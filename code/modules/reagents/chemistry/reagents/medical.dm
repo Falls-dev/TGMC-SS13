@@ -1535,6 +1535,8 @@
 
 /datum/reagent/medicine/sulfasalazine/on_mob_life(mob/living/L, metabolism)
 
+	L.adjust_oxy_loss(-0.5 * effect_str)
+	L.adjust_tox_loss(-0.5 * effect_str)
 	L.reagent_pain_modifier += PAIN_REDUCTION_HEAVY
 
 	if(!ishuman(L))
@@ -1565,18 +1567,11 @@
 	else
 		purge_rate = 10
 
-	if(volume < 50)
-		L.reagents.add_reagent(/datum/reagent/medicine/sulfasalazine, 1)
-
 	if(absorbtion > 0 && volume < max_reagent)
 		L.reagents.add_reagent(/datum/reagent/medicine/sulfasalazine, 2.5)
 
 	if(absorbtion > 0)
 		absorbtion--
-
-	if (volume > 25)
-		L.adjust_oxy_loss(-0.75 * effect_str)
-		L.adjust_tox_loss(-0.75 * effect_str)
 
 	if (volume > 5 && L.get_brute_loss(organic_only = TRUE))
 		absorbtion = -5
