@@ -1525,7 +1525,7 @@
 	purge_rate = 10
 	var/absorbtion = 0
 	var/max_absorbtion = 10
-	var/max_reagent = 150
+	var/max_reagent = 125
 
 /datum/reagent/medicine/sulfasalazine/on_mob_add(mob/living/L, metabolism)
 	if(L.bodytemperature < 169)
