@@ -1535,7 +1535,6 @@
 
 /datum/reagent/medicine/sulfasalazine/on_mob_life(mob/living/L, metabolism)
 
-	L.adjust_oxy_loss(-0.5 * effect_str)
 	L.adjust_tox_loss(-0.5 * effect_str)
 	L.reagent_pain_modifier += PAIN_REDUCTION_HEAVY
 

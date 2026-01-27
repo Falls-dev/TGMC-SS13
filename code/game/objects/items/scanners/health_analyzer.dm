@@ -517,7 +517,7 @@ GLOBAL_LIST_INIT(known_implants, subtypesof(/obj/item/implant))
 				advice += temp_advice
 			if(chemicals_lists["Sulfasalazine"])
 				temp_advice = list(list(
-					"advice" = "Sulfasalazine detected - only administer spaceacillin, nutriments or sugar and saline glucose.",
+					"advice" = "Sulfasalazine detected - only administer spaceacillin, nutriments, sugar and saline glucose.",
 					"tooltip" = "Sulfasalazine uses the reagents it purges for self-replication. It embeds itself into the deepest tissues of the body, making it impossible to remove from the user after administration.",
 					"icon" = "window-close",
 					"color" = "#266930"
