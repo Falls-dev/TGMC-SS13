@@ -1,0 +1,4 @@
+author: "Lumipharon"
+delete-after: True
+changes:
+  - rscadd: "You can now use click drag to help other mobs climb over or onto things"
