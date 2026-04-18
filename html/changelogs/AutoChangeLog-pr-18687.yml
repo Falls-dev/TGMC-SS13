@@ -1,0 +1,4 @@
+author: "Lewdcifer"
+delete-after: True
+changes:
+  - bugfix: "Boilers and Crushers can disable miners and tear holes in walls again."
