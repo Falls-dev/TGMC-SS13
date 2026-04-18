@@ -1,0 +1,5 @@
+author: "Lumipharon"
+delete-after: True
+changes:
+  - balance: "Volkite Carronade range reduced to 15 and has correct range when shooting diagonally"
+  - bugfix: "Jump throws should be more accurate/appropriately ranged when throwing diagonally"
