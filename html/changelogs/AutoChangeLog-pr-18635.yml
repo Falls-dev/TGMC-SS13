@@ -1,0 +1,13 @@
+author: "Lumipharon"
+delete-after: True
+changes:
+  - balance: "Psy crush cannot be instantly double cast"
+  - balance: "Psy crush orb can be destroyed to cancel the ability, will hurt anyone nearby however"
+  - balance: "Psy crush does more damage the larger its AOE"
+  - balance: "Psy blast/lance consumes plasma when first cast, instead of on success"
+  - balance: "Psy blast/lance now target turfs for aimming purposes"
+  - balance: "Psy lance cast times changed to 1.2 seconds"
+  - balance: "Psy blast/lance have a 50% CD applied if the cast is interrupted"
+  - balance: "Psy lance has a 0.8 pierce multiplier"
+  - balance: "Psy blast causes knockback that scales with distance to the epicentre, with low throw force"
+  - balance: "Warlock plasma transfer now acts as a continous beam"
