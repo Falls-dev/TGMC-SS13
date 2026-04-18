@@ -1,4 +1,0 @@
-author: "Lumipharon"
-delete-after: True
-changes:
-  - bugfix: "fixed some projectiles breaking due to missing args"

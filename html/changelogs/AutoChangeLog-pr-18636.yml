@@ -1,6 +1,0 @@
-author: "Lumipharon"
-delete-after: True
-changes:
-  - rscadd: "Campaign: Engineers from both factions can purchase barriade capsules as secondary options"
-  - rscadd: "Campaign: Medics from both factions can purchase healing foam grenades as secondary options"
-  - bugfix: "Campaign: Fixed SMG+ SOM standard loadout not having binocs"

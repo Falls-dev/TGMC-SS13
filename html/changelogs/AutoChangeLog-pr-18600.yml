@@ -1,5 +1,0 @@
-author: "mudzbe"
-delete-after: True
-changes:
-  - balance: "Add another maintenance tunnel to sulaco SD and southern hangar"
-  - bugfix: "Fixed Sulaco SD invincible walls, incorrect maint area"
