@@ -1,5 +1,0 @@
-author: "Lumipharon"
-delete-after: True
-changes:
-  - bugfix: "You can now push objects when things are buckled onto them, such as marines on bikes"
-  - qol: "Buckling something which you have grabbed will always try to transfer the grab to the buckled thing"

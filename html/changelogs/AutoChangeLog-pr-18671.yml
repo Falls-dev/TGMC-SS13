@@ -1,4 +1,0 @@
-author: "Lumipharon"
-delete-after: True
-changes:
-  - bugfix: "Probably fixes generators not triggering collapse timer in some cases"
