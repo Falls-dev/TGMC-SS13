@@ -65,6 +65,9 @@ jobs:
       - name: Run Grep Checks
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: bash tools/ci/check_grep.sh
+      - name: Run RU TGMC Modular Grep Checks
+        if: steps.linter-setup.conclusion == 'success' && !cancelled()
+        run: bash modular_unga/tools/unga_check_grep.sh
       - name: Ticked File Enforcement
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: |
