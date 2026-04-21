@@ -9,3 +9,11 @@
       Valhalla as well.
   mudzbe:
   - bugfix: Cleanup mech removal queen evo oversight
+2026-02-19:
+  Ldip999:
+  - bugfix: fixed HTML Injection with carbon copies
+2026-02-21:
+  Generalcamo:
+  - bugfix: Fixed `flash_lighting_fx`. Camera flash effects work again.
+  mudzbe:
+  - balance: Reduced time to crash to 7 minutes

@@ -209,6 +209,15 @@
 	..()
 	return INITIALIZE_HINT_QDEL
 
+/obj/effect/landmark/zombie_vendor
+	name = "zombie crash progression vendor landmark"
+	icon = 'icons/obj/machines/vending.dmi'
+	icon_state = "marinerequisitions"
+
+/obj/effect/landmark/zombie_vendor/Initialize(mapload)
+	GLOB.zombie_crash_vendor_landmarks += src // Need to track where the landmark will move to after the round starts.
+	return ..()
+
 /obj/effect/landmark/nuke_spawn
 	name = "nuke spawn landmark"
 	icon_state = "tdome_observer"
@@ -409,9 +418,7 @@
 		/obj/item/weapon/gun/rifle/lmg_d,
 		/obj/item/weapon/gun/rifle/type71/commando,
 		/obj/item/weapon/gun/rifle/m412/elite,
-		/obj/item/weapon/gun/rifle/sniper/elite,
 		/obj/item/weapon/gun/smg/m25/elite,
-		/obj/item/weapon/gun/rifle/sniper/elite/xmas,
 		/obj/item/weapon/gun/rifle/sniper/antimaterial,
 		/obj/item/weapon/gun/rifle/railgun,
 		/obj/item/weapon/gun/rifle/icc_coilgun,

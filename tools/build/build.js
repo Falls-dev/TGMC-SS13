@@ -90,6 +90,7 @@ export const DmTarget = new Juke.Target({
     'html/**',
     'icons/**',
     'interface/**',
+    'modular_unga/**',
     `${DME_NAME}.dme`,
     'tgui/public/tgui.html',
     NamedVersionFile,
