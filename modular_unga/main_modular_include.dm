@@ -8,7 +8,7 @@
 #include "__modpack\modpacks_subsystem.dm" //actually mods subsystem + tgui in "tgui/packages/tgui/interfaces/Modpacks.tsx"
 
 /* --FEATURES-- */
-// #include "features\..."
+#include "features\skloname\includes.dm"
 
 /* -- REVERTS -- */
 // #include "reverts\..."
