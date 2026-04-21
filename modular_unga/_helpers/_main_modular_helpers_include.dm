@@ -199,3 +199,23 @@
 			return "северо-запад"
 		if(SOUTHWEST)
 			return "юго-запад"
+
+//И сокращённая версия
+/proc/dir2rutext_short(direction)
+	switch(direction)
+		if(NORTH)
+			return "С"
+		if(SOUTH)
+			return "Ю"
+		if(EAST)
+			return "В"
+		if(WEST)
+			return "З"
+		if(NORTHEAST)
+			return "СВ"
+		if(SOUTHEAST)
+			return "ЮВ"
+		if(NORTHWEST)
+			return "СЗ"
+		if(SOUTHWEST)
+			return "ЮЗ"

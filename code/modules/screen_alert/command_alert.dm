@@ -48,7 +48,7 @@
 	if(!can_use_action())
 		return
 	var/mob/living/carbon/human/human_owner = owner
-	var/text = tgui_input_text(human_owner, "Maximum message length [MAX_COMMAND_MESSAGE_LEN]", "Send message to squad",  max_length = MAX_COMMAND_MESSAGE_LEN, multiline = TRUE)
+	var/text = tgui_input_text(human_owner, "Максимальная длина [MAX_COMMAND_MESSAGE_LEN]", "Отправить сообщение отряду",  max_length = MAX_COMMAND_MESSAGE_LEN, multiline = TRUE)
 	if(!text)
 		return
 	text = capitalize(text)
@@ -74,7 +74,7 @@
 	if(human_owner.assigned_squad)
 		alert_receivers = human_owner.assigned_squad.marines_list + GLOB.observer_list
 		sound_alert = 'sound/effects/sos-morse-code.ogg'
-		announcement_title = "Squad [human_owner.assigned_squad.name] Announcement"
+		announcement_title = "Приказ отряду [human_owner.assigned_squad.name]"
 		switch(human_owner.assigned_squad.id)
 			if(ALPHA_SQUAD)
 				override_color = "red"
@@ -89,14 +89,14 @@
 	else
 		alert_receivers = GLOB.alive_human_list_faction[human_owner.faction] + GLOB.ai_list + GLOB.observer_list
 		sound_alert = 'sound/misc/notice2.ogg'
-		announcement_title = "[human_owner.job.title]'s Announcement"
+		announcement_title = "Сообщение от [human_owner.job.title]"
 
 	for(var/mob/mob_receiver in alert_receivers)
 		mob_receiver.playsound_local(mob_receiver, sound_alert, 35, channel = CHANNEL_ANNOUNCEMENTS)
 		mob_receiver.play_screen_text(HUD_ANNOUNCEMENT_FORMATTING(announcement_title, text, LEFT_ALIGN_TEXT), new /atom/movable/screen/text/screen_text/picture/potrait/custom_mugshot(null, null, owner), override_color)
 		to_chat(mob_receiver, assemble_alert(
 			title = announcement_title,
-			subtitle = "Sent by [human_owner.get_paygrade(0) ? human_owner.get_paygrade(0) : human_owner.job.title] [human_owner.real_name]",
+			subtitle = "Отправлен [human_owner.get_paygrade(0) ? human_owner.get_paygrade(0) : human_owner.job.title] [human_owner.real_name]",
 			message = text,
 			color_override = override_color
 		))
@@ -109,4 +109,3 @@
 	if(isrobot(human_owner))
 		extra_filters += TTS_FILTER_SILICON
 	INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), human_owner, treated_message["tts_message"], human_owner.get_default_language(), human_owner.voice, human_owner.voice_filter, tts_listeners, FALSE, pitch = human_owner.pitch, special_filters = extra_filters.Join("|"), directionality = FALSE)
-

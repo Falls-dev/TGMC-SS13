@@ -15,7 +15,7 @@
 
 /datum/action/ability/xeno_action/hive_message/action_activate()
 	//Preferring the use of multiline input as the message box is larger and easier to quickly proofread before sending to hive.
-	var/input = stripped_multiline_input(xeno_owner, "Maximum message length: [MAX_BROADCAST_LEN]", "Hive Message", "", MAX_BROADCAST_LEN, TRUE)
+	var/input = stripped_multiline_input(xeno_owner, "Максимальная длина: [MAX_BROADCAST_LEN]", "Приказ Улью", "", MAX_BROADCAST_LEN, TRUE)
 	//Newlines are of course stripped and replaced with a space.
 	input = capitalize(trim(replacetext(input, "\n", " ")))
 	if(!input)
@@ -33,15 +33,15 @@
 
 	log_game("[key_name(xeno_owner)] has messaged the hive with: \"[input]\"")
 	deadchat_broadcast(" has messaged the hive: \"[input]\"", xeno_owner, xeno_owner)
-	var/queens_word = HUD_ANNOUNCEMENT_FORMATTING("HIVE MESSAGE", input, CENTER_ALIGN_TEXT)
+	var/queens_word = HUD_ANNOUNCEMENT_FORMATTING("ПРИКАЗ УЛЬЮ", input, CENTER_ALIGN_TEXT)
 
 	var/sound/queen_sound = sound(get_sfx(SFX_QUEEN), channel = CHANNEL_ANNOUNCEMENTS)
 	var/sound/king_sound = sound('sound/voice/alien/xenos_roaring.ogg', channel = CHANNEL_ANNOUNCEMENTS)
 	var/list/xeno_listeners = xeno_owner.hive.get_all_xenos()
 	for(var/mob/living/carbon/xenomorph/xeno AS in xeno_listeners)
 		to_chat(xeno, assemble_alert(
-			title = "Hive Announcement",
-			subtitle = "From [xeno_owner.name]",
+			title = "Приказ Улью",
+			subtitle = "Приказ [xeno_owner.name]",
 			message = input,
 			color_override = "purple"
 		))

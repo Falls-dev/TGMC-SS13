@@ -89,9 +89,9 @@ SUBSYSTEM_DEF(evacuation)
 	var/sec_level_changed = SSsecurity_level.set_level(SEC_LEVEL_DELTA, FALSE) // TRUE if we weren't already on Delta alert
 	priority_announce(
 		type = ANNOUNCEMENT_PRIORITY,
-		title = "[sec_level_changed ? "Code Delta emergency declared. " : ""]Evacuation in [EVACUATION_AUTOMATIC_DEPARTURE/600] minutes.",
-		message = "Emergency evacuation has been triggered. Please proceed to the escape pods.[sec_level_changed ? "\n\n[CONFIG_GET(string/alert_delta)]" : ""]",
-		sound = 'sound/AI/evacuate.ogg',
+		title = "Экстренная Эвакуация",
+		message = "Процесс экстренной эвакуации был запущен. Пожалуйста, проследуйте к спасательным капсулам. Запуск капсул состоится через [EVACUATION_AUTOMATIC_DEPARTURE/600] минут.",
+		sound = 'modular_unga/ru_translate/ru_announce/sound/evacuate.ogg',
 		color_override = sec_level_changed ? "purple" : "orange"
 	)
 	xeno_message("A wave of adrenaline ripples through the hive. The fleshy creatures are trying to escape!")
@@ -105,7 +105,7 @@ SUBSYSTEM_DEF(evacuation)
 	if(evac_status != EVACUATION_STATUS_INITIATING)
 		return FALSE
 	evac_status = EVACUATION_STATUS_IN_PROGRESS
-	priority_announce("WARNING: Evacuation order confirmed. Launching escape pods.", title = "Emergency Evacuation", type = ANNOUNCEMENT_PRIORITY, sound = 'sound/AI/evacuation_confirmed.ogg', color_override = "orange")
+	priority_announce("Приказ об эвакуации подтвержден. Запуск спасательных капсул.", title = "Экстренная Активация", type = ANNOUNCEMENT_PRIORITY, sound = 'modular_unga/ru_translate/ru_announce/sound/evacuation_confirmed.ogg', color_override = "orange")
 	return TRUE
 
 
@@ -115,7 +115,7 @@ SUBSYSTEM_DEF(evacuation)
 	GLOB.enter_allowed = TRUE
 	evac_time = null
 	evac_status = EVACUATION_STATUS_STANDING_BY
-	priority_announce("Evacuation has been cancelled.", title = "Emergency Evacuation", type = ANNOUNCEMENT_PRIORITY, sound = 'sound/AI/evacuate_cancelled.ogg', color_override = "orange")
+	priority_announce("Процесс эвакуации был отменен. Произвожу восстановление первичных систем...", title = "Экстренная Эвакуация", type = ANNOUNCEMENT_PRIORITY, sound = 'modular_unga/ru_translate/ru_announce/sound/evacuate_cancelled.ogg', color_override = "orange")
 	for(var/obj/docking_port/mobile/escape_pod/pod AS in pod_list)
 		pod.unprep_for_launch()
 	return TRUE
@@ -130,7 +130,7 @@ SUBSYSTEM_DEF(evacuation)
 			. = "NOW"
 
 /datum/controller/subsystem/evacuation/proc/announce_evac_completion()
-	priority_announce("ATTENTION: Evacuation complete.", title = "Emergency Evacuation", type = ANNOUNCEMENT_PRIORITY, sound = 'sound/AI/evacuation_complete.ogg', color_override = "orange")
+	priority_announce("Эвакуация завершена. Оставшемуся экипажу требуется завершить миссию.", title = "Эвакуация Завершена", type = ANNOUNCEMENT_PRIORITY, sound = 'modular_unga/ru_translate/ru_announce/sound/evacuation_complete.ogg', color_override = "orange")
 	evac_status = EVACUATION_STATUS_COMPLETE
 
 
@@ -165,7 +165,7 @@ SUBSYSTEM_DEF(evacuation)
 			I.toggle(TRUE)
 	dest_master.toggle(TRUE)
 	dest_index = 1
-	priority_announce("The emergency destruct system has been deactivated.", title = "Self Destruct System", type = ANNOUNCEMENT_PRIORITY, sound = 'sound/AI/selfdestruct_deactivated.ogg', color_override = "purple")
+	priority_announce("Протокол самоуничтожения деактивирован. Перезапуск систем.", title = "Протокол Самоуничтожения", type = ANNOUNCEMENT_PRIORITY, sound = 'modular_unga/ru_translate/ru_announce/sound/selfdestruct_deactivated.ogg', color_override = "purple")
 	if(evac_status == EVACUATION_STATUS_STANDING_BY)
 		SSsecurity_level.set_level(SEC_LEVEL_RED, TRUE)
 	for(var/obj/machinery/floor_warn_light/self_destruct/light AS in alarm_lights)
@@ -184,7 +184,7 @@ SUBSYSTEM_DEF(evacuation)
 			dest_master.visible_message(span_warning("WARNING: Unable to trigger detonation. Please arm all control rods."))
 			return FALSE
 
-	priority_announce("DANGER. DANGER. Self destruct system activated. DANGER. DANGER. Self destruct in progress. DANGER. DANGER.", title = "Self Destruct System", type = ANNOUNCEMENT_PRIORITY, color_override = "purple")
+	priority_announce("ТРЕВОГА. ТРЕВОГА. ПРОТОКОЛ САМОУНИЧТОЖЕНИЯ ЗАВЕРШЕН. ТРЕВОГА. ТРЕВОГА. ДЕТОНАЦИЯ.", title = "Протокол Самоуничтожения", type = ANNOUNCEMENT_PRIORITY, color_override = "purple")
 	GLOB.enter_allowed = FALSE
 	dest_status = NUKE_EXPLOSION_IN_PROGRESS
 	playsound(dest_master, 'sound/machines/alarm.ogg', 75, 0, 30)

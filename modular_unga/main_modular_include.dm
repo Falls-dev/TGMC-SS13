@@ -14,4 +14,5 @@
 // #include "reverts\..."
 
 /* --TRANSLATIONS-- */
-// #include "ru_translate\..."
+#include "ru_translate\ru_announce\includes.dm"
+#include "ru_translate\ru_maps\includes.dm"
