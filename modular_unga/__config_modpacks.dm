@@ -2,9 +2,6 @@
 // Если вы не видите здесь название модуля = вы не можете его отключить. Поэтому, пожалуйста, удалите код вручную.
 // Похоже на моды в Minecraft, не так ли?
 
-// If you are ENG server - you need at first turn off all translations on russian lang
-
-
 /// FEATURES
 
 /// RU_TRANSLATE
