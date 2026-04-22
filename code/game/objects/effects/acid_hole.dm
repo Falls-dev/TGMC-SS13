@@ -1,7 +1,7 @@
 /obj/effect/acid_hole
 	name = "hole"
 	desc = "What could have done this? Something agile enough could probably climb through."
-	icon = 'icons/obj/smooth_objects/acid-hole.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/acid-hole.dmi'
 	icon_state = "acid-hole-0"
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_ACID_HOLE)

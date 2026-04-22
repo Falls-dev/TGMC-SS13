@@ -3,7 +3,7 @@
 /turf/closed/wall
 	name = "wall"
 	desc = "A huge chunk of metal used to seperate rooms."
-	icon = 'icons/turf/walls/regular_wall.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/turf/walls/regular_wall.dmi'
 	icon_state = "metal-0"
 	baseturfs = /turf/open/floor/plating
 	opacity = TRUE
@@ -175,7 +175,7 @@
 		var/alpha_inc = 256 / length(damage_overlays)
 
 		for(var/i = 1; i <= length(damage_overlays); i++)
-			var/image/img = image(icon = 'icons/turf/walls.dmi', icon_state = "overlay_damage")
+			var/image/img = image(icon = 'modular_unga/features/wall_and_floor/icons/turf/walls.dmi', icon_state = "overlay_damage")
 			img.blend_mode = BLEND_MULTIPLY
 			img.alpha = (i * alpha_inc) - 1
 			damage_overlays[i] = img

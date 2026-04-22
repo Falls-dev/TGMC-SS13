@@ -21,7 +21,7 @@
 /datum/action/ability/activable/xeno/plant_weeds
 	name = "Plant Weeds"
 	action_icon_state = "plant_weeds"
-	action_icon = 'icons/Xeno/actions/construction.dmi'
+	action_icon = 'modular_unga/features/wall_and_floor/icons/Xeno/actions/construction.dmi'
 	ability_cost = 75
 	desc = "Plant a weed node on your tile."
 	keybinding_signals = list(
@@ -212,7 +212,7 @@ GLOBAL_LIST_INIT(xeno_resin_costs, list(
 /datum/action/ability/activable/xeno/secrete_resin
 	name = "Secrete Resin"
 	action_icon_state = RESIN_WALL
-	action_icon = 'icons/Xeno/actions/construction.dmi'
+	action_icon = 'modular_unga/features/wall_and_floor/icons/Xeno/actions/construction.dmi'
 	desc = "Builds whatever resin you selected"
 	target_flags = ABILITY_TURF_TARGET
 	ability_cost = 0

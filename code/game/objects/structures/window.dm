@@ -432,7 +432,7 @@
 /obj/structure/window/framed/mainship
 	name = "reinforced window"
 	desc = "A glass window with a special rod matrice inside a wall frame. It looks rather strong. Might take a few good hits to shatter it."
-	icon = 'icons/obj/smooth_objects/ship_window.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/ship_window.dmi'
 	icon_state = "window-reinforced"
 	basestate = "ship_window"
 	base_icon_state = "ship_window"
@@ -493,7 +493,7 @@
 	icon_state = "window-reinforced"
 
 /obj/structure/window/framed/mainship/white
-	icon = 'icons/obj/smooth_objects/wwindow.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/wwindow.dmi'
 	icon_state = "white_rwindow-0"
 	base_icon_state = "white_rwindow"
 	window_frame = /obj/structure/window_frame/mainship/white
@@ -507,7 +507,7 @@
 	)
 
 /obj/structure/window/framed/mainship/gray
-	icon = 'icons/obj/smooth_objects/ship_gray_window.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/ship_gray_window.dmi'
 	icon_state = "ship_gray_window-0"
 	basestate = "ship_gray_window"
 	base_icon_state = "ship_gray_window"
@@ -588,7 +588,7 @@
 
 /obj/structure/window/framed/chigusa
 	name = "reinforced window"
-	icon = 'icons/obj/smooth_objects/chigusa_window.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/chigusa_window.dmi'
 	icon_state = "window-reinforced"
 	basestate = "chigusa_wall"
 	base_icon_state = "chigusa_wall"
@@ -601,7 +601,7 @@
 
 /obj/structure/window/framed/wood
 	name = "window"
-	icon = 'icons/obj/smooth_objects/wood_regular.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/wood_regular.dmi'
 	icon_state = "wood_regular-0"
 	basestate = "wood_regular"
 	base_icon_state = "wood_regular"
@@ -612,7 +612,7 @@
 	desc = "A glass window with a special rod matrice inside a wall frame. It looks rather strong. Might take a few good hits to shatter it."
 	max_integrity = 100
 	reinf = TRUE
-	icon = 'icons/obj/smooth_objects/wood_reinforced.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/wood_reinforced.dmi'
 	icon_state = "wood_reinforced-0"
 	basestate = "wood_reinforced"
 	base_icon_state = "wood_reinforced"
@@ -623,7 +623,7 @@
 
 /obj/structure/window/framed/prison
 	name = "window"
-	icon = 'icons/obj/smooth_objects/wood_reinforced.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/wood_reinforced.dmi'
 	icon_state = "wood_reinforced-0"
 	basestate = "wood_reinforced"
 	base_icon_state = "wood_reinforced"
@@ -634,7 +634,7 @@
 	desc = "A glass window with a special rod matrice inside a wall frame. It looks rather strong. Might take a few good hits to shatter it."
 	max_integrity = 100
 	reinf = TRUE
-	icon = 'icons/obj/smooth_objects/prison_rwindow.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/prison_rwindow.dmi'
 	icon_state = "window-reinforced"
 	base_icon_state = "prison_rwindow"
 	basestate = "prison_rwindow"
@@ -642,7 +642,7 @@
 
 /obj/structure/window/framed/prison/colony
 	name = "window"
-	icon = 'icons/obj/smooth_objects/prison_rwindow.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/prison_rwindow.dmi'
 	icon_state = "window-reinforced"
 	base_icon_state = "prison_rwindow"
 	basestate = "prison_rwindow"
@@ -678,7 +678,7 @@
 
 /obj/structure/window/framed/prison/cell
 	name = "cell window"
-	icon = 'icons/obj/smooth_objects/cell_rwindow.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/cell_rwindow.dmi'
 	icon_state = "prison_rwindow-0"
 	base_icon_state = "prison_rwindow"
 	basestate = "prison_rwindow"
@@ -708,31 +708,31 @@
 
 /obj/structure/window/framed/kutjevo
 	name = "window"
-	icon = 'icons/obj/smooth_objects/kutjevo_window_blue.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/kutjevo_window_blue.dmi'
 	icon_state = "chigusa_wall-0"
 	base_icon_state = "chigusa_wall"
 	window_frame = /obj/structure/window_frame/kutjevo
 
 /obj/structure/window/framed/kutjevo/orange
-	icon = 'icons/obj/smooth_objects/kutjevo_window_orange.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/kutjevo_window_orange.dmi'
 
 /obj/structure/window/framed/kutjevo/reinforced
 	name = "window"
-	icon = 'icons/obj/smooth_objects/kutjevo_window_blue_reinforced.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/kutjevo_window_blue_reinforced.dmi'
 	icon_state = "window-reinforced"
 	base_icon_state = "chigusa_wall"
 	window_frame = /obj/structure/window_frame/kutjevo
 
 /obj/structure/window/framed/kutjevo/reinforced/orange
 	name = "window"
-	icon = 'icons/obj/smooth_objects/kutjevo_window_orange_reinforced.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/kutjevo_window_orange_reinforced.dmi'
 	icon_state = "window-reinforced"
 	base_icon_state = "chigusa_wall"
 	window_frame = /obj/structure/window_frame/kutjevo
 
 /obj/structure/window/framed/kutjevo/reinforced/hull
 	name = "hull window"
-	icon = 'icons/obj/smooth_objects/kutjevo_window_orange_reinforced.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/kutjevo_window_orange_reinforced.dmi'
 	desc = "A glass window with a special rod matrice inside a wall frame. This one was made out of exotic materials to prevent hull breaches. No way to get through here."
 	icon_state = "window-invincible"
 	base_icon_state = "chigusa_wall"

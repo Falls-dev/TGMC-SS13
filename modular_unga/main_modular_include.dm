@@ -9,6 +9,7 @@
 
 /* --FEATURES-- */
 #include "features\skloname\includes.dm"
+#include "features\wall_and_floor\includes.dm"
 
 /* -- REVERTS -- */
 // #include "reverts\..."

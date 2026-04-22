@@ -120,7 +120,7 @@
 
 /obj/effect/landmark/valhalla_weed_node
 	name = "valhalla xeno weed node spawn landmark"
-	icon = 'icons/Xeno/weeds.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/Xeno/Effects.dmi'
 	icon_state = "weednode0"
 
 /obj/effect/landmark/valhalla_weed_node/Initialize(mapload)
@@ -131,7 +131,7 @@
 
 /obj/effect/landmark/weed_node
 	name = "xeno weed node spawn landmark"
-	icon = 'icons/Xeno/weeds.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/Xeno/Effects.dmi'
 	icon_state = "weednode0"
 
 /obj/effect/landmark/weed_node/Initialize(mapload)
@@ -141,7 +141,7 @@
 
 /obj/effect/landmark/xeno_resin_door
 	name = "xeno resin door spawn landmark"
-	icon = 'icons/Xeno/Effects.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/Xeno/Effects.dmi'
 	icon_state = "resin"
 
 /obj/effect/landmark/xeno_resin_door/Initialize(mapload)
@@ -151,7 +151,7 @@
 
 /obj/effect/landmark/xeno_resin_wall
 	name = "xeno resin wall spawn landmark"
-	icon = 'icons/Xeno/structures.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/Xeno/Effects.dmi'
 	icon_state = "resin0"
 
 /obj/effect/landmark/xeno_resin_wall/Initialize(mapload)

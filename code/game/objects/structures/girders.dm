@@ -1,7 +1,7 @@
 /obj/structure/girder
 	name = "girder"
 	icon_state = "girder-0"
-	icon = 'icons/obj/smooth_objects/girder.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/girder.dmi'
 	desc = "A large structural assembly made out of metal. It requires some layers of metal before it can be considered a wall."
 	anchored = TRUE
 	density = TRUE
@@ -339,17 +339,17 @@
 	. = ..()
 	switch(girder_state)
 		if(GIRDER_BROKEN, GIRDER_BROKEN_PATCHED)
-			icon = 'icons/obj/smooth_objects/girder_broke.dmi'
+			icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/girder_broke.dmi'
 		if(GIRDER_NORMAL)
 			if(!anchored)
 				icon_state = "displaced"
 				return
-			icon = 'icons/obj/smooth_objects/girder.dmi'
+			icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/girder.dmi'
 		if(GIRDER_BUILDING1_LOOSE, GIRDER_BUILDING1_SECURED, GIRDER_BUILDING1_WELDED, GIRDER_BUILDING2_LOOSE, GIRDER_BUILDING2_SECURED)
 			if(reinforcement == GIRDER_REINF_PLASTEEL)
 				icon_state = "reinforced"
 				return
-			icon = 'icons/obj/smooth_objects/girder.dmi'
+			icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/girder.dmi'
 
 
 /obj/structure/girder/ex_act(severity)
