@@ -9,6 +9,20 @@
 	SEND_SIGNAL(owner, COMSIG_XENOMORPH_CORE_RETURN)
 	return ..()
 
+/datum/action/ability/activable/xeno/secrete_resin/hivemind
+	buildable_structures = list(
+		/turf/closed/wall/resin/regenerating,
+		/turf/closed/wall/resin/regenerating/special/bulletproof,
+		/turf/closed/wall/resin/regenerating/special/fireproof,
+		/turf/closed/wall/resin/regenerating/special/hardy,
+		/obj/alien/resin/sticky,
+		/obj/structure/mineral_door/resin,
+		/obj/structure/bed/nest,
+	)
+
+/datum/action/ability/activable/xeno/secrete_resin/hivemind/get_resin_images()
+	return GLOB.advanced_resin_images_list
+
 /datum/action/ability/activable/xeno/secrete_resin/hivemind/can_use_action(silent, override_flags, selecting)
 	if (owner.status_flags & INCORPOREAL)
 		return FALSE

@@ -206,6 +206,7 @@ GLOBAL_LIST_INIT(xeno_resin_costs, list(
 		/obj/alien/resin/sticky = 25,
 		/obj/structure/mineral_door/resin = 50,
 		/obj/structure/mineral_door/resin/thick = 50,
+		/obj/structure/bed/nest = 50,
 	))
 
 // Secrete Resin
@@ -299,15 +300,19 @@ GLOBAL_LIST_INIT(xeno_resin_costs, list(
 		visual_references[VREF_MUTABLE_BUILDING_COUNTER] = null
 	return ..()
 
+/datum/action/ability/activable/xeno/secrete_resin/proc/get_resin_images()
+	return GLOB.resin_images_list
+
 /datum/action/ability/activable/xeno/secrete_resin/action_activate()
 	//Left click on the secrete resin button opens up radial menu (new type of changing structures).
 	if(xeno_owner.selected_ability != src)
 		return ..()
 	. = ..()
-	var/resin_choice = show_radial_menu(owner, owner, GLOB.resin_images_list, radius = 35)
+	var/list/resin_images = get_resin_images()
+	var/resin_choice = show_radial_menu(owner, owner, resin_images, radius = 35)
 	if(!resin_choice)
 		return
-	set_resin_type(buildable_structures[GLOB.resin_images_list.Find(resin_choice)])
+	set_resin_type(buildable_structures[resin_images.Find(resin_choice)])
 
 /datum/action/ability/activable/xeno/secrete_resin/alternate_action_activate()
 	//Right click on secrete resin button cycles through to the next construction type (old method of changing structures).
@@ -370,6 +375,14 @@ GLOBAL_LIST_INIT(xeno_resin_costs, list(
 /datum/action/ability/activable/xeno/secrete_resin/proc/build_resin(turf/T, weed_flags = WEED_REQUIRES_LOS | WEED_TAKES_TIME | WEED_USES_PLASMA | WEED_NOTIFY, sound = SFX_ALIEN_RESIN_BUILD, silent = FALSE)
 	if(!can_build_here(T, silent))
 		return fail_activate()
+	if(xeno_owner.selected_resin == /obj/structure/bed/nest)
+		for(var/obj/structure/bed/nest/xeno_nest in range(2, T))
+			owner.balloon_alert(owner, span_notice("another nest is too close!"))
+			return fail_activate()
+	if(xeno_owner.selected_resin == /obj/structure/mineral_door/resin || xeno_owner.selected_resin == /obj/structure/mineral_door/resin/thick)
+		for(var/obj/structure/mineral_door/resin/door in range(2, T))
+			owner.balloon_alert(owner, span_notice("another door is too close!"))
+			return fail_activate()
 	if(CHECK_BITFIELD(weed_flags, WEED_REQUIRES_LOS) && !line_of_sight(owner, T, ignore_target_opacity = istype(T, /turf/closed/wall/resin)))
 		if(CHECK_BITFIELD(weed_flags, WEED_COSTS_QB_POINTS))
 			to_chat(owner, span_warning("You cannot build here without line of sight!"))
@@ -381,6 +394,14 @@ GLOBAL_LIST_INIT(xeno_resin_costs, list(
 	// conditions may change, so we need to check again
 	if(!can_build_here(T, silent))
 		return fail_activate()
+	if(xeno_owner.selected_resin == /obj/structure/bed/nest)
+		for(var/obj/structure/bed/nest/xeno_nest in range(2, T))
+			owner.balloon_alert(owner, span_notice("another nest is too close!"))
+			return fail_activate()
+	if(xeno_owner.selected_resin == /obj/structure/mineral_door/resin || xeno_owner.selected_resin == /obj/structure/mineral_door/resin/thick)
+		for(var/obj/structure/mineral_door/resin/door in range(2, T))
+			owner.balloon_alert(owner, span_notice("another door is too close!"))
+			return fail_activate()
 	var/atom/AM = xeno_owner.selected_resin
 	var/atom/new_resin
 	var/costs_points = TRUE

@@ -28,6 +28,7 @@
 #define RESIN_WALL "resin wall"
 #define STICKY_RESIN "sticky resin"
 #define RESIN_DOOR "resin door"
+#define ALIEN_NEST "alien nest"
 
 //Special resin defines
 #define BULLETPROOF_WALL "bulletproof resin wall"
@@ -133,6 +134,17 @@ GLOBAL_LIST_INIT(resin_images_list, list(
 	RESIN_WALL = image('modular_unga/features/wall_and_floor/icons/Xeno/actions/construction.dmi', icon_state = RESIN_WALL),
 	STICKY_RESIN = image('modular_unga/features/wall_and_floor/icons/Xeno/actions/construction.dmi', icon_state = STICKY_RESIN),
 	RESIN_DOOR = image('modular_unga/features/wall_and_floor/icons/Xeno/actions/construction.dmi', icon_state = RESIN_DOOR),
+))
+
+//List of advanced resin structure images
+GLOBAL_LIST_INIT(advanced_resin_images_list, list(
+	RESIN_WALL = image('modular_unga/features/wall_and_floor/icons/Xeno/actions/construction.dmi', icon_state = RESIN_WALL),
+	BULLETPROOF_WALL = image('modular_unga/features/wall_and_floor/icons/Xeno/actions/construction.dmi', icon_state = BULLETPROOF_WALL),
+	FIREPROOF_WALL = image('modular_unga/features/wall_and_floor/icons/Xeno/actions/construction.dmi', icon_state = FIREPROOF_WALL),
+	HARDY_WALL = image('modular_unga/features/wall_and_floor/icons/Xeno/actions/construction.dmi', icon_state = HARDY_WALL),
+	STICKY_RESIN = image('modular_unga/features/wall_and_floor/icons/Xeno/actions/construction.dmi', icon_state = STICKY_RESIN),
+	RESIN_DOOR = image('modular_unga/features/wall_and_floor/icons/Xeno/actions/construction.dmi', icon_state = RESIN_DOOR),
+	ALIEN_NEST = image('modular_unga/features/wall_and_floor/icons/Xeno/actions/construction.dmi', icon_state = ALIEN_NEST),
 ))
 
 //List of puppeteer pheromone images
