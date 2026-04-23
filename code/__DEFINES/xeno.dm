@@ -28,6 +28,7 @@
 #define RESIN_WALL "resin wall"
 #define STICKY_RESIN "sticky resin"
 #define RESIN_DOOR "resin door"
+#define ALIEN_NEST "alien nest"
 
 //Special resin defines
 #define BULLETPROOF_WALL "bulletproof resin wall"
@@ -75,10 +76,10 @@ GLOBAL_LIST_INIT(weed_prob_list, list(
 
 //List of weed images
 GLOBAL_LIST_INIT(weed_images_list, list(
-	WEED = image('icons/Xeno/actions/construction.dmi', icon_state = WEED),
-	STICKY_WEED = image('icons/Xeno/actions/construction.dmi', icon_state = STICKY_WEED),
-	RESTING_WEED = image('icons/Xeno/actions/construction.dmi', icon_state = RESTING_WEED),
-	AUTOMATIC_WEEDING = image('icons/Xeno/actions/general.dmi', icon_state = AUTOMATIC_WEEDING)
+	WEED = image('modular_unga/features/wall_and_floor/icons/Xeno/actions/construction.dmi', icon_state = WEED),
+	STICKY_WEED = image('modular_unga/features/wall_and_floor/icons/Xeno/actions/construction.dmi', icon_state = STICKY_WEED),
+	RESTING_WEED = image('modular_unga/features/wall_and_floor/icons/Xeno/actions/construction.dmi', icon_state = RESTING_WEED),
+	AUTOMATIC_WEEDING = image('modular_unga/features/wall_and_floor/icons/Xeno/actions/general.dmi', icon_state = AUTOMATIC_WEEDING)
 ))
 
 //List of pheromone images
@@ -122,17 +123,28 @@ GLOBAL_LIST_INIT(plant_type_list, list(
 
 //List of plant images
 GLOBAL_LIST_INIT(plant_images_list, list(
-	HEAL_PLANT = image('icons/Xeno/plants.dmi', icon_state = "heal_fruit"),
-	ARMOR_PLANT = image('icons/Xeno/plants.dmi', icon_state = "armor_fruit"),
-	PLASMA_PLANT = image('icons/Xeno/plants.dmi', icon_state = "plasma_fruit"),
-	STEALTH_PLANT = image('icons/Xeno/plants.dmi', icon_state = "stealth_plant")
+	HEAL_PLANT = image('modular_unga/features/wall_and_floor/icons/Xeno/plants.dmi', icon_state = "heal_fruit"),
+	ARMOR_PLANT = image('modular_unga/features/wall_and_floor/icons/Xeno/plants.dmi', icon_state = "armor_fruit"),
+	PLASMA_PLANT = image('modular_unga/features/wall_and_floor/icons/Xeno/plants.dmi', icon_state = "plasma_fruit"),
+	STEALTH_PLANT = image('modular_unga/features/wall_and_floor/icons/Xeno/plants.dmi', icon_state = "stealth_plant")
 ))
 
 //List of resin structure images
 GLOBAL_LIST_INIT(resin_images_list, list(
-	RESIN_WALL = image('icons/Xeno/actions/construction.dmi', icon_state = RESIN_WALL),
-	STICKY_RESIN = image('icons/Xeno/actions/construction.dmi', icon_state = STICKY_RESIN),
-	RESIN_DOOR = image('icons/Xeno/actions/construction.dmi', icon_state = RESIN_DOOR),
+	RESIN_WALL = image('modular_unga/features/wall_and_floor/icons/Xeno/actions/construction.dmi', icon_state = RESIN_WALL),
+	STICKY_RESIN = image('modular_unga/features/wall_and_floor/icons/Xeno/actions/construction.dmi', icon_state = STICKY_RESIN),
+	RESIN_DOOR = image('modular_unga/features/wall_and_floor/icons/Xeno/actions/construction.dmi', icon_state = RESIN_DOOR),
+))
+
+//List of advanced resin structure images
+GLOBAL_LIST_INIT(advanced_resin_images_list, list(
+	RESIN_WALL = image('modular_unga/features/wall_and_floor/icons/Xeno/actions/construction.dmi', icon_state = RESIN_WALL),
+	BULLETPROOF_WALL = image('modular_unga/features/wall_and_floor/icons/Xeno/actions/construction.dmi', icon_state = BULLETPROOF_WALL),
+	FIREPROOF_WALL = image('modular_unga/features/wall_and_floor/icons/Xeno/actions/construction.dmi', icon_state = FIREPROOF_WALL),
+	HARDY_WALL = image('modular_unga/features/wall_and_floor/icons/Xeno/actions/construction.dmi', icon_state = HARDY_WALL),
+	STICKY_RESIN = image('modular_unga/features/wall_and_floor/icons/Xeno/actions/construction.dmi', icon_state = STICKY_RESIN),
+	RESIN_DOOR = image('modular_unga/features/wall_and_floor/icons/Xeno/actions/construction.dmi', icon_state = RESIN_DOOR),
+	ALIEN_NEST = image('modular_unga/features/wall_and_floor/icons/Xeno/actions/construction.dmi', icon_state = ALIEN_NEST),
 ))
 
 //List of puppeteer pheromone images

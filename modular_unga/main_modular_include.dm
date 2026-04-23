@@ -8,10 +8,15 @@
 #include "__modpack\modpacks_subsystem.dm" //actually mods subsystem + tgui in "tgui/packages/tgui/interfaces/Modpacks.tsx"
 
 /* --FEATURES-- */
-// #include "features\..."
+#include "features\skloname\includes.dm"
+#include "features\wall_and_floor\includes.dm"
+#include "features\xenowall\includes.dm"
+#include "features\distress\includes.dm"
+#include "features\last_stand\includes.dm"
 
 /* -- REVERTS -- */
 // #include "reverts\..."
 
 /* --TRANSLATIONS-- */
-// #include "ru_translate\..."
+#include "ru_translate\ru_announce\includes.dm"
+#include "ru_translate\ru_maps\includes.dm"

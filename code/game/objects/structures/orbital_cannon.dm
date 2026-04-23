@@ -202,16 +202,16 @@ GLOBAL_DATUM(rail_gun, /obj/structure/ship_rail_gun)
 	inaccurate_fuel = abs(WARHEAD_FUEL_REQUIREMENT - tray.fuel_amt)
 
 	// Give marines a warning if misfuelled.
-	var/fuel_warning = "Warhead fuel level: safe."
+	var/fuel_warning = "Уровень топлива боеголовки: корректный."
 	if(inaccurate_fuel > 0)
-		fuel_warning = "Warhead fuel level: incorrect.<br>Warhead may be inaccurate."
+		fuel_warning = "Уровень топлива боеголовки: некорректный.<br>Возможно смещение области поражения."
 
 	var/turf/target = locate(T.x + inaccurate_fuel * pick(-1,1),T.y + inaccurate_fuel * pick(-1,1),T.z)
 	GLOB.round_statistics.obs_fired++
 	SSblackbox.record_feedback("tally", "round_statistics", 1, "obs_fired")
 	priority_announce(
-		message = "Evacuate the impact zone immediately!<br><br>Warhead type: [tray.warhead.warhead_kind].<br>[fuel_warning]<br>Estimated location of impact: [get_area(T)].",
-		title = "Orbital bombardment launch command detected!",
+		message = "Немедленно покиньте зону поражения!<br><br>Тип боеголовки: [uppertext(tray.warhead.warhead_kind)].<br>[fuel_warning]<br>Цель: [get_area(T)].",
+		title = "Обнаружена команда на запуск орбитальной бомбардировки!",
 		type = ANNOUNCEMENT_PRIORITY,
 		sound = 'sound/effects/OB_warning_announce.ogg',
 		channel_override = SSsounds.random_available_channel(), // This way, we can't have it be cut off by other sounds.
@@ -219,7 +219,7 @@ GLOBAL_DATUM(rail_gun, /obj/structure/ship_rail_gun)
 	)
 	var/list/receivers = (GLOB.alive_human_list + GLOB.ai_list + GLOB.observer_list)
 	for(var/mob/living/screentext_receiver AS in receivers)
-		screentext_receiver.play_screen_text(HUD_ANNOUNCEMENT_FORMATTING("ORBITAL STRIKE IMMINENT", "TYPE: [uppertext(tray.warhead.warhead_kind)]", LEFT_ALIGN_TEXT), new /atom/movable/screen/text/screen_text/picture/potrait/custom_mugshot(null, null, user))
+		screentext_receiver.play_screen_text(HUD_ANNOUNCEMENT_FORMATTING("ОРБИТАЛЬНЫЙ УДАР", "ТИП СНАРЯДА: [uppertext(tray.warhead.warhead_kind)]", LEFT_ALIGN_TEXT), new /atom/movable/screen/text/screen_text/picture/potrait/custom_mugshot(null, null, user))
 	playsound(target, 'sound/effects/OB_warning_announce_novoiceover.ogg', 125, FALSE, 30, 10) //VOX-less version for xenomorphs
 
 	var/impact_time = 10 SECONDS + (WARHEAD_FLY_TIME * (GLOB.current_orbit/3))

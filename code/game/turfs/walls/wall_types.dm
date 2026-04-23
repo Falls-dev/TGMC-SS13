@@ -2,7 +2,7 @@
 /turf/closed/wall/mainship
 	name = "hull"
 	desc = "A huge chunk of metal used to seperate rooms and make up the ship."
-	icon = 'icons/turf/walls/testwall.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/turf/walls/testwall.dmi'
 	icon_state = "testwall-0"
 	walltype = "testwall"
 
@@ -57,14 +57,14 @@
 	)
 
 /turf/closed/wall/mainship/white
-	icon = 'icons/turf/walls/wwall.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/turf/walls/wwall.dmi'
 	base_icon_state = "wwall"
 	icon_state = "wwall-0"
 	decorated_wall = FALSE
 
 /turf/closed/wall/mainship/gray
 	walltype = "gwall"
-	icon = 'icons/turf/walls/gwall.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/turf/walls/gwall.dmi'
 	base_icon_state = "gwall"
 	icon_state = "gwall-0"
 
@@ -97,7 +97,7 @@
 	resistance_flags = RESIST_ALL
 
 /turf/closed/wall/mainship/research/containment/wall
-	icon = 'icons/turf/mainshipwalls.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/turf/mainshipwalls.dmi'
 	name = "cell wall"
 	walltype = null
 	smoothing_flags = NONE
@@ -150,7 +150,7 @@
 
 /turf/closed/wall/desert
 	name = "wall"
-	icon = 'icons/turf/walls/chigusa.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/turf/walls/chigusa.dmi'
 	icon_state = "chigusa-0"
 	walltype = "chigusa"
 	base_icon_state = "chigusa"
@@ -160,7 +160,7 @@
 	icon_state = "wall-invincible"
 
 /turf/closed/wall/kutjevo
-	icon = 'icons/turf/walls/kutjevo_wall.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/turf/walls/kutjevo_wall.dmi'
 	icon_state = "kutjevo_wall-0"
 	base_icon_state = "kutjevo_wall"
 
@@ -189,7 +189,7 @@
 /turf/closed/wall/sulaco
 	name = "hull"
 	desc = "A huge chunk of metal used to separate rooms on spaceships from the cold void of space."
-	icon = 'icons/turf/walls/sulaco.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/turf/walls/sulaco.dmi'
 	icon_state = "sulaco-0"
 	base_icon_state = "sulaco"
 	color = "#616161"
@@ -234,7 +234,7 @@
 
 /turf/closed/wall/indestructible
 	name = "wall"
-	icon = 'icons/turf/walls.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/turf/walls.dmi'
 	icon_state = "riveted"
 	opacity = TRUE
 	resistance_flags = RESIST_ALL
@@ -376,7 +376,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/wall/indestructible/splashscreen)
 
 /turf/closed/wall/prison
 	name = "metal wall"
-	icon = 'icons/turf/walls/gorg_prison_wall_two.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/turf/walls/gorg_prison_wall_two.dmi'
 	icon_state = "metal-0"
 	walltype = "metal"
 	base_icon_state = "metal"
@@ -387,7 +387,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/wall/indestructible/splashscreen)
 
 /turf/closed/wall/wood
 	name = "wood wall"
-	icon = 'icons/turf/walls/woodwall.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/turf/walls/woodwall.dmi'
 	icon_state = "woodwall-0"
 	base_icon_state = "woodwall"
 	walltype = "woodwall"
@@ -401,7 +401,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/wall/indestructible/splashscreen)
 /turf/closed/wall/wood/reinforced
 	name = "reinforced wood wall"
 	desc = "A reinforced wooden wall"
-	icon = 'icons/turf/walls/woodrwall.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/turf/walls/woodrwall.dmi'
 	icon_state = "wall-reinforced"
 	base_icon_state = "woodrwall"
 	walltype = "woodrwall"

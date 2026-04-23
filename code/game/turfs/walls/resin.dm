@@ -6,7 +6,7 @@
 /turf/closed/wall/resin
 	name = RESIN_WALL
 	desc = "Weird slime solidified into a wall."
-	icon = 'icons/obj/smooth_objects/resin-wall.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/resin-wall.dmi'
 	icon_state = "resin-wall-0"
 	walltype = "resin-wall"
 	base_icon_state = "resin-wall"
@@ -249,23 +249,32 @@
 	max_integrity = 125
 
 /turf/closed/wall/resin/regenerating/special/bulletproof
-	name = "bulletproof resin wall"
-	desc = "Weird slime solidified into a wall. Looks shiny."
+	name = BULLETPROOF_WALL
+	desc = "Weird slime solidified into a wall. Looks like it could be resistant to bullets and energy weaponry."
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/resin-wall-bullet.dmi'
+	icon_state = "resin-wall-0"
+	walltype = "resin-wall"
+	base_icon_state = "resin-wall"
 	max_upgradable_health = 250
 	soft_armor = list(MELEE = 0, BULLET = 110, LASER = 100, ENERGY = 100, BOMB = 20, BIO = 0, FIRE = 0, ACID = 0) //You aren't damaging this with bullets without alot of AP.
-	color = COLOR_WALL_BULLETPROOF
 
 /turf/closed/wall/resin/regenerating/special/fireproof
-	name = "fireproof resin wall"
-	desc = "Weird slime solidified into a wall. Very red."
+	name = FIREPROOF_WALL
+	desc = "Weird slime solidified into a wall. Looks like it could be resistant to fire."
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/resin-wall-fire.dmi'
+	icon_state = "resin-wall-0"
+	walltype = "resin-wall"
+	base_icon_state = "resin-wall"
 	max_upgradable_health = 200
 	soft_armor = list(MELEE = 0, BULLET = 65, LASER = 75, ENERGY = 75, BOMB = 0, BIO = 0, FIRE = 200, ACID = 0)
-	color = COLOR_WALL_FIREPROOF
 	allow_pass_flags = NONE // To prevent fire from passing beyond it.
 
 /turf/closed/wall/resin/regenerating/special/hardy
-	name = "hardy resin wall"
-	desc = "Weird slime soldified into a wall. Looks sturdy."
+	name = HARDY_WALL
+	desc = "Weird slime solidified into a wall. Looks like it could be resistant to melee attacks and explosives."
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/resin-wall-hardy.dmi'
+	icon_state = "resin-wall-0"
+	walltype = "resin-wall"
+	base_icon_state = "resin-wall"
 	max_upgrade_per_tick = 12 //Upgrades faster, but if damaged at all it will be put on cooldown still to help against walling in combat.
 	soft_armor = list(MELEE = 80, BULLET = 30, LASER = 25, ENERGY = 75, BOMB = 80, BIO = 0, FIRE = 0, ACID = 0)
-	color = COLOR_WALL_HARDY

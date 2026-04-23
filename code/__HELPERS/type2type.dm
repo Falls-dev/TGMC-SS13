@@ -38,7 +38,6 @@
 		if(SOUTHWEST)
 			return "southwest"
 
-
 //Turns a direction into text
 /proc/dir2text_short(direction)
 	switch(direction)

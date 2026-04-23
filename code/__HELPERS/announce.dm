@@ -62,7 +62,7 @@
  */
 /proc/priority_announce(
 	message,
-	title = "Announcement",
+	title = "Оповещение",
 	subtitle = "",
 	type = ANNOUNCEMENT_REGULAR,
 	sound = 'sound/misc/notice2.ogg',
@@ -83,12 +83,12 @@
 			assembly_header = title
 
 		if(ANNOUNCEMENT_PRIORITY)
-			assembly_header = "Priority Announcement"
+			assembly_header = "Приоритетное Оповещение"
 			if(length(title) > 0)
 				assembly_subtitle = title
 
 		if(ANNOUNCEMENT_COMMAND)
-			assembly_header = "Command Announcement"
+			assembly_header = "Оповещение Экипажу"
 
 	if(subtitle && type != ANNOUNCEMENT_PRIORITY)
 		assembly_subtitle = subtitle
@@ -117,9 +117,9 @@
 				SEND_SOUND(M, s)
 
 ///Spawns a paper at each communications printer
-/proc/print_command_report(papermessage, papertitle = "paper", announcemessage = "A report has been downloaded and printed out at all communications consoles.", announcetitle = "Incoming Classified Message", announce = TRUE)
+/proc/print_command_report(papermessage, papertitle = "paper", announcemessage = "Отчет был загружен и распечатан на всех консолях связи.", announcetitle = "Входящее зашифрованное сообщение", announce = TRUE)
 	if(announce)
-		priority_announce(announcemessage, announcetitle, sound = 'sound/AI/commandreport.ogg')
+		priority_announce(announcemessage, announcetitle, sound = 'modular_unga/ru_translate/ru_announce/sound/commandreport.ogg')
 
 	for(var/obj/machinery/computer/communications/C in GLOB.machines)
 		if(C.machine_stat & (BROKEN|NOPOWER))
@@ -167,7 +167,7 @@
  * * alert - optional, alert or notice?
  * * receivers - a list of all players to send the message to
  */
-/proc/minor_announce(message, title = "Attention:", alert, list/receivers = GLOB.alive_human_list, should_play_sound = FALSE)
+/proc/minor_announce(message, title = "Внимание:", alert, list/receivers = GLOB.alive_human_list, should_play_sound = FALSE)
 	if(!message)
 		return
 

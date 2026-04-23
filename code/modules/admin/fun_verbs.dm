@@ -108,9 +108,9 @@ ADMIN_VERB(command_report, R_FUN, "Command Report", "Create a custom command rep
 
 	switch(tgui_alert(user, "Should this be announced to the general population?", "Announce", list("Yes", "No", "Cancel")))
 		if("Yes")
-			priority_announce(input, customname, customsubtitle, sound = 'sound/AI/commandreport.ogg', color_override = override);
+			priority_announce(input, customname, customsubtitle, sound = 'modular_unga/ru_translate/ru_announce/sound/commandreport.ogg', color_override = override);
 		if("No")
-			priority_announce("New update available at all communication consoles.", "Classified Transmission Received", type = ANNOUNCEMENT_PRIORITY, sound = 'sound/AI/commandreport.ogg')
+			priority_announce("Новое объявление доступно на всех консолях связи.", "Получена конфиденциальная передача", type = ANNOUNCEMENT_PRIORITY, sound = 'modular_unga/ru_translate/ru_announce/sound/commandreport.ogg')
 		else
 			return
 

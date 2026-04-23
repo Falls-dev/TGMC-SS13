@@ -157,7 +157,7 @@
 //Resin Doors
 /obj/structure/mineral_door/resin
 	name = RESIN_DOOR
-	icon = 'icons/obj/smooth_objects/resin-door.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/resin-door.dmi'
 	icon_state = "resin-door-1"
 	base_icon_state = "resin-door"
 	resistance_flags = NONE

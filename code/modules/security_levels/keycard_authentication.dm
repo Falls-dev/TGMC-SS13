@@ -179,9 +179,9 @@ GLOBAL_VAR_INIT(maint_all_access, FALSE)
 /proc/make_maint_all_access()
 	GLOB.maint_all_access = TRUE
 	priority_announce(
-		title = "Attention!",
-		subtitle = "Shipside emergency declared.",
-		message = "The maintenance access requirement has been revoked on all maintenance airlocks.",
+		title = "Внимание!",
+		subtitle = "На корабле объявлена чрезвычайная ситуация.",
+		message = "Требование доступа для всех технических тоннелей отменено.",
 		sound = 'sound/misc/notice1.ogg',
 		color_override = "grey"
 	)
@@ -191,9 +191,9 @@ GLOBAL_VAR_INIT(maint_all_access, FALSE)
 /proc/revoke_maint_all_access()
 	GLOB.maint_all_access = FALSE
 	priority_announce(
-		title = "Attention!",
-		subtitle = "Shipside emergency revoked.",
-		message = "The maintenance access requirement has been restored on all maintenance airlocks.",
+		title = "Внимание!",
+		subtitle = "Отбой Тревоги.",
+		message = "Требование доступа для всех технических тоннелей было возвращено.",
 		sound = 'sound/misc/notice2.ogg',
 		color_override = "grey"
 	)

@@ -1,7 +1,7 @@
 /obj/structure/fence
 	name = "fence"
 	desc = "A large metal mesh strewn between two poles. Intended as a cheap way to separate areas, while allowing one to see through it."
-	icon = 'icons/obj/smooth_objects/fence.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/fence.dmi'
 	base_icon_state = "fence"
 	icon_state = "fence-icon"
 	density = TRUE
@@ -17,7 +17,7 @@
 	///Chance for the fence to break on /init
 	var/chance_to_break = 80 //Defaults to 80%
 	///icon set we switch to when destroyed
-	var/destroyed_icon = 'icons/obj/smooth_objects/brokenfence.dmi'
+	var/destroyed_icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/brokenfence.dmi'
 
 /obj/structure/fence/ex_act(severity)
 	switch(severity)
