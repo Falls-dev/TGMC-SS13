@@ -138,3 +138,11 @@
   Runian:
   - bugfix: Agility's button icon correctly changes when it is toggled.
   - bugfix: Carriers can no longer store harmless huggers.
+2026-04-23:
+  Lumipharon:
+  - bugfix: fixed abduct not working if you clicked too far away
+  - bugfix: fixed a silo runtime
+  - balance: Multitile vehicles are not slowed by sticky weeds/resin
+  Runian:
+  - bugfix: Xenomorphs no longer permanently lose health from radiation (cloneloss
+      / toxin / oxygen damage). It is converted to brute or burn.
