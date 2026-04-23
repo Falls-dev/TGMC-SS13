@@ -11,6 +11,8 @@
 #include "features\skloname\includes.dm"
 #include "features\wall_and_floor\includes.dm"
 #include "features\xenowall\includes.dm"
+#include "features\distress\includes.dm"
+#include "features\last_stand\includes.dm"
 
 /* -- REVERTS -- */
 // #include "reverts\..."

@@ -515,6 +515,14 @@
 	GLOB.eord_roomba_spawns -= src
 	return ..()
 
+/obj/effect/landmark/last_stand_waves
+	name = "last stand waves location"
+
+/obj/effect/landmark/last_stand_waves/Initialize(mapload)
+	. = ..()
+	GLOB.waves_spawner_locs += loc
+	return INITIALIZE_HINT_QDEL
+
 /// Marks the bottom left of the testing zone.
 /// In landmarks.dm and not unit_test.dm so it is always active in the mapping tools.
 /obj/effect/landmark/unit_test_bottom_left
