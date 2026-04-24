@@ -1,0 +1,41 @@
+name: Merge upstream
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * *"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  merge-upstream:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout fork
+        uses: actions/checkout@v4
+
+      - name: Install python deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install PyGithub openai
+
+      - name: Run merge upstream script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          TARGET_REPO: Falls-dev/TGMC-SS13
+          TARGET_BRANCH: master
+
+          UPSTREAM_REPO: tgstation/TerraGov-Marine-Corps
+          UPSTREAM_BRANCH: master
+
+          MERGE_BRANCH: merge-upstream
+
+          TRANSLATE_CHANGES: "false"
+          CHANGELOG_AUTHOR: ""
+          LOG_LEVEL: INFO
+        run: |
+          python tools/merge-upstream/merge_upstream.py
