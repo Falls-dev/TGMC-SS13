@@ -15,6 +15,7 @@
 #include "features\last_stand\includes.dm"
 #include "features\auto_upstream\includes.dm"
 #include "features\shoulder\includes.dm"
+#include "features\xeno_respawn_time\includes.dm"
 
 /* -- REVERTS -- */
 #include "reverts\allow_tadpole_construct\includes.dm"
