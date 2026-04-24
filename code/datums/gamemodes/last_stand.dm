@@ -22,11 +22,18 @@
 	)
 	respawn_time = 1 MINUTES
 	whitelist_ground_maps = list(MAP_LAST_STAND)
+
+	///time between waves
 	var/waves_check_interval = 1 MINUTES
+	///waves timer
 	var/last_waves_check
+
+	///the strength of the waves is ultimately multiplied by the number of people
 	var/waves_power = 0.8
 	var/health_factor = 1
+	///time from the beginning of the round when the waves will not spawn
 	var/neutral_time = 5 MINUTES
+	///list of possible wave generators
 	var/list/waves_spawner = list()
 
 /datum/game_mode/last_stand/announce()
@@ -61,8 +68,8 @@
 			continue
 		GLOB.latejoin_gateway -= loc
 
-	for(var/atom/nuke in GLOB.nuke_list)
-		var/turf/turf_targeted = get_turf(nuke)
+	for(var/atom/nuke in GLOB.nuclear_bombs)
+		var/turf_targeted = get_turf(nuke)
 		new /obj/effect/ai_node/goal(turf_targeted, null)
 
 /datum/game_mode/last_stand/post_setup()
@@ -113,13 +120,13 @@
 	var/list/living_player_list = count_humans_and_xenos(count_flags = COUNT_IGNORE_ALIVE_SSD|COUNT_IGNORE_XENO_SPECIAL_AREA)
 	var/num_humans = living_player_list[1]
 
-	if(!length(GLOB.nuke_list))
-		message_admins("Round finished: [MODE_INFESTATION_X_MAJOR]")
+	if(!length(GLOB.nuclear_bombs))
+		message_admins("Round finished: [MODE_INFESTATION_X_MAJOR]") //xenos destroyed the bombs, xeno major victory
 		round_finished = MODE_INFESTATION_X_MAJOR
 		return TRUE
 
 	if(!num_humans)
-		message_admins("Round finished: [MODE_INFESTATION_X_MAJOR]")
+		message_admins("Round finished: [MODE_INFESTATION_X_MAJOR]") //xenos wiped out ALL the marines, xeno major victory
 		round_finished = MODE_INFESTATION_X_MAJOR
 		return TRUE
 
@@ -136,7 +143,7 @@
 /datum/game_mode/last_stand/declare_completion()
 	. = ..()
 	to_chat(world, span_round_header("|[round_finished]|"))
-	var/sound/S = sound(pick('sound/theme/neutral_hopeful1.ogg', 'sound/theme/neutral_hopeful2.ogg'), channel = CHANNEL_CINEMATIC)
+	var/sound/S = sound(pick('sound/theme/neutral_hopeful1.ogg','sound/theme/neutral_hopeful2.ogg'), channel = CHANNEL_CINEMATIC)
 	SEND_SOUND(world, S)
 
 	log_game("[round_finished]\nGame mode: [name]\nRound time: [duration2text()]\nEnd round player population: [length(GLOB.clients)]\nTotal xenos spawned: [GLOB.round_statistics.total_xenos_created]\nTotal humans spawned: [GLOB.round_statistics.total_humans_created]")
