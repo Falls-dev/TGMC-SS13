@@ -914,7 +914,7 @@
 /area/whiskey_outpost)
 "fA" = (
 /obj/structure/window/reinforced,
-/obj/machinery/marine_selector/clothes/robo,
+/obj/machinery/marine_selector/clothes,
 /turf/open/floor/mainship/orange{
 	dir = 4
 	},
@@ -2265,7 +2265,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/marine_selector/gear/robo,
+/obj/machinery/marine_selector/gear,
 /turf/open/floor/mainship/blue{
 	dir = 4
 	},
@@ -2290,7 +2290,7 @@
 /area/whiskey_outpost)
 "nW" = (
 /obj/structure/window/reinforced,
-/obj/machinery/marine_selector/clothes/robo,
+/obj/machinery/marine_selector/clothes,
 /turf/open/floor/mainship/blue{
 	dir = 4
 	},
@@ -5105,7 +5105,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/marine_selector/gear/robo,
+/obj/machinery/marine_selector/gear,
 /turf/open/floor/mainship/orange{
 	dir = 4
 	},
