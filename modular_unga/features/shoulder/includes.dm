@@ -4,4 +4,4 @@
 	name = "Стрельба из плеча"
 	group = "Features"
 	desc = "Можно стрелять из-за плеча союзников."
-	author = "Homoexp13"
+	author = "homexp13"
