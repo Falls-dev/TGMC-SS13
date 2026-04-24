@@ -13,9 +13,8 @@
 ### Other Files:
 
 - `.github/workflows/merge-upstream.yml`
-- `.github/workflows/update_tgs_dmapi.yml`
+- `.github/workflows/merge_conflicts.yml`
 - `tools/merge-upstream/`
-- `modular_unga/tools/`
 
 Что добавляет модуль:
 - workflow для ручного запуска merge/upstream-задач через GitHub Actions
