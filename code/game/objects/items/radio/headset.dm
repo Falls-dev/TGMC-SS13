@@ -201,8 +201,6 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		RegisterSignals(user, list(COMSIG_MOB_REVIVE, COMSIG_MOB_DEATH, COMSIG_HUMAN_SET_UNDEFIBBABLE), PROC_REF(update_minimap_icon))
 	if(camera)
 		camera.c_tag = user.name
-		if(user.job)
-			camera.role_name = user.job.title
 		if(user.assigned_squad)
 			camera.network |= lowertext(user.assigned_squad.name)
 	possibly_deactivate_in_loc()
@@ -220,7 +218,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	if(istype(user) && headset_hud_on)
 		disable_squadhud()
 		squadhud.remove_hud_from(user)
-		user.hud_used.SL_locator.alpha = 0
+		user.hud_used?.SL_locator.alpha = 0
 		wearer = null
 		squadhud = null
 	if(camera)
@@ -312,6 +310,24 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	for(var/datum/action/action AS in wearer.actions)
 		if(istype(action, /datum/action/minimap))
 			action.remove_action(wearer)
+
+/// Re-sync headset UI after client.screen gets rebuilt on login or mob transfer.
+/obj/item/radio/headset/mainship/proc/refresh_wearer_hud(mob/living/carbon/human/user = wearer)
+	if(!istype(user) || user.wear_ear != src)
+		return
+
+	wearer = user
+	squadhud = GLOB.huds[GLOB.faction_to_data_hud[faction]]
+
+	if(!headset_hud_on)
+		enable_squadhud()
+		return
+
+	squadhud?.add_hud_to(wearer)
+	add_minimap()
+	INVOKE_NEXT_TICK(src, PROC_REF(update_minimap_icon))
+	if(sl_direction)
+		INVOKE_NEXT_TICK(src, PROC_REF(enable_sl_direction))
 
 /obj/item/radio/headset/mainship/proc/enable_sl_direction()
 	if(!headset_hud_on)
