@@ -4989,7 +4989,7 @@
 /turf/closed/wall/r_wall,
 /area/whiskey_outpost/outside/east)
 "ND" = (
-/obj/machinery/nuclearbomb,
+/obj/structure/nuclearbomb,
 /turf/open/floor/plating/asteroidfloor,
 /area/whiskey_outpost)
 "NG" = (
