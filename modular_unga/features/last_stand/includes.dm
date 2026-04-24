@@ -1,4 +1,6 @@
 #include "code\wave_spawner.dm"
+#include "code\nukebomb.dm"
+#include "code\turf.dm"
 
 /datum/modpack/last_stand
 	id = "last_stand"

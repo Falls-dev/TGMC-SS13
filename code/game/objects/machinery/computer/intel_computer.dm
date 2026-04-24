@@ -63,7 +63,7 @@
 	update_minimap_icon()
 	SSpoints.supply_points[faction] += supply_reward
 	SSpoints.dropship_points += dropship_reward
-	priority_announce("Получена секретная передача из [get_area(src)]. Бонус доставлен в виде [supply_reward] очков Карго и [dropship_reward] очков шаттла.", title = "Отдел Разведки UPP", sound = 'modular_unga/ru_translate/ru_announce/sound/bonus_climed.ogg')
+	priority_announce("Получена секретная передача из [get_area(src)]. Бонус доставлен в виде [supply_reward] очков Карго и [dropship_reward] очков шаттла.", title = "Отдел Разведки TGMC", sound = 'modular_unga/ru_translate/ru_announce/sound/bonus_climed.ogg')
 	SSminimaps.remove_marker(src)
 
 /obj/machinery/computer/intel_computer/Destroy()

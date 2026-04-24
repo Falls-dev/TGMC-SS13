@@ -13,9 +13,14 @@
 #include "features\xenowall\includes.dm"
 #include "features\distress\includes.dm"
 #include "features\last_stand\includes.dm"
+#include "features\auto_upstream\includes.dm"
+#include "features\shoulder\includes.dm"
+#include "features\unga_guns\includes.dm"
+#include "features\xeno_respawn_time\includes.dm"
 
 /* -- REVERTS -- */
-// #include "reverts\..."
+#include "reverts\allow_tadpole_construct\includes.dm"
+#include "reverts\no_tutorial\includes.dm"
 
 /* --TRANSLATIONS-- */
 #include "ru_translate\ru_announce\includes.dm"

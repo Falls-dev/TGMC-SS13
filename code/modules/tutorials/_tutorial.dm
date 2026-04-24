@@ -210,7 +210,7 @@
 	if (!isnull(grandfather_date) && player_join_date < grandfather_date)
 		return FALSE
 
-	return TRUE
+	return FALSE // RU TGMC EDIT: Disable turorials
 
 /// Marks the tutorial as completed.
 /// Call `/datum/tutorial/proc/complete()` instead.
