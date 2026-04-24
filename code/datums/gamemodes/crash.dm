@@ -49,6 +49,8 @@
 		/datum/xeno_caste/hivelord = 5,
 	)
 
+	xenorespawn_time = 2 MINUTES // RU TGMC EDIT: Время респавна ксеносов - 2 минуты
+
 /datum/game_mode/infestation/crash/pre_setup()
 	. = ..()
 

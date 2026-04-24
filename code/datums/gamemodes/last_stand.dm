@@ -20,7 +20,8 @@
 		/datum/job/terragov/squad/leader = 4,
 		/datum/job/terragov/squad/standard = -1,
 	)
-	respawn_time = 1 MINUTES
+	xenorespawn_time = 1 MINUTES
+
 	whitelist_ground_maps = list(MAP_LAST_STAND)
 
 	///time between waves
