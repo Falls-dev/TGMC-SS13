@@ -76,8 +76,8 @@ SUBSYSTEM_DEF(ticker)
 				window_flash(C)
 			to_chat(world,
 				custom_boxed_message("red_box",
-				"[span_alert("<b><big>Welcome to the pre-game lobby of [CONFIG_GET(string/server_name)]!</big></b>")]<hr>\
-				You can now set up your character and select READY to join roundstart.<br>The game will start in [round(time_left / 10) || CONFIG_GET(number/lobby_countdown)] seconds."\
+				"[span_alert("<b><big>Добро пожаловать на [CONFIG_GET(string/server_name)]!</big></b>")]<hr>\
+				Настройте своего персонажа и нажмите READY чтобы начать игру с начала раунда.<br>Игра начнётся через [round(time_left / 10) || CONFIG_GET(number/lobby_countdown)] секунд."\
 			))
 			current_state = GAME_STATE_PREGAME
 			to_chat(world, SSpersistence.seasons_info_message())
@@ -131,14 +131,14 @@ SUBSYSTEM_DEF(ticker)
 
 
 /datum/controller/subsystem/ticker/proc/setup()
-	to_chat(world, span_boldnotice("<b>Enjoy the game!</b>"))
+	to_chat(world, span_boldnotice("<b>Наслаждайтесь игрой!</b>"))
 	var/init_start = world.timeofday
 	//Create and announce mode
 	mode = config.pick_mode(GLOB.master_mode)
 
 	CHECK_TICK
 	if(!mode.can_start(bypass_checks))
-		to_chat(world, "Reverting to pre-game lobby.")
+		to_chat(world, "Возврат в лобби.")
 		QDEL_NULL(mode)
 		SSjob.ResetOccupations()
 		return FALSE
@@ -146,14 +146,14 @@ SUBSYSTEM_DEF(ticker)
 	CHECK_TICK
 	if(!mode.pre_setup() && !bypass_checks)
 		QDEL_NULL(mode)
-		to_chat(world, "<b>Error in pre-setup for [GLOB.master_mode].</b> Reverting to pre-game lobby.")
+		to_chat(world, "<b>Ошибка в предварительной настройке для [GLOB.master_mode].</b> Возврат в лобби.")
 		SSjob.ResetOccupations()
 		return FALSE
 
 	CHECK_TICK
 	if(!mode.setup() && !bypass_checks)
 		QDEL_NULL(mode)
-		to_chat(world, "<b>Error in setup for [GLOB.master_mode].</b> Reverting to pre-game lobby.")
+		to_chat(world, "<b>Ошибка в настройке для [GLOB.master_mode].</b> Возврат в лобби.")
 		SSjob.ResetOccupations()
 		return FALSE
 
@@ -309,7 +309,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/skip_delay = check_rights()
 	if(delay_end && !skip_delay)
-		to_chat(world, span_boldnotice("An admin has delayed the round end."))
+		to_chat(world, span_boldnotice("Администрация заморозила завершение раунда."))
 		return
 
 	to_chat(world, span_boldnotice("Rebooting World in [DisplayTimeText(delay)]. [reason]"))
@@ -319,11 +319,11 @@ SUBSYSTEM_DEF(ticker)
 	sleep(delay - (world.time - start_wait))
 
 	if(delay_end && !skip_delay)
-		to_chat(world, span_boldnotice("Reboot was cancelled by an admin."))
+		to_chat(world, span_boldnotice("Рестарт отменён по прихоти администратора."))
 		return
 
 	log_game("Rebooting World. [reason]")
-	to_chat_immediate(world, "<h3>[span_boldnotice("Rebooting...")]</h3>")
+	to_chat_immediate(world, "<h3>[span_boldnotice("Рестарт...")]</h3>")
 
 	world.Reboot(TRUE)
 
@@ -339,7 +339,7 @@ SUBSYSTEM_DEF(ticker)
 		tip = pick(SSstrings.get_list_from_file("tips/meme"))
 
 	if(tip)
-		to_chat(world, fieldset_block("[span_tip("Tip of the round")]", html_encode(tip), "boxed_message purple_box"))
+		to_chat(world, fieldset_block("[span_tip("Совет дня")]", html_encode(tip), "boxed_message purple_box"))
 
 
 /datum/controller/subsystem/ticker/proc/check_queue()
@@ -349,7 +349,7 @@ SUBSYSTEM_DEF(ticker)
 	if(!hpc)
 		listclearnulls(queued_players)
 		for(var/mob/new_player/NP in queued_players)
-			to_chat(NP, span_userdanger("The alive players limit has been released!<br><a href='byond://?src=[REF(NP)];lobby_choice=late_join;override=1'>[html_encode(">>Join Game<<")]</a>"))
+			to_chat(NP, span_userdanger("Лимит на количество новых игроков снят!<br><a href='byond://?src=[REF(NP)];lobby_choice=late_join;override=1'>[html_encode(">>Жми сюда чтобы играть<<")]</a>"))
 			SEND_SOUND(NP, sound('sound/misc/notice1.ogg', channel = CHANNEL_NOTIFY))
 			NP.late_choices()
 		queued_players.Cut()
@@ -364,14 +364,14 @@ SUBSYSTEM_DEF(ticker)
 			listclearnulls(queued_players)
 			if(living_player_count() < hpc)
 				if(next_in_line?.client)
-					to_chat(next_in_line, span_userdanger("A slot has opened! You have approximately 20 seconds to join. <a href='byond://?src=[REF(next_in_line)];lobby_choice=latejoin;override=1'>\>\>Join Game\<\<</a>"))
+					to_chat(next_in_line, span_userdanger("Свободное место! У тебя есть примерно 20 секунд, чтобы присоединиться. <a href='byond://?src=[REF(next_in_line)];lobby_choice=latejoin;override=1'>\>\>Жми сюда\<\<</a>"))
 					SEND_SOUND(next_in_line, sound('sound/misc/notice1.ogg', channel = CHANNEL_NOTIFY))
 					next_in_line.late_choices()
 					return
 				queued_players -= next_in_line //Client disconnected, remove he
 			queue_delay = 0 //No vacancy: restart timer
 		if(25 to INFINITY)  //No response from the next in line when a vacancy exists, remove he
-			to_chat(next_in_line, span_danger("No response received. You have been removed from the line."))
+			to_chat(next_in_line, span_danger("Ответ не получен. Ты был удалён из очереди."))
 			queued_players -= next_in_line
 			queue_delay = 0
 

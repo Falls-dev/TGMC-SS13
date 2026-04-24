@@ -130,23 +130,23 @@
 		message = ";" //radio message
 	switch(order_action)
 		if(ORDER_DESIGNATION_TYPE_MOVE)
-			message += "[ordered ? "[selected_mob], " : "everyone, "]move [dir2text(angle2dir(Get_Angle(get_turf(owner), get_turf(target))))]!"
+			message += "[ordered ? "[selected_mob], двигайся на" : "Товарищи, двигайтесь на"] [dir2rutext(angle2dir(Get_Angle(get_turf(owner), get_turf(target))))]!"
 		if(ORDER_DESIGNATION_TYPE_ATTACK)
-			message += "[ordered ? "[selected_mob], " : "everyone, "][pick("attack", "destroy", "target")] [target]!"
+			message += "[ordered ? "[selected_mob], [pick("атакуй", "уничтожь")]" : "Товарищи, [pick("атакуйте", "уничтожьте")]"] [target]!"
 		if(ORDER_DESIGNATION_TYPE_REPAIR)
-			message += "[ordered ? "[selected_mob], " : null]repair [target]."
+			message += "[ordered ? "[selected_mob], " : null][pick("почини", "восстанови", "отремонтируй")] [target]."
 		if(ORDER_DESIGNATION_TYPE_HEAL)
-			message += "[ordered ? "[selected_mob], " : "someone, "][pick("heal", "triage", "help")] [target]!"
+			message += "[ordered ? "[selected_mob], [pick("помоги", "подлечи", "окажи поддержку")]" : "Товарищи, [pick("помогите", "подлечите", "окажите поддержку")]"] [target]!"
 		if(ORDER_DESIGNATION_TYPE_FOLLOW)
-			message += "[ordered ? "[selected_mob], " : "everyone, "]follow [target == owner ? "me" : target]!"
+			message += "[ordered ? "[selected_mob], [pick("следуй", "иди")]" : "Товарищи, [pick("следуйте", "идите")]"] за [target]!"
 		if(ORDER_DESIGNATION_TYPE_INTERACT)
-			message += "[ordered ? "[selected_mob], " : "someone, "]use [target]."
+			message += "[ordered ? "[selected_mob], используй" : "Товарищи, используйте"] [target]."
 		if(ORDER_DESIGNATION_TYPE_OPEN)
-			message += "[ordered ? "[selected_mob], " : "someone "]open [target]."
+			message += "[ordered ? "[selected_mob], открой" : "Товарищи, откройте"] [target]."
 		if(ORDER_DESIGNATION_TYPE_CLOSE)
-			message += "[ordered ? "[selected_mob], " : "someone "]close [target]."
+			message += "[ordered ? "[selected_mob], закрой" : "Товарищи, закройте"] [target]."
 		if(ORDER_DESIGNATION_TYPE_PICKUP)
-			message += "[ordered ? "[selected_mob], " : "someone "][pick("pickup", "grab")] [target]."
+			message += "[ordered ? "[selected_mob], [pick("подбери", "возьми")]" : "Товарищи, [pick("подберите", "возьмите")]"] [target]."
 
 	owner.say(message)
 

@@ -254,44 +254,48 @@
 
 /mob/new_player/proc/view_lore()
 	var/output = "<div align='center'>"
-	output += "<a href='byond://?src=[REF(src)];lobby_choice=marines'>TerraGov Marine Corps</A><br><br><a href='byond://?src=[REF(src)];lobby_choice=aliens'>Xenomorph Hive</A><br><br><a href='byond://?src=[REF(src)];lobby_choice=som'>Sons of Mars</A>"
+	output += "<meta charset='UTF-8'>"
+	output += "<a href='byond://?src=[REF(src)];lobby_choice=marines'>Корпус морской пехоты TerraGov</A><br><br><a href='byond://?src=[REF(src)];lobby_choice=aliens'>Улей ксеноморфов</A><br><br><a href='byond://?src=[REF(src)];lobby_choice=som'>Сыны Марса</A>"
 	output += "</div>"
 
-	var/datum/browser/popup = new(src, "lore", "<div align='center'>Current Year: [GAME_YEAR]</div>", 240, 300)
+	var/datum/browser/popup = new(src, "lore", "<div align='center'>Текущий год: [GAME_YEAR]</div>", 240, 300)
 	popup.set_content(output)
 	popup.open(FALSE)
 
 /mob/new_player/proc/view_marines()
 	var/output = "<div align='center'>"
-	output += "<p><i>The <b>TerraGov Marine Corps'</b> mission is to enforce space law for the purpose of defending Terra's orbit as well as other solar colonies around the galaxy under the conflict of the Independent Colonial Confederation and the intelligent xenomorph threat. \nThe TGMC is composed by willing men and women from all kinds of social strata, hailing from all across the TerraGov systems. \nAs the vessel approaches to the ordered location on space, the cryostasis pods deactivate and awake you from your long-term stasis. Knowing that it's one of those days again, you hope that you'll make this out alive...</i></p>"
+	output += "<meta charset='UTF-8'>"
+	output += "<p><i>Миссия <b>Корпуса морской пехоты TerraGov</b> заключается в обеспечении соблюдения космического закона ради защиты орбиты Терры, а также других солнечных колоний по всей галактике в условиях конфликта с Независимой Колониальной Конфедерацией (ICC) и угрозой разумных ксеноморфов. \nTGMC состоит из добровольцев, мужчин и женщин из самых разных социальных слоёв, прибывших со всех систем TerraGov. \nКогда корабль приближается к назначенной точке в космосе, криокапсулы пробуждают морпехов от долгосрочного стазиса. Понимая, что снова настал один из тех дней, вы надеетесь выжить...</i></p>"
 	output += "</div>"
 
-	var/datum/browser/popup = new(src, "marines", "<div align='center'>TerraGov Marine Corps</div>", 480, 280)
+	var/datum/browser/popup = new(src, "marines", "<div align='center'>Корпус морской пехоты TerraGov</div>", 480, 280)
 	popup.set_content(output)
 	popup.open(FALSE)
 
 /mob/new_player/proc/view_aliens()
 	var/output = "<div align='center'>"
-	output += "<p><i>Hailing from one of many unknown planets and other unlisted habitats, the <b>xenomorph threat</b> remains at large and still unclear. Extremely dangerous extraterrestrial lifeforms, part of the hive under the Queen Mother, had caught the TGMC and NT colonies off-guard during their discovery in 2414. \nThey are divided into castes, each with their specialized roles equivalent to a traditional squad member in a human force, thanks to the xenomorph's lifecycle. \nAfter days of ravaging the current area, a metal hive was sighted by the Queen Mother and transported you on the ground. With your intent to spread the hive is in motion, you and your fellow sisters get to work...</i></p>"
+	output += "<meta charset='UTF-8'>"
+	output += "<p><i>Происходящая с одной из множества неизвестных планет и других незарегистрированных мест обитания, <b>угроза ксеноморфов</b> остаётся масштабной и до конца не изученной. Эти крайне опасные внеземные формы жизни, являющиеся частью улья под властью Королевы-Матери, застали колонии TGMC и NT врасплох во время их обнаружения в 2414 году. \nОни делятся на касты, каждая из которых выполняет специализированную роль, сопоставимую с ролью военных в традиционном человеческом понимании, благодаря жизненному циклу ксеноморфов. \nПосле нескольких дней опустошения текущего района Королева-Мать заметила металлический улей и перенесла вас на поверхность. С намерением распространить улей вы и ваши сёстры приступаете к делу...</i></p>"
 	output += "</div>"
 
-	var/datum/browser/popup = new(src, "aliens", "<div align='center'>Xenomorph Hive</div>", 480, 280)
+	var/datum/browser/popup = new(src, "aliens", "<div align='center'>Улей ксеноморфов</div>", 480, 280)
 	popup.set_content(output)
 	popup.open(FALSE)
 
 /mob/new_player/proc/view_som()
 	var/output = "<div align='left'>"
-	output += "<p><i>The <b>Sons of Mars</b> are a fanatical group that trace their lineage back to the great Martian uprising. \
-	After TerraGov brutally crushed the rebellion, many Martians fled into deep space and most Terrans thought they would die in the great void. \
-	However, more than a century later their descendants emerged as the Sons of Mars, who are determined to reclaim their lost home and crush their hated enemy TerraGov.\
+	output += "<meta charset='UTF-8'>"
+	output += "<p><i><b>Сыны Марса</b> - фанатики, ведущие своё происхождение от великого восстания на Марсе. \
+	После того как TerraGov жестоко подавила мятеж, многие жители Марса бежали в отдалённые части космоса, кроме тех кто решил что их ждёт неминуемая гибель в далёкой пустоте. \
+	Однако более века спустя их потомки вернулись как Сыны Марса, решившие вернуть утраченный дом и сокрушить своего ненавистного врага - TerraGov.\
 	</i></p>"
 	output += "</div>"
-	output += "<p><i>The men and women that form the SOM are taught from birth of their dream of Mars, and hatred of TerraGov, and are fiercely proud of their history. \
-	As a society they have a single mindeded dedication towards reclaiming a home almost none of them have ever seen. What they lack in sheer manpower or resources compared to TerraGov, they make up for with advanced technology and bloody minded focus. \
-	Across the outer rim of colonised space, the SOM have worked to spread discontent and rebellion across TerraGov's many colonies, many of whom are receptive to the SOM's promises of freedom from TerraGov tyranny. \
-	Now the SOM feel their long promised revenge is almost at hand, and the threat of all out war looms over all human occupied space...</i></p>"
+	output += "<p><i>Мужчин и женщин с рождения учат мечте о Марсе и ненависти к TerraGov; они яростно гордятся своей историей. \
+	Как общество, они одержимы единой целью - вернуть дом, который почти никто из них никогда не видел. То, чего им не хватает в численности и ресурсах по сравнению с TerraGov, они компенсируют передовыми технологиями и кровавой решимостью. \
+	На внешнем рубеже колонизированного пространства Сыновья Марса разжигают восстания во множестве колоний TerraGov, многие из которых готовы предать TerraGov ради свободы от тирании. \
+	Теперь же Сыновья Марса считают, что их давно обещанная месть почти близка, а угроза полномасштабной войны нависла над всем колонизированным космосом...</i></p>"
 
-	var/datum/browser/popup = new(src, "som", "<div align='center'>Sons of Mars</div>", 480, 430)
+	var/datum/browser/popup = new(src, "som", "<div align='center'>Сыны Марса</div>", 480, 430)
 	popup.set_content(output)
 	popup.open(FALSE)
 
