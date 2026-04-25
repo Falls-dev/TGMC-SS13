@@ -154,3 +154,7 @@
   - rscadd: HMG-08 ammo from Zombie Crash vendor is now the normal variant (500 bullets).
   ivanmixo:
   - bugfix: Removing job positions now bottoms out at 0
+2026-04-25:
+  Runian:
+  - bugfix: Abduct's self-knockdown is no longer reclusive and thus does not self-knockdown
+      for a absurd amount of time.

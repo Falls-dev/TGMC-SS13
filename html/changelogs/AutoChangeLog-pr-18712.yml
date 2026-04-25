@@ -1,4 +1,0 @@
-author: "Runian"
-delete-after: True
-changes:
-  - bugfix: "Abduct's self-knockdown is no longer reclusive and thus does not self-knockdown for a absurd amount of time."
