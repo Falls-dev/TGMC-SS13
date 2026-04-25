@@ -3,31 +3,40 @@
 mode Crash
 	requiredplayers 2
 	squadmaxnumber 1
-	maximumplayers 40
+	maximumplayers 9
 	deploytimelock 45
 endmode
 
 mode Nuclear War
-	requiredplayers 2
+	requiredplayers 15
 endmode
 
 mode Sovl War
-	requiredplayers 2
+	requiredplayers 10
 endmode
 
 mode Extended
 	requiredplayers 0
-	votable 0
+	maximumplayers 2
 endmode
 
 mode Combat Patrol
-	requiredplayers 2
+	requiredplayers 20
 endmode
 
 mode Sensor Capture
-	requiredplayers 2
+	requiredplayers 20
 endmode
 
 mode Campaign
-	requiredplayers 2
+	requiredplayers 15
+endmode
+
+# RU TGMC EDIT
+mode Distress Signal
+	requiredplayers 10
+endmode
+
+mode Last Stand
+	requiredplayers 1
 endmode

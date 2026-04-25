@@ -14,11 +14,11 @@ GLOBAL_VAR_INIT(custom_info, "")
 GLOBAL_VAR_INIT(motd, "")
 
 ///Regex for detecting non-ASCII symbols
-GLOBAL_VAR_INIT(non_ascii_regex, regex(@"[^\x00-\x7F]"))
+GLOBAL_VAR_INIT(non_ascii_regex, regex(@"[^\x00-\x7F\u0401\u0451]"))
 GLOBAL_PROTECT(non_ascii_regex)
 
 ///Returns true if this contains text that is not ASCII
-#define NON_ASCII_CHECK(text) (findtext(text, GLOB.non_ascii_regex))
+#define NON_ASCII_CHECK(text) (findtext(convert_ru_string_to_en_string(text), GLOB.non_ascii_regex))
 
 GLOBAL_LIST_EMPTY(custom_loadouts)
 

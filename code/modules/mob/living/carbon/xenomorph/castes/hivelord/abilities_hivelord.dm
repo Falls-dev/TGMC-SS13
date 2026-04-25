@@ -64,9 +64,16 @@
 	ability_cost = 25
 	buildable_structures = list(
 		/turf/closed/wall/resin/regenerating/thick,
+		/turf/closed/wall/resin/regenerating/special/bulletproof,
+		/turf/closed/wall/resin/regenerating/special/fireproof,
+		/turf/closed/wall/resin/regenerating/special/hardy,
 		/obj/alien/resin/sticky,
 		/obj/structure/mineral_door/resin/thick,
+		/obj/structure/bed/nest,
 	)
+
+/datum/action/ability/activable/xeno/secrete_resin/hivelord/get_resin_images()
+	return GLOB.advanced_resin_images_list
 
 // ***************************************
 // *********** Resin walker

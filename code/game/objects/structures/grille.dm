@@ -140,7 +140,7 @@
 //MARINE SHIP GRILLE
 
 /obj/structure/grille/smoothing
-	icon = 'icons/obj/smooth_objects/grille.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/grille.dmi'
 	icon_state = "grille-0"
 	base_icon_state = "grille"
 	smoothing_flags = SMOOTH_BITMASK

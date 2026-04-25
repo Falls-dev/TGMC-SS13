@@ -54,7 +54,7 @@
 	status_display_icon = "default"
 	fire_alarm_light_color = LIGHT_COLOR_EMISSIVE_GREEN
 	number_level = SEC_LEVEL_GREEN
-	lowering_sound = 'sound/AI/code_green.ogg'
+	lowering_sound = 'modular_unga/ru_translate/ru_announce/sound/code_green.ogg'
 
 /**
  * BLUE
@@ -69,8 +69,8 @@
 	status_display_icon = "default"
 	fire_alarm_light_color = LIGHT_COLOR_BLUE
 	number_level = SEC_LEVEL_BLUE
-	lowering_sound = 'sound/AI/code_blue_lowered.ogg'
-	elevating_sound = 'sound/AI/code_blue_elevated.ogg'
+	lowering_sound = 'modular_unga/ru_translate/ru_announce/sound/code_blue_lowered.ogg'
+	elevating_sound = 'modular_unga/ru_translate/ru_announce/sound/code_blue_elevated.ogg'
 
 /**
  * RED
@@ -86,8 +86,8 @@
 	fire_alarm_light_color = LIGHT_COLOR_EMISSIVE_RED
 	number_level = SEC_LEVEL_RED
 	sec_level_flags = (SEC_LEVEL_FLAG_CAN_SWITCH_WITH_AUTH|SEC_LEVEL_FLAG_RED_LIGHTS)
-	lowering_sound = 'sound/AI/code_red_lowered.ogg'
-	elevating_sound = 'sound/AI/code_red_elevated.ogg'
+	lowering_sound = 'modular_unga/ru_translate/ru_announce/sound/code_red_lowered.ogg'
+	elevating_sound = 'modular_unga/ru_translate/ru_announce/sound/code_red_elevated.ogg'
 
 /**
  * DELTA

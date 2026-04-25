@@ -1,7 +1,7 @@
 /obj/structure/window_frame
 	name = "window frame"
 	desc = "A big hole in the wall that used to sport a large window. Can be vaulted through"
-	icon = 'icons/obj/smooth_objects/regular_window_frame.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/regular_window_frame.dmi'
 	icon_state = "white_window_frame-0"
 	base_icon_state = "white_window_frame"
 	interaction_flags = INTERACT_CHECK_INCAPACITATED
@@ -106,33 +106,33 @@
 	return TRUE
 
 /obj/structure/window_frame/mainship
-	icon = 'icons/obj/smooth_objects/ship_window_frame.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/ship_window_frame.dmi'
 	icon_state = "ship_window_frame-0"
 	basestate = "ship_window_frame"
 	base_icon_state = "ship_window_frame"
 
 /obj/structure/window_frame/mainship/white
-	icon = 'icons/obj/smooth_objects/white_window_frame.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/white_window_frame.dmi'
 	icon_state = "white_window_frame-0"
 	basestate = "white_window_frame"
 	base_icon_state = "white_window_frame"
 	window_type = /obj/structure/window/framed/mainship/white
 
 /obj/structure/window_frame/mainship/gray
-	icon = 'icons/obj/smooth_objects/gray_window_frame.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/gray_window_frame.dmi'
 	icon_state = "gray_window_frame-0"
 	basestate = "gray_window_frame"
 	base_icon_state = "gray_window_frame"
 	window_type = /obj/structure/window/framed/mainship/gray
 
 /obj/structure/window_frame/colony
-	icon = 'icons/obj/smooth_objects/col_window_frame.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/col_window_frame.dmi'
 	icon_state = "col_window_frame-0"
 	base_icon_state = "col_window_frame"
 	basestate = "col_window_frame"
 
 /obj/structure/window_frame/colony/reinforced
-	icon = 'icons/obj/smooth_objects/col_rwindow_frame.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/col_rwindow_frame.dmi'
 	icon_state = "col_rwindow_frame-0"
 	basestate = "col_rwindow_frame"
 	base_icon_state = "col_rwindow_frame"
@@ -150,25 +150,25 @@
 	max_integrity = 300
 
 /obj/structure/window_frame/chigusa
-	icon = 'icons/obj/smooth_objects/chigusa_window_frame.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/chigusa_window_frame.dmi'
 	icon_state = "chigusa_window_frame-0"
 	basestate = "chigusa_window_frame"
 	base_icon_state = "chigusa_window_frame"
 
 /obj/structure/window_frame/kutjevo
-	icon = 'icons/obj/smooth_objects/kutjevo_window_frame.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/kutjevo_window_frame.dmi'
 	icon_state = "col_window_frame-0"
 	base_icon_state = "col_window_frame"
 	basestate = "col_window_frame"
 
 /obj/structure/window_frame/wood
-	icon = 'icons/obj/smooth_objects/wood_window_frame.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/wood_window_frame.dmi'
 	icon_state = "wood_window_frame-0"
 	basestate = "wood_window_frame"
 	base_icon_state = "wood_window_frame"
 
 /obj/structure/window_frame/prison
-	icon = 'icons/obj/smooth_objects/prison_rwindow_frame.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/prison_rwindow_frame.dmi'
 	icon_state = "col_rwindow_frame-0"
 	basestate = "col_rwindow_frame"
 	base_icon_state = "col_rwindow_frame"
@@ -189,7 +189,7 @@
 	)
 
 /obj/structure/window_frame/kutjevo
-	icon = 'icons/obj/smooth_objects/kutjevo_window_frame.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/obj/smooth_objects/kutjevo_window_frame.dmi'
 	icon_state = "col_window_frame-0"
 	base_icon_state = "col_window_frame"
 	basestate = "col_window_frame"

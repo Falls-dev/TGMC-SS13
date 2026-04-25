@@ -120,7 +120,7 @@
 
 /obj/effect/landmark/valhalla_weed_node
 	name = "valhalla xeno weed node spawn landmark"
-	icon = 'icons/Xeno/weeds.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/Xeno/Effects.dmi'
 	icon_state = "weednode0"
 
 /obj/effect/landmark/valhalla_weed_node/Initialize(mapload)
@@ -131,7 +131,7 @@
 
 /obj/effect/landmark/weed_node
 	name = "xeno weed node spawn landmark"
-	icon = 'icons/Xeno/weeds.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/Xeno/Effects.dmi'
 	icon_state = "weednode0"
 
 /obj/effect/landmark/weed_node/Initialize(mapload)
@@ -141,7 +141,7 @@
 
 /obj/effect/landmark/xeno_resin_door
 	name = "xeno resin door spawn landmark"
-	icon = 'icons/Xeno/Effects.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/Xeno/Effects.dmi'
 	icon_state = "resin"
 
 /obj/effect/landmark/xeno_resin_door/Initialize(mapload)
@@ -151,7 +151,7 @@
 
 /obj/effect/landmark/xeno_resin_wall
 	name = "xeno resin wall spawn landmark"
-	icon = 'icons/Xeno/structures.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/Xeno/Effects.dmi'
 	icon_state = "resin0"
 
 /obj/effect/landmark/xeno_resin_wall/Initialize(mapload)
@@ -514,6 +514,14 @@
 /obj/effect/landmark/eord_roomba/Destroy()
 	GLOB.eord_roomba_spawns -= src
 	return ..()
+
+/obj/effect/landmark/last_stand_waves
+	name = "last stand waves location"
+
+/obj/effect/landmark/last_stand_waves/Initialize(mapload)
+	. = ..()
+	GLOB.waves_spawner_locs += loc
+	return INITIALIZE_HINT_QDEL
 
 /// Marks the bottom left of the testing zone.
 /// In landmarks.dm and not unit_test.dm so it is always active in the mapping tools.

@@ -2,7 +2,7 @@
 /obj/structure/xeno/spawner
 	name = "spawner"
 	desc = "A slimy, oozy resin bed filled with foul-looking egg-like ...things."
-	icon = 'icons/Xeno/3x3building.dmi'
+	icon = 'modular_unga/features/wall_and_floor/icons/Xeno/3x3building.dmi'
 	icon_state = "spawner"
 	bound_width = 96
 	bound_height = 96

@@ -20,7 +20,7 @@
 		/datum/job/terragov/squad/engineer = 5,
 		/datum/job/xenomorph = CRASH_LARVA_POINTS_NEEDED,
 	)
-	respawn_time = 15 MINUTES
+	respawn_time = 10 MINUTES // RU TGMC EDIT: Понижаем время респавна с 15 до 10 минут
 	blacklist_ground_maps = list(MAP_BIG_RED, MAP_DELTA_STATION, MAP_LV_624, MAP_WHISKEY_OUTPOST, MAP_OSCAR_OUTPOST, MAP_FORT_PHOBOS, MAP_CHIGUSA, MAP_LAVA_OUTPOST, MAP_CORSAT, MAP_KUTJEVO_REFINERY, MAP_BLUESUMMERS, MAP_PRISON_STATION)
 	tier_three_penalty = 1
 	tier_three_inclusion = TRUE
@@ -48,6 +48,8 @@
 		/datum/xeno_caste/queen = 10,
 		/datum/xeno_caste/hivelord = 5,
 	)
+
+	xenorespawn_time = 2 MINUTES // RU TGMC EDIT: Время респавна ксеносов - 2 минуты
 
 /datum/game_mode/infestation/crash/pre_setup()
 	. = ..()
@@ -127,12 +129,12 @@
 /datum/game_mode/infestation/crash/announce()
 	to_chat(world, span_round_header("The current map is - [SSmapping.configs[GROUND_MAP].map_name]!"))
 	priority_announce(
-		message = "Scheduled for landing in T-10 Minutes. Prepare for landing. Known hostiles near LZ. Detonation Protocol Active, planet disposable. Marines disposable.",
-		title = "Good morning, marines.",
+		message = "Высадка запланирована через 10 минут. Приготовьтесь к посадке. Предварительное сканирование показывает наличие агрессивных форм биологической жизни. Ваша следующая миссия - заполучить коды доступа и активировать ядерную боеголовку.",
+		title = "Доброе утро, товарищи!",
 		type = ANNOUNCEMENT_PRIORITY,
+		sound = 'modular_unga/ru_translate/ru_announce/sound/crash_start.ogg',
 		color_override = "red"
 	)
-	playsound(shuttle, 'sound/machines/warning-buzzer.ogg', 75, 0, 30)
 
 
 /datum/game_mode/infestation/crash/process()
