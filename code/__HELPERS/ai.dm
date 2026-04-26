@@ -173,6 +173,22 @@
 				continue
 			nearest_target = nearby_unmanned
 			shorter_distance = get_dist(source, nearby_unmanned)
+//////////////////////////////////////////////////////////
+////////////////////RU TGMC EDIT START////////////////////
+//////////////////////////////////////////////////////////
+	if(target_flags & TARGET_NUKE) //for last stand
+		for(var/atom/nearby_nuke AS in GLOB.nuclear_bombs)
+			if(source.z != nearby_nuke.z)
+				continue
+			if(get_dist(source, nearby_nuke) >= shorter_distance)
+				continue
+			if(need_los && !line_of_sight(source, nearby_nuke))
+				continue
+			nearest_target = nearby_nuke
+			shorter_distance = get_dist(source, nearby_nuke)
+//////////////////////////////////////////////////////////
+/////////////////////RU TGMC EDIT END/////////////////////
+//////////////////////////////////////////////////////////
 	if(target_flags & TARGET_FRIENDLY_XENO)
 		if(!nearby_xeno_list)
 			nearby_xeno_list = cheap_get_xenos_near(source, shorter_distance - 1)

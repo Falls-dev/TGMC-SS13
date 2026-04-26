@@ -23,8 +23,7 @@
 - добавлен gamemode `/datum/game_mode/last_stand`
 - добавлен `wave_spawner` для волн ксеноморфов
 - добавлен landmark `last_stand_waves` для точек спавна волн
-- режим использует обычные `/obj/machinery/nuclearbomb` через `GLOB.nuke_list`
-- режим подключён в сборку через `tgmc.dme`
+- режим использует обычные `/obj/structure/nuclearbomb` через `GLOB.nuke_list`
 
 ### Map Files:
 

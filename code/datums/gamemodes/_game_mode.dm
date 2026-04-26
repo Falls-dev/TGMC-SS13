@@ -27,7 +27,9 @@ GLOBAL_VAR(common_report) //Contains common part of roundend report
 
 	var/deploy_time_lock = 15 MINUTES
 	///The respawn time for marines
-	var/respawn_time = 30 MINUTES
+	var/respawn_time = 15 MINUTES // RU TGMC EDIT: Понижаем респавн с 30 до 15 минут
+	//The respawn time for Xenomorphs
+	var/xenorespawn_time = 3 MINUTES // RU TGMC EDIT: Добавляем таймер на респавн ксеносов
 	///How many points do you need to win in a point gamemode
 	var/win_points_needed = 0
 	///The points per faction, assoc list
@@ -1078,6 +1080,15 @@ GLOBAL_LIST_INIT(bioscan_locations, list(
 	var/stored_larva = xeno_job.total_positions - xeno_job.current_positions
 	if(stored_larva)
 		items += "Burrowed larva: [stored_larva]"
+
+/// Displays your xeno respawn timer, if applicable
+/datum/game_mode/proc/handle_xeno_respawn_timer(datum/dcs, mob/source, list/items)
+	if(GLOB.respawn_allowed)
+		var/status_value = ((GLOB.key_to_time_of_role_death[source.key] ? GLOB.key_to_time_of_role_death[source.key] : -INFINITY) + SSticker.mode?.xenorespawn_time - world.time) * 0.1
+		if(status_value <= 0)
+			items += "Xeno respawn timer: READY"
+		else
+			items += "Xeno respawn timer: [(status_value / 60) % 60]:[add_leading(num2text(status_value % 60), 2, "0")]"
 
 ///Returns a list of verbs to give ghosts in this gamemode
 /datum/game_mode/proc/ghost_verbs(mob/dead/observer/observer)
