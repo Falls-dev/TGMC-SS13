@@ -7,4 +7,4 @@
 	name = "скины на негров"
 	group = "Features"
 	desc = "порт скинов с унг https://github.com/UngaCo/UngaMarines-13/commit/100af2db0b5a12dbba733e4cc51e00047af4e732"
-	author = "Helg2"
+	author = "Helg2 (первоисточник), ivan132011 (порт)"
