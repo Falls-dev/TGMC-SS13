@@ -122,3 +122,9 @@ endmap
 map bluemoon
 	maxplayers 40
 endmap
+
+# RU TGMC EDIT
+
+map last_stand
+	disabled
+endmap

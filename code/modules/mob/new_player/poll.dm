@@ -3,7 +3,7 @@
  *
  */
 /mob/new_player/proc/handle_playeR_POLLSing()
-	var/list/output = list("<div align='center'><B>Player polls</B><hr><table>")
+	var/list/output = list("<meta charset='UTF-8'><div align='center'><B>Player polls</B><hr><table>")
 	var/rs = REF(src)
 	for(var/p in GLOB.polls)
 		var/datum/poll_question/poll = p

@@ -6,4 +6,4 @@
 	name = "Респрайт стен и полов"
 	group = "Features"
 	desc = "Портирование красивых стенок и полов с инициатусов."
-	author = "homoexp13"
+	author = "homexp13"

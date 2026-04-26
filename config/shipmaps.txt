@@ -38,3 +38,6 @@ endmap
 map multiz_debug
 endmap
 
+# RU TGMC EDIT
+#map talos # REMOVED IN GAME. REASON: OLD SHIT.
+#endmap

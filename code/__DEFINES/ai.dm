@@ -51,6 +51,7 @@
 #define TARGET_FRIENDLY_MOB (1<<6)
 ///Tanks and mechs
 #define TARGET_VEHICLE (1<<7)
+#define TARGET_NUKE (1<<8)
 #define TARGET_HOSTILE (ALL &~ (TARGET_FRIENDLY_XENO|TARGET_FRIENDLY_MOB))
 
 #define MAX_NODE_RANGE 15

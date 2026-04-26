@@ -22,7 +22,6 @@ GLOBAL_LIST_EMPTY(id_card_list)
 GLOBAL_LIST_EMPTY(disposal_list)
 GLOBAL_LIST_EMPTY(ladder_list)
 GLOBAL_LIST_EMPTY(patrol_point_list)
-GLOBAL_LIST_EMPTY(waves_spawner_locs)
 GLOBAL_LIST_EMPTY(brig_closets)
 GLOBAL_LIST_EMPTY(supply_pad_list)
 GLOBAL_LIST_EMPTY(supply_beacon)
@@ -172,3 +171,13 @@ GLOBAL_LIST_INIT(do_not_preserve_empty, typecacheof(list(
 	/obj/item/storage/backpack/marine/corpsman/satchel,
 	/obj/item/storage/backpack/marine/satchel/tech,
 	/obj/item/storage/backpack/marine/standard), only_root_path = TRUE))
+
+//////////////////////////////////////////////////////////
+////////////////////RU TGMC EDIT START////////////////////
+//////////////////////////////////////////////////////////
+GLOBAL_LIST_EMPTY(waves_spawner_locs)
+
+GLOBAL_LIST_EMPTY(nuclear_bombs)
+//////////////////////////////////////////////////////////
+/////////////////////RU TGMC EDIT END/////////////////////
+//////////////////////////////////////////////////////////
