@@ -1,4 +1,4 @@
-//ORIGINAL FILE: code/modules/projectiles/ammunition/energy/energy.dm
+//ORIGINAL FILE: code/modules/projectiles/magazines/energy.dm
 
 /obj/item/cell/lasgun/plasma
 	rechargable = FALSE
