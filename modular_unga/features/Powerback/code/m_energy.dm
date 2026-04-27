@@ -41,7 +41,7 @@
 /obj/item/cell/lasgun/volkite/powerpack/marine_back
 	name = "\improper TE powerback"
 	desc = "A heavy reinforced backpack with an array of ultradensity energy cells. Click drag cells to the powerpack to recharge."
-	icon = 'modular_unga/features/Powerback/icons/powerpack.dmi'
+	icon = 'modular_unga/features/powerback/icons/powerpack.dmi'
 	icon_state = "pp_100"
 	maxcharge = 2400
 	base_icon_state = "pp"
