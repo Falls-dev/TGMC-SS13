@@ -1,7 +1,7 @@
 #include "code/m_energy.dm"
 
-/datum/modpack/powerback
-	id = "powerback"
+/datum/modpack/powerbackpack
+	id = "powerbackpack"
 	name = "Подключалка Лазеркам"
 	//icon = 'modular_unga/z_example_modpack/preview.dmi'
 	group = "Features"
