@@ -17,6 +17,7 @@
 #include "features\shoulder\includes.dm"
 #include "features\unga_guns\includes.dm"
 #include "features\xeno_respawn_time\includes.dm"
+#include "features\valibarda\includes.dm"
 
 /* -- REVERTS -- */
 #include "reverts\allow_tadpole_construct\includes.dm"
