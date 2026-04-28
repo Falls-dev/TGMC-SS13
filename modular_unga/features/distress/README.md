@@ -4,21 +4,19 @@
 
 ### Defines/Helpers:
 
-- `code/__DEFINES/actions.dm`
+- добавлен `ABILITY_DISTRESS` что ссылается на оффовский `ABILITY_NUCLEARWAR`
 
 Добавлено:
-- `ABILITY_DISTRESS`
+- `code/datums/gamemodes/distress.dm`
 
 ### TG Proc/File Changes:
 
-- `code/datums/gamemodes/distress.dm`
+- `code/__DEFINES/actions.dm`
 - `tgmc.dme`
 
 Что изменено:
 - добавлен gamemode `/datum/game_mode/infestation/distress`
-- режим использует локальные job paths и доступные mode flags этого форка
-- стартовые `psy points` выданы через `add_strategic_psy_points` и `add_tactical_psy_points`
-- дистресс работает как отдельный infestation-вариант без собственного спавна ядерной бомбы
+- режим является портом Nuclear War без спавна ядерной бомбы
 - режим подключён в сборку через `tgmc.dme`
 
 ### TGUI Files:

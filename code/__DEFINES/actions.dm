@@ -25,9 +25,9 @@
 
 #define ABILITY_CRASH (1<<0)
 #define ABILITY_NUCLEARWAR (1<<1)
-#define ABILITY_LAST_STAND (1<<2)
-#define ABILITY_DISTRESS (1<<3)
-#define ABILITY_ALL_GAMEMODE (ABILITY_CRASH|ABILITY_NUCLEARWAR|ABILITY_LAST_STAND|ABILITY_DISTRESS)
+#define ABILITY_LAST_STAND (1<<2) // RU TGMC EDIT: Абилки на ласстенде, не применимо к другим режимам
+#define ABILITY_DISTRESS (ABILITY_NUCLEARWAR) // RU TGMC EDIT: Абилки на дистрессе идут под копирку абилок с нюкавары (по факту нюквар это и есть дистресс но с нюкой)
+#define ABILITY_ALL_GAMEMODE (ABILITY_CRASH|ABILITY_NUCLEARWAR)
 
 #define PSIONIC_INTERACTION_STRENGTH_WEAK 1
 #define PSIONIC_INTERACTION_STRENGTH_STANDARD 2
