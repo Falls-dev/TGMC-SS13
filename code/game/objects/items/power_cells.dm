@@ -31,6 +31,10 @@
 	var/charge_delay = 0
 	///used to track what set of overlays to use to display charge level
 	var/charge_overlay = "cell"
+	//ru tgmc edit
+	/// Can this cell be recharged via cell recharger or TE powerpack?
+	var/rechargable = TRUE
+	//ru tgmc edit end
 
 /obj/item/cell/Initialize(mapload)
 	. = ..()
