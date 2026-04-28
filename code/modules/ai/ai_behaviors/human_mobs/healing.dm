@@ -1,14 +1,39 @@
 /datum/ai_behavior/human
 	///A list of mobs that might need healing
 	var/list/heal_list = list()
+
 	///Chat lines for trying to heal
-	var/list/healing_chat = list("Healing you.", "Healing you, hold still.", "Stop moving!", "Fixing you up.", "Healing.", "Treating wounds.", "I'll have you patched up in no time.", "Quit your complaining, it's just a fleshwound.", "Cover me!", "Give me some room!")
-	///Chat lines for trying to heal
-	var/list/self_heal_chat = list("Healing, cover me!", "Healing over here.", "Where's the damn medic?", "Medic!", "Treating wounds.", "It's just a flesh wound.", "Need a little help here!", "Cover me!.")
+	var/list/healing_chat = list( \
+	"Лечу тебя.", "Лечу, не двигайся.", "Не шевелись!", "Сейчас подлатаю.", \
+	"Лечу трёхсотого.", "Обрабатываю раны.", "Жить будешь.", \
+	"Хватит ныть, это просто царапина.", "Прикройте, латаю!", "Щас помогу.", \
+	"Держись, сейчас помогу.", "Секунду, всё будет.", "Работаю над тобой.", \
+	"Ща заштопаем.", "Не дёргайся!", "Сейчас станет легче.", \
+	"Стой на месте!", "Я тебе помогу.", "Будешь жить.", "Почти готово.", "Терпи!", \
+	"Делаю всё возможное.", "Не умирай тут!", "Ещё чуть-чуть.")
+	///Chat lines for self healing
+	var/list/self_heal_chat = list( \
+	"Лечу себя!", "Лечусь тут.", "Блядь где медик?", \
+	"Медик!", "Обрабатываю раны.", "Больно, сука.", \
+	"Мне бы помочь!", "Прикройте меня!", "Залатываюсь.", "Ща оклемаюсь.", \
+	"Нужно немного времени!", "Я ещё в строю.", "Сейчас буду.", \
+	"Подлататься надо.", "Не сдохну так просто.", "Живу пока.")
 	///Chat lines for someone being perma
-	var/list/unrevivable_chat = list("We lost them!", "I lost them!", "Damn it, they're gone!", "Perma!", "No longer revivable.", "I can't help this one.", "I'm sorry.")
+	var/list/unrevivable_chat = list( \
+	"Мы его потеряли!", "Я его потерял!", "Чёрт, он мёртв!", \
+	"Двухсотый.", "Его уже не вернуть.", "Я не могу помочь.", \
+	"Прости...", "Слишком поздно.", "Конец.", "Он ушёл.", \
+	"Ничего не сделать.", "Потерян.", "Мы не успели.", \
+	"Он не смог.", "Здесь уже всё.", "Бесполезно.", \
+	"Не спасти.", "Прощай.", "Его больше нет.")
 	///Chat lines for getting a new heal target
-	var/list/move_to_heal_chat = list("Hold on, I'm coming!", "Cover me, I'm moving!", "Moving to assist!", "I'm gonna fix you up.", "They need help!", "Cover me!", "Getting them up.", "Quit your complaining, it's just a fleshwound.", "On the move!", "Helping out here.")
+	var/list/move_to_heal_chat = list( \
+	"Держись, я иду!", "Прикройте, иду лечить!", "Иду помогать!", \
+	"Сейчас тебя подлатаю.", "Прикройте!", \
+	"Поднимаю его.","В движении!", "Иду на помощь.", "Уже бегу!", \
+	"Секунду, буду рядом.", "Держись!", "Не умирай!", \
+	"На подходе!", "Сейчас помогу!", "Держи позицию!", \
+	"Почти у тебя!", "Вытащу тебя.", "Лечу на помощь!")
 
 /datum/ai_behavior/human/late_initialize()
 	if(should_hold())

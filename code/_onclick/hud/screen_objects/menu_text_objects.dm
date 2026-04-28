@@ -66,7 +66,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/text/lobby)
 	player.playsound_local(player, 'sound/effects/menu_select.ogg', 50)
 
 /atom/movable/screen/text/lobby/clickable/setup_character
-	maptext = "<span class='lobbytext'>ЗАГРУЗКА ПЕРСОНАЖА</span>"
+	maptext = "<span class='lobbytextrus'>ЗАГРУЗКА ПЕРСОНАЖА</span>"
 	icon_state = "setup"
 	maptext_x = 23
 	///Bool, whether we registered to listen for charachter updates already
@@ -80,14 +80,14 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/text/lobby)
 	var/nametouse = hud?.mymob.client ? hud.mymob.client.prefs.real_name : "Unknown Character"
 	if(length(nametouse) > MAX_CHAR_NAME_DISPLAYED)
 		nametouse = trim(nametouse, MAX_CHAR_NAME_DISPLAYED) + "..."
-	maptext = "<span class='lobbytext'>[nametouse]</span>"
+	maptext = "<span class='lobbytextrus'>[nametouse]</span>"
 	if(registered)
 		return
 	RegisterSignal(hud.mymob.client, COMSIG_CLIENT_PREFERENCES_UIACTED, PROC_REF(update_text))
 	registered = TRUE
 
 /atom/movable/screen/text/lobby/clickable/join_game
-	maptext = "<span class='lobbytext'>ПРИСОЕДИНИТЬСЯ К ИГРЕ</span>"
+	maptext = "<span class='lobbytextrus'>ПРИСОЕДИНИТЬСЯ</span>"
 	icon_state = "join"
 
 /atom/movable/screen/text/lobby/clickable/join_game/Initialize(mapload, datum/hud/hud_owner)
@@ -97,14 +97,14 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/text/lobby)
 /atom/movable/screen/text/lobby/clickable/join_game/update_text()
 	var/mob/new_player/player = hud.mymob
 	if(SSticker?.current_state > GAME_STATE_PREGAME)
-		maptext = "<span class='lobbytext'>ПРИСОЕДИНИТЬСЯ К ИГРЕ</span>"
+		maptext = "<span class='lobbytextrus'>ПРИСОЕДИНИТЬСЯ</span>"
 		icon_state = "join"
 		remove_atom_colour(FIXED_COLOR_PRIORITY, unhighlighted_color)
 		return
 	remove_atom_colour(FIXED_COLOR_PRIORITY, unhighlighted_color)
 	unhighlighted_color = player.ready ? COLOR_GREEN : COLOR_RED
 	add_atom_colour(unhighlighted_color, FIXED_COLOR_PRIORITY)
-	maptext = "<span class='lobbytext'>ВЫ: [player.ready ? "" : "НЕ "]ГОТОВЫ</span>"
+	maptext = "<span class='lobbytextrus'>ВЫ: [player.ready ? "" : "НЕ "]ГОТОВЫ</span>"
 	icon_state = player.ready ? "ready" : "unready"
 
 /atom/movable/screen/text/lobby/clickable/join_game/Click()
@@ -118,7 +118,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/text/lobby)
 
 
 /atom/movable/screen/text/lobby/clickable/observe
-	maptext = "<span class='lobbytext'>НАБЛЮДАТЬ</span>"
+	maptext = "<span class='lobbytextrus'>НАБЛЮДАТЬ</span>"
 	icon_state = "observe"
 
 /atom/movable/screen/text/lobby/clickable/observe/Click()
@@ -127,7 +127,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/text/lobby)
 	player.try_to_observe()
 
 /atom/movable/screen/text/lobby/clickable/manifest
-	maptext = "<span class='lobbytext'>МАНИФЕСТ МОРПЕХОВ</span>"
+	maptext = "<span class='lobbytextrus'>МАНИФЕСТ МОРПЕХОВ</span>"
 	icon_state = "manifest"
 
 /atom/movable/screen/text/lobby/clickable/manifest/Click()
@@ -136,7 +136,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/text/lobby)
 	player.view_manifest()
 
 /atom/movable/screen/text/lobby/clickable/xenomanifest
-	maptext = "<span class='lobbytext'>МАНИФЕСТ КСЕНОМОРФОВ</span>"
+	maptext = "<span class='lobbytextrus'>МАНИФЕСТ КСЕНОСОВ</span>"
 	icon_state = "manifest"
 
 /atom/movable/screen/text/lobby/clickable/xenomanifest/Click()
@@ -145,7 +145,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/text/lobby)
 	player.view_xeno_manifest()
 
 /atom/movable/screen/text/lobby/clickable/background
-	maptext = "<span class='lobbytext'>ПРЕДЫСТОРИЯ</span>"
+	maptext = "<span class='lobbytextrus'>ПРЕДЫСТОРИЯ</span>"
 	icon_state = "background"
 
 /atom/movable/screen/text/lobby/clickable/background/Click()
@@ -155,7 +155,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/text/lobby)
 
 
 /atom/movable/screen/text/lobby/clickable/changelog
-	maptext = "<span class='lobbytext'>ЛОГ ИЗМЕНЕНИЙ</span>"
+	maptext = "<span class='lobbytextrus'>ЛОГ ИЗМЕНЕНИЙ</span>"
 	icon_state = "changelog"
 
 /atom/movable/screen/text/lobby/clickable/changelog/Click()
@@ -164,7 +164,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/text/lobby)
 
 
 /atom/movable/screen/text/lobby/clickable/polls
-	maptext = "<span class='lobbytext'>ОПРОСЫ</span>"
+	maptext = "<span class='lobbytextrus'>ОПРОСЫ</span>"
 	icon_state = "poll"
 
 /atom/movable/screen/text/lobby/clickable/polls/update_text()
@@ -175,9 +175,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/text/lobby)
 	var/mob/new_player/player = hud.mymob
 	var/hasnewpolls = player.check_playerpolls()
 	if(isnull(hasnewpolls))
-		maptext = "<span class='lobbytext'>БАЗЫ ДАННЫХ НЕТ!</span>"
+		maptext = "<span class='lobbytextrus'>БАЗЫ ДАННЫХ НЕТ!</span>"
 		return
-	maptext = "<span class='lobbytext'>ПОСМОТРЕТЬ ОПРОСЫ[hasnewpolls ? " (НОВОЕ!)" : ""]</span>"
+	maptext = "<span class='lobbytextrus'>ОПРОСЫ[hasnewpolls ? " (НОВОЕ!)" : ""]</span>"
 
 /atom/movable/screen/text/lobby/clickable/polls/Click()
 	. = ..()

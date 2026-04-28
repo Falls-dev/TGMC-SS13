@@ -2,9 +2,23 @@
 	///A list of engineering related actions
 	var/list/engineering_list = list()
 	///Chat lines for trying to build
-	var/list/building_chat = list("Building.", "Building, cover me!", "Give me some cover!", "Starting construction.", "Working here.", "Working.", "Cover me, building here.", "Cover me!", "I'm working on it.", "Something need building?", "Work, work.")
+	var/list/building_chat = list( \
+	"Строю.", "Строю, прикройте!", "Дайте прикрытие!", "Начинаю строительство.", "Работаю здесь.", \
+	"Работаю.", "Прикройте, строю тут.", "Прикройте!", "Работа кипит.", "Начал строить.", "Сейчас всё будет.", \
+	"Не мешайте, я занят.", "В процессе.", "Сейчас соберём.", \
+	"Пошла работа.", "Строю, не отвлекайте.", "Строю, держите оборону!", "Ща всё будет готово.", "Работаю, не мешайте.", "Почти готово.", \
+	"Сейчас построю", "Дайте минуту!", "Держите позицию, я строю!", "Веду работы!")
 	///Chat lines for being unable to build something
-	var/list/unable_to_build_chat = list("Can we build it? No, it's FUBAR.", "Unable to build.", "I can't build that.", "Negative.", "Get someone else on it!", "Can't do it, sorry.")
+	var/list/unable_to_build_chat = list( \
+	"Мы можем это построить? Нет, не можем.", "Невозможно построить.", "Я не могу это сделать.", \
+	"Негатив.", "Позовите кого-нибудь другого!", "Не выйдет, сорян.", "Не получится.", \
+	"Это вне моих возможностей.", "Не хватает ресурсов.", "С этим я не справлюсь.", \
+	"Тут всё сломано.", "Слишком сложно.", "Я не знаю как это собрать.", \
+	"Нужно больше материалов.", "Без шансов.", "Это не починить.", "Забудьте.", \
+	"Я пас.", "Не вариант.", "Требуется другой спец.", "Я не смогу.", \
+	"Слишком повреждено.", "Нужно оборудование получше.", "Не могу ничего сделать.", \
+	"Это не починить на месте.", "Нужны инструменты.", "Не хватает деталей.", \
+	"Я тут бессилен.", "Нужно больше времени или ресурсов.")
 
 ///Checks if we should be building anything
 /datum/ai_behavior/human/proc/engineer_process()

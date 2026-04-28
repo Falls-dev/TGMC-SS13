@@ -19,15 +19,27 @@
 	///Inventory datum so the mob_parent can manage its inventory
 	var/datum/managed_inventory/mob_inventory
 	///Chat lines when moving to a new target
-	var/list/new_move_chat = list("Moving.", "On the way.", "Moving out.", "On the move.", "Changing position.", "Watch your spacing!", "Let's move.", "Move out!", "Go go go!!", "moving.", "Mobilising.", "Hoofing it.")
+	var/list/new_move_chat = list( \
+	"Двигаюсь.", "В пути.", "Выдвигаюсь.", "В движении.", "Меняю позицию.", "Держите дистанцию!", "Погнали.", "Вперёд!", "Быстро, быстро!!", \
+	"Двигаюсь.", "Иду.", "Смена позиции.", "Переход к точке.", "Пошли!", "Двигаемся!", "Вперёд, без остановок!", "Марш!", "Работаем!", "На точку.", "Идём дальше.")
 	///Chat lines when following a new target
-	var/list/new_follow_chat = list("Following.", "Following you.", "I got your back!", "Take the lead.", "Let's move!", "Let's go!", "Group up!.", "In formation.", "Where to?",)
+	var/list/new_follow_chat = list( \
+	"Следую.", "Иду за тобой.", "Я прикрою!", "Иду следом.", "Погнали!", "Поехали!", "Собрались!", "Куда идём?", "Держусь за тобой.", \
+	"Ведёшь - я прикрываю.", "Не отстаю.", "С тобой.", "Двигаюсь следом.", "Ведёшь нас.", "Группа, вперёд!", "Вместе держимся.", "Показывай путь.")
 	///Chat lines when engaging a new target
-	var/list/new_target_chat = list("Get some!!", "Engaging!", "You're mine!", "Bring it on!", "Hostiles!", "Take them out!", "Kill 'em!", "Lets rock!", "Go go go!!", "Waste 'em!", "Intercepting.", "Weapons free!", "Fuck you!!", "Moving in!")
+	var/list/new_target_chat = list( \
+	"Получай!!", "Вступаю в бой!", "Ты мой!", "Ну давай!", "Контакт!", "Уничтожить их!", "Мочи их!", "Поехали!", "Вперёд!!", \
+	"Разнести их!", "Перехватываю.", "Огонь разрешён!", "Хуярь гада!!", "Иду в атаку!", "Цель найдена!", "Работаем по цели!", \
+	"Открываю огонь!", "Пошла отработка!", "На них!", "Давим!", "Ебашь мудака!", "Цель обнаружена!")
 	///Chat lines for retreating on low health
-	var/list/retreating_chat = list("Falling back!", "Cover me, I'm hit!", "I'm hit!", "Cover me!", "Disengaging!", "Help me!", "Need a little help here!", "Tactical withdrawal.", "Repositioning.", "Taking fire!", "Taking heavy fire!", "Run for it!")
+	var/list/retreating_chat = list( \
+	"Отступаю!", "Прикройте, задели!", "Я ранен!", "Прикройте!", "Помогите!", "Мне нужна помощь!", \
+	"Меняю позицию.", "Под огнём!", "Бежим!", "Отходим!", "Задели суки!", "Нужно отступить!", "Ухожу!")
 	///General acknowledgement of receiving an order
-	var/receive_order_chat = list("Understood.", "Moving.", "Moving out", "Got it.", "Right away.", "Roger", "You got it.", "On the move.", "Acknowledged.", "Affirmative.", "Who put you in charge?", "Ok.", "I got it sorted.", "On the double.",)
+	var/list/receive_order_chat = list( \
+	"Понял.", "Двигаюсь.", "Выдвигаюсь.", "Принял.", "Сейчас сделаю.", "Есть.", "Будет сделано.", "Уже в пути.", "Принято.", \
+	"Подтверждаю.", "Выполняю.", "Кто тебя командиром сделал?", "Ок.", "Разберусь.", "Быстро сделаю.", \
+	"Исполняю.", "Принял к сведению.", "Уже делаю.", "Сделаю.", "В работе.", "Без проблем.", "Ща будет.")
 	///Cooldown on chat lines, to reduce spam
 	COOLDOWN_DECLARE(ai_chat_cooldown)
 	///Cooldown on running, so we can recover stam and make the most of it

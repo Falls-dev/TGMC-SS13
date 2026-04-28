@@ -5,17 +5,46 @@
 	///Currently equipped and ready melee weapon - could also be the gun
 	var/obj/item/weapon/melee_weapon
 	///Chat lines when opening fire
-	var/list/start_fire_chat = list("Get some!!", "Engaging!", "Open fire!", "Firing!", "Hostiles!", "Take them out!", "Kill 'em!", "Lets rock!", "Fire!!", "Gun them down!", "Shooting!", "Weapons free!", "Fuck you!!")
+	///Chat lines when opening fire
+	var/list/start_fire_chat = list( \
+	"Получай!!", "Вступаю в бой!", "Огонь!", "Стреляю!", "Контакт!", "Враг!", "Мочи их!", "Пошла жара!", "Огонь!!", \
+	"Косим их!", "Веду огонь!", "Жри свинец!", "Пошёл нахуй!", "Тебе хана!", "Контакт спереди!", "Подавляющий огонь!", \
+	"Враги!", "Получи!", "Противник!", "Вперёд!", "Тебе конец!", "Ну давай давай нападай!", "Не дайте ему слинять!", \
+	"Цель замечена!", "Атакую!", "Сейчас начнётся!", "Поздоровайся с пулями!", "Открываю огонь!", "Кончайте их!")
+
 	///Chat lines when reloading
-	var/list/reloading_chat = list("Reloading!", "Cover me, reloading!", "Changing mag!", "Out of ammo!")
+	var/list/reloading_chat = list( \
+	"Перезаряжаюсь!", "Прикрой, перезарядка!", "Я пуст, прикройте!", "Боеприпасы кончились!", "На перезарядке!", \
+	"Перезарядка, кройте!", "Чуть занят, прикройте!", "Секунду!", "Я пустой!", "Перезаряжаю ствол!", \
+	"Пустой!", "Сдерживайте их!", "Прикройте меня!", "Мужики прикройте, я пуст!", "Перезаряжаю!", \
+	"Свинец кончился, ждите!", "Ща вернусь!", "Держите линию!")
+
 	///Chat lines when target goes out of range
-	var/list/out_range_chat = list("Target out of range.", "Out of range.", "I lost them.", "Where'd they go?", "They're running!")
+	var/list/out_range_chat = list( \
+	"Цель вне досягаемости.", "Слишком далеко.", "Враг потерян.", "Куда они делись?", "Они убегают!", \
+	"Убежал, сука!", "Не достаю!", "Уходят!", "Далеко убежали!", "Цель ушла!", \
+	"Они слишком далеко!", "Чёрт, далеко!", "Отступают!", "Не могу попасть!", "Вне видимости!")
+
 	///Chat lines when LOS broken
-	var/list/no_los_chat = list("Target lost!", "Where'd they go?", "I lost sight of them!", "Where'd they go?", "They're running!", "Stop hiding!")
+	var/list/no_los_chat = list( \
+	"Цель потеряна!", "Цель вне видимости!", "Потерял из виду!", "Где они?", "Они убегают!", \
+	"Хватит прятаться!", "Не вижу их!", "Потерял визуальный контакт!", "Нет линии огня!", \
+	"Они за укрытием!", "Вылезай, трус!", "Покажись!", "Я знаю, ты там!", "Не могу выстрелить!", \
+	"Хорошо спрятались!", "Контакт потерян!", "Куда вы делись твари!")
+
 	///Chat lines when some asshole on your team is in the way
-	var/list/friendly_blocked_chat = list("Get out of the way!", "You're in my line!", "Clear the firing lane!", "Move!", "Holding fire!", "Stop blocking me damn it!")
+	var/list/friendly_blocked_chat = list( \
+	"Уйди с дороги!", "Сьеби в сторону!", "Отойди долбоёб!", "Двигайся!", "Прекращаю огонь!", \
+	"Не мешай!", "Уйди!", "Ты мешаешь!", "Сдвинься!", "Убериcь!", \
+	"А ну отошёл!", "Ты нас угробишь!", "Отойди!", "Не стой там!", "Я не могу стрелять!", \
+	"Свой на линии огня!", "Очисти линию!", "Мешаешь!")
+
 	///Chat lines when target dies or is destroyed
-	var/list/dead_target_chat = list("Target down.", "Hostile down.", "Scratch one.", "I got one!", "Down for the count.", "Kill confirmed.")
+	var/list/dead_target_chat = list( \
+	"Цель уничтожена.", "Противник ликвидирован.", "Минус один.", "Есть попадание!", "Готов.", \
+	"Убит.", "Нейтрализован.", "С ним покончено.", "Цель устранена.", \
+	"На одного меньше.", "Обнулён!", "Готов!", "Двухсотый!", "Противник уничтожен!", \
+	"Закончили!", "Он больше не встанет!", "Ещё один готов.", "Хорошая работа.", "Разобрались.")
 
 /datum/ai_behavior/human/melee_interact(datum/source, atom/interactee, melee_tool = melee_weapon) //specifies the arg value
 	var/toggle_intent = FALSE

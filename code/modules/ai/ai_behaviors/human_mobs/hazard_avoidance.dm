@@ -2,19 +2,42 @@
 		///assoc list of hazards to avoid and the range to stay away from them
 	var/list/hazard_list = list()
 	///Chat lines for avoiding uncategorized hazards
-	var/list/default_avoid_chat = list("Watch out!", "Watch out, hazard!", "hazard!", "Keep away from the hazard!", "Well I've never seen a hazard like this before.")
+	var/list/default_avoid_chat = list( \
+	"Осторожно!", "Берегись!", "Не подходи!", "Отходим отсюда!", "Не лезем сюда!", "Опасная зона!", "Назад!", \
+	"Что это за хуйня?!", "Не лезь туда!", "Обходи!", "Держите дистанцию!", "Не трогай это!", "Опасно!")
+
 	///Chat lines for avoiding a live nade
-	var/list/nade_avoid_chat = list("Watch out!", "Watch out, grenade!", "Grenade!", "Run!", "Get out of the way!", "Grenade, move!")
+	var/list/nade_avoid_chat = list( \
+	"Граната!", "Бомба!", "Беги нахуй!", "Беги!", "Разбегаемся!", "Лимонка!", "Граната, валим!", "Ложись!", \
+	"Разойтись!", "Сука, граната!", "Чёрт, граната!", "Назад!", "Сейчас рванёт!", "Быстро прочь!")
+
 	///Chat lines for avoiding fire
-	var/list/fire_avoid_chat = list("Watch out!", "Watch out, fire!", "fire!", "Keep away from the fire!", "Someone put out that fire!", "Clear that fire!", "Keep clear of the flames!", "It's only a bit of fire!")
+	var/list/fire_avoid_chat = list(
+	"Осторожно, огонь!", "Пожар!", "Горячо!", "Держись подальше!", "Кто-нибудь потушите!",
+	"Уберите огонь!", "Горим!", "Слишком жарко!", "Обходи огонь!", "Не подходите!", "Жарко!",
+	"Чёрт, пожар!", "Отходим от огня!", "Держитесь подальше!", "Это уже не шутки!")
+
 	///Chat lines for avoiding acid
-	var/list/acid_avoid_chat = list("Watch out!", "Watch out, acid!", "acid!", "Keep away from the acid!", "Don't step in that acid.", "They're spraying acid!")
+	var/list/acid_avoid_chat = list(
+	"Осторожно, кислота!", "Кислота!", "Не подходите!", "Держись подальше!", "Не трогай!", "У них кислота!", "Берегись!", "Назад!",
+	"Опасная жижа!", "Не лезь!", "Чёрт, кислота!", "Обходи это!", "Не приближайся!")
+
 	///Chat lines for avoiding shuttles
-	var/list/shuttle_avoid_chat = list("Watch out!", "Watch out, it's landing!", "Landing!", "Keep away from landing zone!", "Don't step in under that ship!", "They're landing, keep clear!", "Keep clear!", "Make way!")
+	var/list/shuttle_avoid_chat = list(
+	"Осторожно!", "Они садятся!", "Посадка!", "Очистить зону!", "Уберитеcь с площадки!", "Не стой под шаттлом!",
+	"Освободить место посадки!", "Расходитесь!", "Дайте пройти!", "Шаттл!", "В сторону!", "С дороги!",
+	"Сейчас придавит!", "Быстро очистить зону!", "Отходим!")
+
 	///Chat lines for avoiding cas
-	var/list/cas_avoid_chat = list("Watch out!", "Watch out, CAS!", "CAS!", "Keep away from the CAS!", "Don't get bombed!.", "They're dropping CAS!", "CAS, move!", "Take cover!")
+	var/list/cas_avoid_chat = list(
+	"Осторожно, авиаудар!", "КАС!", "В укрытие!", "Сейчас накроют!", "Не стойте!", "Разбегайтесь!",
+	"Бомбят!", "Руки в ноги!", "КАС, отходим!", "Уходим с позиции!", "Сейчас прилетит!", "Быстро в укрытие!",
+	"Чёрт, авиация!", "Они бомбят!", "Держись подальше!", "Не подставляйтесь!")
+
 	///Chat lines for avoiding xeno warnings
-	var/list/xeno_avoid_chat = list("Watch out!", "Watch out, xeno!", "xeno!", "Keep away from the xeno!", "Don't step get hit by that xeno!", "They're doing something here!")
+	var/list/xeno_avoid_chat = list(
+	"Осторожно, ксенос!", "Ксенос!", "Берегись!", "Валите ксеноса!", "Ксенопидор!", "Назад!", "Бенос!",
+	"Не дай ему попасть!", "Чёрный враг!", "Чёрт, ксенос!", "Обходи его!", "Осторожно!", "Он атакует!", "Ксено!")
 
 /datum/ai_behavior/human/find_next_dirs()
 	. = ..()

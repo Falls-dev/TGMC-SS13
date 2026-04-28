@@ -4,7 +4,7 @@
 /// Base font
 /datum/font/pixellari
 	name = "Pixellari"
-	font_family = 'interface/fonts/Pixellari.ttf'
+	font_family = 'interface/fonts/PixCyrillic.ttf' // RU TGMC EDIT: Add russian font support
 
 /// For icon overlays
 /// Pixellari 12pt metrics generated using Lummox's dmifontsplus (https://www.byond.com/developer/LummoxJR/DmiFontsPlus)

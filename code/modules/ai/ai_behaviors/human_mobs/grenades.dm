@@ -2,7 +2,9 @@
 	///Probability of trying to throw a grenade during process
 	var/nade_throw_prob = 5
 	///Chat lines for throwing a nade
-	var/list/nade_throw_chat = list("Grenade out!", "Fire in the hole!", "Grenade!", "Catch this!")
+	var/list/nade_throw_chat = list( \
+		"Лови гранату!", "Кидаю гранату!", "Граната!", "Лови фашист гранату!", "Граната, беги!", \
+		"Сейчас рванёт!", "Граната, в укрытие!", "Ложись, быстро!", "Живее!", "Разойтись!")
 
 ///Decides if we should throw a grenade
 /datum/ai_behavior/human/proc/grenade_process()
