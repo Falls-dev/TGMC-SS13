@@ -15,20 +15,20 @@
 
 /datum/xenomorph_skin/drone/rouny
 	name = "Rouny"
-	icon = 'icons/Xeno/castes/drone/rouny.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/drone/rouny.dmi'
 	admin_only = TRUE
 
 /datum/xenomorph_skin/drone/king
 	name = "King"
-	icon = 'icons/Xeno/castes/drone/king.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/drone/king.dmi'
 
 /datum/xenomorph_skin/drone/cyborg
 	name = "Cyborg"
-	icon = 'icons/Xeno/castes/drone/cyborg.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/drone/cyborg.dmi'
 
 /datum/xenomorph_skin/drone/hornet
 	name = "Hornet"
-	icon = 'icons/Xeno/castes/drone/hornet.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/drone/hornet.dmi'
 
 // Boiler
 /datum/xenomorph_skin/boiler/base
@@ -37,7 +37,7 @@
 
 /datum/xenomorph_skin/boiler/rouny
 	name = "Rouny"
-	icon = 'icons/Xeno/castes/boiler/rouny.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/boiler/rouny.dmi'
 	admin_only = TRUE
 
 // Bull
@@ -47,7 +47,7 @@
 
 /datum/xenomorph_skin/bull/rouny
 	name = "Rouny"
-	icon = 'icons/Xeno/castes/bull/rouny.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/bull/rouny.dmi'
 	admin_only = TRUE
 
 // Crusher
@@ -57,7 +57,7 @@
 
 /datum/xenomorph_skin/crusher/rouny
 	name = "Rouny"
-	icon = 'icons/Xeno/castes/crusher/rouny.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/crusher/rouny.dmi'
 	admin_only = TRUE
 
 // Defender
@@ -67,7 +67,7 @@
 
 /datum/xenomorph_skin/defender/rouny
 	name = "Rouny"
-	icon = 'icons/Xeno/castes/defender/rouny.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/defender/rouny.dmi'
 	admin_only = TRUE
 
 // Defiler
@@ -77,7 +77,7 @@
 
 /datum/xenomorph_skin/defiler/rouny
 	name = "Rouny"
-	icon = 'icons/Xeno/castes/defiler/rouny.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/defiler/rouny.dmi'
 	admin_only = TRUE
 
 // Gorger
@@ -87,7 +87,7 @@
 
 /datum/xenomorph_skin/gorger/rouny
 	name = "Rouny"
-	icon = 'icons/Xeno/castes/gorger/rouny.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/gorger/rouny.dmi'
 	admin_only = TRUE
 
 // Hivelord
@@ -97,7 +97,7 @@
 
 /datum/xenomorph_skin/hivelord/rouny
 	name = "Rouny"
-	icon = 'icons/Xeno/castes/hivelord/rouny.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/hivelord/rouny.dmi'
 	admin_only = TRUE
 
 // King
@@ -116,12 +116,12 @@
 
 /datum/xenomorph_skin/praetorian/rouny
 	name = "Rouny"
-	icon = 'icons/Xeno/castes/praetorian/rouny.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/praetorian/rouny.dmi'
 	admin_only = TRUE
 
 /datum/xenomorph_skin/praetorian/tacticool
 	name = "Tacticool"
-	icon = 'icons/Xeno/castes/praetorian/tacticool.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/praetorian/tacticool.dmi'
 
 // Queen
 /datum/xenomorph_skin/queen/base
@@ -130,7 +130,7 @@
 
 /datum/xenomorph_skin/queen/rouny
 	name = "Rouny"
-	icon = 'icons/Xeno/castes/queen/rouny.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/queen/rouny.dmi'
 	admin_only = TRUE
 
 // Ravager
@@ -140,12 +140,12 @@
 
 /datum/xenomorph_skin/ravager/rouny
 	name = "Rouny"
-	icon = 'icons/Xeno/castes/ravager/rouny.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/ravager/rouny.dmi'
 	admin_only = TRUE
 
 /datum/xenomorph_skin/ravager/bonehead
 	name = "Bonehead"
-	icon = 'icons/Xeno/castes/ravager/bone.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/ravager/bone.dmi'
 
 // Runner
 /datum/xenomorph_skin/runner/base
@@ -154,21 +154,21 @@
 
 /datum/xenomorph_skin/runner/rouny
 	name = "Rouny"
-	icon = 'icons/Xeno/castes/runner/basic_rouny.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/runner/basic_rouny.dmi'
 	admin_only = TRUE
 
 /datum/xenomorph_skin/runner/gold
 	name = "Gold"
-	icon = 'icons/Xeno/castes/runner/gold.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/runner/gold.dmi'
 
 /datum/xenomorph_skin/runner/gold_rouny
 	name = "Gold Rouny"
-	icon = 'icons/Xeno/castes/runner/gold_rouny.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/runner/gold_rouny.dmi'
 	admin_only = TRUE
 
 /datum/xenomorph_skin/runner/tacticool
 	name = "Tacticool"
-	icon = 'icons/Xeno/castes/runner/tacticool.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/runner/tacticool.dmi'
 
 // Scorpion
 /datum/xenomorph_skin/scorpion/base
@@ -177,7 +177,7 @@
 
 /datum/xenomorph_skin/scorpion/crab
 	name = "Crab"
-	icon = 'icons/Xeno/castes/scorpion/crab.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/scorpion/crab.dmi'
 
 // Shrike
 /datum/xenomorph_skin/shrike/base
@@ -186,16 +186,16 @@
 
 /datum/xenomorph_skin/shrike/rouny
 	name = "Rouny"
-	icon = 'icons/Xeno/castes/shrike/rouny.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/shrike/rouny.dmi'
 	admin_only = TRUE
 
 /datum/xenomorph_skin/shrike/joker
 	name = "Joker"
-	icon = 'icons/Xeno/castes/shrike/joker.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/shrike/joker.dmi'
 
 /datum/xenomorph_skin/shrike/clown
 	name = "Clown"
-	icon = 'icons/Xeno/castes/shrike/joker_rouny.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/shrike/joker_rouny.dmi'
 	admin_only = TRUE
 
 // Warlock
@@ -205,12 +205,12 @@
 
 /datum/xenomorph_skin/warlock/rouny
 	name = "Rouny"
-	icon = 'icons/Xeno/castes/warlock/rouny.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/warlock/rouny.dmi'
 	admin_only = TRUE
 
 /datum/xenomorph_skin/warlock/arabian
 	name = "Arabian"
-	icon = 'icons/Xeno/castes/warlock/arab.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/warlock/arab.dmi'
 
 // Warrior
 /datum/xenomorph_skin/warrior/base
@@ -219,5 +219,5 @@
 
 /datum/xenomorph_skin/warrior/rouny
 	name = "Rouny"
-	icon = 'icons/Xeno/castes/warrior/rouny.dmi'
+	icon = 'modular_unga/features/xeno_skins/icons/warrior/rouny.dmi'
 	admin_only = TRUE
