@@ -19,4 +19,4 @@
 
 
 Blundir +yautja +yautjaleader +yautjalegacy
-Tarsonis_II_Raff +Yautja +YautjaLegacy +YautjaCouncil +YautjaLeader +YautjaCouncilLegacy
+Tarsonis_II_Raff +all
