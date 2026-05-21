@@ -1458,7 +1458,7 @@
 		if(tgui_alert(usr, "Are you sure you want to launch the shuttle? Without sufficiently dealing with the threat, you will be in direct violation of your orders!", "Are you sure?", list("Yes", "Cancel")) != "Yes")
 			return TRUE
 
-		if(!TIMER_COOLDOWN_FINISHED(src, COOLDOWN_EVACUATION))
+		if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_EVACUATION))
 			return TRUE
 		TIMER_COOLDOWN_START(src, COOLDOWN_EVACUATION, 1.5 SECONDS)
 
