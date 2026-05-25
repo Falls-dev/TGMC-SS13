@@ -217,7 +217,7 @@
 			user.balloon_alert(user, "Allah has already helped you")
 			return
 		TIMER_COOLDOWN_START(user, "Koran", 10 MINUTES)
-		if(prob(25))
+		if(prob(10))
 			cell_explosion(M, 1984, 1714, EXPLOSION_FALLOFF_SHAPE_LINEAR)
 			playsound(M, 'sound/misc/Dying.ogg', 15, 1)
 
