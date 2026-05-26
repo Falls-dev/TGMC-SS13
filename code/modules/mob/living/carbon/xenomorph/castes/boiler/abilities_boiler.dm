@@ -255,7 +255,7 @@ GLOBAL_LIST_INIT(boiler_glob_image_list, list(
 	if(!can_use_ability(target, FALSE, ABILITY_IGNORE_PLASMA))
 		return fail_activate()
 
-	if((locate(/obj/effect/forcefield/fog) in xeno_owner.loc) && !get_nearest_target(null, 10, TARGET_HUMAN, xeno_owner.faction)) //говнокод, да
+	if((locate(/obj/effect/forcefield/fog) in xeno_owner.loc) && !get_nearest_target(null, 5, TARGET_HUMAN, xeno_owner.faction)) //говнокод, да
 		xeno_owner.gib()
 		return
 
