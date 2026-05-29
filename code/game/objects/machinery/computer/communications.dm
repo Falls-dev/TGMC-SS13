@@ -45,6 +45,14 @@
 	. = ..()
 	update_icon()
 
+/obj/machinery/computer/communications/arc
+	icon = 'icons/obj/machines/computer.dmi'
+	icon_state = "computer_small"
+	screen_overlay = "comm"
+	density = FALSE
+	circuit = null
+	resistance_flags = RESIST_ALL
+	layer = ARC_OBJ_TOP_LAYER
 
 /obj/machinery/computer/communications/Topic(href, href_list)
 	. = ..()

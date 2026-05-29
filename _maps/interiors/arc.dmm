@@ -1,0 +1,108 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"dH" = (
+/turf/open/shuttle/dropship/eighteen,
+/area/interior/vehicle/arc)
+"sE" = (
+/turf/closed/wall/indestructible{
+	color = "#000000"
+	},
+/area/interior/vehicle/arc)
+"yX" = (
+/obj/structure/bed/chair/vehicle_crew/driver{
+	pixel_y = -3
+	},
+/turf/open/shuttle/dropship/eighteen,
+/area/interior/vehicle/arc)
+"AY" = (
+/obj/structure/bed/chair/comfy/arc{
+	dir = 8;
+	pixel_x = 5
+	},
+/obj/machinery/computer/security/arc{
+	dir = 8;
+	pixel_x = -13;
+	pixel_y = 4
+	},
+/obj/machinery/computer/supplycomp/arc{
+	pixel_x = -13;
+	pixel_y = -9;
+	dir = 8
+	},
+/turf/open/shuttle/dropship/eighteen,
+/area/interior/vehicle/arc)
+"Dn" = (
+/obj/structure/bed/chair/comfy/arc{
+	dir = 8;
+	pixel_x = 5
+	},
+/obj/machinery/computer/camera_advanced/overwatch/military/arc{
+	dir = 8;
+	pixel_x = -13;
+	pixel_y = 10
+	},
+/obj/machinery/computer/communications/arc{
+	dir = 8;
+	pixel_x = -13;
+	pixel_y = -3
+	},
+/turf/open/shuttle/dropship/eighteen,
+/area/interior/vehicle/arc)
+"DG" = (
+/turf/closed/interior/tank/door/arc,
+/area/interior/vehicle/arc)
+"Ly" = (
+/obj/structure/bed/chair/vehicle_crew/gunner{
+	pixel_y = 3
+	},
+/obj/structure/gun_breech/secondary{
+	pixel_y = 0;
+	pixel_x = 3
+	},
+/turf/open/shuttle/dropship/eighteen,
+/area/interior/vehicle/arc)
+"NS" = (
+/obj/structure/periscope/interior_viewport{
+	layer = 2.98;
+	pixel_x = 14;
+	pixel_y = 10
+	},
+/obj/structure/bed/chair/dropship/passenger,
+/turf/open/shuttle/dropship/eighteen,
+/area/interior/vehicle/arc)
+"Rb" = (
+/obj/structure/prop/vehicle/arc,
+/turf/closed/wall/indestructible{
+	color = "#000000"
+	},
+/area/interior/vehicle/arc)
+
+(1,1,1) = {"
+sE
+sE
+sE
+Rb
+"}
+(2,1,1) = {"
+sE
+AY
+Dn
+sE
+"}
+(3,1,1) = {"
+sE
+NS
+dH
+DG
+"}
+(4,1,1) = {"
+sE
+yX
+Ly
+sE
+"}
+(5,1,1) = {"
+sE
+sE
+sE
+sE
+"}

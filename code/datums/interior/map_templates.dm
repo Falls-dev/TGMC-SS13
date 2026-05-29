@@ -33,6 +33,18 @@
 	name = "transport van interior template"
 	filename = "van"
 
+/datum/map_template/interior/box_van
+	name = "transport box van interior template"
+	filename = "box_van"
+
+/datum/map_template/interior/pizza_van
+	name = "pizza van interior template"
+	filename = "pizza_van"
+
+/datum/map_template/interior/arc
+	name = "ARC interior template"
+	filename = "arc"
+
 /datum/map_template/interior/som_tank
 	name = "SOM tank interior template"
 	filename = "som_tank"

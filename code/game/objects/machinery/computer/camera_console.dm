@@ -232,6 +232,18 @@
 /obj/machinery/computer/security/marine_network
 	network = list("marine")
 
+/obj/machinery/computer/security/arc
+	name = "ARC camera computer"
+	desc = "A computer to monitor marine helmet cameras."
+	density = FALSE
+	icon = 'icons/obj/machines/computer.dmi'
+	icon_state = "computer_small"
+	screen_overlay = "cameras"
+	circuit = null
+	resistance_flags = RESIST_ALL
+	layer = ARC_OBJ_BOTTOM_LAYER
+	network = list("marine")
+
 /obj/machinery/computer/security/dropship
 	name = "abstract dropship camera computer"
 	desc = "A computer to monitor cameras linked to the dropship."

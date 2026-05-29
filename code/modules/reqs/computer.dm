@@ -12,10 +12,22 @@
 	var/shuttle_id = SHUTTLE_SUPPLY
 	/// Id of the home docking port
 	var/home_id = "supply_home"
+
 /obj/machinery/computer/supplycomp/crash
 	req_access = list() //So marines can access cargo stuff without relying on synth spawn
 	desc = "A console for an Automated Storage and Retrieval System. This version somehow does not require special access."
 	resistance_flags = RESIST_ALL
+
+/obj/machinery/computer/supplycomp/arc
+	desc = "A console for an Automated Storage and Retrieval System. This version somehow does not require special access."
+	density = FALSE
+	icon = 'icons/obj/machines/computer.dmi'
+	icon_state = "computer_small"
+	screen_overlay = "shuttle"
+	circuit = null
+	resistance_flags = RESIST_ALL
+	req_access = list() //So marines can access cargo stuff without relying on synth spawn
+	layer = ARC_OBJ_BOTTOM_LAYER
 
 /obj/machinery/computer/supplycomp/interact(mob/user)
 	. = ..()

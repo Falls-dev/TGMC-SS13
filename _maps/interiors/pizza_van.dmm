@@ -1,0 +1,227 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/indestructible{
+	color = "#000000"
+	},
+/area/interior/vehicle/pizza_van)
+"j" = (
+/obj/structure/periscope/interior_viewport/simple/windshield{
+	icon_state = "windshield_viewport_bottom";
+	icon = 'icons/obj/vehicles/interiors/pizza_van_interior.dmi'
+	},
+/obj/structure/bed/chair/vehicle_crew/driver_gunner,
+/obj/item/clothing/under/pizza{
+	pixel_y = 10;
+	pixel_x = -5
+	},
+/obj/item/clothing/under/pizza{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/effect/vehicle_roof/pizza_van{
+	icon_state = "front_roof_2"
+	},
+/turf/open/shuttle/vehicle/floor_3_11,
+/area/interior/vehicle/pizza_van)
+"l" = (
+/obj/structure/interior_wall/pizza_van{
+	icon_state = "exterior_3"
+	},
+/obj/effect/vehicle_roof/pizza_van{
+	icon_state = "roof_5"
+	},
+/turf/open/space/basic,
+/area/interior/vehicle/pizza_van)
+"m" = (
+/obj/structure/interior_wall/pizza_van,
+/obj/effect/vehicle_roof/pizza_van{
+	icon_state = "roof_4"
+	},
+/turf/open/space/basic,
+/area/interior/vehicle/pizza_van)
+"n" = (
+/obj/structure/bed/chair/loader_seat{
+	pixel_y = -5
+	},
+/obj/item/clothing/under/pizza{
+	pixel_x = 9;
+	pixel_y = 10
+	},
+/turf/open/shuttle/vehicle/floor_3_12,
+/area/interior/vehicle/pizza_van)
+"r" = (
+/turf/closed/interior/pizza_van{
+	icon_state = "front_3"
+	},
+/area/interior/vehicle/pizza_van)
+"s" = (
+/obj/structure/periscope/interior_viewport/simple/windshield{
+	icon = 'icons/obj/vehicles/interiors/pizza_van_interior.dmi'
+	},
+/obj/effect/vehicle_roof/pizza_van{
+	icon_state = "interior_door"
+	},
+/obj/effect/vehicle_roof/pizza_van{
+	icon_state = "front_roof_1"
+	},
+/turf/open/space/basic,
+/area/interior/vehicle/pizza_van)
+"t" = (
+/obj/item/clothing/under/pizza{
+	pixel_y = 10;
+	pixel_x = 9
+	},
+/turf/open/shuttle/vehicle/med/gray,
+/area/interior/vehicle/pizza_van)
+"u" = (
+/obj/effect/vehicle_roof/pizza_van{
+	icon_state = "roof_2"
+	},
+/turf/open/shuttle/vehicle/med/gray,
+/area/interior/vehicle/pizza_van)
+"B" = (
+/obj/structure/periscope/interior_viewport/simple{
+	pixel_y = 30
+	},
+/obj/structure/bed/chair/comfy/beige,
+/obj/item/stack/sheet/cardboard{
+	layer = 4;
+	pixel_y = 8
+	},
+/obj/structure/closet/crate/freezer,
+/obj/item/pizzabox/random,
+/obj/item/pizzabox/random,
+/obj/item/pizzabox/random,
+/obj/item/pizzabox/random,
+/obj/item/pizzabox/random,
+/obj/item/pizzabox/random,
+/obj/item/pizzabox/random,
+/obj/item/pizzabox/random,
+/obj/item/pizzabox/random,
+/obj/item/pizzabox/random,
+/obj/effect/vehicle_roof/pizza_van{
+	icon_state = "roof_3"
+	},
+/turf/open/shuttle/vehicle/med/gray,
+/area/interior/vehicle/pizza_van)
+"C" = (
+/turf/closed/interior/tank/door/pizza_van/backright,
+/area/interior/vehicle/pizza_van)
+"G" = (
+/turf/closed/interior/pizza_van{
+	icon_state = "front_2"
+	},
+/area/interior/vehicle/pizza_van)
+"J" = (
+/turf/closed/interior/tank/door/pizza_van/backleft,
+/area/interior/vehicle/pizza_van)
+"N" = (
+/turf/closed/interior/pizza_van{
+	icon_state = "exterior_door";
+	alpha = 50;
+	layer = 5.2;
+	pixel_y = 32
+	},
+/area/interior/vehicle/pizza_van)
+"O" = (
+/obj/machinery/telecomms/relay/preset/telecomms/onboard/nondense,
+/turf/closed/interior/pizza_van{
+	icon_state = "back_3"
+	},
+/area/interior/vehicle/pizza_van)
+"T" = (
+/turf/closed/interior/pizza_van{
+	icon_state = "background_2";
+	alpha = 50;
+	layer = 5.2;
+	pixel_y = 32
+	},
+/area/interior/vehicle/pizza_van)
+"U" = (
+/turf/closed/interior/pizza_van{
+	icon_state = "background_3";
+	alpha = 50;
+	layer = 5.2;
+	pixel_y = 32
+	},
+/area/interior/vehicle/pizza_van)
+"V" = (
+/turf/closed/interior/pizza_van{
+	icon_state = "front_1"
+	},
+/area/interior/vehicle/pizza_van)
+"Z" = (
+/obj/structure/periscope/interior_viewport/simple{
+	alpha = 100;
+	pixel_y = -2
+	},
+/obj/structure/bed/chair/comfy/beige{
+	dir = 1
+	},
+/obj/item/stack/sheet/cardboard{
+	layer = 1;
+	pixel_x = 12
+	},
+/obj/item/clothing/under/pizza{
+	pixel_y = 9;
+	pixel_x = 8
+	},
+/turf/open/shuttle/vehicle/med/gray,
+/area/interior/vehicle/pizza_van)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+O
+J
+C
+a
+a
+"}
+(3,1,1) = {"
+a
+m
+u
+t
+T
+a
+"}
+(4,1,1) = {"
+a
+l
+B
+Z
+U
+a
+"}
+(5,1,1) = {"
+a
+s
+j
+n
+N
+a
+"}
+(6,1,1) = {"
+a
+r
+G
+V
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+a
+"}

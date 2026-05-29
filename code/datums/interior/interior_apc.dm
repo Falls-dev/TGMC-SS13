@@ -13,6 +13,15 @@
 /datum/interior/armored/van
 	template = /datum/map_template/interior/van
 
+/datum/interior/armored/box_van
+	template = /datum/map_template/interior/box_van
+
+/datum/interior/armored/pizza_van
+	template = /datum/map_template/interior/pizza_van
+
+/datum/interior/armored/arc
+	template = /datum/map_template/interior/arc
+
 /turf/closed/interior/apc
 	name = "\improper Athena tank interior"
 	icon = 'icons/obj/armored/3x3/apc_interior.dmi'
@@ -106,3 +115,19 @@
 /area/interior/apc
 	name = "APC Interior"
 	icon_state = "shuttle"
+
+/area/interior/vehicle
+	name = "Vehicle Interior"
+	icon_state = "shuttle"
+
+/area/interior/vehicle/van
+	name = "Van Interior"
+
+/area/interior/vehicle/box_van
+	name = "Box Van Interior"
+
+/area/interior/vehicle/pizza_van
+	name = "Pizza Van Interior"
+
+/area/interior/vehicle/arc
+	name = "ARC Interior"

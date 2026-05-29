@@ -205,6 +205,8 @@
 #define TABLE_LAYER 2.8
 #define GIB_LAYER 2.85 // sit on top of tables, but below machines
 #define BELOW_OBJ_LAYER 2.9
+#define ARC_OBJ_BOTTOM_LAYER 2.981
+#define ARC_OBJ_TOP_LAYER 2.982
 #define LOW_ITEM_LAYER 2.95
 //#define OBJ_LAYER 3 //For easy recordkeeping; this is a byond define
 #define UPPER_ITEM_LAYER 3.05
