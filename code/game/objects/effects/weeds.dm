@@ -150,6 +150,9 @@
 	)
 	AddElement(/datum/element/connect_loc, connections)
 
+/obj/alien/weeds/sticky/on_loc_entered(datum/source, atom/movable/crosser)
+	slow_down_crosser(crosser, WEED_SLOWDOWN)
+
 /obj/alien/weeds/sticky/proc/slow_down_crosser(atom/movable/crosser, slow_amount = 1)
 	if(crosser.throwing || crosser.buckled)
 		return
@@ -325,8 +328,10 @@
 	)
 	AddElement(/datum/element/connect_loc, connections)
 
-/obj/alien/weeds/node/sticky/proc/slow_down_crosser(datum/source, atom/movable/crosser)
-	SIGNAL_HANDLER
+/obj/alien/weeds/node/sticky/on_loc_entered(datum/source, atom/movable/crosser)
+	slow_down_crosser(crosser, WEED_SLOWDOWN)
+
+/obj/alien/weeds/node/sticky/proc/slow_down_crosser(atom/movable/crosser, slow_amount = WEED_SLOWDOWN)
 	if(crosser.throwing || crosser.buckled)
 		return
 
