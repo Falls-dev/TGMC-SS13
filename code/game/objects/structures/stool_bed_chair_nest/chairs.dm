@@ -140,9 +140,6 @@
 	color = rgb(255,255,255)
 	hit_sound = 'sound/weapons/bladeslice.ogg'
 
-/obj/structure/bed/chair/comfy/arc
-	layer = BELOW_OBJ_LAYER
-
 /obj/structure/bed/chair/comfy/brown
 	color = rgb(255,113,0)
 

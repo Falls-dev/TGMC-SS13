@@ -35,13 +35,3 @@
 	desc = "State of the art machinery for general overwatch purposes."
 	overwatch_title = "Main"
 
-/obj/machinery/computer/camera_advanced/overwatch/military/arc
-	name = "ARC Overwatch Console"
-	desc = "State of the art machinery for general overwatch purposes."
-	icon = 'icons/obj/machines/computer.dmi'
-	icon_state = "computer_small"
-	screen_overlay = "terminal_misc"
-	density = FALSE
-	circuit = null
-	resistance_flags = RESIST_ALL
-	layer = ARC_OBJ_TOP_LAYER

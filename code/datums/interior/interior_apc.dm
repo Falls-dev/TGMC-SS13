@@ -13,9 +13,6 @@
 /datum/interior/armored/van
 	template = /datum/map_template/interior/van
 
-/datum/interior/armored/arc
-	template = /datum/map_template/interior/arc
-
 /turf/closed/interior/apc
 	name = "\improper Athena tank interior"
 	icon = 'icons/obj/armored/3x3/apc_interior.dmi'
@@ -116,6 +113,3 @@
 
 /area/interior/vehicle/van
 	name = "Van Interior"
-
-/area/interior/vehicle/arc
-	name = "ARC Interior"
