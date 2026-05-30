@@ -13,12 +13,6 @@
 /datum/interior/armored/van
 	template = /datum/map_template/interior/van
 
-/datum/interior/armored/box_van
-	template = /datum/map_template/interior/box_van
-
-/datum/interior/armored/pizza_van
-	template = /datum/map_template/interior/pizza_van
-
 /datum/interior/armored/arc
 	template = /datum/map_template/interior/arc
 
@@ -122,12 +116,6 @@
 
 /area/interior/vehicle/van
 	name = "Van Interior"
-
-/area/interior/vehicle/box_van
-	name = "Box Van Interior"
-
-/area/interior/vehicle/pizza_van
-	name = "Pizza Van Interior"
 
 /area/interior/vehicle/arc
 	name = "ARC Interior"

@@ -36,12 +36,6 @@
 /obj/effect/vehicle_roof/ex_act()
 	return
 
-/obj/structure/interior_wall/box_van
-	icon = 'icons/obj/vehicles/interiors/box_van_interior.dmi'
-
-/obj/structure/interior_wall/pizza_van
-	icon = 'icons/obj/vehicles/interiors/pizza_van_interior.dmi'
-
 /obj/effect/landmark/interior/spawn
 	name = "interior interactable spawner"
 
