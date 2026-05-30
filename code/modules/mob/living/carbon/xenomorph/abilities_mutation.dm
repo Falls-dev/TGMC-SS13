@@ -96,8 +96,8 @@
 	xeno_owner.mutation_toxin_reagent = injected_reagent // Use separate variable to avoid conflicts
 
 /datum/action/ability/xeno_action/mutation/toxin/update_button_icon()
-	var/atom/A = xeno_owner.mutation_toxin_reagent
-	action_icon_state = initial(A.name)
+	var/datum/reagent/toxin/reagent = xeno_owner?.mutation_toxin_reagent || injected_reagent
+	action_icon_state = initial(reagent.name)
 	return ..()
 
 /datum/action/ability/xeno_action/mutation/toxin/action_activate()
