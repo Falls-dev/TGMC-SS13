@@ -172,7 +172,7 @@
 	return
 
 /mob/living/carbon/xenomorph/hivemind/proc/return_to_core()
-	if(!(status_flags & INCORPOREAL) && !TIMER_COOLDOWN_FINISHED(src, COOLDOWN_HIVEMIND_MANIFESTATION))
+	if(!(status_flags & INCORPOREAL) && TIMER_COOLDOWN_FINISHED(src, COOLDOWN_HIVEMIND_MANIFESTATION))
 		do_change_form()
 	for(var/obj/item/explosive/grenade/sticky/sticky_bomb in contents)
 		sticky_bomb.clean_refs()

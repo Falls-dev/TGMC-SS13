@@ -897,7 +897,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		viewsize = zoom_viewsize
 
 	if(zoom) //If we are zoomed out, reset that parameter.
-		if(!TIMER_COOLDOWN_FINISHED(user, COOLDOWN_ZOOM)) //If we are spamming the zoom, cut it out
+		if(TIMER_COOLDOWN_FINISHED(user, COOLDOWN_ZOOM)) //If we are spamming the zoom, cut it out
 			user.visible_message(span_notice("[user] looks up from [zoom_device]."),
 			span_notice("You look up from [zoom_device]."))
 
@@ -937,7 +937,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		user.client.view_size.add(viewsize)
 		change_zoom_offset(user, zoom_offset = tileoffset)
 
-	if(!TIMER_COOLDOWN_FINISHED(user, COOLDOWN_ZOOM))
+	if(TIMER_COOLDOWN_FINISHED(user, COOLDOWN_ZOOM))
 		user.visible_message(span_notice("[user] peers through \the [zoom_device]."),
 		span_notice("You peer through \the [zoom_device]."))
 	zoom = TRUE

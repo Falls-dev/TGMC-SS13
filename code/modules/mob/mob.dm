@@ -1,8 +1,4 @@
 /mob/Destroy()
-	if(client)
-		stack_trace("Mob with client has been deleted.")
-	else if(ckey)
-		stack_trace("Mob without client but with associated ckey has been deleted.")
 	unset_machine()
 	GLOB.mob_list -= src
 	GLOB.dead_mob_list -= src
@@ -12,7 +8,10 @@
 	if(length(observers))
 		for(var/mob/dead/observes AS in observers)
 			observes.reset_perspective(null)
-	ghostize()
+	if(client && key && !isobserver(src))
+		ghostize(FALSE)
+	else if(client)
+		client = null
 	clear_fullscreens()
 	if(mind)
 		mind = null

@@ -65,7 +65,7 @@
 	log_tgui(client,
 		context = "[id]/initialize",
 		window = src)
-	if(!client)
+	if(!client || !isclient(client))
 		return
 	src.initial_assets = assets
 	src.initial_inline_html = inline_html
@@ -108,6 +108,8 @@
 	// Open the window
 	client << browse(html, "window=[id];[options]")
 	// Detect whether the control is a browser
+	if(!isclient(client))
+		return
 	is_browser = winexists(client, id) == "BROWSER"
 	// Instruct the client to signal UI when the window is closed.
 	if(!is_browser)

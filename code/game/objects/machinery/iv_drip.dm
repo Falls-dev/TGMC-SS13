@@ -137,7 +137,7 @@
 		var/amount = beaker.reagents.maximum_volume - beaker.reagents.total_volume
 		amount = min(amount, 4)
 		// If the beaker is full, ping
-		if(amount == 0 && !TIMER_COOLDOWN_FINISHED(src, COOLDOWN_IV_PING))
+		if(amount == 0 && TIMER_COOLDOWN_FINISHED(src, COOLDOWN_IV_PING))
 			visible_message("\The [src] pings.")
 			TIMER_COOLDOWN_START(src, COOLDOWN_IV_PING, 2 SECONDS)
 			return
@@ -153,7 +153,7 @@
 			return
 
 		// If the human is losing too much blood, beep.
-		if(T.blood_volume < BLOOD_VOLUME_SAFE && !TIMER_COOLDOWN_FINISHED(src, COOLDOWN_IV_PING))
+		if(T.blood_volume < BLOOD_VOLUME_SAFE && TIMER_COOLDOWN_FINISHED(src, COOLDOWN_IV_PING))
 			visible_message("\The [src] beeps loudly.")
 			TIMER_COOLDOWN_START(src, COOLDOWN_IV_PING, 2 SECONDS)
 

@@ -64,7 +64,7 @@
 
 /obj/vehicle/ridden/motorbike/relaymove(mob/living/user, direction)
 	if(fuel_count <= 0)
-		if(!TIMER_COOLDOWN_FINISHED(src, COOLDOWN_BIKE_FUEL_MESSAGE))
+		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_BIKE_FUEL_MESSAGE))
 			to_chat(user, span_warning("There is no fuel left!"))
 			TIMER_COOLDOWN_START(src, COOLDOWN_BIKE_FUEL_MESSAGE, 1 SECONDS)
 		return FALSE

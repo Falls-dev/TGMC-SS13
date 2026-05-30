@@ -288,7 +288,7 @@
 	return ..()
 
 /mob/living/carbon/update_tracking(mob/living/carbon/C)
-	if(!hud_used?.SL_locator)
+	if(!C || !hud_used?.SL_locator)
 		return
 	var/atom/movable/screen/LL_dir = hud_used.SL_locator
 

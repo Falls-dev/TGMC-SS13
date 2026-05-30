@@ -30,6 +30,8 @@
 /datum/ai_behavior/spiderling/cleanup_signals()
 	. = ..()
 	UnregisterSignal(mob_parent, list(COMSIG_OBSTRUCTED_MOVE, COMSIG_SPIDERLING_CHANGE_ORDER))
+	if(!escorted_atom)
+		return
 	UnregisterSignal(escorted_atom, list(
 		COMSIG_XENOMORPH_REST,
 		COMSIG_XENOMORPH_UNREST,

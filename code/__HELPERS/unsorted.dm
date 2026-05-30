@@ -96,7 +96,7 @@
 
 /proc/Get_Angle(atom/start, atom/end)//For beams.
 	if(!start || !end)
-		CRASH("Get_Angle called for inexisting atoms: [isnull(start) ? "null" : start] to [isnull(end) ? "null" : end]")
+		return 0
 	if(!start.z)
 		start = get_turf(start)
 		if(!start)

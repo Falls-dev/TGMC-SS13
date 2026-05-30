@@ -267,7 +267,7 @@
 /obj/vehicle/sealed/armored/Bump(atom/A)
 	. = ..()
 	if(HAS_TRAIT(A, TRAIT_STOPS_TANK_COLLISION))
-		if(!TIMER_COOLDOWN_FINISHED(src, COOLDOWN_VEHICLE_CRUSHSOUND))
+		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_VEHICLE_CRUSHSOUND))
 			visible_message(span_danger("[src] is stopped by [A]!"))
 			playsound(A, 'sound/effects/metal_crash.ogg', 45)
 			TIMER_COOLDOWN_START(src, COOLDOWN_VEHICLE_CRUSHSOUND, 1 SECONDS)

@@ -46,7 +46,9 @@
 
 /datum/hud/proc/remove_parallax(mob/viewmob)
 	var/mob/screenmob = viewmob || mymob
-	var/client/C = screenmob.client
+	var/client/C = screenmob?.client
+	if(!C)
+		return
 	C.screen -= (C.parallax_rock)
 	for(var/atom/movable/screen/plane_master/plane_master as anything in screenmob.hud_used.get_true_plane_masters(PLANE_SPACE))
 		if(screenmob != mymob)
@@ -57,7 +59,9 @@
 
 /datum/hud/proc/apply_parallax_pref(mob/viewmob)
 	var/mob/screenmob = viewmob || mymob
-	var/client/C = screenmob.client
+	var/client/C = screenmob?.client
+	if(!C)
+		return FALSE
 /*	if(SSmapping.level_trait(screen_location?.z, ZTRAIT_NOPARALLAX))
 		for(var/atom/movable/screen/plane_master/white_space as anything in get_true_plane_masters(PLANE_SPACE))
 			white_space.hide_plane(screenmob)
