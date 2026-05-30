@@ -134,6 +134,10 @@
 /obj/alien/weeds/footstep_override(atom/movable/source, list/footstep_overrides)
 	footstep_overrides[FOOTSTEP_RESIN] = layer
 
+/obj/alien/weeds/proc/on_loc_entered(datum/source, atom/movable/crosser)
+	SIGNAL_HANDLER
+	return
+
 /obj/alien/weeds/sticky
 	name = "sticky weeds"
 	desc = "A layer of disgusting sticky slime, it feels like it's going to slow your movement down."
@@ -147,7 +151,6 @@
 	AddElement(/datum/element/connect_loc, connections)
 
 /obj/alien/weeds/sticky/proc/slow_down_crosser(atom/movable/crosser, slow_amount = 1)
-	SIGNAL_HANDLER
 	if(crosser.throwing || crosser.buckled)
 		return
 
