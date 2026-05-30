@@ -28,7 +28,7 @@
 	if(target_display)
 		var/datum/progressicon/D = new (target, target_display)
 		LAZYADD(prog_displays, D)
-	if(!bar_tag)
+	if(!bar_tag || !user)
 		return
 	bar = new bar_tag
 	bar.loc = target
