@@ -734,7 +734,7 @@
 	L.reagent_shock_modifier -= PAIN_REDUCTION_MEDIUM
 	if(CHECK_BITFIELD(L.restrained_flags, RESTRAINED_XENO_NEST))
 		L.reagents.remove_all_type(/datum/reagent/toxin, 3*effect_str, 0, 1)
-		if(TIMER_COOLDOWN_FINISHED(L, name) || L.stat == DEAD)
+		if(TIMER_COOLDOWN_RUNNING(L, name) || L.stat == DEAD)
 			return
 		if(L.health < -85)
 			to_chat(L, span_userdanger("You feel a weird sensation from the nest jelly!"))

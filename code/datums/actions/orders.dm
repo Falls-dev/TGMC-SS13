@@ -47,7 +47,7 @@
 	var/mob/living/carbon/human/human = owner
 	if(!istype(human))
 		return
-	if(TIMER_COOLDOWN_FINISHED(human, COOLDOWN_SKILL_ORDERS))
+	if(TIMER_COOLDOWN_RUNNING(human, COOLDOWN_SKILL_ORDERS))
 		button.color = rgb(255,0,0,255)
 	else
 		button.color = rgb(255,255,255,255)

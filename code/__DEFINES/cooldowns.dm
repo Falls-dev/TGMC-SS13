@@ -122,7 +122,7 @@
 /**
  * Stoppable timer cooldowns.
  * Use indexes the same as the regular tiemr cooldowns.
- * They make use of the TIMER_COOLDOWN_FINISHED() and TIMER_COOLDOWN_END() macros the same, just not the TIMER_COOLDOWN_START() one.
+ * They make use of the TIMER_COOLDOWN_RUNNING() and TIMER_COOLDOWN_END() macros the same, just not the TIMER_COOLDOWN_START() one.
  * A bit more expensive than the regular timers, but can be reset before they end and the time left can be checked.
  */
 
@@ -130,7 +130,7 @@
 
 #define S_TIMER_COOLDOWN_RESET(cd_source, cd_index) reset_cooldown(cd_source, cd_index)
 
-#define S_TIMER_COOLDOWN_TIMELEFT(cd_source, cd_index) (timeleft(TIMER_COOLDOWN_FINISHED(cd_source, cd_index)))
+#define S_TIMER_COOLDOWN_TIMELEFT(cd_source, cd_index) (timeleft(TIMER_COOLDOWN_RUNNING(cd_source, cd_index)))
 
 
 /**

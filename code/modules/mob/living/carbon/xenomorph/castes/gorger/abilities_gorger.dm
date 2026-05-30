@@ -267,7 +267,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(TIMER_COOLDOWN_FINISHED(owner, REJUVENATE_MISCLICK_CD))
+	if(TIMER_COOLDOWN_RUNNING(owner, REJUVENATE_MISCLICK_CD))
 		return FALSE
 
 /datum/action/ability/activable/xeno/rejuvenate/use_ability(atom/A)

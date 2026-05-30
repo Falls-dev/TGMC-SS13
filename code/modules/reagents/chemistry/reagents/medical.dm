@@ -342,7 +342,7 @@
 	return ..()
 
 /datum/reagent/medicine/dexalinplus/on_mob_add(mob/living/L, metabolism)
-	if(TIMER_COOLDOWN_FINISHED(L, name))
+	if(TIMER_COOLDOWN_RUNNING(L, name))
 		return
 	L.adjust_stamina_loss(-100*effect_str)
 	to_chat(L, span_userdanger("You feel a complete lack of fatigue, so relaxing!"))
@@ -511,12 +511,12 @@
 
 /datum/reagent/medicine/adrenaline/on_mob_add(mob/living/carbon/human/L, metabolism)
 	var/mob/living/carbon/human/H = L
-	if(TIMER_COOLDOWN_FINISHED(L, COOLDOWN_STAMINA))
+	if(TIMER_COOLDOWN_RUNNING(L, COOLDOWN_STAMINA))
 		return
 	L.adjust_stamina_loss(-30 * effect_str)
 	to_chat(L, span_userdanger("You feel a burst of energy as the adrenaline courses through you! Time to go fast!"))
 
-	if(TIMER_COOLDOWN_FINISHED(L, COOLDOWN_CRIT) || L.stat == DEAD)
+	if(TIMER_COOLDOWN_RUNNING(L, COOLDOWN_CRIT) || L.stat == DEAD)
 		return
 	if(L.health < H.health_threshold_crit && volume >= 2)
 		to_chat(L, span_userdanger("Heart explosion! Power running in your veins!"))

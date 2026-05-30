@@ -1015,7 +1015,7 @@ to_chat will check for valid clients itself already so no need to double check f
 // *********** Facehuggers proc
 // ***************************************
 /datum/hive_status/proc/can_spawn_as_hugger(mob/dead/observer/user)
-	if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_SENTIENT_HUGGER))
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_SENTIENT_HUGGER))
 		return FALSE
 
 	if(!user.client?.prefs || is_banned_from(user.ckey, ROLE_XENOMORPH))

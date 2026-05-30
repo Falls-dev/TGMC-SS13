@@ -559,7 +559,7 @@
 
 /obj/item/clothing/head/hachimaki/attack_self(mob/user)
 	var/mob/living/carbon/human/activator = user
-	if(TIMER_COOLDOWN_FINISHED(user, "Banzai"))
+	if(TIMER_COOLDOWN_RUNNING(user, "Banzai"))
 		user.balloon_alert(user, "You used that emote too recently")
 		return
 	TIMER_COOLDOWN_START(user, "Banzai", 60 SECONDS)
