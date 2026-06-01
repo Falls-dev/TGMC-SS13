@@ -66,6 +66,7 @@
 	// The timer is needed for when the signal is sent
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_START, src)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_AI_MINION_RALLY, src)
+	global_rally_zombies(src, TRUE)
 	log_game("[key_name(reason)] has enabled the nuke at [AREACOORD(src)]")
 
 ///Disables nuke timer

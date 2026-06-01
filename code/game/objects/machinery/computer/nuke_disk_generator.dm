@@ -199,6 +199,7 @@
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_DISK_PROGRESS, src)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_AI_MINION_RALLY, src)
+	global_rally_zombies(src, TRUE)
 
 	visible_message(span_notice("[src] beeps as it's program requires attention."))
 
