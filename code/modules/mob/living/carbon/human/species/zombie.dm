@@ -153,6 +153,33 @@
 	var/datum/action/ability/emit_gas/emit_gas = new
 	emit_gas.give_action(H)
 
+/datum/species/zombie/hunter
+	name = "Hunter zombie"
+	total_health = 175
+	slowdown = 0
+	claw_type = /obj/item/weapon/zombie_claw/no_zombium
+
+/datum/species/zombie/hunter/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
+	. = ..()
+	H.color = COLOR_ALMOST_BLACK
+
+/datum/species/zombie/hunter/post_species_loss(mob/living/carbon/human/H, datum/species/old_species)
+	. = ..()
+	H.color = null
+
+/datum/species/zombie/boomer
+	name = "Boomer zombie"
+	heal_rate = 20
+	total_health = 250
+
+/datum/species/zombie/boomer/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
+	. = ..()
+	H.color = COLOR_TOXIN_HUSKPOWDER
+
+/datum/species/zombie/boomer/post_species_loss(mob/living/carbon/human/H, datum/species/old_species)
+	. = ..()
+	H.color = null
+
 /particles/smoker_zombie
 	icon = 'icons/effects/particles/smoke.dmi'
 	icon_state = list("smoke_1" = 1, "smoke_2" = 1, "smoke_3" = 2)
