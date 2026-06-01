@@ -76,6 +76,7 @@
 #define AMMO_SOUND_PITCH (1<<16)
 ///Used to identify ammo from sentry guns and other other automated sources
 #define AMMO_SENTRY (1<<17)
+#define AMMO_SKIPS_ZOMBIE (1<<18)
 
 //Gun defines for gun related thing. More in the projectile folder.
 //gun_features_flags

@@ -550,6 +550,8 @@ SUBSYSTEM_DEF(timer)
  * Returns a string of the type of the callback for this timer
  */
 /datum/timedevent/proc/getcallingtype()
+	if(!callBack || !callBack.object)
+		return "NULL_OBJECT"
 	. = "ERROR"
 	if (callBack.object == GLOBAL_PROC)
 		. = "GLOBAL_PROC"
