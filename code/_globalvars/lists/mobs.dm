@@ -148,6 +148,7 @@ GLOBAL_LIST_INIT(xeno_types_tier_two, list(
 	/datum/xeno_caste/hivelord,
 	/datum/xeno_caste/hunter,
 	/datum/xeno_caste/panther,
+	/datum/xeno_caste/pyrogen,
 	/datum/xeno_caste/puppeteer,
 	/datum/xeno_caste/spitter,
 	/datum/xeno_caste/warrior,
