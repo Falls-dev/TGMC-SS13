@@ -36,6 +36,7 @@ SUBSYSTEM_DEF(persistence)
 		/datum/season_datum/weapons/guns/copsandrobbers_seasonal,
 		/datum/season_datum/weapons/guns/shotgun_seasonal,
 		/datum/season_datum/weapons/guns/lever_seasonal,
+		/datum/season_datum/weapons/guns/ICC_scum,
 		),
 		SEASONAL_HEAVY = list(
 		/datum/season_datum/weapons/guns/heavy_defualt,
@@ -303,6 +304,22 @@ SUBSYSTEM_DEF(persistence)
 		/obj/item/ammo_magazine/shotgun/mbx900 = -1,
 		/obj/item/ammo_magazine/shotgun/mbx900/buckshot = -1,
 		/obj/item/ammo_magazine/shotgun/mbx900/tracking = -1,
+		)
+
+/datum/season_datum/weapons/guns/ICC_scum
+	name = "ICC"
+	description = "Several types of weapons from these scum have been added to the vendor: L-4034, ML-41, L-11, L-15 and lMG-D"
+	item_list = list(
+		/obj/item/weapon/gun/shotgun/pump/trenchgun = 3,
+		/obj/item/weapon/gun/rifle/icc_autoshotgun = 2,
+		/obj/item/ammo_magazine/rifle/icc_autoshotgun = -1,
+		/obj/item/ammo_magazine/rifle/icc_autoshotgun/frag = -1,
+		/obj/item/weapon/gun/rifle/icc_sharpshooter = 2,
+		/obj/item/ammo_magazine/rifle/icc_sharpshooter = -1,
+		/obj/item/weapon/gun/rifle/icc_battlecarbine = 3,
+		/obj/item/ammo_magazine/rifle/icc_battlecarbine = -1,
+		/obj/item/weapon/gun/rifle/lmg_d = 2,
+		/obj/item/ammo_magazine/rifle/lmg_d = -1,
 		)
 
 // Heavy Weapons Seasonals //
