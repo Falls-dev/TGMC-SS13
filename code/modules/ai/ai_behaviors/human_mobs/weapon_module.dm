@@ -269,8 +269,9 @@
 	var/dist = get_dist(target, mob_parent)
 	if(dist > target_distance)
 		return AI_FIRE_OUT_OF_RANGE
-	//dist 1 has issues with LOS checks, causing failure to fire when being hit diagonally past a wall
-	if((dist > 1) && !line_of_sight(mob_parent, target)) //todo: This doesnt check if we can actually shoot past stuff in the line, but also checking path seems excessive
+	if(!line_of_sight(mob_parent, target))
+		return AI_FIRE_NO_LOS
+	if(check_path(mob_parent, target, PASS_PROJECTILE|PASS_MOB) != get_turf(target))
 		return AI_FIRE_NO_LOS
 
 	//ammo_datum_type is always populated, with the last loaded ammo type. This shouldnt be an issue since we check ammo first

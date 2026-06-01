@@ -880,6 +880,9 @@ So if we are on the 32th absolute pixel coordinate we are on tile 1, but if we a
 	if(proj.firer && proj.firer.faction == faction)
 		damage *= proj.friendly_fire_multiplier
 
+	if((proj.ammo.ammo_behavior_flags & AMMO_SKIPS_ZOMBIE) && iszombie(src))
+		return
+
 	damage = check_shields(COMBAT_PROJ_ATTACK, damage, proj.ammo.armor_type, FALSE, proj.penetration)
 	if(!damage)
 		proj.ammo.on_shield_block(src, proj)

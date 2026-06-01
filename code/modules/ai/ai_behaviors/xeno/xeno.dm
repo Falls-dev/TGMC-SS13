@@ -34,8 +34,8 @@
 			continue
 		//xeno_action/activable is activated with a different proc for keybinded actions, so we gotta use the correct proc
 		if(istype(action, /datum/action/ability/activable))
-			var/datum/action/ability/activable/xeno_action = action
-			xeno_action.use_ability(atom_to_walk_to)
+			var/datum/action/ability/activable/activable_action = action
+			activable_action.use_ability(atom_to_walk_to)
 		else
 			action.action_activate()
 	return ..()
