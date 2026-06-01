@@ -1,0 +1,182 @@
+///Rallies nearby zombies
+/proc/global_rally_zombies(atom/rally_point, global_rally = FALSE)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_AI_ZOMBIE_RALLY, rally_point, global_rally)
+
+/datum/action/rally_zombie
+	name = "Rally Zombies"
+	action_icon_state = "rally_minions"
+	action_icon = 'icons/Xeno/actions/general.dmi'
+
+/datum/action/rally_zombie/action_activate()
+	owner.balloon_alert(owner, "Zombies Rallied!")
+	global_rally_zombies(owner)
+	var/datum/action/set_agressivity/set_agressivity = owner.actions_by_path[/datum/action/set_agressivity]
+	if(set_agressivity)
+		SEND_SIGNAL(owner, COMSIG_ESCORTING_ATOM_BEHAVIOUR_CHANGED, set_agressivity.zombies_agressive) //New escorting ais should have the same behaviour as old one
+
+/datum/action/set_agressivity
+	name = "Set other zombie behavior"
+	action_icon_state = "minion_agressive"
+	action_icon = 'icons/Xeno/actions/general.dmi'
+	///If zombies should be agressive
+	var/zombies_agressive = TRUE
+
+/datum/action/set_agressivity/action_activate()
+	zombies_agressive = !zombies_agressive
+	SEND_SIGNAL(owner, COMSIG_ESCORTING_ATOM_BEHAVIOUR_CHANGED, zombies_agressive)
+	update_button_icon()
+
+/datum/action/set_agressivity/update_button_icon()
+	action_icon_state = zombies_agressive ? "minion_agressive" : "minion_passive"
+	return ..()
+
+/obj/item/weapon/zombie_claw
+	name = "claws"
+	hitsound = 'sound/weapons/slice.ogg'
+	icon_state = "zombie_claw_left"
+	base_icon_state = "zombie_claw"
+	force = 25
+	sharp = IS_SHARP_ITEM_BIG
+	edge = TRUE
+	attack_verb = list("claws", "slashes", "tears", "rips", "dices", "cuts", "bites")
+	item_flags = CAN_BUMP_ATTACK|DELONDROP
+	attack_speed = 8 //Same as unarmed delay
+	pry_capable = IS_PRY_CAPABLE_FORCE
+	///How much zombium are transferred per hit. Set to zero to remove transmission
+	var/zombium_per_hit = 7
+
+/obj/item/weapon/zombie_claw/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+
+/obj/item/weapon/zombie_claw/melee_attack_chain(mob/user, atom/target, params, rightclick)
+	. = ..()
+	if(!.)
+		return
+	target.attack_zombie(user, src, params, rightclick)
+
+/obj/item/weapon/zombie_claw/strong
+	force = 35
+
+/obj/item/weapon/zombie_claw/tank
+	attack_speed = 12
+	force = 40
+
+/obj/item/weapon/zombie_claw/no_zombium
+	zombium_per_hit = 0
+
+/obj/item/weapon/zombie_claw/equipped(mob/user, slot)
+	. = ..()
+	if(slot == SLOT_L_HAND)
+		icon_state = "[base_icon_state]_right"
+	else if(slot == SLOT_R_HAND)
+		icon_state = "[base_icon_state]_left"
+
+/**
+ * Any special attack by zombie behavior
+ * Called after melee_attack_chain if it returns true
+*/
+/atom/proc/attack_zombie(mob/living/carbon/human/zombie, obj/item/weapon/zombie_claw/claw, params, rightclick)
+	return
+
+/obj/machinery/door/attack_zombie(mob/living/carbon/human/zombie, obj/item/weapon/zombie_claw/claw, params, rightclick)
+	if(!density)
+		return
+	if(zombie.do_actions)
+		return
+	if(locked)
+		to_chat(zombie, span_warning("\The [src] is bolted down tight."))
+		return
+	if(welded)
+		to_chat(zombie, span_warning("\The [src] is welded shut."))
+		return
+
+	balloon_alert_to_viewers("prying open [src]...")
+	if(!do_after(zombie, 4 SECONDS, IGNORE_HELD_ITEM, src))
+		return
+	playsound(zombie.loc, 'sound/effects/metal_creaking.ogg', 25, 1)
+
+	if(!density || operating) //Make sure it's still closed
+		return
+	zombie.changeNext_move(claw.attack_speed)
+	open(TRUE)
+
+/obj/machinery/power/apc/attack_zombie(mob/living/carbon/human/zombie, obj/item/weapon/zombie_claw/claw, params, rightclick)
+	zombie.do_attack_animation(src, ATTACK_EFFECT_CLAW)
+	zombie.visible_message(span_danger("[zombie] slashes \the [src]!"), \
+	span_danger("We slash \the [src]!"), null, 5)
+	playsound(loc, SFX_ALIEN_CLAW_METAL, 25, 1)
+
+	var/allcut = wires.is_all_cut()
+
+	if(beenhit >= pick(3, 4) && !CHECK_BITFIELD(machine_stat, PANEL_OPEN))
+		ENABLE_BITFIELD(machine_stat, PANEL_OPEN)
+		update_appearance()
+		visible_message(span_danger("\The [src]'s cover swings open, exposing the wires!"), null, null, 5)
+
+	else if(CHECK_BITFIELD(machine_stat, PANEL_OPEN) && !allcut)
+		wires.cut_all()
+		update_appearance()
+		visible_message(span_danger("\The [src]'s wires snap apart in a rain of sparks!"), null, null, 5)
+	else
+		beenhit += 1
+	zombie.changeNext_move(claw.attack_speed)
+	zombie.do_attack_animation(src, used_item = claw)
+
+/obj/machinery/nuclearbomb/attack_zombie(mob/living/carbon/human/zombie, obj/item/weapon/zombie_claw/claw, params, rightclick)
+	if(!timer_enabled)
+		to_chat(zombie, span_warning("\The [name] isn't active."))
+		return
+
+	zombie.visible_message(span_boldwarning("[zombie.name] begins to slash at the nuke."),
+	"Starts slashing at the nuke.")
+	if(!do_after(zombie, 5 SECONDS, NONE, src, BUSY_ICON_DANGER, BUSY_ICON_HOSTILE))
+		return
+	disable(key_name(zombie))
+
+/mob/living/carbon/human/attack_zombie(mob/living/carbon/human/zombie, obj/item/weapon/zombie_claw/claw, params, rightclick)
+	if(stat == DEAD)
+		return
+	if(!claw.zombium_per_hit)
+		return
+	if(species.species_flags & NO_CHEM_METABOLIZATION)
+		apply_damage(modify_by_armor(claw.zombium_per_hit * ZOMBIUM_ROBOT_EFFECT_MULTIPLIER, BIO, 0, zombie.get_limbzone_target()), BURN, zombie.get_limbzone_target())//Zombium is corrosive to machines
+	else
+		reagents.add_reagent(/datum/reagent/zombium, modify_by_armor(claw.zombium_per_hit, BIO, 0, zombie.get_limbzone_target()))
+
+/obj/structure/barricade/attack_zombie(mob/living/carbon/human/zombie, obj/item/weapon/zombie_claw/claw, params, rightclick)
+	if(!is_wired)
+		return
+	if(zombie.a_intent != INTENT_HARM)
+		return
+	balloon_alert(zombie, "barbed wire slices into you!")
+	zombie.apply_damage(20, blocked = MELEE , sharp = TRUE, updating_health = TRUE)//Higher damage since zombies have high healing rate, and theyre using their hands
+
+/obj/machinery/vending/attack_zombie(mob/living/carbon/human/zombie, obj/item/weapon/zombie_claw/claw, params, rightclick)
+	if(tipped_level == 2)
+		return
+	tip_over()
+
+/obj/structure/razorwire/attack_zombie(mob/living/carbon/human/zombie, obj/item/weapon/zombie_claw/claw, params, rightclick)
+	if(zombie.a_intent != INTENT_HARM)
+		return
+	zombie.apply_damage(ZOMBIE_RAZORWIRE_DAMAGE, blocked = MELEE, updating_health = TRUE)//Less health but more damage
+	update_appearance(UPDATE_ICON)
+
+/particles/smoker_zombie
+	icon = 'icons/effects/particles/smoke.dmi'
+	icon_state = list("smoke_1" = 1, "smoke_2" = 1, "smoke_3" = 2)
+	width = 100
+	height = 100
+	count = 5
+	spawning = 4
+	lifespan = 9
+	fade = 10
+	grow = 0.2
+	velocity = list(0, 0)
+	position = generator(GEN_CIRCLE, 10, 10, NORMAL_RAND)
+	drift = generator(GEN_VECTOR, list(0, -0.15), list(0, 0.15))
+	gravity = list(0, 0.4)
+	scale = generator(GEN_VECTOR, list(0.3, 0.3), list(0.9,0.9), NORMAL_RAND)
+	rotation = 0
+	spin = generator(GEN_NUM, 10, 20)

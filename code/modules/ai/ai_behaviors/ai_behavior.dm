@@ -24,8 +24,6 @@ Registers signals, handles the pathfinding element addition/removal alongside ma
 	var/lower_engage_dist = 1
 	///How far away we are happy to stray from our escort target
 	var/upper_escort_dist = 3
-	///Legacy xeno child AIs tune this separately from the lower escort distance.
-	var/escort_upper_maintain_dist = 3
 	///Prob chance of sidestepping (left or right) when distance maintained with target
 	var/sidestep_prob = 0
 	///Current node to use for calculating action states: this is the mob's node
@@ -506,14 +504,8 @@ These are parameter based so the ai behavior can choose to (un)register the sign
 	if(current_action == MOVING_TO_ATOM && (atom_to_walk_to == combat_target))
 		max_range = upper_engage_dist
 		min_range = lower_engage_dist
-	if(!mob_parent || !atom_to_walk_to)
-		return
-	var/turf/mob_turf = get_turf(mob_parent)
-	var/turf/target_turf = get_turf(atom_to_walk_to)
-	if(!mob_turf || !target_turf)
-		return
 	//An actual accurate angle, unlike get_dir
-	var/dir_to_target = angle2dir(Get_Angle(mob_turf, target_turf))
+	var/dir_to_target = angle2dir(Get_Angle(get_turf(mob_parent), get_turf(atom_to_walk_to)))
 	var/list/dir_options = list()
 
 	var/in_optimal = (dist_to_target >= min_range) && (dist_to_target <= max_range)
@@ -539,13 +531,13 @@ These are parameter based so the ai behavior can choose to (un)register the sign
 /datum/ai_behavior/proc/ai_complete_move(move_dir, try_sidestep = TRUE)
 	var/turf/new_loc = get_step(mob_parent, move_dir)
 	if(new_loc?.atom_flags & AI_BLOCKED)
-		move_dir = pick(LeftAndRightOfDir(move_dir, FALSE, TRUE))
+		move_dir = pick(LeftAndRightOfDir(move_dir, always_diag = TRUE))
 		new_loc = get_step(mob_parent, move_dir)
 		if(new_loc?.atom_flags & AI_BLOCKED || !can_cross_lava_turf(new_loc))
 			return
 	if(!mob_parent.Move(new_loc, move_dir))
 		if(!(SEND_SIGNAL(mob_parent, COMSIG_OBSTRUCTED_MOVE, move_dir) & COMSIG_OBSTACLE_DEALT_WITH) && try_sidestep)
-			ai_complete_move(pick(LeftAndRightOfDir(move_dir, FALSE, TRUE)), FALSE)
+			ai_complete_move(pick(LeftAndRightOfDir(move_dir, always_diag = TRUE)), FALSE)
 		return
 	if(ISDIAGONALDIR(move_dir))
 		mob_parent.next_move_slowdown += (DIAG_MOVEMENT_ADDED_DELAY_MULTIPLIER - 1) * mob_parent.cached_multiplicative_slowdown
@@ -673,3 +665,4 @@ These are parameter based so the ai behavior can choose to (un)register the sign
 		atom_to_walk_to = null
 		if(current_action == MOVING_TO_ATOM && need_new_state)
 			look_for_new_state()
+
