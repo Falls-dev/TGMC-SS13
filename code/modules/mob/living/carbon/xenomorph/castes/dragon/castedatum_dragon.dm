@@ -26,7 +26,7 @@
 
 	// *** Evolution *** //
 	maximum_active_caste = 1
-	evolve_min_xenos = 16
+	evolve_min_xenos = 8
 	death_evolution_delay = 15 MINUTES
 
 	// *** Flags *** //
