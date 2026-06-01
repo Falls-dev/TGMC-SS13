@@ -28,10 +28,8 @@
 	// *** Evolution *** //
 	evolution_threshold = 900
 
-	// deevolves_to = /mob/living/carbon/xenomorph/runner
-
 	// *** Flags *** //
-	caste_flags = CASTE_EVOLUTION_ALLOWED|CASTE_FIRE_IMMUNE // CASTE_MUTATIONS_ALLOWED
+	caste_flags = CASTE_EVOLUTION_ALLOWED|CASTE_FIRE_IMMUNE
 	can_flags = parent_type::can_flags|CASTE_CAN_BE_GIVEN_PLASMA
 
 	// *** Defense *** //
@@ -54,12 +52,6 @@
 	///multiplier on plasma amount vs damage that is recieved on attack
 	var/plasma_damage_dealt_mult = 2.5
 
-	// Я хз где мутации
-	//mutations = list(
-	//	/datum/mutation_upgrade/shell/flame_cloak,
-	//	/datum/mutation_upgrade/spur/only_fire,
-	//	/datum/mutation_upgrade/veil/burnt_wounds
-	//)
 
 /datum/xeno_caste/pyrogen/on_caste_applied(mob/xenomorph)
 	. = ..()

@@ -30,9 +30,9 @@
 	death_evolution_delay = 15 MINUTES
 
 	// *** Flags *** //
-	caste_flags = CASTE_FIRE_IMMUNE|CASTE_IS_INTELLIGENT|CASTE_INSTANT_EVOLUTION|CASTE_LEADER_TYPE // CASTE_MUTATIONS_ALLOWED
+	caste_flags = CASTE_FIRE_IMMUNE|CASTE_IS_INTELLIGENT|CASTE_INSTANT_EVOLUTION|CASTE_LEADER_TYPE
 	can_flags = parent_type::can_flags|CASTE_CAN_CORRUPT_GENERATOR
-	caste_traits = list(TRAIT_STAGGERIMMUNE, TRAIT_SLOWDOWNIMMUNE, TRAIT_STUNIMMUNE) //TRAIT_CAN_DISABLE_MINER, TRAIT_CAN_TEAR_HOLE
+	caste_traits = list(TRAIT_STAGGERIMMUNE, TRAIT_SLOWDOWNIMMUNE, TRAIT_STUNIMMUNE)
 
 	// *** Defense *** //
 	soft_armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 45, BIO = 60, FIRE = 200, ACID = 60)
@@ -59,12 +59,6 @@
 		/datum/action/ability/xeno_action/blessing_menu,
 	)
 
-	// Я не нашёл где находятся мутации
-	//mutations = list(
-	//	/datum/mutation_upgrade/shell/regenerative_armor,
-	//	/datum/mutation_upgrade/spur/breath_of_variety,
-	//	/datum/mutation_upgrade/veil/benevolence
-	//)
 
 /datum/xeno_caste/dragon/normal
 	upgrade = XENO_UPGRADE_NORMAL

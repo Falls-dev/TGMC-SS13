@@ -18,7 +18,6 @@
 	plasma_icon_state = "fury"
 	max_health = 365
 	evolution_threshold = 225
-
 	caste_flags = CASTE_INNATE_PLASMA_REGEN|CASTE_PLASMADRAIN_IMMUNE|CASTE_EVOLUTION_ALLOWED
 
 	soft_armor = list(MELEE = 20, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 10, BIO = 20, FIRE = 20, ACID = 20)
@@ -42,6 +41,7 @@
 		/datum/action/ability/activable/xeno/articulate,
 		/datum/action/ability/activable/xeno/puppet_blessings,
 	)
+
 
 /datum/xeno_caste/puppeteer/normal
 	upgrade = XENO_UPGRADE_NORMAL
