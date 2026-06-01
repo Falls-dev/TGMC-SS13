@@ -15,7 +15,7 @@
 	if(!istype(owner))
 		hud_data = new()
 	else
-		hud_data = owner.species.hud
+		hud_data = owner.species?.hud || new()
 
 	if(hud_data.icon)
 		ui_style = hud_data.icon
