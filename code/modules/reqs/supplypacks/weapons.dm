@@ -7,6 +7,11 @@
 	contains = list(/obj/item/weapon/gun/energy/lasgun/lasrifle/tesla)
 	cost = 600
 
+/datum/supply_packs/weapons/e50
+	name = "E-50 laser emitter"
+	contains = list(/obj/item/weapon/gun/energy/lasgun/lasrifle/e50)
+	cost = 400
+
 /datum/supply_packs/weapons/tx55
 	name = "AR-55 OICW rifle"
 	contains = list(/obj/item/weapon/gun/rifle/tx55)

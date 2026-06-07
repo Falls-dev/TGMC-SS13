@@ -15,6 +15,7 @@ GLOBAL_LIST_INIT(engineer_gear_listed_products, list(
 	/obj/item/detpack = list(CAT_ENGSUP, "Detonation pack", 2, "orange3"),
 	/obj/item/tesla_turret = list(CAT_ENGSUP, "Tesla Turret", 20, "blue"),
 	/obj/item/weapon/gun/hsg102 = list(CAT_ENGSUP, "HSG-102", 35, "blue"),
+	/obj/item/weapon/gun/energy/lasgun/lasrifle/e50 = list(CAT_ENGSUP, "E-50 laser emitter", 40, "blue"),
 	/obj/item/ammo_magazine/hsg102 = list(CAT_ENGSUP, "HSG-102 Ammo box", 4, "orange2"),
 	/obj/structure/closet/crate/uav_crate = list(CAT_ENGSUP, "Iguana Unmanned Vehicle", 25, "blue"),
 	/obj/structure/closet/crate/uav_crate/medium = list(CAT_ENGSUP, "Gecko Unmanned Vehicle", 28, "blue"),

@@ -1335,3 +1335,33 @@
 
 /datum/ammo/energy/lasgun/marine/weakening/pocket
 	plasma_drain = 80
+
+// E-50 laser emitter
+/obj/item/weapon/gun/energy/lasgun/lasrifle/e50
+	name = "\improper E-50 laser emitter"
+	desc = "A heavy laser emitter cannon. Devastating at range and liable to set the ground ablaze, but each shot drains a TerraGov power cell dry in short order."
+	icon = 'icons/obj/items/gun/energy64.dmi'
+	icon_state = "e50"
+	worn_icon_state = "e50"
+	inhand_x_dimension = 64
+	inhand_y_dimension = 32
+	worn_icon_list = list(
+		slot_l_hand_str = 'icons/mob/inhands/gun/energy_lefthand_64.dmi',
+		slot_r_hand_str = 'icons/mob/inhands/gun/energy_righthand_64.dmi',
+	)
+	reload_sound = 'sound/weapons/guns/interact/standard_laser_rifle_reload.ogg'
+	fire_sound = 'sound/weapons/guns/fire/laser3.ogg'
+	ammo_datum_type = /datum/ammo/energy/emitter/e50
+	default_ammo_type = /obj/item/cell/lasgun/lasrifle
+	allowed_ammo_types = list(/obj/item/cell/lasgun/lasrifle, /obj/item/cell/lasgun/lasrifle/recharger)
+	rounds_per_shot = 150
+	equip_slot_flags = ITEM_SLOT_BACK
+	w_class = WEIGHT_CLASS_BULKY
+	gun_features_flags = GUN_WIELDED_FIRING_ONLY|GUN_ENERGY|GUN_AMMO_COUNTER|GUN_AMMO_COUNT_BY_SHOTS_REMAINING|GUN_NO_PITCH_SHIFT_NEAR_EMPTY|GUN_SHOWS_AMMO_REMAINING
+	muzzle_flash_color = COLOR_VIBRANT_LIME
+	max_shots = 4
+	fire_delay = 4 SECONDS
+	wield_delay = 0.7 SECONDS
+	scatter_unwielded = 20
+	accuracy_mult_unwielded = 0.5
+	damage_falloff_mult = 0.1
