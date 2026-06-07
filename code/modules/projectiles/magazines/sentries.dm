@@ -41,6 +41,13 @@
 	max_rounds = 50
 	default_ammo = /datum/ammo/bullet/turret/sniper
 
+/obj/item/ammo_magazine/sentry/sniper/pea
+	name = "\improper Магазин PE-A (GOROH)"
+	desc = "Коробка заполненная горохом. Вставьте в горохострел в случае отстутсвия боеприпасов."
+	icon_state = "sentry_pea"
+	max_rounds = 60
+	default_ammo = /datum/ammo/bullet/turret/sniper/pea
+
 /obj/item/ammo_magazine/sentry/shotgun
 	name = "\improper Магазин TUR-SH (12G)"
 	desc = "Коробчатый магазин на 75 специализированных патронов 12 калибра для турели \"Бык\". Вставьте в порт турели в случае отстутсвия боеприпасов."
