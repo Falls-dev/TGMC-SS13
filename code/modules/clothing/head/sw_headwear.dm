@@ -66,14 +66,14 @@
 /obj/item/clothing/head/sw/helmet/replicant/legion501
 	name = "\improper 501st Legion clone trooper helmet"
 	desc = "A phase II helmet bearing the blue markings of the 501st Legion."
-	icon_state = "replicant_501st"
-	worn_icon_state = "replicant_501st"
+	icon_state = "replicant2_501st"
+	worn_icon_state = "replicant2_501st"
 
 /obj/item/clothing/head/sw/helmet/replicant/battalion212
 	name = "\improper 212th Battalion clone trooper helmet"
 	desc = "A phase II helmet bearing the orange markings of the 212th Attack Battalion."
-	icon_state = "replicant_212th"
-	worn_icon_state = "replicant_212th"
+	icon_state = "replicant2_212th"
+	worn_icon_state = "replicant2_212th"
 
 /obj/item/clothing/head/sw/helmet/replicant/scout
 	name = "\improper Clone scout trooper helmet"
