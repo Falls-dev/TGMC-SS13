@@ -137,6 +137,10 @@
 		/obj/item/armor_module/armor/legs/marine/ranger,
 		/obj/item/armor_module/armor/arms/marine/ranger,
 
+		/obj/item/armor_module/armor/chest/marine/mjolnir,
+		/obj/item/armor_module/armor/arms/marine/mjolnir,
+		/obj/item/armor_module/armor/legs/marine/mjolnir,
+
 		/obj/item/armor_module/armor/chest/marine/kabuto,
 		/obj/item/armor_module/armor/legs/marine/kabuto,
 		/obj/item/armor_module/armor/arms/marine/kabuto,

@@ -768,8 +768,8 @@
 		to_chat(user, span_notice("You refill [FT] with [lowertext(FT.caliber)]."))
 		FT.update_icon()
 
-	else if(istype(I, /obj/item/weapon/twohanded/rocketsledge))
-		var/obj/item/weapon/twohanded/rocketsledge/RS = I
+	else if(istype(I, /obj/item/weapon/twohanded/sledgehammer/rocketsledge))
+		var/obj/item/weapon/twohanded/sledgehammer/rocketsledge/RS = I
 		if(RS.reagents.get_reagent_amount(/datum/reagent/fuel) == RS.max_fuel || !reagents.total_volume)
 			return ..()
 

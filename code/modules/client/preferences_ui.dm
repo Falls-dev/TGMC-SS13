@@ -140,6 +140,7 @@
 			data["tgui_input"] = tgui_input
 			data["tgui_input_big_buttons"] = tgui_input_big_buttons
 			data["tgui_input_buttons_swap"] = tgui_input_buttons_swap
+			data["auto_open_changelogs"] = auto_open_changelogs
 			data["clientfps"] = clientfps
 			data["chat_on_map"] = chat_on_map
 			data["max_chat_length"] = max_chat_length
@@ -847,6 +848,9 @@
 
 		if("tgui_input_buttons_swap")
 			tgui_input_buttons_swap = !tgui_input_buttons_swap
+
+		if("auto_open_changelogs")
+			auto_open_changelogs = !auto_open_changelogs
 
 		if("clientfps")
 			var/desiredfps = text2num(params["newValue"])

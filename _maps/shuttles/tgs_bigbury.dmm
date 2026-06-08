@@ -337,13 +337,9 @@
 /turf/open/floor/mainship/orange/full,
 /area/shuttle/canterbury)
 "bs" = (
-/obj/machinery/door/window{
-	dir = 8
-	},
-/turf/open/floor/mainship/red{
-	dir = 1
-	},
-/area/shuttle/canterbury)
+/obj/effect/turf_decal/warning_stripes/leader,
+/turf/open/floor/mainship/blue/full,
+/area/shuttle/canterbury/cic)
 "bt" = (
 /obj/machinery/marine_selector/gear/engi,
 /turf/open/floor/mainship/mono,
@@ -365,6 +361,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/effect/turf_decal/warning_stripes/engineer,
 /turf/open/floor/mainship/red/full,
 /area/shuttle/canterbury)
 "by" = (
@@ -372,10 +369,12 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/effect/turf_decal/warning_stripes/medical,
 /turf/open/floor/mainship/red/full,
 /area/shuttle/canterbury)
 "bz" = (
 /obj/effect/landmark/start/job/crash/squadsmartgunner,
+/obj/effect/turf_decal/warning_stripes/smartgunner,
 /turf/open/floor/mainship/red/full,
 /area/shuttle/canterbury)
 "bA" = (
@@ -875,6 +874,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/job/crash/squadrobot,
+/obj/effect/turf_decal/warning_stripes/robot,
 /turf/open/floor/mainship/red/full,
 /area/shuttle/canterbury)
 "Fl" = (
@@ -932,6 +932,7 @@
 /area/shuttle/canterbury)
 "LA" = (
 /obj/effect/landmark/start/job/crash/squadrobot,
+/obj/effect/turf_decal/warning_stripes/robot,
 /turf/open/floor/mainship/red/full,
 /area/shuttle/canterbury)
 "Mj" = (
@@ -1081,6 +1082,7 @@
 /area/shuttle/canterbury)
 "UO" = (
 /obj/effect/landmark/start/job/crash/squadmarine,
+/obj/effect/turf_decal/warning_stripes/marine,
 /turf/open/floor/mainship/red/full,
 /area/shuttle/canterbury)
 "UP" = (
@@ -1330,7 +1332,7 @@ Uo
 Uo
 ad
 Ub
-MY
+bs
 bM
 al
 AS
@@ -1384,9 +1386,9 @@ bo
 at
 au
 at
-au
-au
-au
+at
+at
+at
 ap
 ap
 ab
@@ -1574,7 +1576,7 @@ Tm
 ab
 oa
 mi
-bs
+ow
 ab
 ab
 ar

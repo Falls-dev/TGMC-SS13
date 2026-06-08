@@ -616,8 +616,6 @@
 #define COMSIG_LIVING_WEEDS_AT_LOC_CREATED "living_weeds_at_loc_created"	///from obj/alien/weeds/Initialize()
 #define COMSIG_LIVING_WEEDS_ADJACENT_REMOVED "living_weeds_adjacent_removed"	///from obj/alien/weeds/Destroy()
 
-#define COMSIG_LIVING_UPDATE_PLANE_BLUR "living_update_plane_blur"
-	#define COMPONENT_CANCEL_BLUR (1<<0)
 ///From base of mob/living/set_jump_component()
 #define COMSIG_LIVING_SET_JUMP_COMPONENT "living_set_jump_component"
 

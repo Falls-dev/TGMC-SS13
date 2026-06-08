@@ -96,7 +96,7 @@
 /datum/internal_organ/kidneys/process()
 	var/medicine_cap = current_medicine_cap
 
-	if(SEND_SIGNAL(owner, COMSIG_LIVING_UPDATE_PLANE_BLUR) & COMPONENT_CANCEL_BLUR)
+	if(owner.has_blur_protection())
 		medicine_cap += freyr_medicine_cap
 
 	current_medicine_count += new_medicines // We detect reagents over the cap, and add punishment for them later
@@ -222,10 +222,16 @@
 	var/eye_surgery_stage = 0
 
 /datum/internal_organ/eyes/process()
-	if(organ_status == ORGAN_BRUISED)
-		owner.set_blurriness(20)
-	if(organ_status == ORGAN_BROKEN)
-		owner.set_blindness(20)
+    if(organ_status == ORGAN_BRUISED)
+        owner.set_blurriness(20)
+    else if(organ_status == ORGAN_BROKEN)
+        owner.set_blindness(20)
+
+    else if(organ_status == ORGAN_HEALTHY)
+        if(owner.eye_blurry > 0)
+            owner.set_blurriness(0)
+        if(owner.eye_blind > 0)
+            owner.set_blindness(0)
 
 /datum/internal_organ/brain
 	name = "brain"

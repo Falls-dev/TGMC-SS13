@@ -40,7 +40,7 @@
 			/obj/item/ammo_magazine/packet/mateba = -1,
 			/obj/item/ammo_magazine/flamer_tank/backtank/X = -1,
 			/obj/item/ammo_magazine/flamer_tank/backtank/G = -1,
-			/obj/item/weapon/twohanded/rocketsledge = -1,
+			/obj/item/weapon/twohanded/sledgehammer/rocketsledge = -1,
 			/obj/item/weapon/twohanded/chainsaw = -1,
 			/obj/item/weapon/twohanded/chainsaw/sword = -1,
 			/obj/item/explosive/grenade/training = -1,

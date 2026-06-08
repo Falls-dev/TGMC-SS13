@@ -314,7 +314,7 @@
 
 	if(prefs.lastchangelog != GLOB.changelog_hash) //bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, span_info("You have unread updates in the changelog."))
-		if(CONFIG_GET(flag/aggressive_changelog))
+		if(CONFIG_GET(flag/aggressive_changelog) || prefs.auto_open_changelogs)
 			changes()
 		else
 			winset(src, "infowindow.changelog", "font-style=bold")

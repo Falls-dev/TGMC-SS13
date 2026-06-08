@@ -434,7 +434,7 @@
 	force = 18
 	force_activated = 28
 
-/obj/item/weapon/twohanded/rocketsledge
+/obj/item/weapon/twohanded/sledgehammer/rocketsledge
 	name = "rocket sledge"
 	desc = "Fitted with a rocket booster at the head, the rocket sledge would deliver a tremendously powerful impact, easily crushing your enemies. Uses fuel to power itself."
 	icon_state = "rocketsledge"
@@ -472,7 +472,7 @@
 	///knockback value; 0 = crush mode, 1 = knockback mode
 	var/knockback
 
-/obj/item/weapon/twohanded/rocketsledge/Initialize(mapload)
+/obj/item/weapon/twohanded/sledgehammer/rocketsledge/Initialize(mapload)
 	. = ..()
 	stun = crush_stun_amount
 	paralyze = crush_paralyze_amount
@@ -480,38 +480,38 @@
 	create_reagents(max_fuel, null, list(/datum/reagent/fuel = max_fuel))
 	AddElement(/datum/element/strappable)
 
-/obj/item/weapon/twohanded/rocketsledge/equipped(mob/user, slot)
+/obj/item/weapon/twohanded/sledgehammer/rocketsledge/equipped(mob/user, slot)
 	. = ..()
 	toggle_item_bump_attack(user, TRUE)
 
-/obj/item/weapon/twohanded/rocketsledge/dropped(mob/user)
+/obj/item/weapon/twohanded/sledgehammer/rocketsledge/dropped(mob/user)
 	. = ..()
 	toggle_item_bump_attack(user, FALSE)
 
-/obj/item/weapon/twohanded/rocketsledge/examine(mob/user)
+/obj/item/weapon/twohanded/sledgehammer/rocketsledge/examine(mob/user)
 	. = ..()
 	. += span_notice("Press <b>Unique Action</b> to change modes.")
 	. += span_notice("It contains <b>[reagents.get_reagent_amount(/datum/reagent/fuel)]/[max_fuel]</b> units of fuel!")
 
-/obj/item/weapon/twohanded/rocketsledge/wield(mob/user)
+/obj/item/weapon/twohanded/sledgehammer/rocketsledge/wield(mob/user)
 	. = ..()
 	if((reagents.get_reagent_amount(/datum/reagent/fuel) < fuel_used))
 		playsound(loc, 'sound/items/weldingtool_off.ogg', 25)
 		return
 	update_icon()
 
-/obj/item/weapon/twohanded/rocketsledge/unwield(mob/user)
+/obj/item/weapon/twohanded/sledgehammer/rocketsledge/unwield(mob/user)
 	. = ..()
 	update_icon()
 
-/obj/item/weapon/twohanded/rocketsledge/update_icon_state()
+/obj/item/weapon/twohanded/sledgehammer/rocketsledge/update_icon_state()
 	. = ..()
 	if ((reagents.get_reagent_amount(/datum/reagent/fuel) > fuel_used) && (CHECK_BITFIELD(item_flags, WIELDED)))
 		icon_state = "rocketsledge_w"
 	else
 		icon_state = "rocketsledge"
 
-/obj/item/weapon/twohanded/rocketsledge/afterattack(obj/target, mob/user, flag)
+/obj/item/weapon/twohanded/sledgehammer/rocketsledge/afterattack(obj/target, mob/user, flag)
 	if(istype(target, /obj/structure/reagent_dispensers/fueltank) && get_dist(user,target) <= 1)
 		var/obj/structure/reagent_dispensers/fueltank/RS = target
 		if(RS.reagents.total_volume == 0)
@@ -527,7 +527,7 @@
 
 	return ..()
 
-/obj/item/weapon/twohanded/rocketsledge/unique_action(mob/user)
+/obj/item/weapon/twohanded/sledgehammer/rocketsledge/unique_action(mob/user)
 	. = ..()
 	if (knockback)
 		stun = crush_stun_amount
@@ -543,7 +543,7 @@
 	balloon_alert(user, "Selected mode: KNOCKBACK.")
 	playsound(loc, 'sound/machines/switch.ogg', 25)
 
-/obj/item/weapon/twohanded/rocketsledge/attack(mob/living/carbon/M, mob/living/carbon/user as mob)
+/obj/item/weapon/twohanded/sledgehammer/rocketsledge/attack(mob/living/carbon/M, mob/living/carbon/user as mob)
 	if(!CHECK_BITFIELD(item_flags, WIELDED))
 		to_chat(user, span_warning("You need a more secure grip to use [src]!"))
 		return

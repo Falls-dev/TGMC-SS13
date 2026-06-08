@@ -32,6 +32,7 @@ GLOBAL_LIST_INIT(medic_gear_listed_products, list(
 	/obj/item/reagent_containers/hypospray/autoinjector/synaptizine = list(CAT_MEDSUP, "Injector (Synaptizine)", 2, "cyan"),
 	/obj/item/reagent_containers/hypospray/autoinjector/oxycodone = list(CAT_MEDSUP, "Injector (Oxycodone)", 2, "cyan"),
 	/obj/item/reagent_containers/hypospray/autoinjector/neuraline = list(CAT_MEDSUP, "Injector (Neuraline)", 14, "cyan"),
+	/obj/item/explosive/grenade/chem_grenade/healing_foam = list(CAT_MEDSUP, "EMS-02 Healing Foam Grenade", 8, "cyan"),
 	/obj/item/healthanalyzer/gloves = list(CAT_MEDSUP, "Health scanner gloves", 2, "yellow"),
 	/obj/item/clothing/gloves/defibrillator = list(CAT_MEDSUP, "Advanced medical gloves", 4, "yellow"),
 	/obj/item/defibrillator/advanced = list(CAT_MEDSUP, "advanced emergency defibrillator", 4, "yellow"),

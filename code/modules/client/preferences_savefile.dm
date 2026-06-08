@@ -183,6 +183,7 @@
 	READ_FILE(S["tgui_input"], tgui_input)
 	READ_FILE(S["tgui_input_big_buttons"], tgui_input_big_buttons)
 	READ_FILE(S["tgui_input_buttons_swap"], tgui_input_buttons_swap)
+	READ_FILE(S["auto_open_changelogs"], auto_open_changelogs)
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -256,6 +257,7 @@
 	tgui_input = sanitize_integer(tgui_input, FALSE, TRUE, initial(tgui_input))
 	tgui_input_big_buttons = sanitize_integer(tgui_input_big_buttons, FALSE, TRUE, initial(tgui_input_big_buttons))
 	tgui_input_buttons_swap = sanitize_integer(tgui_input_buttons_swap, FALSE, TRUE, initial(tgui_input_buttons_swap))
+	auto_open_changelogs = sanitize_integer(auto_open_changelogs, FALSE, TRUE, initial(auto_open_changelogs))
 
 	fast_mc_refresh = sanitize_integer(fast_mc_refresh, FALSE, TRUE, initial(fast_mc_refresh))
 	split_admin_tabs = sanitize_integer(split_admin_tabs, FALSE, TRUE, initial(split_admin_tabs))
@@ -408,6 +410,7 @@
 	WRITE_FILE(S["tgui_input"], tgui_input)
 	WRITE_FILE(S["tgui_input_big_buttons"], tgui_input_big_buttons)
 	WRITE_FILE(S["tgui_input_buttons_swap"], tgui_input_buttons_swap)
+	WRITE_FILE(S["auto_open_changelogs"], auto_open_changelogs)
 
 	// Admin options
 	WRITE_FILE(S["fast_mc_refresh"], fast_mc_refresh)

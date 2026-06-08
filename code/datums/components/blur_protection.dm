@@ -21,11 +21,6 @@
 
 /datum/component/blur_protection/proc/equipped_to_slot(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
-	RegisterSignal(user, COMSIG_LIVING_UPDATE_PLANE_BLUR, PROC_REF(cancel_blur))
-
-/datum/component/blur_protection/proc/cancel_blur()
-	return COMPONENT_CANCEL_BLUR
 
 /datum/component/blur_protection/proc/removed_from_slot(datum/source, mob/user)
 	SIGNAL_HANDLER
-	UnregisterSignal(user, COMSIG_LIVING_UPDATE_PLANE_BLUR)

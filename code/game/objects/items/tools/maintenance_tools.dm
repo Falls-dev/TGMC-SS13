@@ -387,8 +387,8 @@
 		playsound(loc, 'sound/effects/refill.ogg', 25, 1, 3)
 		balloon_alert(user, "Refills")
 
-	else if(istype(I, /obj/item/weapon/twohanded/rocketsledge))
-		var/obj/item/weapon/twohanded/rocketsledge/RS = I
+	else if(istype(I, /obj/item/weapon/twohanded/sledgehammer/rocketsledge))
+		var/obj/item/weapon/twohanded/sledgehammer/rocketsledge/RS = I
 		if(RS.reagents.get_reagent_amount(/datum/reagent/fuel) == RS.max_fuel || !reagents.total_volume)
 			return ..()
 

@@ -227,7 +227,7 @@
 
 /datum/supply_packs/weapons/rocketsledge
 	name = "Rocket sledge"
-	contains = list(/obj/item/weapon/twohanded/rocketsledge)
+	contains = list(/obj/item/weapon/twohanded/sledgehammer/rocketsledge)
 	cost = 600
 
 /datum/supply_packs/weapons/chainsaw

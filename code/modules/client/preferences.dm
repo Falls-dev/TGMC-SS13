@@ -30,6 +30,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/toggles_deadchat = TOGGLES_DEADCHAT_DEFAULT
 	var/toggles_chat = TOGGLES_CHAT_DEFAULT
 	var/toggles_gameplay = TOGGLES_GAMEPLAY_DEFAULT
+	var/auto_open_changelogs = TRUE
 
 	//Sound Preferences
 	/// Volume setting that sets the volume of adminhelp sound

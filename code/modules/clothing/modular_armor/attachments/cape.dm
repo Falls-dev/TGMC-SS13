@@ -47,6 +47,187 @@
 				"none",
 			),
 		),
+		"scarf round" = list(
+			HOOD = FALSE,
+			HIGHLIGHT_VARIANTS = list("none"),
+		),
+		"scarf tied" = list(
+			HOOD = FALSE,
+			HIGHLIGHT_VARIANTS = list("none"),
+		),
+		"scarf" = list(
+			HOOD = TRUE,
+			HIGHLIGHT_VARIANTS = list(
+				"scarf",
+				"none",
+			),
+		),
+		"striped" = list(
+			HOOD = TRUE,
+			HIGHLIGHT_VARIANTS = list("none"),
+		),
+		"geist" = list(
+			HOOD = TRUE,
+			HIGHLIGHT_VARIANTS = list("none"),
+		),
+		"ghille" = list(
+			HOOD = FALSE,
+			HIGHLIGHT_VARIANTS = list("none"),
+		),
+		"ghille (left)" = list(
+			HOOD = FALSE,
+			HIGHLIGHT_VARIANTS = list("none"),
+		),
+		"ghille (right)" = list(
+			HOOD = FALSE,
+			HIGHLIGHT_VARIANTS = list("none"),
+		),
+		"ghille (alt)" = list(
+			HOOD = FALSE,
+			HIGHLIGHT_VARIANTS = list("none"),
+		),
+		"drifter" = list(
+			HOOD = FALSE,
+			HIGHLIGHT_VARIANTS = list("none"),
+		),
+		"normal" = list(
+			HOOD = TRUE,
+			HIGHLIGHT_VARIANTS = list(
+				"normal",
+				"normal (alt)",
+				"none",
+			),
+		),
+		"short" = list(
+			HOOD = TRUE,
+			HIGHLIGHT_VARIANTS = list(
+				"short",
+				"none",
+			),
+		),
+		"short (old)" = list(
+			HOOD = TRUE,
+			HIGHLIGHT_VARIANTS = list("none"),
+		),
+		"shredded" = list(
+			HOOD = TRUE,
+			HIGHLIGHT_VARIANTS = list(
+				"shredded",
+				"none",
+			),
+		),
+		"half" = list(
+			HOOD = TRUE,
+			HIGHLIGHT_VARIANTS = list(
+				"half",
+				"none",
+			),
+		),
+		"full" = list(
+			HOOD = TRUE,
+			HIGHLIGHT_VARIANTS = list(
+				"full",
+				"none",
+			),
+		),
+		"back" = list(
+			HOOD = FALSE,
+			HIGHLIGHT_VARIANTS = list(
+				"back",
+				"none",
+			),
+		),
+		"cover" = list(
+			HOOD = FALSE,
+			HIGHLIGHT_VARIANTS = list(
+				"cover",
+				"none",
+			),
+		),
+		"cover (alt)" = list(
+			HOOD = FALSE,
+			HIGHLIGHT_VARIANTS = list(
+				"cover (alt)",
+				"none",
+			),
+		),
+		"shoal" = list(
+			HOOD = FALSE,
+			HIGHLIGHT_VARIANTS = list(
+				"shoal",
+				"none",
+			),
+		),
+		"shoal (back)" = list(
+			HOOD = FALSE,
+			HIGHLIGHT_VARIANTS = list(
+				"shoal (back)",
+				"none",
+			),
+		),
+		"shoal (alt)" = list(
+			HOOD = FALSE,
+			HIGHLIGHT_VARIANTS = list(
+				"shoal (alt)",
+				"none",
+			),
+		),
+		"rapier (right)" = list(
+			HOOD = FALSE,
+			HIGHLIGHT_VARIANTS = list(
+				"rapier (right)",
+				"none",
+			),
+		),
+		"rapier (left)" = list(
+			HOOD = FALSE,
+			HIGHLIGHT_VARIANTS = list(
+				"rapier (left)",
+				"none",
+			),
+		),
+		"overlord" = list(
+			HOOD = FALSE,
+			HIGHLIGHT_VARIANTS = list(
+				"overlord",
+				"none",
+			),
+		),
+		"overlord (alt)" = list(
+			HOOD = FALSE,
+			HIGHLIGHT_VARIANTS = list(
+				"overlord (alt)",
+				"none",
+			),
+		),
+		"overlord (altagain)" = list(
+			HOOD = FALSE,
+			HIGHLIGHT_VARIANTS = list(
+				"overlord (altagain)",
+				"none",
+			),
+		),
+		"star" = list(
+			HOOD = TRUE,
+			HIGHLIGHT_VARIANTS = list(
+				"star",
+				"none",
+			),
+		),
+		"jacket" = list(
+			HOOD = FALSE,
+			HIGHLIGHT_VARIANTS = list(
+				"jacket",
+				"none",
+			),
+		),
+		"sniper" = list(
+			HOOD = TRUE,
+			HIGHLIGHT_VARIANTS = list(
+				"sniper",
+				"none",
+			),
+		),
 	)
 
 	///True if the hood is up, false if not.
