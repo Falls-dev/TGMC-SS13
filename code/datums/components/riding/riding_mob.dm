@@ -221,16 +221,22 @@
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
 
 /datum/component/riding/creature/horse/Initialize(mob/living/riding_mob, force = FALSE, check_loc, lying_buckle, hands_needed, target_hands_needed, silent)
+	riding_mob.pixel_x = initial(riding_mob.pixel_x)
+	riding_mob.pixel_y = initial(riding_mob.pixel_y)
 	. = ..()
 	riding_mob.density = FALSE
 
 /datum/component/riding/creature/horse/vehicle_mob_unbuckle(datum/source, mob/living/former_rider, force = FALSE)
 	former_rider.density = initial(former_rider.density)
+	restore_position(former_rider)
+	var/mob/living/simple_animal/horse/horse_parent = parent
+	if(istype(horse_parent))
+		horse_parent.update_riding_appearance()
 	return ..()
 
 /datum/component/riding/creature/horse/handle_specials()
 	. = ..()
-	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, -24), TEXT_SOUTH = list(0, -24), TEXT_EAST = list(-8, -24), TEXT_WEST = list(8, -24)))
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 20), TEXT_EAST = list(-6, 14), TEXT_WEST = list(6, 14)))
 	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
