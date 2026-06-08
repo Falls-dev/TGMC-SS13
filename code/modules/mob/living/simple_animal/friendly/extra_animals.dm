@@ -59,10 +59,44 @@
 	melee_damage = 8
 	mob_size = MOB_SIZE_BIG
 	layer = BELOW_MOB_LAYER
+	pixel_w = -32
+	pixel_z = -16
+	var/icon_riding = "horse_riding"
+	var/mutable_appearance/riding_overlay
 
 /mob/living/simple_animal/horse/Initialize(mapload)
 	. = ..()
+	icon_riding = "[icon_living]_riding"
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/horse)
+	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_horse_dir_change))
+
+/mob/living/simple_animal/horse/proc/on_horse_dir_change(datum/source, old_dir, new_dir)
+	SIGNAL_HANDLER
+	update_riding_appearance()
+
+/mob/living/simple_animal/horse/proc/update_riding_appearance()
+	if(!LAZYLEN(buckled_mobs))
+		if(riding_overlay)
+			cut_overlay(riding_overlay)
+			riding_overlay = null
+		if(stat != DEAD)
+			icon_state = icon_living
+		return
+	if(!riding_overlay)
+		riding_overlay = mutable_appearance(icon, icon_riding, ABOVE_MOB_LAYER)
+	riding_overlay.dir = dir
+	riding_overlay.pixel_w = pixel_w
+	riding_overlay.pixel_z = pixel_z
+	cut_overlay(riding_overlay)
+	add_overlay(riding_overlay)
+	if(stat != DEAD)
+		icon_state = icon_living
+
+/mob/living/simple_animal/horse/proc/reset_rider_position(mob/living/rider)
+	rider.pixel_x = initial(rider.pixel_x)
+	rider.pixel_y = initial(rider.pixel_y)
+	if(rider.client)
+		rider.client.view_size.reset_to_default()
 
 /mob/living/simple_animal/horse/user_buckle_mob(mob/living/buckling_mob, mob/user, check_loc = TRUE, silent)
 	if(!Adjacent(buckling_mob, src) || !Adjacent(user, src))
@@ -75,8 +109,15 @@
 	if(!.)
 		buckling_mob.density = initial(buckling_mob.density)
 
+/mob/living/simple_animal/horse/post_buckle_mob(mob/living/buckled_mob)
+	reset_rider_position(buckled_mob)
+	update_riding_appearance()
+
 /mob/living/simple_animal/horse/post_unbuckle_mob(mob/living/buckled_mob)
 	buckled_mob.density = initial(buckled_mob.density)
+	reset_rider_position(buckled_mob)
+	if(!LAZYLEN(buckled_mobs))
+		update_riding_appearance()
 
 /mob/living/simple_animal/horse/relaymove(mob/living/user, direction)
 	if(user.buckled != src)
