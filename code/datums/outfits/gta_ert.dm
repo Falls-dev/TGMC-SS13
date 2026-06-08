@@ -33,7 +33,7 @@
 	head = /obj/item/clothing/head/fun/bandana_ballas
 	belt = /obj/item/storage/belt/lifesaver/full
 	glasses = /obj/item/clothing/glasses/hud/health
-	suit_store = /obj/item/weapon/gun/smg/skorpion/mag_harness
+	suit_store = /obj/item/weapon/gun/smg/uzi/mag_harness
 	l_pocket = /obj/item/storage/pouch/medical_injectors/medic
 	backpack_contents = list(
 		/obj/item/defibrillator = 1,
@@ -41,7 +41,7 @@
 		/obj/item/tool/crowbar/red = 1,
 		/obj/item/storage/box/mre = 1,
 		/obj/item/storage/box/m94 = 1,
-		/obj/item/ammo_magazine/smg/skorpion = 6,
+		/obj/item/ammo_magazine/smg/uzi/extended = 6,
 	)
 
 /datum/outfit/job/gta/ert/ballas/leader
@@ -79,7 +79,7 @@
 	jobtype = /datum/job/gta/ert/grove/standard
 	w_uniform = /obj/item/clothing/under/fun/grove1
 	head = /obj/item/clothing/head/fun/bandana_grove
-	suit_store = /obj/item/weapon/gun/smg/skorpion/mag_harness
+	suit_store = /obj/item/weapon/gun/smg/uzi/mag_harness
 	belt = /obj/item/storage/belt/knifepouch
 	r_pocket = /obj/item/storage/pouch/medical_injectors/firstaid
 	l_pocket = /obj/item/storage/pouch/grenade
@@ -89,7 +89,7 @@
 		/obj/item/storage/box/mre = 1,
 		/obj/item/explosive/grenade/incendiary/molotov = 3,
 		/obj/item/storage/box/m94 = 2,
-		/obj/item/ammo_magazine/smg/skorpion = 8,
+		/obj/item/ammo_magazine/smg/uzi/extended = 8,
 	)
 
 /datum/outfit/job/gta/ert/grove/medic
