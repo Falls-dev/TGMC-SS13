@@ -83,10 +83,12 @@
 			icon_state = icon_living
 		return
 	if(!riding_overlay)
-		riding_overlay = mutable_appearance(icon, icon_riding, ABOVE_MOB_LAYER)
+		riding_overlay = mutable_appearance(icon, icon_riding, MOB_BELOW_PIGGYBACK_LAYER)
 	riding_overlay.dir = dir
 	riding_overlay.pixel_w = pixel_w
 	riding_overlay.pixel_z = pixel_z
+	riding_overlay.pixel_y = pixel_y
+	riding_overlay.pixel_x = pixel_x
 	cut_overlay(riding_overlay)
 	add_overlay(riding_overlay)
 	if(stat != DEAD)

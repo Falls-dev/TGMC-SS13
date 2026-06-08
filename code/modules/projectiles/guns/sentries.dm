@@ -416,7 +416,7 @@
 
 // Peashooter
 
-/obj/item/weapon/gun/sentry/sniper
+/obj/item/weapon/gun/sentry/sniper/pea
 	name = "\improper Горохострел"
 	desc = "Развёртываемая автоматическая... турель? Стреляет горохом по неприятелю."
 	icon_state = "sentry_peashooter"

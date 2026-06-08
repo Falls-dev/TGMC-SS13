@@ -262,6 +262,7 @@
 		/obj/item/attachable/flashlight,
 		/obj/item/attachable/foldable/bipod,
 		/obj/item/attachable/magnetic_harness,
+		/obj/item/attachable/buildasentry,
 	)
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_ENERGY|GUN_AMMO_COUNT_BY_SHOTS_REMAINING|GUN_NO_PITCH_SHIFT_NEAR_EMPTY
 	attachable_offset = list("muzzle_x" = 34, "muzzle_y" = 14,"rail_x" = 18, "rail_y" = 18, "under_x" = 23, "under_y" = 10, "stock_x" = 22, "stock_y" = 12)

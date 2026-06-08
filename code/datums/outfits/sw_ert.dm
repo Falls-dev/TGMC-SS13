@@ -10,7 +10,7 @@
 		/obj/item/cell/lasgun/plasma = 4,
 	)
 	r_pocket = /obj/item/storage/pouch/medical_injectors/firstaid
-	l_pocket = /obj/item/storage/pouch/grenade
+	l_pocket = /obj/item/storage/pouch/grenade/standard
 
 /datum/outfit/job/sw/ert/rebel
 	name = "Rebel Trooper"

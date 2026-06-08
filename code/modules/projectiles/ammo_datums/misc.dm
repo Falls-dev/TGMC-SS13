@@ -39,6 +39,7 @@
 
 /datum/ammo/bullet/turret/sniper/pea
 	name = "pea bullet"
+	icon = 'icons/obj/items/pea.dmi'
 	icon_state = "pea"
 	bullet_color = COLOR_SOFT_RED
 	accurate_range = 14
