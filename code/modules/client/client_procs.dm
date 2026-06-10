@@ -923,6 +923,7 @@
 		new_size = CONFIG_GET(string/default_view_square)
 
 	view = new_size
+	SEND_SIGNAL(src, COMSIG_VIEW_SET, new_size)
 	apply_clickcatcher()
 	mob.reload_fullscreens()
 	attempt_auto_fit_viewport()
