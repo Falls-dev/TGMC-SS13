@@ -213,6 +213,7 @@
 		"Misc" = list(
 			/obj/item/tool/research/xeno_analyzer = -1,
 			/obj/item/tool/research/excavation_tool = -1,
+			/obj/item/pinpointer/archaeology = -1,
 			/obj/item/clothing/glasses/hud/health = 15,
 			/obj/item/roller = 15,
 		),
@@ -294,6 +295,7 @@
 		"Misc" = list(
 			/obj/item/tool/research/xeno_analyzer = -1,
 			/obj/item/tool/research/excavation_tool = -1,
+			/obj/item/pinpointer/archaeology = -1,
 			/obj/item/clothing/glasses/hud/health = -1,
 			/obj/item/roller = -1,
 		),

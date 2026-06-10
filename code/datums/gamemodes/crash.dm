@@ -15,6 +15,7 @@
 		/datum/job/terragov/medical/medicalofficer = 1,
 		/datum/job/terragov/silicon/synthetic = 1,
 		/datum/job/terragov/command/fieldcommander = 1,
+		/datum/job/terragov/medical/researcher = 1,
 		/datum/job/xenomorph = FREE_XENO_AT_START
 	)
 	job_points_needed_by_job_type = list(
