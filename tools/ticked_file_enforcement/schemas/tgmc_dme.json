@@ -2,7 +2,11 @@
 	"file": "tgmc.dme",
 	"scannable_directory": "code/",
 	"subdirectories": true,
-	"excluded_files": [],
+	"excluded_files": [
+		"code/modules/mob/living/carbon/xenomorph/castes/puppeteer/mutations_puppeteer.dm",
+		"code/modules/mob/living/carbon/xenomorph/castes/dragon/mutations_dragon.dm",
+		"code/modules/mob/living/carbon/xenomorph/castes/pyrogen/mutations_pyrogen.dm"
+	],
 	"forbidden_includes": [
 		"code/modules/tgs/**/*.dm",
 		"code/modules/unit_tests/[!_]*.dm"
