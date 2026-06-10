@@ -431,17 +431,17 @@
 
 ///Toggles the new players ready state
 /mob/new_player/proc/toggle_ready()
-    if(SSticker?.current_state > GAME_STATE_PREGAME)
-        to_chat(src, span_warning("The round has already started."))
-        return
-    ready = !ready
-    if(ready)
-        GLOB.ready_players += src
-        cached_highest_job = get_highest_priority_job()
-    else
-        GLOB.ready_players -= src
-        cached_highest_job = null
-    to_chat(src, span_warning("You are now [ready? "" : "not "]ready."))
+	if(SSticker?.current_state > GAME_STATE_PREGAME)
+		to_chat(src, span_warning("The round has already started."))
+		return
+	ready = !ready
+	if(ready)
+		GLOB.ready_players += src
+		cached_highest_job = get_highest_priority_job()
+	else
+		GLOB.ready_players -= src
+		cached_highest_job = null
+	to_chat(src, span_warning("You are now [ready? "" : "not "]ready."))
 
 ///Attempts to latejoin the player
 /mob/new_player/proc/attempt_late_join(queue_override = FALSE)

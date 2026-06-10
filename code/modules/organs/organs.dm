@@ -222,16 +222,16 @@
 	var/eye_surgery_stage = 0
 
 /datum/internal_organ/eyes/process()
-    if(organ_status == ORGAN_BRUISED)
-        owner.set_blurriness(20)
-    else if(organ_status == ORGAN_BROKEN)
-        owner.set_blindness(20)
+	if(organ_status == ORGAN_BRUISED)
+		owner.set_blurriness(20)
+	else if(organ_status == ORGAN_BROKEN)
+		owner.set_blindness(20)
 
-    else if(organ_status == ORGAN_HEALTHY)
-        if(owner.eye_blurry > 0)
-            owner.set_blurriness(0)
-        if(owner.eye_blind > 0)
-            owner.set_blindness(0)
+	else if(organ_status == ORGAN_HEALTHY)
+		if(owner.eye_blurry > 0)
+			owner.set_blurriness(0)
+		if(owner.eye_blind > 0)
+			owner.set_blindness(0)
 
 /datum/internal_organ/brain
 	name = "brain"

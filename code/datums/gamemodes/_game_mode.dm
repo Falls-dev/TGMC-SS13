@@ -1137,10 +1137,16 @@ GLOBAL_LIST_INIT(bioscan_locations, list(
 	var/datum/preferences/prefs = pred_candidate.client.prefs
 	var/spawn_type = job.return_spawn_type(prefs)
 	var/mob/living/carbon/human/new_predator = new spawn_type()
-	new_predator.forceMove(job.return_spawn_turf(pred_candidate, pred_candidate.client))
-	new_predator.ckey = pred_candidate.ckey
-	new_predator.apply_assigned_role_to_spawn(job)
-	job.after_spawn(new_predator)
+	var/spawn_turf = job.return_spawn_turf(new_predator, pred_candidate.client)
+	if(!isturf(spawn_turf))
+		qdel(new_predator)
+		return
+	new_predator.forceMove(spawn_turf)
+	if(!pred_candidate.mind)
+		pred_candidate.mind_initialize()
+	new_predator.apply_assigned_role_to_spawn(job, pred_candidate.client)
+	pred_candidate.mind.transfer_to(new_predator, TRUE)
+	job.after_spawn(new_predator, pred_candidate, TRUE)
 	qdel(pred_candidate)
 
 /datum/game_mode/proc/start_hunt()

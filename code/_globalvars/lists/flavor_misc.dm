@@ -109,7 +109,7 @@ GLOBAL_LIST_INIT(playable_icons, list(
 	"defiler",
 	"drone",
 	"puppeteer",
-    "pyrogen",
+	"pyrogen",
 	"xenodragon",
 	"facehugger",
 	"fieldcommander",
