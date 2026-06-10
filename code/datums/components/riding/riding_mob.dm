@@ -226,6 +226,16 @@
 	. = ..()
 	riding_mob.density = FALSE
 
+/datum/component/riding/creature/horse/RegisterWithParent()
+	. = ..()
+	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_horse_pre_move))
+
+/datum/component/riding/creature/horse/proc/on_horse_pre_move(datum/source, atom/new_loc, direction)
+	SIGNAL_HANDLER
+	var/mob/living/simple_animal/horse/horse_parent = parent
+	if(istype(horse_parent) && LAZYLEN(horse_parent.buckled_mobs))
+		horse_parent.update_riding_appearance()
+
 /datum/component/riding/creature/horse/vehicle_mob_unbuckle(datum/source, mob/living/former_rider, force = FALSE)
 	former_rider.density = initial(former_rider.density)
 	restore_position(former_rider)
@@ -241,6 +251,11 @@
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+	vehicle_move_delay = 2.5
+
+/datum/component/riding/creature/pig/handle_specials()
+	. = ..()
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 6), TEXT_WEST = list(2, 6)))
 	vehicle_move_delay = 2.5
 
 // ***************************************
