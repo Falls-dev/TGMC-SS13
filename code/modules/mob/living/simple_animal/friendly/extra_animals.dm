@@ -1,6 +1,6 @@
 /mob/living/simple_animal/pig
 	name = "pig"
-	desc = "A stocky mammal with a flat snout. Oink."
+	desc = "A stocky mammal with a flat snout. Oink. Drag yourself onto it to ride."
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "pig"
 	icon_living = "pig"
@@ -96,10 +96,16 @@
 	icon_riding = "[icon_living]_riding"
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/horse)
 	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_horse_dir_change))
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_horse_moved))
 
 /mob/living/simple_animal/horse/proc/on_horse_dir_change(datum/source, old_dir, new_dir)
 	SIGNAL_HANDLER
 	update_riding_appearance()
+
+/mob/living/simple_animal/horse/proc/on_horse_moved(datum/source, atom/old_loc, direction)
+	SIGNAL_HANDLER
+	if(LAZYLEN(buckled_mobs))
+		update_riding_appearance()
 
 /mob/living/simple_animal/horse/proc/update_riding_appearance()
 	if(!LAZYLEN(buckled_mobs))
@@ -109,17 +115,15 @@
 		if(stat != DEAD)
 			icon_state = icon_living
 		return
-	if(!riding_overlay)
-		riding_overlay = mutable_appearance(icon, icon_riding, MOB_BELOW_PIGGYBACK_LAYER)
+	if(riding_overlay)
+		cut_overlay(riding_overlay)
+	riding_overlay = mutable_appearance(icon, icon_riding, MOB_BELOW_PIGGYBACK_LAYER)
 	riding_overlay.dir = dir
-	riding_overlay.pixel_w = pixel_w
-	riding_overlay.pixel_z = pixel_z
-	riding_overlay.pixel_y = pixel_y
-	riding_overlay.pixel_x = pixel_x
 	cut_overlay(riding_overlay)
 	add_overlay(riding_overlay)
 	if(stat != DEAD)
 		icon_state = icon_living
+	update_appearance()
 
 /mob/living/simple_animal/horse/proc/reset_rider_position(mob/living/rider)
 	rider.pixel_x = initial(rider.pixel_x)
