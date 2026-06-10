@@ -160,7 +160,7 @@ def format_discord_changelog(entries):
             change_type = entry['type']
             label = PREFIX_LABEL.get(change_type, change_type)
             emoji = PREFIX_EMOJI.get(change_type, PREFIX_EMOJI.get(label, '\U0001f4dd'))
-            lines.append('* {} {}: {}'.format(label, emoji, entry['text']))
+            lines.append('* {}: {}'.format(emoji, entry['text']))
         lines.append('')
     return '\n'.join(lines).strip()
 
