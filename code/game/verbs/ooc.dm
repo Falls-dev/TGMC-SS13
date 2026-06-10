@@ -4,6 +4,12 @@
 	ooc(message)
 
 
+/client/proc/handle_ooc_prefix(client/target)
+	var/prefix = ""
+	if(CONFIG_GET(flag/ooc_country_flags) && prefs.show_ooc_country_flag && country)
+		prefix += country2chaticon(country, target ? list(target) : GLOB.clients)
+	return prefix
+
 /client/verb/ooc(msg as text)
 	set name = "OOC"
 	set category = "OOC.Chat"
@@ -132,10 +138,11 @@
 		if(check_other_rights(C, R_ADMIN, FALSE))
 			display_name = "<a class='hidelink' href='byond://?_src_=holder;[HrefToken(TRUE)];playerpanel=[REF(usr)]'>[display_name]</a>"
 		var/avoid_highlight = C == src
+		var/ooc_prefix = handle_ooc_prefix(C)
 		if(display_colour)
-			to_chat(C, "<font color='[display_colour]'><EM>[keyname]</EM>[span_ooc("<span class='prefix'>OOC: [display_name]")]: <span class='message linkify'>[msg]</span></span></font>", avoid_highlighting = avoid_highlight)
+			to_chat(C, "<font color='[display_colour]'><EM>[keyname]</EM>[ooc_prefix][span_ooc("<span class='prefix'>OOC: [display_name]")]: <span class='message linkify'>[msg]</span></span></font>", avoid_highlighting = avoid_highlight)
 		else
-			to_chat(C, "<span class='[display_class]'><EM>[keyname]</EM>[span_prefix("OOC: [display_name]")]: <span class='message linkify'>[msg]</span></span>", avoid_highlighting = avoid_highlight)
+			to_chat(C, "<span class='[display_class]'><EM>[keyname]</EM>[ooc_prefix][span_prefix("OOC: [display_name]")]: <span class='message linkify'>[msg]</span></span>", avoid_highlighting = avoid_highlight)
 
 /client/verb/xooc_wrapper()
 	set hidden = TRUE
