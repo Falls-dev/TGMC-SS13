@@ -46,6 +46,14 @@ all_changelog_entries = {}
 
 # Do not change the order, add to the bottom of the array if necessary
 validPrefixes = [
+    'add',
+    'fix',
+    'del',
+    'sound',
+    'image',
+    'map',
+    'code',
+    'typo',
     'bugfix',
     'wip',
     'qol',
@@ -68,6 +76,27 @@ validPrefixes = [
 
 def dictToTuples(inp):
     return [(k, v) for k, v in inp.items()]
+
+PREFIX_LABEL = {
+    'rscadd': 'add',
+    'add': 'add',
+    'bugfix': 'fix',
+    'fix': 'fix',
+    'rscdel': 'del',
+    'del': 'del',
+    'soundadd': 'sound',
+    'sounddel': 'sound',
+    'sound': 'sound',
+    'imageadd': 'image',
+    'imagedel': 'image',
+    'image': 'image',
+    'expansion': 'map',
+    'map': 'map',
+    'spellcheck': 'typo',
+    'typo': 'typo',
+    'code_imp': 'code',
+    'code': 'code',
+}
 
 PREFIX_EMOJI = {
     'rscadd': '\U00002795',      # ➕
@@ -124,12 +153,14 @@ def format_discord_changelog(entries):
     for entry in entries:
         by_author.setdefault(entry['author'], []).append(entry)
 
-    lines = ['**Changelog** ({})'.format(today.isoformat()), '']
+    lines = []
     for author in sorted(by_author.keys()):
-        lines.append('**{}**'.format(author))
+        lines.append('{}:'.format(author))
         for entry in by_author[author]:
-            emoji = PREFIX_EMOJI.get(entry['type'], '\U0001f4dd')  # 📝
-            lines.append('{} {}'.format(emoji, entry['text']))
+            change_type = entry['type']
+            label = PREFIX_LABEL.get(change_type, change_type)
+            emoji = PREFIX_EMOJI.get(change_type, PREFIX_EMOJI.get(label, '\U0001f4dd'))
+            lines.append('* {} {}: {}'.format(label, emoji, entry['text']))
         lines.append('')
     return '\n'.join(lines).strip()
 
