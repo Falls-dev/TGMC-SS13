@@ -16,8 +16,8 @@
 	name = "Rebel Trooper"
 	jobtype = /datum/job/sw/ert/rebel
 	w_uniform = /obj/item/clothing/under/sw/rebel
-	wear_suit = /obj/item/clothing/suit/sw/vest
-	head = /obj/item/clothing/head/sw/helmet/rebel
+	wear_suit = /obj/item/clothing/suit/storage/marine/sw/rebel/vest
+	head = /obj/item/clothing/head/helmet/marine/sw/rebel
 	suit_store = /obj/item/weapon/gun/energy/lasgun/lasrifle/plasma/rifle/standard
 	backpack_contents = list(
 		/obj/item/cell/lasgun/plasma = 4,
@@ -29,8 +29,8 @@
 	name = "Rebel Officer"
 	jobtype = /datum/job/sw/ert/rebel/officer
 	w_uniform = /obj/item/clothing/under/sw/rebel/officer
-	wear_suit = /obj/item/clothing/suit/sw/vest/officer
-	head = /obj/item/clothing/head/sw/helmet/rebel/black
+	wear_suit = /obj/item/clothing/suit/storage/marine/sw/rebel/vest/officer
+	head = /obj/item/clothing/head/helmet/marine/sw/rebel/black
 	suit_store = /obj/item/weapon/gun/energy/lasgun/lasrifle/plasma/rifle/standard
 	backpack_contents = list(
 		/obj/item/cell/lasgun/plasma = 4,
@@ -41,8 +41,8 @@
 	name = "Rebel Medic"
 	jobtype = /datum/job/sw/ert/rebel/medic
 	w_uniform = /obj/item/clothing/under/sw/rebel
-	wear_suit = /obj/item/clothing/suit/sw/vest
-	head = /obj/item/clothing/head/sw/helmet/rebel
+	wear_suit = /obj/item/clothing/suit/storage/marine/sw/rebel/vest
+	head = /obj/item/clothing/head/helmet/marine/sw/rebel
 	belt = /obj/item/storage/belt/lifesaver/full
 	belt_contents = null
 	l_pocket = /obj/item/storage/pouch/medkit/medic
@@ -57,8 +57,8 @@
 	name = "Republic Clone Trooper"
 	jobtype = /datum/job/sw/ert/republic
 	w_uniform = /obj/item/clothing/under/sw/repofficer_ensign
-	wear_suit = /obj/item/clothing/suit/armor/sw/replicant
-	head = /obj/item/clothing/head/sw/helmet/replicant/phase2
+	wear_suit = /obj/item/clothing/suit/storage/marine/sw/clone
+	head = /obj/item/clothing/head/helmet/marine/sw/clone/phase2
 	suit_store = /obj/item/weapon/gun/energy/lasgun/lasrifle/plasma/rifle/standard
 	backpack_contents = list(
 		/obj/item/cell/lasgun/plasma = 4,
@@ -70,16 +70,16 @@
 	name = "Republic Clone Sergeant"
 	jobtype = /datum/job/sw/ert/republic/sergeant
 	w_uniform = /obj/item/clothing/under/sw/repofficer_ensign
-	wear_suit = /obj/item/clothing/suit/armor/sw/replicant/sgt
-	head = /obj/item/clothing/head/sw/helmet/replicant/sgt
+	wear_suit = /obj/item/clothing/suit/storage/marine/sw/clone/sgt
+	head = /obj/item/clothing/head/helmet/marine/sw/clone/sgt
 	suit_store = /obj/item/weapon/gun/energy/lasgun/lasrifle/plasma/rifle/standard
 
 /datum/outfit/job/sw/ert/republic/medic
 	name = "Republic Clone Medic"
 	jobtype = /datum/job/sw/ert/republic/medic
 	w_uniform = /obj/item/clothing/under/sw/repofficer_medical
-	wear_suit = /obj/item/clothing/suit/armor/sw/replicant/mp
-	head = /obj/item/clothing/head/sw/helmet/replicant/mp
+	wear_suit = /obj/item/clothing/suit/storage/marine/sw/clone/mp
+	head = /obj/item/clothing/head/helmet/marine/sw/clone/mp
 	belt = /obj/item/storage/belt/lifesaver/full
 	belt_contents = null
 	l_pocket = /obj/item/storage/pouch/medkit/medic
@@ -94,8 +94,8 @@
 	name = "Republic Elite Clone"
 	jobtype = /datum/job/sw/ert/republic/elite
 	w_uniform = /obj/item/clothing/under/sw/repofficer_ensign
-	wear_suit = /obj/item/clothing/suit/armor/sw/replicant/reinforced
-	head = /obj/item/clothing/head/sw/helmet/replicant/legion501
+	wear_suit = /obj/item/clothing/suit/storage/marine/sw/clone/reinforced
+	head = /obj/item/clothing/head/helmet/marine/sw/clone/legion501
 	suit_store = /obj/item/weapon/gun/energy/lasgun/lasrifle/plasma/rifle/standard
 	belt_contents = list(
 		/obj/item/cell/lasgun/plasma = 6,
@@ -109,8 +109,8 @@
 	name = "Republic Clone Commando"
 	jobtype = /datum/job/sw/ert/republic/elite/commando
 	w_uniform = /obj/item/clothing/under/sw/repofficer_ensign
-	wear_suit = /obj/item/clothing/suit/armor/sw/replicant/commando
-	head = /obj/item/clothing/head/sw/helmet/replicant/commando
+	wear_suit = /obj/item/clothing/suit/storage/marine/sw/clone/commando
+	head = /obj/item/clothing/head/helmet/marine/sw/clone/commando
 	suit_store = /obj/item/weapon/gun/energy/lasgun/lasrifle/plasma/rifle/standard
 	belt_contents = list(
 		/obj/item/cell/lasgun/plasma = 6,
@@ -123,8 +123,8 @@
 	name = "Imperial Stormtrooper"
 	jobtype = /datum/job/sw/ert/imperial
 	w_uniform = /obj/item/clothing/under/sw/imptechnician/black
-	wear_suit = /obj/item/clothing/suit/armor/sw/stormtrooper
-	head = /obj/item/clothing/head/sw/helmet/repstormtrooper
+	wear_suit = /obj/item/clothing/suit/storage/marine/sw/stormtrooper
+	head = /obj/item/clothing/head/helmet/marine/sw/repstormtrooper
 	suit_store = /obj/item/weapon/gun/energy/lasgun/lasrifle/plasma/rifle/standard
 	backpack_contents = list(
 		/obj/item/cell/lasgun/plasma = 4,
@@ -135,16 +135,16 @@
 	name = "Imperial Stormtrooper Officer"
 	jobtype = /datum/job/sw/ert/imperial/officer
 	w_uniform = /obj/item/clothing/under/sw/imp_stormofficer
-	wear_suit = /obj/item/clothing/suit/armor/sw/stormtrooper
-	head = /obj/item/clothing/head/sw/helmet/imp_stormofficer
+	wear_suit = /obj/item/clothing/suit/storage/marine/sw/stormtrooper
+	head = /obj/item/clothing/head/helmet/marine/sw/imp_stormofficer
 	suit_store = /obj/item/weapon/gun/energy/lasgun/lasrifle/plasma/rifle/standard
 
 /datum/outfit/job/sw/ert/imperial/medic
 	name = "Imperial Storm Surgeon"
 	jobtype = /datum/job/sw/ert/imperial/medic
 	w_uniform = /obj/item/clothing/under/sw/imptechnician
-	wear_suit = /obj/item/clothing/suit/armor/sw/stormsurgeon
-	head = /obj/item/clothing/head/sw/helmet/stormsurgeon
+	wear_suit = /obj/item/clothing/suit/storage/marine/sw/stormsurgeon
+	head = /obj/item/clothing/head/helmet/marine/sw/stormsurgeon
 	belt = /obj/item/storage/belt/lifesaver/full
 	belt_contents = null
 	l_pocket = /obj/item/storage/pouch/medkit/medic
@@ -159,8 +159,8 @@
 	name = "Imperial Royal Guardsman"
 	jobtype = /datum/job/sw/ert/imperial/guard
 	w_uniform = /obj/item/clothing/under/sw/impofficer_captain
-	wear_suit = /obj/item/clothing/suit/armor/sw/redguard
-	head = /obj/item/clothing/head/sw/helmet/redguard
+	wear_suit = /obj/item/clothing/suit/storage/marine/sw/redguard
+	head = /obj/item/clothing/head/helmet/marine/sw/redguard
 	suit_store = /obj/item/weapon/gun/energy/lasgun/lasrifle/plasma/rifle/standard
 	belt_contents = list(
 		/obj/item/cell/lasgun/plasma = 6,
@@ -173,6 +173,6 @@
 	name = "Imperial Senate Guardsman"
 	jobtype = /datum/job/sw/ert/imperial/guard/senate
 	w_uniform = /obj/item/clothing/under/sw/impofficer_captain
-	wear_suit = /obj/item/clothing/suit/armor/sw/senateguard
-	head = /obj/item/clothing/head/sw/helmet/senateguard
+	wear_suit = /obj/item/clothing/suit/storage/marine/sw/senateguard
+	head = /obj/item/clothing/head/helmet/marine/sw/senateguard
 	suit_store = /obj/item/weapon/gun/energy/lasgun/lasrifle/plasma/rifle/standard
