@@ -99,32 +99,32 @@ PREFIX_LABEL = {
 }
 
 PREFIX_EMOJI = {
-    'rscadd': '\U00002795',      # ➕
-    'add': '\U00002795',
-    'rscdel': '\U0001f5d1\ufe0f',  # 🗑️
-    'del': '\U0001f5d1\ufe0f',
-    'qol': '\u2728',             # ✨
+    'rscadd': '\U00002705',      # ✅
+    'add': '\U00002705',
+    'rscdel': '\U0000274c',      # ❌
+    'del': '\U0000274c',
+    'qol': '\u2747\ufe0f',       # ❇️
     'balance': '\u2696\ufe0f',   # ⚖️
-    'bugfix': '\U0001f41b',      # 🐛
-    'fix': '\U0001f41b',
+    'bugfix': '\u267f',          # ♿
+    'fix': '\u267f',
     'sound': '\U0001f50a',       # 🔊
     'soundadd': '\U0001f50a',
-    'sounddel': '\U0001f50a',
+    'sounddel': '\U0001f507',    # 🔇
     'image': '\U0001f5bc\ufe0f', # 🖼️
-    'imageadd': '\U0001f5bc\ufe0f',
-    'imagedel': '\U0001f5bc\ufe0f',
+    'imageadd': '\U0001f4e5',    # 📥
+    'imagedel': '\U0001f4e4',    # 📤
     'expansion': '\U0001f5fa\ufe0f',  # 🗺️
     'map': '\U0001f5fa\ufe0f',
-    'spellcheck': '\u270f\ufe0f',    # ✏️
-    'typo': '\u270f\ufe0f',
+    'spellcheck': '\U0001f4cb',  # 📋
+    'typo': '\U0001f5a5\ufe0f',  # 🖥️
     'code_imp': '\U0001f4bb',    # 💻
-    'code': '\U0001f4bb',
+    'code': '\U0001f6dc',        # 🛜
     'refactor': '\u267b\ufe0f',  # ♻️
-    'config': '\u2699\ufe0f',    # ⚙️
+    'config': '\U0001f9f0',      # 🧰
     'admin': '\U0001f6e1\ufe0f', # 🛡️
-    'server': '\U0001f5a5\ufe0f', # 🖥️
-    'wip': '\U0001f6a7',         # 🚧
-    'experiment': '\U0001f9ea',  # 🧪
+    'server': '\U0001f4be',      # 💾
+    'wip': '\u2622\ufe0f',       # ☢️
+    'experiment': '\u26a0\ufe0f',  # ⚠️
 }
 
 def read_config_txt():
