@@ -942,6 +942,10 @@
 /obj/machinery/marine_selector/clothes/robo,
 /turf/open/floor/mainship/red/full,
 /area/shuttle/canterbury)
+"RM" = (
+/obj/effect/landmark/start/job/crash/researcher,
+/turf/open/floor/mainship/sterile/dark,
+/area/shuttle/canterbury/medical)
 "RS" = (
 /obj/structure/cable,
 /obj/effect/attach_point/crew_weapon/dropship1,
@@ -1032,7 +1036,7 @@ bK
 aC
 cJ
 bS
-cJ
+RM
 ce
 bo
 cm
