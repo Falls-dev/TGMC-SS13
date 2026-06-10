@@ -325,6 +325,9 @@ CHECK_RANDOMIZER
 #COBALT_BASE_API https://api.cobalt.tools/
 #COBALT_API_KEY
 
+# Changelog Discord Webhook
+#CHANGELOG_DISCORD_HOOK https://example.com
+
 # дедикайтед
 ## Discord TGS or other bot token.
 DISCORD_TOKEN YOUR_SECRET_TOKEN
