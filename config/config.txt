@@ -276,55 +276,6 @@ TGUI_MAX_CHUNK_COUNT 32
 #TGS_EVENT_APPROVAL_MESSAGING
 #TGS_ADMINLESS_MESSAGING
 
-## Example server config for TGMC.
-## Copy to config/config.txt and edit (config/config.txt is not tracked by git).
-##
-## Check code/controllers/configuration/entries for all options.
-
-$include dbconfig.txt
-$include resources.txt
-$include ported_features.txt
-
-SERVER_NAME TGMC
-TITLE TGMC
-HOSTEDBY yournamehere
-
-ADMIN_LEGACY_SYSTEM
-ALLOW_SHUTDOWN
-LOCALHOST_RANK
-AUTOMUTE_ON
-GUEST_BAN
-CHECK_RANDOMIZER
-
-################################################################################
-# Ported features (IPINTEL, OOC flags, yt-dlp/cobalt)
-#
-# Add this line to your config/config.txt:
-#   $include ported_features.txt
-#
-# config/config.txt is gitignored — copy from config/example/ if you do not have one.
-################################################################################
-
-## OOC country flags (ip-api.com). Players can hide their flag in prefs.
-#OOC_COUNTRY_FLAGS
-
-## IPINTEL — proxy/VPN detection via getipintel.net
-## Requires a real contact email. Default placeholder disables the feature.
-## DB cache needs the ipintel table (see SQL/ipintel.sql).
-#IPINTEL_RATING_BAD 0.9
-#IPINTEL_EMAIL your.email@example.com
-#IPINTEL_SAVE_GOOD 12
-#IPINTEL_SAVE_BAD 1
-#IPINTEL_DOMAIN check.getipintel.net
-
-## Play Internet Sound — yt-dlp (either key works; INVOKE_YOUTUBEDL is legacy alias)
-#INVOKE_YT_DLP yt-dlp
-#INVOKE_YOUTUBEDL yt-dlp
-
-## Play Internet Sound — cobalt.tools (used if set; preferred over yt-dlp when both are set)
-#COBALT_BASE_API https://api.cobalt.tools/
-#COBALT_API_KEY
-
 # Changelog Discord Webhook
 #CHANGELOG_DISCORD_HOOK https://example.com
 
