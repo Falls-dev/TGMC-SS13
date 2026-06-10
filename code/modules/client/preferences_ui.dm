@@ -169,6 +169,7 @@
 			data["fast_mc_refresh"] = fast_mc_refresh
 			data["split_admin_tabs"] = split_admin_tabs
 			data["hear_ooc_anywhere_as_staff"] = hear_ooc_anywhere_as_staff
+			data["show_ooc_country_flag"] = show_ooc_country_flag
 			data["volume_adminhelp"] = volume_adminhelp
 			data["volume_adminmusic"] = volume_adminmusic
 			data["volume_ambience"] = volume_ambience
@@ -1112,6 +1113,8 @@
 
 		if("hear_ooc_anywhere_as_staff")
 			hear_ooc_anywhere_as_staff = !hear_ooc_anywhere_as_staff
+		if("show_ooc_country_flag")
+			show_ooc_country_flag = !show_ooc_country_flag
 
 		if("volume_adminhelp")
 			volume_adminhelp = params["newValue"]

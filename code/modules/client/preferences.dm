@@ -207,6 +207,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	///When enabled, can hear OOC channels from anywhere in any situation.
 	///Ex: mentors/admins being able to hear XOOC as a human, or LOOC when not nearby the speaker.
 	var/hear_ooc_anywhere_as_staff = TRUE
+	var/show_ooc_country_flag = TRUE
 
 	/// If unique action will only act on the item in the active hand. If false, it will try to act on the item on the inactive hand as well in certain conditions.
 	var/unique_action_use_active_hand = TRUE
