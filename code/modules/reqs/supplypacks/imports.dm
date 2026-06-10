@@ -334,3 +334,21 @@
 	notes = "Contains a random, but curated set of items, these packs are valued around 150 to 200 points. Some items can only be acquired from these. Spend responsibly."
 	contains = list(/obj/item/loot_box/tgmclootbox)
 	cost = 1000
+
+/datum/supply_packs/imports/mini_pig
+	name = "Mini pig"
+	containertype = /obj/structure/closet/crate
+	contains = list(/mob/living/simple_animal/pig/mini)
+	cost = 300
+
+/datum/supply_packs/imports/pig
+	name = "Pig"
+	containertype = /obj/structure/closet/crate
+	contains = list(/mob/living/simple_animal/pig)
+	cost = 500
+
+/datum/supply_packs/imports/horse
+	name = "Horse"
+	containertype = /obj/structure/closet/crate
+	contains = list(/mob/living/simple_animal/horse)
+	cost = 1000

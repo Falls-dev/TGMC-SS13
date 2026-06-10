@@ -103,6 +103,11 @@
 	contains = list(/obj/item/storage/box/visual/grenade/drain)
 	cost = 700
 
+/datum/supply_packs/explosives/boomvest
+	name = "Bomb vest"
+	contains = list(/obj/item/clothing/suit/storage/marine/boomvest)
+	cost = 2000
+
 /datum/supply_packs/explosives/plastique
 	name = "C4 plastic explosive"
 	contains = list(/obj/item/explosive/plastique)
