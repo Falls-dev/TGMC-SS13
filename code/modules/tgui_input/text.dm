@@ -110,7 +110,8 @@
 /datum/tgui_input_text/ui_static_data(mob/user)
 	var/list/data = list()
 	data["large_buttons"] = user.client.prefs.tgui_input_big_buttons
-	data["max_length"] = max_length
+	if(isnum(max_length) && max_length > 0 && max_length < INFINITY)
+		data["max_length"] = max_length
 	data["message"] = message
 	data["multiline"] = multiline
 	data["placeholder"] = default // Default is a reserved keyword
@@ -130,7 +131,7 @@
 		return
 	switch(action)
 		if("submit")
-			if(max_length)
+			if(isnum(max_length) && max_length > 0 && max_length < INFINITY)
 				if(length(params["entry"]) > max_length)
 					CRASH("[usr] typed a text string longer than the max length")
 				if(encode && (length(html_encode(params["entry"])) > max_length))
@@ -153,4 +154,7 @@
 /datum/tgui_input_text/proc/set_entry(entry)
 	if(!isnull(entry))
 		var/converted_entry = encode ? html_encode(entry) : entry
-		src.entry = max_length ? trim(converted_entry, PREVENT_CHARACTER_TRIM_LOSS(max_length)) : converted_entry
+		if(isnum(max_length) && max_length > 0 && max_length < INFINITY)
+			src.entry = trim(converted_entry, PREVENT_CHARACTER_TRIM_LOSS(max_length))
+		else
+			src.entry = converted_entry
