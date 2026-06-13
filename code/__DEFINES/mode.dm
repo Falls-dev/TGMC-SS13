@@ -50,7 +50,6 @@
 #define MODE_SILO_NO_LARVA (1<<13)
 #define MODE_TELETOWER (1<<14)
 #define MODE_XENO_DEN (1<<15)
-#define MODE_HAS_EXCAVATION (1<<16)
 #define MODE_HAS_MINERS (1<<17)
 #define MODE_PREDATOR (1<<18)
 /// Should marines have access to quickbuild?
@@ -185,8 +184,6 @@
 		return status_limit
 
 	return desired_status
-
-#define MAX_EXCAVATIONS 10
 
 #define MIN_PHORON_MINER_AMOUNT 5
 #define MIN_PLATINUM_MINER_AMOUNT 3

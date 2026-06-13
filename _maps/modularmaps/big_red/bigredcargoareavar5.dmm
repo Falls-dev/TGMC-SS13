@@ -455,10 +455,6 @@
 /obj/structure/xenoautopsy/tank/hugger,
 /turf/open/floor/plating,
 /area/bigredv2/outside/nw)
-"Ea" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating,
-/area/bigredv2/outside/nw)
 "Ee" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
@@ -1396,7 +1392,7 @@ zF
 zF
 Rm
 RN
-Ea
+zF
 zF
 kH
 zF

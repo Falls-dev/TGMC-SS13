@@ -104,10 +104,6 @@
 /obj/effect/landmark/weed_node,
 /turf/open/floor/plating/ground/mars/random/cave/rock,
 /area/bigredv2/caves/east)
-"aR" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/east)
 "aT" = (
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/bigredv2/caves/east)
@@ -2437,7 +2433,7 @@ aT
 aT
 aT
 aT
-aR
+aT
 aT
 aH
 aG
@@ -2508,7 +2504,7 @@ aT
 aT
 aT
 aT
-aR
+aT
 aH
 aT
 aT

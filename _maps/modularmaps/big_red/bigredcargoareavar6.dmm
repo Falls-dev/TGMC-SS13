@@ -547,10 +547,6 @@
 /obj/effect/ai_node,
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/bigredv2/caves/northwest)
-"IX" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating,
-/area/bigredv2/outside/nw)
 "Js" = (
 /obj/machinery/light{
 	dir = 1
@@ -1337,7 +1333,7 @@ WG
 WG
 WG
 WG
-IX
+WG
 WG
 WG
 WG

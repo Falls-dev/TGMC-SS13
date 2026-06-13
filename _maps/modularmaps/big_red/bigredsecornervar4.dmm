@@ -21,10 +21,6 @@
 /obj/effect/landmark/miner_platinum,
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/bigredv2/caves/southeast/garbledradio)
-"m" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast/garbledradio)
 "o" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/plating/ground/mars/random/cave,
@@ -70,10 +66,6 @@
 "K" = (
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/bigredv2/caves/southeast/garbledradio)
-"O" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
 "Q" = (
 /obj/effect/landmark/start/job/xenomorph,
 /obj/effect/landmark/weed_node,
@@ -815,7 +807,7 @@ V
 K
 K
 X
-m
+K
 X
 X
 X
@@ -1177,7 +1169,7 @@ w
 w
 w
 w
-O
+w
 w
 w
 o
@@ -1745,7 +1737,7 @@ w
 w
 w
 w
-O
+w
 w
 o
 w
@@ -2964,7 +2956,7 @@ w
 w
 w
 w
-O
+w
 w
 w
 w
@@ -3154,7 +3146,7 @@ w
 w
 w
 w
-O
+w
 F
 w
 w

@@ -27,11 +27,6 @@
 /obj/effect/landmark/fog_blocker,
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/bigredv2/caves/northeast)
-"q" = (
-/obj/effect/ai_node,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast)
 "r" = (
 /turf/open/floor/plating,
 /area/bigredv2/caves/lambda_lab)
@@ -1831,7 +1826,7 @@ N
 N
 j
 j
-q
+u
 j
 j
 j

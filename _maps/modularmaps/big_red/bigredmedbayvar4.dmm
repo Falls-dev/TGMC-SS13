@@ -94,16 +94,8 @@
 	dir = 8
 	},
 /area/bigredv2/outside/medical)
-"do" = (
-/obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/tile/white,
-/area/bigredv2/outside/medical)
 "dy" = (
 /obj/machinery/light,
-/obj/effect/landmark/excavation_site_spawner,
 /turf/open/floor/tile/green/whitegreen{
 	dir = 6
 	},
@@ -2561,7 +2553,7 @@ GA
 nl
 Hd
 jp
-do
+jh
 NW
 jh
 vl

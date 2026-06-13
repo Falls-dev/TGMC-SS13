@@ -12,10 +12,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/lv624/ground/caves/central2)
-"bu" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/caves/central2)
 "bS" = (
 /obj/effect/ai_node,
 /turf/open/floor/wood,
@@ -25,10 +21,6 @@
 /obj/effect/landmark/corpsespawner/colonist,
 /turf/open/floor/wood,
 /area/lv624/ground/caves/central2)
-"dp" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/caves/central1)
 "dv" = (
 /obj/item/storage/firstaid/regular,
 /obj/effect/decal/cleanable/blood/drip,
@@ -974,7 +966,7 @@ GF
 Yv
 Yv
 Yv
-bu
+Yv
 Hy
 Yv
 Yv
@@ -1404,7 +1396,7 @@ GF
 GF
 Yv
 op
-bu
+Yv
 Yv
 Hy
 Yv
@@ -2254,7 +2246,7 @@ EQ
 Yv
 Yv
 Yv
-bu
+Yv
 Yv
 Yv
 Yv
@@ -2795,7 +2787,7 @@ vk
 GF
 Yv
 Yv
-bu
+Yv
 Yv
 zK
 Yv
@@ -3217,7 +3209,7 @@ iu
 vk
 au
 au
-dp
+au
 au
 hh
 vk

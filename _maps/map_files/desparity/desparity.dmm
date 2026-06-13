@@ -140,13 +140,6 @@
 	dir = 9
 	},
 /area/lv624/lazarus/hydroponics)
-"aU" = (
-/obj/effect/landmark/excavation_site_spawner,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/tile/dark/red2/corner{
-	dir = 8
-	},
-/area/lv624/lazarus/research/caves)
 "aV" = (
 /obj/machinery/power/apc/drained{
 	crash_break_probability = 100
@@ -1361,10 +1354,6 @@
 	dir = 10
 	},
 /area/lv624/ground/jungle9)
-"hh" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/jungle9)
 "hj" = (
 /obj/machinery/door/airlock/mainship/generic/ert{
 	dir = 2
@@ -2328,10 +2317,6 @@
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/dark,
 /area/lv624/lazarus/engineering)
-"md" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/caves/west1)
 "me" = (
 /obj/effect/ai_node,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
@@ -3730,10 +3715,6 @@
 /obj/structure/window/reinforced/west,
 /turf/open/floor/freezer,
 /area/lv624/lazarus/canteen)
-"tc" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/ground/grass/weedable,
-/area/lv624/ground/jungle9)
 "td" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/mainship,
@@ -3863,10 +3844,6 @@
 "tK" = (
 /turf/open/floor/plating/dmg3,
 /area/lv624/lazarus/crashed_ship/desparity)
-"tM" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/engine/cult,
-/area/lv624/ground/caves/west1)
 "tN" = (
 /obj/effect/turf_decal/siding{
 	dir = 1
@@ -5605,10 +5582,6 @@
 	dir = 8
 	},
 /area/lv624/lazarus/medbay)
-"Cf" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/mainship,
-/area/lv624/lazarus/crashed_ship/desparity)
 "Cg" = (
 /obj/structure/flora/ausbushes/grassybush{
 	pixel_x = 4;
@@ -5718,10 +5691,6 @@
 /obj/structure/cable,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/lv624/lazarus/medbay)
-"CJ" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirtgrassborder/autosmooth/buildable,
-/area/lv624/ground/jungle9)
 "CK" = (
 /obj/item/trash/cigbutt,
 /obj/structure/cable,
@@ -6628,10 +6597,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/tile/dark/blue2/corner,
 /area/lv624/lazarus/research/caves)
-"Hr" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/caves/east1)
 "Hs" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
@@ -6772,10 +6737,6 @@
 /obj/structure/cable,
 /turf/open/floor,
 /area/lv624/lazarus/spaceport)
-"Ih" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/caves/central1)
 "Ii" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
@@ -7405,10 +7366,6 @@
 /obj/structure/cable,
 /turf/open/floor,
 /area/lv624/lazarus/spaceport)
-"Lj" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/jungle10)
 "Ln" = (
 /obj/structure/flora/ausbushes/genericbush,
 /turf/open/floor/plating/ground/dirtgrassborder/autosmooth/buildable,
@@ -9705,7 +9662,6 @@
 "VY" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/excavation_site_spawner,
 /turf/open/floor/wood,
 /area/lv624/lazarus/bar)
 "Wa" = (
@@ -11486,7 +11442,7 @@ vt
 vt
 dw
 vt
-md
+vt
 dw
 FC
 FC
@@ -12235,7 +12191,7 @@ tH
 wM
 xW
 PM
-Lj
+wM
 wM
 JY
 Pf
@@ -12514,7 +12470,7 @@ vt
 zg
 zg
 ss
-tM
+Sh
 zg
 zg
 vt
@@ -12696,7 +12652,7 @@ wh
 wh
 bT
 DX
-Cf
+mU
 GW
 DX
 XC
@@ -14752,7 +14708,7 @@ ft
 ft
 EH
 Zp
-CJ
+EH
 EH
 PO
 Sn
@@ -16236,7 +16192,7 @@ FC
 FC
 ua
 ua
-Ih
+ua
 ua
 ua
 ua
@@ -16398,7 +16354,7 @@ oz
 yO
 wI
 Du
-hh
+ft
 ft
 GQ
 ft
@@ -16895,7 +16851,7 @@ Ww
 Ww
 Ww
 Ww
-tc
+Zp
 EH
 MZ
 Fx
@@ -17917,7 +17873,7 @@ rq
 rq
 PL
 uB
-aU
+PL
 PL
 XO
 zw
@@ -18625,7 +18581,7 @@ wh
 FC
 Uq
 Uq
-Hr
+Uq
 Uq
 Uq
 rq

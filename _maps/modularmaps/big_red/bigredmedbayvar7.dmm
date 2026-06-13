@@ -1011,10 +1011,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/dmg1,
 /area/bigredv2/outside/medical)
-"DR" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/tile/dark,
-/area/bigredv2/outside/medical)
 "DU" = (
 /turf/open/floor/tile/green/whitegreen{
 	dir = 6
@@ -2549,7 +2545,7 @@ SU
 (31,1,1) = {"
 Ht
 ht
-DR
+Vo
 Vo
 Vo
 ht
