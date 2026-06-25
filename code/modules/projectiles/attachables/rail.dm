@@ -21,7 +21,7 @@
 	icon_state = "smoll"
 	slot = ATTACHMENT_SLOT_RAIL
 	add_aim_mode = TRUE
-	aim_mode_movement_mult = -0.9
+	aim_mode_movement_mult = -0.8
 
 /obj/item/attachable/b15_scope
 	name = "B15 smart scope"
@@ -29,7 +29,7 @@
 	icon_state = "big"
 	slot = ATTACHMENT_SLOT_RAIL
 	add_aim_mode = TRUE
-	aim_mode_delay_mod = -0.8
+	aim_mode_delay_mod = -0.7
 
 /obj/item/attachable/m16sight
 	name = "M16 iron sights"
