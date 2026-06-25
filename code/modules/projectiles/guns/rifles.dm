@@ -81,6 +81,8 @@
 		/obj/item/attachable/shoulder_mount,
 		/obj/item/weapon/gun/energy/lasgun/lasrifle/pocket_beam,
 		/obj/item/weapon/gun/flamer/hydro_cannon,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
@@ -172,6 +174,8 @@
 		/obj/item/attachable/shoulder_mount,
 		/obj/item/weapon/gun/energy/lasgun/lasrifle/pocket_beam,
 		/obj/item/weapon/gun/flamer/hydro_cannon,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
@@ -267,6 +271,8 @@
 		/obj/item/attachable/buildasentry,
 		/obj/item/weapon/gun/rifle/pepperball/pepperball_mini,
 		/obj/item/attachable/shoulder_mount,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_AMMO_COUNTER|GUN_CAN_POINTBLANK|GUN_SMOKE_PARTICLES
@@ -387,6 +393,8 @@
 		/obj/item/attachable/shoulder_mount,
 		/obj/item/weapon/gun/energy/lasgun/lasrifle/pocket_beam, //RUTGMC EDIT
 		/obj/item/weapon/gun/flamer/hydro_cannon,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_AMMO_COUNTER|GUN_CAN_POINTBLANK|GUN_SMOKE_PARTICLES
@@ -459,6 +467,8 @@
 		/obj/item/attachable/shoulder_mount,
 		/obj/item/weapon/gun/energy/lasgun/lasrifle/pocket_beam, //RUTGMC EDIT
 		/obj/item/weapon/gun/flamer/hydro_cannon,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
@@ -511,6 +521,8 @@
 		/obj/item/attachable/buildasentry,
 		/obj/item/weapon/gun/rifle/pepperball/pepperball_mini,
 		/obj/item/attachable/shoulder_mount,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	attachable_offset = list("muzzle_x" = 44, "muzzle_y" = 19,"rail_x" = 15, "rail_y" = 21, "under_x" = 25, "under_y" = 16, "stock_x" = 18, "stock_y" = 15)
@@ -565,6 +577,8 @@
 		/obj/item/attachable/stock/m41a,
 		/obj/item/weapon/gun/grenade_launcher/underslung/invisible,
 		/obj/item/attachable/shoulder_mount,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
@@ -626,6 +640,8 @@
 		/obj/item/weapon/gun/grenade_launcher/underslung,
 		/obj/item/weapon/gun/rifle/pepperball/pepperball_mini,
 		/obj/item/weapon/gun/grenade_launcher/underslung/mpi, //alt sprite, unremovable
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
@@ -681,6 +697,8 @@
 		/obj/item/attachable/reddot,
 		/obj/item/attachable/lasersight,
 		/obj/item/attachable/flashlight/under,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 	starting_attachment_types = list(/obj/item/attachable/stock/mpi_km/black)
 
@@ -757,6 +775,8 @@
 		/obj/item/weapon/gun/energy/lasgun/lasrifle/pocket_beam,
 		/obj/item/attachable/b7_scope,
 		/obj/item/weapon/gun/flamer/hydro_cannon,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES|GUN_WIELDED_FIRING_ONLY
 	gun_firemode_list = list(GUN_FIREMODE_SEMIAUTO, GUN_FIREMODE_AUTOMATIC)
@@ -767,6 +787,7 @@
 	burst_amount = 2
 	autoburst_delay = 0.1 SECONDS
 	fire_delay = 0.2 SECONDS
+	aim_speed_modifier = 2.5
 	placed_overlay_iconstate = "ak47"
 
 /obj/item/weapon/gun/rifle/type16/m2
@@ -815,6 +836,8 @@
 		/obj/item/attachable/shoulder_mount,
 		/obj/item/attachable/b7_scope,
 		/obj/item/weapon/gun/flamer/hydro_cannon,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 	equip_slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
@@ -834,6 +857,7 @@
 	akimbo_additional_delay = 2
 	akimbo_scatter_mod = 24
 	akimbo_additional_delay = 20
+	aim_speed_modifier = 2.5
 
 //-------------------------------------------------------
 
@@ -881,6 +905,8 @@
 		/obj/item/attachable/reddot,
 		/obj/item/attachable/lasersight,
 		/obj/item/attachable/flashlight/under,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
@@ -927,6 +953,8 @@
 		/obj/item/attachable/flashlight,
 		/obj/item/attachable/magnetic_harness,
 		/obj/item/attachable/stock/dpm,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_WIELDED_FIRING_ONLY|GUN_AMMO_COUNTER
@@ -994,6 +1022,8 @@
 		/obj/item/weapon/gun/rifle/pepperball/pepperball_mini,
 		/obj/item/attachable/shoulder_mount,
 		/obj/item/weapon/gun/flamer/hydro_cannon,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
@@ -1059,6 +1089,8 @@
 		/obj/item/weapon/gun/grenade_launcher/underslung,
 		/obj/item/weapon/gun/rifle/pepperball/pepperball_mini,
 		/obj/item/weapon/gun/flamer/hydro_cannon,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
@@ -1137,6 +1169,8 @@
 		/obj/item/weapon/gun/rifle/pepperball/pepperball_mini,
 		/obj/item/weapon/gun/energy/lasgun/lasrifle/pocket_beam,
 		/obj/item/weapon/gun/flamer/hydro_cannon,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
@@ -1212,6 +1246,8 @@
 		/obj/item/attachable/motiondetector,
 		/obj/item/attachable/buildasentry,
 		/obj/item/attachable/shoulder_mount,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_AMMO_COUNTER|GUN_WIELDED_FIRING_ONLY|GUN_SMOKE_PARTICLES
@@ -1219,8 +1255,8 @@
 	starting_attachment_types = list(/obj/item/attachable/stock/t60stock)
 	gun_skill_category = SKILL_HEAVY_WEAPONS
 	attachable_offset = list("muzzle_x" = 42, "muzzle_y" = 21,"rail_x" = 6, "rail_y" = 23, "under_x" = 26, "under_y" = 15, "stock_x" = 8, "stock_y" = 13)
-	aim_fire_delay = 0.15 SECONDS
-	aim_speed_modifier = 5.3
+	aim_fire_delay = 0.1 SECONDS
+	aim_speed_modifier = 5
 
 	fire_delay = 0.15 SECONDS
 	damage_falloff_mult = 0.5
@@ -1284,13 +1320,14 @@
 		/obj/item/attachable/buildasentry,
 		/obj/item/weapon/gun/rifle/pepperball/pepperball_mini,
 		/obj/item/attachable/shoulder_mount,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_WIELDED_FIRING_ONLY|GUN_SMOKE_PARTICLES
 	gun_firemode_list = list(GUN_FIREMODE_AUTOMATIC, GUN_FIREMODE_BURSTFIRE, GUN_FIREMODE_AUTOBURST)
 	gun_skill_category = SKILL_HEAVY_WEAPONS
 	attachable_offset = list("muzzle_x" = 42, "muzzle_y" = 19,"rail_x" = 17, "rail_y" = 21, "under_x" = 31, "under_y" = 15, "stock_x" = 18, "stock_y" = 15)
-	aim_fire_delay = 0.15 SECONDS
 	aim_speed_modifier = 2
 
 	fire_delay = 0.3 SECONDS
@@ -1368,12 +1405,13 @@
 		/obj/item/attachable/suppressor/unremovable/invisible,
 		/obj/item/attachable/scope/unremovable,
 		/obj/item/weapon/gun/flamer/hydro_cannon,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
 	attachable_offset = list("muzzle_x" = 41, "muzzle_y" = 19,"rail_x" = 18, "rail_y" = 24, "under_x" = 34, "under_y" = 16, "stock_x" = 19, "stock_y" = 13)
 	gun_firemode_list = list(GUN_FIREMODE_BURSTFIRE, GUN_FIREMODE_AUTOBURST)
-	aim_fire_delay = 0.15 SECONDS
 	aim_speed_modifier = 2
 
 	fire_delay = 0.25 SECONDS
@@ -1404,6 +1442,8 @@
 		/obj/item/attachable/scope/mini,
 		/obj/item/attachable/scope/marine,
 		/obj/item/weapon/gun/flamer/mini_flamer/unremovable,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 	starting_attachment_types = list(/obj/item/weapon/gun/flamer/mini_flamer/unremovable)
 
@@ -1477,6 +1517,8 @@
 		/obj/item/weapon/gun/rifle/pepperball/pepperball_mini,
 		/obj/item/weapon/gun/energy/lasgun/lasrifle/pocket_beam, //RUTGMC EDIT
 		/obj/item/weapon/gun/flamer/hydro_cannon,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_WIELDED_FIRING_ONLY|GUN_SMOKE_PARTICLES //Its a shotgun type weapon effectively, most shotgun type weapons shouldn't be able to point blank 1 handed.
@@ -1880,13 +1922,14 @@
 		/obj/item/attachable/magnetic_harness,
 		/obj/item/attachable/motiondetector,
 		/obj/item/attachable/scope/marine,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
 	gun_firemode_list = list(GUN_FIREMODE_AUTOMATIC, GUN_FIREMODE_BURSTFIRE, GUN_FIREMODE_AUTOBURST)
 	starting_attachment_types = list(/obj/item/attachable/stock/ar11, /obj/item/attachable/scope/mini/ar11)
 	attachable_offset = list("muzzle_x" = 31, "muzzle_y" = 17,"rail_x" = 6, "rail_y" = 20, "under_x" = 20, "under_y" = 12, "stock_x" = 17, "stock_y" = 14)
-	aim_fire_delay = 0.15 SECONDS
 
 	fire_delay = 0.25 SECONDS
 	burst_amount = 3
@@ -1984,12 +2027,13 @@
 		/obj/item/weapon/gun/rifle/pepperball/pepperball_mini,
 		/obj/item/weapon/gun/energy/lasgun/lasrifle/pocket_beam,
 		/obj/item/weapon/gun/flamer/hydro_cannon,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
 	gun_firemode_list = list(GUN_FIREMODE_AUTOMATIC)
 	attachable_offset = list("muzzle_x" = 46, "muzzle_y" = 16,"rail_x" = 18, "rail_y" = 19, "under_x" = 34, "under_y" = 13, "stock_x" = 0, "stock_y" = 13)
-	aim_fire_delay = 0.15 SECONDS
 	aim_speed_modifier = 2.5
 
 	fire_delay = 0.25 SECONDS
@@ -2041,6 +2085,8 @@
 		/obj/item/attachable/bayonet,
 		/obj/item/attachable/bayonetknife,
 		/obj/item/attachable/bayonetknife/som,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
@@ -2101,6 +2147,8 @@
 		/obj/item/attachable/bayonet,
 		/obj/item/attachable/bayonetknife,
 		/obj/item/attachable/bayonetknife/som,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
@@ -2232,6 +2280,8 @@
 		/obj/item/attachable/motiondetector,
 		/obj/item/weapon/gun/rifle/tx54/mini,
 		/obj/item/attachable/scope/optical,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
@@ -2373,6 +2423,8 @@
 		/obj/item/attachable/scope/marine,
 		/obj/item/attachable/scope/mini,
 		/obj/item/attachable/motiondetector,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
@@ -2464,6 +2516,8 @@
 		/obj/item/attachable/flashlight,
 		/obj/item/attachable/magnetic_harness,
 		/obj/item/attachable/verticalgrip,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
@@ -2497,6 +2551,8 @@
 		/obj/item/attachable/magnetic_harness,
 		/obj/item/attachable/verticalgrip,
 		/obj/item/attachable/reddot,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 /obj/item/weapon/gun/rifle/som_carbine/black/standard
@@ -2556,6 +2612,8 @@
 		/obj/item/attachable/scope/marine,
 		/obj/item/attachable/scope/mini,
 		/obj/item/attachable/motiondetector,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_AMMO_COUNTER|GUN_CAN_POINTBLANK|GUN_SMOKE_PARTICLES
@@ -2622,6 +2680,8 @@
 		/obj/item/attachable/motiondetector,
 		/obj/item/attachable/buildasentry,
 		/obj/item/attachable/shoulder_mount,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_AMMO_COUNTER|GUN_WIELDED_FIRING_ONLY|GUN_SMOKE_PARTICLES
@@ -2698,6 +2758,8 @@
 		/obj/item/weapon/gun/shotgun/combat/masterkey,
 		/obj/item/weapon/gun/flamer/mini_flamer,
 		/obj/item/weapon/gun/grenade_launcher/underslung/mpi/removeable,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 	starting_attachment_types = list(/obj/item/attachable/stock/icc_sharpshooter)
 
@@ -2769,6 +2831,8 @@
 		/obj/item/weapon/gun/flamer/mini_flamer,
 		/obj/item/weapon/gun/grenade_launcher/underslung/mpi/removeable,
 		/obj/item/weapon/gun/rifle/pepperball/pepperball_mini,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
@@ -2832,6 +2896,8 @@
 		/obj/item/attachable/scope,
 		/obj/item/attachable/scope/marine,
 		/obj/item/attachable/motiondetector,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
@@ -2943,6 +3009,8 @@
 		/obj/item/attachable/flashlight,
 		/obj/item/attachable/compensator,
 		/obj/item/attachable/magnetic_harness,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER
@@ -2954,7 +3022,7 @@
 	extra_delay = 0.15 SECONDS
 	accuracy_mult = 1.15
 	damage_mult = 1.2
-	damage_falloff_mult = 1.5
+	damage_falloff_mult = 0.5
 	wield_delay = 0.85 SECONDS
 	aim_slowdown = 0.2
 	scatter = 0
@@ -2985,8 +3053,8 @@
 	caliber = CALIBER_10X26_CASELESS //codex
 	max_shells = 80 //codex
 	force = 20
-	aim_slowdown = 0.5
-	wield_delay = 1.1 SECONDS
+	aim_slowdown = 0.45
+	wield_delay = 1 SECONDS
 	fire_sound = SFX_GUN_SMARTGUN
 	dry_fire_sound = 'sound/weapons/guns/fire/m41a_empty.ogg'
 	unload_sound =   'sound/weapons/guns/interact/T42_unload.ogg'
@@ -3009,12 +3077,18 @@
 		/obj/item/weapon/gun/pistol/plasma_pistol,
 		/obj/item/weapon/gun/flamer/mini_flamer,
 		/obj/item/attachable/motiondetector,
+		/obj/item/weapon/gun/energy/lasgun/lasrifle/pocket_beam,
+		/obj/item/attachable/angledgrip,
+		/obj/item/weapon/gun/flamer/hydro_cannon,
+		/obj/item/weapon/gun/rifle/pepperball/pepperball_mini,
+		/obj/item/weapon/gun/grenade_launcher/underslung,
+		/obj/item/weapon/gun/shotgun/combat/masterkey,
 	)
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_WIELDED_FIRING_ONLY
 	gun_firemode_list = list(GUN_FIREMODE_SEMIAUTO, GUN_FIREMODE_AUTOMATIC)
 	gun_skill_category = SKILL_SMARTGUN //Uses SG skill for the penalties.
-	attachable_offset = list("muzzle_x" = 42, "muzzle_y" = 17,"rail_x" = 15, "rail_y" = 21, "under_x" = 24, "under_y" = 14, "stock_x" = 12, "stock_y" = 13)
+	attachable_offset = list("muzzle_x" = 42, "muzzle_y" = 17,"rail_x" = 15, "rail_y" = 21, "under_x" = 34, "under_y" = 14, "stock_x" = 12, "stock_y" = 13)
 
 	fire_delay = 0.2 SECONDS
 	burst_amount = 0
@@ -3067,6 +3141,8 @@
 		/obj/item/attachable/motiondetector,
 		/obj/item/attachable/buildasentry,
 		/obj/item/attachable/shoulder_mount,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_AMMO_COUNTER|GUN_WIELDED_FIRING_ONLY|GUN_SMOKE_PARTICLES
@@ -3074,7 +3150,6 @@
 	gun_skill_category = SKILL_HEAVY_WEAPONS
 	attachable_offset = list("muzzle_x" = 42, "muzzle_y" = 21,"rail_x" = 6, "rail_y" = 23, "under_x" = 26, "under_y" = 15, "stock_x" = 8, "stock_y" = 13)
 	actions_types = list(/datum/action/item_action/aim_mode)
-	aim_fire_delay = 0.15 SECONDS
 	aim_speed_modifier = 5
 
 	fire_delay = 0.15 SECONDS
@@ -3137,6 +3212,8 @@
 		/obj/item/attachable/reddot,
 		/obj/item/attachable/lasersight,
 		/obj/item/attachable/flashlight/under,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
@@ -3191,6 +3268,8 @@
 		/obj/item/attachable/buildasentry,
 		/obj/item/attachable/verticalgrip,
 		/obj/item/weapon/gun/grenade_launcher/underslung/invisible,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	attachable_offset = list("muzzle_x" = 58, "muzzle_y" = 18,"rail_x" = 24, "rail_y" = 21, "under_x" = 35, "under_y" = 15, "stock_x" = 8, "stock_y" = 13)
