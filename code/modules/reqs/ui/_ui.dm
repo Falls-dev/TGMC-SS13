@@ -72,7 +72,7 @@
 				packs[our_pack.type] += 1
 			else
 				packs[our_pack.type] = 1
-			cost += our_pack.cost
+			cost += SSpoints.get_supply_pack_cost(our_pack)
 		.["requests"] += list(list("id" = our_order.id, "orderer" = our_order.orderer, "orderer_rank" = our_order.orderer_rank, "reason" = our_order.reason, "cost" = cost, "packs" = packs, "authed_by" = our_order.authorised_by))
 	.["deniedrequests"] = list()
 	for(var/i in length(SSpoints.deniedrequests) to 1 step -1)
@@ -87,7 +87,7 @@
 				packs[our_pack.type] += 1
 			else
 				packs[our_pack.type] = 1
-			cost += our_pack.cost
+			cost += SSpoints.get_supply_pack_cost(our_pack)
 		.["deniedrequests"] += list(list(
 			"id" = our_order.id,
 			"orderer" = our_order.orderer,
@@ -109,7 +109,7 @@
 				packs[our_pack.type] += 1
 			else
 				packs[our_pack.type] = 1
-			cost += our_pack.cost
+			cost += SSpoints.get_supply_pack_cost(our_pack)
 		.["approvedrequests"] += list(list(
 			"id" = our_order.id,
 			"orderer" = our_order.orderer,
@@ -131,7 +131,7 @@
 				packs[our_pack.type] += 1
 			else
 				packs[our_pack.type] = 1
-			cost += our_pack.cost
+			cost += SSpoints.get_supply_pack_cost(our_pack)
 		.["awaiting_delivery"] += list(list(
 			"id" = our_order.id,
 			"orderer" = our_order.orderer,
@@ -174,7 +174,7 @@
 				packs[our_pack.type] += 1
 			else
 				packs[our_pack.type] = 1
-			cost += our_pack.cost
+			cost += SSpoints.get_supply_pack_cost(our_pack)
 		.["shopping_history"] += list(list(
 			"id" = our_order.id,
 			"orderer" = our_order.orderer,
@@ -190,7 +190,7 @@
 	for(var/i in SSpoints.shopping_cart)
 		var/datum/supply_packs/our_pack = SSpoints.supply_packs[i]
 		.["shopping_list_items"] += SSpoints.shopping_cart[i]
-		.["shopping_list_cost"] += our_pack.cost * SSpoints.shopping_cart[our_pack.type]
+		.["shopping_list_cost"] += SSpoints.get_supply_pack_cost(our_pack) * SSpoints.shopping_cart[our_pack.type]
 		.["shopping_list"][our_pack.type] = list("count" = SSpoints.shopping_cart[our_pack.type])
 	if(supply_shuttle)
 		if(supply_shuttle?.mode == SHUTTLE_CALL)
@@ -255,9 +255,9 @@
 					var/cart_cost = 0
 					for(var/i in shopping_cart)
 						var/datum/supply_packs/SP = SSpoints.supply_packs[i]
-						cart_cost += SP.cost * shopping_cart[SP.type]
+						cart_cost += SSpoints.get_supply_pack_cost(SP) * shopping_cart[SP.type]
 					var/excess_points = SSpoints.supply_points[ui_user.faction] - cart_cost
-					var/number_to_buy = min(round(excess_points / P.cost), 20) //hard cap at 20
+					var/number_to_buy = min(round(excess_points / SSpoints.get_supply_pack_cost(P)), 20) //hard cap at 20
 					if(shopping_cart[P.type])
 						shopping_cart[P.type] += number_to_buy
 					else

@@ -370,12 +370,22 @@ const Pack = (props) => {
   const { data } = useBackend();
   const { pack, amount } = props;
   const { supplypackscontents } = data;
-  const { name, item_notes, cost, contains } = supplypackscontents[pack];
+  const { name, item_notes, cost, base_cost, discount_percent, contains } =
+    supplypackscontents[pack];
 
   return !!contains && contains.constructor === Object ? (
     <Collapsible
       color="transparent"
-      title={<PackName cost={cost} name={name} pl={0} amount={amount} />}
+      title={
+        <PackName
+          cost={cost}
+          baseCost={base_cost}
+          discountPercent={discount_percent}
+          name={name}
+          pl={0}
+          amount={amount}
+        />
+      }
     >
       <b>{item_notes ? 'Notes: ' : null} </b> {item_notes}
       <Table>
@@ -383,21 +393,54 @@ const Pack = (props) => {
       </Table>
     </Collapsible>
   ) : (
-    <PackName cost={cost} name={name} pl="22px" />
+    <PackName
+      cost={cost}
+      baseCost={base_cost}
+      discountPercent={discount_percent}
+      name={name}
+      pl="22px"
+    />
   );
 };
 
 const PackName = (props) => {
-  const { cost, name, pl, amount } = props;
+  const { cost, baseCost, discountPercent, name, pl, amount } = props;
+  const totalCost = amount ? amount * cost : null;
+  const totalBaseCost = amount ? amount * baseCost : null;
+  const hasDiscount = !!discountPercent && baseCost > cost;
 
   return (
     <Box inline pl={pl}>
       <Box textAlign="right" inline width="140px">
         {amount ? amount + 'x' : ''}
-        {cost} points {amount ? '(' + amount * cost + ')' : ''}
+        {hasDiscount ? (
+          <>
+            <Box as="span" color="bad">
+              {cost} points
+            </Box>{' '}
+            <Box as="span" style={{ textDecoration: 'line-through' }}>
+              {baseCost}
+            </Box>
+            {amount ? (
+              <>
+                {' '}
+                (<Box as="span" color="bad">{totalCost}</Box>/{totalBaseCost})
+              </>
+            ) : null}
+          </>
+        ) : (
+          <>{cost} points {amount ? '(' + totalCost + ')' : ''}</>
+        )}
       </Box>
       <Box width="15px" inline />
-      <Box inline>{name}</Box>
+      <Box inline>
+        {name}
+        {hasDiscount ? (
+          <Box as="span" color="bad" ml={1} bold>
+            -{discountPercent}%
+          </Box>
+        ) : null}
+      </Box>
     </Box>
   );
 };

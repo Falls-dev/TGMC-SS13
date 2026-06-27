@@ -25,7 +25,7 @@
 				packs[our_pack.type] += 1
 			else
 				packs[our_pack.type] = 1
-			cost += our_pack.cost
+			cost += SSpoints.get_supply_pack_cost(our_pack)
 		.["requests"] += list(list(
 			"id" = our_order.id,
 			"orderer" = our_order.orderer,
@@ -48,7 +48,7 @@
 				packs[our_pack.type] += 1
 			else
 				packs[our_pack.type] = 1
-			cost += our_pack.cost
+			cost += SSpoints.get_supply_pack_cost(our_pack)
 		.["deniedrequests"] += list(list(
 			"id" = our_order.id,
 			"orderer" = our_order.orderer,
@@ -71,7 +71,7 @@
 				packs[our_pack.type] += 1
 			else
 				packs[our_pack.type] = 1
-			cost += our_pack.cost
+			cost += SSpoints.get_supply_pack_cost(our_pack)
 		.["approvedrequests"] += list(list(
 			"id" = our_order.id,
 			"orderer" = our_order.orderer,
@@ -97,7 +97,7 @@
 				packs[our_pack.type] += 1
 			else
 				packs[our_pack.type] = 1
-			cost += our_pack.cost
+			cost += SSpoints.get_supply_pack_cost(our_pack)
 		.["awaiting_delivery"] += list(list(
 			"id" = our_order.id,
 			"orderer" = our_order.orderer,
@@ -115,7 +115,7 @@
 	for(var/i in SSpoints.request_shopping_cart[user.ckey])
 		var/datum/supply_packs/our_pack = SSpoints.supply_packs[i]
 		.["shopping_list_items"] += SSpoints.request_shopping_cart[user.ckey][i]
-		.["shopping_list_cost"] += our_pack.cost * SSpoints.request_shopping_cart[user.ckey][our_pack.type]
+		.["shopping_list_cost"] += SSpoints.get_supply_pack_cost(our_pack) * SSpoints.request_shopping_cart[user.ckey][our_pack.type]
 		.["shopping_list"][our_pack.type] = list("count" = SSpoints.request_shopping_cart[user.ckey][our_pack.type])
 
 	var/list/beacon_list = GLOB.supply_beacon.Copy()

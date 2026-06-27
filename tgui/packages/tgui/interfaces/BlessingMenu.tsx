@@ -28,6 +28,8 @@ type UpgradeData = {
   iconstate: string;
   category: string;
   cost: number;
+  base_cost: number;
+  discount_percent: number;
   times_bought: number;
 };
 
@@ -108,6 +110,8 @@ const Upgrades = (props: { selectedCategory: string | null }) => {
                 key={upgrade.name}
                 upgrade_desc={upgrade.desc}
                 upgrade_cost={upgrade.cost}
+                upgrade_base_cost={upgrade.base_cost}
+                upgrade_discount_percent={upgrade.discount_percent}
                 upgrade_times_bought={upgrade.times_bought}
                 upgradeicon={upgrade.iconstate}
               />
@@ -123,6 +127,8 @@ type UpgradeEntryProps = {
   upgrade_name: string;
   upgrade_desc: string;
   upgrade_cost: number;
+  upgrade_base_cost: number;
+  upgrade_discount_percent: number;
   upgrade_times_bought: number;
   upgradeicon: string;
 };
@@ -135,6 +141,8 @@ const UpgradeEntry = (props: UpgradeEntryProps) => {
     upgrade_name,
     upgrade_desc,
     upgrade_cost,
+    upgrade_base_cost,
+    upgrade_discount_percent,
     upgrade_times_bought,
     upgradeicon,
   } = props;
@@ -160,6 +168,8 @@ const UpgradeEntry = (props: UpgradeEntryProps) => {
         timesbought={upgrade_times_bought}
         iconstate={upgradeicon}
         cost={upgrade_cost}
+        baseCost={upgrade_base_cost}
+        discountPercent={upgrade_discount_percent}
       />
     </Collapsible>
   );
@@ -171,13 +181,17 @@ type UpgradeViewEntryProps = {
   timesbought: number;
   iconstate: string;
   cost: number;
+  baseCost: number;
+  discountPercent: number;
 };
 
 const UpgradeView = (props: UpgradeViewEntryProps) => {
   const { data } = useBackend<BlessingData>();
   const { psypoints } = data;
 
-  const { name, desc, timesbought, iconstate, cost } = props;
+  const { name, desc, timesbought, iconstate, cost, baseCost, discountPercent } =
+    props;
+  const hasDiscount = !!discountPercent && baseCost > cost;
 
   return (
     <Flex align="center">
@@ -197,6 +211,20 @@ const UpgradeView = (props: UpgradeViewEntryProps) => {
         />
         <Box bold mt={5} color={psypoints > cost ? 'good' : 'bad'}>
           {'Cost: ' + cost}
+          {hasDiscount ? (
+            <>
+              <Box as="span" color="bad" ml={1}>
+                -{discountPercent}%
+              </Box>
+              <Box
+                as="span"
+                ml={1}
+                style={{ textDecoration: 'line-through' }}
+              >
+                {baseCost}
+              </Box>
+            </>
+          ) : null}
         </Box>
         <Box bold my={0.5} color={timesbought >= 1 ? 'good' : ''}>
           {timesbought + ' Bought'}

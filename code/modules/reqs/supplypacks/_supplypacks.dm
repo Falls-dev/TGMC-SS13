@@ -25,6 +25,8 @@ GLOBAL_LIST_INIT(all_supply_groups, list(
 	var/notes
 	var/list/contains = list()
 	var/cost
+	///Round discount percent for this pack. 0 means no discount.
+	var/discount_percent = 0
 	var/obj/containertype
 	var/access
 	var/group
@@ -32,6 +34,11 @@ GLOBAL_LIST_INIT(all_supply_groups, list(
 	var/randomised_num_contained = 0
 	/// Is this item restricted from buying on crash?
 	var/crash_restricted = FALSE
+
+/datum/supply_packs/proc/get_discounted_cost()
+	if(!discount_percent)
+		return cost
+	return max(1, round(cost * (100 - discount_percent) / 100))
 
 /datum/supply_packs/proc/generate(atom/movable/location)
 	for(var/i in contains)

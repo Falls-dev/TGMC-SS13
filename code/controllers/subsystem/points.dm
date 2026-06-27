@@ -80,6 +80,7 @@ SUBSYSTEM_DEF(points)
 		P = new pack()
 		if(!P.contains)
 			continue
+		P.discount_percent = generate_discount_percent()
 		supply_packs[pack] = P
 		LAZYADD(supply_packs_ui[P.group], pack)
 		var/list/containsname = list()
@@ -91,7 +92,32 @@ SUBSYSTEM_DEF(points)
 				containsname[path] = list("name" = initial(path.name), "count" = 1)
 			else
 				containsname[path]["count"]++
-		supply_packs_contents[pack] = list("name" = P.name, "item_notes" = P.notes, "container_name" = initial(P.containertype.name), "cost" = P.cost, "contains" = containsname)
+		supply_packs_contents[pack] = list(
+			"name" = P.name,
+			"item_notes" = P.notes,
+			"container_name" = initial(P.containertype.name),
+			"cost" = P.get_discounted_cost(),
+			"base_cost" = P.cost,
+			"discount_percent" = P.discount_percent,
+			"contains" = containsname,
+		)
+
+/datum/controller/subsystem/points/proc/generate_discount_percent()
+	var/roll = rand(1, 100)
+	if(roll <= 1)
+		return 50
+	if(roll <= 4)
+		return 30
+	if(roll <= 15)
+		return 15
+	if(roll <= 20)
+		return 10
+	return 0
+
+/datum/controller/subsystem/points/proc/get_supply_pack_cost(datum/supply_packs/pack)
+	if(!pack)
+		return 0
+	return pack.get_discounted_cost()
 
 /datum/controller/subsystem/points/fire(resumed = FALSE)
 	dropship_points += DROPSHIP_POINT_RATE / (1 MINUTES / wait)
@@ -116,7 +142,7 @@ SUBSYSTEM_DEF(points)
 		return
 	for(var/i in ckey_shopping_cart)
 		var/datum/supply_packs/SP = supply_packs[i]
-		cost += SP.cost * ckey_shopping_cart[i]
+		cost += get_supply_pack_cost(SP) * ckey_shopping_cart[i]
 	if(cost > personal_supply_points[user.ckey])
 		return
 	var/list/datum/supply_order/orders = process_cart(user, ckey_shopping_cart)
@@ -243,7 +269,7 @@ SUBSYSTEM_DEF(points)
 	var/cost = 0
 	for(var/i in O.pack)
 		var/datum/supply_packs/SP = i
-		cost += SP.cost
+		cost += get_supply_pack_cost(SP)
 	if(cost > supply_points[user.faction])
 		return
 	var/obj/docking_port/mobile/supply_shuttle = SSshuttle.getShuttle(SHUTTLE_SUPPLY)
@@ -318,7 +344,7 @@ SUBSYSTEM_DEF(points)
 	var/cost = 0
 	for(var/i in shopping_cart)
 		var/datum/supply_packs/SP = supply_packs[i]
-		cost += SP.cost * shopping_cart[i]
+		cost += get_supply_pack_cost(SP) * shopping_cart[i]
 	if(cost > supply_points[user.faction])
 		return
 	var/list/datum/supply_order/orders = process_cart(user, shopping_cart)

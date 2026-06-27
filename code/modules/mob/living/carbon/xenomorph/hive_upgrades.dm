@@ -18,6 +18,20 @@ GLOBAL_LIST_INIT(tier_to_primo_upgrade, list(
 	///Assocative list name = upgraderef
 	var/list/datum/hive_upgrade/upgrades_by_name = list()
 
+/datum/hive_purchases/proc/generate_discount_percent()
+	var/roll = rand(1, 100)
+	if(roll <= 1)
+		return 50
+	if(roll <= 4)
+		return 40
+	if(roll <= 10)
+		return 30
+	if(roll <= 20)
+		return 20
+	if(roll <= 45)
+		return 10
+	return 0
+
 // ***************************************
 // *********** UI for hive store/blessing menu
 // ***************************************
@@ -30,6 +44,7 @@ GLOBAL_LIST_INIT(tier_to_primo_upgrade, list(
 			continue
 		if(!(SSticker.mode.xeno_abilities_flags & upgrade.gamemode_flags))
 			continue
+		upgrade.discount_percent = generate_discount_percent()
 		buyable_upgrades += upgrade
 		upgrades_by_name[upgrade.name] = upgrade
 
@@ -54,7 +69,7 @@ GLOBAL_LIST_INIT(tier_to_primo_upgrade, list(
 	.["upgrades"] = list()
 	for(var/datum/hive_upgrade/upgrade AS in buyable_upgrades)
 		.["upgrades"] += list(list("name" = upgrade.name, "desc" = upgrade.desc, "category" = upgrade.category,\
-		"cost" = upgrade.psypoint_cost, "times_bought" = upgrade.times_bought, "iconstate" = upgrade.icon))
+		"cost" = upgrade.get_discounted_cost(), "base_cost" = upgrade.psypoint_cost, "discount_percent" = upgrade.discount_percent, "times_bought" = upgrade.times_bought, "iconstate" = upgrade.icon))
 	.["psypoints"] = SSpoints.xeno_points_by_hive[X.hive.hivenumber]
 
 /datum/hive_purchases/ui_static_data(mob/user)
@@ -72,7 +87,7 @@ GLOBAL_LIST_INIT(tier_to_primo_upgrade, list(
 				return
 			if(!upgrade.on_buy(user))
 				return
-			log_game("[key_name(user)] has purchased \a [upgrade] Blessing for [upgrade.psypoint_cost] psypoints for the [user.hive.hivenumber] hive")
+			log_game("[key_name(user)] has purchased \a [upgrade] Blessing for [upgrade.get_discounted_cost()] psypoints for the [user.hive.hivenumber] hive")
 			if(upgrade.upgrade_flags & UPGRADE_FLAG_MESSAGE_HIVE)
 				xeno_message("[user] has purchased \a [upgrade] Blessing", "xenoannounce", 5, user.hivenumber)
 
@@ -85,6 +100,8 @@ GLOBAL_LIST_INIT(tier_to_primo_upgrade, list(
 	var/category = "ERROR CATEGORY"
 	///Psy point cost, float
 	var/psypoint_cost = 10
+	///Round discount percent for this upgrade. 0 means no discount.
+	var/discount_percent = 0
 	///upgrade flag var
 	var/upgrade_flags = NONE
 	///gamemode flags to whether this upgrade is purchasable
@@ -94,6 +111,11 @@ GLOBAL_LIST_INIT(tier_to_primo_upgrade, list(
 	///string for UI icon in buyable_icons.dmi for this upgrade
 	var/icon = "silo"
 
+/datum/hive_upgrade/proc/get_discounted_cost()
+	if(!discount_percent)
+		return psypoint_cost
+	return max(1, round(psypoint_cost * (100 - discount_percent) / 100))
+
 /**
  * Buys the upgrade and applies its effects
  * returns true on success false on fail
@@ -102,7 +124,7 @@ GLOBAL_LIST_INIT(tier_to_primo_upgrade, list(
  */
 /datum/hive_upgrade/proc/on_buy(mob/living/carbon/xenomorph/buyer)
 	SHOULD_CALL_PARENT(TRUE)
-	SSpoints.xeno_points_by_hive[buyer.hivenumber] -= psypoint_cost
+	SSpoints.xeno_points_by_hive[buyer.hivenumber] -= get_discounted_cost()
 	times_bought++
 	/*RUTGMC EDIT begin */
 	if(buyer.status_flags & INCORPOREAL)
@@ -125,9 +147,10 @@ GLOBAL_LIST_INIT(tier_to_primo_upgrade, list(
 	if(buyer.status_flags & INCORPOREAL)
 		to_chat(buyer, span_xenowarning("You can't build in this form!"))
 		return FALSE
-	if(SSpoints.xeno_points_by_hive[buyer.hivenumber] < psypoint_cost)
+	var/discounted_cost = get_discounted_cost()
+	if(SSpoints.xeno_points_by_hive[buyer.hivenumber] < discounted_cost)
 		if(!silent)
-			to_chat(buyer, span_xenowarning("You need [psypoint_cost-SSpoints.xeno_points_by_hive[buyer.hivenumber]] more points to request this blessing!"))
+			to_chat(buyer, span_xenowarning("You need [discounted_cost-SSpoints.xeno_points_by_hive[buyer.hivenumber]] more points to request this blessing!"))
 		return FALSE
 	return TRUE
 
@@ -169,8 +192,8 @@ GLOBAL_LIST_INIT(tier_to_primo_upgrade, list(
 		return FALSE
 
 	var/atom/built = new building_type(get_turf(buyer), buyer.hivenumber)
-	to_chat(buyer, span_notice("We build [built] for [psypoint_cost] psy points."))
-	log_game("[buyer] has built \a [built] in [AREACOORD(built)], spending [psypoint_cost] psy points in the process")
+	to_chat(buyer, span_notice("We build [built] for [get_discounted_cost()] psy points."))
+	log_game("[buyer] has built \a [built] in [AREACOORD(built)], spending [get_discounted_cost()] psy points in the process")
 	xeno_message("[buyer] has built \a [built] at [get_area(built)]!", "xenoannounce", 5, buyer.hivenumber)
 	return ..()
 
@@ -288,10 +311,10 @@ GLOBAL_LIST_INIT(tier_to_primo_upgrade, list(
 	if(!can_buy(buyer, FALSE))
 		return FALSE
 
-	to_chat(buyer, span_xenowarning("We build a new acid turret, spending [psypoint_cost] psychic points in the process"))
+	to_chat(buyer, span_xenowarning("We build a new acid turret, spending [get_discounted_cost()] psychic points in the process"))
 	new turret_type(get_turf(buyer), buyer.hivenumber)
 
-	log_game("[buyer] built a turret in [AREACOORD(buyer)], spending [psypoint_cost] psy points in the process")
+	log_game("[buyer] built a turret in [AREACOORD(buyer)], spending [get_discounted_cost()] psy points in the process")
 	xeno_message("[buyer] has built a new turret at [get_area(buyer)]!", "xenoannounce", 5, buyer.hivenumber)
 
 	return ..()
@@ -371,7 +394,7 @@ GLOBAL_LIST_INIT(tier_to_primo_upgrade, list(
 		xeno_message("[buyer] sent [gibbed_human] into oblivion!", "xenoannounce", 5, buyer.hivenumber)
 		to_chat(buyer, span_xenowarning("WE HAVE SENT THE [gibbed_human] INTO OBLIVION!"))
 		gibbed_human.gib()
-		log_game("[buyer] sent [gibbed_human] into oblivion, spending [psypoint_cost] psy points in the process.")
+		log_game("[buyer] sent [gibbed_human] into oblivion, spending [get_discounted_cost()] psy points in the process.")
 		break
 	return ..()
 
