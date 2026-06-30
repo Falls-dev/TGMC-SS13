@@ -7,6 +7,11 @@
 	contains = list(/obj/item/clothing/mask/gas/swat)
 	cost = 50
 
+/datum/supply_packs/armor/adv_welding
+	name = "Advanced welding helmet"
+	contains = list(/obj/item/clothing/head/welding/advanced)
+	cost = 100
+
 /datum/supply_packs/armor/riot
 	name = "Heavy riot armor set"
 	contains = list(
