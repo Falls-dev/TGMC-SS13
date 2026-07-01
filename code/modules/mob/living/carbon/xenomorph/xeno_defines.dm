@@ -25,6 +25,8 @@
 	// *** Melee Attacks *** //
 	///The amount of damage a xenomorph caste will do with a 'slash' attack.
 	var/melee_damage = 10
+	///The amount of armour pen their melee attacks have
+	var/melee_ap = 0
 	/// The damage typing of the melee damage.
 	var/melee_damage_type = BRUTE
 	/// The armor typing of the melee damage.
@@ -224,11 +226,9 @@
 	for(var/trait in caste_traits)
 		ADD_TRAIT(xenomorph, trait, XENO_TRAIT)
 	xenomorph.AddComponent(/datum/component/bump_attack)
-	xenomorph.RegisterSignal(xenomorph,COMSIG_XENOMORPH_ATTACK_LIVING, TYPE_PROC_REF(/mob/living/carbon/xenomorph, onhithuman))
 
 /datum/xeno_caste/proc/on_caste_removed(mob/xenomorph)
 	var/datum/component/bump_attack = xenomorph.GetComponent(/datum/component/bump_attack)
-	xenomorph.UnregisterSignal(xenomorph, COMSIG_XENOMORPH_ATTACK_LIVING)
 	bump_attack?.RemoveComponent()
 	for(var/trait in caste_traits)
 		REMOVE_TRAIT(xenomorph, trait, XENO_TRAIT)
@@ -416,10 +416,8 @@ GLOBAL_LIST_INIT(strain_list, init_glob_strain_list())
 	var/obj/item/explosive/grenade/globadier/selected_grenade = /obj/item/explosive/grenade/globadier
 
 	// *** Behemoth vars *** //
-	/// Whether we are currently charging or not.
-	var/behemoth_charging = FALSE
-	/// The amount of Wrath currently stored.
-	var/wrath_stored = 0
+	/// References our currently held Earth Pillar.
+	var/obj/structure/xeno/earth_pillar/held_pillar
 
 	// *** Bull vars *** //
 	var/bull_charging = FALSE

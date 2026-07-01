@@ -35,7 +35,7 @@
 	GLOB.round_statistics.xeno_unarmed_attacks++
 	SSblackbox.record_feedback(FEEDBACK_TALLY, "round_statistics", 1, "xeno_unarmed_attacks")
 
-/atom/proc/attack_alien(mob/living/carbon/xenomorph/xeno_attacker, damage_amount = xeno_attacker.xeno_caste.melee_damage, damage_type = BRUTE, damage_flag = MELEE, effects = TRUE, armor_penetration = 0, isrightclick = FALSE)
+/atom/proc/attack_alien(mob/living/carbon/xenomorph/xeno_attacker, damage_amount = xeno_attacker.xeno_caste.melee_damage, damage_type = BRUTE, damage_flag = MELEE, effects = TRUE, armor_penetration = xeno_attacker.xeno_caste.melee_ap, isrightclick = FALSE)
 	return
 
 /mob/living/carbon/xenomorph/larva/UnarmedAttack(atom/A, has_proximity, modifiers)
