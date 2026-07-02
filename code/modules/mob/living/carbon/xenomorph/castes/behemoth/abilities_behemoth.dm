@@ -348,7 +348,7 @@
 	desc = "Create or interact with an Earth Pillar. If holding one, you will instead throw it."
 	action_icon = 'icons/Xeno/actions/behemoth.dmi'
 	action_icon_state = "earth_riser"
-	cooldown_duration = 45 SECONDS
+	cooldown_duration = 30 SECONDS
 	use_state_flags = ABILITY_USE_LYING|ABILITY_USE_BUCKLED|ABILITY_IGNORE_PLASMA|ABILITY_IGNORE_COOLDOWN
 	keybinding_signals = list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_EARTH_RISER,
@@ -523,8 +523,10 @@
 			if(!isliving(movable_checked) || xeno_owner.issamexenohive(movable_checked))
 				continue
 			var/mob/living/hit_living = movable_checked
-			if(hit_living.loc == get_turf(target)) // Additional effects if a pillar lands on top of someone.
-				hit_living.AdjustKnockdown(EARTH_RISER_THROW_KNOCKDOWN)
+			if(hit_living.stat == DEAD)
+				continue
+			hit_living.AdjustKnockdown(EARTH_RISER_THROW_KNOCKDOWN)
+			if(get_dist(hit_living, target) <= 1)
 				hit_living.apply_damage(xeno_owner.xeno_caste.melee_damage * xeno_owner.xeno_melee_damage_modifier, BRUTE, xeno_owner.zone_selected, NONE, FALSE, FALSE, TRUE, xeno_owner.xeno_caste.melee_ap, xeno_owner)
 			hit_living.adjust_stagger(EARTH_RISER_THROW_STAGGER)
 			hit_living.add_slowdown(EARTH_RISER_THROW_SLOWDOWN)
@@ -594,7 +596,7 @@
 #define LANDSLIDE_SPEED 1
 #define LANDSLIDE_DAMAGE_MECHA_MODIFIER 1.5
 #define LANDSLIDE_DAMAGE_VEHICLE_MODIFIER 10
-#define LANDSLIDE_DAMAGE_LIVING_MULTIPLIER 0.8 // percent
+#define LANDSLIDE_DAMAGE_LIVING_MULTIPLIER 1.2 // percent
 #define LANDSLIDE_KNOCKDOWN_DURATION 0.7 SECONDS
 
 /datum/action/ability/activable/xeno/landslide
@@ -747,6 +749,15 @@
 					xeno_stats.melee_damage += vehicle_damage
 					xeno_stats.landslide_damage += vehicle_damage
 					atoms_hit += target_vehicle
+				if(issentry(target_object))
+					var/obj/machinery/deployable/mounted/sentry/sentry = target_object
+					var/sentry_damage = xeno_owner.xeno_caste.melee_damage * xeno_owner.xeno_melee_damage_modifier * LANDSLIDE_DAMAGE_LIVING_MULTIPLIER
+					sentry.take_damage(sentry_damage, BRUTE, MELEE)
+					sentry.knock_down()
+					var/datum/personal_statistics/xeno_stats = GLOB.personal_statistics_list[xeno_owner.ckey]
+					xeno_stats.melee_damage += sentry_damage
+					xeno_stats.landslide_damage += sentry_damage
+					atoms_hit += sentry
 					continue
 
 /// Adds effects for when we make impact against something.
@@ -886,6 +897,7 @@
 #define GEOCRUSH_STAGGER 5 // stacks
 #define GEOCRUSH_KNOCKDOWN 1 SECONDS
 #define GEOCRUSH_KNOCKBACK 2 // tiles
+#define GEOCRUSH_PILLAR_EXPLOSION_DELAY 1.5 SECONDS
 
 /datum/action/ability/activable/xeno/geocrush
 	name = "Geocrush"
@@ -908,10 +920,35 @@
 	xeno_owner.playsound_local(xeno_owner, 'sound/effects/alien/newlarva.ogg', 20, 0)
 	xeno_owner.balloon_alert(xeno_owner, "[initial(name)] ready")
 
+/datum/action/ability/activable/xeno/geocrush/proc/geocrush_pillar_explosion(obj/structure/xeno/earth_pillar/pillar, turf/target_turf)
+	if(QDELETED(pillar))
+		return
+	var/damage = xeno_owner.xeno_caste.melee_damage * xeno_owner.xeno_melee_damage_modifier
+	pillar.geocrush_act(xeno_owner, damage, xeno_owner.xeno_caste.melee_damage_type, xeno_owner.xeno_caste.melee_damage_armor, xeno_owner.xeno_caste.melee_ap)
+	new /obj/effect/temp_visual/behemoth/geocrush(target_turf)
+	new /obj/effect/temp_visual/shockwave(target_turf, 4, get_dir(target_turf, xeno_owner))
+	playsound(target_turf, 'sound/effects/alien/behemoth/geocrush.ogg', 40, TRUE, 40)
 
 // This handles target acquisition, as well as related checks, before actually doing the ability.
 /datum/action/ability/activable/xeno/geocrush/use_ability(atom/target)
 	. = ..()
+	if(isearthpillar(target))
+		if(!target.Adjacent(xeno_owner))
+			if(get_dist(xeno_owner, target) > EARTH_RISER_THROW_RANGE || !line_of_sight(xeno_owner, target, EARTH_RISER_THROW_RANGE))
+				xeno_owner.balloon_alert(xeno_owner, "Out of range or no line of sight")
+				return
+			var/obj/structure/xeno/earth_pillar/pillar = target
+			var/list/turf/affected_turfs = filled_circle_turfs(get_turf(pillar), EARTH_RISER_THROW_RADIUS)
+			for(var/turf/T AS in affected_turfs)
+				for(var/atom/movable/AM AS in T)
+					if(isearthpillar(AM) && AM != pillar)
+						var/obj/structure/xeno/earth_pillar/other_pillar = AM
+						other_pillar.warning_flash()
+			xeno_warning(affected_turfs, GEOCRUSH_PILLAR_EXPLOSION_DELAY, COLOR_DARK_MODERATE_ORANGE)
+			addtimer(CALLBACK(src, PROC_REF(geocrush_pillar_explosion), pillar, get_turf(pillar)), GEOCRUSH_PILLAR_EXPLOSION_DELAY)
+			succeed_activate()
+			add_cooldown()
+			return
 ///////////////////// TARGET ACQUISITION /////////////////////
 	if(!target.Adjacent(xeno_owner))
 		// If our target isn't adjacent, and we have directional attacks enabled, we can attempt to find a valid target.
@@ -1010,6 +1047,26 @@
 
 // Except for Earth Pillars. We can knock these around for funsies.
 /obj/structure/xeno/earth_pillar/geocrush_act(mob/living/carbon/xenomorph/xeno_owner, damage, damage_type, armor_type, armor_penetration)
+	if(!Adjacent(xeno_owner))
+		playsound(loc, 'sound/effects/alien/behemoth/earth_pillar_destroyed.ogg', 40, TRUE)
+		new /obj/effect/temp_visual/behemoth/earth_pillar/creation/destruction(loc)
+		var/list/turfs = filled_circle_turfs(loc, EARTH_RISER_THROW_RADIUS)
+		for(var/turf/T AS in turfs)
+			for(var/atom/movable/AM AS in T)
+				if(!isliving(AM) || xeno_owner.issamexenohive(AM))
+					continue
+				var/mob/living/L = AM
+				if(L.stat == DEAD)
+					continue
+				L.AdjustKnockdown(EARTH_RISER_THROW_KNOCKDOWN)
+				L.adjust_stagger(EARTH_RISER_THROW_STAGGER)
+				L.add_slowdown(EARTH_RISER_THROW_SLOWDOWN)
+				if(get_dist(L, loc) <= 1)
+					L.apply_damage(damage, damage_type, xeno_owner.zone_selected, NONE, FALSE, FALSE, TRUE, armor_penetration, xeno_owner)
+				L.apply_damage(damage, STAMINA, xeno_owner.zone_selected, NONE, FALSE, FALSE, TRUE, armor_penetration, xeno_owner)
+				step_towards(L, loc, get_dist(L, loc) - 1)
+		qdel(src)
+		return FALSE
 	throw_at(get_ranged_target_turf(src, get_dir(xeno_owner, src), GEOCRUSH_KNOCKBACK), GEOCRUSH_KNOCKBACK, 1, xeno_owner)
 	return ..()
 
