@@ -29,7 +29,7 @@ export const MarineSelector = (props) => {
     );
 
   return (
-    <Window width={600} height={700}>
+    <Window width={650} height={700}>
       {!!showDesc && (
         <Modal width="400px">
           <Box>{showDesc}</Box>
@@ -87,7 +87,6 @@ const ItemCategory = (props) => {
   const cant_buy =
     (choice === 'choice' && !remaining) ||
     (choice === 'points' && !remaining_points);
-
   return (
     <Section
       title={name}
@@ -140,123 +139,134 @@ const ItemLine = (props) => {
   const { act, data } = useBackend();
 
   const {
-    display_record: {
-      id,
-      prod_cost,
-      prod_index,
-      prod_color,
-      prod_name,
-      prod_desc,
-    },
+    display_record,
     cant_buy,
     remaining_points,
     showDesc,
     setShowDesc,
   } = props;
+  const {
+    id,
+    prod_cost,
+    prod_index,
+    prod_color,
+    prod_name,
+    prod_desc,
+    product_cost,
+    product_index,
+    product_color,
+    product_name,
+    product_desc,
+  } = display_record;
+  const cost = product_cost ?? prod_cost;
+  const index = product_index ?? prod_index;
+  const color = product_color ?? prod_color;
+  const name = product_name ?? prod_name;
+  const desc = product_desc ?? prod_desc;
 
   return (
     <LabeledList.Item
       key={id}
       buttons={
         <>
-          {prod_color === 'white' && (
+          {color === 'white' && (
             <Box inline mr="6px" ml="6px">
               Essential
             </Box>
           )}
-          {prod_color === 'orange' && (
+          {color === 'orange' && (
             <Box inline mr="6px" ml="6px" color="green">
               Recommended
             </Box>
           )}
-          {prod_color === 'orange2' && (
+          {color === 'orange2' && (
             <Box inline mr="6px" ml="6px" color="orange">
               Munition
             </Box>
           )}
-          {prod_color === 'orange3' && (
+          {color === 'orange3' && (
             <Box inline mr="6px" ml="6px" color="orange">
               Explosive
             </Box>
           )}
-          {prod_color === 'yellow' && (
+          {color === 'yellow' && (
             <Box inline mr="6px" ml="6px" color="yellow">
               Tool
             </Box>
           )}
-          {prod_color === 'yellow2' && (
+          {color === 'yellow2' && (
             <Box inline mr="6px" ml="6px" color="yellow">
               Money
             </Box>
           )}
-          {prod_color === 'blue' && (
+          {color === 'blue' && (
             <Box inline mr="6px" ml="6px" color="blue">
               Specialist
             </Box>
           )}
-          {prod_color === 'cyan' && (
+          {color === 'cyan' && (
             <Box inline mr="6px" ml="6px" color="cyan">
               Medicine
             </Box>
           )}
-          {prod_color === 'cyan2' && (
+          {color === 'cyan2' && (
             <Box inline mr="6px" ml="6px" color="cyan">
               Implant
             </Box>
           )}
-          {prod_color === 'red' && (
+          {color === 'red' && (
             <Box inline mr="6px" ml="6px" color="red">
               Weapon
             </Box>
           )}
-          {prod_color === 'synth-cosmetic' && (
+          {color === 'synth-cosmetic' && (
             <Box inline mr="6px" ml="6px" color="blue">
               Cosmetic
             </Box>
           )}
-          {prod_color === 'synth-storage' && (
+          {color === 'synth-storage' && (
             <Box inline mr="6px" ml="6px" color="magenta">
               Storage
             </Box>
           )}
-          {prod_color === 'synth-armor' && (
+          {color === 'synth-armor' && (
             <Box inline mr="6px" ml="6px" color="red">
               Armor
             </Box>
           )}
-          {prod_color === 'synth-rcmarmor' && (
+          {color === 'synth-rcmarmor' && (
             <Box inline mr="6px" ml="6px" color="orange">
               Recommended - Armor
             </Box>
           )}
-          {prod_color === 'synth-rcmarmstorage' && (
+          {color === 'synth-rcmarmstorage' && (
             <Box inline mr="6px" ml="6px" color="green">
               Recommended - Armor and Suit Storage
             </Box>
           )}
-          {prod_color === 'synth-attachable' && (
+          {color === 'synth-attachable' && (
             <Box inline mr="6px" ml="6px" color="green">
               Recommended - Attachable to Flak Jacket
             </Box>
           )}
-          {prod_cost > 0 && (
+          {cost > 0 && (
             <Box inline width="75px" mr="6px" ml="6px">
-              {prod_cost} points
+              {cost} points
             </Box>
           )}
           <Button
-            disabled={cant_buy || prod_cost > remaining_points}
-            onClick={() => act('vend', { vend: prod_index })}
-            selected={prod_color === 'white'}
+            disabled={cant_buy || cost > remaining_points}
+            onClick={() => act('vend', { vend: index })}
+            selected={color === 'white'}
           >
             Vend
           </Button>
         </>
       }
-      label={prod_name}
+      label={name}
       labelColor="white"
     >
-      {!!prod_desc && <Button onClick={() => setShowDesc(prod_desc)}>?</Button>}
+      {!!desc && <Button onClick={() => setShowDesc(desc)}>?</Button>}
     </LabeledList.Item>
   );
 };

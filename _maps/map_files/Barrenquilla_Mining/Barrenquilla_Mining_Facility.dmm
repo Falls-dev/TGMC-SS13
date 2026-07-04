@@ -6348,9 +6348,9 @@
 /area/barren/engie/engine)
 "Ed" = (
 /obj/structure/table/mainship,
-/obj/item/detpack,
-/obj/item/detpack,
-/obj/item/detpack,
+/obj/item/explosive/plastique/detpack,
+/obj/item/explosive/plastique/detpack,
+/obj/item/explosive/plastique/detpack,
 /obj/item/assembly/signaler,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/sheet/metal/medium_stack,

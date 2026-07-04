@@ -40,6 +40,11 @@
 	var/burn_heal = 0
 	var/blood_gain = 0.4
 
+/datum/reagent/consumable/nutriment/proc/get_nutrition_gain(amount)
+	if(!amount)
+		amount = volume
+	return nutriment_factor * effect_str * amount / custom_metabolism
+
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/L, metabolism)
 	if(prob(50))
 		L.heal_limb_damage(brute_heal, burn_heal)

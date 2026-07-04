@@ -62,3 +62,46 @@
 		implanter.internal_implant = src
 		implanter.icon_state = "cargo_full"
 		implanter.spent = TRUE
+
+/obj/item/implant/hud
+
+	// what kind of HUD do we want?
+	var/hud_type
+	// do we want it to be activated by default?
+	var/hud_active
+
+/obj/item/implant/hud/implant(mob/living/carbon/human/target, mob/living/user)
+	. = ..()
+	if(.)
+		var/datum/atom_hud/H = GLOB.huds[hud_type]
+		if(H)
+			H.add_hud_to(target)
+
+/obj/item/implant/hud/activate()
+	. = ..()
+	if(!.)
+		return FALSE
+
+	hud_active = !hud_active
+
+	var/datum/atom_hud/H = GLOB.huds[hud_type]
+	if(!H || !implant_owner)
+		return TRUE
+
+	if(hud_active)
+		H.add_hud_to(implant_owner)
+		to_chat(implant_owner, span_notice("You activate your [name]."))
+	else
+		H.remove_hud_from(implant_owner)
+		to_chat(implant_owner, span_notice("You deactivate your [name]."))
+
+	return TRUE
+
+/obj/item/implant/hud/unimplant()
+	if(hud_active && implant_owner)
+		var/datum/atom_hud/H = GLOB.huds[hud_type]
+		if(H)
+			H.remove_hud_from(implant_owner)
+		hud_active = FALSE
+
+	return ..()

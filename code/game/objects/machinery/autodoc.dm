@@ -557,6 +557,8 @@
 							if(A)
 								for(A in occupant)
 									sleep(HEMOSTAT_REMOVE_MAX_DURATION*surgery_mod)
+									if(!occupant)
+										break
 									occupant.visible_message(span_warning("[src] defty extracts a wriggling parasite from [occupant]'s ribcage!"))
 									var/mob/living/carbon/xenomorph/larva/L = locate() in occupant //the larva was fully grown, ready to burst.
 									if(L)
@@ -759,13 +761,6 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		to_chat(user, span_notice("[src] is non-functional!"))
 		return
-
-	if(user.skills.getRating(SKILL_SURGERY) < SKILL_SURGERY_TRAINED && !event)
-		target.visible_message(span_notice("[target] fumbles around figuring out how to get into \the [src]."),
-		span_notice("You fumble around figuring out how to get into \the [src]."))
-		var/fumbling_time = max(0 , SKILL_TASK_TOUGH - ( SKILL_TASK_EASY * user.skills.getRating(SKILL_SURGERY) ))// 8 secs non-trained, 5 amateur
-		if(!do_after(target, fumbling_time, NONE, src, BUSY_ICON_UNSKILLED))
-			return
 
 	target.visible_message(span_notice("[target] starts climbing into \the [src]."),
 	span_notice("You start climbing into \the [src]."))

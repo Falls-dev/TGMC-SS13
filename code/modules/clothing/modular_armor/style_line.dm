@@ -54,6 +54,30 @@
 	colorable_colors = ARMOR_PALETTES_LIST
 	colorable_allowed = PRESET_COLORS_ALLOWED
 
+/obj/item/clothing/suit/modular/style/Alpha_greatcoat
+	name = "\improper Alpha greatcoat"
+	desc = "An old greatcoat, it's unclear how it hasn't completely torn yet.."
+	icon_state = "Alpha_greatcoat"
+	worn_icon_state = "Alpha_greatcoat_worn"
+
+/obj/item/clothing/suit/modular/style/Delta_greatcoat
+	name = "\improper Delta greatcoat"
+	desc = "An old greatcoat, it's unclear how it hasn't completely torn yet.."
+	icon_state = "Delta_greatcoat"
+	worn_icon_state = "Delta_greatcoat_worn"
+
+/obj/item/clothing/suit/modular/style/Bravo_greatcoat
+	name = "\improper Bravo greatcoat"
+	desc = "An old greatcoat, it's unclear how it hasn't completely torn yet.."
+	icon_state = "Bravo_greatcoat"
+	worn_icon_state = "Bravo_greatcoat_worn"
+
+/obj/item/clothing/suit/modular/style/Charlie_greatcoat
+	name = "\improper Charlie greatcoat"
+	desc = "An old greatcoat, it's unclear how it hasn't completely torn yet.."
+	icon_state = "Charlie_greatcoat"
+	worn_icon_state = "Charlie_greatcoat_worn"
+
 // ***************************************
 //  Modular hats
 /obj/item/clothing/head/modular/style

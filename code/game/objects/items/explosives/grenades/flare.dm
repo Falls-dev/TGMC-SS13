@@ -11,14 +11,14 @@
 	w_class = WEIGHT_CLASS_TINY
 	hud_state = "grenade_frag"
 	light_system = MOVABLE_LIGHT
-	light_range = 6
+	light_range = 8
 	light_color = LIGHT_COLOR_FLARE
 	throw_sound = null
 	overlay_type = null
 	groundhit_sound_is_playable = FALSE
 	var/fuel = 0
-	var/lower_fuel_limit = 60
-	var/upper_fuel_limit = 75
+	var/lower_fuel_limit = 300
+	var/upper_fuel_limit = 450
 
 /obj/item/explosive/grenade/flare/dissolvability(acid_strength)
 	return 2
@@ -142,7 +142,7 @@
 	hud_state = "grenade_frag"
 	lower_fuel_limit = 25
 	upper_fuel_limit = 30
-	light_power = 3
+	light_power = 5
 	light_color = LIGHT_COLOR_GREEN
 	var/datum/squad/user_squad
 	var/obj/effect/overlay/temp/laser_target/cas/target

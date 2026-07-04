@@ -111,3 +111,84 @@
 			return attack_alien_grab(xeno_attacker)
 		if(INTENT_HARM)
 			return attack_alien_harm(xeno_attacker)
+
+///////////////////////////////
+//        MELTING FIRE       //
+///////////////////////////////
+
+/obj/fire/melting_fire
+	name = "melting fire"
+	desc = "It feels cold to the touch, yet it burns."
+	icon_state = "xeno_fire"
+	flame_color = "purple"
+	light_on = FALSE
+	light_range = 0
+	light_power = 0
+	burn_ticks = 36
+	burn_decay = 9
+	/// The creator of this fire. Only really matters for pyrogens.
+	var/mob/living/carbon/xenomorph/creator
+
+/obj/fire/melting_fire/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, icon_state, src)
+
+/obj/fire/melting_fire/affect_atom(atom/affected)
+	if(isvehicle(affected))
+		var/obj/vehicle/ghost_rider = affected
+		ghost_rider.take_damage(burn_level / 2, BURN, ACID)
+		return
+	if(!ishuman(affected))
+		return FALSE
+	var/mob/living/carbon/human/human_affected = affected
+	if(human_affected.stat == DEAD)
+		return FALSE
+	if(human_affected.status_flags & (INCORPOREAL|GODMODE))
+		return
+	if(human_affected.pass_flags & PASS_FIRE)
+		return
+	if(human_affected.soft_armor.getRating(FIRE) >= 100)
+		to_chat(human_affected, span_warning("You are untouched by the flames."))
+		return
+	handle_human(human_affected)
+
+/// Handles everything that should be done to the human whom is affected by the fire.
+/obj/fire/melting_fire/proc/handle_human(mob/living/carbon/human/affected_human)
+	var/datum/status_effect/stacking/melting_fire/debuff = affected_human.has_status_effect(STATUS_EFFECT_MELTING_FIRE)
+	if(debuff)
+		debuff.add_stacks(PYROGEN_MELTING_FIRE_EFFECT_STACK, creator)
+	else
+		affected_human.apply_status_effect(STATUS_EFFECT_MELTING_FIRE, PYROGEN_MELTING_FIRE_EFFECT_STACK, creator)
+	affected_human.take_overall_damage(PYROGEN_MELTING_FIRE_DAMAGE, BURN, FIRE, updating_health = TRUE, max_limbs = 2)
+	return TRUE // For shattering fire
+
+///////////////////////////////
+//        SHATTERING FIRE    //
+///////////////////////////////
+
+/obj/fire/melting_fire/shattering
+	name = "shattering fire"
+	desc = "Cold to the touch, it rapidly spreads cracks through anything it contacts."
+	icon_state = "violet_1"
+	flame_color = "violet"
+
+/obj/fire/melting_fire/shattering/affect_atom(atom/affected)
+	. = ..()
+	if(.) // parent proc only returns true if it applies its effects to a human, so affected must be a human, ergo no type validation needed
+		var/mob/living/carbon/human/victim = affected
+		victim.apply_status_effect(STATUS_EFFECT_SHATTER, 3 SECONDS)
+
+/obj/fire/melting_fire/melting_acid
+	name = "melting acid fire"
+	desc = "Cold to the touch, it burns in more ways than one."
+	icon_state = "green_1"
+	flame_color = "green"
+
+/obj/fire/melting_fire/melting_acid/handle_human(mob/living/carbon/human/affected_human)
+	// In sum, it is acid-based and can't be put out like fire. Discounting armor, better than melting at very-low (1-2) and very-high (22-30).
+	var/datum/status_effect/stacking/melting_acid/debuff = affected_human.has_status_effect(STATUS_EFFECT_MELTING_ACID)
+	if(debuff)
+		debuff.add_stacks(1)
+	else
+		affected_human.apply_status_effect(STATUS_EFFECT_MELTING_ACID, 1)
+	affected_human.take_overall_damage(PYROGEN_MELTING_FIRE_DAMAGE, BURN, ACID, updating_health = TRUE, max_limbs = 2)

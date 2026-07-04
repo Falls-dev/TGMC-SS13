@@ -330,6 +330,10 @@
 /datum/species/proc/handle_death(mob/living/carbon/human/H)
 	return
 
+/// Called in revival procs, useful for special species behaviour like zombie revival.
+/datum/species/proc/can_revive_to_crit(mob/living/carbon/human/H)
+	return H.has_working_organs()
+
 //TODO KILL ME
 ///Snowflake proc for monkeys so they can call attackpaw
 /datum/species/proc/spec_unarmedattack(mob/living/carbon/human/user, atom/target)

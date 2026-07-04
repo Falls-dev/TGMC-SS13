@@ -57,3 +57,28 @@
 /obj/structure/periscope/som/update_overlays()
 	. = ..()
 	. += emissive_appearance(icon, "[icon_state]_emissive", src)
+
+// Окошко для просмотра чё снаружи машины творится
+// Текст взят с кумов, код взят с тгмс
+/obj/structure/periscope/interior_viewport
+	name = "External Cameras Terminal"
+	desc = "A small terminal connected to the external cameras of a vehicle, allowing a 360-degree visual survey of vehicle surroundings."
+	icon = 'icons/obj/vehicles/interiors/general.dmi'
+	icon_state = "viewport"
+	layer = ABOVE_MOB_LAYER
+	anchored = TRUE
+	resistance_flags = RESIST_ALL
+
+// Окошко поменьше
+/obj/structure/periscope/interior_viewport/simple
+	name = "viewport"
+	desc = "Hey, I can see my base from here!"
+	icon_state = "viewport_simple"
+
+// Для VAN машины
+/obj/structure/periscope/interior_viewport/simple/windshield
+	name = "windshield"
+	desc = "When it was cleaned last time? There is a squashed bug in the corner."
+	icon = 'icons/obj/vehicles/interiors/van.dmi'
+	icon_state = "windshield_viewport_top"
+	alpha = 80

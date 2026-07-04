@@ -37,7 +37,7 @@
 	backpack_contents = list(
 		/obj/item/tool/extinguisher = 1,
 		/obj/item/assembly/signaler = 1,
-		/obj/item/detpack = 4,
+		/obj/item/explosive/plastique/detpack = 4,
 		/obj/item/weapon/gun/energy/lasgun/lasrifle/volkite/cope = 1,
 		/obj/item/storage/box/mre/som = 1,
 		/obj/item/reagent_containers/hypospray/autoinjector/dylovene = 1,
@@ -63,7 +63,7 @@
 	backpack_contents = list(
 		/obj/item/tool/extinguisher = 1,
 		/obj/item/assembly/signaler = 1,
-		/obj/item/detpack = 4,
+		/obj/item/explosive/plastique/detpack = 4,
 		/obj/item/weapon/gun/energy/lasgun/lasrifle/volkite/cope = 1,
 		/obj/item/storage/box/mre/som = 1,
 		/obj/item/reagent_containers/hypospray/autoinjector/dylovene = 1,
@@ -88,7 +88,7 @@
 	backpack_contents = list(
 		/obj/item/tool/extinguisher = 1,
 		/obj/item/assembly/signaler = 1,
-		/obj/item/detpack = 4,
+		/obj/item/explosive/plastique/detpack = 4,
 		/obj/item/weapon/gun/energy/lasgun/lasrifle/volkite/cope = 1,
 		/obj/item/storage/box/mre/som = 1,
 		/obj/item/reagent_containers/hypospray/autoinjector/dylovene = 1,
@@ -113,7 +113,7 @@
 	backpack_contents = list(
 		/obj/item/tool/extinguisher/mini = 1,
 		/obj/item/assembly/signaler = 1,
-		/obj/item/detpack = 3,
+		/obj/item/explosive/plastique/detpack = 3,
 		/obj/item/ammo_magazine/smg/som = 2,
 		/obj/item/weapon/gun/energy/lasgun/lasrifle/volkite/cope = 1,
 		/obj/item/storage/box/mre/som = 1,
@@ -139,7 +139,7 @@
 	backpack_contents = list(
 		/obj/item/tool/extinguisher/mini = 1,
 		/obj/item/assembly/signaler = 1,
-		/obj/item/detpack = 3,
+		/obj/item/explosive/plastique/detpack = 3,
 		/obj/item/ammo_magazine/handful/buckshot = 2,
 		/obj/item/weapon/gun/energy/lasgun/lasrifle/volkite/cope = 1,
 		/obj/item/storage/box/mre/som = 1,

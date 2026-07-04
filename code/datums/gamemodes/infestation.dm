@@ -25,7 +25,7 @@
 		weed_type = pickweight(GLOB.weed_prob_list)
 		new weed_type(T)
 	for(var/turf/T as anything in GLOB.xeno_resin_wall_turfs)
-		T.change_turf(/turf/closed/wall/resin/regenerating, T.type)
+		T.ChangeTurf(/turf/closed/wall/resin/regenerating, T.type)
 	for(var/i as anything in GLOB.xeno_resin_door_turfs)
 		new /obj/structure/mineral_door/resin(i)
 	for(var/i as anything in GLOB.xeno_tunnel_spawn_turfs)
@@ -50,7 +50,7 @@
 	if(round_finished)
 		return PROCESS_KILL
 
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_BIOSCAN) || bioscan_interval == 0)
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_BIOSCAN) || bioscan_interval == 0)
 		return
 	announce_bioscans(GLOB.current_orbit)
 

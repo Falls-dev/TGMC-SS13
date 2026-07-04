@@ -1,3 +1,27 @@
+/// Makes an atom look like a blue hologram.
+/atom/proc/makeHologram(opacity = 0.5, modify_color_transparency = TRUE)
+	if(modify_color_transparency)
+		add_filter("HOLO: Color and Transparent", 1, color_matrix_filter(rgb(125, 180, 225, opacity * 255)))
+	add_filter("HOLO: Scanline", 2, alpha_mask_filter(0, 0, icon('icons/effects/effects.dmi', "scanline")))
+
+/obj/effect/build_hologram
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/effect/build_hologram/Initialize(mapload, atom/copy_type, modify_color = FALSE, mob/owner)
+	. = ..()
+	appearance = initial(copy_type.appearance)
+	anchored = TRUE
+	SET_PLANE_EXPLICIT(src, ABOVE_LIGHTING_PLANE, src)
+	makeHologram(0.7, modify_color)
+	if(owner)
+		var/image/disguised_icon = image(loc = src)
+		disguised_icon.override = TRUE
+		add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/all_but_one_person, "holo_invis_alt_appearance", disguised_icon, owner)
+
+/obj/effect/build_hologram/Destroy()
+	remove_alt_appearance("holo_invis_alt_appearance")
+	return ..()
+
 //The effect when you wrap a dead body in gift wrap
 /obj/effect/spresent
 	name = "strange present"

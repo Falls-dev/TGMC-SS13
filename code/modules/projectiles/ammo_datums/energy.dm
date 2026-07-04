@@ -20,6 +20,18 @@
 	max_range = 10
 	bullet_color = COLOR_VIBRANT_LIME
 
+/datum/ammo/energy/emitter/e50
+	name = "heavy emitter bolt"
+	ammo_behavior_flags = AMMO_ENERGY|AMMO_HITSCAN|AMMO_INCENDIARY|AMMO_SNIPER
+	hitscan_effect_icon = "beam_heavy"
+	bullet_color = COLOR_VIBRANT_LIME
+	armor_type = LASER
+	damage = 60
+	penetration = 30
+	max_range = 25
+	accurate_range_min = 0
+	incendiary_strength = 18
+
 /datum/ammo/energy/taser
 	name = "taser bolt"
 	icon_state = "stun"

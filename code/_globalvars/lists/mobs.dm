@@ -63,6 +63,8 @@ GLOBAL_LIST_INIT_TYPED(xeno_caste_datums, /list/datum/xeno_caste, init_xeno_cast
 GLOBAL_LIST_INIT(all_xeno_types, list(
 	/mob/living/carbon/xenomorph/runner,
 	/mob/living/carbon/xenomorph/runner/primordial,
+	/mob/living/carbon/xenomorph/runner/melter,
+	/mob/living/carbon/xenomorph/runner/melter/primordial,
 	/mob/living/carbon/xenomorph/drone,
 	/mob/living/carbon/xenomorph/drone/primordial,
 	/mob/living/carbon/xenomorph/sentinel,
@@ -83,6 +85,8 @@ GLOBAL_LIST_INIT(all_xeno_types, list(
 	/mob/living/carbon/xenomorph/warrior/primordial,
 	/mob/living/carbon/xenomorph/spitter,
 	/mob/living/carbon/xenomorph/spitter/primordial,
+	/mob/living/carbon/xenomorph/spitter/globadier,
+	/mob/living/carbon/xenomorph/spitter/globadier/primordial,
 	/mob/living/carbon/xenomorph/hivelord,
 	/mob/living/carbon/xenomorph/hivelord/primordial,
 	/mob/living/carbon/xenomorph/carrier,
@@ -99,6 +103,8 @@ GLOBAL_LIST_INIT(all_xeno_types, list(
 	/mob/living/carbon/xenomorph/praetorian/primordial,
 	/mob/living/carbon/xenomorph/praetorian/dancer,
 	/mob/living/carbon/xenomorph/praetorian/dancer/primordial,
+	/mob/living/carbon/xenomorph/praetorian/oppressor,
+	/mob/living/carbon/xenomorph/praetorian/oppressor/primordial,
 	/mob/living/carbon/xenomorph/predalien,
 	/mob/living/carbon/xenomorph/boiler,
 	/mob/living/carbon/xenomorph/boiler/primordial,
@@ -121,7 +127,13 @@ GLOBAL_LIST_INIT(all_xeno_types, list(
 	/mob/living/carbon/xenomorph/scorpion,
 	/mob/living/carbon/xenomorph/facehugger,
 	/mob/living/carbon/xenomorph/spiderling,
+	/mob/living/carbon/xenomorph/pyrogen,
+	/mob/living/carbon/xenomorph/pyrogen/primordial,
+	/mob/living/carbon/xenomorph/puppeteer,
+	/mob/living/carbon/xenomorph/puppeteer/primordial,
 	/mob/living/carbon/xenomorph/baneling,
+	/mob/living/carbon/xenomorph/dragon,
+	/mob/living/carbon/xenomorph/dragon/primordial,
 ))
 
 GLOBAL_LIST_EMPTY_TYPED(hellhound_list, /mob/living/carbon/xenomorph/hellhound)
@@ -142,6 +154,8 @@ GLOBAL_LIST_INIT(xeno_types_tier_two, list(
 	/datum/xeno_caste/hivelord,
 	/datum/xeno_caste/hunter,
 	/datum/xeno_caste/panther,
+	/datum/xeno_caste/pyrogen,
+	/datum/xeno_caste/puppeteer,
 	/datum/xeno_caste/spitter,
 	/datum/xeno_caste/warrior,
 ))
@@ -179,6 +193,10 @@ GLOBAL_LIST_EMPTY(hive_ui_caste_index)
 ///Contains static data passed to all hive status UI.
 GLOBAL_LIST_INIT(hive_ui_static_data, init_hive_status_lists()) // init by make_datum_references_lists()
 
+/proc/get_hive_ui_caste_index(datum/xeno_caste/caste)
+	var/path = caste.base_caste_type_path || caste.caste_type_path
+	return GLOB.hive_ui_caste_index[path]
+
 /proc/init_hive_status_lists()
 	. = list()
 	// Initializes static ui data used by all hive status UI
@@ -187,11 +205,11 @@ GLOBAL_LIST_INIT(hive_ui_static_data, init_hive_status_lists()) // init by make_
 		var/datum/xeno_caste/caste = GLOB.xeno_caste_datums[caste_type_path][XENO_UPGRADE_BASETYPE]
 		if(caste.caste_flags & CASTE_HIDE_IN_STATUS)
 			continue
-		if(caste.base_caste_type_path)
+		var/index_path = initial(caste.base_caste_type_path) || initial(caste.caste_type_path)
+		if(GLOB.hive_ui_caste_index[index_path])
 			continue
-		var/type_path = initial(caste.caste_type_path)
 
-		GLOB.hive_ui_caste_index[type_path] = length(.) //Starts from 0.
+		GLOB.hive_ui_caste_index[index_path] = length(.) //Starts from 0.
 
 		var/icon/xeno_minimap = icon('icons/UI_icons/map_blips.dmi', initial(caste.minimap_icon))
 		var/tier = initial(caste.tier)
@@ -202,7 +220,7 @@ GLOBAL_LIST_INIT(hive_ui_static_data, init_hive_status_lists()) // init by make_
 
 		. += list(list(
 			"name" = initial(caste.caste_name),
-			"is_queen" = type_path == /mob/living/carbon/xenomorph/queen,
+			"is_queen" = index_path == /mob/living/carbon/xenomorph/queen,
 			"minimap" = icon2base64(xeno_minimap),
 			"sort_mod" = per_tier_counter[tier]++,
 			"tier" = GLOB.tier_as_number[tier],

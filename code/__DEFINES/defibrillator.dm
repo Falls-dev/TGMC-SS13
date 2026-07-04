@@ -9,7 +9,7 @@
  * * `skill_input` - What to multiply `healing_value` by. If this is less than `SKILL_MEDICAL_PRACTICED`, will be 8.
  * * `healing_value` - The number to multiply. Should be `DEFIBRILLATOR_BASE_HEALING_VALUE` unless you want to change the base healing value
  */
-#define DEFIBRILLATOR_HEALING_TIMES_SKILL(skill_input, healing_value) (skill_input < SKILL_MEDICAL_PRACTICED ? 8 : healing_value * skill_input * 0.5)
+#define DEFIBRILLATOR_HEALING_TIMES_SKILL(skill_input, healing_value) (skill_input < SKILL_MEDICAL_PRACTICED ? healing_value : healing_value * skill_input * 0.5)
 
 // Defibrillation outcomes, used in human_defines.dm
 ///Ready to defibrillate

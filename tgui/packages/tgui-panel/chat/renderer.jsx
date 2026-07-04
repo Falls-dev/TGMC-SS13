@@ -8,6 +8,7 @@ import { createRoot } from 'react-dom/client';
 import { createLogger } from 'tgui/logging';
 import { Tooltip } from 'tgui-core/components';
 import { EventEmitter } from 'tgui-core/events';
+import { classes } from 'tgui-core/react';
 
 import {
   COMBINE_MAX_MESSAGES,
@@ -109,7 +110,10 @@ const updateMessageBadge = (message) => {
   const foundBadge = node.querySelector('.Chat__badge');
   const badge = foundBadge || document.createElement('div');
   badge.textContent = times;
-  badge.className = 'Chat__badge';
+  badge.className = classes(['Chat__badge', 'Chat__badge--animate']);
+  requestAnimationFrame(() => {
+    badge.className = 'Chat__badge';
+  });
   if (!foundBadge) {
     node.appendChild(badge);
   }
@@ -130,12 +134,17 @@ class ChatRenderer {
     /** @type {HTMLElement} */
     this.scrollNode = null;
     this.scrollTracking = true;
+    this.lastScrollHeight = 0;
     this.handleScroll = (type) => {
       const node = this.scrollNode;
+      if (!node) {
+        return;
+      }
       const height = node.scrollHeight;
       const bottom = node.scrollTop + node.offsetHeight;
       const scrollTracking =
-        Math.abs(height - bottom) < SCROLL_TRACKING_TOLERANCE;
+        Math.abs(height - bottom) < SCROLL_TRACKING_TOLERANCE ||
+        this.lastScrollHeight === 0;
       if (scrollTracking !== this.scrollTracking) {
         this.scrollTracking = scrollTracking;
         this.events.emit('scrollTrackingChanged', scrollTracking);
@@ -311,7 +320,11 @@ class ChatRenderer {
     }
   }
 
-  getCombinableMessage(predicate, now, from, to) {
+  getCombinableMessage(predicate) {
+    const now = Date.now();
+    const len = this.visibleMessages.length;
+    const from = len - 1;
+    const to = Math.max(0, len - COMBINE_MAX_MESSAGES);
     for (let i = from; i >= to; i--) {
       const message = this.visibleMessages[i];
 
@@ -341,18 +354,18 @@ class ChatRenderer {
       }
       return;
     }
+    // Store last scroll position
+    if (this.scrollNode) {
+      this.lastScrollHeight = this.scrollNode.scrollHeight;
+    }
     // Insert messages
     const fragment = document.createDocumentFragment();
     const countByType = {};
     let node;
-
-    const len = this.visibleMessages.length;
-    const from = len - 1;
-    const to = Math.max(0, len - COMBINE_MAX_MESSAGES);
     for (let payload of batch) {
       const message = createMessage(payload);
       // Combine messages
-      const combinable = this.getCombinableMessage(message, now, from, to);
+      const combinable = this.getCombinableMessage(message);
       if (combinable) {
         combinable.times = (combinable.times || 1) + 1;
         updateMessageBadge(combinable);
@@ -573,18 +586,6 @@ class ChatRenderer {
       this.rootNode.removeChild(message.node);
       // Mark this message as pruned
       message.node = 'pruned';
-    }
-    // Remove pruned messages from the message array
-    this.messages = this.messages.filter(
-      (message) => message.node !== 'pruned',
-    );
-    logger.log(`Cleared chat`);
-  }
-
-  saveToDisk() {
-    // Allow only on IE11
-    if (Byond.IS_LTE_IE10) {
-      return;
     }
     // Remove pruned messages from the message array
     this.messages = this.messages.filter(

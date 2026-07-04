@@ -85,6 +85,13 @@ GLOBAL_LIST_INIT(pheromone_images_list, list(
 	AURA_XENO_FRENZY = image('icons/Xeno/actions/general.dmi', icon_state = AURA_XENO_FRENZY),
 ))
 
+//List of puppeteer pheromone images
+GLOBAL_LIST_INIT(puppeteer_phero_images_list, list(
+	AURA_XENO_BLESSFURY = image('icons/Xeno/actions/puppeteer.dmi', icon_state = "Fury"),
+	AURA_XENO_BLESSWARDING = image('icons/Xeno/actions/puppeteer.dmi', icon_state = "Warding"),
+	AURA_XENO_BLESSFRENZY = image('icons/Xeno/actions/puppeteer.dmi', icon_state = "Frenzy"),
+))
+
 //List of Defiler toxin types available for selection
 GLOBAL_LIST_INIT(defiler_toxin_type_list, list(
 	/datum/reagent/toxin/xeno_ozelomelyn,

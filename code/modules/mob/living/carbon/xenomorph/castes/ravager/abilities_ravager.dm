@@ -11,7 +11,9 @@
 	keybinding_signals = list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_RAVAGER_CHARGE,
 	)
-	///charge distance
+	/// The amount of deciseconds that carbons will be paralyze if hit.
+	var/paralyze_duration = 2 SECONDS
+	/// The maximum range/distance that can be charged.
 	var/charge_range = RAV_CHARGEDISTANCE
 
 /datum/action/ability/activable/xeno/charge/use_ability(atom/A)

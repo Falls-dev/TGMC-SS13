@@ -180,8 +180,10 @@
 	if(exploding)
 		return
 	exploding = TRUE
-	cell_explosion(loc, reagents.total_volume * 0.2, reagents.total_volume * 0.1)
-	flame_radius(round(reagents.total_volume * 0.005), loc)
+	var/turf/explosion_turf = get_turf(src)
+	cell_explosion(explosion_turf || loc, reagents.total_volume * 0.2, reagents.total_volume * 0.1)
+	if(explosion_turf)
+		flame_radius(round(reagents.total_volume * 0.005), explosion_turf)
 	qdel(src)
 
 /obj/structure/reagent_dispensers/fueltank/fire_act(burn_level, flame_color)
@@ -225,8 +227,10 @@
 		return
 	exploding = TRUE
 
-	cell_explosion(loc, reagents.total_volume * 0.4, reagents.total_volume * 0.2)
-	flame_radius(round(reagents.total_volume * 0.005), loc, 40, 46, 31, 30, colour = FLAME_COLOR_BLUE )
+	var/turf/explosion_turf = get_turf(src)
+	cell_explosion(explosion_turf || loc, reagents.total_volume * 0.4, reagents.total_volume * 0.2)
+	if(explosion_turf)
+		flame_radius(round(reagents.total_volume * 0.005), explosion_turf, 40, 46, 31, 30, colour = FLAME_COLOR_BLUE )
 	qdel(src)
 
 /obj/structure/reagent_dispensers/fueltank/gfuel
@@ -241,8 +245,10 @@
 		return
 	exploding = TRUE
 
-	cell_explosion(loc, reagents.total_volume * 0.4, reagents.total_volume * 0.2)
-	flame_radius(round(reagents.total_volume * 0.005), loc, 46, 40, 31, 30, colour = FLAME_COLOR_LIME)
+	var/turf/explosion_turf = get_turf(src)
+	cell_explosion(explosion_turf || loc, reagents.total_volume * 0.4, reagents.total_volume * 0.2)
+	if(explosion_turf)
+		flame_radius(round(reagents.total_volume * 0.005), explosion_turf, 46, 40, 31, 30, colour = FLAME_COLOR_LIME)
 	qdel(src)
 
 /obj/structure/reagent_dispensers/water_cooler

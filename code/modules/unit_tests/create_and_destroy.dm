@@ -30,8 +30,6 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	//This turf existing is an error in and of itself
 	ignore += typesof(/turf/baseturf_skipover)
 	ignore += typesof(/turf/baseturf_bottom)
-	//It wants a lot more context then we have
-	ignore += typesof(/obj/effect/buildmode_line)
 	//Our system doesn't support it without warning spam from unregister calls on things that never registered
 	ignore += typesof(/obj/docking_port)
 	//These shouldn't be spawned directly, rather they should be spawned through their weapon item counterparts
@@ -60,9 +58,9 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 
 	for(var/type_path in typesof(/atom/movable, /turf) - ignore) //No areas please
 		if(ispath(type_path, /turf))
-			spawn_at.change_turf(type_path)
+			spawn_at.ChangeTurf(type_path)
 			//We change it back to prevent baseturfs stacking and hitting the limit
-			spawn_at.change_turf(original_turf_type, original_baseturfs)
+			spawn_at.ChangeTurf(original_turf_type, original_baseturfs)
 			if(original_baseturf_count != length(spawn_at.baseturfs))
 				Fail("[type_path] changed the amount of baseturfs from [original_baseturf_count] to [length(spawn_at.baseturfs)]; [english_list(original_baseturfs)] to [islist(spawn_at.baseturfs) ? english_list(spawn_at.baseturfs) : spawn_at.baseturfs]")
 				//Warn if it changes again

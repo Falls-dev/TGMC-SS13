@@ -5,6 +5,7 @@
 #define FUSION_ENGINE_LIGHT_DAMAGE 1
 #define FUSION_ENGINE_MEDIUM_DAMAGE 2
 #define FUSION_ENGINE_HEAVY_DAMAGE 3
+#define MARINE_QUICKBUILD_ALLOWED (CHECK_BITFIELD(SSticker.mode?.round_type_flags, MODE_ALLOW_MARINE_QUICKBUILD) && (!SSticker.round_start_time || (world.time - SSticker.round_start_time) < 10 MINUTES))
 
 /obj/machinery/power/fusion_engine
 	name = "\improper S-52 fusion reactor"
@@ -176,7 +177,7 @@
 		balloon_alert(user, "Need more welding fuel")
 		return FALSE
 
-	if(user.skills.getRating(SKILL_ENGINEER) < SKILL_ENGINEER_ENGI)
+	if(!MARINE_QUICKBUILD_ALLOWED && user.skills.getRating(SKILL_ENGINEER) < SKILL_ENGINEER_ENGI)
 		balloon_alert_to_viewers("Fumbles with [src]'s internals")
 		var/fumbling_time = 10 SECONDS - 2 SECONDS * user.skills.getRating(SKILL_ENGINEER)
 		if(!do_after(user, fumbling_time, NONE, src, BUSY_ICON_UNSKILLED, extra_checks = CALLBACK(WT, TYPE_PROC_REF(/obj/item/tool/weldingtool, isOn))))
@@ -206,7 +207,7 @@
 		balloon_alert(user, "Doesn't need wire adjustments")
 		return FALSE
 
-	if(user.skills.getRating(SKILL_ENGINEER) < SKILL_ENGINEER_ENGI)
+	if(!MARINE_QUICKBUILD_ALLOWED && user.skills.getRating(SKILL_ENGINEER) < SKILL_ENGINEER_ENGI)
 		balloon_alert_to_viewers("Fumbles with [src]'s wiring")
 		var/fumbling_time = 10 SECONDS - 2 SECONDS * user.skills.getRating(SKILL_ENGINEER)
 		if(!do_after(user, fumbling_time, NONE, src, BUSY_ICON_UNSKILLED))
@@ -232,7 +233,7 @@
 		balloon_alert(user, "Doesn't need pipe adjustments")
 		return FALSE
 
-	if(user.skills.getRating(SKILL_ENGINEER) < SKILL_ENGINEER_ENGI)
+	if(!MARINE_QUICKBUILD_ALLOWED && user.skills.getRating(SKILL_ENGINEER) < SKILL_ENGINEER_ENGI)
 		balloon_alert_to_viewers("Fumbles with [src]'s tubing")
 		var/fumbling_time = 10 SECONDS - 2 SECONDS * user.skills.getRating(SKILL_ENGINEER)
 		if(!do_after(user, fumbling_time, NONE, src, BUSY_ICON_UNSKILLED))
@@ -260,7 +261,7 @@
 		balloon_alert(user, "There is no cell to remove")
 		return
 
-	if(user.skills.getRating(SKILL_ENGINEER) < SKILL_ENGINEER_ENGI)
+	if(!MARINE_QUICKBUILD_ALLOWED && user.skills.getRating(SKILL_ENGINEER) < SKILL_ENGINEER_ENGI)
 		balloon_alert_to_viewers("Fumbles with [src]'s fuel bay")
 		var/fumbling_time = 10 SECONDS - 2 SECONDS * user.skills.getRating(SKILL_ENGINEER)
 		if(!do_after(user, fumbling_time, NONE, src, BUSY_ICON_UNSKILLED))
@@ -269,7 +270,7 @@
 	balloon_alert_to_viewers("Starts prying [src]'s fuel bay open")
 	if(!do_after(user, 10 SECONDS - (user.skills.getRating(SKILL_ENGINEER) * 2 SECONDS), NONE, src, BUSY_ICON_BUILD))
 		return FALSE
-	
+
 	if(buildstate != FUSION_ENGINE_NO_DAMAGE)
 		return
 	if(is_on)
@@ -355,6 +356,7 @@
 #undef FUSION_ENGINE_LIGHT_DAMAGE
 #undef FUSION_ENGINE_MEDIUM_DAMAGE
 #undef FUSION_ENGINE_HEAVY_DAMAGE
+#undef MARINE_QUICKBUILD_ALLOWED
 
 //FUEL CELL
 /obj/item/fuel_cell

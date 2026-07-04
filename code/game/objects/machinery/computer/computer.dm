@@ -20,6 +20,7 @@
 	var/processing = 0
 	///How many times the computer can be smashed by a Xeno before it is disabled.
 	var/durability = 2
+	var/unscrewable = TRUE
 
 /obj/machinery/computer/Initialize(mapload)
 	. = ..()
@@ -150,6 +151,9 @@
 
 /obj/machinery/computer/screwdriver_act(mob/living/user, obj/item/I)
 	. = ..()
+
+	if(unscrewable)
+		return
 
 	if(!circuit)
 		return

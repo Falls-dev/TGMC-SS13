@@ -25,6 +25,10 @@
 	)
 
 	base_icon_state = "Larva"
+	skins = list(
+		/datum/xenomorph_skin/larva,
+		/datum/xenomorph_skin/larva/larva_shahid,
+	)
 
 /mob/living/carbon/xenomorph/larva/Initialize(mapload)
 	. = ..()

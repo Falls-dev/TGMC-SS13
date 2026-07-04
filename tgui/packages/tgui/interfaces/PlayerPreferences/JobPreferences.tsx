@@ -159,7 +159,7 @@ export const JobPreferences = (props) => {
                         })
                       }
                     />
-                    {idx === 1}
+                    {idx === 1 && <br />}
                   </>
                 ))}
               </Flex.Item>

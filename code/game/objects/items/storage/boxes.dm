@@ -50,6 +50,37 @@
 	new /obj/item/clothing/mask/breath( src )
 	new /obj/item/tank/emergency_oxygen/engi( src )
 
+/obj/item/storage/box/MRE
+	name = "\improper TGMC MRE"
+	desc = "Meal Ready-to-Eat, meant to be consumed in the field, and has an expiration that is two decades past a marine's average combat life expectancy."
+	icon_state = "mealpack"
+	w_class = WEIGHT_CLASS_SMALL
+	storage_type = /datum/storage/box/mre
+	var/isopened = FALSE
+
+/obj/item/storage/box/MRE/PopulateContents()
+	var/entree = pick("boneless pork ribs", "grilled chicken", "pizza square", "spaghetti", "chicken tenders")
+	var/side = pick("meatballs", "cheese spread", "beef turnover", "mashed potatoes")
+	var/snack = pick("biscuit", "pretzels", "peanuts", "cracker")
+	var/desert = pick("spiced apples", "chocolate brownie", "sugar cookie", "choco bar", "crayon")
+	name = "[initial(name)] ([entree])"
+	new /obj/item/reagent_containers/food/snacks/packaged_meal(src, entree)
+	new /obj/item/reagent_containers/food/snacks/packaged_meal(src, side)
+	new /obj/item/reagent_containers/food/snacks/packaged_meal(src, snack)
+	new /obj/item/reagent_containers/food/snacks/packaged_meal(src, desert)
+
+/obj/item/storage/box/MRE/update_icon_state()
+	. = ..()
+	if(!isopened)
+		isopened = TRUE
+		icon_state += "opened"
+
+/obj/item/storage/box/MRE/som
+	name = "\improper SOM MFR"
+	desc = "A Martian Field Ration, guaranteed to have a taste of Mars in every bite."
+	icon_state = "som_mealpack"
+	storage_type = /datum/storage/box/mre/som
+
 /obj/item/storage/box/gloves
 	name = "box of latex gloves"
 	desc = "Contains white gloves."

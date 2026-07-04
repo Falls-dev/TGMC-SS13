@@ -28,19 +28,28 @@ img.icon {
 }
 
 a {
-  color: hsl(201.7, 48.6%, 43.5%);
+  cursor: var(--cursor-pointer);
+  color: var(--color-hyperlink);
+  transition: color var(--transition-time-medium);
+
+  &:hover {
+    color: hsl(from var(--color-hyperlink) h s calc(l + var(--adjust-hover)));
+  }
 }
 
-a.visited {
-  color: hsl(272.3, 100%, 45.1%);
-}
-
+a.visited,
 a:visited {
-  color: hsl(272.3, 100%, 45.1%);
+  color: var(--color-hyperlink-visited);
+
+  &:hover {
+    color: hsl(
+      from var(--color-hyperlink-visited) h s calc(l + var(--adjust-hover))
+    );
+  }
 }
 
-a.popt {
-  text-decoration: none;
+.center {
+  text-align: center;
 }
 
 /* POPUPS */
@@ -200,8 +209,8 @@ a.popt {
 /* MOTD */
 
 .motd {
-  color: hsl(75.3, 100%, 26.1%);
-  font-family: Verdana, sans-serif;
+  color: hsl(213.6, 37.9%, 74.1%);
+  font-family: Verdana;
   white-space: normal;
 }
 
@@ -211,20 +220,21 @@ a.popt {
 .motd h4,
 .motd h5,
 .motd h6 {
-  color: hsl(75.3, 100%, 26.1%);
+  color: hsl(213.6, 37.9%, 74.1%);
   text-decoration: underline;
+  font-family: Verdana;
+  text-decoration: none;
 }
 
-.motd a,
-.motd a:link,
-.motd a:visited,
-.motd a:active,
-.motd a:hover {
-  color: hsl(75.3, 100%, 26.1%);
+.motd h1,
+.motd h2,
+.motd h3 {
+  color: hsl(220, 100%, 67%);
+  font-weight: bold;
 }
 
 .tip {
-  color: hsl(289, 100%, 38.4%);
+  color: hsl(272.2, 58.7%, 58.2%);
   font-weight: bold;
 }
 
@@ -280,12 +290,12 @@ em {
   font-weight: bold;
 }
 .colorooc {
-  color: hsl(228.94, 100%, 64.9%);
+  color: hsl(47.9, 100%, 40%);
   font-weight: bold;
 }
 
 .looc {
-  color: hsl(180, 44.23%, 40.78%);
+  color: hsl(44, 62.7%, 59%);
   font-weight: bold;
 }
 
@@ -311,15 +321,15 @@ em {
   font-weight: bold;
 }
 .headmentorooc {
-  color: hsl(120, 33.72%, 33.73%);
+  color: hsl(120, 38.9%, 37.8%);
   font-weight: bold;
 }
 .senioradminooc {
-  color: hsl(350.22, 47.42%, 61.96%);
+  color: hsl(349.9, 62.6%, 66.5%);
   font-weight: bold;
 }
 .adminooc {
-  color: hsl(350.07, 59.18%, 48.04%);
+  color: hsl(350.2, 76.6%, 48.6%);
   font-weight: bold;
 }
 .trialminooc {
@@ -335,7 +345,7 @@ em {
   font-weight: bold;
 }
 .mentorooc {
-  color: hsl(120, 50.74%, 39.8%);
+  color: hsl(120, 57.2%, 39.4%);
   font-weight: bold;
 }
 .maintainerooc {
@@ -351,23 +361,23 @@ em {
   font-weight: bold;
 }
 .msay {
-  color: hsl(30, 17.74%, 48.63%);
+  color: hsl(120, 79.1%, 32%);
   font-weight: bold;
 }
 .adminmsay {
-  color: hsl(28.97, 28.16%, 40.39%);
+  color: hsl(29.4, 45.5%, 43.1%);
   font-weight: bold;
 }
 .headminmsay {
-  color: hsl(30, 21.43%, 32.94%);
+  color: hsl(30, 62.4%, 33.3%);
   font-weight: bold;
 }
 .admin {
-  color: hsl(223.9, 100%, 59.8%);
+  color: hsl(227, 63.5%, 60.2%);
   font-weight: bold;
 }
 .asay {
-  color: hsl(340, 74.36%, 45.88%);
+  color: hsl(16.2, 100%, 50%);
   font-weight: bold;
 }
 .headminasay {
@@ -375,7 +385,7 @@ em {
   font-weight: bold;
 }
 .boldannounce {
-  color: hsl(0, 100%, 50%);
+  color: hsl(0, 73.6%, 44.5%);
   font-weight: bold;
 }
 .staffpmin {
@@ -399,7 +409,8 @@ em {
 }
 
 .say,
-.infoplain {
+.infoplain,
+.emote {
 }
 .yell {
   font-weight: bold;
@@ -413,24 +424,24 @@ em {
 }
 
 .deadsay {
-  color: hsl(272.08, 100%, 68.82%);
+  color: hsl(272, 100%, 82%);
 }
 .bigdeadsay {
-  color: hsl(272.08, 100%, 68.82%);
+  color: hsl(272, 100%, 82%);
   font-size: 140%;
 }
 .tinydeadsay {
-  color: hsl(272.08, 100%, 68.82%);
+  color: hsl(272, 100%, 82%);
   font-size: 85%;
 }
 .radio {
-  color: hsl(120, 72.2%, 43.7%);
+  color: hsl(132.8, 74.4%, 45.9%);
 }
 .deptradio {
   color: hsl(300, 74.5%, 40%);
 }
 .comradio {
-  color: hsl(218.79, 50%, 54.51%);
+  color: hsl(219.2, 59%, 60.8%);
 }
 .syndradio {
   color: hsl(357.9, 28.9%, 38.6%);
@@ -454,24 +465,21 @@ em {
 .sciradio {
   color: hsl(300, 48.5%, 40.4%);
 }
-
 .supradio {
   color: hsl(33.7, 44.9%, 49.8%);
 }
-
 .alpharadio {
-  color: hsl(0, 60.5%, 46.7%);
+  color: hsl(0, 62%, 53%);
 }
 .bravoradio {
-  color: hsl(38, 62.3%, 55.3%);
+  color: hsl(38, 62%, 55%);
 }
 .charlieradio {
-  color: hsl(300, 36.6%, 52.4%);
+  color: hsl(300, 51%, 58%);
 }
 .deltaradio {
-  color: hsl(228.1, 67.5%, 52.9%);
+  color: hsl(228, 79%, 62%);
 }
-
 .zuluradio {
   color: hsl(24.9, 100%, 50%);
 }
@@ -490,16 +498,14 @@ em {
 }
 
 .binarysay {
-  color: hsl(114.1, 81.9%, 41.2%);
-  background-color: hsl(0, 0%, 0%);
-  display: block;
+  color: hsl(209.6, 100%, 55.9%);
 }
 .binarysay a {
-  color: hsl(120, 45.1%, 54.3%);
+  color: hsl(120, 100%, 50%);
 }
 .binarysay a:active,
 .binarysay a:visited {
-  color: hsl(120, 45.1%, 54.3%);
+  color: hsl(120, 100%, 76.7%);
 }
 
 .alert {
@@ -560,10 +566,10 @@ h2.alert {
   font-size: 85%;
 }
 .xenonotice {
-  color: hsl(154.7, 48.54%, 33.53%);
+  color: hsl(154.7, 30.4%, 49%);
 }
 .boldnotice {
-  color: hsl(240, 50%, 60%);
+  color: hsl(227, 87.7%, 68%);
   font-weight: bold;
 }
 .warning {
@@ -571,7 +577,7 @@ h2.alert {
   font-style: italic;
 }
 .xenowarning {
-  color: hsl(154.7, 48.54%, 33.53%);
+  color: hsl(154.7, 30.4%, 49%);
   font-style: italic;
 }
 
@@ -644,7 +650,6 @@ h2.alert {
   font-style: italic;
   font-weight: bold;
 }
-
 .danger {
   color: hsl(0, 73.6%, 44.5%);
   font-weight: bold;
@@ -655,7 +660,7 @@ h2.alert {
   font-size: 185%;
 }
 .xenodanger {
-  color: hsl(165, 48.54%, 40.39%);
+  color: hsl(154.7, 30.4%, 49%);
   font-weight: bold;
 }
 .avoidharm {
@@ -663,12 +668,12 @@ h2.alert {
   font-weight: bold;
 }
 .xenouserdanger {
-  color: hsl(165, 48.54%, 40.39%);
+  color: hsl(154.7, 30.4%, 49%);
   font-weight: bold;
   font-size: 1.5em;
 }
 .xenoannounce {
-  color: hsl(154.7, 48.54%, 33.53%);
+  color: hsl(154.7, 30.4%, 49%);
   font-family: book-antiqua;
   font-weight: bold;
   font-style: italic;
@@ -692,20 +697,20 @@ h2.alert {
   color: hsl(314.8, 75.3%, 62%);
 }
 .xenoqueen {
-  font-size: 22.4px;
+  font-size: 1.4em;
 }
 .xenoshrike {
-  font-size: 19.2px;
+  font-size: 1.2em;
 }
 .xenohivemind {
-  font-size: 19.2px;
+  font-size: 1.2em;
 }
 .ordercic {
   font-weight: bold;
-  font-size: 36px;
+  font-size: 2em;
 }
 .xenoleader {
-  font-size: 19.2px;
+  font-size: 1.2em;
 }
 
 .alien {
@@ -714,47 +719,44 @@ h2.alert {
 .newscaster {
   color: hsl(0, 43%, 42%);
 }
-
 .role_header {
-  color: hsl(221.25, 100%, 78.04%);
+  color: hsl(225, 65%, 75%);
   display: block;
   text-align: center;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 125%;
 }
 .role_body {
-  color: hsl(0, 85.96%, 44.71%);
+  color: hsl(225, 85%, 90%);
   display: block;
-  text-align: center;
 }
-
 .round_setup {
   color: hsl(0, 100%, 42.9%);
   font-family: impact;
-  font-size: 20px;
+  font-size: 1.25em;
 }
 .round_header {
   color: hsl(0, 100%, 42.9%);
   display: block;
   text-align: center;
   font-weight: bold;
-  font-size: 32px;
+  font-size: 2em;
 }
 .round_body {
   color: hsl(227, 87.7%, 68%);
   display: block;
   text-align: center;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 1.5em;
 }
 .event_announcement {
   color: hsl(262.7, 55.7%, 63.7%);
   font-family: arial-narrow;
-  font-size: 24px;
+  font-size: 1.5em;
 }
 .seasons_announce {
   color: hsl(168.1, 75.7%, 42%);
-  font-size: 16px;
+  font-size: 1em;
 }
 .season_additional_info {
   color: hsl(211.8, 11.7%, 71.6%);
@@ -1098,40 +1100,87 @@ h2.alert {
   margin-left: 3em;
 }
 
-.examine_block {
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(55, 55, 55, 0.33);
-  margin: 7px 4px;
-  padding: 8px 12px;
+.fieldset_legend {
+  position: relative;
+  max-width: 95%;
+  font-size: 120%;
+  background-color: var(--color-section);
+  padding: var(--space-s) var(--space-m);
+  border-color: inherit;
+  z-index: 0;
+
+  &:before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: var(--border-thickness-tiny) solid;
+    border-color: inherit;
+    border-radius: var(--border-radius-medium);
+    mask-image: linear-gradient(to top, black 50%, transparent 50%);
+    z-index: -1;
+  }
 }
 
-.examine_block hr {
-  border: none;
-  background: hsl(0, 0%, 13.3%);
-  height: 1px;
-  margin: 8px 16px 8px 16px;
+.boxed_message {
+  background: hsl(220, 10%, 10%);
+  border: var(--border-thickness-tiny) solid;
+  border-left: var(--border-thickness-large) solid;
+  border-color: hsla(220, 40%, 75%, 0.25);
+  margin: var(--space-m) 0;
+  padding: var(--space-m) var(--space-l);
+  border-radius: var(--border-radius-medium);
+
+  &.red_box {
+    background: hsl(0, 20%, 10%);
+    color: hsl(0, 100%, 85%);
+    border-color: hsla(0, 100%, 50%, 0.5);
+  }
+
+  &.green_box {
+    background: hsl(140, 20%, 10%);
+    color: hsl(120, 100%, 85%);
+    border-color: hsla(120, 100%, 50%, 0.5);
+  }
+
+  &.blue_box {
+    background: hsl(220, 20%, 10%);
+    color: hsl(225, 90%, 85%);
+    border-color: hsla(225, 90%, 65%, 0.5);
+  }
+
+  &.purple_box {
+    background: hsl(260, 25%, 12.5%);
+    color: hsl(260, 100%, 85%);
+    border-color: hsla(260, 100%, 75%, 0.5);
+  }
+
+  hr {
+    margin: var(--space-m) -0.75em;
+    border-color: inherit;
+  }
 }
-.examine_block .blockheader {
-  font-family: Verdana;
-  color: hsl(215.1, 63.1%, 79.8%);
-  display: block;
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.3em;
-}
+
 // Provides a horizontal bar with text in the middle
-// I got this off stackoverflow
+// I got this from TG and the coder there got if off Stack Overflow
 .separator {
   display: flex;
   align-items: center;
-  text-align: center;
+  text-align: left;
+  font-weight: bold;
+}
+
+.separator::before {
+  text-align: left;
+  position: absolute;
+  padding-left: var(--space-m);
 }
 
 .separator::before,
 .separator::after {
   content: '';
   flex: 1;
-  border-bottom: 1px solid rgba(100, 100, 100, 0.33);
+  border-bottom: 1px solid hsla(220, 40%, 75%, 0.25);
+  margin: var(--space-m) -0.75em var(--space-m) -0.75em;
 }
 
 .separator:not(:empty)::before {
@@ -1144,42 +1193,54 @@ h2.alert {
 
 .tooltip {
   font-style: italic;
-  border-bottom: 1px dashed #fff;
+  border-bottom: 2px dotted;
 }
 
 $ooc_alert_bg_colors: (
-  'ooc': hsl(212.2, 97.62%, 16.47%),
-  'game': hsl(0, 100%, 14.71%),
+  'ooc': hsl(50.6, 100%, 15.1%),
+  'game': hsl(0, 100%, 14.7%),
 );
 
 $ooc_alert_border_colors: (
-  'ooc': hsl(212.17, 100%, 46.08%) 70,
-  'game': hsl(0, 100%, 42.94%) 70,
+  'ooc': hsla(47.9, 100%, 40%, 70%),
+  'game': hsla(0, 100%, 42.9%, 70%),
 );
 
 $ooc_alert_text_colors: (
-  'ooc': hsl(212.17, 100%, 46.08%),
-  'game': hhsl(0, 100%, 42.94%),
+  'ooc': hsl(47.9, 100%, 40%),
+  'game': hsl(0, 100%, 42.9%),
 );
 
-$ooc_alert_text_colors: (
-  'ooc': #006deb,
-  'game': #db0000,
-);
+$border-width: 4;
+
+$border-width-px: $border-width * 1px;
 
 @each $color-type, $color in $ooc_alert_text_colors {
   .ooc_alert_#{$color-type} {
     background: map.get($ooc_alert_bg_colors, $color-type);
     border: 1px solid map.get($ooc_alert_border_colors, $color-type);
-    color: hsl(0, 0%, 100%);
+    margin: var(--space-m);
+    padding: var(--space-m) var(--space-s);
+    color: var(--color-white);
     font-weight: bold;
     display: flex;
     flex-direction: column;
+    border-radius: var(--border-radius-medium);
   }
 
   .ooc_alert_#{$color-type} .ooc_announcement_text {
     color: map.get($ooc_alert_text_colors, $color-type);
-    padding: 8px 0 0 5.6px;
+    padding: 0.5em 0 0 0.35em;
+  }
+  .ooc_alert_#{$color-type} .separator::before {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid map.get($ooc_alert_border_colors, $color-type);
+  }
+  .ooc_alert_#{$color-type} .separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid map.get($ooc_alert_border_colors, $color-type);
   }
 }
 
@@ -1231,10 +1292,6 @@ $alert-subheader-header-colors: (
   'grey': hsl(28.2, 73%, 68%),
 );
 
-$border-width: 4;
-
-$border-width-px: $border-width * 1px;
-
 .faction_alert_text {
   background: hsl(0, 0%, 12.5%);
   padding: 0.5rem 0.5rem;
@@ -1260,7 +1317,10 @@ $border-width-px: $border-width * 1px;
 
 @each $color-name, $color-value in $alert-stripe-colors {
   .faction_alert_#{$color-name} {
-    color: hsl(0, 0%, 100%);
+    color: color.adjust(
+      map.get($alert-stripe-colors, $color-name),
+      $lightness: 75%
+    );
     box-shadow: none;
     font-weight: bold;
     margin: 1rem 0 1rem 0;

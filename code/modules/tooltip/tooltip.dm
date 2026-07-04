@@ -16,6 +16,7 @@ Notes:
 - You may have noticed 90% of the work is done via javascript on the client. Gotta save those cycles man.
 */
 
+
 /datum/tooltip
 	var/client/owner
 	var/control = "mainwindow.tooltip"
@@ -24,13 +25,16 @@ Notes:
 	var/init = FALSE
 	var/atom/last_target
 
+
 /datum/tooltip/New(client/C)
-	if(C)
+	if (C)
 		owner = C
 		var/datum/asset/stuff = get_asset_datum(/datum/asset/simple/jquery)
 		stuff.send(owner)
 		owner << browse(file2text('code/modules/tooltip/tooltip.html'), "window=[control]")
-	return ..()
+
+	..()
+
 
 /datum/tooltip/proc/show(atom/movable/thing, params = null, title = null, content = null, theme = "default", special = "none")
 	if (!thing || !params || (!title && !content) || !owner || !isnum(world.icon_size))
@@ -76,6 +80,7 @@ Notes:
 
 	return TRUE
 
+
 /datum/tooltip/proc/hide()
 	queueHide = showing ? TRUE : FALSE
 
@@ -111,9 +116,12 @@ Notes:
 		theme = "default"
 	user.client.tooltips.show(tip_src, params, title, content, theme)
 
+
 //Arbitrarily close a user's tooltip
 //Includes sanity checks.
 /proc/closeToolTip(mob/user)
 	if(!istype(user) || !user.client?.tooltips)
 		return
 	user.client.tooltips.hide()
+
+

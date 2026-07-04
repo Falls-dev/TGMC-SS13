@@ -66,7 +66,7 @@ const DownloadProgress = (props) => (
         good: [0.75, Infinity],
         average: [-Infinity, 0.75],
       }}
-      value={props.current * 0.01}
+      value={props.current / 100}
     />
   </Section>
 );
@@ -78,7 +78,7 @@ const Uploadprogress = (props) => (
         good: [0.75, Infinity],
         average: [-Infinity, 0.75],
       }}
-      value={props.current * 0.01}
+      value={props.current / 100}
     />
   </Section>
 );

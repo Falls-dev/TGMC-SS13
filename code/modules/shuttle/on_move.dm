@@ -14,6 +14,8 @@
 		return
 
 	for(var/atom/thing AS in contents)
+		if(istype(thing, /mob/dead/observer))
+			continue
 		SEND_SIGNAL(thing, COMSIG_MOVABLE_SHUTTLE_CRUSH, shuttle)
 		if(isliving(thing))
 			var/mob/living/M = thing
@@ -41,7 +43,7 @@
 	if(!(. & (MOVE_TURF|MOVE_CONTENTS))) // copypaste from the parent proc
 		return
 	// scrape away all the walls we land on, so you can't hide nukes in mineral walls
-	scrape_away()
+	ScrapeAway()
 
 /// Called on the old turf to move the turf data
 /turf/proc/on_shuttle_move(turf/newT, list/movement_force, move_dir)
@@ -52,7 +54,7 @@
 	var/shuttle_depth = depth_to_find_baseturf(/turf/baseturf_skipover/shuttle)
 	if(!shuttle_depth)
 		CRASH("A turf queued to move via shuttle somehow had no skipover in baseturfs. [src]([type]):[loc]")
-	newT.copy_on_top(src, 1, shuttle_depth, TRUE)
+	newT.CopyOnTop(src, 1, shuttle_depth, TRUE)
 	return TRUE
 
 /// Called on the new turf after everything has been moved
@@ -62,7 +64,7 @@
 
 	var/shuttle_depth = depth_to_find_baseturf(/turf/baseturf_skipover/shuttle)
 	if(shuttle_depth)
-		oldT.scrape_away(shuttle_depth)
+		oldT.ScrapeAway(shuttle_depth)
 
 	if(rotation)
 		shuttle_rotate(rotation) //see shuttle_rotate.dm

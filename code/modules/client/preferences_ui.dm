@@ -1,3 +1,24 @@
+
+/atom/movable/screen/map_view/preference_preview
+	/// All the plane masters that need to be applied.
+	var/atom/movable/screen/background/screen_bg
+
+/atom/movable/screen/map_view/preference_preview/Destroy()
+	QDEL_NULL(screen_bg)
+	return ..()
+
+/atom/movable/screen/map_view/preference_preview/generate_view(map_key)
+	. = ..()
+	screen_bg = new
+	screen_bg.del_on_map_removal = FALSE
+	screen_bg.assigned_map = assigned_map
+	screen_bg.icon_state = "clear"
+	screen_bg.fill_rect(1, 1, 4, 1)
+
+/atom/movable/screen/map_view/preference_preview/display_to_client(client/show_to)
+	show_to.register_map_obj(screen_bg)
+	return ..()
+
 /datum/preferences/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -5,15 +26,11 @@
 		ui = new(user, src, "PlayerPreferences", "Preferences")
 		ui.set_autoupdate(FALSE)
 		ui.open()
-		// HACK: Without this the character starts out really tiny because of some BYOND bug.
-		// You can fix it by changing a preference, so let's just forcably update the body to emulate this.
-		// Lemon from the future: this issue appears to replicate if the byond map (what we're relaying here)
-		// Is shown while the client's mouse is on the screen. As soon as their mouse enters the main map, it's properly scaled
-		// I hate this place
-		addtimer(CALLBACK(src, PROC_REF(update_preview_icon)), 1 SECONDS)
+		screen_main.display_to(user, ui.window)
 
 /datum/preferences/ui_close(mob/user)
 	. = ..()
+	user.client?.clear_map(map_name)
 	user.client?.clear_character_previews()
 
 /datum/preferences/ui_state(mob/user)
@@ -67,6 +84,8 @@
 			data["species"] = species || "Human"
 			data["good_eyesight"] = good_eyesight
 			data["citizenship"] = citizenship
+			data["tts_voice"] = tts_voice
+			data["tts_pitch"] = "[tts_pitch]"
 			data["religion"] = religion
 			data["h_style"] = h_style
 			data["grad_style"] = grad_style
@@ -128,11 +147,17 @@
 			data["ui_style_alpha"] = ui_style_alpha
 			data["windowflashing"] = windowflashing
 			data["auto_fit_viewport"] = auto_fit_viewport
+			data["sound_tts"] = sound_tts
+			data["volume_tts"] = volume_tts
+			data["radio_tts_flags"] = radio_tts_flags
 			data["accessible_tgui_themes"] = accessible_tgui_themes
-			data["tgui_fancy"] = tgui_fancy
+			data["tgui_lock"] = tgui_lock
+			data["ui_scale"] = ui_scale
+			data["tgui_input"] = tgui_input
 			data["tgui_input"] = tgui_input
 			data["tgui_input_big_buttons"] = tgui_input_big_buttons
 			data["tgui_input_buttons_swap"] = tgui_input_buttons_swap
+			data["auto_open_changelogs"] = auto_open_changelogs
 			data["clientfps"] = clientfps
 			data["chat_on_map"] = chat_on_map
 			data["max_chat_length"] = max_chat_length
@@ -161,6 +186,7 @@
 			data["fast_mc_refresh"] = fast_mc_refresh
 			data["split_admin_tabs"] = split_admin_tabs
 			data["hear_ooc_anywhere_as_staff"] = hear_ooc_anywhere_as_staff
+			data["show_ooc_country_flag"] = show_ooc_country_flag
 			data["volume_adminhelp"] = volume_adminhelp
 			data["volume_adminmusic"] = volume_adminmusic
 			data["volume_ambience"] = volume_ambience
@@ -194,6 +220,7 @@
 	. = list()
 	switch(tab_index)
 		if(CHARACTER_CUSTOMIZATION, PRED_CHARACTER_CUSTOMIZATION)
+			update_preview_icon()
 			.["mapRef"] = "player_pref_map"
 		if(GEAR_CUSTOMIZATION)
 			.["clothing"] = list(
@@ -715,6 +742,31 @@
 				return
 			religion = choice
 
+		if("tts_voice")
+			var/list/voices
+			if(SStts.tts_enabled)
+				voices = SStts.available_speakers
+			else if(fexists("data/cached_tts_voices.json"))
+				var/list/text_data = rustg_file_read("data/cached_tts_voices.json")
+				voices = json_decode(text_data)
+			if(!length(voices))
+				return
+			var/choice = tgui_input_list(ui.user, "What do you sound like?", "TTS", voices)
+			if(!choice)
+				return
+			tts_voice = choice
+			if(TIMER_COOLDOWN_RUNNING(user, COOLDOWN_TRY_TTS))
+				return
+			TIMER_COOLDOWN_START(ui.user, COOLDOWN_TRY_TTS, 0.5 SECONDS)
+			INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), ui.user.client, "Hello, this is my voice.", speaker = choice, local = TRUE, special_filters = isrobot(GLOB.all_species[species]) ? TTS_FILTER_SILICON : "", pitch = tts_pitch)
+
+		if("tts_pitch")
+			tts_pitch = clamp(text2num(params["newValue"]), -12, 12)
+			if(TIMER_COOLDOWN_RUNNING(user, COOLDOWN_TRY_TTS))
+				return
+			TIMER_COOLDOWN_START(ui.user, COOLDOWN_TRY_TTS, 0.5 SECONDS)
+			INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), ui.user.client, "Hello, this is my voice.", speaker = tts_voice, local = TRUE, special_filters = isrobot(GLOB.all_species[species]) ? TTS_FILTER_SILICON : "", pitch = tts_pitch)
+
 		if("squad")
 			var/new_squad = params["newValue"]
 			if(!(new_squad in SELECTABLE_SQUADS))
@@ -758,14 +810,54 @@
 			auto_fit_viewport = !auto_fit_viewport
 			parent?.attempt_auto_fit_viewport()
 
+		if("sound_tts")
+			var/choice = tgui_input_list(ui.user, "What kind of TTS do you want?", "TTS choice", GLOB.all_tts_options)
+			if(!choice)
+				return
+			sound_tts = choice
+
+		if("volume_tts")
+			var/new_vol = text2num(params["newValue"])
+			if(!isnum(new_vol))
+				return
+			new_vol = round(new_vol)
+			volume_tts = clamp(new_vol, 0, 100)
+
+		if("toggle_radio_tts_setting")
+			switch(params["newsetting"])
+				if("sl")
+					TOGGLE_BITFIELD(radio_tts_flags, RADIO_TTS_SL)
+					if(!CHECK_BITFIELD(radio_tts_flags, RADIO_TTS_SL)) //When SL radio is being disabled, disable squad radio too
+						DISABLE_BITFIELD(radio_tts_flags, RADIO_TTS_SQUAD)
+
+				if("squad")
+					TOGGLE_BITFIELD(radio_tts_flags, RADIO_TTS_SQUAD)
+					if(CHECK_BITFIELD(radio_tts_flags, RADIO_TTS_SQUAD))
+						ENABLE_BITFIELD(radio_tts_flags, RADIO_TTS_SL) //Enable SL TTS if not already enabled
+
+				if("command")
+					TOGGLE_BITFIELD(radio_tts_flags, RADIO_TTS_COMMAND)
+
+				if("hivemind")
+					TOGGLE_BITFIELD(radio_tts_flags, RADIO_TTS_HIVEMIND)
+
+				if("all")
+					TOGGLE_BITFIELD(radio_tts_flags, RADIO_TTS_ALL)
+					if(CHECK_BITFIELD(radio_tts_flags, RADIO_TTS_ALL)) //Enable all other channels when 'ALL' is enabled
+						for(var/flag in GLOB.all_radio_tts_options)
+							ENABLE_BITFIELD(radio_tts_flags, flag)
+
+			if(!CHECK_MULTIPLE_BITFIELDS(radio_tts_flags, RADIO_TTS_SL|RADIO_TTS_SQUAD|RADIO_TTS_COMMAND|RADIO_TTS_HIVEMIND))
+				DISABLE_BITFIELD(radio_tts_flags, RADIO_TTS_ALL)
+
 		if("accessible_tgui_themes")
 			accessible_tgui_themes = !accessible_tgui_themes
 
-		if("tgui_fancy")
-			tgui_fancy = !tgui_fancy
-
 		if("tgui_lock")
 			tgui_lock = !tgui_lock
+
+		if("ui_scale")
+			ui_scale = !ui_scale
 
 		if("tgui_input")
 			tgui_input = !tgui_input
@@ -775,6 +867,9 @@
 
 		if("tgui_input_buttons_swap")
 			tgui_input_buttons_swap = !tgui_input_buttons_swap
+
+		if("auto_open_changelogs")
+			auto_open_changelogs = !auto_open_changelogs
 
 		if("clientfps")
 			var/desiredfps = text2num(params["newValue"])
@@ -1036,6 +1131,8 @@
 
 		if("hear_ooc_anywhere_as_staff")
 			hear_ooc_anywhere_as_staff = !hear_ooc_anywhere_as_staff
+		if("show_ooc_country_flag")
+			show_ooc_country_flag = !show_ooc_country_flag
 
 		if("volume_adminhelp")
 			volume_adminhelp = params["newValue"]

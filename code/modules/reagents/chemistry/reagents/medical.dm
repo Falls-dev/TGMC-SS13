@@ -15,7 +15,7 @@
 /datum/reagent/medicine/inaprovaline/on_mob_add(mob/living/L, metabolism)
 	ADD_TRAIT(L, TRAIT_IGNORE_SUFFOCATION, REAGENT_TRAIT(src))
 	var/mob/living/carbon/human/H = L
-	if(TIMER_COOLDOWN_CHECK(L, name) || L.stat == DEAD)
+	if(TIMER_COOLDOWN_RUNNING(L, name) || L.stat == DEAD)
 		return
 	if(L.health < H.health_threshold_crit && volume > 14) //If you are in crit, and someone injects at least 15u into you at once, you will heal 30% of your physical damage instantly.
 		to_chat(L, span_userdanger("You feel a rush of energy as stimulants course through your veins!"))
@@ -110,8 +110,8 @@
 
 /datum/reagent/medicine/paracetamol/overdose_process(mob/living/L, metabolism)
 	L.hallucination = max(L.hallucination, 2)
-	L.reagent_pain_modifier += PAIN_REDUCTION_VERY_LIGHT
-	L.apply_damage(0.5*effect_str, TOX)
+	L.reagent_pain_modifier -= PAIN_REDUCTION_VERY_LIGHT
+	L.apply_damage(1.5*effect_str, TOX)
 
 /datum/reagent/medicine/paracetamol/overdose_crit_process(mob/living/L, metabolism)
 	L.apply_damage(3*effect_str, TOX)
@@ -149,7 +149,7 @@
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL * 0.5
 
 /datum/reagent/medicine/oxycodone/on_mob_add(mob/living/L, metabolism)
-	if(TIMER_COOLDOWN_CHECK(L, name))
+	if(TIMER_COOLDOWN_RUNNING(L, name))
 		return
 	L.adjust_stamina_loss(-20*effect_str)
 	to_chat(L, span_userdanger("You feel a burst of energy revitalize you all of a sudden! You can do anything!"))
@@ -342,7 +342,7 @@
 	return ..()
 
 /datum/reagent/medicine/dexalinplus/on_mob_add(mob/living/L, metabolism)
-	if(TIMER_COOLDOWN_CHECK(L, name))
+	if(TIMER_COOLDOWN_RUNNING(L, name))
 		return
 	L.adjust_stamina_loss(-100*effect_str)
 	to_chat(L, span_userdanger("You feel a complete lack of fatigue, so relaxing!"))
@@ -467,7 +467,7 @@
 	purge_rate = 5
 
 /datum/reagent/medicine/synaptizine/on_mob_add(mob/living/L, metabolism)
-	if(TIMER_COOLDOWN_CHECK(L, name))
+	if(TIMER_COOLDOWN_RUNNING(L, name))
 		return
 	L.adjust_stamina_loss(-30*effect_str)
 	to_chat(L, span_userdanger("You feel a burst of energy as the stimulants course through you! Time to go!"))
@@ -511,12 +511,12 @@
 
 /datum/reagent/medicine/adrenaline/on_mob_add(mob/living/carbon/human/L, metabolism)
 	var/mob/living/carbon/human/H = L
-	if(TIMER_COOLDOWN_CHECK(L, COOLDOWN_STAMINA))
+	if(TIMER_COOLDOWN_RUNNING(L, COOLDOWN_STAMINA))
 		return
 	L.adjust_stamina_loss(-30 * effect_str)
 	to_chat(L, span_userdanger("You feel a burst of energy as the adrenaline courses through you! Time to go fast!"))
 
-	if(TIMER_COOLDOWN_CHECK(L, COOLDOWN_CRIT) || L.stat == DEAD)
+	if(TIMER_COOLDOWN_RUNNING(L, COOLDOWN_CRIT) || L.stat == DEAD)
 		return
 	if(L.health < H.health_threshold_crit && volume >= 2)
 		to_chat(L, span_userdanger("Heart explosion! Power running in your veins!"))
@@ -563,7 +563,7 @@
 
 /datum/reagent/medicine/neuraline/on_mob_add(mob/living/L, metabolism)
 	var/mob/living/carbon/human/H = L
-	if(TIMER_COOLDOWN_CHECK(L, name) || L.stat == DEAD)
+	if(TIMER_COOLDOWN_RUNNING(L, name) || L.stat == DEAD)
 		return
 	if(L.health < H.health_threshold_crit && volume > 3) //If you are in crit, and someone injects at least 3u into you, you will heal 20% of your physical damage instantly.
 		to_chat(L, span_userdanger("You feel a rush of energy as stimulants course through your veins!"))
@@ -648,7 +648,7 @@
 
 /datum/reagent/medicine/russian_red/on_mob_add(mob/living/L, metabolism)
 	var/mob/living/carbon/human/H = L
-	if(TIMER_COOLDOWN_CHECK(L, name) || L.stat == DEAD)
+	if(TIMER_COOLDOWN_RUNNING(L, name) || L.stat == DEAD)
 		return
 	if(L.health < H.health_threshold_crit && volume > 9) //If you are in crit, and someone injects at least 9u into you, you will heal 20% of your physical damage instantly.
 		to_chat(L, span_userdanger("You feel a rush of energy as stimulants course through your veins!"))
@@ -1518,38 +1518,99 @@
 	return ..()
 
 /datum/reagent/medicine/sulfasalazine
-	name = "sulfasalazine"
-	description = "Sulfasalazine, a self-restoring agent that has great healing effects at the cost of purging all the other reagents."
+	name = "Sulfasalazine"
+	description = "Sulfasalazine, a self-restoring agent that has great healing effects, but it also purges most other reagents."
 	color = COLOR_REAGENT_SULFASALAZINE
 	custom_metabolism = 0
-	purge_rate = 5
+	purge_rate = 10
 	var/absorbtion = 0
 	var/max_absorbtion = 10
-	var/max_reagent = 50
+	var/max_reagent = 125
 
 /datum/reagent/medicine/sulfasalazine/on_mob_life(mob/living/L, metabolism)
-	if(absorbtion > 0 && volume < max_reagent)
-		L.reagents.add_reagent(/datum/reagent/medicine/sulfasalazine, 3.5)
+	L.adjust_tox_loss(-0.5 * effect_str)
+	L.reagent_pain_modifier += PAIN_REDUCTION_HEAVY
+
+	if(!ishuman(L))
+		return ..()
+	var/mob/living/carbon/human/human = L
+
+	if(volume > 100 && prob(10))
+		var/datum/internal_organ/organ = human.get_damaged_organ()
+		if(organ)
+			L.adjust_tox_loss(15 * effect_str)
+			holder.remove_reagent(/datum/reagent/medicine/sulfasalazine, 25)
+			organ.heal_organ_damage(15 * effect_str)
+			return ..()
+
+	if(volume > 100 && prob(10))
+		for(var/datum/limb/i_limb in human.limbs)
+			for(var/datum/wound/internal_bleeding/i_bleed in i_limb.wounds)
+				L.adjust_tox_loss(15 * effect_str)
+				holder.remove_reagent(/datum/reagent/medicine/sulfasalazine, 25)
+				i_bleed.damage = max(0, i_bleed.damage - 100)
+		return ..()
+
+	if(L.bodytemperature < 169)
+		purge_rate = 0
+	else
+		purge_rate = 10
 
 	if(absorbtion > 0)
+		if(volume < max_reagent)
+			L.reagents.add_reagent(/datum/reagent/medicine/sulfasalazine, 2.5)
 		absorbtion--
 
-	if (volume > 5 && L.get_brute_loss(organic_only = TRUE) && absorbtion <= 0)
-		L.heal_overall_damage(4*effect_str, 0)
-		holder.remove_reagent(/datum/reagent/medicine/sulfasalazine, 3.5)
+	if(volume > 5)
+		if(L.get_brute_loss(organic_only = TRUE))
+			absorbtion = -5
+			L.heal_overall_damage(4*effect_str, 0)
+			holder.remove_reagent(/datum/reagent/medicine/sulfasalazine, 2)
+		if(L.get_fire_loss(organic_only = TRUE))
+			absorbtion = -5
+			L.heal_overall_damage(0, 4*effect_str)
+			holder.remove_reagent(/datum/reagent/medicine/sulfasalazine, 2)
 
-	if (volume > 5 && L.get_fire_loss(organic_only = TRUE) && absorbtion <= 0)
-		L.heal_overall_damage(0, 4*effect_str)
-		holder.remove_reagent(/datum/reagent/medicine/sulfasalazine, 3.5)
+	var/static/list/excluded_reagents_sulfa = list(
+		/datum/reagent/medicine/sulfasalazine,
+		/datum/reagent/medicine/spaceacillin,
+		/datum/reagent/consumable/nutriment,
+		/datum/reagent/consumable/sugar,
+		/datum/reagent/medicine/saline_glucose,
+	)
+
+	var/static/list/reduced_purge_reagents = list(
+		/datum/reagent/toxin,
+		/datum/reagent/hypervene,
+	)
 
 	for(var/datum/reagent/R in L.reagents.reagent_list)
-		//we dont purge themself
-		if(R.type != /datum/reagent/medicine/sulfasalazine)
-			var/purge = min(R.volume, purge_rate)
-			L.reagents.remove_reagent(R.type, purge)
-			absorbtion = min(absorbtion + purge, max_absorbtion)
+		if(is_type_in_list(R, excluded_reagents_sulfa))
+			continue
+
+		var/current_purge_rate = purge_rate
+
+		if(current_purge_rate > 0 && is_type_in_list(R, reduced_purge_reagents))
+			current_purge_rate = 5
+
+		var/purge = min(R.volume, current_purge_rate)
+		L.reagents.remove_reagent(R.type, purge)
+		absorbtion = min(absorbtion + purge, max_absorbtion)
 
 	return ..()
+
+/datum/reagent/medicine/sulfasalazine/on_mob_delete(mob/living/L, metabolism)
+	to_chat(L, span_userdanger("You feel the Sulfasalazine stirring deep within your tissues..."))
+	var/datum/weakref/sulfa_issue = WEAKREF(L)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(restore_sulfasalazine), sulfa_issue), 7.5 SECONDS)
+
+/proc/restore_sulfasalazine(datum/weakref/sulfa_issue)
+	var/mob/living/L = sulfa_issue.resolve()
+	if(!L)
+		return
+
+	to_chat(L, span_userdanger("The Sulfasalazine erupts back into your bloodstream!"))
+	L.reagents.add_reagent(/datum/reagent/medicine/sulfasalazine, 5)
 
 /datum/reagent/histamine
 	name = "Histamine"
@@ -1658,3 +1719,54 @@
 /datum/reagent/medicine/regrow/overdose_crit_process(mob/living/L, metabolism)
 	L.reagent_shock_modifier -= PAIN_REDUCTION_SUPER_HEAVY
 	L.apply_damages(effect_str, effect_str, effect_str * 4)
+
+/datum/reagent/medicine/experimental_medical_salve
+	name = "Experimental Medical Salve"
+	description = "A new drug made by BioCourse Pharmaceuticals. Quickly restores health and stamina initially, then lesser healing before purging itself."
+	color = COLOR_REAGENT_EMSALVE
+	custom_metabolism = REAGENTS_METABOLISM * 0.1 //since it purges itself this prevents people from using one unit to spam the early healing
+	/// Used for particles. Holds the particles instead of the mob. See particle_holder for documentation.
+	var/obj/effect/abstract/particle_holder/particle_holder
+
+/datum/reagent/medicine/experimental_medical_salve/reaction_mob(mob/living/L, method = TOUCH, volume, show_message = TRUE, touch_protection = 0)
+	if(!(method in list(TOUCH, VAPOR)))
+		return
+	return ..()
+
+/datum/reagent/medicine/experimental_medical_salve/on_mob_life(mob/living/L, metabolism)
+	L.reagent_shock_modifier += PAIN_REDUCTION_HEAVY
+	switch(current_cycle)
+		if(1 to 5) // big burst of healing + stamina initially
+			if(!particle_holder)
+				particle_holder = new(L, /particles/healing_cross)
+			L.heal_overall_damage(4*effect_str, 4*effect_str)
+			L.adjust_stamina_loss(-4*effect_str)
+		if(6 to 25) // smaller gradual healing
+			L.heal_overall_damage(1.5*effect_str, 1.5*effect_str)
+		if(26 to INFINITY) // purges itself quickly
+			if(particle_holder)
+				qdel(particle_holder)
+				particle_holder = null
+			holder.remove_reagent(/datum/reagent/medicine/experimental_medical_salve, 10)
+	return ..()
+
+/datum/reagent/medicine/experimental_medical_salve/on_mob_delete(mob/living/L, metabolism)
+	if(particle_holder)
+		qdel(particle_holder)
+		particle_holder = null
+	return ..()
+
+/particles/healing_cross
+	icon = 'icons/effects/particles/generic_particles.dmi'
+	icon_state = "cross"
+	width = 500
+	height = 500
+	count = 10
+	spawning = 1
+	gravity = list(0, 0.1)
+	color = LIGHT_COLOR_WHITE
+	lifespan = 13
+	fade = 5
+	fadein = 5
+	friction = generator(GEN_NUM, 0.1, 0.15)
+	position = generator(GEN_SQUARE, 0, 16)

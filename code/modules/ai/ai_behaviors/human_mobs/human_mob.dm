@@ -11,84 +11,135 @@
 	///Flags about what the AI is current doing or wanting
 	var/human_ai_state_flags = HUMAN_AI_NEED_WEAPONS
 	///To what level they will handle healing others
-	var/medical_rating = AI_MED_STANDARD
-	///List of abilities to consider doing every Process()
-	var/list/ability_list = list()
+	var/medical_rating = AI_MED_DEFAULT
+	///To what level they will handle engineering tasks like repairs
+	var/engineer_rating = AI_ENGIE_DEFAULT
+	///List of things the NPC will try to interact with, such as gear to pick up
+	var/list/atom/atoms_to_interact = list()
 	///Inventory datum so the mob_parent can manage its inventory
 	var/datum/managed_inventory/mob_inventory
 	///Chat lines when moving to a new target
-	var/list/new_move_chat = list("Иду.", "В пути.", "Выдвигаюсь.", "Шагом марш.", "Меняю позицию.", "Смотрите под ноги!", "Пошли.", "Выдвигаемся!", "Пошёл пошёл пошёл!!", "Мобилизуемся.", "Почапали.")
+	var/list/new_move_chat = list( \
+	"Двигаюсь.", "В пути.", "Выдвигаюсь.", "В движении.", "Меняю позицию.", "Держите дистанцию!", "Погнали.", "Вперёд!", "Быстро, быстро!!", \
+	"Двигаюсь.", "Иду.", "Смена позиции.", "Переход к точке.", "Пошли!", "Двигаемся!", "Вперёд, без остановок!", "Марш!", "Работаем!", "На точку.", "Идём дальше.")
 	///Chat lines when following a new target
-	var/list/new_follow_chat = list("Следую.", "Следую за тобой.", "Я прикрою!", "Веди.", "Поспешим!", "Пошли!", "Сгруппируемся!", "В боевое построение.", "Куда идти?",)
+	var/list/new_follow_chat = list( \
+	"Следую.", "Иду за тобой.", "Я прикрою!", "Иду следом.", "Погнали!", "Поехали!", "Собрались!", "Куда идём?", "Держусь за тобой.", \
+	"Ведёшь - я прикрываю.", "Не отстаю.", "С тобой.", "Двигаюсь следом.", "Ведёшь нас.", "Группа, вперёд!", "Вместе держимся.", "Показывай путь.")
 	///Chat lines when engaging a new target
-	var/list/new_target_chat = list("Получи!!", "Вступаю в бой!", "Не уйдёшь!", "Ну давай же!", "Враги!", "Валим их!", "Убейте их!", "Зажжём!", "Пошёл пошёл пошёл!!", "В расход их!", "Иду на перехват.", "Огонь на поражение!", "Иди нахуй!!", "Вхожу!")
+	var/list/new_target_chat = list( \
+	"Получай!!", "Вступаю в бой!", "Ты мой!", "Ну давай!", "Контакт!", "Уничтожить их!", "Мочи их!", "Поехали!", "Вперёд!!", \
+	"Разнести их!", "Перехватываю.", "Огонь разрешён!", "Хуярь гада!!", "Иду в атаку!", "Цель найдена!", "Работаем по цели!", \
+	"Открываю огонь!", "Пошла отработка!", "На них!", "Давим!", "Ебашь мудака!", "Цель обнаружена!")
 	///Chat lines for retreating on low health
-	var/list/retreating_chat = list("Отступаем!", "Прикройте меня, я ранен!", "Я ранен!", "Прикройте меня!", "Отходим!", "Помогите!", "Мне нужна помощь!", "Тактическое отступление.", "Меняю позицию.", "Я под огнём!", "Я под тяжелым огнём!", "Валим!")
+	var/list/retreating_chat = list( \
+	"Отступаю!", "Прикройте, задели!", "Я ранен!", "Прикройте!", "Помогите!", "Мне нужна помощь!", \
+	"Меняю позицию.", "Под огнём!", "Бежим!", "Отходим!", "Задели суки!", "Нужно отступить!", "Ухожу!")
+	///General acknowledgement of receiving an order
+	var/list/receive_order_chat = list( \
+	"Понял.", "Двигаюсь.", "Выдвигаюсь.", "Принял.", "Сейчас сделаю.", "Есть.", "Будет сделано.", "Уже в пути.", "Принято.", \
+	"Подтверждаю.", "Выполняю.", "Кто тебя командиром сделал?", "Ок.", "Разберусь.", "Быстро сделаю.", \
+	"Исполняю.", "Принял к сведению.", "Уже делаю.", "Сделаю.", "В работе.", "Без проблем.", "Ща будет.")
+	///Cooldown on chat lines, to reduce spam
 	COOLDOWN_DECLARE(ai_chat_cooldown)
+	///Cooldown on running, so we can recover stam and make the most of it
 	COOLDOWN_DECLARE(ai_run_cooldown)
+	///Cooldown on taking any damage (this could include DOT etc)
 	COOLDOWN_DECLARE(ai_damage_cooldown)
+	///Cooldown on being attacked by something with a source, so we don't try heal right next to enemies
 	COOLDOWN_DECLARE(ai_heal_after_dam_cooldown)
+	///Cooldown on retreating, so we don't get stuck running forever if pursued
 	COOLDOWN_DECLARE(ai_retreat_cooldown)
 
 /datum/ai_behavior/human/New(loc, mob/parent_to_assign, atom/escorted_atom)
-	..()
-	refresh_abilities()
-	mob_parent.a_intent = INTENT_HARM
+	. = ..()
 	mob_inventory = new(mob_parent)
+	RegisterSignal(mob_parent, COMSIG_MOB_DROPPING_ITEM, PROC_REF(on_item_unequip)) //we do this on New because we want to know about items lost when dead
 
 /datum/ai_behavior/human/Destroy(force, ...)
 	gun = null
 	melee_weapon = null
 	hazard_list = null
 	heal_list = null
+	atoms_to_interact = null
 	QDEL_NULL(mob_inventory)
 	return ..()
 
+/datum/ai_behavior/human/register_action_signals(action_type)
+	. = ..()
+	switch(action_type)
+		if(MOVING_TO_SAFETY)
+			RegisterSignal(mob_parent, COMSIG_STATE_MAINTAINED_DISTANCE, PROC_REF(melee_interact))
+
 /datum/ai_behavior/human/start_ai()
-	RegisterSignal(mob_parent, COMSIG_OBSTRUCTED_MOVE, TYPE_PROC_REF(/datum/ai_behavior, deal_with_obstacle))
-	RegisterSignals(mob_parent, list(ACTION_GIVEN, ACTION_REMOVED), PROC_REF(refresh_abilities))
+	. = ..()
 	RegisterSignal(mob_parent, COMSIG_HUMAN_DAMAGE_TAKEN, PROC_REF(on_take_damage))
 	RegisterSignal(mob_parent, COMSIG_AI_HEALING_MOB, PROC_REF(parent_being_healed))
 	RegisterSignal(mob_parent, COMSIG_MOB_TOGGLEMOVEINTENT, PROC_REF(on_move_toggle))
+	RegisterSignal(mob_parent, COMSIG_MOB_INTERACTION_DESIGNATED, PROC_REF(interaction_designated))
+
+	RegisterSignal(SSdcs, COMSIG_GLOB_DESIGNATED_TARGET_SET, PROC_REF(interaction_designated))
 	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_ON_CRIT, PROC_REF(on_other_mob_crit))
+
 	if(mob_parent?.skills?.getRating(SKILL_MEDICAL) >= SKILL_MEDICAL_PRACTICED) //placeholder setter. Some jobs have high med but aren't medics...
 		medical_rating = AI_MED_MEDIC
 		RegisterSignals(SSdcs, list(COMSIG_GLOB_AI_NEED_HEAL, COMSIG_GLOB_MOB_CALL_MEDIC), PROC_REF(mob_need_heal))
+	if(mob_parent?.skills?.getRating(SKILL_CONSTRUCTION) >= SKILL_CONSTRUCTION_PLASTEEL) //placeholder setter. Some jobs have high construction but aren't engineers...
+		engineer_rating = AI_ENGIE_STANDARD
+		RegisterSignal(SSdcs, COMSIG_GLOB_HOLO_BUILD_INITIALIZED, PROC_REF(on_holo_build_init))
 	if(human_ai_behavior_flags & HUMAN_AI_AVOID_HAZARDS)
 		RegisterSignal(SSdcs, COMSIG_GLOB_AI_HAZARD_NOTIFIED, PROC_REF(add_hazard))
 		RegisterSignal(mob_parent, COMSIG_MOVABLE_Z_CHANGED, (PROC_REF(on_change_z)))
 	if(human_ai_behavior_flags & HUMAN_AI_USE_WEAPONS)
 		RegisterSignals(mob_inventory, list(COMSIG_INVENTORY_DAT_GUN_ADDED, COMSIG_INVENTORY_DAT_MELEE_ADDED), PROC_REF(equip_weaponry))
 		RegisterSignal(mob_parent, COMSIG_LIVING_SET_LYING_ANGLE, PROC_REF(equip_weaponry))
-		equip_weaponry()
 	if(human_ai_behavior_flags & HUMAN_AI_AUDIBLE_CONTROL)
 		RegisterSignal(mob_parent, COMSIG_MOVABLE_HEAR, PROC_REF(recieve_message))
-	return ..()
 
 /datum/ai_behavior/human/cleanup_signals()
 	UnregisterSignal(mob_parent, list(
-		COMSIG_OBSTRUCTED_MOVE,
-		ACTION_GIVEN,
-		ACTION_REMOVED,
 		COMSIG_HUMAN_DAMAGE_TAKEN,
 		COMSIG_LIVING_SET_LYING_ANGLE,
 		COMSIG_MOVABLE_Z_CHANGED,
 		COMSIG_MOVABLE_HEAR,
 		COMSIG_AI_HEALING_MOB,
 		COMSIG_MOB_TOGGLEMOVEINTENT,
+		COMSIG_MOB_INTERACTION_DESIGNATED,
 	))
 	UnregisterSignal(mob_inventory, list(COMSIG_INVENTORY_DAT_GUN_ADDED, COMSIG_INVENTORY_DAT_MELEE_ADDED))
-	UnregisterSignal(SSdcs, list(COMSIG_GLOB_AI_HAZARD_NOTIFIED, COMSIG_GLOB_MOB_ON_CRIT, COMSIG_GLOB_AI_NEED_HEAL, COMSIG_GLOB_MOB_CALL_MEDIC))
+	UnregisterSignal(SSdcs, list(COMSIG_GLOB_AI_HAZARD_NOTIFIED, COMSIG_GLOB_MOB_ON_CRIT, COMSIG_GLOB_AI_NEED_HEAL, COMSIG_GLOB_MOB_CALL_MEDIC, COMSIG_GLOB_DESIGNATED_TARGET_SET, COMSIG_GLOB_HOLO_BUILD_INITIALIZED))
 	return ..()
 
 /datum/ai_behavior/human/process()
+	if(should_hold())
+		return
 	if(mob_parent.notransform)
 		return ..()
-	if(mob_parent.do_actions)
-		return ..()
+
+	var/mob/living/carbon/human/human_parent = mob_parent
+	if(human_parent.lying_angle)
+		INVOKE_ASYNC(human_parent, TYPE_PROC_REF(/mob/living/carbon/human, get_up))
+		return
 
 	if((medical_rating >= AI_MED_MEDIC) && medic_process())
 		return
+
+	if((engineer_rating >= AI_ENGIE_STANDARD) && engineer_process())
+		return
+
+	if((human_parent.nutrition <= NUTRITION_HUNGRY) && length(mob_inventory.food_list))
+		var/datum/reagent/consumable/nutriment/mob_nutriment = human_parent.reagents.get_reagent(/datum/reagent/consumable/nutriment)
+		if(!mob_nutriment || (human_parent.nutrition + mob_nutriment.get_nutrition_gain()) < NUTRITION_OVERFED)
+			for(var/obj/item/reagent_containers/food/food AS in mob_inventory.food_list)
+				if(!food.ai_should_use(human_parent))
+					continue
+				food.ai_use(human_parent, human_parent)
+				break
+
+	if(mob_parent.buckled && !mob_parent.buckled.ai_should_stay_buckled(mob_parent))
+		mob_parent.buckled.unbuckle_mob(mob_parent)
+
+	. = ..()
 
 	for(var/datum/action/action in ability_list)
 		if(!action.ai_should_use(atom_to_walk_to)) //todo: some of these probably should be aimmed at combat_target somehow...
@@ -100,173 +151,74 @@
 			action.action_activate()
 
 	if(human_ai_behavior_flags & HUMAN_AI_USE_WEAPONS)
-		if(grenade_process())
-			return ..()
-		weapon_process()
+		if(!grenade_process())
+			weapon_process()
 
-	return ..()
+	if(!combat_target && !interact_target && length(atoms_to_interact) && isturf(atoms_to_interact[1].loc))
+		for(var/atom/atom AS in atoms_to_interact)
+			if(atom.z != mob_parent.z)
+				continue
+			if(!isturf(atoms_to_interact[1].loc))
+				return
+			if(get_dist(mob_parent, atom) > AI_ESCORTING_BREAK_DISTANCE)
+				continue
+			set_interact_target(atom)
+
+/datum/ai_behavior/human/should_hold()
+	if(human_ai_state_flags & HUMAN_AI_BUSY_ACTION && COOLDOWN_FINISHED(src, ai_heal_after_dam_cooldown)) //Don't just stand there when taking damage
+		return TRUE
+	if(HAS_TRAIT(mob_parent, TRAIT_IS_RELOADING))
+		return TRUE
+	if(HAS_TRAIT(mob_parent, TRAIT_IS_CLIMBING))
+		return TRUE
+	if(HAS_TRAIT(mob_parent, TRAIT_IS_SHRAP_REMOVING))
+		return TRUE
+	if(HAS_TRAIT(mob_parent, TRAIT_IS_EQUIPPING_ITEM))
+		return TRUE
+	if(mob_parent.pulledby?.faction == mob_parent.faction)
+		return TRUE //lets players wrangle NPC's
+	return FALSE
 
 /datum/ai_behavior/human/scheduled_move()
-	if(human_ai_state_flags & HUMAN_AI_ANY_HEALING)
+	if(human_ai_state_flags & HUMAN_AI_BUSY_ACTION)
 		registered_for_move = FALSE
 		return
 	return ..()
-
-/datum/ai_behavior/human/ai_do_move()
-	if(mob_parent.pulledby?.faction == mob_parent.faction)
-		return //lets players wrangle NPC's
-	return ..()
-
-/datum/ai_behavior/human/register_action_signals(action_type)
-	switch(action_type)
-		if(MOVING_TO_ATOM)
-			RegisterSignal(mob_parent, COMSIG_STATE_MAINTAINED_DISTANCE, PROC_REF(melee_interact))
-	return ..()
-
-/datum/ai_behavior/human/unregister_action_signals(action_type)
-	switch(action_type)
-		if(MOVING_TO_ATOM)
-			UnregisterSignal(mob_parent, COMSIG_STATE_MAINTAINED_DISTANCE)
-	return ..()
-
-/datum/ai_behavior/human/cleanup_current_action(next_action)
-	. = ..()
-	if(next_action == MOVING_TO_NODE)
-		return
 
 /datum/ai_behavior/human/change_action(next_action, atom/next_target, list/special_distance_to_maintain)
 	. = ..()
 	if(!.)
 		return
-	if(human_ai_state_flags & HUMAN_AI_ANY_HEALING)
+	if(human_ai_state_flags & HUMAN_AI_BUSY_ACTION)
 		mob_parent.a_intent = INTENT_HELP
 
-/datum/ai_behavior/human/look_for_new_state()
-	if(human_ai_state_flags & HUMAN_AI_ANY_HEALING)
+/datum/ai_behavior/human/look_for_new_state(atom/next_target)
+	if(human_ai_state_flags & HUMAN_AI_BUSY_ACTION)
 		return
-	var/mob/living/living_parent = mob_parent
-	switch(current_action)
-		if(ESCORTING_ATOM)
-			if(get_dist(escorted_atom, mob_parent) > AI_ESCORTING_MAX_DISTANCE)
-				look_for_next_node()
-				return
-			var/atom/next_target = get_nearest_target(escorted_atom, target_distance, TARGET_HOSTILE, mob_parent.faction, need_los = TRUE)
-			if(!next_target)
-				return
-			change_action(MOVING_TO_ATOM, next_target)
-		if(MOVING_TO_NODE, FOLLOWING_PATH)
-			var/atom/next_target = get_nearest_target(mob_parent, target_distance, TARGET_HOSTILE, mob_parent.faction, need_los = TRUE)
-			if(!next_target)
-				if((human_ai_behavior_flags & HUMAN_AI_SELF_HEAL) && living_parent.health <= minimum_health * 2 * living_parent.maxHealth)
-					INVOKE_ASYNC(src, PROC_REF(try_heal))
-					return
-				if(!goal_node) // We are randomly moving
-					var/atom/mob_to_follow = get_nearest_target(mob_parent, AI_ESCORTING_MAX_DISTANCE, TARGET_FRIENDLY_MOB, mob_parent.faction, need_los = TRUE)
-					if(mob_to_follow)
-						set_escorted_atom(null, mob_to_follow, TRUE)
-						return
-				return
-			change_action(MOVING_TO_ATOM, next_target)
-		if(MOVING_TO_ATOM)
-			if(atom_to_walk_to == interact_target)
-				if(get_dist(atom_to_walk_to, mob_parent) <= target_distance)
-					return
-			if(!weak_escort && escorted_atom && get_dist(escorted_atom, mob_parent) > target_distance)
-				change_action(ESCORTING_ATOM, escorted_atom)
-				return
-			var/atom/next_target = get_nearest_target(mob_parent, target_distance, TARGET_HOSTILE, mob_parent.faction, need_los = TRUE)
-			if(!next_target)//We didn't find a target
-				cleanup_current_action()
-				late_initialize()
-				return
-			set_combat_target(next_target)
-			if(next_target == atom_to_walk_to)//We didn't find a better target
-				return
-			change_action(null, next_target)//We found a better target, change course!
-		if(MOVING_TO_SAFETY)
-			if(COOLDOWN_CHECK(src, ai_retreat_cooldown))
-				target_distance = initial(target_distance)
-				cleanup_current_action()
-				late_initialize()
-				if((human_ai_behavior_flags & HUMAN_AI_SELF_HEAL) && living_parent.health <= minimum_health * 3 * living_parent.maxHealth)
-					INVOKE_ASYNC(src, PROC_REF(try_heal))
-				return
-			if(combat_target) //keep fighting as you retreat
-				return
-			var/atom/next_target = get_nearest_target(escorted_atom, initial(target_distance), TARGET_HOSTILE, mob_parent.faction, need_los = TRUE)
-			if(next_target)
-				set_combat_target(next_target)
-				if(next_target != atom_to_walk_to)
-					set_atom_to_walk_to(next_target)
-				return
-			target_distance = initial(target_distance)
-			cleanup_current_action()
-			late_initialize()
-			if((human_ai_behavior_flags & HUMAN_AI_SELF_HEAL) && living_parent.health <= minimum_health * 3 * living_parent.maxHealth)
-				INVOKE_ASYNC(src, PROC_REF(try_heal))
-		if(IDLE)
-			var/atom/next_target = get_nearest_target(escorted_atom, target_distance, TARGET_HOSTILE, mob_parent.faction, need_los = TRUE)
-			if(!next_target)
-				if((human_ai_behavior_flags & HUMAN_AI_SELF_HEAL) && living_parent.health <= minimum_health * 3 * living_parent.maxHealth)
-					INVOKE_ASYNC(src, PROC_REF(try_heal))
-				return
-			change_action(MOVING_TO_ATOM, next_target)
-
-/datum/ai_behavior/human/deal_with_obstacle(datum/source, direction)
-	var/turf/obstacle_turf = get_step(mob_parent, direction)
-
-	for(var/mob/mob_blocker in obstacle_turf.contents)
-		if(!mob_blocker.density)
-			continue
-		//todo: passflag stuff etc
+	. = ..()
+	if(current_action == MOVING_TO_ATOM && escorted_atom && (atom_to_walk_to != escorted_atom) && get_dist(mob_parent, escorted_atom) > AI_ESCORTING_MAX_DISTANCE)
+		change_action(ESCORTING_ATOM, escorted_atom)
 		return
+	if(current_action == MOVING_TO_SAFETY && (COOLDOWN_FINISHED(src, ai_retreat_cooldown) || !combat_target)) //we retreat until we cant see hostiles or we max out the timer
+		target_distance = initial(target_distance)
+		change_action(ESCORTING_ATOM, escorted_atom)
 
-	var/should_jump = FALSE
-	for(var/obj/object in obstacle_turf)
-		if(!object.density)
-			continue
-		var/obstacle_reaction = object.ai_handle_obstacle(mob_parent, direction)
-		if(obstacle_reaction == AI_OBSTACLE_RESOLVED)
-			return COMSIG_OBSTACLE_DEALT_WITH //we've dealt with it on the obstacle side
-		if(obstacle_reaction == AI_OBSTACLE_JUMP)
-			should_jump = TRUE //we will try jump if the only obstacles are all jumpable
-			continue
-		if(obstacle_reaction == AI_OBSTACLE_ATTACK)
-			INVOKE_ASYNC(src, PROC_REF(melee_interact), null, object)
-			return COMSIG_OBSTACLE_DEALT_WITH //we gotta hit it
+/datum/ai_behavior/human/need_new_combat_target()
+	. = ..()
+	if(.)
+		return
+	if(get_dist(mob_parent, combat_target) <= AI_COMBAT_TARGET_BLIND_DISTANCE)
+		return FALSE
+	if(!line_of_sight(mob_parent, combat_target, target_distance))
+		return TRUE
 
-
-	if(should_jump)
-		SEND_SIGNAL(mob_parent, COMSIG_AI_JUMP)
-		INVOKE_ASYNC(src, PROC_REF(ai_complete_move), direction, FALSE)
-		return COMSIG_OBSTACLE_DEALT_WITH
-
-	if(ISDIAGONALDIR(direction) && ((deal_with_obstacle(null, turn(direction, -45)) & COMSIG_OBSTACLE_DEALT_WITH) || (deal_with_obstacle(null, turn(direction, 45)) & COMSIG_OBSTACLE_DEALT_WITH)))
-		return COMSIG_OBSTACLE_DEALT_WITH
-
-	//Ok we found nothing, yet we are still blocked. Check for blockers on our current turf
-	for(var/obj/obstacle in get_turf(mob_parent))
-		if(!obstacle.density)
-			continue
-		var/obstacle_reaction = obstacle.ai_handle_obstacle(mob_parent, direction)
-		if(obstacle_reaction == AI_OBSTACLE_RESOLVED)
-			return COMSIG_OBSTACLE_DEALT_WITH
-		if(obstacle_reaction == AI_OBSTACLE_JUMP)
-			should_jump = TRUE
-			continue
-		if(obstacle_reaction == AI_OBSTACLE_ATTACK)
-			INVOKE_ASYNC(src, PROC_REF(melee_interact), null, obstacle)
-			return COMSIG_OBSTACLE_DEALT_WITH
-
-	if(should_jump)
-		SEND_SIGNAL(mob_parent, COMSIG_AI_JUMP)
-		INVOKE_ASYNC(src, PROC_REF(ai_complete_move), direction, FALSE)
-		return COMSIG_OBSTACLE_DEALT_WITH
-
-	//We do this last because there could be other stuff blocking us from even reaching the turf
-	if(istype(obstacle_turf, /turf/closed/wall/resin))
-		INVOKE_ASYNC(src, PROC_REF(melee_interact), null, obstacle_turf)
-		return COMSIG_OBSTACLE_DEALT_WITH
+/datum/ai_behavior/human/state_process(atom/next_target)
+	if(human_ai_state_flags & HUMAN_AI_BUSY_ACTION)
+		return
+	if((current_action == MOVING_TO_ATOM) && (atom_to_walk_to == combat_target))
+		return //we generally want to keep fighting
+	if((human_ai_behavior_flags & HUMAN_AI_SELF_HEAL) && !next_target && (mob_parent.health <= minimum_health * 2 * mob_parent.maxHealth) && check_hazards())
+		INVOKE_ASYNC(src, PROC_REF(try_heal))
 
 /datum/ai_behavior/human/set_goal_node(datum/source, obj/effect/ai_node/new_goal_node)
 	. = ..()
@@ -291,12 +243,24 @@
 	if(prob(50))
 		try_speak(pick(new_target_chat))
 	set_run()
-	if(gun)
-		INVOKE_ASYNC(src, PROC_REF(weapon_process), combat_target)
+	INVOKE_ASYNC(src, PROC_REF(weapon_process))
 
-/datum/ai_behavior/human/do_unset_target(atom/old_target, need_new_state = TRUE)
+/datum/ai_behavior/human/do_unset_target(atom/old_target, need_new_state = TRUE, need_new_escort = TRUE)
 	if(combat_target == old_target && (human_ai_state_flags & HUMAN_AI_FIRING))
 		stop_fire()
+	remove_atom_of_interest(old_target)
+
+	if(QDELETED(old_target)) //if they're deleted we need to ensure engineering and medical stuff is cleaned up properly
+		if(human_ai_state_flags & HUMAN_AI_HEALING)
+			on_heal_end(old_target)
+		else
+			remove_from_heal_list(old_target)
+		if(human_ai_state_flags & HUMAN_AI_BUILDING)
+			on_engineering_end(old_target)
+		else
+			remove_from_engineering_list(old_target)
+		return ..()
+
 	var/revive_target = FALSE
 	if((medical_rating >= AI_MED_MEDIC) && (old_target in heal_list))
 		var/mob/living/living_target = old_target
@@ -312,7 +276,7 @@
 
 ///Sets run move intent if able
 /datum/ai_behavior/human/proc/set_run(forced = FALSE)
-	if(!forced && !COOLDOWN_CHECK(src, ai_run_cooldown))
+	if(!forced && !COOLDOWN_FINISHED(src, ai_run_cooldown))
 		return
 	mob_parent.toggle_move_intent(MOVE_INTENT_RUN)
 
@@ -322,57 +286,14 @@
 	if(m_intent == MOVE_INTENT_WALK)
 		COOLDOWN_START(src, ai_run_cooldown, 10 SECONDS) //give time for stam to regen
 
-///Refresh abilities-to-consider list
-/datum/ai_behavior/human/proc/refresh_abilities()
-	SIGNAL_HANDLER
-	ability_list = list()
-	for(var/datum/action/action AS in mob_parent.actions)
-		if(action.ai_should_start_consider())
-			ability_list += action
-
-///Sig handler for physical interactions, like attacks
-/datum/ai_behavior/human/proc/melee_interact(datum/source, atom/interactee)
-	SIGNAL_HANDLER
-	if(mob_parent.next_move > world.time)
-		return
-	if(!interactee)
-		interactee = atom_to_walk_to //this seems like it should be combat_target, but the only time this should come up is if combat_target IS atom_to_walk_to
-	if(!mob_parent.CanReach(interactee, melee_weapon)) //todo: copy this for beno code, lots of other stuff too.
-		return
-
-	mob_parent.face_atom(interactee)
-
-	if(interactee == interact_target)
-		if(isturf(interactee.loc)) //no pickpocketing
-			. = try_interact(interactee)
-		unset_target(interactee)
-		return
-
-	if(melee_weapon)
-		INVOKE_ASYNC(melee_weapon, TYPE_PROC_REF(/obj/item, melee_attack_chain), mob_parent, interactee)
-		return TRUE
-	mob_parent.UnarmedAttack(interactee, TRUE)
-	return TRUE
-
-///Tries to interact with something, usually nonharmfully
-/datum/ai_behavior/human/proc/try_interact(atom/interactee)
-	if(ishuman(interactee))
-		var/mob/living/carbon/human/human = interactee
-		if(mob_parent.faction != human.faction)
-			return
-		INVOKE_ASYNC(src, PROC_REF(try_heal_other), human)
-		return TRUE
-	interactee.do_ai_interact(mob_parent)
-	return TRUE
-
 ///Says an audible message
 /datum/ai_behavior/human/proc/try_speak(message, cooldown = 2 SECONDS)
 	if(mob_parent.incapacitated())
 		return
-	if(!COOLDOWN_CHECK(src, ai_chat_cooldown))
+	if(!COOLDOWN_FINISHED(src, ai_chat_cooldown))
 		return
 	//maybe radio arg in the future for some things
-	mob_parent.say(message)
+	INVOKE_ASYNC(mob_parent, TYPE_PROC_REF(/atom/movable, say), message)
 	COOLDOWN_START(src, ai_chat_cooldown, cooldown)
 
 ///Reacts if the mob is below the min health threshold
@@ -380,45 +301,89 @@
 	SIGNAL_HANDLER
 	if(damage < 5) //Don't want chip damage causing a retreat
 		return
-	if(!COOLDOWN_CHECK(src, ai_damage_cooldown))
+	if(!COOLDOWN_FINISHED(src, ai_damage_cooldown)) //sanity check since damage can occur very frequently, and makes the NPC less likely to instantly run when they get low
 		return
 	COOLDOWN_START(src, ai_damage_cooldown, 1 SECONDS)
-	if(human_ai_state_flags & HUMAN_AI_FIRING)
-		return
-	if(attacker)
+
+	if(attacker) //if there is an attacker, our main priority is to react to it
 		COOLDOWN_START(src, ai_heal_after_dam_cooldown, 4 SECONDS)
-		if((human_ai_state_flags & HUMAN_AI_ANY_HEALING)) //dont just stand there
-			human_ai_state_flags &= ~(HUMAN_AI_ANY_HEALING)
+		if((human_ai_state_flags & HUMAN_AI_BUSY_ACTION)) //dont just stand there
+			human_ai_state_flags &= ~(HUMAN_AI_BUSY_ACTION)
 			late_initialize()
+		if(((current_action == MOVING_TO_SAFETY) || !combat_target) && (attacker.faction != mob_parent.faction))
+			set_combat_target(attacker)
 			return
-		if(current_action == MOVING_TO_SAFETY)
-			if(attacker && attacker.faction != mob_parent.faction)
-				set_combat_target(attacker)
-			return
+
+	//if we are fighting, but at low health and with no other urgent priorities, we run for it.
 
 	if(!(human_ai_behavior_flags & HUMAN_AI_SELF_HEAL))
 		return
-	if((human_ai_state_flags & HUMAN_AI_ANY_HEALING))
+	if((human_ai_state_flags & HUMAN_AI_BUSY_ACTION))
 		return
 
-	var/mob/living/living_mob = mob_parent
-	if(living_mob.health - damage > minimum_health * living_mob.maxHealth)
+	if(mob_parent.health - damage > minimum_health * mob_parent.maxHealth)
 		return
 	if(mob_parent.incapacitated() || mob_parent.lying_angle)
 		return
 	if(!check_hazards())
 		return
 
-	var/atom/next_target = get_nearest_target(mob_parent, target_distance, TARGET_HOSTILE, mob_parent.faction, need_los = TRUE)
+	var/atom/next_target = combat_target ? combat_target : get_nearest_target(mob_parent, target_distance, TARGET_HOSTILE, mob_parent.faction, need_los = TRUE)
 	if(!next_target)
-		INVOKE_ASYNC(src, PROC_REF(try_heal)) //its safe to heal
 		return
+
 	if(prob(50))
 		try_speak(pick(retreating_chat))
 	set_run(TRUE)
 	target_distance = 12
 	COOLDOWN_START(src, ai_retreat_cooldown, 8 SECONDS)
 	change_action(MOVING_TO_SAFETY, next_target, list(INFINITY)) //fallback
+
+/**
+ * Does all the setup to equip and use a tool by an NPC
+ * new_tool can either be the tool itself, or a tool define to find a type of tool in the NPC's inventory
+ */
+
+/datum/ai_behavior/human/proc/equip_tool(new_tool)
+	var/obj/item/equip_tool
+	if(isitem(new_tool))
+		equip_tool = new_tool
+	else
+		equip_tool = mob_inventory.find_tool(new_tool)
+	if(!equip_tool)
+		return
+	pick_up_item(equip_tool)
+	equip_tool.ai_use(user = mob_parent)
+	mob_parent.a_intent = INTENT_HELP
+	return equip_tool
+
+///Stores a tool and resets intent
+/datum/ai_behavior/human/proc/store_tool(old_tool)
+	mob_parent.a_intent = INTENT_HARM
+	if(iswelder(old_tool))
+		var/obj/item/tool/weldingtool/welder = old_tool
+		if(welder.isOn())
+			welder.toggle()
+		var/mob/living/carbon/human/human_owner = mob_parent
+		if(welder.get_fuel() < welder.max_fuel && human_owner?.back?.reagents?.get_reagent_amount(/datum/reagent/fuel))
+			human_owner.back.attackby(welder, human_owner)
+	try_store_item(old_tool)
+
+///Tries to store an item
+/datum/ai_behavior/human/proc/try_store_item(obj/item/item)
+	if(istype(item, /obj/item/weapon/twohanded/offhand))
+		qdel(item)
+		return FALSE
+	if(!mob_parent.equip_to_appropriate_slot(item))
+		return FALSE
+	return TRUE
+
+///Tries to store any items in hand
+/datum/ai_behavior/human/proc/store_hands()
+	if(mob_parent.l_hand)
+		try_store_item(mob_parent.l_hand)
+	if(mob_parent.r_hand)
+		try_store_item(mob_parent.r_hand)
 
 ///Reacts to a heard message
 /datum/ai_behavior/human/proc/recieve_message(atom/source, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)

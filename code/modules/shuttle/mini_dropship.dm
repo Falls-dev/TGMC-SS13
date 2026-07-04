@@ -67,6 +67,8 @@
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/LateInitialize()
 	shuttle_port = SSshuttle.getShuttle(shuttle_id)
+	if(lock_override & CAMERA_LOCK_GROUND)
+		z_lock |= SSmapping.levels_by_trait(ZTRAIT_GROUND)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/give_actions(mob/living/user)
 	if(!user)
@@ -124,7 +126,7 @@
 		to_chat(ui_user, span_warning("The mothership is too far away from the theatre of operation, we cannot take off."))
 		return
 	#endif
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_TADPOLE_LAUNCHING))
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_TADPOLE_LAUNCHING))
 		to_chat(ui_user, span_warning("The dropship's engines are not ready yet"))
 		return
 	TIMER_COOLDOWN_START(src, COOLDOWN_TADPOLE_LAUNCHING, launching_delay) // To stop spamming

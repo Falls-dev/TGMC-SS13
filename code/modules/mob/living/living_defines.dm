@@ -99,7 +99,6 @@
 	var/resting = FALSE
 
 	var/list/icon/pipes_shown = list()
-	var/last_played_vent = 0
 	/// The last direction we moved in a vent. Used to make holding two directions feel nice
 	var/last_vent_dir = 0
 	/// Cell tracker datum we use to manage the pipes around us, for faster ventcrawling
@@ -158,3 +157,9 @@
 	var/time_entered_cryo = 0
 	///The z level this mob is currently registered in
 	var/registered_z = null
+
+/mob/living/proc/has_blur_protection()
+	for(var/obj/item/clothing/C in get_equipped_items())
+		if(C.GetComponent(/datum/component/blur_protection))
+			return TRUE
+	return FALSE

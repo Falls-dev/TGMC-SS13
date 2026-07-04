@@ -267,7 +267,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(TIMER_COOLDOWN_CHECK(owner, REJUVENATE_MISCLICK_CD))
+	if(TIMER_COOLDOWN_RUNNING(owner, REJUVENATE_MISCLICK_CD))
 		return FALSE
 
 /datum/action/ability/activable/xeno/rejuvenate/use_ability(atom/A)
@@ -502,7 +502,7 @@
 
 /datum/action/ability/activable/xeno/feast/can_use_ability(atom/target, silent, override_flags)
 	. = ..()
-	if(TIMER_COOLDOWN_CHECK(xeno_owner, FEAST_MISCLICK_CD))
+	if(TIMER_COOLDOWN_RUNNING(xeno_owner, FEAST_MISCLICK_CD))
 		return FALSE
 	if(xeno_owner.has_status_effect(STATUS_EFFECT_XENO_FEAST))
 		return TRUE

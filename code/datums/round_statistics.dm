@@ -64,6 +64,9 @@ GLOBAL_DATUM_INIT(round_statistics, /datum/round_statistics, new)
 	var/howitzer_shells_fired = 0
 	var/rocket_shells_fired = 0
 	var/obs_fired = 0
+	var/pyrogen_fireballs = 0
+	var/pyrogen_firestorms = 0
+	var/pyrogen_infernos
 	var/queen_screech = 0
 	var/now_pregnant = 0
 	var/failed_impregnations = 0

@@ -6,3 +6,6 @@
 #define COMSIG_ATOM_CHECKPARTS "atom_checkparts"
 ///from base of atom/CheckParts(): (atom/movable/new_craft) - The atom has just been used in a crafting recipe and has been moved inside new_craft.
 #define COMSIG_ATOM_USED_IN_CRAFT "atom_used_in_craft"
+
+/// Fired whenever this atom is the most recent hovered atom for a client.
+#define COMSIG_ATOM_MOUSE_ENTERED "mouse_entered"

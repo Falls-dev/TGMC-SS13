@@ -19,7 +19,7 @@ const MultiZPerfToString = (integer) => {
   let returnval = '';
   switch (integer) {
     case -1:
-      returnval = 'Standard';
+      returnval = 'No Culling';
       break;
     case 0:
       returnval = 'Low';
@@ -101,6 +101,25 @@ export const GameSettings = (props) => {
     volume_end_of_round,
     is_admin,
   } = data;
+
+  // Remember to update this alongside defines
+  // todo: unfuck. Bruh why is this being handled in the tsx?
+  const TTSRadioSetting = ['sl', 'squad', 'command', 'hivemind', 'all'];
+  const TTSRadioSettingToBitfield = {
+    sl: 1 << 0,
+    squad: 1 << 1,
+    command: 1 << 2,
+    all: 1 << 3,
+    hivemind: 1 << 4,
+  };
+  const TTSRadioSettingToName = {
+    sl: 'Squad Leader',
+    squad: 'Squad',
+    command: 'Command/Hive Leader',
+    hivemind: 'Hivemind',
+    all: 'All Channels',
+  };
+
   return (
     <Section title="Game Settings">
       <Stack fill>
@@ -120,6 +139,41 @@ export const GameSettings = (props) => {
                 action="unique_action_use_active_hand"
                 leftLabel={'Use on active hand'}
                 rightLabel={'Use on both hands'}
+              />
+              <SelectFieldPreference
+                label="Play Text-to-Speech"
+                value="sound_tts"
+                action="sound_tts"
+              />
+              <TextFieldPreference
+                label="Text to speech volume"
+                value="volume_tts"
+              />
+              <LabeledList.Item label={'Text to Speech radio configuration'}>
+                {TTSRadioSetting.map((setting) => (
+                  <Button.Checkbox
+                    inline
+                    key={setting}
+                    content={TTSRadioSettingToName[setting]}
+                    checked={
+                      TTSRadioSettingToBitfield[setting] &
+                      data['radio_tts_flags']
+                    }
+                    onClick={() =>
+                      act('toggle_radio_tts_setting', {
+                        newsetting: setting,
+                      })
+                    }
+                  />
+                ))}
+              </LabeledList.Item>
+              <ToggleFieldPreference
+                label="Accessible TGUI themes"
+                value="accessible_tgui_themes"
+                action="accessible_tgui_themes"
+                leftLabel={'Enabled'}
+                rightLabel={'Disabled'}
+                tooltip="Prefer more accessible/default TGUI themes wherever implemented and possible."
               />
               <ToggleFieldPreference
                 label="Fullscreen mode"
@@ -157,14 +211,7 @@ export const GameSettings = (props) => {
                 label="Multi-Z Detail"
                 value={MultiZPerfToString(multiz_performance)}
                 action="multiz_performance"
-                tooltip="How detailed multi-z is. Lower this to improve performance."
-              />
-              <ToggleFieldPreference
-                label="TGUI Window Mode"
-                value="tgui_fancy"
-                action="tgui_fancy"
-                leftLabel={'Fancy (default)'}
-                rightLabel={'Compatible (slower)'}
+                tooltip="How many Multi-Z levels are rendered before they start getting culled. Decrease this to improve performance in case of lag on multi-z maps."
               />
               <ToggleFieldPreference
                 label="TGUI Window Placement"
@@ -172,6 +219,14 @@ export const GameSettings = (props) => {
                 action="tgui_lock"
                 leftLabel={'Free (default)'}
                 rightLabel={'Primary monitor'}
+              />
+              <ToggleFieldPreference
+                label="UI scaling"
+                value="ui_scale"
+                action="ui_scale"
+                leftLabel={'Enabled'}
+                rightLabel={'Disabled'}
+                tooltip="Whether UIs should scale up to match your monitor scaling"
               />
               <ToggleFieldPreference
                 label="TGUI Input boxes"
@@ -248,7 +303,7 @@ export const GameSettings = (props) => {
                 rightLabel={'Disabled'}
               />
               <TextFieldPreference
-                label="Runechat message limit"
+                label="Runechat character limit"
                 value="max_chat_length"
               />
               <ToggleFieldPreference
@@ -309,7 +364,7 @@ export const GameSettings = (props) => {
           </Section>
         </Stack.Item>
       </Stack>
-      <Stack fill>
+      <Stack>
         <Stack.Item grow>
           <Section title="UI settings">
             <LabeledList>
@@ -342,6 +397,13 @@ export const GameSettings = (props) => {
                 rightLabel={'Disabled'}
               />
               <ToggleFieldPreference
+                label="Automatically open changelogs"
+                value="auto_open_changelogs"
+                action="auto_open_changelogs"
+                leftLabel={'Enabled'}
+                rightLabel={'Disabled'}
+              />
+              <ToggleFieldPreference
                 label="Radial medical wheel"
                 value="radialmedicalpref"
                 action="radialmedicalpref"
@@ -369,7 +431,7 @@ export const GameSettings = (props) => {
               />
               <LoopingSelectionPreference
                 label="Pixel Size Scaling"
-                value={PixelSizeNumToString(pixel_size)}
+                value={pixel_size}
                 action="pixel_size"
               />
               <LoopingSelectionPreference
@@ -427,7 +489,7 @@ export const GameSettings = (props) => {
       {!!is_admin && (
         <Stack>
           <Stack.Item grow>
-            <Section title="Administration (admin only)">
+            <Section title="Staff settings">
               <LabeledList>
                 <ToggleFieldPreference
                   label="Fast MC Refresh"

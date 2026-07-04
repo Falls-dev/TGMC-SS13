@@ -2,11 +2,42 @@
 		///assoc list of hazards to avoid and the range to stay away from them
 	var/list/hazard_list = list()
 	///Chat lines for avoiding uncategorized hazards
-	var/list/default_avoid_chat = list("Берегись!", "Берегись, здесь опасно!", "Здесь опасно!", "Не подходите к этому!", "Никогда ничего подобного не видел.")
+	var/list/default_avoid_chat = list( \
+	"Осторожно!", "Берегись!", "Не подходи!", "Отходим отсюда!", "Не лезем сюда!", "Опасная зона!", "Назад!", \
+	"Что это за хуйня?!", "Не лезь туда!", "Обходи!", "Держите дистанцию!", "Не трогай это!", "Опасно!")
+
 	///Chat lines for avoiding a live nade
-	var/list/nade_avoid_chat = list("Берегись!", "Берегись, граната!", "Граната!", "Валим!", "Прочь с дороги!", "Граната, шевелись!")
+	var/list/nade_avoid_chat = list( \
+	"Граната!", "Бомба!", "Беги нахуй!", "Беги!", "Разбегаемся!", "Лимонка!", "Граната, валим!", "Ложись!", \
+	"Разойтись!", "Сука, граната!", "Чёрт, граната!", "Назад!", "Сейчас рванёт!", "Быстро прочь!")
+
 	///Chat lines for avoiding fire
-	var/list/fire_avoid_chat = list("Берегись!", "Берегись, огонь!", "Огонь!", "Не подходите к огню!")
+	var/list/fire_avoid_chat = list(
+	"Осторожно, огонь!", "Пожар!", "Горячо!", "Держись подальше!", "Кто-нибудь потушите!",
+	"Уберите огонь!", "Горим!", "Слишком жарко!", "Обходи огонь!", "Не подходите!", "Жарко!",
+	"Чёрт, пожар!", "Отходим от огня!", "Держитесь подальше!", "Это уже не шутки!")
+
+	///Chat lines for avoiding acid
+	var/list/acid_avoid_chat = list(
+	"Осторожно, кислота!", "Кислота!", "Не подходите!", "Держись подальше!", "Не трогай!", "У них кислота!", "Берегись!", "Назад!",
+	"Опасная жижа!", "Не лезь!", "Чёрт, кислота!", "Обходи это!", "Не приближайся!")
+
+	///Chat lines for avoiding shuttles
+	var/list/shuttle_avoid_chat = list(
+	"Осторожно!", "Они садятся!", "Посадка!", "Очистить зону!", "Уберитеcь с площадки!", "Не стой под шаттлом!",
+	"Освободить место посадки!", "Расходитесь!", "Дайте пройти!", "Шаттл!", "В сторону!", "С дороги!",
+	"Сейчас придавит!", "Быстро очистить зону!", "Отходим!")
+
+	///Chat lines for avoiding cas
+	var/list/cas_avoid_chat = list(
+	"Осторожно, авиаудар!", "КАС!", "В укрытие!", "Сейчас накроют!", "Не стойте!", "Разбегайтесь!",
+	"Бомбят!", "Руки в ноги!", "КАС, отходим!", "Уходим с позиции!", "Сейчас прилетит!", "Быстро в укрытие!",
+	"Чёрт, авиация!", "Они бомбят!", "Держись подальше!", "Не подставляйтесь!")
+
+	///Chat lines for avoiding xeno warnings
+	var/list/xeno_avoid_chat = list(
+	"Осторожно, ксенос!", "Ксенос!", "Берегись!", "Валите ксеноса!", "Ксенопидор!", "Назад!", "Бенос!",
+	"Не дай ему попасть!", "Чёрный враг!", "Чёрт, ксенос!", "Обходи его!", "Осторожно!", "Он атакует!", "Ксено!")
 
 /datum/ai_behavior/human/find_next_dirs()
 	. = ..()
@@ -18,6 +49,26 @@
 	var/list/dir_options = .
 	dir_options = dir_options.Copy()
 	var/list/exclude_dirs = list()
+
+	var/turf/owner_turf = get_turf(mob_parent)
+
+	//lava
+	if(can_cross_lava_turf(owner_turf)) //if we're already in lava, we skip these checks since we're probs gonna have to walk through more to get out
+		for(var/dir_option in dir_options)
+			var/turf/turf_option = get_step(owner_turf, dir_option)
+			if(!islava(turf_option))
+				continue
+			if(turf_option.is_covered())
+				continue
+			exclude_dirs |= dir_option
+
+		dir_options -= exclude_dirs
+		if(!length(dir_options))
+			return NONE //if we're NOT in lava, we do not deliberately path into lava
+			//todo: Need to have NPC path around lava entirely (or jump over it), if their direct path is into lava
+
+	//hazards
+	exclude_dirs.Cut()
 	for(var/atom/movable/thing AS in hazard_list)
 		var/dist = get_dist(mob_parent, thing)
 		if(dist > hazard_list[thing] + 1)
@@ -71,6 +122,22 @@
 		if(prob(20))
 			try_speak(pick(fire_avoid_chat))
 		return
+	if(istype(hazard, /obj/effect/xenomorph/spray))
+		if(prob(20))
+			try_speak(pick(acid_avoid_chat))
+		return
+	if(istype(hazard, /obj/effect/abstract/ripple))
+		if(prob(20))
+			try_speak(pick(shuttle_avoid_chat))
+		return
+	if(istype(hazard, /obj/effect/overlay/blinking_laser/marine))
+		if(prob(20))
+			try_speak(pick(cas_avoid_chat))
+		return
+	if(isfacehugger(hazard) || istype(hazard, /obj/effect/xeno/crush_warning) || istype(hazard, /obj/effect/xeno/abduct_warning) || istype(hazard, /obj/effect/temp_visual/behemoth/warning))
+		if(prob(20))
+			try_speak(pick(xeno_avoid_chat))
+		return
 
 	if(prob(20))
 		try_speak(pick(default_avoid_chat))
@@ -81,7 +148,7 @@
 	hazard_list -= old_hazard
 	UnregisterSignal(old_hazard, list(COMSIG_QDELETING, COMSIG_MOVABLE_Z_CHANGED))
 
-///Checks if we are in range of any hazards
+///Checks if we are safe from any hazards
 /datum/ai_behavior/human/proc/check_hazards()
 	for(var/atom/movable/thing AS in hazard_list)
 		if(get_dist(mob_parent, thing) <= hazard_list[thing])

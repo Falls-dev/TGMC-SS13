@@ -188,6 +188,7 @@
 #define COLOR_REAGENT_SULFASALAZINE "#266930"
 #define COLOR_REAGENT_DIBORANE "#1800a3"
 #define COLOR_REAGENT_STIMULON "#19C832"
+#define COLOR_REAGENT_EMSALVE "#e0b48b"
 
 
 //Color defines used by toxin

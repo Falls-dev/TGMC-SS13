@@ -225,7 +225,7 @@
 	spawn_loot_chance = 45
 	loot = list(
 		/obj/item/explosive/plastique = 7,
-		/obj/item/detpack = 2,
+		/obj/item/explosive/plastique/detpack = 2,
 		/obj/item/assembly/signaler/receiver = 1,
 	)
 

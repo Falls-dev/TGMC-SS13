@@ -108,6 +108,7 @@
 #define PETRIFY_ABILITY_TRAIT "petrify_ability_trait"
 #define SHATTERING_ROAR_ABILITY_TRAIT "shattering_roar_ability_trait"
 #define ZERO_FORM_BEAM_ABILITY_TRAIT "zero_form_beam_ability_trait"
+#define DRAGON_ABILITY_TRAIT "dragon_ability_trait"
 #define WIDOW_ABILITY_TRAIT "widow_ability_trait"
 #define SHRIKE_ABILITY_TRAIT "shrike_ability_trait"
 #define VALHALLA_TRAIT "valhalla"
@@ -182,6 +183,7 @@
 #define TRAIT_HEAVY_STEP "heavy_step"
 ///indicates this mob was spawned by a corpse spawner
 #define TRAIT_MAPSPAWNED "mapspawned"
+#define TRAIT_HOLLOW "hollowedout"
 ///Banished from the hive by the ruler
 #define TRAIT_BANISHED "banished"
 ///Mindmelded with another mob
@@ -220,6 +222,10 @@
 #define TRAIT_NOPLASMAREGEN "noplasmaregen"//xeno plasma wont recharge
 #define TRAIT_UNDEFIBBABLE "undefibbable"//human can't be revived
 #define TRAIT_IMMEDIATE_DEFIB "immediate_defib"//immediately revives when defibbed, rather than just healing
+#define TRAIT_IS_RELOADING "is_reloading"
+#define TRAIT_IS_CLIMBING "is_climbing"
+#define TRAIT_IS_SHRAP_REMOVING "is_shrap_removing"
+#define TRAIT_IS_EQUIPPING_ITEM "is_equipping_item"
 #define TRAIT_CRIT_IS_DEATH "crit_is_death" ///instantly causes enough oxy damage to kill the user when they hit critical health
 #define TRAIT_HEALING_INFUSION "healing_infusion"//greatly improves natural healing for xenos
 #define TRAIT_PSY_DRAINED "psy_drained"//mob was drained of life force by a xenos

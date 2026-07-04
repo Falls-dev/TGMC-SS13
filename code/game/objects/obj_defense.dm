@@ -1,6 +1,6 @@
 /obj/proc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = null, effects = TRUE, attack_dir, armour_penetration = 0, mob/living/blame_mob)
 	if(QDELETED(src))
-		CRASH("[src] taking damage after deletion")
+		return
 	if(!damage_amount)
 		return
 	if(effects)

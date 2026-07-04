@@ -249,7 +249,7 @@
 		to_chat(operator, "[src] cannot be rotated while anchored.")
 		return FALSE
 
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_MOUNTED_GUN_ROTATE))
+	if(!TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MOUNTED_GUN_ROTATE))
 		to_chat(operator, span_warning("[src] cannot be rotated so violently."))
 		stop_fire()
 		return FALSE

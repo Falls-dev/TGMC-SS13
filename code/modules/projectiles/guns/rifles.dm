@@ -1565,6 +1565,21 @@
 /obj/item/weapon/gun/rifle/sg29/patrol
 	starting_attachment_types = list(/obj/item/attachable/stock/sgstock, /obj/item/attachable/sgbarrel, /obj/item/attachable/motiondetector, /obj/item/attachable/verticalgrip)
 
+/obj/item/weapon/gun/rifle/standard_smartmachinegun
+	parent_type = /obj/item/weapon/gun/rifle/sg29
+
+/obj/item/weapon/gun/rifle/standard_smartmachinegun/pmc
+	starting_attachment_types = list(/obj/item/attachable/stock/sgstock, /obj/item/attachable/sgbarrel, /obj/item/attachable/motiondetector, /obj/item/attachable/lasersight)
+
+/obj/item/weapon/gun/rifle/standard_smartmachinegun/deathsquad
+	starting_attachment_types = list(/obj/item/attachable/stock/sgstock, /obj/item/attachable/sgbarrel, /obj/item/attachable/magnetic_harness, /obj/item/attachable/lasersight)
+
+/obj/item/weapon/gun/rifle/standard_smartmachinegun/patrol
+	starting_attachment_types = list(/obj/item/attachable/stock/sgstock, /obj/item/attachable/sgbarrel, /obj/item/attachable/motiondetector, /obj/item/attachable/verticalgrip)
+
+/obj/item/weapon/gun/rifle/standard_smartmachinegun/basic
+	starting_attachment_types = list(/obj/item/attachable/stock/sgstock, /obj/item/attachable/sgbarrel, /obj/item/attachable/magnetic_harness, /obj/item/attachable/flashlight/under)
+
 //-------------------------------------------------------
 //SG Target Rifle, has underbarreled spotting rifle that applies effects.
 
@@ -1894,6 +1909,21 @@
 	starting_attachment_types = list(/obj/item/attachable/stock/ar11, /obj/item/attachable/motiondetector, /obj/item/attachable/bayonet, /obj/item/attachable/lasersight)
 
 /obj/item/weapon/gun/rifle/ar11/standard
+	starting_attachment_types = list(/obj/item/attachable/stock/ar11, /obj/item/attachable/reddot, /obj/item/attachable/lasersight)
+
+/obj/item/weapon/gun/rifle/tx11
+	parent_type = /obj/item/weapon/gun/rifle/ar11
+
+/obj/item/weapon/gun/rifle/tx11/scopeless
+	starting_attachment_types = list(/obj/item/attachable/stock/ar11)
+
+/obj/item/weapon/gun/rifle/tx11/freelancerone
+	starting_attachment_types = list(/obj/item/attachable/stock/ar11, /obj/item/attachable/magnetic_harness, /obj/item/attachable/bayonet, /obj/item/attachable/lasersight)
+
+/obj/item/weapon/gun/rifle/tx11/freelancertwo
+	starting_attachment_types = list(/obj/item/attachable/stock/ar11, /obj/item/attachable/motiondetector, /obj/item/attachable/bayonet, /obj/item/attachable/lasersight)
+
+/obj/item/weapon/gun/rifle/tx11/standard
 	starting_attachment_types = list(/obj/item/attachable/stock/ar11, /obj/item/attachable/reddot, /obj/item/attachable/lasersight)
 
 //-------------------------------------------------------

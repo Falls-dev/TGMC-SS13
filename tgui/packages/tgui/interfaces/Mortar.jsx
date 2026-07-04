@@ -22,6 +22,7 @@ export const Mortar = (props) => {
             <Flex direction="row" justify="space-between">
               <Flex.Item>
                 <NumberInput
+                  expensive
                   value={X}
                   minValue={0}
                   maxValue={255}
@@ -35,6 +36,7 @@ export const Mortar = (props) => {
               </Flex.Item>
               <Flex.Item>
                 <NumberInput
+                  expensive
                   value={Y}
                   minValue={0}
                   maxValue={255}
@@ -48,6 +50,7 @@ export const Mortar = (props) => {
               </Flex.Item>
               <Flex.Item>
                 <NumberInput
+                  expensive
                   value={DX}
                   minValue={-10}
                   width="43px"
@@ -61,6 +64,7 @@ export const Mortar = (props) => {
               </Flex.Item>
               <Flex.Item>
                 <NumberInput
+                  expensive
                   value={DY}
                   minValue={-10}
                   maxValue={10}
@@ -122,6 +126,7 @@ export const Mortar = (props) => {
                 </Table.Cell>
                 <Table.Cell>
                   <Input
+                    expensive
                     value={last_three_inputs['coords_one']['name']}
                     width="100px"
                     onChange={(e, value) =>
@@ -148,6 +153,7 @@ export const Mortar = (props) => {
                 </Table.Cell>
                 <Table.Cell>
                   <Input
+                    expensive
                     value={last_three_inputs['coords_two']['name']}
                     width="100px"
                     onChange={(e, value) =>
@@ -174,6 +180,7 @@ export const Mortar = (props) => {
                 </Table.Cell>
                 <Table.Cell>
                   <Input
+                    expensive
                     value={last_three_inputs['coords_three']['name']}
                     width="100px"
                     onChange={(e, value) =>

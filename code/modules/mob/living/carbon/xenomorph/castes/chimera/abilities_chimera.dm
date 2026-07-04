@@ -462,7 +462,7 @@
 	if(old_target != target)
 		old_target = target
 		stacks = max(0, stacks - 2)
-	target.apply_damage(additional_damage * stacks, BRUTE, xeno_owner.zone_selected, blocked = FALSE)
+	target.apply_damage(additional_damage * stacks, BRUTE, xeno_owner.zone_selected, blocked = MELEE)
 	target.add_slowdown(slowdown_amount * stacks)
 	target.adjust_stagger(stagger_duration * stacks)
 	if(stacks == stacks_max)

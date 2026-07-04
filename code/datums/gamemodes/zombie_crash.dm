@@ -21,7 +21,7 @@
 	)
 	blacklist_ground_maps = list(MAP_WHISKEY_OUTPOST, MAP_OSCAR_OUTPOST, MAP_LAST_STAND)
 
-	round_type_flags = NONE
+	round_type_flags = MODE_ALLOW_MARINE_QUICKBUILD
 
 /datum/game_mode/infestation/crash/zombie/post_setup()
 	. = ..()

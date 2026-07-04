@@ -482,7 +482,6 @@
 
 	accuracy_mult_unwielded = 0.6
 	scatter = 3
-	recoil = 0.5
 	scatter_unwielded = 10
 	recoil_unwielded = 6
 	recoil_backtime_multiplier = 2
@@ -501,6 +500,9 @@
 		/obj/item/attachable/bayonetknife,
 	)
 	attachable_offset = list("muzzle_x" = 50, "muzzle_y" = 21,"rail_x" = 24, "rail_y" = 22)
+
+/obj/item/weapon/gun/revolver/coltrifle/tactical_reload(obj/item/new_magazine, mob/living/carbon/human/user)
+	return
 
 //////////////////////////////////////////////////////////////////////////
 /////////////////////////// t500 revolver ////////////////////////////////

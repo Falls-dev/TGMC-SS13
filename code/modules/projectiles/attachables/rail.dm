@@ -36,9 +36,9 @@
 	activation_sound = 'sound/items/flashlight.ogg'
 
 /obj/item/attachable/flashlight/activate(mob/living/user, turn_off)
-	turn_light(user, turn_off ? !turn_off : !light_on)
+	turn_light(user, !light_on)
 
-/obj/item/attachable/flashlight/turn_light(mob/user, toggle_on, cooldown, sparks, forced, light_again)
+/obj/item/attachable/flashlight/turn_light(mob/user, toggle_on)
 	. = ..()
 
 	if(. != CHECKS_PASSED)
@@ -46,25 +46,26 @@
 
 	if(ismob(master_gun.loc) && !user)
 		user = master_gun.loc
-
 	if(!toggle_on && light_on)
 		icon_state = initial(icon_state)
+		master_gun.set_light_range(0)
+		master_gun.set_light_power(0)
+		master_gun.set_light_on(FALSE)
 		light_on = FALSE
-		master_gun.set_light_range(master_gun.light_range - light_mod)
-		master_gun.set_light_power(master_gun.light_power - (light_mod * 0.5))
-		if(master_gun.light_range <= 0) //does the gun have another light source
-			master_gun.set_light_on(FALSE)
-			REMOVE_TRAIT(master_gun, TRAIT_GUN_FLASHLIGHT_ON, GUN_TRAIT)
+		REMOVE_TRAIT(master_gun, TRAIT_GUN_FLASHLIGHT_ON, GUN_TRAIT)
 	else if(toggle_on & !light_on)
 		icon_state = initial(icon_state) +"_on"
+		master_gun.set_light_range(light_mod)
+		master_gun.set_light_power(3)
+		master_gun.set_light_on(TRUE)
 		light_on = TRUE
-		master_gun.set_light_range(master_gun.light_range + light_mod)
-		master_gun.set_light_power(master_gun.light_power + (light_mod * 0.5))
-		if(!HAS_TRAIT(master_gun, TRAIT_GUN_FLASHLIGHT_ON))
-			master_gun.set_light_on(TRUE)
-			ADD_TRAIT(master_gun, TRAIT_GUN_FLASHLIGHT_ON, GUN_TRAIT)
+		ADD_TRAIT(master_gun, TRAIT_GUN_FLASHLIGHT_ON, GUN_TRAIT)
 	else
 		return
+
+	for(var/X in master_gun.actions)
+		var/datum/action/A = X
+		A.update_button_icon()
 
 	update_icon()
 

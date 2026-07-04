@@ -34,6 +34,16 @@
 	. = ..()
 	AddComponent(/datum/component/ai_controller, /datum/ai_behavior/xeno)
 
+/mob/living/carbon/xenomorph/chimera/ai
+	caste_base_type = /datum/xeno_caste/chimera/phantom
+	tier = XENO_TIER_MINION
+	upgrade = XENO_UPGRADE_BASETYPE
+	mob_size = MOB_SIZE_XENO
+
+/mob/living/carbon/xenomorph/chimera/ai/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/ai_controller, /datum/ai_behavior/xeno)
+
 /mob/living/carbon/xenomorph/chimera/primordial
 	upgrade = XENO_UPGRADE_PRIMO
 

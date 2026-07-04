@@ -46,7 +46,7 @@
 		return
 	if(!istype(loc,/obj/machinery/atmospherics))
 		return
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_VENTCRAWL))
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_VENTCRAWL))
 		return
 	TIMER_COOLDOWN_START(src, COOLDOWN_VENTCRAWL,  crawl_time)
 	visible_message(span_notice("[src] begins climbing out from the ventilation system..."), span_notice("You begin climbing out from the ventilation system..."))

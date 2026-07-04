@@ -46,7 +46,7 @@
 /datum/supply_packs/stationary/m56d
 	name = "HSG-102 mounted heavy smartgun ammo"
 	contains = list(/obj/item/ammo_magazine/hsg102)
-	cost = 30
+	cost = 60
 
 /datum/supply_packs/stationary/minigun_emplacement
 	name = "MG-2005 automatic minigun"

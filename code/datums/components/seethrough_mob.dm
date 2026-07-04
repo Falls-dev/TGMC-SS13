@@ -54,13 +54,10 @@
 	SIGNAL_HANDLER
 
 	var/mob/fool = parent
-	var/icon/current_mob_icon = icon(fool.icon, fool.icon_state)
 	var/datum/hud/our_hud = fool.hud_used
 	for(var/atom/movable/screen/plane_master/seethrough as anything in our_hud.get_true_plane_masters(SEETHROUGH_PLANE))
 		seethrough.unhide_plane(fool)
 
-	render_source_atom.pixel_x = ((current_mob_icon.Width() - ICON_SIZE_X) * 0.5)
-	render_source_atom.pixel_y = ((current_mob_icon.Height() - ICON_SIZE_Y) * 0.5)
 	render_source_atom.name = "seethrough" //So our name is not just "movable" when looking at VVs
 
 	initial_render_target_value = fool.render_target
@@ -133,7 +130,7 @@
 	COOLDOWN_DECLARE(toggle_cooldown)
 
 /datum/action/toggle_seethrough/action_activate(atom/t)
-	if(!COOLDOWN_CHECK(src, toggle_cooldown))
+	if(!COOLDOWN_FINISHED(src, toggle_cooldown))
 		return
 	. = ..()
 	var/datum/component/seethrough_mob/transparency = target

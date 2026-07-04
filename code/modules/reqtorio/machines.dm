@@ -54,7 +54,7 @@
 		return
 	if(!craft)
 		return
-	if(!COOLDOWN_CHECK(src, process_cooldown))
+	if(!COOLDOWN_FINISHED(src, process_cooldown))
 		return
 	if(isitemstack(bumper))
 		var/obj/item/stack/stack = bumper
@@ -133,7 +133,7 @@
 		return
 	switch(action)
 		if("select")
-			if(!COOLDOWN_CHECK(src, process_cooldown))
+			if(!COOLDOWN_FINISHED(src, process_cooldown))
 				balloon_alert(usr, "assembly is still in progress")
 				return
 			craft = SSreqtorio.assembly_crafts[text2path(params["id"])]

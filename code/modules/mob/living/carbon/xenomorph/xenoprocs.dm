@@ -527,7 +527,7 @@
 	if(isnestedhost(src))
 		return
 
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_ACID))
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_ACID))
 		return
 	TIMER_COOLDOWN_START(src, COOLDOWN_ACID, 2 SECONDS)
 
@@ -593,7 +593,7 @@
 	playsound(C, SFX_ALIEN_DROOL, 15, TRUE)
 	do
 		face_atom(C)
-		if(has_status_effect(STATUS_EFFECT_STAGGER))
+		if(IsStaggered())
 			return FALSE
 		do_attack_animation(C)
 		C.reagents.add_reagent(toxin, transfer_amount)
@@ -673,7 +673,7 @@
 ///Handles icon updates when leadered/unleadered. Evolution.dm also uses this
 /mob/living/carbon/xenomorph/proc/update_leader_icon(makeleader = TRUE)
 	// Xenos with specialized icons (Queen, King, Shrike) do not get their icon changed
-	if(istype(xeno_caste, /datum/xeno_caste/queen) || istype(xeno_caste, /datum/xeno_caste/shrike) || istype(xeno_caste, /datum/xeno_caste/king))
+	if(istype(xeno_caste, /datum/xeno_caste/queen) || istype(xeno_caste, /datum/xeno_caste/shrike) || istype(xeno_caste, /datum/xeno_caste/dragon))
 		return
 
 	SSminimaps.remove_marker(src)

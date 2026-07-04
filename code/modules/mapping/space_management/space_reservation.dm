@@ -189,7 +189,7 @@
 		SSmapping.unused_turfs["[T.z]"] -= T
 		SSmapping.used_turfs[T] = src
 		T.turf_flags = (T.turf_flags | RESERVATION_TURF) & ~UNUSED_RESERVATION_TURF
-		T.change_turf(turf_type, turf_type)
+		T.ChangeTurf(turf_type, turf_type)
 
 	bottom_left_turfs += BL
 	top_right_turfs += TR
@@ -284,5 +284,5 @@
 	for(var/turf/T AS in reserved_turfs)
 		if(!(istype(T, turf_type)))
 			continue
-		T.change_turf(new_turf_type, new_turf_type)
+		T.ChangeTurf(new_turf_type, new_turf_type)
 	turf_type = new_turf_type

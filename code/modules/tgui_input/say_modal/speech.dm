@@ -59,9 +59,6 @@
 		if(MENTOR_CHANNEL)
 			SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/msay, entry)
 			return TRUE
-		if(DEAD_CHANNEL)
-			SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/dsay, entry)
-			return TRUE
 	return FALSE
 
 /**

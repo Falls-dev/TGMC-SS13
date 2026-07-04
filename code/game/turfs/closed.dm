@@ -103,7 +103,7 @@
 
 	I.cut_apart(user, name, src)
 	// Change targetted turf to a new one to simulate deconstruction.
-	change_turf(open_turf_type)
+	ChangeTurf(open_turf_type)
 	return TRUE
 
 /turf/closed/mineral/smooth
@@ -249,7 +249,7 @@
 /turf/closed/gm/ex_act(severity)
 	if(severity < EXPLODE_DEVASTATE)
 		return
-	change_turf(/turf/open/ground/grass/weedable)
+	ChangeTurf(/turf/open/ground/grass/weedable)
 
 /turf/closed/gm/dense
 	name = "dense jungle wall"

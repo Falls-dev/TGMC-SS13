@@ -134,4 +134,4 @@
 	name = "Research console"
 	contains = list(/obj/machinery/researchcomp)
 	containertype = null
-	cost = 200
+	cost = 300

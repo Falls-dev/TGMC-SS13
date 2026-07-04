@@ -151,8 +151,6 @@
 				serialized["job"] = job.title
 
 			if(isyautja(mob_poi))
-				serialized["icon"] = job.minimap_icon
-				serialized["job"] = job.title
 				yautja += list(serialized)
 				continue
 

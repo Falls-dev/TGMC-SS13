@@ -11,6 +11,7 @@
 		"Uniforms" = list(
 			/obj/item/clothing/under/marine/robotic = -1,
 			/obj/item/clothing/under/marine = -1,
+			/obj/item/clothing/under/marine/hyperscale = -1,
 			/obj/item/clothing/under/marine/camo = -1,
 			/obj/item/clothing/under/marine/camo/desert = -1,
 			/obj/item/clothing/under/marine/camo/snow = -1,
@@ -39,6 +40,7 @@
 		"Gloves" = list(
 			/obj/item/clothing/gloves/marine = -1,
 			/obj/item/clothing/gloves/marine/fingerless = -1,
+			/obj/item/clothing/gloves/marine/hyperscale = -1,
 			/obj/item/clothing/gloves/marine/veteran/marine = -1,
 			/obj/item/clothing/gloves/marine/separatist = -1,
 			/obj/item/clothing/gloves/white = -1,
@@ -75,6 +77,7 @@
 			/obj/item/storage/belt/utility/full =-1,
 			/obj/item/storage/belt/medical_small = -1,
 			/obj/item/storage/holster/belt/revolver/t500 = -1,
+			/obj/item/storage/belt/protein_pack = -1,
 			/obj/item/storage/belt/mortar_belt = 4,
 		),
 		"Pouches" = list(
@@ -98,8 +101,9 @@
 			/obj/item/storage/pouch/machete/full = -1,
 			/obj/item/cell/lasgun/volkite/powerpack/marine = -1,
 			/obj/item/storage/pouch/general/medium = -1,
+			/obj/item/storage/pouch/protein_pack = -1,
 		),
-		"Headwear" = list(
+		"Surplus Headwear" = list(
 			/obj/item/clothing/head/slouch = -1,
 			/obj/item/clothing/head/headband/red = -1,
 			/obj/item/clothing/head/headband/rambo = -1,
@@ -140,6 +144,18 @@
 			/obj/item/clothing/head/servicecap = -1,
 			/obj/item/clothing/head/strawhat = -1,
 		),
+		"Headwear" = list(
+			/obj/item/clothing/head/modular/style/beret = -1,
+			/obj/item/clothing/head/modular/style/classic_beret = -1,
+			/obj/item/clothing/head/modular/style/boonie = -1,
+			/obj/item/clothing/head/modular/style/cap = -1,
+			/obj/item/clothing/head/modular/style/slouchhat = -1,
+			/obj/item/clothing/head/modular/style/ushanka = -1,
+			/obj/item/clothing/head/modular/style/campaignhat = -1,
+			/obj/item/clothing/head/modular/style/beanie = -1,
+			/obj/item/clothing/head/modular/style/headband = -1,
+			/obj/item/clothing/head/modular/style/bandana = -1,
+		),
 		"Masks" = list(
 			/obj/item/clothing/mask/rebreather/scarf = -1,
 			/obj/item/clothing/mask/bandanna/skull = -1,
@@ -154,6 +170,8 @@
 			/obj/item/clothing/mask/balaclava = -1,
 			/obj/item/clothing/mask/rebreather = -1,
 			/obj/item/clothing/mask/breath = -1,
+			/obj/item/clothing/mask/gas/modular/skimask = -1,
+			/obj/item/clothing/mask/gas/modular/coofmask = -1,
 			/obj/item/clothing/mask/gas = -1,
 			/obj/item/clothing/mask/gas/tactical = -1,
 			/obj/item/clothing/mask/gas/tactical/coif = -1,
@@ -187,6 +205,17 @@
 			/obj/item/instrument/recorder = -1,
 			/obj/item/instrument/harmonica = -1,
 		),
+		"Medical Clothing" = list(
+			/obj/item/clothing/under/rank/medical/blue = -1,
+			/obj/item/clothing/under/rank/medical/green = -1,
+			/obj/item/clothing/under/rank/medical/purple = -1,
+			/obj/item/clothing/suit/storage/labcoat = -1,
+			/obj/item/clothing/suit/surgical = -1,
+			/obj/item/clothing/mask/surgical = -1,
+			/obj/item/clothing/gloves/latex = -1,
+			/obj/item/clothing/shoes/white = -1,
+			/obj/item/clothing/suit/storage/labcoat/paramedic = -1,
+		),
 		"Eyewear" = list(
 			/obj/item/clothing/glasses/regular = -1,
 			/obj/item/clothing/glasses/eyepatch = -1,
@@ -203,7 +232,21 @@
 			/obj/effect/vendor_bundle/service_uniform = -1,
 			/obj/effect/vendor_bundle/separatist_uniform = -1,
 			/obj/effect/vendor_bundle/veteran_uniform = -1,
-		)
+		),
+		"Dress Uniform" = list(
+			/obj/item/clothing/under/marine/whites = -1,
+			/obj/item/clothing/suit/white_dress_jacket = -1,
+			/obj/item/clothing/head/white_dress = -1,
+			/obj/item/clothing/shoes/white = -1,
+			/obj/item/clothing/gloves/white = -1,
+			/obj/item/clothing/under/marine/service = -1,
+			/obj/item/clothing/head/garrisoncap = -1,
+			/obj/item/clothing/head/serviceberet = -1,
+			/obj/item/clothing/head/servicecampaignhat = -1,
+			/obj/item/clothing/head/serviceushanka = -1,
+			/obj/item/clothing/head/servicecap = -1,
+			/obj/item/clothing/under/marine/black_suit = -1,
+		),
 	)
 
 /obj/machinery/vending/uniform_supply/valhalla

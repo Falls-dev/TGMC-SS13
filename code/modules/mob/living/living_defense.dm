@@ -129,6 +129,13 @@
 /mob/living/proc/update_fire()
 	return
 
+/mob/living/proc/is_on_fire()
+	if(on_fire)
+		return TRUE
+	if(has_status_effect(STATUS_EFFECT_MELTING_FIRE))
+		return TRUE
+	return FALSE
+
 ///Puts out any fire on the mob
 /mob/living/proc/ExtinguishMob()
 	var/datum/status_effect/stacking/melting_fire/xeno_fire = has_status_effect(STATUS_EFFECT_MELTING_FIRE)

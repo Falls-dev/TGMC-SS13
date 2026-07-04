@@ -161,3 +161,13 @@
 	if(burn_level <= 0)
 		qdel(src)
 		return PROCESS_KILL
+
+///Reduces duration of fire
+/obj/fire/proc/reduce_fire(amount = 1)
+	if(amount <= 0)
+		return
+	burn_ticks -= amount
+	if(burn_ticks > 0)
+		update_appearance(UPDATE_ICON)
+	else
+		qdel(src)

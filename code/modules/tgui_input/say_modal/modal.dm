@@ -1,3 +1,6 @@
+/** Assigned say modal of the client */
+/client/var/datum/tgui_say/tgui_say
+
 /**
  * Creates a JSON encoded message to open TGUI say modals properly.
  *
@@ -47,7 +50,6 @@
 	sleep(3 SECONDS)
 	window.initialize(
 			strict_mode = TRUE,
-			fancy = TRUE,
 			inline_css = file("tgui/public/tgui-say.bundle.css"),
 			inline_js = file("tgui/public/tgui-say.bundle.js"),
 	);
@@ -61,11 +63,12 @@
 /datum/tgui_say/proc/load()
 	window_open = FALSE
 
-	winset(client, "tgui_say", "pos=848,500;size=231,30;is-visible=0;")
+	winset(client, "tgui_say", "pos=848,500;is-visible=0;")
 
 	window.send_message("props", list(
-		lightMode = FALSE, //client.prefs?.read_preference(/datum/preference/toggle/tgui_say_light_mode),
-		maxLength = max_length,
+		"lightMode" = FALSE, //client.prefs?.read_preference(/datum/preference/toggle/tgui_say_light_mode),
+		"maxLength" = max_length,
+		"scale" = client.prefs?.ui_scale
 	))
 
 	stop_thinking()
@@ -83,7 +86,7 @@
 	if(!payload?["channel"])
 		CRASH("No channel provided to an open TGUI-Say")
 	window_open = TRUE
-	if(payload["channel"] != OOC_CHANNEL && payload["channel"] != ADMIN_CHANNEL && payload["channel"] != MENTOR_CHANNEL && payload["channel"] != DEAD_CHANNEL)
+	if(payload["channel"] != OOC_CHANNEL && payload["channel"] != ADMIN_CHANNEL && payload["channel"] != MENTOR_CHANNEL)
 		start_thinking()
 	if(!client.prefs.show_typing)
 		log_speech_indicators("[key_name(client)] started typing at [loc_name(client.mob)], indicators DISABLED.")

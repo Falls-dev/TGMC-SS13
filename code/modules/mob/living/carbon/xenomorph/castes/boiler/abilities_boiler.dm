@@ -255,6 +255,9 @@ GLOBAL_LIST_INIT(boiler_glob_image_list, list(
 	if(!can_use_ability(target, FALSE, ABILITY_IGNORE_PLASMA))
 		return fail_activate()
 
+	if((locate(/obj/effect/forcefield/fog) in xeno_owner.loc) && !get_nearest_target(xeno_owner, 5, TARGET_HUMAN, xeno_owner.faction, xeno_owner.hivenumber)) //говнокод, да
+		return
+
 	xeno_owner.visible_message(span_xenowarning("\The [xeno_owner] launches a huge glob of acid hurling into the distance!"), \
 	span_xenowarning("We launch a huge glob of acid hurling into the distance!"), null, 5)
 

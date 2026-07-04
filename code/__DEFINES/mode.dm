@@ -53,6 +53,8 @@
 #define MODE_HAS_EXCAVATION (1<<16)
 #define MODE_HAS_MINERS (1<<17)
 #define MODE_PREDATOR (1<<18)
+/// Should marines have access to quickbuild?
+#define MODE_ALLOW_MARINE_QUICKBUILD (1<<19)
 
 #define MODE_INFESTATION_X_MAJOR "Xenomorph Major Victory"
 #define MODE_INFESTATION_M_MAJOR "Marine Major Victory"

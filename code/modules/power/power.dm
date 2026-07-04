@@ -217,6 +217,8 @@
 /proc/electrocute_mob(mob/living/carbon/M, power_source, obj/source, siemens_coeff = 1, dist_check = FALSE)
 	if(!M)
 		return 0	//feckin mechs are dumb
+	if(TIMER_COOLDOWN_RUNNING(M, COOLDOWN_ELECTROCUTED))
+		return
 	if(dist_check)
 		if(!in_range(source,M))
 			return 0

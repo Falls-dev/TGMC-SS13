@@ -46,7 +46,7 @@ const ApcContent = (props) => {
   const chargingStatus =
     powerStatusMap[data.chargingStatus] || powerStatusMap[0];
   const channelArray = data.powerChannels || [];
-  const adjustedCellChange = data.powerCellStatus * 0.01;
+  const adjustedCellChange = data.powerCellStatus / 100;
 
   return (
     <>

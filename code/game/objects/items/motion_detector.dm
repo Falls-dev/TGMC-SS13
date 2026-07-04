@@ -135,7 +135,7 @@
 			continue
 		if(HAS_TRAIT(nearby_human, TRAIT_LIGHT_STEP))
 			continue
-		prepare_blip(nearby_human, nearby_human.wear_id?.iff_signal & operator.wear_id.iff_signal ? MOTION_DETECTOR_FRIENDLY : MOTION_DETECTOR_HOSTILE)
+		prepare_blip(nearby_human, nearby_human.wear_id?.iff_signal & operator.wear_id?.iff_signal ? MOTION_DETECTOR_FRIENDLY : MOTION_DETECTOR_HOSTILE)
 	for(var/mob/living/carbon/xenomorph/nearby_xeno AS in cheap_get_xenos_near(operator, range))
 		if(HAS_TRAIT(nearby_xeno, TRAIT_STEALTH))
 			continue

@@ -33,6 +33,8 @@
 	var/charge_overlay = "cell"
 	/// Can this cell be recharged via cell recharger or TE powerpack?
 	var/rechargable = TRUE
+	/// Can this cell be installed in an APC?
+	var/apc_compatible = TRUE
 
 /obj/item/cell/Initialize(mapload)
 	. = ..()
@@ -262,6 +264,7 @@
 /obj/item/cell/secborg
 	name = "security borg rechargable D battery"
 	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
+	apc_compatible = FALSE
 
 /obj/item/cell/secborg/empty/Initialize(mapload)
 	. = ..()
@@ -328,6 +331,7 @@
 	self_recharge = TRUE
 	charge_amount = 25
 	charge_delay = 2 SECONDS //One hit on a resin thingy every 8 seconds, or one actual wall every 80 seconds.
+	apc_compatible = FALSE
 
 /obj/item/cell/rtg/plasma_cutter
 	name = "plasma cutter cell"
@@ -336,6 +340,8 @@
 	self_recharge = TRUE
 	charge_amount = 25
 	charge_delay = 2 SECONDS //One hit on a resin thingy every 8 seconds, or one actual wall every 80 seconds.
+	apc_compatible = FALSE
+	apc_compatible = FALSE
 
 /obj/item/cell/rtg/large
 	name = "large recharger cell"
@@ -348,6 +354,7 @@
 	self_recharge = TRUE
 	charge_amount = 50
 	charge_delay = 2 SECONDS //One hit on a resin thingy every 4 seconds, or one actual wall every 40 seconds.
+	apc_compatible = FALSE
 
 /obj/item/cell/mecha
 	name = "small radiotope cell"
@@ -360,6 +367,7 @@
 	self_recharge = TRUE
 	maxcharge = 1000
 	charge_amount = 30
+	apc_compatible = FALSE
 
 /obj/item/cell/mecha/medium
 	name = "medium radiotope cell"
@@ -379,3 +387,12 @@
 	w_class = WEIGHT_CLASS_TINY
 	charge_overlay = ""
 	rechargable = FALSE
+	apc_compatible = FALSE
+
+/obj/item/cell/unmanned_vehicle
+	name = "unmanned vehicle battery"
+	desc = "A dense, tough-looking battery used to power TGMC combat unmanned vehicles. Designed to survive gunfire, explosions, and three tours of abuse."
+	icon_state = "icell"
+	maxcharge = 20000
+	w_class = WEIGHT_CLASS_NORMAL
+	apc_compatible = FALSE

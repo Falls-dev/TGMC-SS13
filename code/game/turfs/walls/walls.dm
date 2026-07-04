@@ -63,7 +63,7 @@
 	QDEL_NULL(bullethole_overlay)
 	return ..()
 
-/turf/closed/wall/change_turf(newtype)
+/turf/closed/wall/ChangeTurf(newtype)
 	if(acided_hole)
 		qdel(acided_hole)
 		acided_hole = null
@@ -179,7 +179,7 @@
 /turf/closed/wall/do_acid_melt()
 	. = ..()
 	if(acided_hole)
-		scrape_away()
+		ScrapeAway()
 		return
 	new /obj/effect/acid_hole(src)
 
@@ -242,7 +242,7 @@
 		make_girder(TRUE)
 	else
 		make_girder(FALSE)
-	scrape_away()
+	ScrapeAway()
 
 /turf/closed/wall/ex_act(severity, explosion_direction)
 	if(resistance_flags & INDESTRUCTIBLE)

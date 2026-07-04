@@ -58,7 +58,7 @@
 	if(stat == DEAD) //Corpses don't puke
 		return
 
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_PUKE))
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_PUKE))
 		return
 
 	TIMER_COOLDOWN_START(src, COOLDOWN_PUKE, 40 SECONDS) //5 seconds before the actual action plus 35 before the next one.
@@ -288,6 +288,8 @@
 	return ..()
 
 /mob/living/carbon/update_tracking(mob/living/carbon/C)
+	if(!C || !hud_used?.SL_locator)
+		return
 	var/atom/movable/screen/LL_dir = hud_used.SL_locator
 
 	if(C.z != src.z || get_dist(src, C) < 1 || src == C)
@@ -298,6 +300,8 @@
 		LL_dir.transform = turn(LL_dir.transform, Get_Angle(src, C))
 
 /mob/living/carbon/clear_leader_tracking()
+	if(!hud_used?.SL_locator)
+		return
 	var/atom/movable/screen/LL_dir = hud_used.SL_locator
 	LL_dir.icon_state = "SL_locator_off"
 
@@ -340,7 +344,7 @@
 
 	if(client.eye != src)
 		var/atom/A = client.eye
-		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
+		if(A && A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
 
 	if(glasses)

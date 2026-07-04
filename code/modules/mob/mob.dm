@@ -1,8 +1,4 @@
 /mob/Destroy()
-	if(client)
-		stack_trace("Mob with client has been deleted.")
-	else if(ckey)
-		stack_trace("Mob without client but with associated ckey has been deleted.")
 	unset_machine()
 	GLOB.mob_list -= src
 	GLOB.dead_mob_list -= src
@@ -12,7 +8,10 @@
 	if(length(observers))
 		for(var/mob/dead/observes AS in observers)
 			observes.reset_perspective(null)
-	ghostize()
+	if(client && key && !isobserver(src))
+		ghostize(FALSE)
+	else if(client)
+		client = null
 	clear_fullscreens()
 	if(mind)
 		mind = null
@@ -264,9 +263,12 @@
 			to_chat(src, span_warning("You are unable to equip that."))
 		return FALSE
 	if(item_to_equip.equip_delay_self && !ignore_delay)
+		ADD_TRAIT(src, TRAIT_IS_EQUIPPING_ITEM, REF(src))
 		if(!do_after(src, item_to_equip.equip_delay_self, NONE, item_to_equip, BUSY_ICON_FRIENDLY))
+			REMOVE_TRAIT(src, TRAIT_IS_EQUIPPING_ITEM, REF(src))
 			to_chat(src, "You stop putting on \the [item_to_equip].")
 			return FALSE
+		REMOVE_TRAIT(src, TRAIT_IS_EQUIPPING_ITEM, REF(src))
 		//calling the proc again with ignore_delay saves a boatload of copypaste
 		return equip_to_slot_if_possible(item_to_equip, slot, TRUE, del_on_fail, warning, redraw_mob, override_nodrop)
 	//This will unwield items -without- triggering lights.
@@ -848,7 +850,7 @@
 /// Updates the grab state of the mob and updates movespeed
 /mob/setGrabState(newstate)
 	. = ..()
-	if(isnull(.))
+	if(!.)
 		return
 	if(grab_state == GRAB_PASSIVE)
 		remove_movespeed_modifier(MOVESPEED_ID_MOB_GRAB_STATE)

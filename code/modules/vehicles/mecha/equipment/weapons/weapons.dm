@@ -150,7 +150,7 @@
 	if(!isliving(firer))
 		return
 	var/mob/living/living_firer = firer
-	if(living_firer.has_status_effect(STATUS_EFFECT_STAGGER))
+	if(living_firer.IsStaggered())
 		projectile_to_fire.damage *= STAGGER_DAMAGE_MULTIPLIER
 	if((projectile_to_fire.ammo.ammo_behavior_flags & AMMO_IFF) && ishuman(firer))
 		var/mob/living/carbon/human/human_firer = firer

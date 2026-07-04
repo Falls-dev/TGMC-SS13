@@ -10,12 +10,12 @@
 	RegisterSignal(parent, COMSIG_RIDDEN_DRIVER_MOVE, PROC_REF(driver_move))
 
 /datum/component/riding/vehicle/driver_move(atom/movable/movable_parent, mob/living/user, direction, glide_size_override)
-	if(!COOLDOWN_CHECK(src, vehicle_move_cooldown))
+	if(!COOLDOWN_FINISHED(src, vehicle_move_cooldown))
 		return COMPONENT_DRIVER_BLOCK_MOVE
 	var/obj/vehicle/vehicle_parent = parent
 
 	if(!keycheck(user))
-		if(COOLDOWN_CHECK(src, message_cooldown))
+		if(COOLDOWN_FINISHED(src, message_cooldown))
 			to_chat(user, span_warning("[vehicle_parent] has no key inserted!"))
 			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
 		return COMPONENT_DRIVER_BLOCK_MOVE
@@ -26,7 +26,7 @@
 			user.visible_message(span_danger("[user] falls off \the [vehicle_parent]."),\
 			span_danger("You slip off \the [vehicle_parent] as your body slumps!"))
 
-		if(COOLDOWN_CHECK(src, message_cooldown))
+		if(COOLDOWN_FINISHED(src, message_cooldown))
 			to_chat(user, span_warning("You cannot operate \the [vehicle_parent] right now!"))
 			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
 		return COMPONENT_DRIVER_BLOCK_MOVE
@@ -37,7 +37,7 @@
 			user.visible_message(span_danger("[user] falls off \the [vehicle_parent]."),\
 			span_danger("You fall off \the [vehicle_parent] while trying to operate it while unable to stand!"))
 
-		if(COOLDOWN_CHECK(src, message_cooldown))
+		if(COOLDOWN_FINISHED(src, message_cooldown))
 			to_chat(user, span_warning("You can't seem to manage that while unable to stand up enough to move \the [vehicle_parent]..."))
 			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
 		return COMPONENT_DRIVER_BLOCK_MOVE
@@ -48,7 +48,7 @@
 			user.visible_message(span_danger("[user] falls off \the [vehicle_parent]."),\
 			span_danger("You fall off \the [vehicle_parent] while trying to operate it without being able to hold on!"))
 
-		if(COOLDOWN_CHECK(src, message_cooldown))
+		if(COOLDOWN_FINISHED(src, message_cooldown))
 			to_chat(user, span_warning("You can't seem to hold onto \the [vehicle_parent] to move it..."))
 			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
 		return COMPONENT_DRIVER_BLOCK_MOVE

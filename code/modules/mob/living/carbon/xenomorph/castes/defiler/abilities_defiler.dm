@@ -198,7 +198,7 @@
 	add_cooldown()
 	succeed_activate()
 
-	if(xeno_owner.has_status_effect(STATUS_EFFECT_STAGGER)) //If we got staggered, return
+	if(xeno_owner.IsStaggered()) //If we got staggered, return
 		to_chat(xeno_owner, span_xenowarning("We try to emit toxins but are staggered!"))
 		return fail_activate()
 
@@ -230,7 +230,7 @@
 			if(/datum/reagent/toxin/acid)
 				emitted_gas = new /datum/effect_system/smoke_spread/xeno/acid/light(xeno_owner)
 
-	if(xeno_owner.has_status_effect(STATUS_EFFECT_STAGGER)) //If we got staggered, return
+	if(xeno_owner.IsStaggered()) //If we got staggered, return
 		to_chat(xeno_owner, span_xenowarning("We try to emit toxins but are staggered!"))
 		toggle_particles(FALSE)
 		return

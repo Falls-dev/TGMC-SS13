@@ -11,7 +11,7 @@ body {
   padding: 0;
   margin: 0;
   height: 100%;
-  color: hsl(0, 0%, 0%);
+  color: var(--color-black);
 }
 
 body {
@@ -218,7 +218,7 @@ a.popt {
 
 .motd {
   color: hsl(75.3, 100%, 26.1%);
-  font-family: Verdana, sans-serif;
+  font-family: Verdana;
   white-space: normal;
 }
 
@@ -229,7 +229,8 @@ a.popt {
 .motd h5,
 .motd h6 {
   color: hsl(75.3, 100%, 26.1%);
-  text-decoration: underline;
+  font-family: Verdana;
+  text-decoration: none;
 }
 
 .motd a,
@@ -284,7 +285,7 @@ h6 {
 
 h1.alert,
 h2.alert {
-  color: hsl(0, 0%, 0%);
+  color: var(--color-black);
 }
 
 em {
@@ -311,7 +312,7 @@ em {
 }
 
 .hostooc {
-  color: hsl(0, 0%, 0%);
+  color: var(--color-black);
   font-weight: bold;
 }
 .projleadooc {
@@ -501,7 +502,7 @@ em {
 
 .binarysay {
   color: hsl(114, 86.5%, 40.8%);
-  background-color: hsl(0, 0%, 0%);
+  background-color: var(--color-black);
   display: block;
 }
 .binarysay a {
@@ -521,7 +522,7 @@ em {
 }
 h1.alert,
 h2.alert {
-  color: hsl(0, 0%, 0%);
+  color: var(--color-black);
 }
 
 .attack {
@@ -736,6 +737,7 @@ h2.alert {
   color: hsl(0, 100%, 42.9%);
   display: block;
   text-align: center;
+  color: hsl(225, 100%, 42.9%);
 }
 .round_setup {
   color: hsl(0, 100%, 42.9%);
@@ -771,7 +773,7 @@ h2.alert {
 }
 
 .announce_header {
-  color: hsl(0, 0%, 0%);
+  color: var(--color-black);
   font-weight: bold;
   font-size: 150%;
 }
@@ -1142,37 +1144,48 @@ h2.alert {
 .separator::after {
   content: '';
   flex: 1;
-  border-bottom: 1px solid hsl(215.5, 39.3%, 11%);
+  border-bottom: 1px solid hsla(220, 75%, 25%, 0.5);
 }
 
 .separator:not(:empty)::before {
   margin-right: 0.25em;
 }
 
-.separator:not(:empty)::after {
-  margin-left: 0.25em;
+.fieldset_legend {
+  background: hsl(0, 0%, 100%); // Chat background color
+
+  &:before {
+    background: hsl(0, 0%, 100%); // Chat background color
+  }
 }
 
-.examine_block {
-  background: rgba(0, 0, 0, 0.1);
-  border: 1px solid hsl(215.5, 39.3%, 11%);
-  margin: 7px 4px;
-  padding: 8px 12px;
-}
+.boxed_message {
+  background: hsl(220, 100%, 97.5%);
+  border-color: hsla(220, 75%, 25%, 0.5);
 
-.examine_block hr {
-  border: none;
-  background: hsl(0, 0%, 20%);
-  height: 1px;
-  margin: 8px 16px 8px 16px;
-}
-.examine_block .blockheader {
-  font-family: Verdana;
-  color: hsl(0, 0%, 0%);
-  display: block;
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.3em;
+  &.red_box {
+    background: hsl(0, 100%, 97.5%);
+    color: hsl(0, 45.8%, 27%);
+    border-color: hsla(0, 100%, 50%, 0.5);
+  }
+
+  &.green_box {
+    background: hsl(140, 100%, 97.5%);
+    color: hsl(120, 45.8%, 27%);
+    border-color: hsl(120, 100%, 33%, 0.5);
+  }
+
+  &.blue_box {
+    background: hsl(220, 100%, 97.5%);
+    color: hsl(225, 45.8%, 27%);
+    border-color: hsla(225, 100%, 50%, 0.5);
+  }
+
+  &.purple_box {
+    background: hsl(260, 100%, 97.5%);
+    color: hsl(260, 45.8%, 27%);
+    border-color: hsla(260, 100%, 50%, 0.5);
+  }
 }
 
 .tooltip {
@@ -1195,15 +1208,17 @@ $ooc_alert_text_colors: (
   'game': hsl(0, 100%, 35.7%),
 );
 
+$border-width: 4;
+
+$border-width-px: $border-width * 1px;
+
 @each $color-type, $color in $ooc_alert_text_colors {
   .ooc_alert_#{$color-type} {
     background: map.get($ooc_alert_bg_colors, $color-type);
     border: 1px solid map.get($ooc_alert_border_colors, $color-type);
-    margin: 8px;
-    padding:
-      8px 8px 8px 3,
-      2px;
-    color: hsl(0, 0%, 0%);
+    margin: var(--space-m);
+    padding: var(--space-m) var(--space-s);
+    color: var(--color-black);
     font-weight: bold;
     display: flex;
     flex-direction: column;
@@ -1212,6 +1227,16 @@ $ooc_alert_text_colors: (
   .ooc_alert_#{$color-type} .ooc_announcement_text {
     color: map.get($ooc_alert_text_colors, $color-type);
     padding: 0.5em 0 0 0.35em;
+  }
+  .ooc_alert_#{$color-type} .separator::before {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid map.get($ooc_alert_border_colors, $color-type);
+  }
+  .ooc_alert_#{$color-type} .separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid map.get($ooc_alert_border_colors, $color-type);
   }
 }
 

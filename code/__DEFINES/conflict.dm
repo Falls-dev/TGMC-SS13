@@ -61,6 +61,7 @@
 #define AMMO_FLAME (1<<9)
 ///Used to identify ammo that have intrinsec IFF properties
 #define AMMO_IFF (1<<10)
+#define GUN_IFF AMMO_IFF
 ///If the projectile from this ammo is hitscan
 #define AMMO_HITSCAN (1<<11)
 ///If the projectile does something with on_leave_turf()
@@ -75,6 +76,7 @@
 #define AMMO_SOUND_PITCH (1<<16)
 ///Used to identify ammo from sentry guns and other other automated sources
 #define AMMO_SENTRY (1<<17)
+#define AMMO_SKIPS_ZOMBIE (1<<18)
 
 //Gun defines for gun related thing. More in the projectile folder.
 //gun_features_flags
@@ -149,10 +151,10 @@
 #define SLOWDOWN_ARMOR_VERY_HEAVY 1
 
 //Marine armor defines
-#define MARINE_ARMOR_LIGHT list(MELEE = 35, BULLET = 50, LASER = 50, ENERGY = 40, BOMB = 10, BIO = 40, FIRE = 5, ACID = 40)
-#define MARINE_ARMOR_MEDIUM list(MELEE = 45, BULLET = 60, LASER = 60, ENERGY = 50, BOMB = 20, BIO = 45, FIRE = 10, ACID = 50)
-#define MARINE_ARMOR_HEAVY list(MELEE = 55, BULLET = 70, LASER = 70, ENERGY = 60, BOMB = 30, BIO = 50, FIRE = 15, ACID = 60)
-#define MARINE_HAT_ARMOR list(MELEE = 15, BULLET = 15, LASER = 15, ENERGY = 15, BOMB = 10, BIO = 5, FIRE = 5, ACID = 20)
+#define MARINE_ARMOR_LIGHT list(MELEE = 35, BULLET = 50, LASER = 50, ENERGY = 40, BOMB = 10, BIO = 40, FIRE = 45, ACID = 40)
+#define MARINE_ARMOR_MEDIUM list(MELEE = 45, BULLET = 60, LASER = 60, ENERGY = 50, BOMB = 20, BIO = 45, FIRE = 50, ACID = 50)
+#define MARINE_ARMOR_HEAVY list(MELEE = 55, BULLET = 70, LASER = 70, ENERGY = 60, BOMB = 30, BIO = 50, FIRE = 55, ACID = 60)
+#define MARINE_HAT_ARMOR list(MELEE = 15, BULLET = 15, LASER = 15, ENERGY = 15, BOMB = 10, BIO = 5, FIRE = 45, ACID = 20)
 
 //=================================================
 

@@ -402,6 +402,7 @@
 		/obj/vehicle/sealed/armored/multitile/som_tank,
 		/obj/vehicle/sealed/armored/multitile/campaign,
 		/obj/vehicle/sealed/armored/multitile/icc_lvrt,
+		/obj/vehicle/sealed/armored/multitile/mrap,
 	)
 
 	var/selected_vehicle = tgui_input_list(user, "Which vehicle do you want to spawn?", "Vehicle spawn", spawnable_vehicles)

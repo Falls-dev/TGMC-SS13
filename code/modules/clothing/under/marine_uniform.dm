@@ -16,6 +16,15 @@
 		"No Top" = "_r",
 	)
 
+/obj/item/clothing/under/marine/hyperscale
+	name = "\improper 8E Chameleon TGMC uniform"
+	desc = "A standard-issue, kevlar-weaved, hazmat-tested, EMF-augmented marine uniform BUT colorable with a facepaint! You suspect it's not as robust-proof as advertised."
+	icon_state = "hyperscale_marine_jumpsuit"
+	greyscale_colors = ARMOR_PALETTE_BLACK
+	greyscale_config = /datum/greyscale_config/marine_uniform
+	colorable_colors = ARMOR_PALETTES_LIST
+	colorable_allowed = ICON_STATE_VARIANTS_ALLOWED|PRESET_COLORS_ALLOWED
+
 /obj/item/clothing/under/marine/black_vest
 	starting_attachments = list(/obj/item/armor_module/storage/uniform/black_vest)
 
@@ -363,7 +372,6 @@
 	desc = "A beige suit with a red armband. Sturdy and thick, simply imposing. A mysterious crest emblazons it."
 	icon_state = "mercenary_heavy_uniform"
 	min_cold_protection_temperature = ICE_PLANET_MIN_COLD_PROTECTION_TEMPERATURE
-	soft_armor = list(MELEE = 10, BULLET = 10, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 1, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/under/marine/veteran/mercenary/miner
 	name = "mercenary miner fatigues"
@@ -587,6 +595,16 @@
 	worn_icon_state = "camo"
 	adjustment_variants = list(
 		"Down" = "_d",
+	)
+
+/obj/item/clothing/under/marine/bravo_hawaii
+	name = "\improper Bravo Hawaiian shirt"
+	desc = "A comfortable shirt for drinking beer on the beaches of LV, the label on the back says: 'Exclusive to Bravo, made by Chinese Colonian Children'"
+	icon_state = "bhavai"
+	worn_icon_state = "bhavai"
+	adjustment_variants = list(
+		"Rolled Sleeves" = "_h",
+		"No Sleeves" = "_d",
 	)
 
 /obj/item/clothing/under/marine/whites/blacks

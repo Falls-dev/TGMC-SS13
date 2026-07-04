@@ -67,6 +67,14 @@
 	)
 	idle_power_usage = 211
 
+/obj/machinery/vending/boozeomat/gold
+	name = "Golden Booze-O-Mat"
+	desc = "The beer machine with Bravo squad attributes won by the team 'SKIBIDI_LORDS_1337_BRAVO_GOYDA', it included Timur Livs, Max Bobinchik, Martin Barrett. Robust tournament took place on 11/15/2024 (2524?)"
+	icon_state = "gold-boozeomat"
+	icon_deny = "gold-boozeomat-deny"
+	icon_vend = "gold-boozeomat-vend"
+	product_slogans = "Браво вперде!!;Историю пишут победители!;Никто кроме нас!"
+
 /obj/machinery/vending/assist
 	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
 	icon_vend = "generic-vend"
@@ -145,24 +153,16 @@
 	icon_deny = "med-deny"
 	icon_vend = "med-vend"
 	//product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
-	req_access = list(ACCESS_MARINE_MEDBAY, ACCESS_MARINE_CHEMISTRY) //only doctors and researchers can access these
 	products = list(
 		"Pill Bottle" = list(
-			/obj/item/storage/pill_bottle/bicaridine = 15,
-			/obj/item/storage/pill_bottle/kelotane = 15,
-			/obj/item/storage/pill_bottle/tramadol = 15,
-			/obj/item/storage/pill_bottle/tricordrazine = 15,
-			/obj/item/storage/pill_bottle/combatmix = 15,
-			/obj/item/storage/pill_bottle/dylovene = 15,
-			/obj/item/storage/pill_bottle/inaprovaline = 15,
-			/obj/item/storage/pill_bottle/isotonic = 15,
-			/obj/item/storage/pill_bottle/paracetamol = 6,
-			/obj/item/storage/pill_bottle/dexalin = 6,
-			/obj/item/storage/pill_bottle/spaceacillin = 6,
-			/obj/item/storage/pill_bottle/alkysine = 6,
-			/obj/item/storage/pill_bottle/imidazoline = 6,
-			/obj/item/storage/pill_bottle/imialky = 6,
+			/obj/item/storage/pill_bottle/inaprovaline = -1,
+			/obj/item/storage/pill_bottle/dexalin = -1,
+			/obj/item/storage/pill_bottle/spaceacillin = -1,
+			/obj/item/storage/pill_bottle/alkysine = -1,
+			/obj/item/storage/pill_bottle/imidazoline = -1,
+			/obj/item/storage/pill_bottle/imialky = -1,
 			/obj/item/storage/pill_bottle/hypervene = 6,
+			/obj/item/storage/pill_bottle/quickclot = 4,
 			/obj/item/storage/pill_bottle/russian_red = 4,
 		),
 		"Hypospray" = list (
@@ -202,15 +202,27 @@
 			/obj/item/storage/reagent_tank/tricordrazine = 1,
 			/obj/item/storage/reagent_tank/bktt = 1,
 		),
-		"Misc" = list(
-			/obj/item/tool/research/xeno_analyzer = -1,
-			/obj/item/tool/research/excavation_tool = -1,
+		"Surgical Equipment" = list(
 			/obj/item/storage/pouch/surgery = -1,
 			/obj/item/armor_module/storage/uniform/surgery_webbing = -1,
 			/obj/item/reagent_containers/spray/surgery = -1,
-			/obj/item/tool/soap = 3,
-			/obj/item/clothing/glasses/hud/health = 6,
-			/obj/item/roller = 6,
+			/obj/item/tool/soap = 6,
+			/obj/item/tool/surgery/scalpel/manager = -1,
+			/obj/item/tool/surgery/hemostat = -1,
+			/obj/item/tool/surgery/retractor = -1,
+			/obj/item/tool/surgery/cautery = -1,
+			/obj/item/tool/surgery/circular_saw = -1,
+			/obj/item/tool/surgery/surgical_membrane = -1,
+			/obj/item/tool/surgery/bonegel = -1,
+			/obj/item/tool/surgery/bonesetter = -1,
+			/obj/item/tool/surgery/FixOVein = -1,
+			/obj/item/tool/surgery/suture = -1,
+		),
+		"Misc" = list(
+			/obj/item/tool/research/xeno_analyzer = -1,
+			/obj/item/tool/research/excavation_tool = -1,
+			/obj/item/clothing/glasses/hud/health = 15,
+			/obj/item/roller = 15,
 		),
 	)
 	idle_power_usage = 211
@@ -254,15 +266,8 @@
 			/obj/item/reagent_containers/glass/bottle/medicalnanites = -1,
 		),
 		"Pill Bottle" = list(
-			/obj/item/storage/pill_bottle/bicaridine = -1,
-			/obj/item/storage/pill_bottle/kelotane = -1,
-			/obj/item/storage/pill_bottle/tramadol = -1,
-			/obj/item/storage/pill_bottle/tricordrazine = -1,
-			/obj/item/storage/pill_bottle/dylovene = -1,
 			/obj/item/storage/pill_bottle/inaprovaline = -1,
 			/obj/item/storage/pill_bottle/isotonic = -1,
-			/obj/item/storage/pill_bottle/paracetamol = -1,
-			/obj/item/storage/pill_bottle/dexalin = -1,
 			/obj/item/storage/pill_bottle/spaceacillin = -1,
 			/obj/item/storage/pill_bottle/alkysine = -1,
 			/obj/item/storage/pill_bottle/imidazoline = -1,
@@ -278,13 +283,25 @@
 			/obj/item/stack/medical/heal_pack/gauze = -1,
 			/obj/item/stack/medical/splint = -1,
 		),
-		"Misc" = list(
-			/obj/item/tool/research/xeno_analyzer = -1,
-			/obj/item/tool/research/excavation_tool = -1,
+		"Surgical Equipment" = list(
 			/obj/item/storage/pouch/surgery = -1,
 			/obj/item/armor_module/storage/uniform/surgery_webbing = -1,
 			/obj/item/reagent_containers/spray/surgery = -1,
 			/obj/item/tool/soap = -1,
+			/obj/item/tool/surgery/scalpel/manager = -1,
+			/obj/item/tool/surgery/hemostat = -1,
+			/obj/item/tool/surgery/retractor = -1,
+			/obj/item/tool/surgery/cautery = -1,
+			/obj/item/tool/surgery/circular_saw = -1,
+			/obj/item/tool/surgery/surgical_membrane = -1,
+			/obj/item/tool/surgery/bonegel = -1,
+			/obj/item/tool/surgery/bonesetter = -1,
+			/obj/item/tool/surgery/FixOVein = -1,
+			/obj/item/tool/surgery/suture = -1,
+		),
+		"Misc" = list(
+			/obj/item/tool/research/xeno_analyzer = -1,
+			/obj/item/tool/research/excavation_tool = -1,
 			/obj/item/clothing/glasses/hud/health = -1,
 			/obj/item/roller = -1,
 		),
@@ -640,6 +657,9 @@
 	isshared = TRUE
 
 /obj/machinery/vending/boozeomat/nopower
+	use_power = NO_POWER_USE
+
+/obj/machinery/vending/boozeomat/gold/nopower
 	use_power = NO_POWER_USE
 
 /obj/machinery/vending/assist/nopower

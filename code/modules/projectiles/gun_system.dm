@@ -545,7 +545,9 @@
 	//ammo level overlays
 	if(ammo_level_icon && length(chamber_items) && rounds > 0 && chamber_items[current_chamber_position].loc == src)
 		var/remaining = CEILING(min(rounds / max_rounds, 1) * 100, 25)
-		var/image/ammo_overlay = image(icon, icon_state = "[ammo_level_icon]_[remaining]", pixel_x = icon_overlay_x_offset, pixel_y = icon_overlay_y_offset)
+		var/image/ammo_overlay = image(icon, icon_state = "[ammo_level_icon]_[remaining]")
+		ammo_overlay.pixel_w = icon_overlay_x_offset
+		ammo_overlay.pixel_z = icon_overlay_y_offset
 		. += ammo_overlay
 
 /obj/item/weapon/gun/update_worn_icon_state()
@@ -1284,9 +1286,12 @@
 			return FALSE
 		if(get_magazine_reload_delay(new_mag) > 0 && user && !force)
 			to_chat(user, span_notice("You begin reloading [src] with [new_mag]."))
+			ADD_TRAIT(user, TRAIT_IS_RELOADING, REF(src))
 			if(!do_after(user, get_magazine_reload_delay(new_mag), NONE, user))
+				REMOVE_TRAIT(user, TRAIT_IS_RELOADING, REF(src))
 				to_chat(user, span_warning("Your reload was interupted!"))
 				return FALSE
+			REMOVE_TRAIT(user, TRAIT_IS_RELOADING, REF(src))
 		if(CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_ROTATES_CHAMBER))
 			for(var/i = 1, i <= length(chamber_items), i++)
 				if(chamber_items[i])
@@ -1321,9 +1326,12 @@
 			if(CHECK_BITFIELD(mag.magazine_flags, MAGAZINE_HANDFUL))
 				if(mag.reload_delay > 0 && user && !force)
 					to_chat(user, span_notice("You begin reloading [src] with [mag]."))
+					ADD_TRAIT(user, TRAIT_IS_RELOADING, REF(src))
 					if(!do_after(user, mag.reload_delay, NONE, user))
+						REMOVE_TRAIT(user, TRAIT_IS_RELOADING, REF(src))
 						to_chat(user, span_warning("Your reload was interupted!"))
 						return FALSE
+					REMOVE_TRAIT(user, TRAIT_IS_RELOADING, REF(src))
 				if(mag.current_rounds > 1)
 					items_to_insert += mag.create_handful(null, 1)
 				else
@@ -1772,7 +1780,7 @@
 		projectile_to_fire.point_blank_range = 0
 	if(isliving(firer))
 		var/mob/living/living_firer = firer
-		if(living_firer.has_status_effect(STATUS_EFFECT_STAGGER))
+		if(living_firer.IsStaggered())
 			projectile_to_fire.damage *= STAGGER_DAMAGE_MULTIPLIER
 
 ///Sets the projectile accuracy and scatter

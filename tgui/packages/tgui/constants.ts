@@ -53,7 +53,6 @@ export const CSS_COLORS = [
   'black',
   'blue',
   'brown',
-  'darkred',
   'good',
   'green',
   'grey',

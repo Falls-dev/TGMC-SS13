@@ -76,6 +76,7 @@
 // Subsystems shutdown in the reverse of the order they initialize in
 // The numbers just define the ordering, they are meaningless otherwise.
 
+#define INIT_ORDER_XKEYSCORE -10
 #define INIT_ORDER_DISCORD 30
 #define INIT_ORDER_GARBAGE 27
 #define INIT_ORDER_DBCORE 25
@@ -155,6 +156,7 @@
 #define FIRE_PRIORITY_CHAT 400
 #define FIRE_PRIORITY_LOOPINGSOUND 405
 #define FIRE_PRIORITY_RUNECHAT 410
+#define FIRE_PRIORITY_TTS 425
 #define FIRE_PRIORITY_AUTOFIRE 450
 #define FIRE_PRIORITY_OVERLAYS 500
 #define FIRE_PRIORITY_TIMER 700

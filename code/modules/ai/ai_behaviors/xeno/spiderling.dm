@@ -1,6 +1,5 @@
 /datum/ai_behavior/spiderling
 	upper_maintain_dist = 1
-	escort_upper_maintain_dist = 0
 	lower_maintain_dist = 1
 	base_action = ESCORTING_ATOM
 	identifier = IDENTIFIER_XENO
@@ -30,6 +29,8 @@
 /datum/ai_behavior/spiderling/cleanup_signals()
 	. = ..()
 	UnregisterSignal(mob_parent, list(COMSIG_OBSTRUCTED_MOVE, COMSIG_SPIDERLING_CHANGE_ORDER))
+	if(!escorted_atom)
+		return
 	UnregisterSignal(escorted_atom, list(
 		COMSIG_XENOMORPH_REST,
 		COMSIG_XENOMORPH_UNREST,

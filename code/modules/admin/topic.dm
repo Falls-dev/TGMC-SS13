@@ -442,6 +442,10 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 				newmob = M.change_mob_type(/mob/living/carbon/xenomorph/queen, location, null, delmob)
 			if("king")
 				newmob = M.change_mob_type(/mob/living/carbon/xenomorph/king, location, null, delmob)
+			if("dragon")
+				newmob = M.change_mob_type(/mob/living/carbon/xenomorph/dragon, location, null, delmob)
+			if("pyrogen")
+				newmob = M.change_mob_type(/mob/living/carbon/xenomorph/pyrogen, location,null , delmob)
 			if("behemoth")
 				newmob = M.change_mob_type(/mob/living/carbon/xenomorph/behemoth, location, null, delmob)
 			if("human")
@@ -1218,7 +1222,7 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 				for(var/i in 1 to number)
 					if(path in typesof(/turf))
 						var/turf/O = target
-						var/turf/N = O.change_turf(path)
+						var/turf/N = O.ChangeTurf(path)
 						if(N && obj_name)
 							N.name = obj_name
 					else

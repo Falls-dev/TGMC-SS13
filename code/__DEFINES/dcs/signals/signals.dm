@@ -170,6 +170,8 @@
 #define COMSIG_CLIENT_MOB_LOGOUT "client_mob_logout" //! Called on the client that just logged out from the mob: (/mob)
 #define COMSIG_CLIENT_GET_LARVA_QUEUE_POSITION "client_get_larva_queue_position" //! from /datum/component/larva_queue
 #define COMSIG_CLIENT_SET_LARVA_QUEUE_POSITION "client_set_larva_queue_position" //! from /datum/component/larva_queue
+// from /client/proc/change_view() : (new_size)
+#define COMSIG_VIEW_SET "view_set"
 
 // /atom signals
 #define COMSIG_ATOM_ATTACKBY "atom_attackby"			        //from base of atom/attackby(): (/obj/item, /mob/living)
@@ -320,7 +322,7 @@
 #define COMSIG_MOVABLE_SHUTTLE_CRUSH "movable_shuttle_crush"
 
 // /turf signals
-#define COMSIG_TURF_CHANGE "turf_change"						//from base of turf/change_turf(): (path, list/new_baseturfs, flags, list/transferring_comps)
+#define COMSIG_TURF_CHANGE "turf_change"						//from base of turf/ChangeTurf(): (path, list/new_baseturfs, flags, list/transferring_comps)
 #define COMSIG_TURF_WEED_REMOVED "turf_weed_removed"
 #define COMSIG_TURF_THROW_ENDED_HERE "turf_throw_ended_here"						//From atom/movable/throw_at, sent right after a throw ends
 #define COMSIG_TURF_JUMP_ENDED_HERE "turf_jump_ended_here"      //from datum/element/jump/end_jump(): (jumper)
@@ -616,8 +618,6 @@
 #define COMSIG_LIVING_WEEDS_AT_LOC_CREATED "living_weeds_at_loc_created"	///from obj/alien/weeds/Initialize()
 #define COMSIG_LIVING_WEEDS_ADJACENT_REMOVED "living_weeds_adjacent_removed"	///from obj/alien/weeds/Destroy()
 
-#define COMSIG_LIVING_UPDATE_PLANE_BLUR "living_update_plane_blur"
-	#define COMPONENT_CANCEL_BLUR (1<<0)
 ///From base of mob/living/set_jump_component()
 #define COMSIG_LIVING_SET_JUMP_COMPONENT "living_set_jump_component"
 
@@ -878,3 +878,28 @@
 
 /// From /area/proc/fire_alert() and /area/proc/fire_reset()
 #define COMSIG_AREA_FIRE_ALARM_SET "area_fire_alarm_set"
+
+/// Build/order designator signals.
+#define COMSIG_GLOB_HOLO_BUILD_INITIALIZED "!holo_build_initialized"
+#define COMSIG_GLOB_DESIGNATED_TARGET_SET "!designated_target_set"
+#define COMSIG_MOB_INTERACTION_DESIGNATED "mob_interaction_designated"
+#define COMSIG_DO_OVERWATCH_RADIAL "do_overwatch_radial"
+	#define OVERWATCH_RADIAL_HIDE (1<<0)
+
+///See if we have any priority escort targets
+#define COMSIG_NPC_FIND_NEW_ESCORT "npc_find_new_escort"
+
+///From /atom/add_slaved_npc()
+#define COMSIG_COMPONENT_ADD_NEW_SLAVE_NPC "component_add_new_slave_npc"
+
+#define COMSIG_ATOM_CHECK_CLIMBABLE "atom_check_climbable"
+#define COMSIG_ATOM_TRY_CLIMBABLE "atom_try_climbable"
+	#define COMPONENT_MOVABLE_CAN_CLIMB (1<<0)
+	#define TURF_COVERED (1<<0)
+
+#define COMSIG_MOB_DROPPING_ITEM "mob_dropping_item"
+#define COMSIG_FACE_HUGGER_DEATH "face_hugger_death"
+#define COMSIG_GLOB_AI_ZOMBIE_RALLY "!ai_zombie_rally"
+#define COMSIG_GLOB_ZOMBIE_TUNNEL_DESTROYED "!zombie_tunnel_destroyed"
+#define COMSIG_PUPPET_CHANGE_ALL_ORDER "puppet_change_all_order"
+#define COMSIG_PUPPET_CHANGE_ORDER "puppet_change_order"

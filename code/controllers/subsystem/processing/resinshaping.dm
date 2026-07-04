@@ -29,6 +29,9 @@ SUBSYSTEM_DEF(resinshaping)
 	SIGNAL_HANDLER
 	active = FALSE
 	UnregisterSignal(SSdcs, list(COMSIG_GLOB_OPEN_SHUTTERS_EARLY, COMSIG_GLOB_OPEN_TIMED_SHUTTERS_LATE,COMSIG_GLOB_TADPOLE_LANDED_OUT_LZ,COMSIG_GLOB_DROPPOD_LANDED,COMSIG_GLOB_CANTERBURRY_LANDING))
+	for(var/mob/living/carbon/xenomorph/xeno AS in GLOB.alive_xeno_list)
+		for(var/datum/action/ability/activable/xeno/secrete_resin/resin_action AS in xeno.actions)
+			resin_action.end_resin_drag()
 
 /datum/controller/subsystem/resinshaping/Initialize()
 	RegisterSignals(SSdcs, list(COMSIG_GLOB_OPEN_SHUTTERS_EARLY, COMSIG_GLOB_OPEN_TIMED_SHUTTERS_LATE,COMSIG_GLOB_TADPOLE_LANDED_OUT_LZ,COMSIG_GLOB_DROPPOD_LANDED,COMSIG_GLOB_CANTERBURRY_LANDING), PROC_REF(toggle_off))

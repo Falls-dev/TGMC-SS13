@@ -308,13 +308,15 @@
 	load_player_predator_info()
 //RUTGMC EDIT
 
+	check_ip_intel()
+
 	send_resources()
 
 	apply_clickcatcher()
 
 	if(prefs.lastchangelog != GLOB.changelog_hash) //bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, span_info("You have unread updates in the changelog."))
-		if(CONFIG_GET(flag/aggressive_changelog))
+		if(CONFIG_GET(flag/aggressive_changelog) || prefs.auto_open_changelogs)
 			changes()
 		else
 			winset(src, "infowindow.changelog", "font-style=bold")
@@ -373,6 +375,11 @@
 	Master.UpdateTickRate()
 
 	fully_created = TRUE
+
+	if(CONFIG_GET(flag/ooc_country_flags))
+		spawn(0)
+			if(src)
+				ip2country(address, src)
 
 //////////////////
 //  DISCONNECT  //
@@ -500,10 +507,15 @@
 /client/proc/send_resources()
 #if (PRELOAD_RSC == 0)
 	var/static/next_external_rsc = 0
+	var/static/list/external_rsc_url_keys = list()
 	var/list/external_rsc_urls = CONFIG_GET(keyed_list/external_rsc_urls)
-	if(length(external_rsc_urls))
-		next_external_rsc = WRAP(next_external_rsc+1, 1, length(external_rsc_urls) + 1)
-		preload_rsc = external_rsc_urls[next_external_rsc]
+	if(!length(external_rsc_url_keys) && length(external_rsc_urls))
+		for(var/url in external_rsc_urls)
+			if(external_rsc_urls[url])
+				external_rsc_url_keys += url
+	if(length(external_rsc_url_keys))
+		next_external_rsc = WRAP(next_external_rsc + 1, 1, length(external_rsc_url_keys) + 1)
+		preload_rsc = external_rsc_url_keys[next_external_rsc]
 #endif
 
 	spawn (10) //removing this spawn causes all clients to not get verbs.
@@ -855,34 +867,43 @@
 				if(SAY_CHANNEL)
 					var/say = tgui_say_create_open_command(SAY_CHANNEL)
 					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[say]")
+					winset(src, "tgui_say.browser", "focus=true")
 				if(RADIO_CHANNEL)
 					var/radio = tgui_say_create_open_command(RADIO_CHANNEL)
 					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[radio]")
+					winset(src, "tgui_say.browser", "focus=true")
 				if(ME_CHANNEL)
 					var/me = tgui_say_create_open_command(ME_CHANNEL)
 					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[me]")
+					winset(src, "tgui_say.browser", "focus=true")
 				if(OOC_CHANNEL)
 					var/ooc = tgui_say_create_open_command(OOC_CHANNEL)
 					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[ooc]")
+					winset(src, "tgui_say.browser", "focus=true")
 				if(LOOC_CHANNEL)
 					var/looc = tgui_say_create_open_command(LOOC_CHANNEL)
 					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[looc]")
+					winset(src, "tgui_say.browser", "focus=true")
 				if(MOOC_CHANNEL)
 					var/mooc = tgui_say_create_open_command(MOOC_CHANNEL)
 					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[mooc]")
+					winset(src, "tgui_say.browser", "focus=true")
 				if(XOOC_CHANNEL)
 					var/xooc = tgui_say_create_open_command(XOOC_CHANNEL)
 					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[xooc]")
+					winset(src, "tgui_say.browser", "focus=true")
 				if(ADMIN_CHANNEL)
 					if(holder)
 						var/asay = tgui_say_create_open_command(ADMIN_CHANNEL)
 						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[asay]")
+						winset(src, "tgui_say.browser", "focus=true")
 					else
 						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=")
 				if(MENTOR_CHANNEL)
 					if(holder)
 						var/msay = tgui_say_create_open_command(MENTOR_CHANNEL)
-						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[msay]")
+						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[msay];")
+						winset(src, "tgui_say.browser", "focus=true")
 					else
 						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=")
 				if(DEAD_CHANNEL)
@@ -902,6 +923,7 @@
 		new_size = CONFIG_GET(string/default_view_square)
 
 	view = new_size
+	SEND_SIGNAL(src, COMSIG_VIEW_SET, new_size)
 	apply_clickcatcher()
 	mob.reload_fullscreens()
 	attempt_auto_fit_viewport()
@@ -1061,3 +1083,11 @@ GLOBAL_VAR_INIT(automute_on, null)
 		if("Set-Tab")
 			stat_tab = payload["tab"]
 			SSstatpanels.immediate_send_stat_data(src)
+
+/client/proc/check_ip_intel()
+	set waitfor = 0
+	if(CONFIG_GET(string/ipintel_email))
+		var/datum/ipintel/res = get_ip_intel(address)
+		if(res.intel >= CONFIG_GET(number/ipintel_rating_bad))
+			message_admins(span_adminnotice("Proxy Detection: [key_name_admin(src)] IP intel rated [round(res.intel * 100)]% likely to be a Proxy/VPN."))
+		ip_intel = res.intel

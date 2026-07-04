@@ -27,6 +27,11 @@
 
 /obj/machinery/bot/Initialize(mapload)
 	. = ..()
+	if(SStts.tts_enabled)
+		var/static/todays_voice
+		if(!todays_voice)
+			todays_voice = pick(SStts.available_speakers)
+		voice = todays_voice
 	RegisterSignal(src, COMSIG_AREA_EXITED, PROC_REF(turn_around))
 	update_icon()
 	if(is_active)

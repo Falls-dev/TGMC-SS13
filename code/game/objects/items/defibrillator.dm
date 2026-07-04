@@ -20,6 +20,8 @@
 	var/defibrillator_healing = DEFIBRILLATOR_BASE_HEALING_VALUE
 	///How much charge is used on a shock
 	var/charge_cost = 66
+	//the time you need to wait from the moment you click on the patient until it is revived
+	var/shock_time = 7 SECONDS
 	///The defibrillator's power cell
 	var/obj/item/cell/dcell = null
 	///Var for quickly creating sparks on shock
@@ -145,7 +147,7 @@
 		balloon_alert(user, "busy")
 		return
 
-	if(!COOLDOWN_CHECK(src, defib_cooldown))
+	if(!COOLDOWN_FINISHED(src, defib_cooldown))
 		balloon_alert(user, "recharging")
 		return
 
@@ -199,7 +201,7 @@
 	span_notice("You start setting up the paddles on [patient]'s chest."))
 	playsound(get_turf(src),'sound/items/defib_charge.ogg', 45, 0) // Don't vary this, it should be exactly 7 seconds
 
-	if(!do_after(user, 7 SECONDS, NONE, patient, BUSY_ICON_FRIENDLY, BUSY_ICON_MEDICAL))
+	if(!do_after(user, shock_time, NONE, patient, BUSY_ICON_FRIENDLY, BUSY_ICON_MEDICAL))
 		to_chat(user, span_warning("You stop setting up the paddles on [patient]'s chest."))
 		return
 
@@ -339,3 +341,11 @@
 	icon_state = "civ_defib"
 	charge_cost = 100
 	advanced = TRUE
+
+/obj/item/defibrillator/compact
+	equip_slot_flags = ITEM_SLOT_POCKET
+	w_class = WEIGHT_CLASS_SMALL
+	icon_state = "pocket_defib" //спасибо tarsonis_raff и lorddeferson за иконку
+	charge_cost = 250
+	defibrillator_healing = 2
+	shock_time = 3 SECONDS

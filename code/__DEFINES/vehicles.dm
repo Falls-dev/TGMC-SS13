@@ -24,10 +24,11 @@
 ///Will this car kidnap people by ramming into them?
 #define CAN_KIDNAP (1<<0)
 
-#define TURRET_TYPE_DROIDLASER 3
-#define TURRET_TYPE_HEAVY 2
-#define TURRET_TYPE_LIGHT 1
 #define TURRET_TYPE_EXPLOSIVE 0
+#define TURRET_TYPE_LIGHT 1
+#define TURRET_TYPE_HEAVY 2
+#define TURRET_TYPE_DROIDLASER 3
+#define TURRET_TYPE_CLAW 4
 
 #define CLOAK_ABILITY 0
 #define CARGO_ABILITY 1
@@ -63,6 +64,8 @@
 #define ARMORED_WRECKABLE (1<<9)
 ///Is currently a wreck
 #define ARMORED_IS_WRECK (1<<10)
+///Vehicles with this flag hurt themselves when ramming walls
+#define ARMORED_SELF_WALL_DAMAGE (1<<13)
 
 #define MODULE_PRIMARY (1<<0)
 #define MODULE_SECONDARY (1<<1)

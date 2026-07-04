@@ -66,6 +66,7 @@
 	// The timer is needed for when the signal is sent
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_START, src)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_AI_MINION_RALLY, src)
+	global_rally_zombies(src, TRUE)
 	log_game("[key_name(reason)] has enabled the nuke at [AREACOORD(src)]")
 
 ///Disables nuke timer
@@ -203,6 +204,8 @@
 	data["red"] = r_auth
 	data["green"] = g_auth
 	data["blue"] = b_auth
+	data["current_site"] = get_area_name(get_area(src))
+	data["nuke_ineligible_site"] = GLOB.nuke_ineligible_site
 
 	var/safe_text = (safety) ? "Safe" : "Engaged"
 	var/status = "Unknown"

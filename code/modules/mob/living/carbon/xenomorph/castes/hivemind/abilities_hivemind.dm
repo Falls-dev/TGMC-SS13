@@ -110,7 +110,7 @@ GLOBAL_LIST_INIT(hivemind_resin_images_list, list(
 	return ..()
 
 /datum/action/ability/xeno_action/watch_xeno/hivemind/can_use_action(silent = FALSE, override_flags)
-	if(TIMER_COOLDOWN_CHECK(owner, COOLDOWN_HIVEMIND_MANIFESTATION))
+	if(TIMER_COOLDOWN_RUNNING(owner, COOLDOWN_HIVEMIND_MANIFESTATION))
 		return FALSE
 	return ..()
 

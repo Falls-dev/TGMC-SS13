@@ -41,6 +41,10 @@
 			break
 	update_icon()
 
+/obj/structure/ladder/examine(mob/user)
+	. = ..()
+	. += span_info("[EXAMINE_HINT("Left-click")] it to start moving up or down.")
+
 /obj/structure/ladder/Destroy()
 	if(down)
 		down.up = null

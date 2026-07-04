@@ -40,7 +40,7 @@
 			/obj/item/ammo_magazine/packet/mateba = -1,
 			/obj/item/ammo_magazine/flamer_tank/backtank/X = -1,
 			/obj/item/ammo_magazine/flamer_tank/backtank/G = -1,
-			/obj/item/weapon/twohanded/rocketsledge = -1,
+			/obj/item/weapon/twohanded/sledgehammer/rocketsledge = -1,
 			/obj/item/weapon/twohanded/chainsaw = -1,
 			/obj/item/weapon/twohanded/chainsaw/sword = -1,
 			/obj/item/explosive/grenade/training = -1,
@@ -84,7 +84,6 @@
 		),
 		"Equipment" = list(
 			/obj/item/clothing/glasses/hud/xenohud = -1,
-			/obj/item/clothing/glasses/night/imager_goggles = -1,
 			/obj/item/clothing/glasses/night_vision = -1,
 			/obj/item/cell/night_vision_battery = -1,
 			/obj/item/clothing/mask/gas/swat = -1,

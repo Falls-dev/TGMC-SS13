@@ -2,23 +2,28 @@
 GLOBAL_LIST_EMPTY(all_huds)
 
 //GLOBAL HUD LIST
-GLOBAL_LIST_INIT_TYPED(huds, /datum/atom_hud, list(
-	DATA_HUD_BASIC = new /datum/atom_hud/simple,
-	DATA_HUD_MEDICAL_BASIC = new /datum/atom_hud/medical/basic,
-	DATA_HUD_MEDICAL_ADVANCED = new /datum/atom_hud/medical/advanced,
-	DATA_HUD_MEDICAL_ADVANCED_SYNTH = new /datum/atom_hud/medical/advanced/synthetic,
-	DATA_HUD_MEDICAL_OBSERVER = new /datum/atom_hud/medical/observer,
-	DATA_HUD_XENO_INFECTION = new /datum/atom_hud/xeno_infection,
-	DATA_HUD_XENO_REAGENTS = new /datum/atom_hud/xeno_reagents,
-	DATA_HUD_XENO_STATUS = new /datum/atom_hud/xeno,
-	DATA_HUD_SQUAD_TERRAGOV = new /datum/atom_hud/squad,
-	DATA_HUD_ORDER = new /datum/atom_hud/order,
-	DATA_HUD_MEDICAL_PAIN = new /datum/atom_hud/medical/pain,
-	DATA_HUD_XENO_DEBUFF = new /datum/atom_hud/xeno_debuff,
-	DATA_HUD_XENO_HEART = new /datum/atom_hud/xeno_heart,
-	DATA_HUD_HUNTER = new /datum/atom_hud/hunter_hud,
-	DATA_HUD_HUNTER_CLAN = new /datum/atom_hud/hunter_clan
-	))
+GLOBAL_LIST_INIT_TYPED(huds, /datum/atom_hud, _init_global_huds())
+
+/proc/_init_global_huds()
+    var/list/L = new /list(15)
+
+    L[DATA_HUD_BASIC] = new /datum/atom_hud/simple
+    L[DATA_HUD_MEDICAL_BASIC] = new /datum/atom_hud/medical/basic
+    L[DATA_HUD_MEDICAL_ADVANCED] = new /datum/atom_hud/medical/advanced
+    L[DATA_HUD_MEDICAL_ADVANCED_SYNTH] = new /datum/atom_hud/medical/advanced/synthetic
+    L[DATA_HUD_MEDICAL_OBSERVER] = new /datum/atom_hud/medical/observer
+    L[DATA_HUD_XENO_INFECTION] = new /datum/atom_hud/xeno_infection
+    L[DATA_HUD_XENO_REAGENTS] = new /datum/atom_hud/xeno_reagents
+    L[DATA_HUD_XENO_STATUS] = new /datum/atom_hud/xeno
+    L[DATA_HUD_SQUAD_TERRAGOV] = new /datum/atom_hud/squad
+    L[DATA_HUD_ORDER] = new /datum/atom_hud/order
+    L[DATA_HUD_MEDICAL_PAIN] = new /datum/atom_hud/medical/pain
+    L[DATA_HUD_XENO_DEBUFF] = new /datum/atom_hud/xeno_debuff
+    L[DATA_HUD_XENO_HEART] = new /datum/atom_hud/xeno_heart
+    L[DATA_HUD_HUNTER] = new /datum/atom_hud/hunter_hud
+    L[DATA_HUD_HUNTER_CLAN] = new /datum/atom_hud/hunter_clan
+
+    return L
 
 /datum/atom_hud
 	var/list/atom/hudatoms = list() //list of all atoms which display this hud

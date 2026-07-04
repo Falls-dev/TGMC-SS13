@@ -96,8 +96,13 @@
 	xeno_owner.mutation_toxin_reagent = injected_reagent // Use separate variable to avoid conflicts
 
 /datum/action/ability/xeno_action/mutation/toxin/update_button_icon()
-	var/atom/A = xeno_owner.mutation_toxin_reagent
-	action_icon_state = initial(A.name)
+	if(!xeno_owner)
+		return ..()
+	var/reagent_type = xeno_owner.mutation_toxin_reagent || injected_reagent
+	var/datum/reagent/toxin/reagent = ispath(reagent_type) ? GLOB.chemical_reagents_list[reagent_type] : reagent_type
+	if(!reagent)
+		reagent = GLOB.chemical_reagents_list[injected_reagent]
+	action_icon_state = initial(reagent.name)
 	return ..()
 
 /datum/action/ability/xeno_action/mutation/toxin/action_activate()

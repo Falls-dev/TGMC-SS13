@@ -154,9 +154,13 @@
 	READ_FILE(S["clientfps"], clientfps)
 	READ_FILE(S["parallax"], parallax)
 	READ_FILE(S["tooltips"], tooltips)
+	READ_FILE(S["sound_tts"], sound_tts)
+	READ_FILE(S["volume_tts"], volume_tts)
+	READ_FILE(S["radio_tts_flags"], radio_tts_flags)
 	READ_FILE(S["fast_mc_refresh"], fast_mc_refresh)
 	READ_FILE(S["split_admin_tabs"], split_admin_tabs)
 	READ_FILE(S["hear_ooc_anywhere_as_staff"], hear_ooc_anywhere_as_staff)
+	READ_FILE(S["show_ooc_country_flag"], show_ooc_country_flag)
 
 	READ_FILE(S["key_bindings"], key_bindings)
 	READ_FILE(S["slot_draw_order"], slot_draw_order_pref)
@@ -175,11 +179,12 @@
 	READ_FILE(S["see_rc_emotes"], see_rc_emotes)
 
 	// Tgui options
-	READ_FILE(S["tgui_fancy"], tgui_fancy)
 	READ_FILE(S["tgui_lock"], tgui_lock)
+	READ_FILE(S["ui_scale"], ui_scale)
 	READ_FILE(S["tgui_input"], tgui_input)
 	READ_FILE(S["tgui_input_big_buttons"], tgui_input_big_buttons)
 	READ_FILE(S["tgui_input_buttons_swap"], tgui_input_buttons_swap)
+	READ_FILE(S["auto_open_changelogs"], auto_open_changelogs)
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -224,6 +229,10 @@
 	clientfps = sanitize_integer(clientfps, 0, 240, initial(clientfps))
 	parallax = sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, null)
 	tooltips = sanitize_integer(tooltips, FALSE, TRUE, initial(tooltips))
+	sound_tts = sanitize_inlist(sound_tts, GLOB.all_tts_options, initial(sound_tts))
+	volume_tts = sanitize_integer(volume_tts, 1, 100, initial(volume_tts))
+	radio_tts_flags = sanitize_bitfield(radio_tts_flags, GLOB.all_radio_tts_options, (RADIO_TTS_SL | RADIO_TTS_SQUAD | RADIO_TTS_COMMAND | RADIO_TTS_HIVEMIND))
+	accessible_tgui_themes = sanitize_integer(accessible_tgui_themes, FALSE, TRUE, initial(accessible_tgui_themes))
 
 	key_bindings = sanitize_islist(key_bindings, list())
 	if(!length(key_bindings))
@@ -244,15 +253,17 @@
 	see_chat_non_mob = sanitize_integer(see_chat_non_mob, FALSE, TRUE, initial(see_chat_non_mob))
 	see_rc_emotes = sanitize_integer(see_rc_emotes, FALSE, TRUE, initial(see_rc_emotes))
 
-	tgui_fancy = sanitize_integer(tgui_fancy, FALSE, TRUE, initial(tgui_fancy))
-	tgui_lock = sanitize_integer(tgui_fancy, FALSE, TRUE, initial(tgui_lock))
+	tgui_lock = sanitize_integer(tgui_lock, FALSE, TRUE, initial(tgui_lock))
+	ui_scale = sanitize_integer(ui_scale, FALSE, TRUE, initial(ui_scale))
 	tgui_input = sanitize_integer(tgui_input, FALSE, TRUE, initial(tgui_input))
 	tgui_input_big_buttons = sanitize_integer(tgui_input_big_buttons, FALSE, TRUE, initial(tgui_input_big_buttons))
 	tgui_input_buttons_swap = sanitize_integer(tgui_input_buttons_swap, FALSE, TRUE, initial(tgui_input_buttons_swap))
+	auto_open_changelogs = sanitize_integer(auto_open_changelogs, FALSE, TRUE, initial(auto_open_changelogs))
 
 	fast_mc_refresh = sanitize_integer(fast_mc_refresh, FALSE, TRUE, initial(fast_mc_refresh))
 	split_admin_tabs = sanitize_integer(split_admin_tabs, FALSE, TRUE, initial(split_admin_tabs))
 	hear_ooc_anywhere_as_staff = sanitize_integer(hear_ooc_anywhere_as_staff, FALSE, TRUE, initial(hear_ooc_anywhere_as_staff))
+	show_ooc_country_flag = sanitize_integer(show_ooc_country_flag, FALSE, TRUE, initial(show_ooc_country_flag))
 	return TRUE
 
 
@@ -311,6 +322,9 @@
 	clientfps = sanitize_integer(clientfps, 0, 240, initial(clientfps))
 	parallax = sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, null)
 	tooltips = sanitize_integer(tooltips, FALSE, TRUE, initial(tooltips))
+	sound_tts = sanitize_inlist(sound_tts, GLOB.all_tts_options, initial(sound_tts))
+	volume_tts = sanitize_integer(volume_tts, 1, 100, initial(volume_tts))
+	radio_tts_flags = sanitize_bitfield(radio_tts_flags, GLOB.all_radio_tts_options, (RADIO_TTS_SL | RADIO_TTS_SQUAD | RADIO_TTS_COMMAND | RADIO_TTS_HIVEMIND))
 
 	mute_self_combat_messages = sanitize_integer(mute_self_combat_messages, FALSE, TRUE, initial(mute_self_combat_messages))
 	mute_others_combat_messages = sanitize_integer(mute_others_combat_messages, FALSE, TRUE, initial(mute_others_combat_messages))
@@ -324,8 +338,8 @@
 	see_chat_non_mob = sanitize_integer(see_chat_non_mob, FALSE, TRUE, initial(see_chat_non_mob))
 	see_rc_emotes = sanitize_integer(see_rc_emotes, FALSE, TRUE, initial(see_rc_emotes))
 
-	tgui_fancy = sanitize_integer(tgui_fancy, FALSE, TRUE, initial(tgui_fancy))
-	tgui_lock = sanitize_integer(tgui_fancy, FALSE, TRUE, initial(tgui_lock))
+	tgui_lock = sanitize_integer(tgui_lock, FALSE, TRUE, initial(tgui_lock))
+	ui_scale = sanitize_integer(ui_scale, FALSE, TRUE, initial(ui_scale))
 	tgui_input = sanitize_integer(tgui_input, FALSE, TRUE, initial(tgui_input))
 	tgui_input_big_buttons = sanitize_integer(tgui_input_big_buttons, FALSE, TRUE, initial(tgui_input_big_buttons))
 	tgui_input_buttons_swap = sanitize_integer(tgui_input_buttons_swap, FALSE, TRUE, initial(tgui_input_buttons_swap))
@@ -334,6 +348,7 @@
 	fast_mc_refresh = sanitize_integer(fast_mc_refresh, FALSE, TRUE, initial(fast_mc_refresh))
 	split_admin_tabs = sanitize_integer(split_admin_tabs, FALSE, TRUE, initial(split_admin_tabs))
 	hear_ooc_anywhere_as_staff = sanitize_integer(hear_ooc_anywhere_as_staff, FALSE, TRUE, initial(hear_ooc_anywhere_as_staff))
+	show_ooc_country_flag = sanitize_integer(show_ooc_country_flag, FALSE, TRUE, initial(show_ooc_country_flag))
 
 	WRITE_FILE(S["default_slot"], default_slot)
 	WRITE_FILE(S["lastchangelog"], lastchangelog)
@@ -376,6 +391,9 @@
 	WRITE_FILE(S["clientfps"], clientfps)
 	WRITE_FILE(S["parallax"], parallax)
 	WRITE_FILE(S["tooltips"], tooltips)
+	WRITE_FILE(S["sound_tts"], sound_tts)
+	WRITE_FILE(S["volume_tts"], volume_tts)
+	WRITE_FILE(S["radio_tts_flags"], radio_tts_flags)
 	WRITE_FILE(S["slot_draw_order"], slot_draw_order_pref)
 	WRITE_FILE(S["status_toggle_flags"], status_toggle_flags)
 
@@ -390,16 +408,18 @@
 	WRITE_FILE(S["see_rc_emotes"], see_rc_emotes)
 
 	// Tgui options
-	WRITE_FILE(S["tgui_fancy"], tgui_fancy)
 	WRITE_FILE(S["tgui_lock"], tgui_lock)
+	WRITE_FILE(S["ui_scale"], ui_scale)
 	WRITE_FILE(S["tgui_input"], tgui_input)
 	WRITE_FILE(S["tgui_input_big_buttons"], tgui_input_big_buttons)
 	WRITE_FILE(S["tgui_input_buttons_swap"], tgui_input_buttons_swap)
+	WRITE_FILE(S["auto_open_changelogs"], auto_open_changelogs)
 
 	// Admin options
 	WRITE_FILE(S["fast_mc_refresh"], fast_mc_refresh)
 	WRITE_FILE(S["split_admin_tabs"], split_admin_tabs)
 	WRITE_FILE(S["hear_ooc_anywhere_as_staff"], hear_ooc_anywhere_as_staff)
+	WRITE_FILE(S["show_ooc_country_flag"], show_ooc_country_flag)
 
 	return TRUE
 
@@ -573,6 +593,9 @@
 
 	citizenship = sanitize_inlist(citizenship, CITIZENSHIP_CHOICES, initial(citizenship))
 	religion = sanitize_inlist(religion, RELIGION_CHOICES, initial(religion))
+
+	tts_voice = sanitize_inlist_tts(tts_voice)
+	tts_pitch = sanitize_integer(tts_pitch, -12, 12, initial(tts_pitch))
 
 	med_record = sanitize_text(med_record, initial(med_record))
 	sec_record = sanitize_text(sec_record, initial(sec_record))

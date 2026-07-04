@@ -4,7 +4,7 @@ import { toFixed } from 'tgui-core/math';
 import { useBackend } from '../../backend';
 import { OperatorData } from './data';
 
-export const PowerModulesPane = () => {
+export const PowerModulesPane = (props) => {
   const { act, data } = useBackend<OperatorData>();
   const { mech_equipment, mineral_material_amount } = data;
   return (

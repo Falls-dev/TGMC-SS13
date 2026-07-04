@@ -125,7 +125,7 @@
 	if(severity <= 0)
 		return
 
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_MOB_EX_ACT))
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_MOB_EX_ACT))
 		return
 
 	if(lying_angle)
@@ -774,6 +774,8 @@
 	gender = pick(MALE, FEMALE)
 	name = species.random_name(gender)
 	real_name = name
+	voice = random_tts_voice()
+
 	if(!(species.species_flags & HAS_NO_HAIR))
 		switch(pick(15;"black", 15;"grey", 15;"brown", 15;"lightbrown", 10;"white", 15;"blonde", 15;"red"))
 			if("black")

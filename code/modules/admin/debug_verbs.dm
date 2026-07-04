@@ -136,7 +136,7 @@ ADMIN_VERB(spawn_atom, R_SPAWN, "Spawn", "(atom path) Spawn an atom", ADMIN_CATE
 	var/turf/T = get_turf(user.mob)
 
 	if(ispath(chosen, /turf))
-		T.change_turf(chosen)
+		T.ChangeTurf(chosen)
 	else
 		for(var/i in 1 to amount)
 			var/atom/A = new chosen(T)
@@ -158,7 +158,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(delete_atom, R_DEBUG, "Delete", ADMIN_VERB_NO_DESCRI
 
 	if(isturf(target))
 		var/turf/deleting_turf = target
-		deleting_turf.scrape_away()
+		deleting_turf.ScrapeAway()
 		return
 
 	qdel(target)

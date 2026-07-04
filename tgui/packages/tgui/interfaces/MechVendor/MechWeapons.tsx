@@ -415,12 +415,12 @@ export const MechWeapons = (props) => {
   const [equipmentTab, setequipmentTab] = useState(equipTabs[0]);
   const { setShowDesc } = props;
   return (
-    <Stack>
+    <Stack fill>
       <Stack.Item>
         <SelectedEquipment />
       </Stack.Item>
-      <Stack.Item>
-        <Section lineHeight={1.75} maxWidth={'1120px'} fontSize={'13px'}>
+      <Stack.Item grow>
+        <Section lineHeight={1.75} fontSize={'13px'}>
           <Tabs fluid>
             {equipTabs.map((tabname) => {
               return (

@@ -145,7 +145,8 @@ jobs:
       - name: Find Alternate Tests
         id: alternate_test_finder
         run: |
-          ALTERNATE_TESTS_JSON=$(jq -nRc '[inputs | capture("^(?<major>[0-9]+)\\.(?<minor>[0-9]+): (?<map>[^;]+);?(?<max_client_version>[0-9]+)?$")]' .github/alternate_byond_versions.txt)
+          ALTERNATE_TESTS_JSON=$(grep -Ev '^[[:blank:]]{0,}#{1,}|^[[:blank:]]{0,}$' .github/alternate_byond_versions.txt | jq -nRc '[inputs | capture("^(?<major>[0-9]+)\\.(?<minor>[0-9]+): (?<map>[^;]+);?(?<max_client_version>[0-9]+)?$")]')
+          echo "alternate_tests=$ALTERNATE_TESTS_JSON" >> $GITHUB_OUTPUT
       - name: Collect byond client version configuration
         id: max_required_byond_client
         #the regex here does not filter out non-numbers because error messages about no input are less helpful then error messages about bad input (which includes the bad input)

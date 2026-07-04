@@ -134,6 +134,10 @@
 /obj/alien/weeds/footstep_override(atom/movable/source, list/footstep_overrides)
 	footstep_overrides[FOOTSTEP_RESIN] = layer
 
+/obj/alien/weeds/proc/on_loc_entered(datum/source, atom/movable/crosser)
+	SIGNAL_HANDLER
+	return
+
 /obj/alien/weeds/sticky
 	name = "sticky weeds"
 	desc = "A layer of disgusting sticky slime, it feels like it's going to slow your movement down."
@@ -142,17 +146,30 @@
 /obj/alien/weeds/sticky/Initialize(mapload, obj/alien/weeds/node/node)
 	. = ..()
 	var/static/list/connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(slow_down_crosser)
+		COMSIG_ATOM_ENTERED = PROC_REF(on_loc_entered)
 	)
 	AddElement(/datum/element/connect_loc, connections)
 
-/obj/alien/weeds/sticky/proc/slow_down_crosser(datum/source, atom/movable/crosser)
-	SIGNAL_HANDLER
+/obj/alien/weeds/sticky/on_loc_entered(datum/source, atom/movable/crosser)
+	if(!istype(crosser, /atom/movable))
+		return
+	slow_down_crosser(crosser, WEED_SLOWDOWN)
+
+/obj/alien/weeds/sticky/proc/slow_down_crosser(atom/movable/crosser, slow_amount = 1)
+	if(!istype(crosser, /atom/movable))
+		return
 	if(crosser.throwing || crosser.buckled)
 		return
 
 	if(isvehicle(crosser))
 		var/obj/vehicle/vehicle = crosser
+		if(istype(vehicle, /obj/vehicle/unmanned))
+			var/obj/vehicle/unmanned/unmanned_vehicle = vehicle
+			if(!unmanned_vehicle.affected_by_sticky_weeds)
+				return
+			unmanned_vehicle.weed_slowdown += WEED_SLOWDOWN
+			return
+		COOLDOWN_INCREMENT(vehicle, cooldown_vehicle_move, slow_amount)
 		vehicle.last_move_time += WEED_SLOWDOWN
 		return
 
@@ -317,17 +334,29 @@
 /obj/alien/weeds/node/sticky/Initialize(mapload, obj/alien/weeds/node/node)
 	. = ..()
 	var/static/list/connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(slow_down_crosser)
+		COMSIG_ATOM_ENTERED = PROC_REF(on_loc_entered)
 	)
 	AddElement(/datum/element/connect_loc, connections)
 
-/obj/alien/weeds/node/sticky/proc/slow_down_crosser(datum/source, atom/movable/crosser)
-	SIGNAL_HANDLER
+/obj/alien/weeds/node/sticky/on_loc_entered(datum/source, atom/movable/crosser)
+	if(!istype(crosser, /atom/movable))
+		return
+	slow_down_crosser(crosser, WEED_SLOWDOWN)
+
+/obj/alien/weeds/node/sticky/proc/slow_down_crosser(atom/movable/crosser, slow_amount = WEED_SLOWDOWN)
+	if(!istype(crosser, /atom/movable))
+		return
 	if(crosser.throwing || crosser.buckled)
 		return
 
 	if(isvehicle(crosser))
 		var/obj/vehicle/vehicle = crosser
+		if(istype(vehicle, /obj/vehicle/unmanned))
+			var/obj/vehicle/unmanned/unmanned_vehicle = vehicle
+			if(!unmanned_vehicle.affected_by_sticky_weeds)
+				return
+			unmanned_vehicle.weed_slowdown += WEED_SLOWDOWN
+			return
 		vehicle.last_move_time += WEED_SLOWDOWN
 		return
 

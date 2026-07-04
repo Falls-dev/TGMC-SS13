@@ -101,3 +101,22 @@
 ///If TRUE, the evo proc will consider spawn roony instead of runner on evo
 /datum/config_entry/flag/roony
 	config_entry_value = FALSE
+
+/datum/config_entry/flag/tts_no_whisper
+
+/datum/config_entry/string/tts_http_url
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/string/tts_http_token
+	protection = CONFIG_ENTRY_LOCKED|CONFIG_ENTRY_HIDDEN
+
+/datum/config_entry/number/tts_max_concurrent_requests
+	default = 4
+	min_val = 1
+
+/datum/config_entry/str_list/tts_voice_blacklist
+
+/// Maximum timeout for http calls
+/datum/config_entry/number/tts_http_timeout_seconds
+	default = 30
+	min_val = 0

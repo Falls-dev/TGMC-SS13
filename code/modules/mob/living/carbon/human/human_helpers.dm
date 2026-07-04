@@ -170,10 +170,13 @@
 		to_chat(user, span_alert("There is no exposed flesh or thin material [target_zone == "head" ? "on their head" : "on their body"] to inject into."))
 
 /mob/living/carbon/human/has_brain()
-	var/datum/internal_organ/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
-	if(brain)
-		return TRUE
-	return FALSE
+	var/datum/internal_organ/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(!istype(brain))
+		return FALSE
+	var/datum/limb/braincase = get_limb(brain.parent_limb)
+	if(!braincase || (braincase.limb_status & LIMB_DESTROYED))
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/human/has_eyes()
 	var/datum/internal_organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)

@@ -104,8 +104,8 @@
 	return length(marines_list)
 
 
-/datum/squad/proc/insert_into_squad(mob/living/carbon/human/new_squaddie, give_radio = FALSE)
-	if(!(new_squaddie.job in SSjob.active_occupations))
+/datum/squad/proc/insert_into_squad(mob/living/carbon/human/new_squaddie, give_radio = FALSE, forced = FALSE)
+	if(!forced && !(new_squaddie.job in SSjob.active_occupations))
 		CRASH("attempted to insert marine [new_squaddie] from squad [name] while having job [isnull(new_squaddie.job) ? "null" : new_squaddie.job.title]")
 
 	var/obj/item/card/id/idcard = new_squaddie.get_idcard()
@@ -280,13 +280,28 @@
 	if(is_ic_filtered(message) || NON_ASCII_CHECK(message))
 		to_chat(sender, span_boldnotice("Message invalid. Check your message does not contain filtered words or characters."))
 		return
-
 	var/header = "AUTOMATED CIC NOTICE:"
+	var/sound = "sound/misc/notice3.ogg"
+	var/message_color = "#a9a9a9"
+	var/message_type = /atom/movable/screen/text/screen_text/command_order/automated
 	if(sender)
 		header = "CIC SQUAD MESSAGE FROM [sender.real_name]:"
+		sound = "sound/machinery/dotprinter.ogg"
+		message_color = color
+		message_type = /atom/movable/screen/text/screen_text/command_order
+
+		var/list/tts_listeners = filter_tts_listeners(sender, marines_list, radio_freq, RADIO_TTS_COMMAND)
+		if(!length(tts_listeners))
+			return
+		var/list/treated_message = sender?.treat_message(message)
+		var/list/extra_filters = list(TTS_FILTER_RADIO)
+		if(isrobot(sender))
+			extra_filters += TTS_FILTER_SILICON
+		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), sender, treated_message["tts_message"], sender.get_default_language(), sender.voice, sender.voice_filter, tts_listeners, FALSE, pitch = sender.pitch, special_filters = extra_filters.Join("|"), directionality = FALSE)
 
 	for(var/mob/living/marine AS in marines_list)
-		marine.play_screen_text(HUD_ANNOUNCEMENT_FORMATTING(header, message, CENTER_ALIGN_TEXT))
+		marine.playsound_local(marine, sound, 35)
+		marine.play_screen_text(HUD_ANNOUNCEMENT_FORMATTING(header, message, CENTER_ALIGN_TEXT), message_type, message_color)
 
 /datum/squad/proc/check_entry(datum/job/job)
 	if(!(job.title in current_positions))

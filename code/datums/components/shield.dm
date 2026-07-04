@@ -152,7 +152,7 @@
 
 	if(iscarbon(affected))
 		var/mob/living/carbon/C = affected
-		if(C.has_status_effect(STATUS_EFFECT_STAGGER)) //Lesser penalty to shield cover for being staggered.
+		if(C.IsStaggered()) //Lesser penalty to shield cover for being staggered.
 			shield_status_modifier *= 0.75
 
 	return shield_status_modifier

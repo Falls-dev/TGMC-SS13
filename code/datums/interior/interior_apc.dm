@@ -7,6 +7,12 @@
 /datum/interior/armored/clone_bay
 	template = /datum/map_template/interior/clone_bay
 
+/datum/interior/armored/mrap
+	template = /datum/map_template/interior/mrap
+
+/datum/interior/armored/van
+	template = /datum/map_template/interior/van
+
 /turf/closed/interior/apc
 	name = "\improper Athena tank interior"
 	icon = 'icons/obj/armored/3x3/apc_interior.dmi'
@@ -100,3 +106,10 @@
 /area/interior/apc
 	name = "APC Interior"
 	icon_state = "shuttle"
+
+/area/interior/vehicle
+	name = "Vehicle Interior"
+	icon_state = "shuttle"
+
+/area/interior/vehicle/van
+	name = "Van Interior"

@@ -2,7 +2,7 @@
 	name = "Crash"
 	config_tag = "Crash"
 	required_players = 2
-	round_type_flags = MODE_INFESTATION|MODE_XENO_SPAWN_PROTECT|MODE_DEAD_GRAB_FORBIDDEN|MODE_DISALLOW_RAILGUN|MODE_PSY_POINTS|MODE_PSY_POINTS_ADVANCED|MODE_SILOS_SPAWN_MINIONS|MODE_ALLOW_XENO_QUICKBUILD|MODE_HAS_MINERS
+	round_type_flags = MODE_INFESTATION|MODE_XENO_SPAWN_PROTECT|MODE_DEAD_GRAB_FORBIDDEN|MODE_DISALLOW_RAILGUN|MODE_PSY_POINTS|MODE_PSY_POINTS_ADVANCED|MODE_SILOS_SPAWN_MINIONS|MODE_ALLOW_XENO_QUICKBUILD|MODE_HAS_MINERS|MODE_ALLOW_MARINE_QUICKBUILD
 	xeno_abilities_flags = ABILITY_CRASH
 	valid_job_types = list(
 		/datum/job/terragov/squad/standard = -1,
@@ -25,7 +25,7 @@
 	)
 	blacklist_ground_maps = list(MAP_BIG_RED, MAP_DELTA_STATION, MAP_PRISON_STATION, MAP_LV_624, MAP_WHISKEY_OUTPOST, MAP_OSCAR_OUTPOST, MAP_LAST_STAND)
 
-	restricted_castes = list(/datum/xeno_caste/ravager, /datum/xeno_caste/hivemind, /datum/xeno_caste/chimera)
+	restricted_castes = list(/datum/xeno_caste/ravager, /datum/xeno_caste/hivemind)
 
 	bioscan_interval = 0
 	// Round end conditions

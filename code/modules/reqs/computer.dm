@@ -12,6 +12,7 @@
 	var/shuttle_id = SHUTTLE_SUPPLY
 	/// Id of the home docking port
 	var/home_id = "supply_home"
+
 /obj/machinery/computer/supplycomp/crash
 	req_access = list() //So marines can access cargo stuff without relying on synth spawn
 	desc = "A console for an Automated Storage and Retrieval System. This version somehow does not require special access."

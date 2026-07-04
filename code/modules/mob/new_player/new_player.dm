@@ -13,6 +13,7 @@
 	var/spawning = FALSE
 	///The job we tried to join but were warned it would cause an unbalance. It's saved for later use
 	var/datum/job/saved_job
+	var/cached_highest_job = null
 
 
 /mob/new_player/Initialize(mapload)
@@ -83,7 +84,13 @@
 		for(var/i in GLOB.player_list)
 			if(isnewplayer(i))
 				var/mob/new_player/N = i
-				. += "[N.client?.holder?.fakekey ? N.client.holder.fakekey : N.key][N.ready ? " Playing" : ""]"
+				var/status_text = ""
+				if(N.ready)
+					if(N.cached_highest_job)
+						status_text = " Playing as [N.cached_highest_job]"
+					else
+						status_text = " Playing"
+				. += "[N.client?.holder?.fakekey ? N.client.holder.fakekey : N.key][status_text]"
 			else if(isobserver(i))
 				var/mob/dead/observer/O = i
 				. += "[O.client?.holder?.fakekey ? O.client.holder.fakekey : O.key] Observing"
@@ -430,8 +437,10 @@
 	ready = !ready
 	if(ready)
 		GLOB.ready_players += src
+		cached_highest_job = get_highest_priority_job()
 	else
 		GLOB.ready_players -= src
+		cached_highest_job = null
 	to_chat(src, span_warning("You are now [ready? "" : "not "]ready."))
 
 ///Attempts to latejoin the player
@@ -468,3 +477,21 @@
 			to_chat(usr, span_notice("You have been added to the queue to join the game. Your position in queue is [length(SSticker.queued_players)]."))
 		return
 	late_choices()
+
+/mob/new_player/proc/get_highest_priority_job()
+	if(!client || !client.prefs || !client.prefs.job_preferences)
+		return null
+
+	var/highest_job = null
+	var/highest_level = 0
+
+	for(var/job_name in client.prefs.job_preferences)
+		var/priority = client.prefs.job_preferences[job_name]
+
+		if(priority > highest_level)
+			highest_level = priority
+			highest_job = job_name
+			if(priority == JOBS_PRIORITY_HIGH)
+				break
+
+	return highest_job

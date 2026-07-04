@@ -587,7 +587,7 @@
 		debuff_owner?.balloon_alert(debuff_owner, "Interrupted")
 		return
 	playsound(debuff_owner, 'sound/effects/slosh.ogg', 30)
-	debuff_owner.balloon_alert(debuff_owner, "Succeeded")
+	debuff_owner?.balloon_alert(debuff_owner, "Succeeded")
 	stacks -= SENTINEL_INTOXICATED_RESIST_REDUCTION
 	if(stacks > 0)
 		resist_debuff() // We repeat ourselves as long as the debuff persists.
@@ -690,10 +690,11 @@
 /datum/status_effect/dread
 	id = "dread"
 	status_type = STATUS_EFFECT_REPLACE
+	duration = 6 SECONDS
 	tick_interval = 2 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/dread
 
-/datum/status_effect/dread/on_creation(mob/living/new_owner, set_duration)
+/datum/status_effect/dread/on_creation(mob/living/new_owner, set_duration = initial(duration))
 	owner = new_owner
 	duration = set_duration
 	return ..()
@@ -712,6 +713,29 @@
 /datum/status_effect/dread/on_remove()
 	owner.remove_movespeed_modifier(MOVESPEED_ID_XENO_DREAD)
 	return ..()
+
+/atom/movable/screen/alert/status_effect/draining_dread
+	name = "Draining Dread"
+	desc = "A dreadful presence. You take constant stamina damage until this expires."
+	icon_state = "dread"
+
+/datum/status_effect/draining_dread
+	id = "draining_dread"
+	status_type = STATUS_EFFECT_REPLACE
+	duration = 6 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/draining_dread
+	var/stamina_damage = 4
+
+/datum/status_effect/draining_dread/on_creation(mob/living/new_owner, set_stamina_damage)
+	owner = new_owner
+	if(set_stamina_damage)
+		stamina_damage = set_stamina_damage
+	return ..()
+
+/datum/status_effect/draining_dread/tick(delta_time)
+	. = ..()
+	owner.do_jitter_animation(250)
+	owner.adjust_stamina_loss(stamina_damage)
 
 // ***************************************
 // *********** Melting
@@ -843,7 +867,7 @@
 
 /datum/status_effect/stacking/microwave/tick(delta_time)
 	. = ..()
-	if(COOLDOWN_CHECK(src, cooldown_microwave_status))
+	if(COOLDOWN_FINISHED(src, cooldown_microwave_status))
 		return qdel(src)
 
 	if(!debuff_owner)
@@ -966,3 +990,78 @@
 /datum/status_effect/incapacitating/dancer_tagged
 	id = "dancer_tagged"
 	duration = 15 SECONDS
+
+// ***************************************
+// *********** Acid Melting
+// ***************************************
+/datum/status_effect/stacking/melting_acid
+	id = "melting_acid"
+	tick_interval = 1 SECONDS
+	max_stacks = 30
+	consumed_on_threshold = FALSE
+	alert_type = /atom/movable/screen/alert/status_effect/melting_acid
+	/// Used for particles. Holds the particles instead of the mob. See particle_holder for documentation.
+	var/obj/effect/abstract/particle_holder/particle_holder
+
+/datum/status_effect/stacking/melting_acid/can_gain_stacks()
+	if(owner.status_flags & GODMODE || owner.stat == DEAD)
+		return FALSE
+	return ..()
+
+/datum/status_effect/stacking/melting_acid/on_creation(mob/living/new_owner, stacks_to_apply)
+	if(new_owner.status_flags & GODMODE || new_owner.stat == DEAD)
+		qdel(src)
+		return
+	. = ..()
+	playsound(owner.loc, "sound/bullets/acid_impact1.ogg", 30)
+	particle_holder = new(owner, /particles/melting_acid_status)
+	particle_holder.particles.spawning = 1 + round(stacks / 2)
+
+/datum/status_effect/stacking/melting_acid/on_remove()
+	QDEL_NULL(particle_holder)
+	return ..()
+
+/datum/status_effect/stacking/melting_acid/tick(delta_time)
+	. = ..()
+	if(!owner)
+		return
+	playsound(owner.loc, "sound/bullets/acid_impact1.ogg", 4)
+	particle_holder.particles.spawning = 1 + round(stacks / 2)
+	particle_holder.pixel_x = -2
+	particle_holder.pixel_y = 0
+	owner.apply_damage(5, BURN, null, ACID)
+
+/atom/movable/screen/alert/status_effect/melting_acid
+	name = "Melting (Acid)"
+	desc = "You are melting away!"
+	icon_state = "melting"
+
+/particles/melting_acid_status
+	icon = 'icons/effects/particles/generic_particles.dmi'
+	icon_state = "drip"
+	width = 100
+	height = 100
+	count = 1000
+	spawning = 4
+	lifespan = 10
+	fade = 8
+	velocity = list(0, 0)
+	position = generator(GEN_SPHERE, 16, 16, NORMAL_RAND)
+	drift = generator(GEN_VECTOR, list(-0.1, 0), list(0.1, 0))
+	gravity = list(0, -0.4)
+	scale = generator(GEN_VECTOR, list(0.3, 0.3), list(1, 1), NORMAL_RAND)
+	friction = -0.05
+	color = "#59ff4a"
+
+// ***************************************
+// *********** Lifedrain
+// ***************************************
+/datum/status_effect/incapacitating/lifedrain
+	id = "life_drain"
+	duration = 10 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/lifedrain
+
+/atom/movable/screen/alert/status_effect/lifedrain
+	name = "Lifedrain"
+	desc = "Your life force transfers to xenos when they slash you!"
+	icon_state = "skullemoji"

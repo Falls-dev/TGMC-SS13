@@ -187,6 +187,7 @@ function validate_user($payload) {
 	$res = github_apisend('https://api.github.com/search/issues?q='.$querystring);
 	$res = json_decode($res, TRUE);
 	return $res['total_count'] >= (int)$validation_count;
+
 }
 
 function get_labels($payload){
@@ -618,14 +619,21 @@ function checkchangelog($payload, $compile = true) {
 				break;
 			case 'qol':
 				if($item != 'made something easier to use') {
-					$tags[] = 'QoL';
+					$tags[] = 'Quality of Life';
 					$currentchangelogblock[] = array('type' => 'qol', 'body' => $item);
 				}
 				break;
-			case 'sound':
-				if($item != 'added/modified/removed audio or sound effects') {
+			case 'soundadd':
+				if($item != 'added a new sound thingy') {
 					$tags[] = 'Sound';
-					$currentchangelogblock[] = array('type' => 'sound', 'body' => $item);
+					$currentchangelogblock[] = array('type' => 'soundadd', 'body' => $item);
+				}
+				break;
+			case 'sounddel':
+				if($item != 'removed an old sound thingy') {
+					$tags[] = 'Sound';
+					$tags[] = 'Removal';
+					$currentchangelogblock[] = array('type' => 'sounddel', 'body' => $item);
 				}
 				break;
 			case 'add':
@@ -644,10 +652,17 @@ function checkchangelog($payload, $compile = true) {
 					$currentchangelogblock[] = array('type' => 'rscdel', 'body' => $item);
 				}
 				break;
-			case 'image':
+			case 'imageadd':
 				if($item != 'added some icons and images') {
 					$tags[] = 'Sprites';
-					$currentchangelogblock[] = array('type' => 'image', 'body' => $item);
+					$currentchangelogblock[] = array('type' => 'imageadd', 'body' => $item);
+				}
+				break;
+			case 'imagedel':
+				if($item != 'deleted some icons and images') {
+					$tags[] = 'Sprites';
+					$tags[] = 'Removal';
+					$currentchangelogblock[] = array('type' => 'imagedel', 'body' => $item);
 				}
 				break;
 			case 'typo':
@@ -663,13 +678,6 @@ function checkchangelog($payload, $compile = true) {
 					$currentchangelogblock[] = array('type' => 'balance', 'body' => $item);
 				}
 				break;
-			case 'mapping':
-			case 'map':
-				if($item != 'added/modified/removed map content'){
-					$tags[] = 'Mapping';
-					$currentchangelogblock[] = array('type' => 'balance', 'body' => $item);
-				}
-			break;
 			case 'code_imp':
 			case 'code':
 				if($item != 'changed some code'){

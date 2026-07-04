@@ -14,13 +14,19 @@
 	pass_flags = PASS_AIR
 	resistance_flags = UNACIDABLE|PLASMACUTTER_IMMUNE|PROJECTILE_IMMUNE|CRUSHER_IMMUNE
 	var/amount = 3
+	///Duration in 2 second ticks
 	var/lifetime = 5
 	///time in decisecond for a smoke to spread one tile.
 	var/expansion_speed = 1
+	///Special effect traits
 	var/smoke_traits = NONE
-	var/strength = 1 // Effects scale with the emitter's bomb_strength upgrades.
-	var/bio_protection = 1 // how unefficient its effects are against protected target from 0 to 1.
-	var/datum/effect_system/smoke_spread/cloud // for associated chemical smokes.
+	///Smoke effect strength mult
+	var/strength = 1
+	///Effect strength mult against bio protection
+	var/bio_protection = 1
+	///for associated chemical smoke
+	var/datum/effect_system/smoke_spread/cloud
+	///Fraction used for chem touch effects
 	var/fraction = 0.2
 	///Delay in ticks before this smoke can affect a given mob again, applied in living's effect_smoke
 	var/minimum_effect_delay = 1 SECONDS
@@ -53,7 +59,7 @@
 	AddElement(/datum/element/connect_loc, connections)
 
 /obj/effect/particle_effect/smoke/Destroy()
-	if(lifetime && CHECK_BITFIELD(smoke_traits, SMOKE_CAMO))
+	if(smoke_traits && SMOKE_CAMO)
 		apply_smoke_effect(get_turf(src))
 		LAZYCLEARLIST(cloud?.smoked_mobs)
 	if(CHECK_BITFIELD(smoke_traits, SMOKE_CHEM) && LAZYLEN(cloud?.smoked_mobs)) //so the whole cloud won't stop working somehow
@@ -100,19 +106,30 @@
 	if(CHECK_BITFIELD(smoke_traits, SMOKE_NERF_BEAM) && istype(O, /atom/movable/projectile))
 		O.effect_smoke(src)
 
+/// Called when an atom leaves the turf containing the smoke.
 /obj/effect/particle_effect/smoke/proc/on_exited(datum/source, mob/living/M, direction)
 	SIGNAL_HANDLER
-	if(CHECK_BITFIELD(smoke_traits, SMOKE_CAMO) && istype(M))
-		var/obj/effect/particle_effect/smoke/S = locate() in get_turf(M)
-		if(!CHECK_BITFIELD(S?.smoke_traits, SMOKE_CAMO))
+	if(!istype(M))
+		return
+	var/should_turn_off_cloak = TRUE
+	var/turf/new_turf = get_turf(M)
+	for(var/obj/effect/particle_effect/smoke/smoke_inside_new_turf in new_turf?.contents)
+		if(smoke_inside_new_turf.smoke_traits & SMOKE_CAMO)
+			if(!isxeno(M) && !(smoke_inside_new_turf.smoke_traits & SMOKE_XENO))
+				should_turn_off_cloak = FALSE
+				break
+			if(isxeno(M) && (smoke_inside_new_turf.smoke_traits & SMOKE_XENO))
+				should_turn_off_cloak = FALSE
+				break
+	if(should_turn_off_cloak)
+		if(!isxeno(M))
 			M.smokecloak_off()
+			return
 
 /obj/effect/particle_effect/smoke/proc/apply_smoke_effect(turf/T)
-	if(!T)
-		return
-
 	T.effect_smoke(src)
-	for(var/atom/A in T)
+	for(var/V in T)
+		var/atom/A = V
 		A.effect_smoke(src)
 
 /obj/effect/particle_effect/smoke/proc/pre_chem_effect(mob/living/carbon/C)
@@ -198,8 +215,11 @@
 /////////////////////////////////////////////
 
 /datum/effect_system/smoke_spread
+	///Smoke range
 	var/range = 3
+	///Type of smoke
 	var/smoke_type = /obj/effect/particle_effect/smoke
+	///Smoke duration in 2 sec ticks
 	var/lifetime
 	var/list/smokes
 	var/list/smoked_mobs
@@ -233,7 +253,9 @@
 	var/turf/_location = location?.resolve()
 	if(!QDELETED(_holder))
 		_location = get_turf(_holder)
-	new smoke_type(_location, range, lifetime)
+	var/obj/effect/particle_effect/smoke/S = new smoke_type(_location, range, lifetime)
+	S.apply_smoke_effect(get_turf(S))
+
 
 /////////////////////////////////////////////
 // Bad smoke
@@ -346,6 +368,12 @@
 	color = "#86B028" //Mostly green?
 	smoke_traits = SMOKE_XENO|SMOKE_XENO_ACID|SMOKE_GASP|SMOKE_COUGH|SMOKE_HUGGER_PACIFY
 
+//Used for smokebomb nades.
+/obj/effect/particle_effect/smoke/xeno/burn/opaque
+	alpha = 255
+	opacity = TRUE
+	smoke_traits = SMOKE_XENO|SMOKE_XENO_ACID|SMOKE_GASP|SMOKE_COUGH|SMOKE_HUGGER_PACIFY
+
 //Xeno light acid smoke.for acid huggers
 /obj/effect/particle_effect/smoke/xeno/burn/light
 	lifetime = 4 //Lasts for less time
@@ -453,6 +481,9 @@
 
 /datum/effect_system/smoke_spread/xeno/acid/light
 	smoke_type = /obj/effect/particle_effect/smoke/xeno/burn/light
+
+/datum/effect_system/smoke_spread/xeno/acid/opaque
+	smoke_type = /obj/effect/particle_effect/smoke/xeno/burn/opaque
 
 /datum/effect_system/smoke_spread/xeno/neuro
 	smoke_type = /obj/effect/particle_effect/smoke/xeno/neuro

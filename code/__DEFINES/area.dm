@@ -11,3 +11,5 @@
 #define MARINE_BASE (1<<4)
 ///radio works even underground
 #define ALWAYS_RADIO (1<<5)
+///When present, prevents construction in this area
+#define NO_CONSTRUCTION (1<<6)

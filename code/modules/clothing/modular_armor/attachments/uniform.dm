@@ -41,7 +41,6 @@
 
 /obj/item/armor_module/storage/uniform/surgery_webbing/PopulateContents()
 	new /obj/item/tool/surgery/scalpel/manager(src)
-	new /obj/item/tool/surgery/scalpel(src)
 	new /obj/item/tool/surgery/hemostat(src)
 	new /obj/item/tool/surgery/retractor(src)
 	new /obj/item/tool/surgery/cautery(src)

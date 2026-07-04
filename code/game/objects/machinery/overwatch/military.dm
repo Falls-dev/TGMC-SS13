@@ -179,7 +179,7 @@
 			selected_target = locate(href_list["selected_target"])
 		if("message")
 			if(current_squad && operator == usr)
-				if(TIMER_COOLDOWN_CHECK(operator, COOLDOWN_HUD_ORDER))
+				if(TIMER_COOLDOWN_RUNNING(operator, COOLDOWN_HUD_ORDER))
 					to_chat(operator, span_warning("You've sent an announcement or message too recently!"))
 					return
 				var/input = tgui_input_text(operator, "Please write a message to announce to the squad:", "Squad Message", max_length = MAX_COMMAND_MESSAGE_LENGTH)
@@ -190,7 +190,7 @@
 					visible_message(span_boldnotice("Message sent to all Marines of squad '[current_squad]'."))
 		if("sl_message")
 			if(current_squad && operator == usr)
-				if(TIMER_COOLDOWN_CHECK(operator, COOLDOWN_HUD_ORDER))
+				if(TIMER_COOLDOWN_RUNNING(operator, COOLDOWN_HUD_ORDER))
 					to_chat(operator, span_warning("You've sent an announcement or message too recently!"))
 					return
 				var/input = tgui_input_text(operator, "Please write a message to announce to the squad leader:", "SL Message", max_length = MAX_COMMAND_MESSAGE_LENGTH)
@@ -349,7 +349,7 @@
 
 	switch(choice)
 		if(MESSAGE_SINGLE)
-			if(TIMER_COOLDOWN_CHECK(operator, COOLDOWN_HUD_ORDER))
+			if(TIMER_COOLDOWN_RUNNING(operator, COOLDOWN_HUD_ORDER))
 				to_chat(operator, span_warning("You've sent an announcement or message too recently!"))
 				return
 			var/input = tgui_input_text(source, "Please write a message to announce to this marine:", "CIC Message", max_length = MAX_COMMAND_MESSAGE_LENGTH)
@@ -375,7 +375,7 @@
 		if(ORBITAL_SPOTLIGHT)
 			attempt_spotlight(source, turf_target, params)
 		if(MESSAGE_NEAR)
-			if(TIMER_COOLDOWN_CHECK(operator, COOLDOWN_HUD_ORDER))
+			if(TIMER_COOLDOWN_RUNNING(operator, COOLDOWN_HUD_ORDER))
 				to_chat(operator, span_warning("You've sent an announcement or message too recently!"))
 				return
 			var/input = tgui_input_text(source, "Please write a message to announce to all marines nearby:", "CIC Proximity Message", max_length = MAX_COMMAND_MESSAGE_LENGTH)
@@ -392,7 +392,7 @@
 			var/datum/squad/chosen_squad = squad_select(source, turf_target)
 			switch(choice)
 				if(MESSAGE_SQUAD)
-					if(TIMER_COOLDOWN_CHECK(operator, COOLDOWN_HUD_ORDER))
+					if(TIMER_COOLDOWN_RUNNING(operator, COOLDOWN_HUD_ORDER))
 						to_chat(operator, span_warning("You've sent an announcement or message too recently!"))
 						return
 					var/input = tgui_input_text(source, "Please write a message to announce to the squad:", "Squad Message", max_length = MAX_COMMAND_MESSAGE_LENGTH)
@@ -424,7 +424,7 @@
 	if(power_amount <= 10000)
 		return
 
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_ORBITAL_SPOTLIGHT))
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_ORBITAL_SPOTLIGHT))
 		to_chat(source, span_notice("The Orbital spotlight is still recharging."))
 		return
 	var/area/place = get_area(A)
@@ -611,9 +611,18 @@
 		return
 	. = TRUE
 
-	target.playsound_local(target, 'sound/machines/dotprinter.ogg', 35)
+	target.playsound_local(target, "sound/machines/dotprinter.ogg", 35)
 	to_chat(target, span_notice("<b><i>New message from [sender.real_name]:</b> [message]</i>"))
 	target.play_screen_text(HUD_ANNOUNCEMENT_FORMATTING("CIC MESSAGE FROM [sender.real_name]", capitalize(message), LEFT_ALIGN_TEXT), new /atom/movable/screen/text/screen_text/picture/potrait/custom_mugshot(null, null, sender), "#32cd32")
+
+	var/list/tts_listeners = filter_tts_listeners(sender, target, null, RADIO_TTS_COMMAND)
+	if(!length(tts_listeners))
+		return
+	var/list/treated_message = sender?.treat_message(message)
+	var/list/extra_filters = list(TTS_FILTER_RADIO)
+	if(isrobot(sender))
+		extra_filters += TTS_FILTER_SILICON
+	INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), sender, treated_message["tts_message"], sender.get_default_language(), sender.voice, sender.voice_filter, tts_listeners, FALSE, pitch = sender.pitch, special_filters = extra_filters.Join("|"), directionality = FALSE)
 
 ///Radial menu squad select menu
 /obj/machinery/computer/camera_advanced/overwatch/military/proc/squad_select(datum/source, atom/A)

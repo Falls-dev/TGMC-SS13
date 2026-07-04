@@ -220,7 +220,7 @@ export const HiveStatus = (_props: any) => {
 const CachedCollapsible = (props: {
   title: string;
   open: boolean;
-  children?: JSX.Element;
+  children?: React.JSX.Element;
   onClickXeno: any;
 }) => {
   const { data } = useBackend<InputPack>();
@@ -448,9 +448,10 @@ const EvolutionBar = (_props: any) => {
   const { act, data } = useBackend<InputPack>();
   const { static_info, user_ref, user_xeno, user_index, user_evolution } = data;
 
-  const max = static_info[user_index].evolution_max;
+  const user_static = static_info[user_index];
+  const max = user_static?.evolution_max ?? 0;
 
-  if (!user_xeno || max === 0) {
+  if (!user_xeno || !user_static || max === 0) {
     return <Box />; // Empty.
   }
 
@@ -528,13 +529,19 @@ const PopulationPyramid = (_props: any) => {
     pyramid_data[static_entry.tier].index[static_entry.sort_mod] = index;
   });
 
-  xeno_info.map((entry) => {
-    // Accumulating counts.
+  for (const entry of xeno_info) {
     const static_entry = static_info[entry.index];
-    pyramid_data[static_entry.tier].caste[static_entry.sort_mod]++;
-    pyramid_data[static_entry.tier].total++;
+    if (!static_entry) {
+      continue;
+    }
+    const tier_data = pyramid_data[static_entry.tier];
+    if (!tier_data) {
+      continue;
+    }
+    tier_data.caste[static_entry.sort_mod]++;
+    tier_data.total++;
     hive_total++;
-  });
+  }
 
   const ShowButtons = (_props: any) => {
     return (
@@ -826,6 +833,9 @@ const XenoList = (_props: any) => {
         {!sortingBy.down && <HeaderDivider order={Number.MIN_SAFE_INTEGER} />}
         {xeno_info.map((entry) => {
           const static_entry = static_info[entry.index];
+          if (!static_entry) {
+            return null;
+          }
           let order: number;
           switch (sortingBy.category) {
             case caste:

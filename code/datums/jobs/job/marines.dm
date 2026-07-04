@@ -79,6 +79,13 @@ Make your way to the cafeteria for some post-cryosleep chow, and then get equipp
 	to_chat(M, {"\nYou are a rank-and-file marine of the TGMC, and that is your strength.
 What you lack alone, you gain standing shoulder to shoulder with the men and women of the TerraGov Marine Corps. Ooh-rah!"})
 
+/datum/job/terragov/squad/standard/npc
+	multiple_outfits = TRUE
+	outfits = list(
+		/datum/outfit/job/npc/tgmc/standard,
+		/datum/outfit/job/npc/tgmc/standard/shotgunner,
+	)
+
 //Squad Combat Robot
 /datum/job/terragov/squad/robot
 	title = SQUAD_ROBOT
@@ -192,6 +199,9 @@ What you lack alone, you gain standing shoulder to shoulder with the men and wom
 	to_chat(M, {"\nYou have the equipment and skill to build fortifications, reroute power lines, and bunker down.
 Your squaddies will look to you when it comes to construction in the field of battle."})
 
+/datum/job/terragov/squad/engineer/npc
+	outfit = /datum/outfit/job/npc/tgmc/squad_engineer
+
 /datum/job/terragov/squad/engineer/after_spawn(mob/living/carbon/new_mob, mob/user, latejoin = FALSE)
 	. = ..()
 	if(!ishuman(new_mob))
@@ -252,6 +262,9 @@ Your squaddies will look to you when it comes to construction in the field of ba
 	to_chat(M, {"\nYou must tend the wounds of your squad mates and make sure they are healthy and active.
 You may not be a fully-fledged doctor, but you stand between life and death when it matters."})
 
+/datum/job/terragov/squad/corpsman/npc
+	outfit = /datum/outfit/job/npc/tgmc/corpsman
+
 /datum/job/terragov/squad/corpsman/after_spawn(mob/living/carbon/new_mob, mob/user, latejoin = FALSE)
 	. = ..()
 	if(!ishuman(new_mob))
@@ -307,6 +320,9 @@ You may not be a fully-fledged doctor, but you stand between life and death when
 /datum/job/terragov/squad/smartgunner/radio_help_message(mob/M)
 	. = ..()
 	to_chat(M, {"\nYou are the smartgunner. Your job is to provide IFF weapons support."})
+
+/datum/job/terragov/squad/smartgunner/npc
+	outfit = /datum/outfit/job/npc/tgmc/smartgunner
 
 /datum/job/terragov/squad/smartgunner/after_spawn(mob/living/carbon/new_mob, mob/user, latejoin = FALSE)
 	. = ..()
@@ -395,6 +411,9 @@ You can serve a variety of roles, so choose carefully."})
 	. = ..()
 	to_chat(M, {"\nYou are responsible for the men and women of your squad. Make sure they are on task, working together, and communicating.
 You are also in charge of communicating with command and letting them know about the situation first hand. Keep out of harm's way."})
+
+/datum/job/terragov/squad/leader/npc
+	outfit = /datum/outfit/job/npc/tgmc/squad_leader
 
 /datum/job/terragov/squad/leader/after_spawn(mob/living/carbon/C, mob/user, latejoin = FALSE)
 	. = ..()

@@ -116,7 +116,7 @@
 		link_owner.balloon_alert(link_owner, was_within_range ? ("Link reestablished") : ("Link faltering"))
 		link_target.balloon_alert(link_target, was_within_range ? ("Link reestablished") : ("Link faltering"))
 
-	if(stacks < max_stacks && COOLDOWN_CHECK(src, attunement_increase))
+	if(stacks < max_stacks && COOLDOWN_FINISHED(src, attunement_increase))
 		add_stacks(1)
 
 	var/remaining_health = link_target.maxHealth - (link_target.get_brute_loss() + link_target.get_fire_loss())
@@ -125,7 +125,7 @@
 	var/heal_amount = link_target.maxHealth * (DRONE_ESSENCE_LINK_REGEN * stacks)
 	var/ability_cost = heal_amount * 2
 	if(link_owner.plasma_stored < ability_cost)
-		if(!COOLDOWN_CHECK(src, plasma_warning))
+		if(!COOLDOWN_FINISHED(src, plasma_warning))
 			return
 		link_owner.balloon_alert(link_owner, "No plasma for link")
 		link_target.balloon_alert(link_target, "No plasma for link")
@@ -413,7 +413,7 @@
 	new /obj/effect/temp_visual/telekinesis(get_turf(owner_xeno))
 	to_chat(owner_xeno, span_notice("We feel our wounds close up."))
 
-	var/amount = owner_xeno.maxHealth * GORGER_REJUVENATE_HEAL
+	var/amount = (owner_xeno.maxHealth * GORGER_REJUVENATE_HEAL) * 1.5
 	owner_xeno.heal_xeno_damage(amount, FALSE)
 	tick_damage = 0
 
@@ -678,10 +678,12 @@
 	if(xeno_owner.plasma_stored < plasma_drain)
 		to_chat(xeno_owner, span_notice("Our feast has come to an end..."))
 		xeno_owner.remove_status_effect(STATUS_EFFECT_XENO_FEAST)
+		return
 
 	var/heal_amount = xeno_owner.maxHealth * 0.08
-	xeno_owner.heal_xeno_damage(heal_amount, FALSE)
-	xeno_owner.adjust_overheal(heal_amount * 0.5)
+	var/self_heal_amount = heal_amount * 1.5
+	xeno_owner.heal_xeno_damage(self_heal_amount, FALSE)
+	xeno_owner.adjust_overheal(self_heal_amount * 0.5)
 	xeno_owner.use_plasma(plasma_drain)
 
 	for(var/mob/living/carbon/xenomorph/target_xeno AS in cheap_get_xenos_near(xeno_owner, 4))
@@ -920,6 +922,80 @@
 	rotation = 0
 	spin = 0
 
+// ***************************************
+// *********** Blessings
+// ***************************************
+/datum/status_effect/blessing
+	duration = -1
+	tick_interval = 5 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = null
+	///The owner of this buff.
+	var/mob/living/carbon/xenomorph/buff_owner
+	///Aura strength of the puppeteer who gave this effect.
+	var/strength = 1
+	///Weakref to the puppeteer to set strength.
+	var/datum/weakref/puppeteer
+
+/datum/status_effect/blessing/tick(delta_time)
+	var/mob/living/carbon/xenomorph/xeno = puppeteer?.resolve()
+	if(!xeno)
+		return
+	strength = xeno.xeno_caste.aura_strength
+
+/datum/status_effect/blessing/on_creation(mob/living/new_owner, mob/living/carbon/xenomorph/caster)
+	owner = new_owner
+	puppeteer = WEAKREF(caster)
+	strength = caster.xeno_caste.aura_strength
+	return ..()
+
+/datum/status_effect/blessing/frenzy
+	id = "blessing of frenzy"
+
+/datum/status_effect/blessing/frenzy/on_apply()
+	buff_owner = owner
+	if(!isxeno(buff_owner))
+		return FALSE
+	buff_owner.add_movespeed_modifier(type, TRUE, 0, NONE, TRUE, strength * -0.2)
+	return TRUE
+
+/datum/status_effect/blessing/frenzy/on_remove()
+	buff_owner.remove_movespeed_modifier(type)
+	return ..()
+
+/datum/status_effect/blessing/fury
+	id = "blessing of fury"
+	///The modifier we apply to the xeno's melee damage modifier.
+	var/modifier
+
+/datum/status_effect/blessing/fury/on_apply()
+	buff_owner = owner
+	if(!isxeno(buff_owner))
+		return FALSE
+	modifier = strength * 0.07
+	buff_owner.xeno_melee_damage_modifier += modifier
+	return TRUE
+
+/datum/status_effect/blessing/fury/on_remove()
+	buff_owner.xeno_melee_damage_modifier -= modifier
+	return ..()
+
+/datum/status_effect/blessing/warding
+	id = "blessing of warding"
+	///A holder for the exact armor modified by this status effect.
+	var/datum/armor/armor_modifier
+
+/datum/status_effect/blessing/warding/on_apply()
+	if(!isxeno(owner))
+		return FALSE
+	armor_modifier = getArmor(37.8 * strength, 8.1 * strength, 13.5 * strength, 8.1 * strength)
+	owner.soft_armor = owner.soft_armor.attachArmor(armor_modifier)
+	return TRUE
+
+/datum/status_effect/blessing/warding/on_remove()
+	owner.soft_armor = owner.soft_armor.detachArmor(armor_modifier)
+	armor_modifier = null
+	return ..()
 
 // ***************************************
 // *********** Buff
@@ -1341,4 +1417,3 @@
 	var/mob/living/carbon/xenomorph/xeno_owner = owner
 	xeno_owner.xeno_melee_damage_modifier -= damage_modifier
 	xeno_owner.remove_filter("[id]_outline")
-

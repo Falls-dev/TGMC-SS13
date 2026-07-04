@@ -176,9 +176,9 @@
 
 /obj/item/storage/bible/koran/attack_self(mob/living/carbon/human/activator)
 	TIMER_COOLDOWN_START(activator, "KoranSpam", 5 SECONDS)
-	if(TIMER_COOLDOWN_CHECK(activator, "Koran"))
+	if(TIMER_COOLDOWN_RUNNING(activator, "Koran"))
 		activator.balloon_alert(activator, "Allah has already helped you")
-		if(TIMER_COOLDOWN_CHECK(activator, "KoranSpam"))
+		if(TIMER_COOLDOWN_RUNNING(activator, "KoranSpam"))
 			activator.adjust_brain_loss(1, TRUE)
 			return
 		return
@@ -196,6 +196,30 @@
 			activator.playsound_local(loc, 'sound/hallucinations/im_here1.ogg', 50)
 	else
 		activator.balloon_alert(activator, "This place is not sacred")
+
+/obj/item/storage/bible/koran/afterattack(mob/M, mob/living/carbon/human/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+
+	if(TIMER_COOLDOWN_RUNNING(user, "KoranSpam"))
+		user.adjust_brain_loss(1, TRUE)
+		return
+	TIMER_COOLDOWN_START(user, "KoranSpam", 5 SECONDS)
+
+	if(!((user.religion == "Islam (Shia)") || (user.religion == "Islam (Sunni)")))
+		user.balloon_alert(user, "Infidels cannot use this")
+		return
+
+	var/client/C = M.client
+	if(GLOB.admins.Find(C, 1, 0))
+		if(TIMER_COOLDOWN_RUNNING(user, "Koran"))
+			user.balloon_alert(user, "Allah has already helped you")
+			return
+		TIMER_COOLDOWN_START(user, "Koran", 10 MINUTES)
+		if(prob(10))
+			cell_explosion(M, 1984, 1714, EXPLOSION_FALLOFF_SHAPE_LINEAR)
+			playsound(M, 'sound/misc/Dying.ogg', 15, 1)
 
 /obj/item/rosary
 	name = "Rosary"

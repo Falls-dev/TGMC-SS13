@@ -336,6 +336,40 @@ The default value assumes yt-dlp is in your system PATH
 /datum/config_entry/string/invoke_yt_dlp
 	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN
 
+/datum/config_entry/string/invoke_youtubedl
+	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN
+
+/datum/config_entry/string/cobalt_base_api
+	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN
+
+/datum/config_entry/string/cobalt_api_key
+	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN
+
+/datum/config_entry/string/ipintel_email
+
+/datum/config_entry/string/ipintel_email/ValidateAndSet(str_val)
+	return str_val != "ch@nge.me" && ..()
+
+/datum/config_entry/number/ipintel_rating_bad
+	config_entry_value = 1
+	integer = FALSE
+	min_val = 0
+	max_val = 1
+
+/datum/config_entry/number/ipintel_save_good
+	config_entry_value = 12
+	integer = FALSE
+	min_val = 0
+
+/datum/config_entry/number/ipintel_save_bad
+	config_entry_value = 1
+	integer = FALSE
+	min_val = 0
+
+/datum/config_entry/string/ipintel_domain
+	config_entry_value = "check.getipintel.net"
+
+/datum/config_entry/flag/ooc_country_flags
 
 /datum/config_entry/number/error_cooldown	// The "cooldown" time for each occurrence of a unique error
 	config_entry_value = 600
@@ -451,6 +485,13 @@ This maintains a list of ip addresses that are able to bypass topic filtering.
 
 /datum/config_entry/flag/save_spritesheets
 	default = FALSE
+
+/**
+ * Tgui ui_act payloads larger than 2kb are split into chunks a maximum of 1kb in size.
+ * This flag represents the maximum chunk count the server is willing to receive.
+ */
+/datum/config_entry/number/tgui_max_chunk_count
+	default = 32
 
 // DISCORD ROLE STUFFS
 

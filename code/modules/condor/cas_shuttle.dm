@@ -146,7 +146,7 @@
 	SSmonitor.process_human_positions()
 
 	#ifndef TESTING
-	if(SSmonitor.human_on_ground <= 5)
+	if(SSmonitor.human_on_ground <= 5 && !length(GLOB.active_cas_targets) && !GLOB.minidropship_start_loc)
 		to_chat(user, span_warning("The signal from the area of operations is too weak, you cannot route towards the battlefield."))
 		return
 	#endif
@@ -184,7 +184,7 @@
 
 	SSmonitor.process_human_positions()
 	#ifndef TESTING
-	if(SSmonitor.human_on_ground <= 5)
+	if(SSmonitor.human_on_ground <= 5 && !length(GLOB.active_cas_targets) && !GLOB.minidropship_start_loc)
 		to_chat(user, span_warning("The signal from the area of operations is too weak, you cannot route towards the battlefield."))
 		return
 	#endif
@@ -263,7 +263,7 @@
 	if(active_weapon.ammo_equipped?.ammo_count <= 0)
 		to_chat(source, span_warning("No ammo remaining!"))
 		return
-	if(!COOLDOWN_CHECK(active_weapon, last_fired))
+	if(!COOLDOWN_FINISHED(active_weapon, last_fired))
 		to_chat(source, span_warning("[active_weapon] just fired, wait for it to cool down."))
 		return
 	active_weapon.open_fire(target, attackdir)

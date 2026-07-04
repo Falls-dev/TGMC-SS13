@@ -1,8 +1,10 @@
 /datum/ai_behavior/human
 	///Probability of trying to throw a grenade during process
-	var/nade_throw_prob = 15
+	var/nade_throw_prob = 5
 	///Chat lines for throwing a nade
-	var/list/nade_throw_chat = list("Граната пошла!", "Ложись!", "Граната!", "Лови!")
+	var/list/nade_throw_chat = list( \
+		"Лови гранату!", "Кидаю гранату!", "Граната!", "Лови фашист гранату!", "Граната, беги!", \
+		"Сейчас рванёт!", "Граната, в укрытие!", "Ложись, быстро!", "Живее!", "Разойтись!")
 
 ///Decides if we should throw a grenade
 /datum/ai_behavior/human/proc/grenade_process()
@@ -20,7 +22,7 @@
 			return
 	if(!line_of_sight(mob_parent, combat_target, 7))
 		return
-	if(!check_path(mob_parent, combat_target, PASS_THROW))
+	if(check_path(mob_parent, combat_target, PASS_THROW) != get_turf(combat_target))
 		return
 	if(!check_path_ff(mob_parent, combat_target))
 		return
@@ -43,8 +45,7 @@
 	for(var/obj/item/explosive/grenade/option AS in mob_inventory.grenade_list)
 		if(isgun(option.loc))
 			continue
-		var/mob/living/living_parent = mob_parent
-		if(istype(option, /obj/item/explosive/grenade/smokebomb) && !option.dangerous && (living_parent.health <= minimum_health * 2 * living_parent.maxHealth))
+		if(istype(option, /obj/item/explosive/grenade/smokebomb) && !option.dangerous && (mob_parent.health <= minimum_health * 2 * mob_parent.maxHealth))
 			return
 		nade_options += option
 

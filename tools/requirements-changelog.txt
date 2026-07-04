@@ -1,0 +1,3 @@
+# Python deps for tools/ss13_genchangelog.py (TGS PreSynchronize, CI check_changelogs.sh)
+# Everything else the script uses is Python 3 stdlib (json, urllib, argparse, …).
+PyYAML>=6.0.1,<7

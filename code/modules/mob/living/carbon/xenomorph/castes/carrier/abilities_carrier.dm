@@ -42,7 +42,7 @@ GLOBAL_LIST_INIT(hugger_images_list,  list(
 	keybinding_signals = list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_THROW_HUGGER,
 	)
-	cooldown_duration = 2 SECONDS
+	cooldown_duration = 3 SECONDS
 
 /datum/action/ability/activable/xeno/throw_hugger/get_cooldown()
 	return xeno_owner.xeno_caste.hugger_delay
@@ -153,8 +153,8 @@ GLOBAL_LIST_INIT(hugger_images_list,  list(
 	desc = "Spawn a facehugger that is stored on your body."
 	action_icon_state = "spawn_hugger"
 	action_icon = 'icons/Xeno/actions/carrier.dmi'
-	ability_cost = 100
-	cooldown_duration = 5 SECONDS
+	ability_cost = 150
+	cooldown_duration = 8 SECONDS
 	keybinding_signals = list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_SPAWN_HUGGER,
 	)

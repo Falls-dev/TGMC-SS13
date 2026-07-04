@@ -2,7 +2,6 @@
 	gender = pick(MALE, FEMALE)
 	species = pick(get_playable_species())
 	synthetic_type = pick(SYNTH_TYPES)
-	squad_robot_type = pick(ROBOT_TYPES)
 	ethnicity = random_ethnicity()
 
 	h_style = random_hair_style(gender, species)
@@ -11,6 +10,7 @@
 	good_eyesight = pick(list(FALSE, TRUE))
 	citizenship = pick(CITIZENSHIP_CHOICES)
 	religion = pick(RELIGION_CHOICES)
+	tts_voice = random_tts_voice()
 	randomize_hair_color("hair")
 	randomize_hair_color("grad")
 	randomize_hair_color("facial")
@@ -122,9 +122,8 @@
 	g_eyes = green
 	b_eyes = blue
 
-/datum/preferences/proc/update_preview_icon(job_override, dummy_type = DUMMY_HUMAN_SLOT_PREFERENCES)
-	parent.clear_character_previews()
 
+/datum/preferences/proc/update_preview_icon()
 	// Determine what job is marked as 'High' priority, and dress them up as such.
 	var/datum/job/previewJob
 	var/highest_pref = JOBS_PRIORITY_NEVER
@@ -132,22 +131,32 @@
 		if(job_preferences[job] > highest_pref)
 			previewJob = SSjob.GetJob(job)
 			highest_pref = job_preferences[job]
-	if(job_override)
-		previewJob = job_override
 
 	if(!previewJob)
-		var/icon/dummy_sprite = get_flat_human_icon(null, null, src)
-		parent.show_character_previews(dummy_sprite)
+		var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
+		copy_to(mannequin)
+		parent.show_character_previews(new /mutable_appearance(mannequin))
+		unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
 		return
 
 	if(previewJob.handle_special_preview(parent))
 		return
 
-	var/icon/dummy_sprite = get_flat_human_icon(null, previewJob, src)
-	parent.show_character_previews(dummy_sprite)
+	// Set up the dummy for its photoshoot
+	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
+	copy_to(mannequin)
+
+	if(previewJob)
+		mannequin.job = previewJob
+		previewJob.equip_dummy(mannequin, preference_source = parent)
+
+	parent.show_character_previews(new /mutable_appearance(mannequin))
+	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
+
 
 /datum/preferences/proc/randomize_species_specific()
 	moth_wings = pick(GLOB.moth_wings_list - "Burnt Off")
+
 
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, safety = FALSE)
 	var/new_name
@@ -196,6 +205,9 @@
 	character.citizenship = citizenship
 	character.religion = religion
 
+	character.voice = tts_voice
+	character.pitch = tts_pitch
+
 	character.moth_wings = moth_wings
 	character.underwear = underwear
 	character.undershirt = undershirt
@@ -203,10 +215,15 @@
 	character.update_body()
 	character.update_hair()
 
-/datum/preferences/proc/random_character()
+///Create a random character. Uses a specified species if set.
+/datum/preferences/proc/random_character(datum/species/selected)
+	var/datum/species/S
 	gender = pick(MALE, FEMALE)
-	var/speciestype = pick(GLOB.roundstart_species)
-	var/datum/species/S = GLOB.roundstart_species[speciestype]
+	if(!selected)
+		var/speciestype = pick(GLOB.roundstart_species)
+		S = GLOB.roundstart_species[speciestype]
+	else
+		S = GLOB.all_species[selected.name]
 	species = S.name
 	real_name = S.random_name(gender)
 	age = rand(AGE_MIN, AGE_MAX)

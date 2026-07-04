@@ -2,6 +2,13 @@
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_FLAG
 
+/datum/config_entry/keyed_list/external_rsc_urls/ValidateAndSet(str_val)
+	str_val = trim(str_val)
+	if(!length(str_val))
+		return FALSE
+	config_entry_value[str_val] = TRUE
+	return TRUE
+
 /datum/config_entry/flag/asset_simple_preload
 
 /datum/config_entry/string/asset_transport

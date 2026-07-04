@@ -140,6 +140,12 @@
 /mob/living/carbon/xenomorph/facehugger/Corrupted
 	hivenumber = XENO_HIVE_CORRUPTED
 
+/mob/living/carbon/xenomorph/facehugger/ai
+
+/mob/living/carbon/xenomorph/facehugger/ai/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/ai_controller, /datum/ai_behavior/xeno)
+
 /mob/living/carbon/xenomorph/facehugger/Alpha
 	hivenumber = XENO_HIVE_ALPHA
 

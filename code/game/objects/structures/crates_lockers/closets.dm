@@ -315,7 +315,7 @@
 		return FALSE
 	if(user.do_actions) //Already resisting or doing something like it.
 		return FALSE
-	if(TIMER_COOLDOWN_CHECK(user, COOLDOWN_RESIST))
+	if(TIMER_COOLDOWN_RUNNING(user, COOLDOWN_RESIST))
 		return FALSE
 	//okay, so the closet is either welded or locked... resist!!!
 	user.changeNext_move(CLICK_CD_BREAKOUT)
@@ -487,6 +487,7 @@
 	new /obj/item/clothing/mask/bandanna/bravo(src)
 	new /obj/item/clothing/head/squad_headband/bravo(src)
 	new /obj/item/clothing/under/marine/squad/neck/bravo(src)
+	new /obj/item/clothing/under/marine/bravo_hawaii(src)
 	new /obj/effect/spawner/random/misc/plushie/fiftyfifty(src)
 
 /obj/structure/closet/marine/charlie

@@ -1201,7 +1201,7 @@
 
 /turf/open/floor/mech_bay_recharge_floor/break_tile()
 	if(broken) return
-	change_turf(/turf/open/floor/plating)
+	ChangeTurf(/turf/open/floor/plating)
 	broken = TRUE
 
 /turf/open/floor/mech_bay_recharge_floor/asteroid

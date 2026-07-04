@@ -107,6 +107,12 @@
 		/obj/item/armor_module/storage/medical,
 	)
 
+/obj/item/clothing/suit/modular/xenonauten/heavy/npc_medic
+	starting_attachments = list(
+		/obj/item/armor_module/module/mimir_environment_protection/mark1,
+		/obj/item/armor_module/storage/grenade,
+	)
+
 /obj/item/clothing/suit/modular/xenonauten/heavy/tyr_onegeneral
 	starting_attachments = list(
 		/obj/item/armor_module/module/tyr_extra_armor/mark1,
@@ -260,6 +266,9 @@
 	name = "\improper M11X pattern leader helmet"
 	desc = "A slightly fancier helmet for marine leaders. This one has cushioning to project your fragile brain."
 	soft_armor = MARINE_ARMOR_HEAVY
+
+/obj/item/clothing/head/modular/m10x/leader/antenna
+	starting_attachments = list(/obj/item/armor_module/storage/helmet, /obj/item/armor_module/module/antenna)
 
 /obj/item/clothing/suit/modular/xenonauten/light/mk1
 	name = "\improper Xenonauten-L-MK1 pattern armored vest"

@@ -23,8 +23,8 @@
 						list(/obj/item/explosive/plastique, \
 							/obj/item/explosive/plastique, \
 							/obj/item/explosive/plastique, \
-							/obj/item/detpack, \
-							/obj/item/detpack, \
+							/obj/item/explosive/plastique/detpack, \
+							/obj/item/explosive/plastique/detpack, \
 							/obj/item/assembly/signaler \
 							), \
 						list(/obj/item/weapon/gun/rifle/ar18, \

@@ -233,15 +233,15 @@
 
 // Creates a new turf
 // new_baseturfs can be either a single type or list of types, formated the same as baseturfs. see turf.dm
-/turf/proc/change_turf(path, list/new_baseturfs, flags)
+/turf/proc/ChangeTurf(path, list/new_baseturfs, flags)
 	switch(path)
 		if(null)
 			return
 		if(/turf/baseturf_bottom)
 			path = SSmapping.level_trait(z, ZTRAIT_BASETURF) || /turf/open/space
-			if(!ispath(path))
+			if (!ispath(path))
 				path = text2path(path)
-				if(!ispath(path))
+				if (!ispath(path))
 					warning("Z-level [z] has invalid baseturf '[SSmapping.level_trait(z, ZTRAIT_BASETURF)]'")
 					path = /turf/open/space
 		if(/turf/open/space/basic)
@@ -263,6 +263,7 @@
 	//hybrid lighting
 	var/list/old_hybrid_lights_affecting = hybrid_lights_affecting?.Copy()
 	var/old_directional_opacity = directional_opacity
+
 	var/list/old_baseturfs = baseturfs
 
 	var/list/post_change_callbacks = list()
@@ -333,13 +334,36 @@
 
 	if(!W.smoothing_behavior == NO_SMOOTHING)
 		return W
-	for(var/dirn in GLOB.alldirs)
-		var/turf/D = get_step(W, dirn)
-		if(isnull(D))
-			continue
-		QUEUE_SMOOTH(D)
-		QUEUE_SMOOTH_NEIGHBORS(D)
+	else
+		for(var/dirn in GLOB.alldirs)
+			var/turf/D = get_step(W,dirn)
+			if(isnull(D))
+				continue
+			QUEUE_SMOOTH(D)
+			QUEUE_SMOOTH_NEIGHBORS(D)
 	return W
+
+/// Take off the top layer turf and replace it with the next baseturf down
+/turf/proc/ScrapeAway(amount=1, flags)
+	if(!amount)
+		return
+	if(length(baseturfs))
+		var/list/new_baseturfs = baseturfs.Copy()
+		var/turf_type = new_baseturfs[max(1, length(new_baseturfs) - amount + 1)]
+		while(ispath(turf_type, /turf/baseturf_skipover))
+			amount++
+			if(amount > length(new_baseturfs))
+				CRASH("The bottomost baseturf of a turf is a skipover [src]([type])")
+			turf_type = new_baseturfs[max(1, length(new_baseturfs) - amount + 1)]
+		new_baseturfs.len -= min(amount, length(new_baseturfs) - 1) // No removing the very bottom
+		if(length(new_baseturfs) == 1)
+			new_baseturfs = new_baseturfs[1]
+		return ChangeTurf(turf_type, new_baseturfs, flags)
+
+	if(baseturfs == type)
+		return src
+
+	return ChangeTurf(baseturfs, baseturfs, flags) // The bottom baseturf will never go away
 
 /turf/proc/empty(turf_type = /turf/open/space, baseturf_type, list/ignore_typecache, flags)
 	// Remove all atoms except  landmarks, docking ports, ai nodes
@@ -351,11 +375,11 @@
 		qdel(thing, force=TRUE)
 
 	if(turf_type)
-		change_turf(turf_type, baseturf_type, flags)
-		//var/turf/newT = change_turf(turf_type, baseturf_type, flags)
+		ChangeTurf(turf_type, baseturf_type, flags)
+		//var/turf/newT = ChangeTurf(turf_type, baseturf_type, flags)
 
 /turf/proc/ReplaceWithLattice()
-	src.change_turf(/turf/open/space)
+	src.ChangeTurf(/turf/open/space)
 	new /obj/structure/lattice( locate(src.x, src.y, src.z) )
 
 /turf/proc/AdjacentTurfs()
@@ -639,9 +663,81 @@
 	if(!target)
 		return FALSE
 
+// Make a new turf and put it on top
+// The args behave identical to PlaceOnBottom except they go on top
+// Things placed on top of closed turfs will ignore the topmost closed turf
+// Returns the new turf // todo you can split me into 2, see tg's impl of place_on_top
+/turf/proc/PlaceOnTop(list/new_baseturfs, turf/fake_turf_type, flags)
+	var/area/turf_area = loc
+	if(new_baseturfs && !length(new_baseturfs))
+		new_baseturfs = list(new_baseturfs)
+	flags = turf_area.PlaceOnTopReact(new_baseturfs, fake_turf_type, flags) // A hook so areas can modify the incoming args
+
+	var/turf/newT
+	if(flags & CHANGETURF_SKIP) // We haven't been initialized
+		if(atom_flags & INITIALIZED)
+			stack_trace("CHANGETURF_SKIP was used in a PlaceOnTop call for a turf that's initialized. This is a mistake. [src]([type])")
+		assemble_baseturfs()
+	if(fake_turf_type)
+		if(!new_baseturfs) // If no baseturfs list then we want to create one from the turf type
+			if(!length(baseturfs))
+				baseturfs = list(baseturfs)
+			var/list/old_baseturfs = baseturfs.Copy()
+			if(!istype(src, /turf/closed))
+				old_baseturfs += type
+			newT = ChangeTurf(fake_turf_type, null, flags)
+			newT.assemble_baseturfs(initial(fake_turf_type.baseturfs)) // The baseturfs list is created like roundstart
+			if(!length(newT.baseturfs))
+				newT.baseturfs = list(baseturfs)
+			newT.baseturfs -= GLOB.blacklisted_automated_baseturfs
+			newT.baseturfs.Insert(1, old_baseturfs) // The old baseturfs are put underneath
+			return newT
+		if(!length(baseturfs))
+			baseturfs = list(baseturfs)
+		if(!istype(src, /turf/closed))
+			baseturfs += type
+		baseturfs += new_baseturfs
+		return ChangeTurf(fake_turf_type, null, flags)
+	if(!length(baseturfs))
+		baseturfs = list(baseturfs)
+	if(!istype(src, /turf/closed))
+		baseturfs += type
+	var/turf/change_type
+	if(length(new_baseturfs))
+		change_type = new_baseturfs[length(new_baseturfs)]
+		new_baseturfs.len--
+		if(length(new_baseturfs))
+			baseturfs += new_baseturfs
+	else
+		change_type = new_baseturfs
+	return ChangeTurf(change_type, null, flags)
+
+// Copy an existing turf and put it on top
+// Returns the new turf
+/turf/proc/CopyOnTop(turf/copytarget, ignore_bottom=1, depth=INFINITY, copy_air = FALSE)
+	var/list/new_baseturfs = list()
+	new_baseturfs += baseturfs
+	new_baseturfs += type
+
+	if(depth)
+		var/list/target_baseturfs
+		if(length(copytarget.baseturfs))
+			// with default inputs this would be Copy(clamp(2, -INFINITY, length(baseturfs)))
+			// Don't forget a lower index is lower in the baseturfs stack, the bottom is baseturfs[1]
+			target_baseturfs = copytarget.baseturfs.Copy(clamp(1 + ignore_bottom, 1 + length(copytarget.baseturfs) - depth, length(copytarget.baseturfs)))
+		else if(!ignore_bottom)
+			target_baseturfs = list(copytarget.baseturfs)
+		if(target_baseturfs)
+			target_baseturfs -= new_baseturfs & GLOB.blacklisted_automated_baseturfs
+			new_baseturfs += target_baseturfs
+
+	var/turf/newT = copytarget.copyTurf(src, copy_air)
+	newT.baseturfs = new_baseturfs
+	return newT
+
 /turf/proc/copyTurf(turf/T)
 	if(T.type != type)
-		T.change_turf(type)
+		T.ChangeTurf(type)
 	if(T.icon_state != icon_state)
 		T.icon_state = icon_state
 	if(T.icon != icon)
@@ -654,7 +750,7 @@
 	return T
 
 //If you modify this function, ensure it works correctly with lateloaded map templates.
-/turf/proc/AfterChange(flags) //called after a turf has been replaced in change_turf()
+/turf/proc/AfterChange(flags) //called after a turf has been replaced in ChangeTurf()
 	levelupdate()
 	//CalculateAdjacentTurfs() // linda
 
@@ -791,3 +887,7 @@
 ///Returns the number that shows how far an AM is offset when submerged in this turf
 /turf/proc/get_submerge_depth()
 	return 0
+/turf/proc/is_covered()
+	if(SEND_SIGNAL(src, COMSIG_TURF_CHECK_COVERED) & TURF_COVERED)
+		return TRUE
+	return FALSE

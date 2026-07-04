@@ -49,7 +49,7 @@ export const PortableGenerator = (props) => {
             </LabeledList.Item>
             <LabeledList.Item label="Current sheet level">
               <ProgressBar
-                value={data.stack_percent * 0.01}
+                value={data.stack_percent / 100}
                 ranges={{
                   good: [0.1, Infinity],
                   average: [0.01, 0.1],

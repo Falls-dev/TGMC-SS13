@@ -25,7 +25,7 @@
 	if(!use(1))
 		return
 	playsound(T, 'sound/weapons/genhit.ogg', 25, 1)
-	T.place_on_top(turf_type)
+	T.PlaceOnTop(turf_type)
 
 /obj/item/stack/tile/plasteel
 	force = 6
@@ -38,9 +38,9 @@
 ///Creates plating, used for space turfs only
 /obj/item/stack/tile/plasteel/proc/build(turf/space_turf)
 	if(isspaceturf(space_turf))
-		space_turf.change_turf(/turf/open/floor/plating/airless)
+		space_turf.ChangeTurf(/turf/open/floor/plating/airless)
 	else
-		space_turf.change_turf(/turf/open/floor/plating)
+		space_turf.ChangeTurf(/turf/open/floor/plating)
 
 /obj/item/stack/tile/plasteel/sandstone/runed
 	icon_state = "tile_runedsandstone"

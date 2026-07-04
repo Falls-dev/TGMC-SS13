@@ -108,6 +108,19 @@
 
 	to_chat(src, span_notice("You will [(prefs.toggles_chat & CHAT_LOOC) ? "now" : "no longer"] see messages on the LOOC channel."))
 
+/client/verb/toggle_ooc_country_flag()
+	set category = "Preferences.Chat"
+	set name = "Toggle OOC Country Flag"
+
+	if(!(CONFIG_GET(flag/ooc_country_flags)))
+		to_chat(src, span_warning("OOC country flags are disabled on this server."))
+		return
+
+	prefs.show_ooc_country_flag = !prefs.show_ooc_country_flag
+	prefs.save_preferences()
+
+	to_chat(src, span_notice("Your country flag will [(prefs.show_ooc_country_flag) ? "now" : "no longer"] appear before your name in OOC chat."))
+
 /client/verb/toggle_special()
 	set category = "Preferences"
 	set name = "Toggle Special Roles"
@@ -214,13 +227,3 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 	TOGGLE_BITFIELD(prefs.toggles_deadchat, DISABLE_DEATHRATTLE)
 	to_chat(usr, span_notice("Death announcements have been [(prefs.toggles_deadchat & DISABLE_DEATHRATTLE) ? "disabled" : "enabled"]."))
-
-///Same thing as the character creator preference, but as a byond verb, because not everyone can reach it in tgui preference menu
-/client/verb/toggle_tgui_fancy()
-	set name = "Toggle TGUI Window Compability Mode"
-	set category = "Preferences"
-
-	usr.client.prefs.tgui_fancy = !usr.client.prefs.tgui_fancy
-	usr.client.prefs.save_preferences()
-	SStgui.update_user_uis(usr)
-	to_chat(src, span_interface("TGUI compatibility mode is now [usr.client.prefs.tgui_fancy ? "dis" : "en"]abled."))

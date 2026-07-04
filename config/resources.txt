@@ -1,8 +1,9 @@
 # External resources
-# Set this to the location of a .zip with the server's .rsc inside of it.
-# If you set this mutiple times, the server will rotate between the links.
-# To use this, the compile option PRELOAD_RSC must be set to 0 to keep byond from preloading resources
-# Resource urls can not be encrypted (https://), as they are downloaded by byond, not IE, and byond can't into encryption
+# Set this to the location of your server's .rsc (or a .zip containing it).
+# If you set this multiple times, the server will rotate between the links.
+# PRELOAD_RSC must be 0 in code (already set in TGMC) for clients to download from here.
+# URLs must be http - BYOND preload_rsc does not use https.
+# See config/example/resources.txt for a template.
 
 EXTERNAL_RSC_URLS http://tgstation13.download/byond/tgstationv2.zip
 

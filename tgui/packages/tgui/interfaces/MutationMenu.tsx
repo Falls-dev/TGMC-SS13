@@ -302,6 +302,7 @@ const MutationTree = (props: {
   );
 };
 
+// eslint-disable-next-line complexity
 const MutationNode = (props: { mutation: MutationEntry; level: number }) => {
   const { mutation, level } = props;
   const { act, data } = useBackend<MutationData>();

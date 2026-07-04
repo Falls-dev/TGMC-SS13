@@ -420,9 +420,9 @@
 	if(isxeno(user))
 		var/mob/living/carbon/xenomorph/our_xenomorph = user
 		silent_crawl = our_xenomorph.xeno_caste.silent_vent_crawl
-	if(world.time - user.last_played_vent <= VENT_SOUND_DELAY || silent_crawl)
+	if(TIMER_COOLDOWN_RUNNING(user, COOLDOWN_VENTSOUND) || silent_crawl)
 		return
-	user.last_played_vent = world.time
+	TIMER_COOLDOWN_START(user, COOLDOWN_VENTSOUND, 3 SECONDS)
 	playsound(src, pick('sound/effects/alien/ventcrawl1.ogg','sound/effects/alien/ventcrawl2.ogg'), 50, TRUE, -3)
 
 /**

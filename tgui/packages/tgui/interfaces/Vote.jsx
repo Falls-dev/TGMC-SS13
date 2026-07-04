@@ -50,6 +50,7 @@ const StartVoteOptions = (props) => {
     allow_vote_mode,
     allow_vote_restart,
     allow_vote_groundmap,
+    allow_vote_shipmap,
     vote_happening,
   } = data;
   return (
@@ -64,6 +65,14 @@ const StartVoteOptions = (props) => {
                   onClick={() => act('groundmap')}
                 >
                   Ground Map
+                </Button>
+              </Stack.Item>
+              <Stack.Item>
+                <Button
+                  disabled={vote_happening || !allow_vote_shipmap}
+                  onClick={() => act('shipmap')}
+                >
+                  Ship Map
                 </Button>
               </Stack.Item>
               <Stack.Item>
@@ -97,6 +106,7 @@ const VoteOptions = (props) => {
     allow_vote_mode,
     allow_vote_restart,
     allow_vote_groundmap,
+    allow_vote_shipmap,
     upper_admin,
   } = data;
 
@@ -116,6 +126,18 @@ const VoteOptions = (props) => {
                   >
                     Groundmap vote{' '}
                     {allow_vote_groundmap ? 'Enabled' : 'Disabled'}
+                  </Button.Checkbox>
+                )}
+              </Stack.Item>
+              <Stack.Item>
+                {!!upper_admin && (
+                  <Button.Checkbox
+                    mr={!allow_vote_shipmap ? 1 : 1.6}
+                    color="red"
+                    checked={!!allow_vote_shipmap}
+                    onClick={() => act('toggle_shipmap')}
+                  >
+                    Shipmap vote {allow_vote_shipmap ? 'Enabled' : 'Disabled'}
                   </Button.Checkbox>
                 )}
               </Stack.Item>

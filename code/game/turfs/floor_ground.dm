@@ -550,4 +550,4 @@
 	var/turf/current_turf = get_turf(src)
 	if(current_turf)
 		current_turf.atom_flags |= AI_BLOCKED
-	change_turf(/turf/open/liquid/lava)
+	ChangeTurf(/turf/open/liquid/lava)

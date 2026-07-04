@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Icon,
   LabeledList,
   NoticeBox,
   Section,

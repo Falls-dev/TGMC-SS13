@@ -3,25 +3,33 @@
 #define BM_SWITCHSTATE_DIR 2
 
 /datum/buildmode
+	/// Currently selected build direction
 	var/build_dir = SOUTH
+	/// Holder for the current selected buildmode mode
 	var/datum/buildmode_mode/mode
+	/// The client using the build mode
 	var/client/holder
 
-	// login callback
-	var/li_cb
+	/// Login callback holder
+	var/datum/callback/li_cb
 
-	// SECTION UI
+	/// A list of buttons used to control buildmode
 	var/list/buttons
 
-	// Switching management
+	/// Keeps track of what buttons to display, for example are we switching direction or mode currently
 	var/switch_state = BM_SWITCHSTATE_NONE
-	var/switch_width = 5
-	// modeswitch UI
+	/// Variable used to determine the spacing of the mode buttons
+	var/switch_width = 4
+	/// Holder for the button to switch modes
 	var/atom/movable/screen/buildmode/mode/modebutton
+	/// Holder for the list of buttons to switch modes
 	var/list/modeswitch_buttons = list()
-	// dirswitch UI
+	/// Holder for the button to change directions
 	var/atom/movable/screen/buildmode/bdir/dirbutton
+	/// List of the buttons to switch directions
 	var/list/dirswitch_buttons = list()
+	/// Item preview for selected item
+	var/atom/movable/screen/buildmode/preview_item/preview
 
 /datum/buildmode/New(client/c)
 	mode = new /datum/buildmode_mode/basic(src)
@@ -46,10 +54,12 @@
 
 /datum/buildmode/Destroy()
 	close_switchstates()
+	close_preview()
 	holder.player_details.post_login_callbacks -= li_cb
 	li_cb = null
 	holder = null
 	QDEL_NULL(mode)
+	QDEL_LIST(buttons)
 	QDEL_LIST(modeswitch_buttons)
 	QDEL_LIST(dirswitch_buttons)
 	return ..()
@@ -66,16 +76,16 @@
 
 /datum/buildmode/proc/create_buttons()
 	// keep a reference so we can update it upon mode switch
-	modebutton = new /atom/movable/screen/buildmode/mode(null, null, src)
+	modebutton = new /atom/movable/screen/buildmode/mode(src)
 	buttons += modebutton
-	buttons += new /atom/movable/screen/buildmode/help(null, null, src)
+	buttons += new /atom/movable/screen/buildmode/help(src)
 	// keep a reference so we can update it upon dir switch
-	dirbutton = new /atom/movable/screen/buildmode/bdir(null, null, src)
+	dirbutton = new /atom/movable/screen/buildmode/bdir(src)
 	buttons += dirbutton
-	buttons += new /atom/movable/screen/buildmode/quit(null, null, src)
+	buttons += new /atom/movable/screen/buildmode/quit(src)
 	// build the lists of switching buttons
 	build_options_grid(subtypesof(/datum/buildmode_mode), modeswitch_buttons, /atom/movable/screen/buildmode/modeswitch)
-	build_options_grid(list(SOUTH,EAST,WEST,NORTH,NORTHWEST), dirswitch_buttons, /atom/movable/screen/buildmode/dirswitch)
+	build_options_grid(GLOB.alldirs, dirswitch_buttons, /atom/movable/screen/buildmode/dirswitch)
 
 // this creates a nice offset grid for choosing between buildmode options,
 // because going "click click click ah hell" sucks.
@@ -84,7 +94,7 @@
 	for(var/thing in elements)
 		var/x = pos_idx % switch_width
 		var/y = FLOOR(pos_idx / switch_width, 1)
-		var/atom/movable/screen/buildmode/B = new buttontype(null, null, src, thing)
+		var/atom/movable/screen/buildmode/B = new buttontype(src, thing)
 		// extra .5 for a nice offset look
 		B.screen_loc = "NORTH-[(1 + 0.5 + y*1.5)],WEST+[0.5 + x*1.5]"
 		buttonslist += B
@@ -127,10 +137,41 @@
 	switch_state = BM_SWITCHSTATE_NONE
 	holder.screen -= dirswitch_buttons
 
+/datum/buildmode/proc/preview_selected_item(atom/typepath)
+	close_preview()
+	preview = new /atom/movable/screen/buildmode/preview_item(src)
+	preview.name = initial(typepath.name)
+
+	// Scale the preview if it's bigger than one tile
+	var/mutable_appearance/preview_overlay = new(typepath)
+	var/icon/size_check = icon(initial(typepath.icon), icon_state = initial(typepath.icon_state))
+	var/scale = 1
+	var/width = size_check.Width()
+	var/height = size_check.Height()
+	if(width > world.icon_size || height > world.icon_size)
+		if(width >= height)
+			scale = world.icon_size / width
+		else
+			scale = world.icon_size / height
+	preview_overlay.transform = preview_overlay.transform.Scale(scale)
+	preview_overlay.appearance_flags |= TILE_BOUND
+	preview_overlay.layer = FLOAT_LAYER
+	preview_overlay.plane = FLOAT_PLANE
+	preview.add_overlay(preview_overlay)
+
+	holder.screen += preview
+
+/datum/buildmode/proc/close_preview()
+	if(isnull(preview))
+		return
+	holder.screen -= preview
+	QDEL_NULL(preview)
+
 /datum/buildmode/proc/change_mode(newmode)
 	mode.exit_mode(src)
 	QDEL_NULL(mode)
 	close_switchstates()
+	close_preview()
 	mode = new newmode(src)
 	mode.enter_mode(src)
 	modebutton.update_icon()

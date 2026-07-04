@@ -433,3 +433,108 @@
 		return
 	var/obj/vehicle/sealed/armored/multitile/som_tank/tank = root
 	tank.remove_desant(AM)
+
+//2x3
+/obj/hitbox/two_three
+	bound_x = -32
+	bound_y = -32
+	vehicle_length = 96
+	vehicle_width = 64
+
+/obj/hitbox/two_three/owner_turned(datum/source, old_dir, new_dir)
+	. = ..()
+	if(!.)
+		return
+	var/list/old_locs = locs.Copy()
+	switch(new_dir)
+		if(NORTH)
+			bound_height = vehicle_length
+			bound_width = vehicle_width
+			bound_x = 0
+			bound_y = -32
+			root.pixel_x = 8
+			root.pixel_y = -32
+		if(SOUTH)
+			bound_height = vehicle_length
+			bound_width = vehicle_width
+			bound_x = -32
+			bound_y = -32
+			root.pixel_x = -24
+			root.pixel_y = -32
+		if(WEST)
+			bound_height = vehicle_width
+			bound_width = vehicle_length
+			bound_x = -32
+			bound_y = 0
+			root.pixel_x = -40
+			root.pixel_y = 0
+		if(EAST)
+			bound_height = vehicle_width
+			bound_width = vehicle_length
+			bound_x = -32
+			bound_y = -32
+			root.pixel_x = -40
+			root.pixel_y = -32
+
+	SEND_SIGNAL(src, COMSIG_MULTITILE_VEHICLE_ROTATED, loc, new_dir, null, old_locs)
+
+/obj/hitbox/two_three/on_attempt_drive(atom/movable/movable_parent, mob/living/user, direction)
+	var/obj/vehicle/sealed/armored/armor = root
+	var/movement_dir
+	var/facing_dir = armor.dir
+	var/turf/centerturf = get_turf(root)
+	var/list/enteringturfs = list()
+
+	if(!ISDIAGONALDIR(direction))
+		if(direction == NORTH)
+			movement_dir = facing_dir
+		else if(direction == SOUTH)
+			movement_dir = REVERSE_DIR(facing_dir)
+		else
+			return COMPONENT_DRIVER_BLOCK_MOVE
+		centerturf = get_step(get_step(centerturf, movement_dir), movement_dir)
+		enteringturfs += centerturf
+		enteringturfs += get_step(centerturf, turn(facing_dir, -90))
+	else
+		if(direction & WEST)
+			movement_dir = turn(facing_dir, 90)
+			centerturf = get_step(centerturf, movement_dir)
+		else
+			movement_dir = turn(facing_dir, -90)
+			centerturf = get_step(get_step(centerturf, movement_dir), movement_dir)
+
+		if(direction & NORTH)
+			facing_dir = movement_dir
+			enteringturfs += get_step(centerturf, armor.dir)
+		else
+			facing_dir = REVERSE_DIR(movement_dir)
+			enteringturfs += get_step(centerturf, REVERSE_DIR(armor.dir))
+		enteringturfs += centerturf
+
+	var/canstep = TRUE
+	for(var/turf/T AS in enteringturfs)
+		if(!T.Enter(root, movement_dir))
+			canstep = FALSE
+		for(var/atom/movable/AM AS in T.contents)
+			if(AM.pass_flags & PASS_TANK)
+				continue
+			if(AM.CanPass(root))
+				continue
+			root.Bump(AM)
+			canstep = FALSE
+
+	if(!canstep)
+		return COMPONENT_DRIVER_BLOCK_MOVE
+
+	if(!ISDIAGONALDIR(direction))
+		armor.forceMove(get_step(armor.loc, movement_dir))
+		return COMPONENT_DRIVER_BLOCK_MOVE
+
+	if(direction == NORTHEAST)
+		armor.forceMove(get_step(armor.loc, turn(armor.dir, -45)))
+	else if(direction == SOUTHEAST)
+		armor.forceMove(get_step(armor.loc, turn(armor.dir, -135)))
+
+	root.setDir(facing_dir)
+	COOLDOWN_START(root, cooldown_vehicle_move, root.move_delay * 2)
+	return COMPONENT_DRIVER_BLOCK_MOVE

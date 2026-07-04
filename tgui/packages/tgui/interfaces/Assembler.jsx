@@ -1,7 +1,4 @@
-import { map } from 'common/collections';
 import { Fragment } from 'react';
-
-import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
@@ -14,6 +11,8 @@ import {
   Stack,
   Table,
 } from 'tgui-core/components';
+
+import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
 
 const category_icon = {
@@ -31,19 +30,42 @@ const category_icon = {
   'Pending Order': 'shopping-cart',
 };
 
-export const Assembler = (props) => {
-  const { act, data } = useBackend();
-
-  const [selectedMenu, setSelectedMenu] = useLocalState('selectedMenu', null);
-
-  const { supplypacks } = data;
-
-  const selectedPackCat = supplypacks[selectedMenu]
-    ? supplypacks[selectedMenu]
-    : null;
+const SafeContents = ({ data, title }) => {
+  if (!data || typeof data !== 'object') return null;
 
   return (
-    <Window width={900} height={700}>
+    <>
+      <Table.Row>
+        <Table.Cell bold>{title}</Table.Cell>
+        <Table.Cell bold>Quantity</Table.Cell>
+      </Table.Row>
+      {Object.entries(data).map(([key, item]: [string, any]) => {
+        const name = typeof item === 'object' && item !== null ? (item.name || key) : key;
+        const count = typeof item === 'object' && item !== null ? (item.count || 1) : item;
+
+        return (
+          <Table.Row key={key}>
+            <Table.Cell width="70%">{name}</Table.Cell>
+            <Table.Cell>{count}</Table.Cell>
+          </Table.Row>
+        );
+      })}
+    </>
+  );
+};
+
+const InputContents = (props) => <SafeContents data={props.input} title="Input" />;
+const OutputContents = (props) => <SafeContents data={props.output} title="Output" />;
+
+export const Assembler = (props) => {
+  const { act, data } = useBackend();
+  const [selectedMenu, setSelectedMenu] = useLocalState('selectedMenu', null);
+  const { supplypacks, categories = [] } = data;
+
+  const selectedPackCat = supplypacks ? supplypacks[selectedMenu] : null;
+
+  return (
+    <Window title="Assembler" width={900} height={700}>
       <Flex height="650px" align="stretch">
         <Flex.Item width="280px">
           <Menu />
@@ -62,7 +84,6 @@ export const Assembler = (props) => {
 
 const MenuButton = (props) => {
   const { condition, menuname, icon, width } = props;
-
   const [selectedMenu, setSelectedMenu] = useLocalState('selectedMenu', null);
 
   return (
@@ -78,18 +99,15 @@ const MenuButton = (props) => {
 };
 
 const Menu = (props) => {
-  const { act, data } = useBackend();
-  const { readOnly } = props;
-
+  const { data } = useBackend();
   const { categories } = data;
 
   return (
     <Section height="100%" p="5px">
       <Divider />
       {categories.map((category) => (
-        <Fragment key={category.id}>
+        <Fragment key={category}>
           <MenuButton
-            key={category.id}
             icon={category_icon[category]}
             menuname={category}
             condition={0}
@@ -103,14 +121,15 @@ const Menu = (props) => {
 };
 
 const Pack = (props) => {
-  const { act, data } = useBackend();
+  const { data } = useBackend();
   const { pack } = props;
   const { supplypackscontents } = data;
-  const { name, inputs, outputs } = supplypackscontents[pack];
-  return !!inputs &&
-    inputs.constructor === Object &&
-    !!outputs &&
-    outputs.constructor === Object ? (
+  const item = supplypackscontents[pack];
+  if (!item) return null;
+
+  const { name, inputs, outputs } = item;
+
+  return !!inputs && typeof inputs === 'object' && !!outputs && typeof outputs === 'object' ? (
     <Collapsible color="gray" title={<PackName name={name} pl={0} />}>
       <Table>
         <InputContents input={inputs} />
@@ -126,7 +145,6 @@ const Pack = (props) => {
 
 const PackName = (props) => {
   const { name, pl } = props;
-
   return (
     <Box inline pl={pl}>
       <Box width="15px" inline />
@@ -136,44 +154,33 @@ const PackName = (props) => {
 };
 
 const CategoryButton = (props) => {
-  const { act, data } = useBackend();
+  const { act } = useBackend();
   const { icon, disabled, id, mode } = props;
 
   return (
     <Button
       icon={icon}
       disabled={disabled}
-      onClick={() =>
-        act('select', {
-          id: id,
-          mode: mode,
-        })
-      }
+      onClick={() => act('select', { id: id, mode: mode })}
     />
   );
 };
 
 const Category = (props) => {
-  const { act, data } = useBackend();
-
+  const { data } = useBackend();
   const { supplypackscontents, assemblercraft } = data;
-
-  const [selectedMenu, setSelectedMenu] = useLocalState('selectedMenu', null);
-
-  const { selectedPackCat, should_filter, level } = props;
-
+  const { selectedPackCat, should_filter } = props;
   const [filter, setFilter] = useLocalState(`pack-name-filter`, null);
+  const [selectedMenu] = useLocalState('selectedMenu', null);
 
   const filterSearch = (entry) =>
     should_filter && filter
-      ? supplypackscontents[entry].name
-          ?.toLowerCase()
-          .includes(filter.toLowerCase())
+      ? supplypackscontents[entry]?.name?.toLowerCase().includes(filter.toLowerCase())
       : true;
 
   return (
     <Section
-      level={level || 1}
+      level={1}
       title={
         <>
           <Icon name={category_icon[selectedMenu]} mr="5px" />
@@ -194,64 +201,24 @@ const Category = (props) => {
         )}
         <Stack.Item>
           <Table>
-            {selectedPackCat.filter(filterSearch).map((entry) => {
-              return (
-                <Table.Row key={entry.id}>
-                  <Table.Cell width="30px">
-                    <CategoryButton
-                      icon="sync"
-                      id={entry}
-                      disabled={entry === assemblercraft}
-                      mode="add"
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Pack pack={entry} />
-                  </Table.Cell>
-                </Table.Row>
-              );
-            })}
+            {selectedPackCat.filter(filterSearch).map((entry) => (
+              <Table.Row key={entry}>
+                <Table.Cell width="30px">
+                  <CategoryButton
+                    icon="sync"
+                    id={entry}
+                    disabled={entry === assemblercraft}
+                    mode="add"
+                  />
+                </Table.Cell>
+                <Table.Cell>
+                  <Pack pack={entry} />
+                </Table.Cell>
+              </Table.Row>
+            ))}
           </Table>
         </Stack.Item>
       </Stack>
     </Section>
-  );
-};
-
-const InputContents = (props) => {
-  const { input } = props;
-
-  return (
-    <>
-      <Table.Row>
-        <Table.Cell bold>Input</Table.Cell>
-        <Table.Cell bold>Quantity</Table.Cell>
-      </Table.Row>
-      {map((contententry) => (
-        <Table.Row>
-          <Table.Cell width="70%">{contententry.name}</Table.Cell>
-          <Table.Cell>{contententry.count}</Table.Cell>
-        </Table.Row>
-      ))(input)}
-    </>
-  );
-};
-
-const OutputContents = (props) => {
-  const { output } = props;
-
-  return (
-    <>
-      <Table.Row>
-        <Table.Cell bold>Output</Table.Cell>
-        <Table.Cell bold>Quantity</Table.Cell>
-      </Table.Row>
-      {map((contententry) => (
-        <Table.Row>
-          <Table.Cell width="70%">{contententry.name}</Table.Cell>
-          <Table.Cell>{contententry.count}</Table.Cell>
-        </Table.Row>
-      ))(output)}
-    </>
   );
 };

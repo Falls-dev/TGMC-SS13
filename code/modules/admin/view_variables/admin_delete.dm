@@ -22,7 +22,7 @@
 		BLACKBOX_LOG_ADMIN_VERB("Delete")
 		if(isturf(D))
 			var/turf/T = D
-			T.scrape_away()
+			T.ScrapeAway()
 		else
 			vv_update_display(D, "deleted", VV_MSG_DELETED)
 			qdel(D)

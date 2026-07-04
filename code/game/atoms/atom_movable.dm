@@ -58,6 +58,15 @@
 	///Internal holder for emissive blocker object, do not use directly use blocks_emissive
 	var/atom/movable/render_step/emissive_blocker/em_block
 
+	/// The voice that this movable makes when speaking
+	var/voice
+	/// The pitch adjustment that this movable uses when speaking.
+	var/pitch = 0
+	/// The filter to apply to the voice when processing the TTS audio message.
+	var/voice_filter = ""
+	/// Set to anything other than "" to activate the silicon voice effect for TTS messages.
+	var/tts_silicon_voice_effect = ""
+
 	/// String representing the spatial grid groups we want to be held in.
 	/// acts as a key to the list of spatial grid contents types we exist in via SSspatial_grid.spatial_grid_categories.
 	/// We do it like this to prevent people trying to mutate them and to save memory on holding the lists ourselves
@@ -644,16 +653,17 @@
 
 	var/dist_since_sleep = 0
 
+	var/failed_to_move = FALSE
 	if(dist_x > dist_y)
 		var/error = dist_x * 0.5 - dist_y
-		while(!gc_destroyed && target &&((((x < target.x && dx == EAST) || (x > target.x && dx == WEST)) && get_dist_euclidean(origin, src) < range) || isspaceturf(loc)) && throwing && istype(loc, /turf))
+		while(!gc_destroyed && target &&((((x < target.x && dx == EAST) || (x > target.x && dx == WEST))  && get_dist_euclidean(origin, src) < range) || isspaceturf(loc)) && (!failed_to_move && throwing) && istype(loc, /turf))
 			// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
 			if(error < 0)
 				var/atom/step = get_step(src, dy)
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				if(!Move(step, glide_size_override = DELAY_TO_GLIDE_SIZE(1 / speed)))
-					throwing = FALSE
+					failed_to_move = TRUE
 				error += dist_x
 				dist_since_sleep++
 				if(dist_since_sleep >= speed)
@@ -664,7 +674,7 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				if(!Move(step, glide_size_override = DELAY_TO_GLIDE_SIZE(1 / speed)))
-					throwing = FALSE
+					failed_to_move = TRUE
 				error -= dist_y
 				dist_since_sleep++
 				if(dist_since_sleep >= speed)
@@ -679,7 +689,7 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				if(!Move(step, glide_size_override = DELAY_TO_GLIDE_SIZE(1 / speed)))
-					throwing = FALSE
+					failed_to_move = TRUE
 				error += dist_y
 				dist_since_sleep++
 				if(dist_since_sleep >= speed)
@@ -690,7 +700,7 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				if(!Move(step, glide_size_override = DELAY_TO_GLIDE_SIZE(1 / speed)))
-					throwing = FALSE
+					failed_to_move = TRUE
 				error -= dist_x
 				dist_since_sleep++
 				if(dist_since_sleep >= speed)
@@ -700,7 +710,7 @@
 	//done throwing, either because it hit something or it finished moving
 	if(!originally_dir_locked)
 		atom_flags &= ~DIRLOCK
-	if(isobj(src) && throwing)
+	if(isobj(src) && (!failed_to_move && throwing))
 		throw_impact(get_turf(src), speed)
 	stop_throw(flying, original_layer)
 
@@ -1296,7 +1306,7 @@
 ///Toggles AM between throwing states
 /atom/movable/proc/set_throwing(new_throwing)
 	if(throwing == new_throwing)
-		return
+		return FALSE
 	throwing = new_throwing
 	if(throwing)
 		add_pass_flags(PASS_THROW, THROW_TRAIT)
@@ -1304,6 +1314,7 @@
 	else
 		REMOVE_TRAIT(src, TRAIT_NOSUBMERGE, THROW_TRAIT)
 		remove_pass_flags(PASS_THROW, THROW_TRAIT)
+	return TRUE
 
 ///Toggles AM between flying states
 /atom/movable/proc/set_flying(flying, new_layer)
@@ -1483,8 +1494,9 @@ GLOBAL_LIST_EMPTY(submerge_filter_timer_list)
 /atom/movable/proc/add_nosubmerge_trait(trait_source = TRAIT_GENERIC)
 	if(HAS_TRAIT(src, TRAIT_SUBMERGED))
 		set_submerge_level(old_loc = loc, duration = 0.1)
+	if(!HAS_TRAIT(src, TRAIT_NOSUBMERGE))
+		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_NOSUBMERGE), PROC_REF(_do_submerge))
 	ADD_TRAIT(src, TRAIT_NOSUBMERGE, trait_source)
-	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_NOSUBMERGE), PROC_REF(_do_submerge))
 
 ///Adds submerge effects to the AM. Should never be called directly
 /atom/movable/proc/_do_submerge(atom/movable/source)
@@ -1499,3 +1511,12 @@ GLOBAL_LIST_EMPTY(submerge_filter_timer_list)
 */
 /atom/movable/proc/keybind_face_direction(direction)
 	setDir(direction)
+
+/// Sets and deals with any changes to the move_resist variable.
+/atom/movable/proc/set_move_resist(new_move_resist)
+	if(move_resist == new_move_resist)
+		return
+	move_resist = new_move_resist
+	if(pulledby && !can_be_pulled(pulledby))
+		pulledby.stop_pulling()
+

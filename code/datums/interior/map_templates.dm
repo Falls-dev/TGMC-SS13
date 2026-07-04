@@ -25,6 +25,14 @@
 	name = "clone bay apc interior template"
 	filename = "apc_cloner"
 
+/datum/map_template/interior/mrap
+	name = "transport mrap interior template"
+	filename = "mrap"
+
+/datum/map_template/interior/van
+	name = "transport van interior template"
+	filename = "van"
+
 /datum/map_template/interior/som_tank
 	name = "SOM tank interior template"
 	filename = "som_tank"

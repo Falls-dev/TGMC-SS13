@@ -173,7 +173,7 @@
 	if(isturf(loc) || !description_overlay)
 		return
 	var/mutable_appearance/desc = mutable_appearance('icons/misc/12x12.dmi')
-	desc.pixel_x = 16
+	desc.pixel_w = 16
 	desc.maptext = MAPTEXT(description_overlay)
 	desc.maptext_width = 16
 	. += desc
@@ -473,6 +473,16 @@
 	)
 	description_overlay = "Pe+"
 
+/obj/item/reagent_containers/hypospray/advanced/peridaxonplus_medkit
+	name = "Peridaxon+ hypospray"
+	desc = "A hypospray loaded with Peridaxon Plus, a chemical that heals organs while causing a buildup of toxins. Use with antitoxin. !DO NOT USE IN ACTIVE COMBAT!"
+	amount_per_transfer_from_this = 3
+	list_reagents = list(
+		/datum/reagent/medicine/peridaxon_plus = 6,
+		/datum/reagent/medicine/hyronalin = 12,
+	)
+	description_overlay = "Pe+"
+
 /obj/item/reagent_containers/hypospray/advanced/quickclot
 	name = "Quickclot hypospray"
 	desc = "A hypospray loaded with quick-clot, a a chemical designed to pause all bleeding. Renew doses as needed."
@@ -488,6 +498,15 @@
 	amount_per_transfer_from_this = 5
 	list_reagents = list(
 		/datum/reagent/medicine/quickclotplus = 120,
+	)
+	description_overlay = "Qk+"
+
+/obj/item/reagent_containers/hypospray/advanced/quickclotplus_medkit
+	name = "Quickclot+ hypospray"
+	desc = "A hypospray loaded with quick-clot plus, a chemical designed to remove internal bleeding. Use with antitoxin. !DO NOT USE IN ACTIVE COMBAT!"
+	amount_per_transfer_from_this = 5
+	list_reagents = list(
+		/datum/reagent/medicine/quickclotplus = 30,
 	)
 	description_overlay = "Qk+"
 

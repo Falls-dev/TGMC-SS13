@@ -2,6 +2,9 @@
 /mob/living/proc/get_brute_loss(organic_only = FALSE)
 	return bruteloss
 
+/mob/living/proc/getBruteLoss(organic_only = FALSE)
+	return get_brute_loss(organic_only)
+
 ///We straight up set bruteloss/brute damage to a desired amount unless godmode is enabled
 /mob/living/proc/set_brute_loss(amount)
 	if(status_flags & GODMODE)
@@ -17,6 +20,9 @@
 
 /mob/living/proc/get_fire_loss(organic_only = FALSE)
 	return fireloss
+
+/mob/living/proc/getFireLoss(organic_only = FALSE)
+	return get_fire_loss(organic_only)
 
 ///We straight up set fireloss/burn damage to a desired amount unless godmode is enabled
 /mob/living/proc/set_fire_loss(amount)
@@ -35,6 +41,9 @@
 /mob/living/proc/get_oxy_loss()
 	return oxyloss
 
+/mob/living/proc/getOxyLoss()
+	return get_oxy_loss()
+
 /mob/living/proc/adjust_oxy_loss(amount)
 	if(status_flags & GODMODE)
 		return FALSE	//godmode
@@ -48,6 +57,9 @@
 
 /mob/living/proc/get_tox_loss()
 	return toxloss
+
+/mob/living/proc/getToxLoss()
+	return get_tox_loss()
 
 /mob/living/proc/adjust_tox_loss(amount)
 	if(status_flags & GODMODE)
@@ -87,7 +99,7 @@
 
 /mob/living/proc/update_stamina(feedback = TRUE)
 	hud_used?.staminas?.update_icon()
-	if(staminaloss < max(health * 1.5,0) || !(COOLDOWN_CHECK(src, last_stamina_exhaustion))) //If we're on cooldown for stamina exhaustion, don't bother
+	if(staminaloss < max(health * 1.5,0) || !(COOLDOWN_FINISHED(src, last_stamina_exhaustion))) //If we're on cooldown for stamina exhaustion, don't bother
 		return
 
 	if(feedback)
@@ -128,6 +140,9 @@
 
 /mob/living/proc/get_clone_loss()
 	return cloneloss
+
+/mob/living/proc/getCloneLoss()
+	return get_clone_loss()
 
 /mob/living/proc/adjust_clone_loss(amount)
 	if(status_flags & GODMODE)
@@ -369,8 +384,7 @@
 
 ///Revive the human up to X health points
 /mob/living/carbon/human/proc/revive_to_crit(should_offer_to_ghost = FALSE, should_zombify = FALSE)
-	if(on_fire || !has_working_organs())
-		species.handle_death(src)
+	if(!species.can_revive_to_crit(src))
 		return
 	if(health > 0)
 		return
@@ -387,8 +401,7 @@
 
 ///Check if we have a mind, and finish the revive if we do
 /mob/living/carbon/human/proc/finish_revive_to_crit(should_offer_to_ghost = FALSE, should_zombify = FALSE)
-	if(on_fire || !has_working_organs())
-		species.handle_death(src)
+	if(!species.can_revive_to_crit(src))
 		return
 	do_jitter_animation(1000)
 	if(!client)
@@ -396,14 +409,18 @@
 			offer_mob()
 			addtimer(CALLBACK(src, PROC_REF(finish_revive_to_crit), FALSE, should_zombify), 10 SECONDS)
 			return
-		if(should_zombify || istype(species, /datum/species/zombie))
-			AddComponent(/datum/component/ai_controller, /datum/ai_behavior/xeno/zombie/patrolling, src) //Zombie patrol
-			a_intent = INTENT_HARM
 	if(should_zombify)
-		set_species("Strong zombie")
+		if(!iszombie(src))
+			set_species("Strong zombie")
 		faction = FACTION_ZOMBIE
 	heal_limbs(-health)
 	set_stat(CONSCIOUS)
+	if(!client && (should_zombify || iszombie(src)))
+		var/datum/component/ai_controller/old_ai = GetComponent(/datum/component/ai_controller)
+		qdel(old_ai)
+		AddComponent(/datum/component/ai_controller, /datum/ai_behavior/xeno/zombie/patrolling)
+		a_intent = INTENT_HARM
 	overlay_fullscreen_timer(0.5 SECONDS, 10, "roundstart1", /atom/movable/screen/fullscreen/black)
 	overlay_fullscreen_timer(2 SECONDS, 20, "roundstart2", /atom/movable/screen/fullscreen/spawning_in)
 	REMOVE_TRAIT(src, TRAIT_IS_RESURRECTING, REVIVE_TO_CRIT_TRAIT)
+	SSmobs.start_processing(src)

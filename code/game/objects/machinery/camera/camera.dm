@@ -68,6 +68,12 @@
 		LAZYREMOVE(myarea.cameras, src)
 	return ..()
 
+/obj/machinery/camera/proc/camera_ui_data()
+	return list(
+		"name" = c_tag ? c_tag : "unnamed camera",
+		"ref" = ref(src),
+	)
+
 /obj/machinery/camera/examine(mob/user)
 	. = ..()
 	if(!status)

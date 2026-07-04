@@ -70,3 +70,12 @@
 	icon_state = "leadership_implant"
 	leadership = 1
 	max_skills = list(SKILL_LEADERSHIP = SKILL_LEAD_SUPER)
+
+/obj/item/implant/hud/medical
+	name = "Medical HUD implant"
+	desc = "A specialized microchip that connects to the optic nerve and projects a medical scanner HUD directly into the user's vision."
+	icon_state = "skill_implant"
+	allowed_limbs = list(BODY_ZONE_HEAD)
+
+	hud_type = DATA_HUD_MEDICAL_ADVANCED
+	hud_active = TRUE

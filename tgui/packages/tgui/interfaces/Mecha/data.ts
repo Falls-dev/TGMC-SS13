@@ -1,3 +1,4 @@
+
 export const InternalDamageToDamagedDesc = {
   MECHA_INT_FIRE: 'Internal fire detected',
   MECHA_INT_CONTROL_LOST: 'Control module damaged',

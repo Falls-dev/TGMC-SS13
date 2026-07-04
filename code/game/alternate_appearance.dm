@@ -132,3 +132,55 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 /datum/atom_hud/alternate_appearance/basic/one_person/New(key, image/I, mob/living/M)
 	..(key, I, FALSE)
 	seer = M
+
+/datum/atom_hud/alternate_appearance/basic/one_person/Destroy()
+	seer = null
+	return ..()
+
+/datum/atom_hud/alternate_appearance/basic/group
+	var/list/seers
+
+/datum/atom_hud/alternate_appearance/basic/group/mobShouldSee(mob/M)
+	return M in seers
+
+/datum/atom_hud/alternate_appearance/basic/group/New(key, image/I, list/new_seers)
+	seers = new_seers
+	..(key, I, FALSE)
+
+/datum/atom_hud/alternate_appearance/basic/group/Destroy()
+	seers = null
+	return ..()
+
+/datum/atom_hud/alternate_appearance/basic/all_but_one_person
+	var/mob/seer
+
+/datum/atom_hud/alternate_appearance/basic/all_but_one_person/mobShouldSee(mob/M)
+	return M != seer
+
+/datum/atom_hud/alternate_appearance/basic/all_but_one_person/New(key, image/I, mob/living/M)
+	seer = M
+	..(key, I, FALSE)
+
+/datum/atom_hud/alternate_appearance/basic/all_but_one_person/Destroy()
+	seer = null
+	return ..()
+
+/datum/atom_hud/alternate_appearance/basic/faction
+	var/faction
+
+/datum/atom_hud/alternate_appearance/basic/faction/New(key, image/I, new_faction)
+	faction = new_faction
+	..(key, I, FALSE)
+
+/datum/atom_hud/alternate_appearance/basic/faction/mobShouldSee(mob/M)
+	return faction == M.faction
+
+/datum/atom_hud/alternate_appearance/basic/not_faction
+	var/faction
+
+/datum/atom_hud/alternate_appearance/basic/not_faction/New(key, image/I, new_faction)
+	faction = new_faction
+	..(key, I, FALSE)
+
+/datum/atom_hud/alternate_appearance/basic/not_faction/mobShouldSee(mob/M)
+	return faction != M.faction

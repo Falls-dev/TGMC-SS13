@@ -22,14 +22,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/ui_style = "Midnight"
 	var/ui_style_color = "#ffffff"
 	var/ui_style_alpha = 230
-	var/tgui_fancy = TRUE
 	var/tgui_lock = FALSE
+	var/ui_scale = TRUE
 	var/tgui_input = TRUE
 	var/tgui_input_big_buttons = FALSE
 	var/tgui_input_buttons_swap = FALSE
 	var/toggles_deadchat = TOGGLES_DEADCHAT_DEFAULT
 	var/toggles_chat = TOGGLES_CHAT_DEFAULT
 	var/toggles_gameplay = TOGGLES_GAMEPLAY_DEFAULT
+	var/auto_open_changelogs = TRUE
 
 	//Sound Preferences
 	/// Volume setting that sets the volume of adminhelp sound
@@ -39,7 +40,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// Volume setting that sets the volume of ambience
 	var/volume_ambience = 100
 	/// Volume setting that sets the volume of lobby music
-	var/volume_lobby = 100
+	var/volume_lobby = 10
 	/// Volume setting that sets the volume of musical instruments
 	var/volume_instruments = 100
 	/// Volume setting that sets the volume of weather
@@ -153,6 +154,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	///Whether we generate a xeno name to show in the chatbox and on the mob.
 	var/show_xeno_rank = TRUE
 
+	///whether the user wants to hear tts
+	var/sound_tts = TTS_SOUND_ENABLED
+	///What tts voice should be used
+	var/tts_voice = "Male 01"
+	///how much to pitch the tts voice up and down
+	var/tts_pitch = 0
+	///Volume to use for tts
+	var/volume_tts = 100
+	///Which types of comms the user wants to hear TTS from
+	var/radio_tts_flags = RADIO_TTS_SL | RADIO_TTS_SQUAD | RADIO_TTS_COMMAND | RADIO_TTS_HIVEMIND
+
 	/// Preference for letting people make TGUI windows use more accessible (basically, default) themes, where needed/possible.
 	/// Example application: health analyzers using this to choose between default themes or the NtOS themes.
 	var/accessible_tgui_themes = FALSE
@@ -195,6 +207,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	///When enabled, can hear OOC channels from anywhere in any situation.
 	///Ex: mentors/admins being able to hear XOOC as a human, or LOOC when not nearby the speaker.
 	var/hear_ooc_anywhere_as_staff = TRUE
+	var/show_ooc_country_flag = TRUE
+
+	/// New TGUI Preference preview
+	var/map_name = "player_pref_map"
+	var/atom/movable/screen/map_view/preference_preview/screen_main
 
 	/// If unique action will only act on the item in the active hand. If false, it will try to act on the item on the inactive hand as well in certain conditions.
 	var/unique_action_use_active_hand = TRUE
@@ -237,6 +254,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	parent = C
 
+	// Initialize map objects
+	screen_main = new
+	screen_main.generate_view("screen")
+
 	if(!IsGuestKey(C.key))
 		load_path(C.ckey)
 		loadout_manager = new
@@ -246,7 +267,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return
 
 	// We don't have a savefile or we failed to load them
-	random_character()
+	random_character(/datum/species/human)
 	menuoptions = list()
 	key_bindings = deep_copy_list(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
 	save_keybinds()
@@ -263,9 +284,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user?.client)
-		return
-	if(!SSticker || SSticker.current_state == GAME_STATE_STARTUP)
-		to_chat(src, span_warning("The game is still setting up, please try again later."))
 		return
 
 	update_preview_icon()

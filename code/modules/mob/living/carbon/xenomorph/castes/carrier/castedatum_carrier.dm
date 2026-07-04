@@ -11,17 +11,17 @@
 	wound_type = "carrier" //used to match appropriate wound overlays
 
 	// *** Melee Attacks *** //
-	melee_damage = 22
+	melee_damage = 20
 
 	// *** Speed *** //
 	speed = -0.4
 
 	// *** Plasma *** //
-	plasma_max = 1000
-	plasma_gain = 45
+	plasma_max = 800
+	plasma_gain = 38
 
 	// *** Health *** //
-	max_health = 425
+	max_health = 400
 
 	// *** Evolution *** //
 	evolution_threshold = 225
@@ -33,7 +33,7 @@
 	caste_traits = null
 
 	// *** Defense *** //
-	soft_armor = list(MELEE = 30, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 0, BIO = 5, FIRE = 25, ACID = 5)
+	soft_armor = list(MELEE = 20, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 0, BIO = 5, FIRE = 25, ACID = 5)
 
 	// *** Pheromones *** //
 	aura_strength = 2.5
@@ -42,7 +42,7 @@
 	minimap_icon = "carrier"
 
 	// *** Carrier Abilities *** //
-	huggers_max = 9
+	huggers_max = 7
 	hugger_delay = 1.25 SECONDS
 
 	actions = list(

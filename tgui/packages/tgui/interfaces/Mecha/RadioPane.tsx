@@ -33,9 +33,9 @@ export const RadioPane = (props) => {
           unit="kHz"
           step={0.2}
           stepPixelSize={6}
-          minValue={minfreq * 0.1}
-          maxValue={maxfreq * 0.1}
-          value={frequency * 0.1}
+          minValue={minfreq / 10}
+          maxValue={maxfreq / 10}
+          value={frequency / 10}
           format={(value) => toFixed(value, 1)}
           width="80px"
           onChange={(value) =>

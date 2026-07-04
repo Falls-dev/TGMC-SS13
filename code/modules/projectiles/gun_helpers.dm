@@ -504,7 +504,7 @@ As sniper rifles have both and weapon mods can change them as well. ..() deals w
 	if(!adding_firemodes)
 		if((GUN_FIREMODE_BURSTFIRE in gun_firemode_list) && !(GUN_FIREMODE_BURSTFIRE in initial(gun_firemode_list)) && initial(burst_amount) < 2)
 			remove_firemode(GUN_FIREMODE_BURSTFIRE, user)
-		if((GUN_FIREMODE_AUTOBURST in gun_firemode_list) && !(GUN_FIREMODE_AUTOBURST in initial(gun_firemode_list)) && initial(burst_amount) < 2)
+		if((GUN_FIREMODE_AUTOBURST in gun_firemode_list) && !(GUN_FIREMODE_AUTOBURST in initial(gun_firemode_list)))
 			remove_firemode(GUN_FIREMODE_AUTOBURST, user)
 	else
 		if(!(GUN_FIREMODE_BURSTFIRE in gun_firemode_list))

@@ -80,3 +80,27 @@
 	if(!prob(living_victim.modify_by_armor(proj.damage, BIO, penetration, proj.def_zone)))
 		return
 	living_victim.apply_radiation(2, 2)
+
+/datum/ammo/bullet/smg/squash
+	name = "squash-head submachinegun bullet"
+	hud_state = "pistol_squash"
+	ammo_behavior_flags = AMMO_BALLISTIC
+	damage = 15
+	penetration = 15
+	armor_type = BOMB
+	sundering = 1
+	damage_falloff = 2
+	shrapnel_chance = 0
+	var/shatter_duration = 3 SECONDS
+
+/datum/ammo/bullet/smg/squash/on_hit_mob(mob/target_mob, atom/movable/projectile/proj)
+	if(!isliving(target_mob))
+		return
+	var/mob/living/living_victim = target_mob
+	living_victim.apply_status_effect(STATUS_EFFECT_SHATTER, shatter_duration)
+
+/datum/ammo/bullet/smg/heavy
+	name = "heavy submachinegun bullet"
+	damage = 27.5
+	penetration = 10
+	sundering = 1

@@ -413,3 +413,34 @@
 	allowed_ammo_types = list(/obj/item/ammo_magazine/flamer_tank/large/sentry)
 
 	gun_firemode_list = list(GUN_FIREMODE_AUTOMATIC)
+
+// Peashooter
+
+/obj/item/weapon/gun/sentry/sniper/pea
+	name = "\improper Горохострел"
+	desc = "Развёртываемая автоматическая... турель? Стреляет горохом по неприятелю."
+	icon_state = "sentry_peashooter"
+	worn_icon_state = "sentry"
+
+	turret_range = 14
+	deploy_time = 5 SECONDS
+	max_shells = 75
+	fire_delay = 2 SECONDS
+
+	extra_delay = 6 SECONDS
+	burst_amount = 2
+
+	scatter = 0
+
+	ammo_datum_type = /datum/ammo/bullet/turret/sniper/pea
+	default_ammo_type = /obj/item/ammo_magazine/sentry/sniper/pea
+	allowed_ammo_types = list(/obj/item/ammo_magazine/sentry/sniper/pea)
+
+	gun_firemode_list = list(GUN_FIREMODE_AUTOMATIC)
+
+	attachable_allowed = list(/obj/item/attachable/scope/unremovable/invisible)
+	starting_attachment_types = list(/obj/item/attachable/scope/unremovable/invisible,)
+
+	fire_sound = list('sound/weapons/guns/fire/pea_1.ogg', 'sound/weapons/guns/fire/pea_2.ogg')
+	reload_sound = 'sound/weapons/guns/fire/pea_1.ogg'
+	empty_sound = 'sound/weapons/guns/fire/pea_2.ogg'

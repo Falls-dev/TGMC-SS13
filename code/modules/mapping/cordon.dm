@@ -10,7 +10,7 @@
 	density = TRUE
 	baseturfs = /turf/cordon
 
-/turf/cordon/scrape_away(amount, flags)
+/turf/cordon/ScrapeAway(amount, flags)
 	return src // :devilcat:
 
 /turf/cordon/Adjacent(atom/neighbor, atom/target, atom/movable/mover)

@@ -37,6 +37,11 @@
 	contains = list(/obj/item/storage/backpack/marine/corpsman)
 	cost = 125 // higher price because it has a better cell
 
+/datum/supply_packs/clothing/Med_hud_implant
+	name = "Medical HUD implanter"
+	contains = list(/obj/item/implanter/hud/medical)
+	cost = 75
+
 /datum/supply_packs/clothing/officer_outfits
 	name = "Officer outfits"
 	contains = list(
@@ -56,16 +61,16 @@
 /datum/supply_packs/clothing/night_vision
 	name = "BE-47 NVG night vision goggles"
 	contains = list(/obj/item/clothing/glasses/night_vision)
-	cost = 500
+	cost = 400
 
 /datum/supply_packs/clothing/night_vision_mounted
 	name = "BE-35 NVG night vision module"
 	contains = list(/obj/item/armor_module/module/night_vision)
-	cost = 300
+	cost = 200
 
-/datum/supply_packs/clothing/night_vision_batteries
-	name = "Double pack of night vision batteries"
-	contains = list(/obj/item/cell/night_vision_battery, /obj/item/cell/night_vision_battery)
+/datum/supply_packs/clothing/night_vision_battery
+	name = "Night vision battery"
+	contains = list(/obj/item/cell/night_vision_battery)
 	cost = 100
 
 /datum/supply_packs/clothing/saddle

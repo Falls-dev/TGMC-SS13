@@ -85,6 +85,11 @@ GLOBAL_PROTECT(exp_specialmap)
 			stack_trace("Job created with an invalid outfit parameter ([outfit])")
 		else
 			outfit = new outfit //Can be improved to reference a singleton.
+	if(length(outfits))
+		var/list/options_list = outfits.Copy()
+		outfits.Cut()
+		for(var/path in options_list)
+			outfits += new path
 
 /datum/job/proc/get_whitelist_status(list/roles_whitelist, client/player)
 	if(!roles_whitelist)
@@ -190,6 +195,8 @@ GLOBAL_PROTECT(exp_specialmap)
 				continue
 			if(SSticker.mode?.round_type_flags & MODE_XENO_SPAWN_PROTECT)
 				continue
+			if(iswarfaregamemode(SSticker.mode))
+				continue
 			GLOB.round_statistics.larva_from_marine_spawning += adjusted_jobworth_list[index] / scaled_job.job_points_needed
 		scaled_job.add_job_points(adjusted_jobworth_list[index])
 	var/datum/hive_status/normal_hive = GLOB.hive_datums[XENO_HIVE_NORMAL]
@@ -268,6 +275,8 @@ GLOBAL_PROTECT(exp_specialmap)
 		player = client
 	job = assigned_role
 	set_skills(getSkillsType(job.return_skills_type(player?.prefs)))
+	if(islist(job.job_traits))
+		add_traits(job.job_traits, INNATE_TRAIT)
 	faction = job.faction
 	job.announce(src)
 	GLOB.round_statistics.total_humans_created[faction]++
@@ -278,8 +287,8 @@ GLOBAL_PROTECT(exp_specialmap)
 	. = ..()
 	LAZYADD(GLOB.alive_human_list_faction[faction], src)
 	comm_title = job.comm_title
-	if(job.outfit)
-		if(job.outfit.id)
+	if(job.outfit || assigned_role.multiple_outfits)
+		if(job.outfit?.id)
 			var/obj/item/card/id/id_card = new job.outfit.id
 			if(wear_id)
 				if(!admin_action)
@@ -287,7 +296,7 @@ GLOBAL_PROTECT(exp_specialmap)
 				QDEL_NULL(wear_id)
 			equip_to_slot_or_del(id_card, SLOT_WEAR_ID)
 
-		if(player && isnull(job.outfit.back) && player.prefs.backpack > BACK_NOTHING)
+		if(player && (!job.outfit || isnull(job.outfit.back)) && player.prefs.backpack > BACK_NOTHING)
 			var/obj/item/storage/backpack/new_backpack
 			switch(player.prefs.backpack)
 				if(BACK_BACKPACK)
@@ -306,7 +315,7 @@ GLOBAL_PROTECT(exp_specialmap)
 					new_backpack = new /obj/item/storage/backpack/marine/duffelbag(src)
 			equip_to_slot_or_del(new_backpack, SLOT_BACK)
 
-		job.outfit.handle_id(src, player)
+		job.outfit?.handle_id(src, player)
 
 		var/job_whitelist = job.title
 		var/whitelist_status = job.get_whitelist_status(GLOB.roles_whitelist, player)
@@ -328,7 +337,7 @@ GLOBAL_PROTECT(exp_specialmap)
 		equip_preference_gear(player)
 
 	if(!src.assigned_squad && assigned_squad)
-		job.equip_spawning_squad(src, assigned_squad, player)
+		job.equip_spawning_squad(src, assigned_squad, player, admin_action)
 
 	hud_set_job(faction)
 
@@ -339,23 +348,29 @@ GLOBAL_PROTECT(exp_specialmap)
 		return
 
 	var/list/valid_outfits = list()
+	var/species_type = src.species?.species_type || SPECIES_HUMAN
 
 	for(var/datum/outfit/variant AS in assigned_role.outfits)
-		if(initial(variant.species) == src.species.species_type)
+		if(variant.species == species_type)
 			valid_outfits += variant
 
+	if(!length(valid_outfits))
+		valid_outfits = assigned_role.outfits.Copy()
+	if(!length(valid_outfits))
+		stack_trace("Job [assigned_role.type] has multiple_outfits enabled but no valid outfit for [src.type]")
+		return
+
 	var/datum/outfit/chosen_variant = pick(valid_outfits)
-	chosen_variant = new chosen_variant
 	chosen_variant.equip(src)
 
-/datum/job/proc/equip_spawning_squad(mob/living/carbon/human/new_character, datum/squad/assigned_squad, client/player)
+/datum/job/proc/equip_spawning_squad(mob/living/carbon/human/new_character, datum/squad/assigned_squad, client/player, forced = FALSE)
 	return
 
-/datum/job/terragov/squad/equip_spawning_squad(mob/living/carbon/human/new_character, datum/squad/assigned_squad, client/player)
+/datum/job/terragov/squad/equip_spawning_squad(mob/living/carbon/human/new_character, datum/squad/assigned_squad, client/player, forced = FALSE)
 	if(!assigned_squad)
 		SSjob.JobDebug("Failed to put marine role in squad. Player: [player.key] Job: [title]")
 		return
-	assigned_squad.insert_into_squad(new_character)
+	assigned_squad.insert_into_squad(new_character, FALSE, forced)
 
 /datum/job/proc/on_late_spawn(mob/living/late_spawner)
 	if(job_flags & JOB_FLAG_ADDTOMANIFEST)

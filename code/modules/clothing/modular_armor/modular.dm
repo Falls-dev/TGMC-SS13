@@ -137,6 +137,10 @@
 		/obj/item/armor_module/armor/legs/marine/ranger,
 		/obj/item/armor_module/armor/arms/marine/ranger,
 
+		/obj/item/armor_module/armor/chest/marine/mjolnir,
+		/obj/item/armor_module/armor/arms/marine/mjolnir,
+		/obj/item/armor_module/armor/legs/marine/mjolnir,
+
 		/obj/item/armor_module/armor/chest/marine/kabuto,
 		/obj/item/armor_module/armor/legs/marine/kabuto,
 		/obj/item/armor_module/armor/arms/marine/kabuto,
@@ -179,7 +183,7 @@
 	if(!isturf(user.loc))
 		to_chat(user, span_warning("You cannot turn the light on while in [user.loc]."))
 		return
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_ARMOR_LIGHT) || !ishuman(user))
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_ARMOR_LIGHT) || !ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
 	if(H.wear_suit != src)
@@ -275,6 +279,34 @@
 		/obj/item/armor_module/armor/legs/marine/hardsuit_legs/syndicate_markone,
 	)
 
+/obj/item/clothing/suit/modular/vsd_exoskeleton
+	name = "\improper CrashCore MT/P modular exoskeleton"
+	desc = "CrashCore Industries modular hardsuit exoskeleton, made to lift up the 'Super-Heavy' armor system and designed for full compatiability with jaeger modules. Comes with pre-installed light armour-plating and a shoulder lamp. Mount armor pieces to it by clicking on the frame with the components. Use Alt-Click to remove any attached items."
+	icon_state = "exoskeleton"
+	worn_icon_state = "exoskeleton"
+	greyscale_config = /datum/greyscale_config/vsd_hardsuit/exoskeleton
+	colorable_allowed = PRESET_COLORS_ALLOWED
+	colorable_colors = ARMOR_PALETTES_LIST
+	greyscale_colors = ARMOR_PALETTE_BLACK
+	allowed_uniform_type = /obj/item/clothing/under
+
+/obj/item/clothing/suit/modular/vsd_exoskeleton/generate_attachments_allowed()
+	attachments_allowed = general_list_of_marine_modules.Copy()
+	attachments_allowed += list(
+
+		/obj/item/armor_module/armor/chest/marine/vsd_hardsuit,
+		/obj/item/armor_module/armor/arms/marine/vsd_hardsuit,
+		/obj/item/armor_module/armor/legs/marine/vsd_hardsuit,
+
+		/obj/item/armor_module/armor/chest/marine/vsd_hardsuit/clementia,
+		/obj/item/armor_module/armor/arms/marine/vsd_hardsuit/clementia,
+		/obj/item/armor_module/armor/legs/marine/vsd_hardsuit/clementia,
+
+		/obj/item/armor_module/armor/chest/marine/vsd_hardsuit/hephaestus,
+		/obj/item/armor_module/armor/arms/marine/vsd_hardsuit/hephaestus,
+		/obj/item/armor_module/armor/legs/marine/vsd_hardsuit/hephaestus,
+	)
+
 /** Core helmet module */
 /obj/item/clothing/head/modular
 	name = "Jaeger Pattern Helmet"
@@ -349,7 +381,12 @@
 		/obj/item/armor_module/armor/visor/marine/old/eva/skull,
 		/obj/item/armor_module/armor/visor/marine/old/eod,
 		/obj/item/armor_module/armor/visor/marine/old/assault,
+		/obj/item/armor_module/armor/visor/marine/mjolnir,
+		/obj/item/armor_module/armor/visor/marine/mjolnir_open,
 		/obj/item/armor_module/armor/visor/marine/xenonaut,
+		/obj/item/armor_module/armor/visor/marine/phobos,
+		/obj/item/armor_module/armor/visor/marine/clementia,
+		/obj/item/armor_module/armor/visor/marine/hephaestus,
 
 		// Accessories
 		/obj/item/armor_module/armor/badge,

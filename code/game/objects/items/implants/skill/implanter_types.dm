@@ -40,3 +40,9 @@
 	icon_state = "leadership"
 	empty_icon = "leadership_s"
 	internal_implant = /obj/item/implant/skill/tactical/leadership
+
+/obj/item/implanter/hud/medical
+	name = "Medical HUD implanter"
+	desc = "A sterile implant injector, containing a retinal medical HUD implant. Injects directly into the head."
+	icon_state = "medical"
+	internal_implant = /obj/item/implant/hud/medical

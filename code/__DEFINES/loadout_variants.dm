@@ -37,6 +37,7 @@
 #define CAPE_LONG "cape_long"
 #define CAPE_REGALY "cape_regaly"
 #define CAPE_ONELONG "cape_onelong"
+#define CAPE_SNIPER "cape_sniper"
 
 #define CAPE_HIGHLIGHT_NONE "cape_highlight_none"
 #define LEATHER_JACKET_WEBBING "leather_jacket_webbing"
@@ -82,4 +83,33 @@ GLOBAL_LIST_INIT(loadout_variant_keys, list(
 	BALLISTIC_VEST_JUNGLE = "jungle",
 	BALLISTIC_VEST_DESERT = "desert",
 	BALLISTIC_VEST_SNOW = "snow",
+	CAPE_SCARF_ROUND = "scarf round",
+	CAPE_SCARF_TIED = "scarf tied",
+	CAPE_SCARF = "scarf",
+	CAPE_STRIPED = "striped",
+	CAPE_GEIST = "geist",
+	CAPE_GHILLE = "ghille",
+	CAPE_GHILLE_L = "ghille (left)",
+	CAPE_GHILLE_R = "ghille (right)",
+	CAPE_GHILLE_ALT = "ghille (alt)",
+	CAPE_DRIFTER = "drifter",
+	CAPE_SHORT = "short",
+	CAPE_SHORT_OLD = "short (old)",
+	CAPE_SHREDDED = "shredded",
+	CAPE_HALF = "half",
+	CAPE_FULL = "full",
+	CAPE_BACK = "back",
+	CAPE_COVER = "cover",
+	CAPE_COVER_ALT = "cover (alt)",
+	CAPE_OVERLORD = "overlord",
+	CAPE_OVERLORD_ALT = "overlord (alt)",
+	CAPE_OVERLORD_ALT_2 = "overlord (altagain)",
+	CAPE_SHOAL = "shoal",
+	CAPE_SHOAL_BACK = "shoal (back)",
+	CAPE_SHOAL_ALT = "shoal (alt)",
+	CAPE_STAR = "star",
+	CAPE_RAPIER_R = "rapier (right)",
+	CAPE_RAPIER_L = "rapier (left)",
+	CAPE_JACKET = "jacket",
+	CAPE_SNIPER = "sniper",
 ))

@@ -58,7 +58,7 @@
 	weights[identifier][name] = amount
 
 /obj/effect/ai_node/Destroy()
-	GLOB.all_nodes -= src
+	GLOB.all_nodes[unique_id + 1] = null
 	rustg_remove_node_astar("[unique_id]")
 	//Remove our reference to self from nearby adjacent node's adjacent nodes
 	for(var/direction AS in adjacent_nodes)
@@ -87,6 +87,9 @@
 	var/current_score = 0
 	for(var/direction in adjacent_nodes) //We keep a score for the nodes and see which one is best
 		var/obj/effect/ai_node/node = adjacent_nodes[direction]
+		if(QDELETED(node)) //TODO: This shouldn't be happening in the first place, but there seems to be some issue with adjacency logic that means it is happening sometimes when a node is deleted
+			adjacent_nodes -= node
+			continue
 		current_score = 0
 		for(var/weight in weight_modifiers)
 			current_score += NODE_GET_VALUE_OF_WEIGHT(identifier, node, weight) * weight_modifiers[weight]
@@ -97,8 +100,6 @@
 
 	if(node_to_return)
 		return node_to_return
-	if(!length(adjacent_nodes))
-		return null
 	return adjacent_nodes[pick(adjacent_nodes)]
 
 ///Clears the adjacencies of src and repopulates it, it will consider nodes "adjacent" to src should it be less 15 turfs away

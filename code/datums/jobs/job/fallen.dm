@@ -15,6 +15,13 @@
 	SIGNAL_HANDLER
 	if(QDELING(source))
 		return
+	addtimer(CALLBACK(src, PROC_REF(check_and_delete_mob), source), 0.1	 SECONDS)
+
+/datum/job/fallen/proc/check_and_delete_mob(mob/living/source)
+	if(QDELING(source))
+		return
+	if(source.key || source.client || source.mind)
+		source.ghostize(FALSE)
 	source.visible_message(span_danger("[source] suddenly disappears!"))
 	qdel(source)
 

@@ -1,6 +1,7 @@
 #define FACTION_NEUTRAL "Neutral"
 #define FACTION_TERRAGOV "TerraGov"
 #define FACTION_XENO "Xeno"
+#define FACTION_ALIEN FACTION_XENO
 #define FACTION_ZOMBIE "Zombie"
 #define FACTION_CLF "Colonial Liberation Force"
 #define FACTION_DEATHSQUAD "Deathsquad"

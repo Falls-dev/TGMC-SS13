@@ -15,8 +15,8 @@
 	keybinding_signals = list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_ACIDCHARGE,
 	)
-	cooldown_duration = 30 SECONDS
-	ability_cost = 40
+	cooldown_duration = 15 SECONDS
+	ability_cost = 60
 	var/charge_duration
 	var/obj/effect/abstract/particle_holder/particle_holder
 
@@ -89,8 +89,8 @@
 	keybinding_signals = list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_BULLHEADBUTT,
 	)
-	cooldown_duration = 15 SECONDS
-	ability_cost = 40
+	cooldown_duration = 10 SECONDS
+	ability_cost = 60
 	var/turf/last_turf
 	var/charge_duration
 
@@ -153,8 +153,8 @@
 	keybinding_signals = list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_BULLGORE,
 	)
-	cooldown_duration = 4 SECONDS
-	ability_cost = 40
+	cooldown_duration = 8 SECONDS
+	ability_cost = 60
 	var/turf/last_turf
 	var/charge_duration
 
@@ -219,7 +219,7 @@
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_TOLERATE,
 	)
 	cooldown_duration = 60 SECONDS
-	ability_cost = 40
+	ability_cost = 80
 
 /datum/action/ability/xeno_action/tolerate/action_activate()
 	addtimer(CALLBACK(src, PROC_REF(tolerate_deactivate)), 20 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_OVERRIDE)

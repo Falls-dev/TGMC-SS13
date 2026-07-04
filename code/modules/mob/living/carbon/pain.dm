@@ -1,6 +1,9 @@
 /mob/living/carbon/proc/get_painloss()
 	return painloss
 
+/mob/living/carbon/proc/getShock_Stage()
+	return get_painloss()
+
 /mob/living/carbon/proc/adjust_painloss(amount)
 	if(amount > 0 && (status_flags & GODMODE))
 		return FALSE

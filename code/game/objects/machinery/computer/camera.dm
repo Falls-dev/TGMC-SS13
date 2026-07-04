@@ -149,6 +149,33 @@
 	cam_background.icon_state = "scanline2"
 	cam_background.fill_rect(1, 1, DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
 
+/atom/movable/screen/map_view/camera
+	var/atom/movable/screen/background/cam_background
+
+/atom/movable/screen/map_view/camera/Destroy()
+	QDEL_NULL(cam_background)
+	return ..()
+
+/atom/movable/screen/map_view/camera/generate_view(map_key)
+	. = ..()
+	cam_background = new
+	cam_background.del_on_map_removal = FALSE
+	cam_background.assigned_map = assigned_map
+
+/atom/movable/screen/map_view/camera/display_to(mob/show_to)
+	show_to.client.register_map_obj(cam_background)
+	return ..()
+
+/atom/movable/screen/map_view/camera/proc/show_camera(list/visible_turfs, size_x, size_y)
+	vis_contents = visible_turfs
+	cam_background.icon_state = "clear"
+	cam_background.fill_rect(1, 1, size_x, size_y)
+
+/atom/movable/screen/map_view/camera/proc/show_camera_static()
+	vis_contents.Cut()
+	cam_background.icon_state = "scanline2"
+	cam_background.fill_rect(1, 1, DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
+
 // Returns the list of cameras accessible from this computer
 /obj/machinery/computer/camera/proc/get_available_cameras()
 	var/list/L = list()

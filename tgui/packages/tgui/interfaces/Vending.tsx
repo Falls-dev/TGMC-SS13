@@ -19,22 +19,27 @@ type VendingData = {
   hidden_records: VendingRecord[];
   coin_records: VendingRecord[];
   tabs: string[];
-  stock: number;
+  stock: VendingStock;
   currently_vending: VendingRecord | null;
   extended: number;
   coin: string;
   ui_theme: string;
 };
 
+type VendingStock = {
+  [key: string]: number;
+};
+
 type VendingRecord = {
   product_name: string;
   product_color: string;
+  prod_price: number;
   prod_desc: string;
   ref: string;
   tab: string;
 };
 
-export const Vending = () => {
+export const Vending = (props) => {
   const { act, data } = useBackend<VendingData>();
 
   const {
@@ -68,7 +73,13 @@ export const Vending = () => {
           <Box>{showDesc}</Box>
           <Button content="Dismiss" onClick={() => setShowDesc(null)} />
         </Modal>
-      ) : null}
+      ) : (
+        currently_vending && (
+          <Modal width="400px">
+            <Buying vending={currently_vending} />
+          </Modal>
+        )
+      )}
       <Window.Content scrollable>
         <Section
           title="Select an item"
@@ -125,9 +136,33 @@ export const Vending = () => {
   );
 };
 
+type BuyingModalProps = {
+  vending: VendingRecord;
+};
+
+const Buying = (props: BuyingModalProps) => {
+  const { act, data } = useBackend<VendingData>();
+
+  const { vending } = props;
+
+  return (
+    <Section title={'You have selected ' + vending.product_name}>
+      <Box>
+        Please swipe your ID to pay for the article.
+        <Divider />
+        <Button onClick={() => act('swipe')} icon="id-card" ml="6px">
+          Swipe
+        </Button>
+        <Button onClick={() => act('cancel_buying')} icon="times">
+          Cancel
+        </Button>
+      </Box>
+    </Section>
+  );
+};
+
 type VendingProductEntryProps = {
   stock: number;
-  key: string;
   product_color: string;
   product_name: string;
   prod_desc: string;
@@ -139,8 +174,7 @@ const ProductEntry = (props: VendingProductEntryProps) => {
 
   const { currently_vending } = data;
 
-  const { stock, key, product_color, product_name, prod_desc, prod_ref } =
-    props;
+  const { stock, product_color, product_name, prod_desc, prod_ref } = props;
 
   const [showDesc, setShowDesc] = useLocalState<String | null>(
     'showDesc',
@@ -189,17 +223,17 @@ const ProductEntry = (props: VendingProductEntryProps) => {
   );
 };
 
-const Products = () => {
+const Products = (props) => {
   const { data } = useBackend<VendingData>();
 
   const { displayed_records, stock, tabs } = data;
 
-  const [selectedTab] = useLocalState(
+  const [selectedTab, setSelectedTab] = useLocalState(
     'selectedTab',
     tabs.length ? tabs[0] : null,
   );
 
-  const [showEmpty] = useLocalState('showEmpty', false);
+  const [showEmpty, setShowEmpty] = useLocalState('showEmpty', false);
 
   return (
     <Section>
@@ -229,12 +263,12 @@ const Products = () => {
   );
 };
 
-const Hacked = () => {
-  const { data } = useBackend<VendingData>();
+const Hacked = (props) => {
+  const { act, data } = useBackend<VendingData>();
 
   const { hidden_records, stock, tabs } = data;
 
-  const [selectedTab] = useLocalState(
+  const [selectedTab, setSelectedTab] = useLocalState(
     'selectedTab',
     tabs.length ? tabs[0] : null,
   );
@@ -261,12 +295,12 @@ const Hacked = () => {
   );
 };
 
-const Premium = () => {
+const Premium = (props) => {
   const { act, data } = useBackend<VendingData>();
 
   const { coin_records, stock, coin, tabs } = data;
 
-  const [selectedTab] = useLocalState(
+  const [selectedTab, setSelectedTab] = useLocalState(
     'selectedTab',
     tabs.length ? tabs[0] : null,
   );

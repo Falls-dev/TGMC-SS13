@@ -81,13 +81,14 @@ SUBSYSTEM_DEF(vote)
 			if(!C || C.is_afk())
 				non_voters -= non_voter_ckey
 		if(length(non_voters) > 0)
+			var/non_voter_weight = 0.5
 			if(mode == "restart")
-				choices["Continue Playing"] += length(non_voters)
+				choices["Continue Playing"] += length(non_voters) * non_voter_weight
 				if(choices["Continue Playing"] >= greatest_votes)
 					greatest_votes = choices["Continue Playing"]
 			else if(mode == "gamemode")
 				if(GLOB.master_mode in choices)
-					choices[GLOB.master_mode] += length(non_voters)
+					choices[GLOB.master_mode] += length(non_voters) * non_voter_weight
 					if(choices[GLOB.master_mode] >= greatest_votes)
 						greatest_votes = choices[GLOB.master_mode]
 	. = list()
@@ -101,32 +102,48 @@ SUBSYSTEM_DEF(vote)
 /datum/controller/subsystem/vote/proc/announce_result()
 	var/list/winners = get_result()
 	var/text
-	if(length(winners) > 0)
-		if(question)
-			text += "<b>[question]</b>"
-		else
-			text += "<b>[capitalize(mode)] Vote</b>"
-		for(var/i = 1 to length(choices))
-			var/votes = choices[choices[i]]
-			if(!votes)
-				votes = 0
-			text += "\n<b>[choices[i]]:</b> [votes]"
-		if(mode != "custom")
-			if(length(winners) > 1)
-				text = "\n<b>Vote Tied Between:</b>"
-				for(var/option in winners)
-					text += "\n\t[option]"
-			. = pick(winners)
-			text += "\n<b>Vote Result: [.]</b>"
-		else
-			text += "\n<b>Did not vote:</b> [length(GLOB.clients) - length(voted)]"
+
+	if(!length(winners))
+		if(mode != "shipmap" && mode != "groundmap")
+			text += "<b>Vote Result: Inconclusive - No Votes!</b>"
+			cleanup_vote(text)
+			return
+		//We randomly choose a valid map to avoid restarting with invalid maps for the gamemode, bricking the round and requiring a restart
+		var/random_map = pick(choices)
+		winners += random_map
+		text += "<b>Vote Result: Inconclusive - No Votes! Random valid map selected: [random_map]</b>"
+		. = random_map
+		cleanup_vote(text)
+		return
+
+	if(question)
+		text += "<big><b><i>[question]</i></b></big>"
 	else
-		text += "<b>Vote Result: Inconclusive - No Votes!</b>"
-	log_vote(text)
+		text += "<b>[capitalize(mode)] Vote</b>"
+	for(var/i = 1 to length(choices))
+		var/votes = choices[choices[i]]
+		if(!votes)
+			votes = 0
+		text += "\n<b>[choices[i]]:</b> [votes]"
+	if(mode != "custom")
+		if(length(winners) > 1)
+			text = "<hr><b>Vote Tied Between:</b>"
+			for(var/option in winners)
+				text += "\n\t[option]"
+		. = pick(winners)
+		text += "<hr><b>Vote Result: [.]</b>"
+	else
+		text += "<hr><b>Did not vote:</b> [length(GLOB.clients) - length(voted)]"
+	cleanup_vote(text)
+
+///Cleans up after a vote is successfully concluded
+/datum/controller/subsystem/vote/proc/cleanup_vote(result_text)
 	vote_happening = FALSE
 	remove_action_buttons()
-	to_chat(world, "\n<font color='purple'>[text]</font>")
-
+	if(!result_text)
+		return
+	log_vote(result_text)
+	to_chat(world, custom_boxed_message("purple_box", result_text))
 
 /// Apply the result of the vote if it's possible
 /datum/controller/subsystem/vote/proc/result(default_result)
@@ -304,7 +321,7 @@ SUBSYSTEM_DEF(vote)
 		log_vote(text)
 		var/vp = CONFIG_GET(number/vote_period)
 		SEND_SOUND(world, sound('sound/ambience/votestart.ogg', channel = CHANNEL_NOTIFY, volume = 50))
-		to_chat(world, "<br><font color='purple'><b>[text]</b><br>Type <b>vote</b> or click on vote action (top left) to place your votes.<br>You have [DisplayTimeText(vp)] to vote.</font>")
+		to_chat(world, custom_boxed_message("purple_box", "<big><b>[text]</b></big><hr>Type <b>vote</b> in the command bar or click on vote action (top left) to place your votes.<hr>You have [DisplayTimeText(vp)] to vote.</font>"))
 		time_remaining = round(vp * 0.1)
 		vote_happening = TRUE
 		for(var/c in GLOB.clients)

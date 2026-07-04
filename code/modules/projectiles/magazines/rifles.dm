@@ -344,6 +344,9 @@
 	max_rounds = 250
 	reload_delay = 1.3 SECONDS
 
+/obj/item/ammo_magazine/standard_smartmachinegun
+	parent_type = /obj/item/ammo_magazine/sg29
+
 //-------------------------------------------------------
 //SMART TARGET RIFLE AMMUNITION
 
@@ -461,6 +464,9 @@
 	icon_state_mini = "mag_tx11"
 	default_ammo = /datum/ammo/bullet/rifle/hv
 	max_rounds = 70
+
+/obj/item/ammo_magazine/rifle/tx11
+	parent_type = /obj/item/ammo_magazine/rifle/ar11
 
 //-------------------------------------------------------
 //AR-21

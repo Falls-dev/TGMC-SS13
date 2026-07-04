@@ -25,6 +25,10 @@
 	// *** Melee Attacks *** //
 	///The amount of damage a xenomorph caste will do with a 'slash' attack.
 	var/melee_damage = 10
+	/// The damage typing of the melee damage.
+	var/melee_damage_type = BRUTE
+	/// The armor typing of the melee damage.
+	var/melee_damage_armor = MELEE
 	///number of ticks between attacks for a caste.
 	var/attack_delay = CLICK_CD_MELEE
 
@@ -111,6 +115,10 @@
 	// *** Pheromones *** //
 	///The strength of our aura. Zero means we can't emit any.
 	var/aura_strength = 0
+
+	// *** Puppeteer Abilities *** //
+	var/flay_plasma_gain = 0
+	var/max_puppets = 0
 
 	// *** Defiler Abilities *** //
 	var/list/available_reagents_define = list() //reagents available for select reagent
@@ -216,9 +224,11 @@
 	for(var/trait in caste_traits)
 		ADD_TRAIT(xenomorph, trait, XENO_TRAIT)
 	xenomorph.AddComponent(/datum/component/bump_attack)
+	xenomorph.RegisterSignal(xenomorph,COMSIG_XENOMORPH_ATTACK_LIVING, TYPE_PROC_REF(/mob/living/carbon/xenomorph, onhithuman))
 
 /datum/xeno_caste/proc/on_caste_removed(mob/xenomorph)
 	var/datum/component/bump_attack = xenomorph.GetComponent(/datum/component/bump_attack)
+	xenomorph.UnregisterSignal(xenomorph, COMSIG_XENOMORPH_ATTACK_LIVING)
 	bump_attack?.RemoveComponent()
 	for(var/trait in caste_traits)
 		REMOVE_TRAIT(xenomorph, trait, XENO_TRAIT)
@@ -257,7 +267,7 @@ GLOBAL_LIST_INIT(strain_list, init_glob_strain_list())
 /mob/living/carbon/xenomorph
 	name = "Drone"
 	desc = "What the hell is THAT?"
-	icon = 'icons/Xeno/castes/larva.dmi'
+	icon = 'icons/Xeno/castes/larva/larva.dmi'
 	icon_state = "Drone Walking"
 	speak_emote = list("hisses")
 	melee_damage = 5 //Arbitrary damage value
@@ -291,7 +301,7 @@ GLOBAL_LIST_INIT(strain_list, init_glob_strain_list())
 	var/xeno_flags = NONE
 
 	///Used for keeping the effects icon of current skin, changeable with skin toggling
-	var/effects_icon = 'icons/Xeno/castes/larva.dmi'
+	var/effects_icon = 'icons/Xeno/castes/larva/larva.dmi'
 	/// List of alternative skins to which xeno is able to change, you put only skin datums in here
 	var/list/skins = list()
 
@@ -402,6 +412,9 @@ GLOBAL_LIST_INIT(strain_list, init_glob_strain_list())
 	// *** Carrier vars *** //
 	var/selected_hugger_type = /obj/item/clothing/mask/facehugger
 
+	// *** Globadier vars *** //
+	var/obj/item/explosive/grenade/globadier/selected_grenade = /obj/item/explosive/grenade/globadier
+
 	// *** Behemoth vars *** //
 	/// Whether we are currently charging or not.
 	var/behemoth_charging = FALSE
@@ -439,3 +452,14 @@ GLOBAL_LIST_INIT(strain_list, init_glob_strain_list())
 	///The unresting cooldown
 	COOLDOWN_DECLARE(xeno_unresting_cooldown)
 
+///Called whenever a xeno slashes a human
+/mob/living/carbon/xenomorph/proc/onhithuman(attacker, target) //For globadiers lifesteal debuff
+	SIGNAL_HANDLER
+	if(!ishuman(target))
+		return
+	var/mob/living/carbon/human/victim = target
+	if(!victim.has_status_effect(STATUS_EFFECT_LIFEDRAIN))
+		return
+	var/mob/living/carbon/xenomorph/xeno = attacker
+	var/healamount = xeno.maxHealth * 0.06 //% of the xenos max health
+	HEAL_XENO_DAMAGE(xeno, healamount, FALSE)

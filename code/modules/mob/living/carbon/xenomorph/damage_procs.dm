@@ -25,7 +25,7 @@
 	if(status_flags & (INCORPOREAL|GODMODE))
 		return
 
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_MOB_EX_ACT))
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_MOB_EX_ACT))
 		return
 
 	if(lying_angle)

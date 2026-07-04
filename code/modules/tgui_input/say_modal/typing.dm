@@ -54,7 +54,7 @@
 /mob/living/create_thinking_indicator()
 	if(active_thinking_indicator || active_typing_indicator || stat != CONSCIOUS || !HAS_TRAIT(src, TRAIT_THINKING_IN_CHARACTER))
 		return FALSE
-	active_thinking_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "[bubble_icon]3", TYPING_LAYER, appearance_flags = APPEARANCE_UI|KEEP_APART|TILE_BOUND) //RUTGMC edit - icon change
+	active_thinking_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "[bubble_icon]3", TYPING_LAYER)
 	add_overlay(active_thinking_indicator)
 
 /mob/living/remove_thinking_indicator()
@@ -66,7 +66,7 @@
 /mob/living/create_typing_indicator()
 	if(active_typing_indicator || active_thinking_indicator || stat != CONSCIOUS || !HAS_TRAIT(src, TRAIT_THINKING_IN_CHARACTER))
 		return FALSE
-	active_typing_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "[bubble_icon]0", TYPING_LAYER, appearance_flags = APPEARANCE_UI|KEEP_APART|TILE_BOUND) //RUTGMC edit - icon change
+	active_typing_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "[bubble_icon]0", TYPING_LAYER)
 	add_overlay(active_typing_indicator)
 
 /mob/living/remove_typing_indicator()

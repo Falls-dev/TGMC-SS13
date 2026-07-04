@@ -5,63 +5,79 @@
 	///Currently equipped and ready melee weapon - could also be the gun
 	var/obj/item/weapon/melee_weapon
 	///Chat lines when opening fire
-	var/list/start_fire_chat = list("Получи!!", "Вступаю в бой!", "Открыть огонь!", "Веду огонь!", "Враги!", "Валим их!", "Убейте их!", "Зажжём!", "Огонь!!", "Застрелите их!", "Стреляю!", "Огонь на поражение!", "Иди нахуй!!")
+	var/list/start_fire_chat = list( \
+	"Получай!!", "Вступаю в бой!", "Огонь!", "Стреляю!", "Контакт!", "Враг!", "Мочи их!", "Пошла жара!", "Огонь!!", \
+	"Косим их!", "Веду огонь!", "Жри свинец!", "Пошёл нахуй!", "Тебе хана!", "Контакт спереди!", "Подавляющий огонь!", \
+	"Враги!", "Получи!", "Противник!", "Вперёд!", "Тебе конец!", "Ну давай давай нападай!", "Не дайте ему слинять!", \
+	"Цель замечена!", "Атакую!", "Сейчас начнётся!", "Поздоровайся с пулями!", "Открываю огонь!", "Кончайте их!")
+
 	///Chat lines when reloading
-	var/list/reloading_chat = list("Перезаряжаюсь!", "Прикройте, перезаряжаюсь!", "Меняю магазин!", "Патроны закончились!")
+	var/list/reloading_chat = list( \
+	"Перезаряжаюсь!", "Прикрой, перезарядка!", "Я пуст, прикройте!", "Боеприпасы кончились!", "На перезарядке!", \
+	"Перезарядка, кройте!", "Чуть занят, прикройте!", "Секунду!", "Я пустой!", "Перезаряжаю ствол!", \
+	"Пустой!", "Сдерживайте их!", "Прикройте меня!", "Мужики прикройте, я пуст!", "Перезаряжаю!", \
+	"Свинец кончился, ждите!", "Ща вернусь!", "Держите линию!")
+
 	///Chat lines when target goes out of range
-	var/list/out_range_chat = list("Цель слишком далеко.", "Слишком далеко.", "Потерял их.", "Куда они делись?", "Они убегают!")
+	var/list/out_range_chat = list( \
+	"Цель вне досягаемости.", "Слишком далеко.", "Враг потерян.", "Куда они делись?", "Они убегают!", \
+	"Убежал, сука!", "Не достаю!", "Уходят!", "Далеко убежали!", "Цель ушла!", \
+	"Они слишком далеко!", "Чёрт, далеко!", "Отступают!", "Не могу попасть!", "Вне видимости!")
+
 	///Chat lines when LOS broken
-	var/list/no_los_chat = list("Цель потеряна!", "Не вижу их!", "Куда они делись?", "Они убегают!", "Прекращай прятаться!")
+	var/list/no_los_chat = list( \
+	"Цель потеряна!", "Цель вне видимости!", "Потерял из виду!", "Где они?", "Они убегают!", \
+	"Хватит прятаться!", "Не вижу их!", "Потерял визуальный контакт!", "Нет линии огня!", \
+	"Они за укрытием!", "Вылезай, трус!", "Покажись!", "Я знаю, ты там!", "Не могу выстрелить!", \
+	"Хорошо спрятались!", "Контакт потерян!", "Куда вы делись твари!")
+
 	///Chat lines when some asshole on your team is in the way
-	var/list/friendly_blocked_chat = list("Прочь с дороги!", "Прочь с пути!", "Прочь с линии стрельбы!", "Шевелись!", "Прекращаю огонь!", "Харе мне мешаться!")
+	var/list/friendly_blocked_chat = list( \
+	"Уйди с дороги!", "Сьеби в сторону!", "Отойди долбоёб!", "Двигайся!", "Прекращаю огонь!", \
+	"Не мешай!", "Уйди!", "Ты мешаешь!", "Сдвинься!", "Убериcь!", \
+	"А ну отошёл!", "Ты нас угробишь!", "Отойди!", "Не стой там!", "Я не могу стрелять!", \
+	"Свой на линии огня!", "Очисти линию!", "Мешаешь!")
+
 	///Chat lines when target dies or is destroyed
-	var/list/dead_target_chat = list("Цель мертва.", "Враг убит.", "Враг уничтожен.", "Готовенький!", "Этот больше не встанет.", "Убийство подтверждено.")
+	var/list/dead_target_chat = list( \
+	"Цель уничтожена.", "Противник ликвидирован.", "Минус один.", "Есть попадание!", "Готов.", \
+	"Убит.", "Нейтрализован.", "С ним покончено.", "Цель устранена.", \
+	"На одного меньше.", "Обнулён!", "Готов!", "Двухсотый!", "Противник уничтожен!", \
+	"Закончили!", "Он больше не встанет!", "Ещё один готов.", "Хорошая работа.", "Разобрались.")
+
+/datum/ai_behavior/human/melee_interact(datum/source, atom/interactee, melee_tool = melee_weapon) //specifies the arg value
+	var/toggle_intent = FALSE
+	if(!melee_tool && current_action == MOVING_TO_SAFETY) //this exists so npcs will melee on retreat, even if unarmed
+		toggle_intent = TRUE
+		mob_parent.a_intent = INTENT_HARM
+	. = ..()
+	if(toggle_intent)
+		mob_parent.a_intent = INTENT_HELP
 
 ///Weapon stuff that happens during process
 /datum/ai_behavior/human/proc/weapon_process()
-	if(human_ai_state_flags & HUMAN_AI_NEED_WEAPONS)
+	if((human_ai_state_flags & HUMAN_AI_NEED_WEAPONS) && !(human_ai_state_flags & HUMAN_AI_BUSY_ACTION))
 		equip_weaponry()
-
 	if(!gun)
 		return
+
 	var/fire_result = can_shoot_target(combat_target)
-	if(!(human_ai_state_flags & HUMAN_AI_FIRING))
-		if(fire_result == AI_FIRE_NO_AMMO)
-			INVOKE_ASYNC(src, PROC_REF(reload_gun))
-			return
+	if(human_ai_state_flags & HUMAN_AI_FIRING)
 		if(fire_result != AI_FIRE_CAN_HIT)
-			return
-		if(prob(90))
-			try_speak(pick(start_fire_chat))
-		if(gun.reciever_flags & AMMO_RECIEVER_REQUIRES_UNIQUE_ACTION)
-			gun.unique_action(mob_parent)
-		if(gun.start_fire(mob_parent, combat_target, get_turf(combat_target)) && gun.gun_firemode != GUN_FIREMODE_SEMIAUTO && gun.gun_firemode != GUN_FIREMODE_BURSTFIRE)
-			human_ai_state_flags |= HUMAN_AI_FIRING
+			stop_fire(fire_result)
 		return
 
-	if(fire_result == AI_FIRE_CAN_HIT)
+	if(fire_result == AI_FIRE_NO_AMMO)
+		INVOKE_ASYNC(src, PROC_REF(reload_gun))
 		return
-
-	stop_fire()
-
-	//already firing
-	switch(fire_result)
-		if(AI_FIRE_INVALID_TARGET)
-			return //how'd you do this?
-		if(AI_FIRE_TARGET_DEAD)
-			if(prob(75))
-				try_speak(pick(dead_target_chat))
-		if(AI_FIRE_NO_AMMO)
-			INVOKE_ASYNC(src, PROC_REF(reload_gun))
-		if(AI_FIRE_OUT_OF_RANGE)
-			if(prob(50))
-				try_speak(pick(out_range_chat))
-		if(AI_FIRE_NO_LOS)
-			if(prob(50))
-				try_speak(pick(no_los_chat))
-		if(AI_FIRE_FRIENDLY_BLOCKED)
-			if(prob(50))
-				try_speak(pick(friendly_blocked_chat))
+	if(fire_result != AI_FIRE_CAN_HIT)
+		return
+	if(prob(90))
+		try_speak(pick(start_fire_chat))
+	if(gun.reciever_flags & AMMO_RECIEVER_REQUIRES_UNIQUE_ACTION)
+		gun.unique_action(mob_parent)
+	if(gun.start_fire(mob_parent, combat_target, get_turf(combat_target)) && gun.gun_firemode != GUN_FIREMODE_SEMIAUTO && gun.gun_firemode != GUN_FIREMODE_BURSTFIRE)
+		human_ai_state_flags |= HUMAN_AI_FIRING
 
 ///Tries to equip weaponry from inventory, or find some if none are available
 /datum/ai_behavior/human/proc/equip_weaponry(datum/source)
@@ -90,6 +106,8 @@
 
 ///Tries to equip weaponry, and updates behavior appropriately
 /datum/ai_behavior/human/proc/do_equip_weaponry()
+	store_hands()
+
 	var/obj/item/weapon/primary
 	var/obj/item/weapon/secondary
 
@@ -112,6 +130,8 @@
 			shield_choice = melee_option
 
 	for(var/obj/item/weapon/gun/gun_option AS in mob_inventory.gun_list)
+		if(!gun_option.ai_should_use(user = mob_parent))
+			continue
 		if((gun_option.w_class >= 4) && ((gun_option.fire_delay * 0.1 * gun_option.ammo_datum_type::damage) > (big_gun_choice?.fire_delay * 0.1 * big_gun_choice?.ammo_datum_type::damage)))
 			big_gun_choice = gun_option
 		if((gun_option.w_class < 4) && ((gun_option.fire_delay * 0.1 * gun_option.ammo_datum_type::damage) > (small_gun_choice?.fire_delay * 0.1 * small_gun_choice?.ammo_datum_type::damage)))
@@ -174,6 +194,7 @@
 
 	SEND_SIGNAL(new_weapon, COMSIG_AI_EQUIPPED_GUN, mob_parent) //todo: make another sig for belt strap to trigger off
 	RegisterSignals(new_weapon, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED), PROC_REF(unequip_weapon), TRUE) //One item can be both the gun and melee weapon for a mob
+	RegisterSignal(new_weapon, COMSIG_ITEM_UNWIELD, PROC_REF(on_unwield), TRUE) //we also check for unwielding specifically, as this can happen for a variety of reasons
 	gun = new_weapon
 	return TRUE
 
@@ -192,11 +213,20 @@
 /datum/ai_behavior/human/proc/after_equip_melee(obj/item/weapon/new_weapon)
 	SEND_SIGNAL(new_weapon, COMSIG_AI_EQUIPPED_MELEE, mob_parent)
 	RegisterSignals(new_weapon, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED), PROC_REF(unequip_weapon), TRUE)
+	RegisterSignal(new_weapon, COMSIG_ITEM_UNWIELD, PROC_REF(on_unwield), TRUE)
+
+/datum/ai_behavior/human/proc/on_unwield(obj/item/weapon/old_weapon, mob/living/user)
+	SIGNAL_HANDLER
+	UnregisterSignal(old_weapon, COMSIG_ITEM_UNWIELD)
+	unequip_weapon(old_weapon)
 
 ///Unequips a weapon
 /datum/ai_behavior/human/proc/unequip_weapon(obj/item/weapon/old_weapon)
+	SIGNAL_HANDLER
 	UnregisterSignal(old_weapon, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
 	human_ai_state_flags |= HUMAN_AI_NEED_WEAPONS
+	if(!QDELETED(old_weapon) && isturf(old_weapon.loc))
+		add_atom_of_interest(old_weapon) //we want to pick it up
 	//todo: loosen straps?
 	if(gun == old_weapon)
 		stop_fire()
@@ -231,21 +261,47 @@
 			var/obj/machinery/machinery_target = target
 			if(machinery_target.machine_stat & BROKEN)
 				return AI_FIRE_TARGET_DEAD
+		if(isfacehugger(target))
+			var/obj/item/clothing/mask/facehugger/hugger = target
+			if(hugger.stat == DEAD || !isturf(hugger.loc))
+				return AI_FIRE_TARGET_DEAD //dead or nothing we can do about it
 
-	if(get_dist(target, mob_parent) > target_distance)
+	var/dist = get_dist(target, mob_parent)
+	if(dist > target_distance)
 		return AI_FIRE_OUT_OF_RANGE
-	if(!line_of_sight(mob_parent, target)) //todo: This doesnt check if we can actually shoot past stuff in the line, but also checking path seems excessive
+	if(!line_of_sight(mob_parent, target))
+		return AI_FIRE_NO_LOS
+	if(check_path(mob_parent, target, PASS_PROJECTILE|PASS_MOB) != get_turf(target))
 		return AI_FIRE_NO_LOS
 
 	//ammo_datum_type is always populated, with the last loaded ammo type. This shouldnt be an issue since we check ammo first
-	if((human_ai_behavior_flags & HUMAN_AI_NO_FF) && !(gun.ammo_datum_type::ammo_behavior_flags & AMMO_IFF) && !check_path_ff(mob_parent, target))
+	if((human_ai_behavior_flags & HUMAN_AI_NO_FF) && !(gun.gun_features_flags & GUN_IFF) && !(gun.ammo_datum_type::ammo_behavior_flags & AMMO_IFF) && !check_path_ff(mob_parent, target))
 		return AI_FIRE_FRIENDLY_BLOCKED
 	return AI_FIRE_CAN_HIT
 
 ///Stops gunfire
-/datum/ai_behavior/human/proc/stop_fire()
+/datum/ai_behavior/human/proc/stop_fire(stop_reason)
 	human_ai_state_flags &= ~HUMAN_AI_FIRING
 	gun?.stop_fire()
+
+	if(!stop_reason)
+		return
+
+	switch(stop_reason)
+		if(AI_FIRE_TARGET_DEAD, AI_FIRE_INVALID_TARGET)
+			if(prob(75))
+				try_speak(pick(dead_target_chat))
+		if(AI_FIRE_NO_AMMO)
+			INVOKE_ASYNC(src, PROC_REF(reload_gun))
+		if(AI_FIRE_OUT_OF_RANGE)
+			if(prob(50))
+				try_speak(pick(out_range_chat))
+		if(AI_FIRE_NO_LOS)
+			if(prob(50))
+				try_speak(pick(no_los_chat))
+		if(AI_FIRE_FRIENDLY_BLOCKED)
+			if(prob(50))
+				try_speak(pick(friendly_blocked_chat))
 
 ///Tries to reload our gun
 /datum/ai_behavior/human/proc/reload_gun()

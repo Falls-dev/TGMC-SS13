@@ -47,7 +47,7 @@
 	update_appearance(UPDATE_OVERLAYS)
 
 /turf/open/floor/plating/plating_catwalk/make_plating()
-	return scrape_away()
+	return ScrapeAway()
 
 /turf/open/floor/plating/plating_catwalk/prison
 	icon_state = "prison_above"

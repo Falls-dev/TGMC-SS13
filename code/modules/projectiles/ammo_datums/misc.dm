@@ -37,6 +37,16 @@
 	penetration = 50
 	damage_falloff = 0
 
+/datum/ammo/bullet/turret/sniper/pea
+	name = "pea bullet"
+	icon = 'icons/obj/items/pea.dmi'
+	icon_state = "pea"
+	bullet_color = COLOR_SOFT_RED
+	accurate_range = 14
+	damage = 75
+	penetration = 50
+	damage_falloff = 0
+
 /datum/ammo/flamethrower/turret
 	max_range = 8
 	damage = 50

@@ -125,6 +125,9 @@ GLOBAL_VAR_INIT(refid_filter, TYPEID(filter(type="angular_blur")))
 #define isxenobehemoth(A) (istype(A, /mob/living/carbon/xenomorph/behemoth))
 #define isxenopanther(A) (istype(A, /mob/living/carbon/xenomorph/panther))
 #define isxenofacehugger(A) (istype(A, /mob/living/carbon/xenomorph/facehugger))
+#define isfacehugger(A) (istype(A, /obj/item/clothing/mask/facehugger))
+#define isxenodragon(A) (istype(A, /mob/living/carbon/xenomorph/dragon))
+#define isxenopyrogen(A) (istype(A, /mob/living/carbon/xenomorph/pyrogen))
 
 //Silicon mobs
 #define issilicon(A) (istype(A, /mob/living/silicon))
@@ -260,6 +263,8 @@ GLOBAL_VAR_INIT(refid_filter, TYPEID(filter(type="angular_blur")))
 
 #define isvehicle(A) (istype(A, /obj/vehicle))
 
+#define issealedvehicle(A) (istype(A, /obj/vehicle/sealed))
+
 #define ismecha(A) (istype(A, /obj/vehicle/sealed/mecha))
 
 #define isarmoredvehicle(A) (istype(A, /obj/vehicle/sealed/armored))
@@ -307,6 +312,7 @@ GLOBAL_VAR_INIT(refid_filter, TYPEID(filter(type="angular_blur")))
 
 //Gamemode
 #define iscrashgamemode(O) (istype(O, /datum/game_mode/infestation/crash))
+#define iswarfaregamemode(O) (istype(O, /datum/game_mode/infestation/warfare))
 #define iszombiecrashgamemode(O) (istype(O, /datum/game_mode/infestation/crash/zombie))
 #define isinfestationgamemode(O) (istype(O, /datum/game_mode/infestation))
 #define isexterminationgamemode(O) (istype(O, /datum/game_mode/infestation/distress/extermination))

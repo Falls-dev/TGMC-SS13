@@ -157,6 +157,10 @@
 		if(initial(xeno.tier) == XENO_TIER_MINION)
 			continue // Skipping minions
 		var/datum/xeno_caste/caste = xeno.xeno_caste
+		var/caste_index = get_hive_ui_caste_index(caste)
+		if(isnull(caste_index))
+			stack_trace("Hive UI missing caste index for [caste.type] ([caste.base_caste_type_path || caste.caste_type_path])")
+			continue
 		var/plasma_multi = caste.plasma_regen_limit == 0 ? 1 : caste.plasma_regen_limit // Division by 0 bad.
 		var/health = xeno.health > 0 ? xeno.health / xeno.maxHealth : -xeno.health / xeno.get_death_threshold()
 		.["xeno_info"] += list(list(
@@ -169,7 +173,7 @@
 			"can_be_leader" = CHECK_BITFIELD(initial(caste.can_flags), CASTE_CAN_BE_LEADER),
 			"is_leader" = xeno.xeno_flags & XENO_LEADER,
 			"is_ssd" = !xeno.client,
-			"index" = GLOB.hive_ui_caste_index[caste.base_caste_type_path ? caste.base_caste_type_path : caste.caste_type_path],
+			"index" = caste_index,
 		))
 
 	var/mob/living/carbon/xenomorph/xeno_user
@@ -228,7 +232,8 @@
 	.["user_index"] = 0
 	if(isxeno(user))
 		var/mob/living/carbon/xenomorph/xeno_user = user
-		.["user_index"] = GLOB.hive_ui_caste_index[xeno_user.xeno_caste.base_caste_type_path ? xeno_user.xeno_caste.base_caste_type_path : xeno_user.xeno_caste.caste_type_path]
+		var/user_caste_index = get_hive_ui_caste_index(xeno_user.xeno_caste)
+		.["user_index"] = user_caste_index || 0
 
 	.["user_purchase_perms"] = FALSE
 	if(isxeno(user))
@@ -1015,7 +1020,7 @@ to_chat will check for valid clients itself already so no need to double check f
 // *********** Facehuggers proc
 // ***************************************
 /datum/hive_status/proc/can_spawn_as_hugger(mob/dead/observer/user)
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_SENTIENT_HUGGER))
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_SENTIENT_HUGGER))
 		return FALSE
 
 	if(!user.client?.prefs || is_banned_from(user.ckey, ROLE_XENOMORPH))

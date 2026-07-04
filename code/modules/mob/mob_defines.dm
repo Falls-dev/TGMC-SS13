@@ -158,9 +158,6 @@
 	var/life_kills_total = 0
 	var/max_bonus_life_kills
 
-	///Tracks open UIs for a user.
-	var/list/tgui_open_uis = list()
-
 	///TODO GET RID OF ME
 	var/list/pain_stored = list()
 	var/last_pain_message = ""

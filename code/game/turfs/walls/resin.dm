@@ -21,7 +21,7 @@
 	take_damage(burn_level * 1.25, BURN, FIRE)
 
 /turf/closed/wall/resin/proc/thicken()
-	change_turf(/turf/closed/wall/resin/thick)
+	ChangeTurf(/turf/closed/wall/resin/thick)
 	return TRUE
 
 /turf/closed/wall/resin/plasmacutter_act(mob/living/user, obj/item/tool/pickaxe/plasmacutter/I)
@@ -65,7 +65,7 @@
 	canSmoothWith = list(SMOOTH_GROUP_XENO_STRUCTURES)
 
 /turf/closed/wall/resin/membrane/thicken()
-	change_turf(/turf/closed/wall/resin/membrane/thick)
+	ChangeTurf(/turf/closed/wall/resin/membrane/thick)
 
 /turf/closed/wall/resin/membrane/thick
 	name = "thick resin membrane"
@@ -120,9 +120,9 @@
 	playsound(src, SFX_ALIEN_RESIN_BREAK, 25)
 
 /turf/closed/wall/resin/dismantle_wall()
-	scrape_away()
+	ScrapeAway()
 
-/turf/closed/wall/resin/change_turf(newtype)
+/turf/closed/wall/resin/ChangeTurf(newtype)
 	. = ..()
 	if(!.)
 		return

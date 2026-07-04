@@ -6,6 +6,7 @@
 #define MINER_LIGHT_SDAMAGE 4
 #define MINER_LIGHT_MDAMAGE 2
 #define MINER_LIGHT_DESTROYED 0
+#define MINER_PASSIVE 9
 #define MINER_AUTOMATED "mining computer"
 #define MINER_RESISTANT "reinforced components"
 #define MINER_OVERCLOCKED "high-efficiency drill"
@@ -48,7 +49,11 @@
 	var/miner_upgrade_type
 	var/obj/machinery/camera/miner/camera
 
-/obj/machinery/miner/damaged	//mapping and all that shebang
+	var/passive_mode = FALSE
+	var/start_time = 0
+	var/passive_duration = 15 MINUTES
+
+/obj/machinery/miner/damaged //mapping and all that shebang
 	miner_status = MINER_DESTROYED
 	icon_state = "mining_drill_error"
 
@@ -63,6 +68,7 @@
 
 /obj/machinery/miner/Initialize(mapload)
 	. = ..()
+	start_time = world.time
 	init_marker()
 	start_processing()
 	RegisterSignal(SSdcs, COMSIG_GLOB_DROPSHIP_HIJACKED, PROC_REF(disable_on_hijack))
@@ -78,6 +84,9 @@
 
 /obj/machinery/miner/update_icon_state()
 	. = ..()
+	if (miner_status == MINER_PASSIVE)
+		icon_state = "mining_drill_passive"
+		return
 	switch(miner_status)
 		if(MINER_RUNNING)
 			icon_state = "mining_drill_active_[miner_upgrade_type]"
@@ -237,9 +246,17 @@
 		return FALSE
 	playsound(loc, 'sound/items/ratchet.ogg', 25, TRUE)
 	miner_integrity = max_miner_integrity
+	passive_mode = FALSE
+	start_time = world.time
 	set_miner_status()
 	user.visible_message(span_notice("[user] repairs [src]'s tubing and plating."),
 	span_notice("You repair [src]'s tubing and plating."))
+
+	var/list/target_hive = GLOB.alive_xeno_list_hive[XENO_HIVE_NORMAL]
+	if(target_hive && target_hive.len)
+		for(var/mob/living/carbon/xenomorph/X in target_hive)
+			to_chat(X, span_xenoannounce("We sense a mining well has been repaired!"))
+
 	start_processing()
 	faction = user.faction
 	record_miner_repair(user)
@@ -263,8 +280,13 @@
 			. += span_info("It's lightly damaged, and you can see some dents and loose piping.</span>\n<span class='info'>Use a wrench to repair it.")
 		if(MINER_RUNNING)
 			. += span_info("[src]'s storage module displays [stored_mineral] crates are ready to be exported.")
+		if(MINER_PASSIVE)
+			. += span_info("[src] entered deep mining mode.")
 
 /obj/machinery/miner/attack_hand(mob/living/user)
+	if(miner_status == MINER_PASSIVE)
+		to_chat(user, span_warning("[src] has entered deep mining mode, it is invulnerable and automated"))
+		return
 	if(miner_status != MINER_RUNNING)
 		to_chat(user, span_warning("[src] is damaged!"))
 		return
@@ -285,23 +307,61 @@
 	start_processing()
 
 /obj/machinery/miner/process()
-	if(miner_status != MINER_RUNNING || mineral_value == 0)
+	if(!passive_mode && world.time - start_time >= passive_duration)
+		if(stored_mineral > 0)
+			SSpoints.supply_points[faction] += mineral_value * stored_mineral
+			SSpoints.dropship_points += dropship_bonus * stored_mineral
+			GLOB.round_statistics.points_from_mining += mineral_value * stored_mineral
+			do_sparks(5, TRUE, src)
+			playsound(loc,'sound/effects/phasein.ogg', 50, FALSE)
+			say("Ore shipment has been sold for [mineral_value * stored_mineral] points.")
+			stored_mineral = 0
+
+		if(miner_upgrade_type)
+			var/turf/spawn_turf = get_step(src, SOUTH)
+			switch(miner_upgrade_type)
+				if(MINER_RESISTANT)
+					new /obj/item/minerupgrade/reinforcement(spawn_turf)
+					max_miner_integrity = initial(max_miner_integrity)
+					if(miner_integrity > max_miner_integrity)
+						miner_integrity = max_miner_integrity
+				if(MINER_OVERCLOCKED)
+					new /obj/item/minerupgrade/overclock(spawn_turf)
+					required_ticks = initial(required_ticks)
+				if(MINER_AUTOMATED)
+					new /obj/item/minerupgrade/automatic(spawn_turf)
+			miner_upgrade_type = null
+			visible_message(span_notice("[src] ejects its installed module as it enters deep mining mode."))
+
+		passive_mode = TRUE
+		miner_status = MINER_PASSIVE
+		update_icon()
+		SSminimaps.remove_marker(src)
+		var/marker_icon = "miner_[mineral_value >= PLATINUM_CRATE_SELL_AMOUNT ? "platinum" : "phoron"]_passive"
+		SSminimaps.add_marker(src, MINIMAP_FLAG_ALL, image('icons/UI_icons/map_blips.dmi', null, marker_icon, MINIMAP_BLIPS_LAYER))
+
+	if(miner_status != MINER_RUNNING && miner_status != MINER_PASSIVE)
 		stop_processing()
 		SSminimaps.remove_marker(src)
 		var/marker_icon = "miner_[mineral_value >= PLATINUM_CRATE_SELL_AMOUNT ? "platinum" : "phoron"]_off"
-		SSminimaps.add_marker(src, MINIMAP_FLAG_XENO, image('icons/UI_icons/map_blips.dmi', null, marker_icon, MINIMAP_BLIPS_LAYER))
+		SSminimaps.add_marker(src, MINIMAP_FLAG_ALL, image('icons/UI_icons/map_blips.dmi', null, marker_icon, MINIMAP_BLIPS_LAYER))
 		return
+
 	if(add_tick >= required_ticks)
-		if(miner_upgrade_type == MINER_AUTOMATED)
+		if(miner_upgrade_type == MINER_AUTOMATED || passive_mode)
 			for(var/direction in GLOB.cardinals)
 				if(!isopenturf(get_step(loc, direction))) //Must be open on one side to operate
 					continue
-				SSpoints.supply_points[faction] += mineral_value
-				SSpoints.dropship_points += dropship_bonus
-				GLOB.round_statistics.points_from_mining += mineral_value
+
+				var/actual_mineral_value = passive_mode ? round(mineral_value / 3) : mineral_value
+				var/actual_dropship_bonus = passive_mode ? round(dropship_bonus / 3) : dropship_bonus
+
+				SSpoints.supply_points[faction] += actual_mineral_value
+				SSpoints.dropship_points += actual_dropship_bonus
+				GLOB.round_statistics.points_from_mining += actual_mineral_value
 				do_sparks(5, TRUE, src)
 				playsound(loc,'sound/effects/phasein.ogg', 50, FALSE)
-				say("Ore shipment has been sold for [mineral_value] points.")
+				say("Ore shipment has been sold for [actual_mineral_value] points.")
 				add_tick = 0
 				return
 			playsound(loc,'sound/machines/buzz-two.ogg', 35, FALSE)
@@ -309,12 +369,15 @@
 			return
 		stored_mineral += 1
 		add_tick = 0
-	if(stored_mineral >= 8)	//Stores 8 boxes worth of minerals
+	if(stored_mineral >= 8 && !passive_mode) //Stores 8 boxes worth of minerals
 		stop_processing()
 	else
 		add_tick += 1
 
 /obj/machinery/miner/attack_alien(mob/living/carbon/xenomorph/xeno_attacker, damage_amount = xeno_attacker.xeno_caste.melee_damage, damage_type = BRUTE, damage_flag = MELEE, effects = TRUE, armor_penetration = 0, isrightclick = FALSE)
+	if(miner_status == MINER_PASSIVE)
+		to_chat(xeno_attacker, span_warning("The drilling rig has entered a deep mining mode and is invulnerable!"))
+		return
 	if(xeno_attacker.status_flags & INCORPOREAL) //Incorporeal xenos cannot attack physically.
 		return
 	if(miner_upgrade_type == MINER_RESISTANT && !(xeno_attacker.mob_size == MOB_SIZE_BIG || xeno_attacker.xeno_caste.caste_flags & CASTE_IS_STRONG))
