@@ -146,9 +146,10 @@
 	fling_ability.collusion_damage_multiplier -= multiplier_value
 	return ..()
 
-//
-//
-//
+/*
+// ***************************************
+// *********** Gravity Tide Mutation (DISABLED)
+// ***************************************
 
 /datum/xeno_mutation/shrike/gravity_tide
 	name = "Gravity Tide"
@@ -189,6 +190,7 @@
 	force_ability.rebound_throwing = initial(force_ability.rebound_throwing)
 	force_ability.throwing_distance -= distance_value
 	return ..()
+*/
 
 //
 //
@@ -292,7 +294,6 @@
 	child_name = null
 	status_effect_type = STATUS_EFFECT_DEFLECTIVE_FORCE
 	buff_desc = "Отражение снарядов, перезарядка крика 40%"
-	conflicting_mutation_types = list(STATUS_EFFECT_GRAVITY_TIDE)
 
 /atom/movable/screen/alert/status_effect/shrike/deflective_force
 	name = "Deflective Force"
