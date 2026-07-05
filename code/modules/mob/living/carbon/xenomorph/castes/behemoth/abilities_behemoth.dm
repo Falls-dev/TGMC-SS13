@@ -326,8 +326,6 @@
 /datum/action/ability/activable/xeno/behemoth_seize/proc/post_throw(datum/source)
 	SIGNAL_HANDLER
 	UnregisterSignal(xeno_owner, list(COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_POST_THROW))
-	xeno_owner.remove_pass_flags(SEIZE_PASS_FLAGS, XENO_TRAIT)
-
 
 // ***************************************
 // *********** Earth Riser
@@ -912,6 +910,7 @@
 	)
 	/// Whether the Spur mutation is currently enabled.
 	var/spur_mutation = FALSE
+	var/remote_pillar_explosion = FALSE
 
 /datum/action/ability/activable/xeno/geocrush/on_cooldown_finish()
 	. = ..()
@@ -922,9 +921,11 @@
 
 /datum/action/ability/activable/xeno/geocrush/proc/geocrush_pillar_explosion(obj/structure/xeno/earth_pillar/pillar, turf/target_turf)
 	if(QDELETED(pillar))
+		remote_pillar_explosion = FALSE
 		return
 	var/damage = xeno_owner.xeno_caste.melee_damage * xeno_owner.xeno_melee_damage_modifier
-	pillar.geocrush_act(xeno_owner, damage, xeno_owner.xeno_caste.melee_damage_type, xeno_owner.xeno_caste.melee_damage_armor, xeno_owner.xeno_caste.melee_ap)
+	pillar.geocrush_act(xeno_owner, damage, xeno_owner.xeno_caste.melee_damage_type, xeno_owner.xeno_caste.melee_damage_armor, xeno_owner.xeno_caste.melee_ap, remote_pillar_explosion)
+	remote_pillar_explosion = FALSE
 	new /obj/effect/temp_visual/behemoth/geocrush(target_turf)
 	new /obj/effect/temp_visual/shockwave(target_turf, 4, get_dir(target_turf, xeno_owner))
 	playsound(target_turf, 'sound/effects/alien/behemoth/geocrush.ogg', 40, TRUE, 40)
@@ -945,6 +946,7 @@
 						var/obj/structure/xeno/earth_pillar/other_pillar = AM
 						other_pillar.warning_flash()
 			xeno_warning(affected_turfs, GEOCRUSH_PILLAR_EXPLOSION_DELAY, COLOR_DARK_MODERATE_ORANGE)
+			remote_pillar_explosion = TRUE
 			addtimer(CALLBACK(src, PROC_REF(geocrush_pillar_explosion), pillar, get_turf(pillar)), GEOCRUSH_PILLAR_EXPLOSION_DELAY)
 			succeed_activate()
 			add_cooldown()
@@ -1046,8 +1048,8 @@
 	return FALSE
 
 // Except for Earth Pillars. We can knock these around for funsies.
-/obj/structure/xeno/earth_pillar/geocrush_act(mob/living/carbon/xenomorph/xeno_owner, damage, damage_type, armor_type, armor_penetration)
-	if(!Adjacent(xeno_owner))
+/obj/structure/xeno/earth_pillar/geocrush_act(mob/living/carbon/xenomorph/xeno_owner, damage, damage_type, armor_type, armor_penetration, remote_explosion = FALSE)
+	if(remote_explosion || !Adjacent(xeno_owner))
 		playsound(loc, 'sound/effects/alien/behemoth/earth_pillar_destroyed.ogg', 40, TRUE)
 		new /obj/effect/temp_visual/behemoth/earth_pillar/creation/destruction(loc)
 		var/list/turfs = filled_circle_turfs(loc, EARTH_RISER_THROW_RADIUS)
