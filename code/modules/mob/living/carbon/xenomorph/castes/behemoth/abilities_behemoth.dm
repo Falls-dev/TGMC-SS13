@@ -594,8 +594,8 @@
 #define LANDSLIDE_SPEED 1
 #define LANDSLIDE_DAMAGE_MECHA_MODIFIER 1.5
 #define LANDSLIDE_DAMAGE_VEHICLE_MODIFIER 10
-#define LANDSLIDE_DAMAGE_LIVING_MULTIPLIER 1.2 // percent
-#define LANDSLIDE_KNOCKDOWN_DURATION 0.7 SECONDS
+#define LANDSLIDE_DAMAGE_LIVING_MULTIPLIER 1.5 // percent
+#define LANDSLIDE_KNOCKDOWN_DURATION 1.2 SECONDS
 
 /datum/action/ability/activable/xeno/landslide
 	name = "Landslide"
@@ -721,7 +721,7 @@
 				continue
 			if(isliving(target_movable))
 				var/mob/living/target_living = target_movable
-				if(target_living.stat == DEAD || target_living.lying_angle || xeno_owner.issamexenohive(target_living))
+				if(target_living.stat == DEAD || xeno_owner.issamexenohive(target_living))
 					continue
 				living_hit(target_living)
 				continue
@@ -891,9 +891,10 @@
 #define GEOCRUSH_RANGE 1 // tiles
 #define GEOCRUSH_STAMINA_DAMAGE_MODIFIER 1.0 // percent
 #define GEOCRUSH_OBJECT_DAMAGE_MODIFIER 4.0 // percent
+#define GEOCRUSH_LIVING_DAMAGE_MULTIPLIER 1.4
 #define GEOCRUSH_SLOWDOWN 5 // stacks
 #define GEOCRUSH_STAGGER 5 // stacks
-#define GEOCRUSH_KNOCKDOWN 1 SECONDS
+#define GEOCRUSH_KNOCKDOWN 2 SECONDS
 #define GEOCRUSH_KNOCKBACK 2 // tiles
 #define GEOCRUSH_PILLAR_EXPLOSION_DELAY 1.5 SECONDS
 
@@ -1028,11 +1029,12 @@
 // For living targets, we just damage them and apply effects.
 /mob/living/geocrush_act(mob/living/carbon/xenomorph/xeno_owner, damage, damage_type, armor_type, armor_penetration)
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, emote), "scream")
-	apply_damage(damage, damage_type, ran_zone(), armor_type, FALSE, FALSE, TRUE, armor_penetration, xeno_owner)
+	var/final_brute_damage = damage * GEOCRUSH_LIVING_DAMAGE_MULTIPLIER
+	apply_damage(final_brute_damage, damage_type, ran_zone(), armor_type, FALSE, FALSE, TRUE, armor_penetration, xeno_owner)
 	apply_damage(damage * GEOCRUSH_STAMINA_DAMAGE_MODIFIER, STAMINA, xeno_owner.zone_selected, NONE, FALSE, FALSE, TRUE, armor_penetration, xeno_owner)
 	var/datum/personal_statistics/xeno_stats = GLOB.personal_statistics_list[xeno_owner.ckey]
-	xeno_stats.melee_damage += damage
-	xeno_stats.geocrush_damage += damage
+	xeno_stats.melee_damage += final_brute_damage
+	xeno_stats.geocrush_damage += final_brute_damage
 	Knockdown(GEOCRUSH_KNOCKDOWN)
 	add_slowdown(GEOCRUSH_SLOWDOWN)
 	adjust_stagger(GEOCRUSH_STAGGER)
