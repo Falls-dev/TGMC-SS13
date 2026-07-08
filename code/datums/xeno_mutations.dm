@@ -21,8 +21,6 @@
 	var/buff_desc = ""
 	///Касты, которым будет доступна данная мутация
 	var/list/caste_restrictions = list()
-	/// List of status effect types that conflict with this mutation
-	var/list/conflicting_mutation_types = list()
 
 /datum/xeno_mutation/proc/is_available(mob/living/carbon/xenomorph/xeno)
 	if(length(caste_restrictions) > 0)
@@ -333,13 +331,6 @@ GLOBAL_LIST_EMPTY(xeno_mutations)
 	initialize_xeno_mutations()
 	for(var/datum/xeno_mutation/mutation in GLOB.xeno_mutations)
 		if(mutation.name == mutation_name)
-			return mutation
-	return null
-
-/proc/get_xeno_mutation_by_status_effect(effect_type)
-	initialize_xeno_mutations()
-	for(var/datum/xeno_mutation/mutation in GLOB.xeno_mutations)
-		if(mutation.status_effect_type == effect_type)
 			return mutation
 	return null
 
