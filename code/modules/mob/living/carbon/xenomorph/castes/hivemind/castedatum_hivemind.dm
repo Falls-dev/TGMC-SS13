@@ -17,7 +17,7 @@
 	plasma_max = 1000
 	plasma_gain = 200
 
-	// *** Health *** //
+	// *** Health *** //1
 	max_health = 100
 
 	maximum_active_caste = 1
