@@ -32,9 +32,17 @@
 		KEYBINDING_ALTERNATE = COMSIG_XENOABILITY_CHOOSE_WEEDS,
 	)
 	use_state_flags = ABILITY_USE_LYING
-	///the maximum range of the ability
+	/// The multiplier of ability cost. This is seperate of the weed type's ability cost multiplier.
+	var/cost_multiplier = 1
+	/// How far can weeds be placed? 0: On use, plants on your tile. 1+: On use, select the ability and right-click to plant at target tile.
 	var/max_range = 0
-	///The seleted type of weeds
+	/// List of weeds that can be selected.
+	var/list/obj/alien/weeds/node/selectable_weed_typepaths = list(
+		/obj/alien/weeds/node,
+		/obj/alien/weeds/node/sticky,
+		/obj/alien/weeds/node/resting
+	)
+	/// The selected type of weeds that will be planted.
 	var/obj/alien/weeds/node/weed_type = /obj/alien/weeds/node
 	///Whether automatic weeding is active
 	var/auto_weeding = FALSE
@@ -116,9 +124,18 @@
 
 ///Chose which weed will be planted by the xeno owner or toggle automatic weeding
 /datum/action/ability/activable/xeno/plant_weeds/proc/choose_weed()
-	var/weed_choice = show_radial_menu(owner, owner, GLOB.weed_images_list, radius = 35)
+	var/list/available_weeds = list()
+	for(var/obj/alien/weeds/node/weed_type_possible AS in selectable_weed_typepaths)
+		var/weed_image = GLOB.weed_images_list[initial(weed_type_possible.name)]
+		if(!weed_image)
+			continue
+		available_weeds[initial(weed_type_possible.name)] = weed_image
+	available_weeds[AUTOMATIC_WEEDING] = GLOB.weed_images_list[AUTOMATIC_WEEDING] // For automatic weeding.
+
+	var/weed_choice = show_radial_menu(xeno_owner, xeno_owner, available_weeds, radius = 48)
 	if(!weed_choice)
 		return
+
 	if(weed_choice == AUTOMATIC_WEEDING)
 		toggle_auto_weeding()
 	else
@@ -225,6 +242,8 @@
 		)
 	/// Used for the dragging functionality of pre-shuttter building
 	var/dragging = FALSE
+	/// The percentage of maximum health to heal the owner whenever a structure is built.
+	var/heal_percentage = 0
 
 
 /// Helper for handling the start of mouse-down and to begin the drag-building
@@ -324,6 +343,9 @@
 		build_resin(get_turf(xeno_owner))
 	else
 		build_resin(get_turf(A))
+	if(heal_percentage)
+		var/health_healed = xeno_owner.maxHealth * heal_percentage
+		HEAL_XENO_DAMAGE(xeno_owner, health_healed, FALSE)
 
 /datum/action/ability/activable/xeno/secrete_resin/proc/get_wait()
 	. = base_wait

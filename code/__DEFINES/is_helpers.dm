@@ -293,6 +293,8 @@ GLOBAL_VAR_INIT(refid_filter, TYPEID(filter(type="angular_blur")))
 
 #define isimplant(A) (istype(A, /obj/item/implant))
 
+#define isresinjelly(A) (istype(A, /obj/item/resin_jelly))
+
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/assembly))
 

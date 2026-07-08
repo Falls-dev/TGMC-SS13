@@ -109,6 +109,7 @@
 #define SHATTERING_ROAR_ABILITY_TRAIT "shattering_roar_ability_trait"
 #define ZERO_FORM_BEAM_ABILITY_TRAIT "zero_form_beam_ability_trait"
 #define DRAGON_ABILITY_TRAIT "dragon_ability_trait"
+#define HIVELORD_ABILITY_TRAIT "hivelord_ability_trait"
 #define WIDOW_ABILITY_TRAIT "widow_ability_trait"
 #define VALHALLA_TRAIT "valhalla"
 #define WEIGHTBENCH_TRAIT "weightbench"
@@ -195,6 +196,8 @@
 #define TRAIT_TANK_DESANT "tank_desant"
 /// Mob has fov applied to it
 #define TRAIT_FOV_APPLIED "fov_applied"
+/// Allows xenomorphs to heal without needing to be on weeds.
+#define TRAIT_INNATE_HEALING "innate_healing"
 
 ///Traits for managing AM pass_flags
 #define TRAIT_PASS_LOW_STRUCTURE "pass_low_structure"
@@ -242,6 +245,7 @@
 ///The target xenomorph's wound overlays won't be visible
 #define TRAIT_XENOMORPH_INVISIBLE_BLOOD "invisible_blood"
 #define TRAIT_VALHALLA_XENO "valhalla_xeno"
+#define TRAIT_RECOVERY_PYLON_TURF "recovery_pylon_turf" // Turf is affected by a recovery pylon.
 //important_recursive_contents traits
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.

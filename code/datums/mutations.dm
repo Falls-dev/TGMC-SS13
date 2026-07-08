@@ -122,6 +122,30 @@
 		to_chat(usr, span_xenonotice("Existing mutation chosen. No biomass spent."))
 		return
 
+	for(var/conflict_type AS in mutation_datum.conflicting_mutation_types)
+		var/datum/status_effect/conflicting_effect = locate(conflict_type) in xeno_owner.status_effects
+		if(conflicting_effect)
+			// Вызываем on_remove для отката эффектов
+			conflicting_effect.on_remove()
+			// Удаляем статус-эффект
+			xeno_owner.remove_status_effect(conflicting_effect)
+			// Удаляем из холдера
+			xeno_owner.upgrades_holder.Remove(conflict_type)
+
+			var/datum/xeno_mutation/conflict_mutation = get_xeno_mutation_by_status_effect(conflict_type)
+			if(conflict_mutation && conflict_mutation.name)
+				xeno_owner.purchased_mutations -= conflict_mutation.name
+
+			to_chat(usr, span_notice("Previous conflicting mutation removed."))
+
+		// Удаляем способности конфликтной мутации если есть
+		var/datum/xeno_mutation/conflict_mutation = get_xeno_mutation_by_status_effect(conflict_type)
+		if(conflict_mutation && conflict_mutation.ability_type)
+			for(var/datum/action/ability/xeno_action/mutation/ability in xeno_owner.actions)
+				if(istype(ability, conflict_mutation.ability_type))
+					ability.remove_action(xeno_owner)
+					xeno_owner.upgrades_holder.Remove(conflict_mutation.ability_type)
+
 	//Remove parent mutations if purchasing higher tier
 	var/datum/status_effect/parent_to_remove
 	if(mutation_datum.parent_name)
