@@ -6,6 +6,7 @@
 /datum/xeno_mutation/runner
 	category = "Enhancement"
 	caste_restrictions = list("runner")
+	caste_blacklist = list(/datum/xeno_caste/runner/melter)
 
 /datum/status_effect/runner
 	duration = -1

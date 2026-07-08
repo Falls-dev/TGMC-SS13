@@ -21,12 +21,21 @@
 	var/buff_desc = ""
 	///Касты, которым будет доступна данная мутация
 	var/list/caste_restrictions = list()
-
+	///Запрещает Брать стрейнам мутации основы
+	var/list/caste_blacklist = list()
 
 /datum/xeno_mutation/proc/is_available(mob/living/carbon/xenomorph/xeno)
+	// 1. Сначала проверяем черный список (по типу касты)
+	if(length(caste_blacklist) > 0)
+		for(var/blacklisted_caste in caste_blacklist)
+			if(istype(xeno.xeno_caste, blacklisted_caste))
+				return FALSE // Если каста в блэклисте — мутация недоступна
+
+	// 2. Затем проверяем белый список (по имени касты)
 	if(length(caste_restrictions) > 0)
 		var/current_caste = lowertext(xeno.xeno_caste.caste_name)
 		return current_caste in caste_restrictions
+
 	return TRUE
 
 /datum/xeno_mutation/proc/is_purchased(mob/living/carbon/xenomorph/xeno)

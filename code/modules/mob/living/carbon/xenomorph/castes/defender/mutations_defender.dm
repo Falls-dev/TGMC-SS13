@@ -7,6 +7,7 @@
 /datum/xeno_mutation/defender
 	category = "Enhancement"
 	caste_restrictions = list("defender")
+	caste_blacklist = list(/datum/xeno_caste/defender/steel_crest)
 
 /datum/status_effect/defender
 	duration = -1

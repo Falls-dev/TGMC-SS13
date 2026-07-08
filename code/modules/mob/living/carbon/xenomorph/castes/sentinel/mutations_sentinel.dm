@@ -8,6 +8,7 @@
 /datum/xeno_mutation/sentinel
 	category = "Enhancement"
 	caste_restrictions = list("sentinel")
+	caste_blacklist = list(/datum/xeno_caste/sentinel/retrograde)
 
 /datum/status_effect/sentinel
 	duration = -1
