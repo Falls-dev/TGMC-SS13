@@ -25,7 +25,6 @@
 		/datum/job/terragov/squad/smartgunner = 4,
 		/datum/job/terragov/squad/leader = 4,
 		/datum/job/terragov/squad/standard = -1,
-		/datum/job/terragov/squad/robot = -1,
 	)
 	enable_fun_tads = TRUE
 	xenorespawn_time = 1 MINUTES

@@ -47,7 +47,7 @@
 	laughs = list(MALE = SFX_ROBOT_MALE_LAUGH, FEMALE = SFX_ROBOT_FEMALE_LAUGH, PLURAL = SFX_ROBOT_MALE_LAUGH, NEUTER = SFX_ROBOT_FEMALE_LAUGH)
 	death_message = "shudders violently whilst spitting out error text before collapsing, their visual sensor darkening..."
 	special_death_message = "You have been shut down.<br><small>But it is not the end of you yet... if you still have your body, wait until somebody can resurrect you...</small>"
-	joinable_roundstart = FALSE
+	joinable_roundstart = TRUE
 
 	inherent_actions = list(/datum/action/repair_self)
 
@@ -90,17 +90,33 @@
 	icobase = 'icons/mob/human_races/r_robot_alpharii.dmi'
 	joinable_roundstart = FALSE
 
+/datum/species/robot/alpharii/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
+	. = ..()
+	H.regenerate_icons()
+
 /datum/species/robot/charlit
 	name = "Chilvaris Combat Robot"
 	icobase = 'icons/mob/human_races/r_robot_charlit.dmi'
 	joinable_roundstart = FALSE
+
+/datum/species/robot/charlit/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
+	. = ..()
+	H.regenerate_icons()
 
 /datum/species/robot/deltad
 	name = "Ratcher Combat Robot"
 	icobase = 'icons/mob/human_races/r_robot_deltad.dmi'
 	joinable_roundstart = FALSE
 
+/datum/species/robot/deltad/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
+	. = ..()
+	H.regenerate_icons()
+
 /datum/species/robot/bravada
 	name = "Sterling Combat Robot"
 	icobase = 'icons/mob/human_races/r_robot_bravada.dmi'
 	joinable_roundstart = FALSE
+
+/datum/species/robot/bravada/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
+	. = ..()
+	H.regenerate_icons()

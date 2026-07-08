@@ -87,6 +87,11 @@ Godspeed, captain! And remember, you are not above the law."})
 	minimal_access = ALL_MARINE_ACCESS
 	display_order = JOB_DISPLAY_ORDER_EXECUTIVE_OFFICER
 	outfit = /datum/outfit/job/command/fieldcommander
+	multiple_outfits = TRUE
+	outfits = list(
+		/datum/outfit/job/command/fieldcommander,
+		/datum/outfit/job/command/fieldcommander_robot,
+	)
 	exp_type = EXP_TYPE_COMMAND
 	exp_requirements = XP_REQ_UNSEASONED
 	job_flags = JOB_FLAG_LATEJOINABLE|JOB_FLAG_ROUNDSTARTJOINABLE|JOB_FLAG_ALLOWS_PREFS_GEAR|JOB_FLAG_PROVIDES_BANK_ACCOUNT|JOB_FLAG_ADDTOMANIFEST|JOB_FLAG_ISCOMMAND|JOB_FLAG_BOLD_NAME_ON_SELECTION|JOB_FLAG_PROVIDES_SQUAD_HUD|JOB_FLAG_CAN_SEE_ORDERS|JOB_FLAG_ALWAYS_VISIBLE_ON_MINIMAP
@@ -934,13 +939,17 @@ Use your office fax machine to communicate with corporate headquarters or to acq
 	return preference_source.prefs.synthetic_name
 
 /datum/job/terragov/silicon/synthetic/return_spawn_type(datum/preferences/prefs)
-	if(prefs?.synthetic_type == "Early Synthetic")
-		return /mob/living/carbon/human/species/synthetic/early
+	if(prefs?.synthetic_type == "Engineer Synthetic")
+		return /mob/living/carbon/human/species/synthetic/engineer
+	if(prefs?.synthetic_type == "Medical Synthetic")
+		return /mob/living/carbon/human/species/synthetic/medical
 	return /mob/living/carbon/human/species/synthetic
 
 /datum/job/terragov/silicon/synthetic/return_skills_type(datum/preferences/prefs)
-	if(prefs?.synthetic_type == "Early Synthetic")
-		return /datum/skills/synthetic/early
+	if(prefs?.synthetic_type == "Engineer Synthetic")
+		return /datum/skills/synthetic/engineer
+	if(prefs?.synthetic_type == "Medical Synthetic")
+		return /datum/skills/synthetic/medical
 	return ..()
 
 /datum/job/terragov/silicon/synthetic/after_spawn(mob/living/carbon/new_mob, mob/user, latejoin = FALSE)
@@ -1080,7 +1089,6 @@ If you require any help, use <b>mentorhelp</b> to ask mentors about what you're 
 		ACCESS_MARINE_CHARLIE,
 		ACCESS_MARINE_DELTA,
 		ACCESS_MARINE_PREP,
-		ACCESS_MARINE_ROBOT,
 		ACCESS_MARINE_ENGPREP,
 		ACCESS_MARINE_SMARTPREP,
 		ACCESS_MARINE_MEDPREP,
@@ -1099,7 +1107,6 @@ If you require any help, use <b>mentorhelp</b> to ask mentors about what you're 
 		ACCESS_MARINE_DELTA,
 		ACCESS_MARINE_PREP,
 		ACCESS_MARINE_DROPSHIP,
-		ACCESS_MARINE_ROBOT,
 		ACCESS_MARINE_ENGPREP,
 		ACCESS_MARINE_SMARTPREP,
 		ACCESS_MARINE_MEDPREP,

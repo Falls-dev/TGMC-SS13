@@ -73,9 +73,8 @@
 /mob/living/carbon/human/species/synthetic/binarycheck(mob/H)
 	return TRUE
 
-/datum/species/synthetic/early // Worse at medical, better at engineering. Tougher in general than later synthetics.
-	name = "Early Synthetic"
-	icobase = 'icons/mob/human_races/r_synthetic.dmi'
+/datum/species/synthetic/engineer // Worse at medical, better at engineering. Tougher in general than later synthetics.
+	name = "Engineer Synthetic"
 	slowdown = 1.15 //Slower than Late Synths.
 	total_health = 200 //Tough boys, very tough boys.
 	brute_mod = 0.6
@@ -87,3 +86,14 @@
 
 	melting_min_damage = 7
 	melting_max_damage = 19
+
+/datum/species/synthetic/medical // Medical synths: better at medicine, worse at engineering.
+	name = "Medical Synthetic"
+	total_health = 100 // Less HP, but you don't really need it anyway, right?
+	brute_mod = 0.8 // We handle brute-force attacks less effectively
+
+	// We can run!!
+	species_flags = NO_BREATHE|NO_BLOOD|NO_POISON|NO_PAIN|IS_SYNTHETIC|NO_CHEM_METABOLIZATION|DETACHABLE_HEAD|HAS_LIPS|HAS_UNDERWEAR|HAS_SKIN_COLOR|ROBOTIC_LIMBS|GREYSCALE_BLOOD
+	max_stamina = 75
+
+	hair_color = "#04d8fd"
