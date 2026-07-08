@@ -90,33 +90,17 @@
 	icobase = 'icons/mob/human_races/r_robot_alpharii.dmi'
 	joinable_roundstart = FALSE
 
-/datum/species/robot/alpharii/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
-	. = ..()
-	H.regenerate_icons()
-
 /datum/species/robot/charlit
 	name = "Chilvaris Combat Robot"
 	icobase = 'icons/mob/human_races/r_robot_charlit.dmi'
 	joinable_roundstart = FALSE
-
-/datum/species/robot/charlit/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
-	. = ..()
-	H.regenerate_icons()
 
 /datum/species/robot/deltad
 	name = "Ratcher Combat Robot"
 	icobase = 'icons/mob/human_races/r_robot_deltad.dmi'
 	joinable_roundstart = FALSE
 
-/datum/species/robot/deltad/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
-	. = ..()
-	H.regenerate_icons()
-
 /datum/species/robot/bravada
 	name = "Sterling Combat Robot"
 	icobase = 'icons/mob/human_races/r_robot_bravada.dmi'
 	joinable_roundstart = FALSE
-
-/datum/species/robot/bravada/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
-	. = ..()
-	H.regenerate_icons()

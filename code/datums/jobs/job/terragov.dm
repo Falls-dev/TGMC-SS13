@@ -10,6 +10,15 @@
 /datum/job/terragov/return_spawn_type(datum/preferences/prefs)
 	switch(prefs?.species)
 		if("Combat Robot")
+			switch(prefs?.squad_robot_type)
+				if("Hammerhead", "Hammerhead Combat Robot")
+					return /mob/living/carbon/human/species/robot/alpharii
+				if("Chilvaris", "Chilvaris Combat Robot")
+					return /mob/living/carbon/human/species/robot/charlit
+				if("Ratcher", "Ratcher Combat Robot")
+					return /mob/living/carbon/human/species/robot/deltad
+				if("Sterling", "Sterling Combat Robot")
+					return /mob/living/carbon/human/species/robot/bravada
 			return /mob/living/carbon/human/species/robot
 		if("Vatborn")
 			return /mob/living/carbon/human/species/vatborn
