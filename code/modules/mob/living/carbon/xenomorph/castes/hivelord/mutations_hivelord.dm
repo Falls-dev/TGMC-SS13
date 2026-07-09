@@ -330,7 +330,8 @@
 /datum/status_effect/hivelord/weed_specialist
 	id = "upgrade_weed_specialist"
 	alert_type = /atom/movable/screen/alert/status_effect/hivelord/weed_specialist
-	var/cost_multiplier = -0.5
+	/// Множитель стоимости. 0.5 = 50% дешевле (1 - 0.5 = 0.5).
+	var/cost_reduction = 0.5
 
 /datum/status_effect/hivelord/weed_specialist/on_apply()
 	xenomorph_owner = owner
@@ -340,8 +341,8 @@
 	if(/obj/alien/weeds/node in weed_ability.selectable_weed_typepaths)
 		weed_ability.selectable_weed_typepaths -= /obj/alien/weeds/node
 	if(weed_ability.weed_type == /obj/alien/weeds/node && length(weed_ability.selectable_weed_typepaths))
-		weed_ability.weed_type = pick(weed_ability.selectable_weed_typepaths)
-	weed_ability.cost_multiplier += cost_multiplier
+		weed_ability.weed_type = weed_ability.selectable_weed_typepaths[1]
+	weed_ability.cost_multiplier -= cost_reduction
 	weed_ability.update_ability_cost()
 	weed_ability.update_button_icon()
 	return TRUE
@@ -352,7 +353,7 @@
 		return ..()
 	if(!(/obj/alien/weeds/node in weed_ability.selectable_weed_typepaths))
 		weed_ability.selectable_weed_typepaths += /obj/alien/weeds/node
-	weed_ability.cost_multiplier -= cost_multiplier
+	weed_ability.cost_multiplier += cost_reduction
 	weed_ability.update_ability_cost()
 	weed_ability.update_button_icon()
 	return ..()

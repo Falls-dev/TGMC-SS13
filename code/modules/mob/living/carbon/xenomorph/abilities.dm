@@ -60,7 +60,7 @@
 
 /// Updates the ability cost based on gamestate.
 /datum/action/ability/activable/xeno/plant_weeds/proc/update_ability_cost(shutters_recently_opened)
-	ability_cost = initial(ability_cost) * initial(weed_type.ability_cost_mult)
+	ability_cost = initial(ability_cost) * initial(weed_type.ability_cost_mult) * cost_multiplier
 	ability_cost = (!shutters_recently_opened && SSmonitor.gamestate == SHUTTERS_CLOSED) ? ability_cost * 0.5 : ability_cost
 
 /**
