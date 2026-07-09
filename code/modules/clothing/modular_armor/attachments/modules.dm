@@ -33,7 +33,7 @@
 	worn_icon_state = "mod_lamp_a"
 	slowdown = 0
 	light_mod = 6 /// The boost to armor shoulder light
-	slot = ATTACHMENT_SLOT_MODULE
+	slot = ATTACHMENT_SLOT_UTILITY_MODULE
 
 /**
  * Mini autodoc module
@@ -45,7 +45,7 @@
 	icon_state = "mod_autodoc"
 	worn_icon_state = "mod_autodoc_a"
 	slowdown = 0
-	slot = ATTACHMENT_SLOT_MODULE
+	slot = ATTACHMENT_SLOT_UTILITY_MODULE
 
 /obj/item/armor_module/module/valkyrie_autodoc/on_attach(obj/item/attaching_to, mob/user)
 	. = ..()
@@ -509,7 +509,7 @@
 	worn_icon_state = "mod_illusion_a"
 	slowdown = 0
 	attach_features_flags = ATTACH_REMOVABLE|ATTACH_ACTIVATION|ATTACH_APPLY_ON_MOB
-	slot = ATTACHMENT_SLOT_MODULE
+	slot = ATTACHMENT_SLOT_UTILITY_MODULE
 	toggle_signal = COMSIG_KB_ARMORMODULE
 	COOLDOWN_DECLARE(mirage_cooldown)
 
@@ -543,7 +543,7 @@
 	worn_icon_state = "mod_armorlock_a"
 	slowdown = 0.1
 	attach_features_flags = ATTACH_REMOVABLE|ATTACH_ACTIVATION|ATTACH_APPLY_ON_MOB
-	slot = ATTACHMENT_SLOT_MODULE
+	slot = ATTACHMENT_SLOT_UTILITY_MODULE
 	toggle_signal = COMSIG_KB_ARMORMODULE
 	COOLDOWN_DECLARE(armorlock_cooldown)
 	///This is the armor amounts we will be adding and removing when armor lock is activated
@@ -1037,7 +1037,7 @@
 	icon_state = "mod_pluto"
 	worn_icon_state = "mod_pluto_a"
 	slowdown = 0.1
-	slot = ATTACHMENT_SLOT_MODULE
+	slot = ATTACHMENT_SLOT_UTILITY_MODULE
 
 /obj/item/armor_module/module/pluto/on_attach(obj/item/attaching_to, mob/user)
 	. = ..()

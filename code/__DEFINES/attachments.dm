@@ -45,6 +45,7 @@
 #define ATTACHMENT_SLOT_SHOULDER "shoulder"
 #define ATTACHMENT_SLOT_KNEE "knee"
 #define ATTACHMENT_SLOT_MODULE "module"
+#define ATTACHMENT_SLOT_UTILITY_MODULE "utility_module"
 #define ATTACHMENT_SLOT_STORAGE "storage"
 #define ATTACHMENT_SLOT_BELT "belt"
 
