@@ -51,8 +51,8 @@
 		balloon_alert(src, "We are rested enough")
 		return
 
-	var/rage_start_hp = maxHealth * 0.6
-	var/rage_max_hp = -75
+	var/rage_start_hp = maxHealth * RAVAGER_RAGE_MIN_HEALTH_THRESHOLD
+	var/rage_max_hp = -90
 	rage_power = clamp((rage_start_hp - health) / (rage_start_hp - rage_max_hp), 0, 1)
 
 	add_filter("ravager_rage_outline", 5, outline_filter(rage_power, COLOR_RED))
@@ -96,7 +96,7 @@
 	var/burn_damage = get_fire_loss()
 	if(!brute_damage && !burn_damage)
 		return
-	var/health_recovery = (RAVAGER_RAGE_HEALTH_RECOVERY_PER_SLASH + (RAVAGER_RAGE_HEALTH_RECOVERY_PER_SLASH * rage_power)) * 2
+	var/health_recovery = (RAVAGER_RAGE_HEALTH_RECOVERY_PER_SLASH + (RAVAGER_RAGE_HEALTH_RECOVERY_PER_SLASH * rage_power))
 	var/health_modifier
 	if(brute_damage)
 		health_modifier = -min(brute_damage, health_recovery)
