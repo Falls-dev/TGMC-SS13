@@ -51,8 +51,9 @@
 		balloon_alert(src, "We are rested enough")
 		return
 
-	var/rage_threshold = maxHealth * (1 - RAVAGER_RAGE_MIN_HEALTH_THRESHOLD)
-	rage_power = max(0, (1 - ((health - RAVAGER_ENDURE_HP_LIMIT) / (maxHealth - RAVAGER_ENDURE_HP_LIMIT - rage_threshold))))
+	var/rage_start_hp = maxHealth * 0.6
+	var/rage_max_hp = -75
+	rage_power = clamp((rage_start_hp - health) / (rage_start_hp - rage_max_hp), 0, 1)
 
 	add_filter("ravager_rage_outline", 5, outline_filter(rage_power, COLOR_RED))
 
@@ -71,7 +72,7 @@
 		REMOVE_TRAIT(src, TRAIT_STAGGERIMMUNE, RAGE_TRAIT)
 		staggerstun_immune = FALSE
 
-	xeno_melee_damage_modifier = initial(xeno_melee_damage_modifier) + rage_power
+	xeno_melee_damage_modifier = initial(xeno_melee_damage_modifier) + rage_power * 0.333
 	add_movespeed_modifier(MOVESPEED_ID_RAVAGER_RAGE, TRUE, 0, NONE, TRUE, xeno_caste.speed * 0.5 * rage_power)
 
 	if((health <= 0) && !on_cooldown && stat == CONSCIOUS)
@@ -95,7 +96,7 @@
 	var/burn_damage = get_fire_loss()
 	if(!brute_damage && !burn_damage)
 		return
-	var/health_recovery = RAVAGER_RAGE_HEALTH_RECOVERY_PER_SLASH + (RAVAGER_RAGE_HEALTH_RECOVERY_PER_SLASH * rage_power)
+	var/health_recovery = (RAVAGER_RAGE_HEALTH_RECOVERY_PER_SLASH + (RAVAGER_RAGE_HEALTH_RECOVERY_PER_SLASH * rage_power)) * 2
 	var/health_modifier
 	if(brute_damage)
 		health_modifier = -min(brute_damage, health_recovery)
