@@ -20,7 +20,7 @@
 /datum/xeno_mutation/shrike/lone_healer
 	name = "Lone Healer"
 	desc = "Psychic Cure может использоваться на себя. Лечение себя эффективно только на 70%. Несовместим с Delayed condition."
-	cost = 15
+	cost = 10
 	icon_state = "xenobuff_generic"
 	tier = 1
 	parent_name = null
@@ -63,7 +63,7 @@
 
 /datum/xeno_mutation/shrike/resistant_cure
 	name = "Resistant Cure"
-	desc = "Psychic Cure также применяет эффекты смолистого желе к вам и цели на 90 секунд."
+	desc = "Psychic Cure также применяет эффекты смолистого желе к вам и цели на 60 секунд."
 	cost = 5
 	icon_state = "xenobuff_generic"
 	tier = 1
@@ -74,14 +74,14 @@
 
 /atom/movable/screen/alert/status_effect/shrike/resistant_cure
 	name = "Resistant Cure"
-	desc = "Psychic Cure также применяет эффекты смолистого желе к вам и цели на 90 секунд."
+	desc = "Psychic Cure также применяет эффекты смолистого желе к вам и цели на 60 секунд."
 	icon_state = "xenobuff_attack"
 
 /datum/status_effect/shrike/resistant_cure
 	id = "upgrade_resistant_cure"
 	alert_type = /atom/movable/screen/alert/status_effect/shrike/resistant_cure
 
-	var/duration_value = 90 SECONDS  // Максимум - 90 секунд
+	var/duration_value = 60 SECONDS  // Максимум - 60 секунд
 
 /datum/status_effect/shrike/resistant_cure/on_apply()
 	xenomorph_owner = owner
@@ -246,7 +246,7 @@
 
 /datum/xeno_mutation/shrike/delayed_condition
 	name = "Delayed Condition"
-	desc = "Psychic Cure дает иммунитет к замедлению и задерживает все входящие эффекты оглушения/падения/шатания на 20 секунд. По окончании задержки эффекты применяются повторно. Несовместим с Lone healer."
+	desc = "Psychic Cure дает иммунитет к замедлению и задерживает все входящие эффекты оглушения/падения/шатания на 12 секунд. По окончании задержки эффекты применяются повторно. Несовместим с Lone healer."
 	cost = 15
 	icon_state = "xenobuff_generic"
 	tier = 1
@@ -258,14 +258,14 @@
 
 /atom/movable/screen/alert/status_effect/shrike/delayed_condition
 	name = "Delayed Condition"
-	desc = "Psychic Cure дает иммунитет к замедлению и задерживает все входящие эффекты оглушения/падения/шатания на 20 секунд. По окончании задержки эффекты применяются повторно."
+	desc = "Psychic Cure дает иммунитет к замедлению и задерживает все входящие эффекты оглушения/падения/шатания на 12 секунд. По окончании задержки эффекты применяются повторно."
 	icon_state = "xenobuff_attack"
 
 /datum/status_effect/shrike/delayed_condition
 	id = "upgrade_delayed_condition"
 	alert_type = /atom/movable/screen/alert/status_effect/shrike/delayed_condition
 
-	var/duration_value = 20 SECONDS  // Максимум - 20 секунд
+	var/duration_value = 12 SECONDS  // Максимум - 12 секунд
 
 /datum/status_effect/shrike/delayed_condition/on_apply()
 	xenomorph_owner = owner
@@ -288,7 +288,7 @@
 
 /datum/xeno_mutation/shrike/deflective_force
 	name = "Deflective Force"
-	desc = "Unrelenting Force теперь отражает все снаряды в своей области. При отражении >50 урона от снародов перезарядка Psychic Scream становится 40% от оригинальной. Несовместим с Gravity tide."
+	desc = "Unrelenting Force теперь отражает все снаряды в своей области. При отражении >50 урона от снарядов перезарядка Unrelenting Force становится 40% от оригинальной. Несовместим с Gravity tide."
 	cost = 10
 	icon_state = "xenobuff_generic"
 	tier = 1
@@ -329,7 +329,7 @@
 
 /datum/xeno_mutation/shrike/psychic_choke
 	name = "Psychic Choke"
-	desc = "Вы теряете способность Psychic Fling и получаете Psychic Choke. Choke позволяет парализовать морпеха во время использования. Порог урона для прерывания - 80. Несовместим с Body fling и Smashing fling."
+	desc = "Вы теряете способность Psychic Fling и получаете Psychic Choke. Choke позволяет парализовать морпеха во время использования. Порог урона для прерывания - 50. Несовместим с Body fling и Smashing fling."
 	cost = 5
 	icon_state = "xenobuff_generic"
 	tier = 1
@@ -341,14 +341,14 @@
 
 /atom/movable/screen/alert/status_effect/shrike/psychic_choke
 	name = "Psychic Choke"
-	desc = "Вы теряете способность Psychic Fling и получаете Psychic Choke. Choke позволяет парализовать морпеха во время использования. Порог урона для прерывания - 80."
+	desc = "Вы теряете способность Psychic Fling и получаете Psychic Choke. Choke позволяет парализовать морпеха во время использования. Порог урона для прерывания - 50."
 	icon_state = "xenobuff_attack"
 
 /datum/status_effect/shrike/psychic_choke
 	id = "upgrade_psychic_choke"
 	alert_type = /atom/movable/screen/alert/status_effect/shrike/psychic_choke
 
-	var/threshold_value = 80  // Максимум - 80
+	var/threshold_value = 50  // Максимум - 50
 
 /datum/status_effect/shrike/psychic_choke/on_apply()
 	xenomorph_owner = owner
@@ -356,12 +356,17 @@
 		fling.remove_action(xenomorph_owner)
 	var/datum/action/ability/activable/xeno/psychic_choke/choke_ability = new()
 	choke_ability.give_action(xenomorph_owner)
-	choke_ability.damage_threshold += threshold_value // Увеличиваем порог прерывания до 80+
+	choke_ability.damage_threshold += threshold_value
 	return TRUE
 
 /datum/status_effect/shrike/psychic_choke/on_remove()
+	var/datum/action/ability/activable/xeno/psychic_choke/choke_ability = xenomorph_owner.actions_by_path[/datum/action/ability/activable/xeno/psychic_choke]
+	if(choke_ability)
+		choke_ability.damage_threshold -= threshold_value
+
 	for(var/datum/action/ability/activable/xeno/psychic_choke/choke in xenomorph_owner.actions)
 		choke.remove_action(xenomorph_owner)
+
 	var/has_fling = FALSE
 	for(var/datum/action/ability/activable/xeno/psychic_fling/fling in xenomorph_owner.actions)
 		has_fling = TRUE
@@ -369,9 +374,4 @@
 	if(!has_fling)
 		var/datum/action/ability/activable/xeno/psychic_fling/fling_ability = new()
 		fling_ability.give_action(xenomorph_owner)
-	// Возвращаем порог урона к базовому значению
-	var/datum/action/ability/activable/xeno/psychic_choke/choke_ability = xenomorph_owner.actions_by_path[/datum/action/ability/activable/xeno/psychic_choke]
-	if(choke_ability)
-		choke_ability.damage_threshold -= threshold_value
 	return ..()
-
