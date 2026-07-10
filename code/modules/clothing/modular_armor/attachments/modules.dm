@@ -71,6 +71,176 @@
 	worn_icon_state = "mod_autodoc_som_a"
 	variants_by_parent_type = list(/obj/item/clothing/suit/modular/som/heavy/leader = "")
 
+/obj/item/armor_module/module/sif
+	name = "\improper Sif reagent module"
+	icon = 'icons/mob/modular/modular_armor_modules.dmi'
+	desc = "Designed for mounting on modular armor. This module contains a replaceable reagent container and steadily injects its contents into the wearer until each reagent reaches its overdose threshold."
+	icon_state = "mod_sif"
+	worn_icon_state = "mod_chemsystem_a"
+	attach_features_flags = ATTACH_REMOVABLE|ATTACH_ACTIVATION|ATTACH_APPLY_ON_MOB
+	slot = ATTACHMENT_SLOT_UTILITY_MODULE
+	toggle_signal = COMSIG_KB_ARMORMODULE
+	var/obj/item/reagent_containers/inner_container
+	var/mob/living/carbon/human/wearer
+
+/obj/item/armor_module/module/sif/Initialize(mapload)
+	. = ..()
+	inner_container = new /obj/item/reagent_containers/glass/reagent_canister(src)
+	inner_container.reagents.add_reagent(/datum/reagent/medicine/bicaridine, 300)
+	inner_container.reagents.add_reagent(/datum/reagent/medicine/kelotane, 300)
+	inner_container.reagents.add_reagent(/datum/reagent/medicine/tramadol, 150)
+	inner_container.reagents.add_reagent(/datum/reagent/medicine/tricordrazine, 300)
+
+/obj/item/armor_module/module/sif/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	QDEL_NULL(inner_container)
+	wearer = null
+	return ..()
+
+/obj/item/armor_module/module/sif/examine(mob/user)
+	. = ..()
+	if(!inner_container)
+		. += span_notice("There is no reagent container installed. Use CTRL + SHIFT + left-click while attached to remove a container or click with a reagent container to insert one.")
+		return
+	. += span_notice("Installed container: [inner_container]. Use CTRL + SHIFT + left-click while attached to remove it.")
+	if(inner_container.reagents)
+		. += span_notice("Container volume: [inner_container.reagents.total_volume]/[inner_container.reagents.maximum_volume].")
+
+/obj/item/armor_module/module/sif/on_attach(obj/item/attaching_to, mob/user)
+	. = ..()
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_parent_examine))
+	RegisterSignal(parent, COMSIG_CLICK_CTRL_SHIFT, PROC_REF(on_parent_click))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_parent_attackby))
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED_TO_SLOT, PROC_REF(handle_equip))
+	RegisterSignal(parent, COMSIG_ITEM_UNEQUIPPED, PROC_REF(handle_unequip))
+	if(ishuman(parent.loc))
+		handle_equip(parent, parent.loc, SLOT_WEAR_SUIT)
+
+/obj/item/armor_module/module/sif/on_detach(obj/item/detaching_from, mob/user)
+	STOP_PROCESSING(SSobj, src)
+	wearer = null
+	active = FALSE
+	update_action_icon()
+	UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE, COMSIG_CLICK_CTRL_SHIFT, COMSIG_ATOM_ATTACKBY, COMSIG_ITEM_EQUIPPED_TO_SLOT, COMSIG_ITEM_UNEQUIPPED))
+	return ..()
+
+/obj/item/armor_module/module/sif/proc/on_parent_examine(datum/source, mob/user, list/examine_text)
+	SIGNAL_HANDLER
+	if(!inner_container)
+		examine_text += span_notice("[src] has no reagent container installed. Use CTRL + SHIFT + left-click to remove a container or click with a reagent container to insert one.")
+		return
+	examine_text += span_notice("[src] contains [inner_container]. Use CTRL + SHIFT + left-click to remove it.")
+	if(inner_container.reagents)
+		examine_text += span_notice("Container volume: [inner_container.reagents.total_volume]/[inner_container.reagents.maximum_volume].")
+
+/obj/item/armor_module/module/sif/proc/on_parent_click(datum/source, mob/user)
+	SIGNAL_HANDLER
+	if(remove_container(user))
+		return COMSIG_MOB_CLICK_CANCELED
+
+/obj/item/armor_module/module/sif/proc/on_parent_attackby(datum/source, obj/item/held_item, mob/user)
+	SIGNAL_HANDLER
+	if(!istype(held_item, /obj/item/reagent_containers))
+		return
+
+	if(install_container(held_item, user))
+		return COMPONENT_NO_AFTERATTACK
+
+/obj/item/armor_module/module/sif/proc/install_container(obj/item/reagent_containers/new_container, mob/user)
+	if(inner_container)
+		if(!remove_container(user))
+			return FALSE
+
+	user.temporarilyRemoveItemFromInventory(new_container)
+	new_container.forceMove(src)
+	inner_container = new_container
+	to_chat(user, span_notice("You insert [new_container] into [src]."))
+	return TRUE
+
+/obj/item/armor_module/module/sif/proc/remove_container(mob/user)
+	if(!inner_container)
+		to_chat(user, span_warning("There is no reagent container installed in [src]."))
+		return FALSE
+	if(!user.put_in_active_hand(inner_container))
+		user.put_in_hands(inner_container)
+	inner_container = null
+	to_chat(user, span_notice("You remove the reagent container from [src]."))
+	return TRUE
+
+/obj/item/armor_module/module/sif/proc/handle_equip(datum/source, mob/equipper, slot)
+	SIGNAL_HANDLER
+	if(slot != SLOT_WEAR_SUIT || !ishuman(equipper))
+		return
+	wearer = equipper
+	if(active)
+		START_PROCESSING(SSobj, src)
+	update_action_icon()
+
+/obj/item/armor_module/module/sif/proc/handle_unequip(datum/source, mob/unequipper, slot)
+	SIGNAL_HANDLER
+	if(slot != SLOT_WEAR_SUIT)
+		return
+	STOP_PROCESSING(SSobj, src)
+	active = FALSE
+	wearer = null
+	update_action_icon()
+
+/obj/item/armor_module/module/sif/proc/update_action_icon()
+	var/datum/action/item_action/toggle/toggle_action = locate(/datum/action/item_action/toggle) in actions
+	if(!toggle_action)
+		return
+	toggle_action.use_obj_appeareance = FALSE
+	toggle_action.action_icon = 'icons/mob/actions.dmi'
+	toggle_action.action_icon_state = active ? "cboost_on" : "cboost_off"
+	toggle_action.update_button_icon()
+
+/obj/item/armor_module/module/sif/activate(mob/living/carbon/human/user)
+	if(!ishuman(user) || user != wearer || user.wear_suit != parent)
+		return
+
+	active = !active
+	update_action_icon()
+	if(!active)
+		STOP_PROCESSING(SSobj, src)
+		to_chat(user, span_notice("The Sif module powers down."))
+		return
+
+	START_PROCESSING(SSobj, src)
+	to_chat(user, span_notice("The Sif module powers up."))
+
+/obj/item/armor_module/module/sif/process()
+	if(!wearer || parent?.loc != wearer || wearer.wear_suit != parent)
+		STOP_PROCESSING(SSobj, src)
+		active = FALSE
+		wearer = null
+		update_action_icon()
+		return PROCESS_KILL
+
+	if(!active)
+		return
+
+	if(QDELETED(inner_container))
+		inner_container = null
+		return
+
+	var/datum/reagents/source_reagents = inner_container?.reagents
+	if(!source_reagents || !wearer.reagents || !length(source_reagents.reagent_list))
+		return
+
+	var/remaining_transfer = 5
+	for(var/datum/reagent/reagent as anything in source_reagents.reagent_list)
+		if(remaining_transfer <= 0)
+			break
+		if(isnull(reagent.overdose_threshold))
+			continue
+		var/current_amount = wearer.reagents.get_reagent_amount(reagent.type)
+		var/transfer_amount = min(reagent.overdose_threshold - current_amount, source_reagents.get_reagent_amount(reagent.type), remaining_transfer)
+		if(transfer_amount <= 0)
+			continue
+		wearer.reagents.add_reagent(reagent.type, transfer_amount)
+		source_reagents.remove_reagent(reagent.type, transfer_amount)
+		remaining_transfer -= transfer_amount
+
 /**
  * Fire poof module
 */
@@ -580,6 +750,130 @@
 	user.remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_STOPS_TANK_COLLISION, TRAIT_IMMOBILE, TRAIT_INCAPACITATED), REF(src))
 	user.move_resist = initial(user.move_resist)
 	user.status_flags &= ~GODMODE
+
+/obj/item/armor_module/module/nerta
+	name = "\improper Nerta redistribution module"
+	desc = "Designed for mounting on modular armor. When activated near another active Nerta module, both users are linked together and redistribute brute and burn trauma between themselves."
+	icon = 'icons/mob/modular/modular_armor_modules.dmi'
+	icon_state = "mod_armorlock"
+	worn_icon_state = "mod_armorlock_a"
+	attach_features_flags = ATTACH_REMOVABLE|ATTACH_ACTIVATION|ATTACH_APPLY_ON_MOB
+	slot = ATTACHMENT_SLOT_UTILITY_MODULE
+	toggle_signal = COMSIG_KB_ARMORMODULE
+	var/mob/living/carbon/human/operator
+	var/obj/item/armor_module/module/nerta/linked_module
+	var/link_range = 7
+
+/obj/item/armor_module/module/nerta/on_attach(obj/item/attaching_to, mob/user)
+	. = ..()
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED_TO_SLOT, PROC_REF(handle_equip))
+	RegisterSignal(parent, COMSIG_ITEM_UNEQUIPPED, PROC_REF(handle_unequip))
+	if(ishuman(parent.loc))
+		handle_equip(parent, parent.loc, SLOT_WEAR_SUIT)
+
+/obj/item/armor_module/module/nerta/on_detach(obj/item/detaching_from, mob/user)
+	break_link()
+	active = FALSE
+	operator = null
+	update_action_icon()
+	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED_TO_SLOT, COMSIG_ITEM_UNEQUIPPED))
+	return ..()
+
+/obj/item/armor_module/module/nerta/proc/handle_equip(datum/source, mob/equipper, slot)
+	SIGNAL_HANDLER
+	if(slot != SLOT_WEAR_SUIT || !ishuman(equipper))
+		return
+	operator = equipper
+	update_action_icon()
+
+/obj/item/armor_module/module/nerta/proc/handle_unequip(datum/source, mob/unequipper, slot)
+	SIGNAL_HANDLER
+	if(slot != SLOT_WEAR_SUIT)
+		return
+	break_link()
+	active = FALSE
+	operator = null
+	update_action_icon()
+
+/obj/item/armor_module/module/nerta/proc/has_active_link()
+	if(!linked_module || !active || !linked_module.active)
+		return FALSE
+	if(QDELETED(operator) || QDELETED(linked_module.operator))
+		return FALSE
+	return get_dist(operator, linked_module.operator) <= link_range
+
+/obj/item/armor_module/module/nerta/proc/update_action_icon()
+	var/datum/action/item_action/toggle/toggle_action = locate(/datum/action/item_action/toggle) in actions
+	if(!toggle_action)
+		return
+	toggle_action.use_obj_appeareance = FALSE
+	toggle_action.action_icon = 'icons/mob/actions.dmi'
+	if(!active)
+		toggle_action.action_icon_state = "cboost_off"
+	else if(has_active_link())
+		toggle_action.action_icon_state = "cboost_on"
+	else
+		toggle_action.action_icon_state = "cboost_configure"
+	toggle_action.update_button_icon()
+
+/obj/item/armor_module/module/nerta/activate(mob/living/carbon/human/user)
+	if(!ishuman(user) || user != operator || user.wear_suit != parent)
+		return
+
+	if(linked_module)
+		break_link()
+		return
+
+	active = !active
+	update_action_icon()
+	if(!active)
+		to_chat(user, span_notice("The Nerta module powers down."))
+		return
+
+	if(try_link())
+		return
+
+	to_chat(user, span_notice("The Nerta module is active and waiting for a nearby partner."))
+
+/obj/item/armor_module/module/nerta/proc/try_link()
+	if(!operator || !active || linked_module)
+		return FALSE
+
+	for(var/mob/living/carbon/human/nearby in range(link_range, operator))
+		if(nearby == operator || nearby.stat == DEAD || nearby.wear_suit == null)
+			continue
+		var/obj/item/armor_module/module/nerta/partner = locate(/obj/item/armor_module/module/nerta) in nearby.wear_suit.contents
+		if(!partner || partner == src || !partner.active || partner.linked_module || partner.operator != nearby)
+			continue
+		linked_module = partner
+		partner.linked_module = src
+		operator.apply_status_effect(/datum/status_effect/nerta_link, nearby, src, partner, link_range)
+		nearby.apply_status_effect(/datum/status_effect/nerta_link, operator, partner, src, link_range)
+		update_action_icon()
+		partner.update_action_icon()
+		to_chat(operator, span_notice("Your Nerta module links with [nearby]."))
+		to_chat(nearby, span_notice("Your Nerta module links with [operator]."))
+		return TRUE
+
+	return FALSE
+
+/obj/item/armor_module/module/nerta/proc/break_link(silent = FALSE)
+	var/obj/item/armor_module/module/nerta/partner = linked_module
+	linked_module = null
+	if(operator)
+		operator.remove_status_effect(/datum/status_effect/nerta_link)
+	if(partner)
+		partner.linked_module = null
+		if(partner.operator)
+			partner.operator.remove_status_effect(/datum/status_effect/nerta_link)
+		partner.active = FALSE
+		partner.update_action_icon()
+		if(!silent && partner.operator)
+			to_chat(partner.operator, span_warning("Your Nerta link collapses."))
+	active = FALSE
+	update_action_icon()
+	if(!silent && operator)
+		to_chat(operator, span_warning("Your Nerta link collapses."))
 
 /obj/item/armor_module/module/style
 	name = "\improper Armor Equalizer"

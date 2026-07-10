@@ -70,6 +70,7 @@
 		/obj/item/armor_module/module/fire_proof,
 		/obj/item/armor_module/module/tyr_extra_armor,
 		/obj/item/armor_module/module/tyr_extra_armor/mark1,
+		/obj/item/armor_module/module/sif,
 		/obj/item/armor_module/module/mimir_environment_protection,
 		/obj/item/armor_module/module/mimir_environment_protection/mark1,
 		/obj/item/armor_module/module/ballistic_armor,
@@ -77,6 +78,7 @@
 		/obj/item/armor_module/module/eshield,
 		/obj/item/armor_module/module/mirage,
 		/obj/item/armor_module/module/armorlock,
+		/obj/item/armor_module/module/nerta,
 
 		// Storage modules
 		/obj/item/armor_module/storage/general,
