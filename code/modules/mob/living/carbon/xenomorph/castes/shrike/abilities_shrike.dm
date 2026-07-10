@@ -150,6 +150,8 @@
 	var/collusion_damage_multiplier = 0
 	/// Can this ability be used on xenomorphs? If so, what amount should the cooldown duration be mulitplied by?
 	var/friendly_cooldown_multiplier = 0
+	/// Should the collusion duration/multiplier only register for xenomorphs; also allows targetting of other xenos.
+	var/collusion_xenos_only = FALSE
 
 /datum/action/ability/activable/xeno/psychic_fling/on_cooldown_finish()
 	to_chat(owner, span_notice("We gather enough mental strength to fling something again."))
@@ -161,9 +163,13 @@
 		return FALSE
 	if(QDELETED(target))
 		return FALSE
-	if(!isitem(target) && !ishuman(target) && !isdroid(target) && !isxeno(target)) // Добавили isxeno
+	if(!isitem(target) && !ishuman(target) && !isdroid(target) && !isxeno(target))
 		return FALSE
 	if(target.move_resist >= MOVE_FORCE_OVERPOWERING)
+		return FALSE
+	if(isxeno(target) && (target != xeno_owner) && !collusion_xenos_only)
+		if(!silent)
+			to_chat(owner, span_warning("We cannot fling our sisters without proper training."))
 		return FALSE
 	var/max_dist = 3
 	if(!line_of_sight(owner, target, max_dist))
@@ -176,10 +182,6 @@
 			return FALSE
 		if(!CHECK_BITFIELD(use_state_flags|override_flags, ABILITY_IGNORE_DEAD_TARGET) && victim.stat == DEAD)
 			return FALSE
-	if(isxeno(target) && !(use_state_flags & ABILITY_TARGET_SELF))
-		var/mob/living/carbon/xenomorph/xeno_target = target
-		if(!xeno_target.issamexenohive(owner))
-			return FALSE // Только союзники
 
 /datum/action/ability/activable/xeno/psychic_fling/use_ability(atom/target)
 	var/mob/living/carbon/human/victim = target

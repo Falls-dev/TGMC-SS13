@@ -225,6 +225,7 @@
 	if(!fling_ability)
 		return FALSE
 	fling_ability.use_state_flags |= ABILITY_TARGET_SELF
+	fling_ability.collusion_xenos_only = TRUE // Разрешаем бросать ксеносов
 	fling_ability.collusion_damage_multiplier += multiplier_value
 	fling_ability.collusion_paralyze_duration += 2 SECONDS
 	return TRUE
@@ -234,6 +235,7 @@
 	if(!fling_ability)
 		return ..()
 	fling_ability.use_state_flags &= ~ABILITY_TARGET_SELF
+	fling_ability.collusion_xenos_only = initial(fling_ability.collusion_xenos_only) // Возвращаем FALSE
 	fling_ability.collusion_damage_multiplier -= multiplier_value
 	fling_ability.collusion_paralyze_duration -= 2 SECONDS
 	return ..()
@@ -350,26 +352,26 @@
 
 /datum/status_effect/shrike/psychic_choke/on_apply()
 	xenomorph_owner = owner
-	// Удаляем ВСЕ копии Psychic Fling, чтобы не плодить дубликаты
 	for(var/datum/action/ability/activable/xeno/psychic_fling/fling in xenomorph_owner.actions)
 		fling.remove_action(xenomorph_owner)
-	// Добавляем Choke
 	var/datum/action/ability/activable/xeno/psychic_choke/choke_ability = new()
 	choke_ability.give_action(xenomorph_owner)
+	choke_ability.damage_threshold += threshold_value // Увеличиваем порог прерывания до 80+
 	return TRUE
 
 /datum/status_effect/shrike/psychic_choke/on_remove()
-	// Удаляем ВСЕ копии Choke
 	for(var/datum/action/ability/activable/xeno/psychic_choke/choke in xenomorph_owner.actions)
 		choke.remove_action(xenomorph_owner)
-	// Проверяем, есть ли уже Fling у моба
 	var/has_fling = FALSE
 	for(var/datum/action/ability/activable/xeno/psychic_fling/fling in xenomorph_owner.actions)
 		has_fling = TRUE
 		break
-	// Добавляем Fling ТОЛЬКО если его нет
 	if(!has_fling)
 		var/datum/action/ability/activable/xeno/psychic_fling/fling_ability = new()
 		fling_ability.give_action(xenomorph_owner)
+	// Возвращаем порог урона к базовому значению
+	var/datum/action/ability/activable/xeno/psychic_choke/choke_ability = xenomorph_owner.actions_by_path[/datum/action/ability/activable/xeno/psychic_choke]
+	if(choke_ability)
+		choke_ability.damage_threshold -= threshold_value
 	return ..()
 
