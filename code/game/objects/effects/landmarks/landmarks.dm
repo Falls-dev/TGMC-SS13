@@ -499,6 +499,9 @@
 	name = "Vehicle spawner landmark"
 	icon_state = "x4"
 
+/obj/effect/landmark/valhalla/ai_squad_spawner_landmark
+	name = "AI Squad spawner landmark"
+
 /obj/effect/landmark/eord_roomba
 	name = "EORD roomba spawn point"
 
