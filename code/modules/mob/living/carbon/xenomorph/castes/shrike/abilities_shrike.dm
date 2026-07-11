@@ -195,8 +195,6 @@
 	playsound(owner,'sound/effects/magic.ogg', 75, 1)
 	playsound(victim,'sound/weapons/alien_claw_block.ogg', 75, 1)
 
-	succeed_activate()
-	add_cooldown()
 	if(ishuman(victim))
 		var/mob/living/carbon/human/human_target = victim
 		if(stun_duration)
