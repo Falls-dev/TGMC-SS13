@@ -56,6 +56,13 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
+
+		if(istype(src, /obj/machinery/marine_selector/clothes/robo) || istype(src, /obj/machinery/marine_selector/gear/robo))
+			if(!istype(H.species, /datum/species/robot))
+				to_chat(user, span_warning("Access denied."))
+				return FALSE
+			return TRUE
+
 		if(!allowed(H))
 			to_chat(user, span_warning("Access denied. Your assigned role doesn't have access to this machinery."))
 			return FALSE
