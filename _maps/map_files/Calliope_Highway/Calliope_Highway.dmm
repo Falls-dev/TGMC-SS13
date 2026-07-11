@@ -9,14 +9,6 @@
 	pixel_y = -5
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/prop{
-	name = "\improper cozy case";
-	desc = "A rather cozy case you can sit on. The label says it's full of pillows - though it's probably empty.";
-	icon_state = "case";
-	icon = 'icons/obj/structures/crates.dmi';
-	can_buckle = 1;
-	pixel_y = 6
-	},
 /obj/structure/machinery/light/small{
 	light_color = "#C02526";
 	color = "#C02526";
@@ -173,7 +165,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/item/toy/deck/uno{
+/obj/item/stack/sheet/cardboard{
 	pixel_x = 10;
 	pixel_y = -2
 	},
@@ -537,7 +529,6 @@
 /area/calliope/highway/checkpoint)
 "aUZ" = (
 /obj/structure/table/mainship,
-/obj/structure/prop/server_equipment/laptop/closed,
 /turf/open/floor/prison/floor_plate,
 /area/calliope/bunker/barracks)
 "aVC" = (
@@ -891,10 +882,6 @@
 /area/calliope/exterior_buildings/ghost_town)
 "bCK" = (
 /obj/structure/fence,
-/obj/structure/prop/urban/billboardsandsigns/bigbillboards{
-	dir = 10;
-	pixel_y = 35
-	},
 /turf/open/auto_turf/sand_white/layer1,
 /area/calliope/highway/checkpoint)
 "bDC" = (
@@ -996,9 +983,9 @@
 /turf/open/floor/plating,
 /area/calliope/bunker_exterior_buildings/complex)
 "bMj" = (
-/obj/item/storage/briefcase/stowaway,
-/obj/item/spacecash/c1000/counterfeit,
-/obj/item/spacecash/c1000/counterfeit,
+/obj/effect/spawner/random/food_or_drink/beer,
+/obj/item/spacecash/bundle/c100,
+/obj/item/spacecash/bundle/c100,
 /obj/structure/closet/secure_closet/guncabinet{
 	name = "confiscated items cabinet";
 	req_access = null;
@@ -1145,7 +1132,7 @@
 /area/calliope/highway/southbound)
 "cbu" = (
 /obj/structure/table/reinforced/prison,
-/obj/item/paper_bin{
+/obj/effect/spawner/random/misc/paperbin{
 	pixel_y = 9;
 	pixel_x = -8
 	},
@@ -1203,14 +1190,14 @@
 /turf/open/floor/plating,
 /area/calliope/oob/mountain)
 "ceb" = (
-/obj/item/clothing/accessory/health/scrap,
-/obj/item/clothing/accessory/health/scrap,
-/obj/item/clothing/accessory/health/scrap,
-/obj/item/clothing/accessory/health/scrap,
-/obj/item/clothing/accessory/health/scrap,
-/obj/item/clothing/accessory/health/scrap,
-/obj/item/clothing/accessory/health/scrap,
-/obj/item/clothing/accessory/health/scrap,
+/obj/effect/spawner/random/weaponry/gun/egun/lowchance,
+/obj/effect/spawner/random/weaponry/gun/egun/lowchance,
+/obj/effect/spawner/random/weaponry/gun/egun/lowchance,
+/obj/effect/spawner/random/weaponry/gun/egun/lowchance,
+/obj/effect/spawner/random/weaponry/gun/egun/lowchance,
+/obj/effect/spawner/random/weaponry/gun/egun/lowchance,
+/obj/effect/spawner/random/weaponry/gun/egun/lowchance,
+/obj/effect/spawner/random/weaponry/gun/egun/lowchance,
 /obj/structure/largecrate{
 	name = "Scrape plate crate (x8)"
 	},
@@ -1589,7 +1576,7 @@
 "cFM" = (
 /obj/structure/table/reinforced/prison,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/ammo_box/magazine/nade_box/training{
+/obj/effect/spawner/random/weaponry/ammo/sidearm/training{
 	pixel_x = 4;
 	pixel_y = 7
 	},
@@ -1730,21 +1717,21 @@
 /turf/open/floor/bot,
 /area/calliope/bunker/sterlingtransfer)
 "cSL" = (
-/obj/item/weapon/gun/rifle/m20a,
-/obj/item/weapon/gun/rifle/m20a,
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/rifles,
+/obj/effect/spawner/random/weaponry/gun/rifles,
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = -3;
 	pixel_y = -4
 	},
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = -3;
 	pixel_y = -4
 	},
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = -3;
 	pixel_y = -4
 	},
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = -3;
 	pixel_y = -4
 	},
@@ -1753,7 +1740,7 @@
 	req_access = null;
 	req_one_access = list(12,9)
 	},
-/obj/item/clothing/head/helmet/marine/veteran/ua_riot,
+/obj/item/clothing/head/hardhat,
 /obj/item/clothing/suit/marine/guard,
 /obj/item/clothing/suit/marine/guard,
 /turf/open/floor/prison/floor_plate,
@@ -1767,7 +1754,7 @@
 /turf/open/floor/plating/plating_catwalk/prison,
 /area/calliope/bunker/pillbox)
 "cVF" = (
-/obj/item/restraint/legcuffs/beartrap,
+/obj/effect/spawner/random/misc/soap,
 /turf/open/floor/plating/ground/dirt,
 /area/calliope/highway/southbound)
 "cVH" = (
@@ -1905,16 +1892,6 @@
 /turf/open/floor,
 /area/calliope/bunker/sterlingtransfer)
 "dhi" = (
-/obj/structure/prop{
-	name = "\improper cozy case";
-	desc = "A rather cozy case you can sit on. The label says it's full of pillows - though it's probably empty.";
-	icon_state = "case";
-	icon = 'icons/obj/structures/crates.dmi';
-	can_buckle = 1;
-	pixel_y = 21;
-	pixel_x = 3;
-	layer = 3.1
-	},
 /turf/open/floor,
 /area/calliope/shuttles/drop1)
 "dhr" = (
@@ -2005,7 +1982,7 @@
 /area/calliope/bunker/fuel_depot)
 "doL" = (
 /obj/structure/table/reinforced/prison,
-/obj/item/weapon/swiss_army_knife{
+/obj/effect/spawner/random/weaponry/melee{
 	pixel_x = 0;
 	pixel_y = 5
 	},
@@ -2052,7 +2029,7 @@
 /turf/open/floor/plating/ground/dirt,
 /area/calliope/highway/southbound)
 "drc" = (
-/obj/item/prop/helmetgarb/family_photo{
+/obj/effect/spawner/random/misc/cigar{
 	pixel_x = -3;
 	pixel_y = 11
 	},
@@ -2154,7 +2131,7 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/tool/weldpack/minitank{
+/obj/effect/spawner/random/engineering/engibelt/emptyornot{
 	pixel_x = 5;
 	pixel_y = 24
 	},
@@ -2327,11 +2304,11 @@
 /area/calliope/highway/checkpoint)
 "dMr" = (
 /obj/structure/table/mainship,
-/obj/item/weapon/twohanded/lungemine{
+/obj/effect/spawner/random/weaponry/explosive/grenade{
 	pixel_y = -11;
 	pixel_x = -6
 	},
-/obj/item/weapon/twohanded/lungemine{
+/obj/effect/spawner/random/weaponry/explosive/grenade{
 	pixel_y = -1;
 	pixel_x = -6
 	},
@@ -2518,7 +2495,7 @@
 /area/calliope/highway/northbound)
 "dZV" = (
 /obj/structure/table/reinforced/prison,
-/obj/item/prop/magazine/book/starshiptroopers{
+/obj/effect/spawner/random/misc/book{
 	pixel_x = -5;
 	pixel_y = 9
 	},
@@ -2540,7 +2517,7 @@
 	pixel_x = -15;
 	pixel_y = -12
 	},
-/obj/item/weapon/knife/marine/bowie,
+/obj/effect/spawner/random/weaponry/melee,
 /turf/open/floor/prison/floor_plate,
 /area/calliope/bunker/cafeteria)
 "edE" = (
@@ -2618,7 +2595,7 @@
 	light_power = 0.5;
 	pixel_y = 10
 	},
-/obj/item/prop/magazine/boots,
+/obj/effect/spawner/random/misc/book,
 /turf/open/floor/prison/floor_plate,
 /area/calliope/bunker/entry_checkpoint)
 "eki" = (
@@ -2680,7 +2657,7 @@
 	pixel_x = 4;
 	pixel_y = -4
 	},
-/obj/item/clothing/glasses/mbcg,
+/obj/item/clothing/glasses/meson,
 /turf/open/floor/prison/floor_plate,
 /area/calliope/bunker/cafeteria)
 "eso" = (
@@ -2745,12 +2722,12 @@
 	pixel_x = 1;
 	layer = 3.1
 	},
-/obj/item/prop/colony/usedbandage{
+/obj/effect/spawner/random/misc/plushie{
 	dir = 6;
 	pixel_y = 3;
 	pixel_x = 19
 	},
-/obj/item/prop/colony/usedbandage{
+/obj/effect/spawner/random/misc/plushie{
 	dir = 6;
 	pixel_y = 18;
 	pixel_x = -14
@@ -2941,7 +2918,7 @@
 /area/calliope/oob/mountain)
 "eQF" = (
 /obj/structure/rack,
-/obj/item/clothing/under/marine/officer/boiler,
+/obj/item/clothing/under/color/grey,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/prison/sterile_white,
 /area/calliope/bunker/barracks)
@@ -3010,11 +2987,11 @@
 /area/calliope/bunker/entry_checkpoint)
 "eWK" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/ammo_box/magazine/misc/mre/twe{
+/obj/effect/spawner/random/food_or_drink/packagedbar{
 	pixel_x = -7;
 	pixel_y = 27
 	},
-/obj/item/ammo_box/magazine/misc/mre/wy{
+/obj/effect/spawner/random/food_or_drink/packagedbar{
 	pixel_x = 5;
 	pixel_y = 25
 	},
@@ -3067,7 +3044,7 @@
 "fdi" = (
 /obj/structure/table/reinforced/prison,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/gun/smg/nailgun{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = -2;
 	pixel_y = 5
 	},
@@ -3075,18 +3052,18 @@
 	pixel_x = 5;
 	pixel_y = 1
 	},
-/obj/item/ammo_magazine/smg/nailgun{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = -5;
 	pixel_y = -2
 	},
-/obj/item/ammo_magazine/smg/nailgun{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = -8;
 	pixel_y = 2
 	},
 /turf/open/floor/prison/floor_plate,
 /area/calliope/bunker/closet)
 "fdy" = (
-/obj/item/paper_bin/uscm{
+/obj/effect/spawner/random/misc/clipboard{
 	pixel_x = 8;
 	pixel_y = 9
 	},
@@ -3125,7 +3102,7 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced/prison,
-/obj/item/research_upgrades,
+/obj/effect/landmark/excavation_site_spawner,
 /turf/open/floor/prison/sterile_white,
 /area/calliope/bunker/abandoned_section)
 "fgG" = (
@@ -3391,7 +3368,7 @@
 "fDU" = (
 /obj/structure/table/reinforced/prison,
 /obj/machinery/portable_atmospherics/canister/air,
-/obj/item/prop/tableflag{
+/obj/effect/spawner/random/misc/plushie{
 	pixel_x = -18;
 	pixel_y = 9
 	},
@@ -3620,7 +3597,7 @@
 "gak" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced/prison,
-/obj/item/tool/stamp/approved{
+/obj/item/tool/pen/blue{
 	pixel_x = 6;
 	pixel_y = 8
 	},
@@ -3628,7 +3605,7 @@
 	pixel_x = -4;
 	pixel_y = 1
 	},
-/obj/item/clothing/head/helmet/marine/veteran/ua_riot{
+/obj/item/clothing/head/hardhat{
 	pixel_x = 8;
 	pixel_y = -3
 	},
@@ -4005,7 +3982,7 @@
 /area/calliope/bunker/command)
 "gEC" = (
 /obj/structure/table/reinforced/prison,
-/obj/item/prop/helmetgarb/flair_io{
+/obj/effect/spawner/random/misc/cigarettes{
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -4353,7 +4330,7 @@
 /area/calliope/highway/southbound)
 "hgp" = (
 /obj/structure/rack,
-/obj/item/clothing/glasses/meson/refurbished{
+/obj/item/clothing/glasses/meson{
 	pixel_x = 1;
 	pixel_y = 17
 	},
@@ -4368,16 +4345,6 @@
 /turf/open/asphalt/cement/cement7,
 /area/calliope/exterior_buildings/ghost_town)
 "hgQ" = (
-/obj/structure/prop{
-	name = "\improper uncomfy case";
-	desc = "A regular case you'd sit on. The label says it's full of steel sheets. Probably empty now.";
-	icon_state = "case";
-	icon = 'icons/obj/structures/crates.dmi';
-	can_buckle = 1;
-	layer = 3.6;
-	pixel_x = 7;
-	pixel_y = 17
-	},
 /turf/open/asphalt/cement/cement2,
 /area/calliope/highway/checkpoint)
 "hhc" = (
@@ -4424,59 +4391,59 @@
 /turf/open/auto_turf/strata_grass,
 /area/calliope/highway/northbound)
 "hkk" = (
-/obj/item/ammo_magazine/rifle/m20a,
-/obj/item/ammo_magazine/rifle/m20a,
-/obj/item/ammo_magazine/rifle/m20a,
-/obj/item/ammo_magazine/rifle/m20a,
-/obj/item/ammo_magazine/rifle/m20a,
-/obj/item/ammo_magazine/rifle/m20a,
-/obj/item/ammo_magazine/rifle/m20a,
-/obj/item/ammo_magazine/rifle/m20a,
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms,
+/obj/effect/spawner/random/weaponry/gun/sidearms,
+/obj/effect/spawner/random/weaponry/gun/sidearms,
+/obj/effect/spawner/random/weaponry/gun/sidearms,
+/obj/effect/spawner/random/weaponry/gun/sidearms,
+/obj/effect/spawner/random/weaponry/gun/sidearms,
+/obj/effect/spawner/random/weaponry/gun/sidearms,
+/obj/effect/spawner/random/weaponry/gun/sidearms,
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = 0;
 	pixel_y = 5
 	},
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = 7;
 	pixel_y = -2
 	},
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = 6;
 	pixel_y = -4
 	},
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = 5;
 	pixel_y = -3
 	},
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = -1;
 	pixel_y = -5
 	},
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = -2;
 	pixel_y = -5
 	},
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = -3;
 	pixel_y = -4
 	},
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = -7;
 	pixel_y = 0
 	},
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = -7;
 	pixel_y = 0
 	},
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = -7;
 	pixel_y = 0
 	},
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = -7;
 	pixel_y = 0
 	},
@@ -4484,8 +4451,8 @@
 	fill_from_loc = 1;
 	name = "M20A magazine case"
 	},
-/obj/item/ammo_box/magazine/m20a/empty,
-/obj/item/ammo_box/rounds,
+/obj/effect/spawner/random/weaponry/gun/sidearms/empty,
+/obj/effect/spawner/random/weaponry/ammo/sidearm,
 /turf/open/floor/prison/floor_plate,
 /area/calliope/bunker/armory)
 "hkL" = (
@@ -4577,23 +4544,7 @@
 /turf/open/floor/prison/floor_plate,
 /area/calliope/oob/mountain)
 "hpR" = (
-/obj/structure/prop{
-	icon = 'icons/obj/structures/props/platforms.dmi';
-	icon_state = "platform";
-	name = "powerloader dock";
-	desc = "A square metal surface resting on four legs.";
-	dir = 4;
-	layer = 2.97
-	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/prop{
-	icon = 'icons/obj/structures/props/platforms.dmi';
-	icon_state = "platform";
-	name = "powerloader dock";
-	desc = "A square metal surface resting on four legs.";
-	dir = 8;
-	layer = 2.97
-	},
 /obj/vehicle/powerloader,
 /turf/open/floor/prison/bright_clean2,
 /area/calliope/bunker/sterlingtransfer)
@@ -4756,7 +4707,7 @@
 "hEp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced/prison,
-/obj/item/paper_bin{
+/obj/effect/spawner/random/misc/paperbin{
 	pixel_y = 9;
 	pixel_x = -8
 	},
@@ -4930,10 +4881,10 @@
 /turf/open/floor/prison/sterile_white,
 /area/calliope/bunker/abandoned_section)
 "idQ" = (
-/obj/item/device/cassette_tape/heavymetal,
-/obj/item/device/cassette_tape/pop4,
-/obj/item/device/cassette_tape/nam,
-/obj/item/storage/pouch/cassette,
+/obj/effect/spawner/random/misc/plushie,
+/obj/effect/spawner/random/misc/plushie,
+/obj/effect/spawner/random/misc/plushie,
+/obj/effect/spawner/random/medical/health_analyzer,
 /obj/item/reagent_container/syringe/drugs{
 	pixel_x = 2;
 	pixel_y = 3
@@ -4943,7 +4894,7 @@
 	req_access = null;
 	req_one_access = list(12,9)
 	},
-/obj/item/weapon/knife/marine/sas,
+/obj/effect/spawner/random/weaponry/melee,
 /turf/open/floor/prison/floor_plate,
 /area/calliope/bunker/holding)
 "iet" = (
@@ -4978,10 +4929,6 @@
 /turf/open/floor/corsat/marked,
 /area/calliope/bunker/abandoned_section)
 "igv" = (
-/obj/structure/prop/almayer/whiteboard{
-	pixel_y = 25;
-	density = 0
-	},
 /turf/open/floor/prison/floor_plate,
 /area/calliope/bunker/cafeteria)
 "igI" = (
@@ -5061,7 +5008,7 @@
 /turf/open/asphalt/cement/cement15,
 /area/calliope/highway/northbound)
 "iol" = (
-/obj/item/prop/colony/usedbandage{
+/obj/effect/spawner/random/misc/plushie{
 	dir = 6;
 	pixel_y = 19;
 	pixel_x = -20
@@ -5101,8 +5048,8 @@
 /obj/item/reagent_container/food/snacks/flour,
 /obj/item/reagent_container/food/snacks/flour,
 /obj/item/reagent_container/food/snacks/flour,
-/obj/item/storage/box/powderedmilk,
-/obj/item/storage/box/cheeseslices,
+/obj/effect/spawner/random/food_or_drink/drink_cans,
+/obj/effect/spawner/random/food_or_drink/drink_alcohol_bottle,
 /obj/item/reagent_container/food/condiment/juice/egg,
 /obj/item/reagent_container/food/snacks/flour,
 /obj/item/reagent_container/food/snacks/flour,
@@ -5147,7 +5094,7 @@
 /turf/open/floor/plating/ground/dirt,
 /area/calliope/highway/southbound)
 "iwL" = (
-/obj/item/restraint/legcuffs/beartrap,
+/obj/effect/spawner/random/misc/soap,
 /turf/open/floor/plating/ground/dirt/typethree,
 /area/calliope/highway/southbound)
 "ixv" = (
@@ -5256,12 +5203,12 @@
 	pixel_x = 0;
 	pixel_y = 11
 	},
-/obj/item/prop/colony/usedbandage{
+/obj/effect/spawner/random/misc/plushie{
 	dir = 10;
 	pixel_y = 7;
 	pixel_x = -14
 	},
-/obj/item/prop/colony/usedbandage{
+/obj/effect/spawner/random/misc/plushie{
 	dir = 4;
 	pixel_x = 5;
 	pixel_y = 15
@@ -5468,19 +5415,19 @@
 	},
 /obj/structure/table/mainship,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_container/food/drinks/coffeecup{
+/obj/effect/spawner/random/food_or_drink/drink_cans{
 	pixel_x = -7;
 	pixel_y = 10
 	},
-/obj/item/reagent_container/food/drinks/coffeecup/uscm{
+/obj/effect/spawner/random/food_or_drink/drink_cans{
 	pixel_x = -9;
 	pixel_y = 4
 	},
-/obj/item/reagent_container/food/drinks/coffeecup/wy{
+/obj/effect/spawner/random/food_or_drink/drink_cans{
 	pixel_x = 11;
 	pixel_y = 11
 	},
-/obj/item/reagent_container/food/drinks/coffeecup{
+/obj/effect/spawner/random/food_or_drink/drink_cans{
 	pixel_x = 9;
 	pixel_y = 7
 	},
@@ -5748,15 +5695,15 @@
 	pixel_x = -5;
 	pixel_y = 11
 	},
-/obj/item/reagent_container/food/condiment/saltshaker{
+/obj/effect/spawner/random/food_or_drink/kitchen{
 	pixel_x = -10;
 	pixel_y = 13
 	},
-/obj/item/reagent_container/food/condiment/hotsauce/franks{
+/obj/effect/spawner/random/food_or_drink/kitchen{
 	pixel_x = 9;
 	pixel_y = 11
 	},
-/obj/item/reagent_container/food/condiment/hotsauce/franks{
+/obj/effect/spawner/random/food_or_drink/kitchen{
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -5764,7 +5711,7 @@
 	pixel_x = -5;
 	pixel_y = 6
 	},
-/obj/item/reagent_container/food/condiment/saltshaker{
+/obj/effect/spawner/random/food_or_drink/kitchen{
 	pixel_x = -9;
 	pixel_y = 8
 	},
@@ -5793,7 +5740,7 @@
 /area/calliope/oob/mountain)
 "jCI" = (
 /obj/structure/table/mainship,
-/obj/item/prop/almayer/comp_closed{
+/obj/structure/nuke_disk_candidate{
 	pixel_y = 10
 	},
 /obj/item/storage/firstaid/synth,
@@ -5939,16 +5886,6 @@
 /obj/structure/platform_decoration{
 	dir = 4
 	},
-/obj/structure/prop{
-	name = "\improper seat-like case";
-	desc = "It's a case made into an impromptu seat.";
-	icon_state = "case";
-	icon = 'icons/obj/structures/crates.dmi';
-	can_buckle = 1;
-	pixel_y = 13;
-	layer = 3.6;
-	pixel_x = 6
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/asteroidfloor/north,
 /area/calliope/bunker/cargo_area)
@@ -5983,22 +5920,6 @@
 /turf/open/floor/asteroidfloor/north,
 /area/calliope/highway/northbound)
 "jNO" = (
-/obj/structure/prop{
-	icon = 'icons/obj/structures/props/platforms.dmi';
-	icon_state = "platform";
-	name = "powerloader dock";
-	desc = "A square metal surface resting on four legs.";
-	dir = 8;
-	layer = 2.97
-	},
-/obj/structure/prop{
-	icon = 'icons/obj/structures/props/platforms.dmi';
-	icon_state = "platform";
-	name = "powerloader dock";
-	desc = "A square metal surface resting on four legs.";
-	dir = 4;
-	layer = 2.97
-	},
 /obj/vehicle/powerloader,
 /turf/open/floor/prison/bright_clean2,
 /area/calliope/bunker/sterlingtransfer)
@@ -6212,7 +6133,7 @@
 	pixel_x = 0;
 	pixel_y = 3
 	},
-/obj/item/storage/firstaid/softpack/brute{
+/obj/effect/spawner/random/medical/firstaid/alwaysspawns{
 	pixel_x = -3;
 	pixel_y = -10
 	},
@@ -6398,7 +6319,7 @@
 	pixel_x = -8;
 	pixel_y = 12
 	},
-/obj/item/tool/stamp/approved{
+/obj/item/tool/pen/blue{
 	pixel_x = -7;
 	pixel_y = -2
 	},
@@ -6729,7 +6650,7 @@
 	pixel_y = -2;
 	layer = 3.01
 	},
-/obj/item/prop/colony/usedbandage{
+/obj/effect/spawner/random/misc/plushie{
 	dir = 4;
 	pixel_x = 2;
 	pixel_y = -8
@@ -6883,20 +6804,20 @@
 /obj/structure/machinery/light/blue{
 	dir = 4
 	},
-/obj/item/facepaint/sunscreen_stick{
+/obj/effect/spawner/random/misc/cigar{
 	pixel_y = 4;
 	pixel_x = 8;
 	layer = 3.2
 	},
-/obj/item/prop/helmetgarb/gunoil{
+/obj/effect/spawner/random/misc/soap{
 	pixel_x = 6;
 	pixel_y = 12
 	},
-/obj/item/storage/box/loadout/co2_knife{
+/obj/item/storage/belt/knifepouch{
 	pixel_x = -7;
 	pixel_y = 10
 	},
-/obj/item/storage/box/pdt_kit{
+/obj/item/storage/belt/knifepouch{
 	pixel_x = -2;
 	pixel_y = -1
 	},
@@ -7124,10 +7045,6 @@
 /turf/open/auto_turf/sand_white/layer1,
 /area/calliope/highway/southbound)
 "lGO" = (
-/obj/structure/prop/vehicles/crawler{
-	icon_state = "crawler_fuel";
-	dir = 1
-	},
 /obj/structure/largecrate/random/case/double{
 	pixel_x = 9;
 	pixel_y = -9
@@ -7274,7 +7191,7 @@
 "lRO" = (
 /obj/structure/table/reinforced/prison,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/tool/stamp/uscm,
+/obj/item/tool/pen/red,
 /turf/open/floor/strata/fake_wood,
 /area/calliope/bunker/command)
 "lSb" = (
@@ -7319,10 +7236,6 @@
 /turf/open/floor/almayer/plating_striped/west,
 /area/calliope/bunker/engineering)
 "lWP" = (
-/obj/structure/prop/dam/crane/damaged{
-	pixel_x = 0;
-	pixel_y = -13
-	},
 /turf/open/floor/plating/ground/dirt,
 /area/calliope/highway/southbound)
 "lWX" = (
@@ -7360,15 +7273,15 @@
 /area/calliope/oob/mountain)
 "lZI" = (
 /obj/structure/table,
-/obj/item/ammo_box/magazine/misc/mre/fsr{
+/obj/effect/spawner/random/food_or_drink/packagedbar{
 	pixel_x = 1;
 	pixel_y = 18
 	},
-/obj/item/ammo_box/magazine/misc/mre/fsr{
+/obj/effect/spawner/random/food_or_drink/packagedbar{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/ammo_box/magazine/misc/mre/fsr{
+/obj/effect/spawner/random/food_or_drink/packagedbar{
 	pixel_x = -10;
 	pixel_y = 8
 	},
@@ -7440,7 +7353,7 @@
 "mep" = (
 /obj/structure/table,
 /obj/machinery/portable_atmospherics/pump,
-/obj/item/storage/beer_pack,
+/obj/effect/spawner/random/food_or_drink/beer,
 /turf/open/floor/plating,
 /area/calliope/highway/northbound)
 "mey" = (
@@ -7604,14 +7517,6 @@
 /obj/item/bedsheet/orange{
 	pixel_y = 13
 	},
-/obj/structure/prop/holidays/string_lights/corner{
-	pixel_x = -29;
-	pixel_y = 18
-	},
-/obj/structure/prop/holidays/string_lights{
-	pixel_x = 3;
-	pixel_y = 18
-	},
 /turf/open/floor/prison/floor_plate,
 /area/calliope/bunker/barracks)
 "mov" = (
@@ -7764,8 +7669,8 @@
 /area/calliope/bunker_exterior_buildings/complex)
 "mGF" = (
 /obj/structure/table,
-/obj/item/weapon/twohanded/folded_metal_chair,
-/obj/item/weapon/twohanded/folded_metal_chair{
+/obj/effect/spawner/random/misc/structure/chair_or_metal,
+/obj/effect/spawner/random/misc/structure/chair_or_metal{
 	pixel_x = 0;
 	pixel_y = 20
 	},
@@ -8098,11 +8003,11 @@
 	pixel_x = 8;
 	pixel_y = -2
 	},
-/obj/item/trash/crushed_cup{
+/obj/effect/spawner/random/misc/trash{
 	pixel_x = -6;
 	pixel_y = 5
 	},
-/obj/item/trash/wy_chips_pepper{
+/obj/effect/spawner/random/misc/trash{
 	pixel_x = -1;
 	pixel_y = -2
 	},
@@ -8140,12 +8045,12 @@
 	pixel_x = 4;
 	pixel_y = 2
 	},
-/obj/item/weapon/gun/rifle/m20a/unloaded,
-/obj/item/weapon/gun/rifle/m20a/unloaded,
-/obj/item/ammo_box/magazine/m20a,
-/obj/item/ammo_magazine/rifle/m20a,
-/obj/item/ammo_magazine/rifle/m20a,
-/obj/item/ammo_magazine/rifle/m20a,
+/obj/effect/spawner/random/weaponry/gun/rifles/unloaded,
+/obj/effect/spawner/random/weaponry/gun/rifles/unloaded,
+/obj/effect/spawner/random/weaponry/gun/sidearms,
+/obj/effect/spawner/random/weaponry/gun/sidearms,
+/obj/effect/spawner/random/weaponry/gun/sidearms,
+/obj/effect/spawner/random/weaponry/gun/sidearms,
 /obj/item/ammo_magazine/shotgun/buckshot,
 /turf/open/floor/strata/faux_wood,
 /area/calliope/exterior_buildings/ghost_town)
@@ -8419,7 +8324,7 @@
 "nPQ" = (
 /obj/structure/rack,
 /obj/item/tool/weldingtool/hugetank,
-/obj/item/stack/sheet/metal/med_small_stack{
+/obj/item/stack/sheet/metal/small_stack{
 	pixel_x = -4;
 	pixel_y = -3
 	},
@@ -8443,7 +8348,7 @@
 "nRz" = (
 /obj/structure/table/reinforced/prison,
 /obj/effect/spawner/random/toy,
-/obj/item/storage/box/pdt_kit/advanced{
+/obj/item/storage/belt/knifepouch/advanced{
 	pixel_x = -10;
 	pixel_y = 15
 	},
@@ -8469,12 +8374,6 @@
 /area/calliope/highway/southbound)
 "nUV" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/prop/almayer/whiteboard{
-	pixel_y = 1;
-	density = 0;
-	layer = 6;
-	pixel_x = 2
-	},
 /obj/structure/flora/pottedplant{
 	icon_state = "pottedplant_21";
 	layer = 3.2;
@@ -8521,7 +8420,7 @@
 /area/calliope/highway/southbound)
 "nXZ" = (
 /obj/structure/table/reinforced/prison,
-/obj/item/prop/magazine/dirty/torn{
+/obj/effect/spawner/random/misc/book{
 	pixel_x = -8;
 	pixel_y = 11
 	},
@@ -8530,7 +8429,7 @@
 	pixel_x = 7;
 	pixel_y = 12
 	},
-/obj/item/clothing/glasses/mbcg,
+/obj/item/clothing/glasses/meson,
 /turf/open/floor/prison/floor_plate,
 /area/calliope/bunker/barracks)
 "nYd" = (
@@ -8576,8 +8475,8 @@
 	pixel_x = 3;
 	pixel_y = 23
 	},
-/obj/item/tool/shovel/etool/folded,
-/obj/item/tool/shovel/etool/folded{
+/obj/item/tool/shovel/etool,
+/obj/item/tool/shovel/etool{
 	pixel_x = 7;
 	pixel_y = 9
 	},
@@ -8589,7 +8488,7 @@
 	pixel_x = -6;
 	pixel_y = 26
 	},
-/obj/item/stack/barbed_wire/full_stack,
+/obj/item/stack/barbed_wire/full,
 /turf/open/floor/prison/floor_plate,
 /area/calliope/bunker/closet)
 "nZB" = (
@@ -8792,7 +8691,7 @@
 /turf/open/floor/plating/ground/dirt,
 /area/calliope/highway/checkpoint)
 "ovn" = (
-/obj/item/tool/portadialysis{
+/obj/effect/spawner/random/medical/surgical{
 	pixel_x = -7;
 	pixel_y = 8
 	},
@@ -8847,9 +8746,6 @@
 /turf/open/floor/prison/floor_plate,
 /area/calliope/oob/mountain)
 "ozi" = (
-/obj/structure/prop/invuln/minecart_tracks{
-	dir = 1
-	},
 /turf/open/floor/plating/ground/dirt2,
 /area/calliope/highway/southbound)
 "ozI" = (
@@ -8938,39 +8834,39 @@
 /turf/open/floor/corsat/marked,
 /area/calliope/bunker/hallway)
 "oKG" = (
-/obj/item/clothing/accessory/health/ceramic_plate,
-/obj/item/clothing/accessory/health/ceramic_plate,
-/obj/item/clothing/accessory/health/ceramic_plate,
-/obj/item/clothing/accessory/health/ceramic_plate,
-/obj/item/clothing/accessory/health/ceramic_plate,
-/obj/item/clothing/accessory/health/ceramic_plate,
+/obj/item/clothing/suit/armor/bulletproof,
+/obj/item/clothing/suit/armor/bulletproof,
+/obj/item/clothing/suit/armor/bulletproof,
+/obj/item/clothing/suit/armor/bulletproof,
+/obj/item/clothing/suit/armor/bulletproof,
+/obj/item/clothing/suit/armor/bulletproof,
 /obj/structure/largecrate{
 	name = "Ceramic plate crate (x6)"
 	},
-/obj/item/clothing/accessory/health/ceramic_plate,
+/obj/item/clothing/suit/armor/bulletproof,
 /turf/open/floor/strata/faux_wood,
 /area/calliope/exterior_buildings/ghost_town)
 "oKN" = (
 /obj/structure/rack,
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/vehicle_clamp{
+/obj/effect/spawner/random/misc/trash{
 	pixel_x = 2;
 	pixel_y = 24
 	},
-/obj/item/vehicle_clamp{
+/obj/effect/spawner/random/misc/trash{
 	pixel_x = 3;
 	pixel_y = 16
 	},
-/obj/item/vehicle_clamp{
+/obj/effect/spawner/random/misc/trash{
 	pixel_x = -7;
 	pixel_y = 21
 	},
-/obj/item/vehicle_clamp{
+/obj/effect/spawner/random/misc/trash{
 	pixel_x = 2;
 	pixel_y = 1
 	},
-/obj/item/vehicle_clamp{
+/obj/effect/spawner/random/misc/trash{
 	pixel_x = -5;
 	pixel_y = -4
 	},
@@ -9007,7 +8903,7 @@
 /area/calliope/bunker/hospital)
 "oNU" = (
 /obj/structure/table,
-/obj/item/prop/flower_vase/redwhiteflowers{
+/obj/effect/spawner/random/misc/plant{
 	pixel_x = 4;
 	pixel_y = 10
 	},
@@ -9535,9 +9431,6 @@
 /turf/open/auto_turf/strata_grass,
 /area/calliope/exterior_buildings/ghost_town)
 "pIY" = (
-/obj/structure/prop/invuln/minecart_tracks{
-	dir = 1
-	},
 /turf/open/floor/plating/catwalk/rusted,
 /area/calliope/highway/southbound)
 "pKg" = (
@@ -9733,7 +9626,7 @@
 /area/calliope/bunker/cargo_area)
 "qcB" = (
 /obj/structure/table/black,
-/obj/item/flashlight/lantern/on,
+/obj/effect/spawner/random/misc/table_lighting,
 /turf/open/floor/plating/ground/dirt,
 /area/calliope/highway/southbound)
 "qcF" = (
@@ -9757,7 +9650,6 @@
 /turf/open/floor/asteroidfloor/north,
 /area/calliope/shuttles/drop1)
 "qdw" = (
-/obj/structure/prop/wooden_cross,
 /turf/open/auto_turf/strata_grass/layer1,
 /area/calliope/exterior_buildings/ghost_town)
 "qdF" = (
@@ -9919,11 +9811,11 @@
 /obj/structure/machinery/light/blue{
 	dir = 8
 	},
-/obj/item/folder/black_random{
+/obj/effect/spawner/random/misc/folder{
 	pixel_x = -7;
 	pixel_y = -2
 	},
-/obj/item/folder/black_random{
+/obj/effect/spawner/random/misc/folder{
 	pixel_x = -1;
 	pixel_y = 8
 	},
@@ -10055,7 +9947,7 @@
 /area/calliope/bunker/command)
 "qKJ" = (
 /obj/structure/closet/crate/freezer/cooler,
-/obj/item/storage/beer_pack,
+/obj/effect/spawner/random/food_or_drink/beer,
 /turf/open/floor/plating/ground/dirt,
 /area/calliope/highway/checkpoint)
 "qLd" = (
@@ -10071,7 +9963,7 @@
 /turf/open/floor/plating/ground/dirt,
 /area/calliope/highway/southbound)
 "qMv" = (
-/obj/item/paper_bin/uscm{
+/obj/effect/spawner/random/misc/clipboard{
 	pixel_x = -8;
 	pixel_y = 4
 	},
@@ -10532,10 +10424,10 @@
 	id = "sterling entryL";
 	name = "Inner Security Door-control"
 	},
-/obj/item/clothing/accessory/pads/kneepads{
+/obj/item/clothing/gloves/marine/fingerless{
 	color = "#293d3d"
 	},
-/obj/item/clothing/accessory/pads/bracers{
+/obj/item/clothing/gloves/marine/black{
 	color = "#293d3d";
 	pixel_x = -8;
 	pixel_y = -2
@@ -10631,7 +10523,7 @@
 /area/calliope/highway/southbound)
 "rNd" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/trash/USCMtray{
+/obj/effect/spawner/random/misc/trash{
 	pixel_x = 3;
 	pixel_y = 6
 	},
@@ -10684,7 +10576,7 @@
 "rPq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/cabinet,
-/obj/item/toy/plush/therapy/random_color,
+/obj/effect/spawner/random/misc/plushie/fiftyfifty,
 /obj/item/tool/lighter/zippo/black,
 /obj/item/weapon/knife/marine,
 /turf/open/floor/strata/fake_wood,
@@ -10896,7 +10788,7 @@
 	pixel_y = 2
 	},
 /obj/item/weapon/gun/rifle/ar10,
-/obj/item/ammo_box/magazine/ar10,
+/obj/effect/spawner/random/weaponry/gun/rifles,
 /turf/open/floor/strata/faux_wood,
 /area/calliope/exterior_buildings/ghost_town)
 "snM" = (
@@ -10965,7 +10857,7 @@
 	pixel_x = -7;
 	pixel_y = 2
 	},
-/obj/item/tool/stamp/approved{
+/obj/item/tool/pen/blue{
 	pixel_x = 7;
 	pixel_y = 0
 	},
@@ -11141,15 +11033,15 @@
 	pixel_x = -10;
 	pixel_y = -4
 	},
-/obj/item/restraint/handcuffs{
+/obj/item/restraints/handcuffs{
 	pixel_x = 0;
 	pixel_y = 15
 	},
-/obj/item/restraint/handcuffs{
+/obj/item/restraints/handcuffs{
 	pixel_x = 2;
 	pixel_y = 12
 	},
-/obj/item/restraint/handcuffs{
+/obj/item/restraints/handcuffs{
 	pixel_x = -4;
 	pixel_y = 15
 	},
@@ -11462,9 +11354,6 @@
 /turf/open/floor/prison/floor_plate,
 /area/calliope/bunker/barracks)
 "toR" = (
-/obj/structure/prop/invuln/minecart_tracks/bumper{
-	dir = 5
-	},
 /turf/open/auto_turf/sand_white/layer1,
 /area/calliope/highway/southbound)
 "toU" = (
@@ -11480,59 +11369,59 @@
 /turf/open/floor/plating/ground/dirt,
 /area/calliope/highway/southbound)
 "tqg" = (
-/obj/item/ammo_magazine/rifle/m20a,
-/obj/item/ammo_magazine/rifle/m20a,
-/obj/item/ammo_magazine/rifle/m20a,
-/obj/item/ammo_magazine/rifle/m20a,
-/obj/item/ammo_magazine/rifle/m20a,
-/obj/item/ammo_magazine/rifle/m20a,
-/obj/item/ammo_magazine/rifle/m20a,
-/obj/item/ammo_magazine/rifle/m20a,
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms,
+/obj/effect/spawner/random/weaponry/gun/sidearms,
+/obj/effect/spawner/random/weaponry/gun/sidearms,
+/obj/effect/spawner/random/weaponry/gun/sidearms,
+/obj/effect/spawner/random/weaponry/gun/sidearms,
+/obj/effect/spawner/random/weaponry/gun/sidearms,
+/obj/effect/spawner/random/weaponry/gun/sidearms,
+/obj/effect/spawner/random/weaponry/gun/sidearms,
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = 0;
 	pixel_y = 5
 	},
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = 7;
 	pixel_y = -2
 	},
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = 6;
 	pixel_y = -4
 	},
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = 5;
 	pixel_y = -3
 	},
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = -1;
 	pixel_y = -5
 	},
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = -2;
 	pixel_y = -5
 	},
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = -3;
 	pixel_y = -4
 	},
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = -7;
 	pixel_y = 0
 	},
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = -7;
 	pixel_y = 0
 	},
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = -7;
 	pixel_y = 0
 	},
-/obj/item/ammo_magazine/rifle/m20a{
+/obj/effect/spawner/random/weaponry/gun/sidearms{
 	pixel_x = -7;
 	pixel_y = 0
 	},
@@ -11550,7 +11439,7 @@
 /turf/open/floor/prison/floor_plate,
 /area/calliope/bunker/barracks)
 "trE" = (
-/obj/item/prop/colony/usedbandage{
+/obj/effect/spawner/random/misc/plushie{
 	pixel_x = 14;
 	pixel_y = -8
 	},
@@ -11585,19 +11474,19 @@
 	pixel_y = 1
 	},
 /obj/structure/table,
-/obj/item/clothing/head/helmet/marine/veteran/pmc/gunner/rmc{
+/obj/item/clothing/glasses/hud/health{
 	pixel_x = 8;
 	pixel_y = 5
 	},
-/obj/item/clothing/head/helmet/marine/veteran/pmc/sniper/rmc{
+/obj/item/clothing/glasses/hud/health{
 	pixel_x = 5;
 	pixel_y = 10
 	},
-/obj/item/clothing/head/helmet/marine/veteran/ua_riot{
+/obj/item/clothing/head/hardhat{
 	pixel_x = 7;
 	pixel_y = 0
 	},
-/obj/item/clothing/suit/marine/veteran/royal_marine{
+/obj/item/clothing/suit/armor/bulletproof{
 	pixel_x = -8;
 	pixel_y = -2
 	},
@@ -11609,7 +11498,7 @@
 	pixel_x = -3;
 	pixel_y = -4
 	},
-/obj/item/clothing/head/helmet/marine/veteran/ua_riot{
+/obj/item/clothing/head/hardhat{
 	pixel_x = 2;
 	pixel_y = 5
 	},
@@ -11648,16 +11537,16 @@
 	pixel_y = -1;
 	pixel_x = -12
 	},
-/obj/item/prop/helmetgarb/gunoil{
+/obj/effect/spawner/random/misc/soap{
 	pixel_x = 6;
 	pixel_y = 12
 	},
 /obj/machinery/portable_atmospherics/pump,
-/obj/item/prop/helmetgarb/gunoil{
+/obj/effect/spawner/random/misc/soap{
 	pixel_x = 8;
 	pixel_y = 4
 	},
-/obj/item/clothing/accessory/storage/webbing/m3/mag,
+/obj/item/armor_module/storage/uniform/black_vest,
 /turf/open/floor/prison,
 /area/calliope/bunker/armory)
 "tyd" = (
@@ -11699,10 +11588,6 @@
 	icon_state = "psychbed"
 	},
 /obj/item/bedsheet/brown,
-/obj/structure/prop/almayer/sadar_decoration{
-	pixel_x = 6;
-	pixel_y = 32
-	},
 /turf/open/floor/carpet,
 /area/calliope/bunker/command)
 "tDv" = (
@@ -11713,7 +11598,7 @@
 /obj/structure/window/reinforced/toughened{
 	dir = 8
 	},
-/obj/item/paper_bin/uscm{
+/obj/effect/spawner/random/misc/clipboard{
 	pixel_x = -6;
 	pixel_y = 7
 	},
@@ -11950,7 +11835,7 @@
 	pixel_x = 5;
 	pixel_y = 26
 	},
-/obj/item/weapon/straight_razor{
+/obj/effect/spawner/random/weaponry/melee{
 	pixel_x = 3;
 	pixel_y = 12
 	},
@@ -11978,23 +11863,23 @@
 	pixel_x = 7;
 	pixel_y = 27
 	},
-/obj/item/trash/USCMtray{
+/obj/effect/spawner/random/misc/trash{
 	pixel_x = -7;
 	pixel_y = 8
 	},
-/obj/item/trash/USCMtray{
+/obj/effect/spawner/random/misc/trash{
 	pixel_x = 8;
 	pixel_y = -5
 	},
-/obj/item/trash/USCMtray{
+/obj/effect/spawner/random/misc/trash{
 	pixel_x = -7;
 	pixel_y = 11
 	},
-/obj/item/trash/USCMtray{
+/obj/effect/spawner/random/misc/trash{
 	pixel_x = 9;
 	pixel_y = -2
 	},
-/obj/item/trash/USCMtray{
+/obj/effect/spawner/random/misc/trash{
 	pixel_x = -7;
 	pixel_y = 14
 	},
@@ -12072,7 +11957,7 @@
 /area/calliope/highway/southbound)
 "uoK" = (
 /obj/structure/table/reinforced/prison,
-/obj/item/ammo_box/magazine/misc/flares/signal,
+/obj/effect/spawner/random/engineering/structure/handheld_lighting,
 /obj/item/clothing/suit/armor/vest/ballistic{
 	pixel_x = -8;
 	pixel_y = 5
@@ -12273,7 +12158,7 @@
 	pixel_y = 5
 	},
 /obj/machinery/portable_atmospherics/canister/air,
-/obj/item/prop/magazine/book/spacebeast{
+/obj/effect/spawner/random/misc/book{
 	pixel_x = -7;
 	pixel_y = 0
 	},
@@ -12387,7 +12272,7 @@
 	pixel_x = 7;
 	pixel_y = 7
 	},
-/obj/item/ammo_box/magazine/nade_box{
+/obj/effect/spawner/random/weaponry/ammo/sidearm{
 	pixel_x = -5;
 	pixel_y = 5
 	},
@@ -12848,7 +12733,6 @@
 	pixel_y = 18;
 	pixel_x = -11
 	},
-/obj/structure/prop/server_equipment/laptop,
 /turf/open/floor/prison/floor_plate,
 /area/calliope/bunker/cafeteria)
 "vYI" = (
@@ -12939,9 +12823,6 @@
 /turf/open/floor/prison,
 /area/calliope/oob/mountain)
 "wfz" = (
-/obj/structure/prop/invuln/minecart_tracks{
-	dir = 10
-	},
 /turf/open/floor/plating/ground/dirt2,
 /area/calliope/highway/southbound)
 "wgA" = (
@@ -13132,7 +13013,7 @@
 /area/calliope/bunker_exterior_buildings/complex)
 "wsA" = (
 /obj/structure/table/reinforced/prison,
-/obj/item/prop/colony/game{
+/obj/effect/spawner/random/misc/book{
 	pixel_x = -2;
 	pixel_y = 6
 	},
@@ -13197,8 +13078,8 @@
 /area/calliope/bunker/barracks)
 "wxW" = (
 /obj/structure/table,
-/obj/item/weapon/twohanded/folded_metal_chair,
-/obj/item/weapon/twohanded/folded_metal_chair{
+/obj/effect/spawner/random/misc/structure/chair_or_metal,
+/obj/effect/spawner/random/misc/structure/chair_or_metal{
 	pixel_x = -4;
 	pixel_y = 4
 	},
@@ -13421,8 +13302,8 @@
 /area/calliope/highway/checkpoint)
 "wLR" = (
 /obj/structure/table,
-/obj/item/weapon/twohanded/folded_metal_chair,
-/obj/item/weapon/twohanded/folded_metal_chair{
+/obj/effect/spawner/random/misc/structure/chair_or_metal,
+/obj/effect/spawner/random/misc/structure/chair_or_metal{
 	pixel_x = 0;
 	pixel_y = 18
 	},
@@ -13519,11 +13400,11 @@
 /area/calliope/bunker/holding)
 "wRN" = (
 /obj/structure/table/reinforced/prison,
-/obj/item/tool/stamp/approved{
+/obj/item/tool/pen/blue{
 	pixel_x = -3;
 	pixel_y = 11
 	},
-/obj/item/tool/stamp/approved{
+/obj/item/tool/pen/blue{
 	pixel_x = -5;
 	pixel_y = 3
 	},
@@ -13872,7 +13753,7 @@
 /area/calliope/highway/checkpoint)
 "xAe" = (
 /obj/item/stool,
-/obj/item/fishing_pole,
+/obj/effect/spawner/random/misc/table_parts,
 /turf/open/floor/plating/ground/dirt,
 /area/calliope/highway/checkpoint)
 "xAh" = (
@@ -13886,9 +13767,6 @@
 /turf/open/asphalt/cement/cement7,
 /area/calliope/exterior_buildings/ghost_town)
 "xAH" = (
-/obj/structure/prop/invuln/minecart_tracks{
-	dir = 5
-	},
 /turf/open/floor/plating/ground/dirt2,
 /area/calliope/highway/southbound)
 "xBw" = (
@@ -13969,7 +13847,7 @@
 /area/calliope/exterior_buildings/ghost_town)
 "xHP" = (
 /obj/structure/table/mainship,
-/obj/item/paper_bin/uscm{
+/obj/effect/spawner/random/misc/clipboard{
 	pixel_x = 8;
 	pixel_y = 9
 	},
@@ -14079,7 +13957,7 @@
 /turf/open/floor/almayer/plating_striped/north,
 /area/calliope/bunker/hospital)
 "xVi" = (
-/obj/item/prop/rock,
+/obj/item/ore/slag,
 /turf/open/auto_turf/sand_white/layer0,
 /area/calliope/highway/northbound)
 "xVt" = (
