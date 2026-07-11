@@ -306,8 +306,6 @@
 	return ..()
 
 /datum/action/ability/activable/xeno/unrelenting_force/use_ability(atom/target)
-	succeed_activate()
-	add_cooldown()
 	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob, update_icons)), 1 SECONDS)
 	xeno_owner.icon_state = "[xeno_owner.xeno_caste.caste_name] Screeching"
 	if(target) // Keybind use doesn't have a target
