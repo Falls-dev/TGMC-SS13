@@ -523,6 +523,13 @@
 	squeak_sound = 'sound/items/wee.ogg'
 	squeak_volume = 20
 
+/obj/item/toy/plush/dragon
+	name = "dragon plushie"
+	desc = "A plush dragon figurine that is warm to the touch."
+	icon_state = "dragon"
+	worn_icon_state = "dragon"
+	attack_verb = list("bites", "tail slaps", "pats")
+
 /obj/item/toy/plush/gnome
 	name = "gnome"
 	desc = "A mythological creature that guarded Terra's garden. You wonder why it is here."

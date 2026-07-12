@@ -256,7 +256,7 @@
 
 	. += "Biomass: [biomass]/[biomass > 50 ? biomass : 50]"
 
-	var/casteswap_value = ((GLOB.key_to_time_of_caste_swap[key] ? GLOB.key_to_time_of_caste_swap[key] : -INFINITY)  + 15 MINUTES - world.time) * 0.1
+	var/casteswap_value = ((GLOB.key_to_time_of_caste_swap[key] ? GLOB.key_to_time_of_caste_swap[key] : -INFINITY)  + 10 MINUTES - world.time) * 0.1
 	if(casteswap_value <= 0)
 		. += "Caste Swap Timer: READY"
 	else
@@ -726,3 +726,9 @@
 
 	charge_datum.speed_down(1) //Lose one turf worth of speed.
 	return PRECRUSH_PLOWED
+
+/mob/living/carbon/xenomorph/ClickOn(atom/A, params)
+	if(health_scan && isliving(A) && health_analyzer)
+		health_analyzer.attack(A, src)
+		return
+	return ..()

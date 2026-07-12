@@ -239,7 +239,26 @@
 	deploy_flags = IS_DEPLOYABLE|DEPLOY_ON_INITIALIZE
 
 /obj/item/weapon/gun/sentry/basic/premade/radial
-	turret_range = 9
+	turret_flags = TURRET_HAS_CAMERA|TURRET_ALERTS|TURRET_RADIAL
+	item_flags = TWOHANDED
+	deploy_flags = IS_DEPLOYABLE|DEPLOY_ON_INITIALIZE|DEPLOYED_NO_PICKUP
+
+/obj/item/weapon/gun/sentry/mini/premade/radial
+	turret_flags = TURRET_HAS_CAMERA|TURRET_ALERTS|TURRET_RADIAL
+	item_flags = TWOHANDED
+	deploy_flags = IS_DEPLOYABLE|DEPLOY_ON_INITIALIZE|DEPLOYED_NO_PICKUP
+
+/obj/item/weapon/gun/sentry/sniper/premade/radial
+	turret_flags = TURRET_HAS_CAMERA|TURRET_ALERTS|TURRET_RADIAL
+	item_flags = TWOHANDED
+	deploy_flags = IS_DEPLOYABLE|DEPLOY_ON_INITIALIZE|DEPLOYED_NO_PICKUP
+
+/obj/item/weapon/gun/sentry/shotgun/premade/radial
+	turret_flags = TURRET_HAS_CAMERA|TURRET_ALERTS|TURRET_RADIAL
+	item_flags = TWOHANDED
+	deploy_flags = IS_DEPLOYABLE|DEPLOY_ON_INITIALIZE|DEPLOYED_NO_PICKUP
+
+/obj/item/weapon/gun/sentry/flamer/premade/radial
 	turret_flags = TURRET_HAS_CAMERA|TURRET_ALERTS|TURRET_RADIAL
 	item_flags = TWOHANDED
 	deploy_flags = IS_DEPLOYABLE|DEPLOY_ON_INITIALIZE|DEPLOYED_NO_PICKUP

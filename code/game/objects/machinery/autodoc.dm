@@ -63,9 +63,9 @@
 
 	var/obj/machinery/computer/autodoc_console/connected
 
-	/// starts with 500 metal loaded
-	var/stored_metal = 1000
-	var/stored_metal_max = 2000
+	/// starts with 1000 matter loaded
+	var/stored_matter = 1000
+	var/stored_matter_max = 2000
 
 /obj/machinery/autodoc/Initialize(mapload)
 	. = ..()
@@ -493,13 +493,13 @@
 						sleep(ROBOLIMB_MEND_MAX_DURATION*surgery_mod)
 						sleep(ROBOLIMB_PREPARE_MAX_DURATION*surgery_mod)
 
-						if(stored_metal < LIMB_METAL_AMOUNT)
-							say("Metal reserves depleted.")
+						if(stored_matter < LIMB_MATTER_AMOUNT)
+							say("Biomass reserves depleted.")
 							playsound(loc, 'sound/machines/buzz-two.ogg', 15, TRUE)
 							surgery_todo_list -= S
 							continue // next surgery
 
-						stored_metal -= LIMB_METAL_AMOUNT
+						stored_matter -= LIMB_MATTER_AMOUNT
 
 						if(S.limb_ref.parent.limb_status & LIMB_DESTROYED) // there's nothing to attach to
 							say("Limb attachment failed.")
@@ -520,7 +520,7 @@
 						sleep(ROBOLIMB_ATTACH_MAX_DURATION*surgery_mod)
 						if(!surgery)
 							break
-						S.limb_ref.robotize()
+						S.limb_ref.biotize()
 						occupant.update_body()
 						occupant.update_health()
 						occupant.UpdateDamageIcon()
@@ -846,13 +846,30 @@
 	if(!ishuman(user))
 		return // no
 
-	if(istype(I, /obj/item/stack/sheet/metal))
-		var/obj/item/stack/sheet/metal/M = I
-		if(stored_metal >= stored_metal_max)
-			to_chat(user, span_warning("[src]'s metal reservoir is full; it can't hold any more material!"))
+	if(istype(I, /obj/item/reagent_containers/glass/beaker))
+		var/obj/item/reagent_containers/glass/beaker/B = I
+		if(B.reagents.has_reagent(/datum/reagent/medicine/biomass, 30))
+			if(stored_matter >= stored_matter_max)
+				to_chat(user, span_warning("Biomass tank [src] is full!"))
+				return
+
+			to_chat(user, span_notice("[src] is processing [I]."))
+			B.reagents.remove_reagent(/datum/reagent/medicine/biomass, 30)
+			stored_matter = min(stored_matter_max, stored_matter + 200)
+
+			to_chat(user, span_notice("The reservoir now contains [stored_matter] out of [stored_matter_max] units."))
 			return
-		stored_metal = min(stored_metal_max,stored_metal + M.amount * 100)
-		to_chat(user, span_notice("[src] processes \the [I]. Its metal reservoir now contains [stored_metal] of [stored_metal_max] units."))
+		else
+			to_chat(user, span_warning("Insufficient biomass in [I] for processing (100 required)."))
+			return
+
+	else if(istype(I, /obj/item/limb))
+		if(stored_matter >= stored_matter_max)
+			to_chat(user, span_warning("Biomass tank [src] is full!"))
+			return
+
+		to_chat(user, span_notice("[src] is processing [I]."))
+		stored_matter = min(stored_matter_max, stored_matter + 50)
 		user.drop_held_item()
 		qdel(I)
 
@@ -1340,7 +1357,7 @@
 
 /obj/machinery/autodoc/examine(mob/living/user)
 	. = ..()
-	to_chat(user, span_notice("Its metal reservoir contains [stored_metal] of [stored_metal_max] units."))
+	to_chat(user, span_notice("The biomass reservoir contains [stored_matter] out of [stored_matter_max] units."))
 	if(!occupant) //Allows us to reference medical files/scan reports for cryo via examination.
 		return
 	if(!ishuman(occupant))

@@ -36,10 +36,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/lastsetting = null	//Stores the last setting that ghost_others was set to, for a little more efficiency when we update ghost images. Null means no update is necessary
 
 	var/inquisitive_ghost = FALSE
-	/// Stores variable set in toggle_health_scan.
-	var/health_scan = FALSE
-	/// Creates health_analyzer to scan with on toggle_health_scan toggle.
-	var/obj/item/healthanalyzer/integrated/health_analyzer
 	///A weakref to the original corpse of the observer
 	var/datum/weakref/can_reenter_corpse
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
@@ -119,8 +115,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	QDEL_NULL(orbit_menu)
 	GLOB.observer_list -= src //"wait isnt this done in logout?" Yes it is but because this is clients thats unreliable so we do it again here
 	SSmobs.dead_players_by_zlevel[z] -= src
-
-	QDEL_NULL(health_analyzer)
 
 	return ..()
 
@@ -678,19 +672,12 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		to_chat(src, span_notice("You will no longer examine things you click on."))
 
 /// Toggle for whether you health-scan living beings on click as observer.
-/mob/dead/observer/verb/toggle_health_scan()
+/mob/dead/observer/verb/verb_toggle_health_scan()
 	set category = "Ghost.Toggles"
 	set name = "Toggle Health Scan"
 	set desc = "Toggles whether you health-scan living beings on click"
 
-	if(health_scan)
-		to_chat(src, span_notice("Health scan disabled."))
-		health_scan = FALSE
-		QDEL_NULL(health_analyzer)
-	else
-		to_chat(src, span_notice("Health scan enabled."))
-		health_scan = TRUE
-		health_analyzer = new()
+	toggle_health_scan()
 
 /mob/dead/observer/verb/join_valhalla()
 	set name = "Join Valhalla"
@@ -730,6 +717,14 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		SSpoints.xeno_points_by_hive[XENO_HIVE_FALLEN] = 10000
 		mind.transfer_to(new_xeno, TRUE)
 		xallhala_job.after_spawn(new_xeno)
+
+		var/datum/action/toggle_health_scan/scan_action = new()
+		scan_action.give_action(new_xeno)
+
+		if(src.health_scan)
+			new_xeno.toggle_health_scan()
+			scan_action.set_toggle(TRUE)
+
 		return
 
 	var/datum/job/valhalla_job = tgui_input_list(usr, "You are about to embark to the ghastly walls of Valhalla. What job would you like to have?", "Join Valhalla", GLOB.jobs_fallen_marine)
