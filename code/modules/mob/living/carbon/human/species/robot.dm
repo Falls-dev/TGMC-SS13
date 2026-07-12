@@ -1,3 +1,6 @@
+// Должен совпадать с ROBOT_TOTAL_BUY_POINTS из code/__DEFINES/loadout/loadout.dm
+#define ROBOT_SPECIES_BUY_POINTS 45
+
 /datum/species/robot
 	name = "Combat Robot"
 	species_type = SPECIES_COMBAT_ROBOT
@@ -56,10 +59,14 @@
 	H.speech_span = SPAN_ROBOT
 	H.health_threshold_crit = -100
 
-/datum/species/robot/post_species_loss(mob/living/carbon/human/H)
+/datum/species/robot/handle_post_spawn(mob/living/carbon/human/H)
 	. = ..()
-	H.speech_span = initial(H.speech_span)
-	H.health_threshold_crit = -50
+	addtimer(CALLBACK(src, PROC_REF(add_robot_points), H), 1)
+
+/datum/species/robot/proc/add_robot_points(mob/living/carbon/human/H)
+	var/obj/item/card/id/I = H.get_idcard()
+	if(I)
+		I.marine_points[CAT_ROBOT] = ROBOT_SPECIES_BUY_POINTS
 
 /datum/species/robot/handle_unique_behavior(mob/living/carbon/human/H)
 	if(H.health <= 0 && H.health > -50)
