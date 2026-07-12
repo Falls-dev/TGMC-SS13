@@ -59,6 +59,11 @@
 	H.speech_span = SPAN_ROBOT
 	H.health_threshold_crit = -100
 
+/datum/species/robot/post_species_loss(mob/living/carbon/human/H)
+	. = ..()
+	H.speech_span = initial(H.speech_span)
+	H.health_threshold_crit = -50
+
 /datum/species/robot/handle_post_spawn(mob/living/carbon/human/H)
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(add_robot_points), H), 1)
