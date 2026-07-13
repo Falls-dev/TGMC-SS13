@@ -1,0 +1,13 @@
+{
+    "map_name": "Calliope Highway",
+    "short_name": "Highway",
+    "map_path": "map_files/Calliope_Highway",
+    "map_file": "Calliope_Highway.dmm",
+    "announce_text": "Now deploying to the Calliope Highway sector for reconnaissance and response operations.",
+    "armor": "desert",
+    "quickbuilds": 1800,
+    "traits": [{
+        "weather_sandstorm": true,
+        "Ground": true
+    }]
+}

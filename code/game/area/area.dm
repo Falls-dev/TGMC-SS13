@@ -70,6 +70,8 @@
 
 	///Boolean to limit the areas (subtypes included) that atoms in this area can smooth with. Used for shuttles.
 	var/area_limited_icon_smoothing = FALSE
+	///Flavor tag used by some map-specific systems (e.g. urban tunnel restrictions).
+	var/area_flavor = AREA_FLAVOR_NONE
 
 /area/New()
 	// This interacts with the map loader, so it needs to be set immediately

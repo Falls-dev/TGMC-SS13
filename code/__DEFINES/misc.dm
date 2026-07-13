@@ -19,6 +19,8 @@
 #define DIRT_TYPE_MARS 2
 #define DIRT_TYPE_SNOW 3
 #define DIRT_TYPE_LAVALAND 4
+#define DIRT_TYPE_SAND 5
+#define DIRT_TYPE_SHALE 6
 
 ///How many variations of bullethole patterns there are
 #define BULLETHOLE_STATES 10
