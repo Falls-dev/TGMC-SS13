@@ -94,3 +94,61 @@
 	icon_state = "rapidfire"
 	slot = ATTACHMENT_SLOT_UNDER
 	burst_mod = 2
+	gun_firemode_list_mod = list(GUN_FIREMODE_AUTOMATIC)
+
+	var/list/saved_firemode_list = null
+
+/obj/item/attachable/burstfire_assembly/on_attach(attaching_item, mob/user)
+	if(!istype(attaching_item, /obj/item/weapon/gun))
+		return
+
+	master_gun = attaching_item
+
+	saved_firemode_list = master_gun.gun_firemode_list.Copy()
+
+	apply_modifiers(attaching_item, user, TRUE)
+
+	if(attachment_action_type)
+		var/datum/action/action_to_update = new attachment_action_type(src, master_gun)
+		if(isliving(master_gun.loc))
+			var/mob/living/living_user = master_gun.loc
+			if(master_gun == living_user.l_hand || master_gun == living_user.r_hand)
+				action_to_update.give_action(living_user)
+
+	if(length(variants_by_parent_type))
+		for(var/selection in variants_by_parent_type)
+			if(istype(master_gun, selection))
+				icon_state = variants_by_parent_type[selection]
+
+	update_icon()
+
+/obj/item/attachable/burstfire_assembly/on_detach(detaching_item, mob/user)
+	if(!isgun(detaching_item))
+		return
+
+	activate(user, TRUE)
+
+	apply_modifiers(detaching_item, user, FALSE)
+
+	for(var/mode in master_gun.gun_firemode_list)
+		if(!(mode in saved_firemode_list))
+			master_gun.gun_firemode_list -= mode
+
+	if(!(master_gun.gun_firemode in master_gun.gun_firemode_list))
+		master_gun.gun_firemode = master_gun.gun_firemode_list[1]
+
+	if(length(master_gun.gun_firemode_list) == 1)
+		var/datum/action/old_action = locate(/datum/action/item_action/firemode) in master_gun.actions
+		if(old_action)
+			old_action.remove_action(user)
+			qdel(old_action)
+
+	for(var/datum/action/action_to_update AS in master_gun.actions)
+		if(action_to_update.target != src)
+			continue
+		qdel(action_to_update)
+		break
+
+	master_gun = null
+	icon_state = initial(icon_state)
+	update_icon()
