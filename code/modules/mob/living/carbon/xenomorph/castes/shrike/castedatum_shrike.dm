@@ -11,17 +11,18 @@
 	wound_type = "shrike" //used to match appropriate wound overlays
 
 	// *** Melee Attacks *** //
-	melee_damage = 23
+	melee_damage = 24
 
 	// *** Speed *** //
-	speed = -0.6
+	speed = -0.7
+	weeds_speed_mod = -0.2
 
 	// *** Plasma *** //
 	plasma_max = 925
 	plasma_gain = 55
 
 	// *** Health *** //
-	max_health = 400
+	max_health = 450
 
 	// *** Evolution *** //
 	maximum_active_caste = 1

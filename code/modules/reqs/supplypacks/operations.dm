@@ -134,4 +134,6 @@
 	name = "Research console"
 	contains = list(/obj/machinery/researchcomp)
 	containertype = null
-	cost = 300
+	access = ACCESS_MARINE_RESEARCH
+	cost = 200
+	crash_restricted = TRUE
