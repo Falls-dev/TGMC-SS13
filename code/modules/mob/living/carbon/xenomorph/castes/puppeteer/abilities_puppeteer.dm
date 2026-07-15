@@ -206,8 +206,8 @@
 	name = "Stitch Puppet"
 	action_icon_state = "stitch_puppet"
 	action_icon = 'icons/Xeno/actions/puppeteer.dmi'
-	desc = "Uses 125 biomass to create a flesh homunculus to do your bidding, at an adjacent target location."
-	cooldown_duration = 15 SECONDS
+	desc = "Creates a flesh homunculus to do your bidding, at an adjacent target location."
+	cooldown_duration = 20 SECONDS
 	target_flags = ABILITY_TURF_TARGET
 	use_state_flags = ABILITY_USE_LYING|ABILITY_IGNORE_COOLDOWN
 	keybinding_signals = list(
@@ -219,7 +219,7 @@
 /datum/action/ability/activable/xeno/puppet/give_action(mob/living/L)
 	. = ..()
 	var/max_puppets = xeno_owner?.xeno_caste.max_puppets ? xeno_owner.xeno_caste.max_puppets : 4
-	desc = "Uses 125 biomass to create a flesh homunculus to do your bidding, at an adjacent target location. You can only deploy [max_puppets] puppets at one time."
+	desc = "Creates a flesh homunculus to do your bidding, at an adjacent target location. You can only deploy [max_puppets] puppets at one time."
 
 	var/mutable_appearance/counter_maptext = mutable_appearance(icon = null, icon_state = null, layer = ACTION_LAYER_MAPTEXT)
 	counter_maptext.pixel_x = 16
@@ -276,7 +276,7 @@
 
 	xeno_owner.face_atom(target)
 	xeno_owner.visible_message(span_warning("[xeno_owner] begins to vomit out biomass and skillfully sews various bits and pieces together!"))
-	if(!do_after(xeno_owner, 8 SECONDS, IGNORE_HELD_ITEM, target, BUSY_ICON_CLOCK, extra_checks = CALLBACK(xeno_owner, TYPE_PROC_REF(/mob, break_do_after_checks), list("health" = xeno_owner.health))))
+	if(!do_after(xeno_owner, 5 SECONDS, IGNORE_HELD_ITEM, target, BUSY_ICON_CLOCK, extra_checks = CALLBACK(xeno_owner, TYPE_PROC_REF(/mob, break_do_after_checks), list("health" = xeno_owner.health))))
 		return FALSE
 
 	xeno_owner.visible_message(span_warning("[xeno_owner] forms a repulsive puppet!"))
