@@ -168,7 +168,7 @@
 		xeno_owner.balloon_alert(xeno_owner, "Max Spiderlings")
 		return fail_activate()
 
-	if(!do_after(owner, 0.5 SECONDS, IGNORE_LOC_CHANGE, owner, BUSY_ICON_DANGER))
+	if(!do_after(owner, 2 SECONDS, IGNORE_LOC_CHANGE, owner, BUSY_ICON_DANGER))
 		return fail_activate()
 
 	current_charges--
