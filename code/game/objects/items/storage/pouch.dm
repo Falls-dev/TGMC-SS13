@@ -205,6 +205,12 @@
 	name = "sidearm pouch"
 	desc = "It can contain a pistol or revolver. Useful for emergencies."
 	icon_state = "pistol"
+	///the snowflake item(s) that will update the sprite.
+	var/list/holsterable_allowed = list(
+		/obj/item/weapon/gun,
+	)
+	///records the specific special item currently in the holster
+	var/obj/holstered_item = null
 
 /obj/item/storage/pouch/pistol/Initialize(mapload, ...)
 	. = ..()
@@ -215,6 +221,8 @@
 	storage_datum.sprite_slots = 1
 	storage_datum.max_w_class = WEIGHT_CLASS_BULKY
 	storage_datum.draw_mode = FALSE
+	storage_datum.holstered_item = src.holstered_item
+	storage_datum.holsterable_allowed = src.holsterable_allowed
 	storage_datum.set_holdable(
 		can_hold_list = list(
 			/obj/item/weapon/gun/pistol,
@@ -229,6 +237,26 @@
 			/obj/item/weapon/gun/revolver/coltrifle,
 		)
 	)
+
+//я слишком тупой что бы сделать это лучше на пример просто добавить компонент который будет добавлять такой функционал так что просто скопирую часть кода с пояса
+/obj/item/storage/pouch/pistol/Destroy()
+	if(holstered_item)
+		QDEL_NULL(holstered_item)
+	return ..()
+
+/obj/item/storage/pouch/pistol/attack_hand(mob/living/user) //Prioritizes our snowflake item on unarmed click
+	if(holstered_item && ishuman(user) && loc == user)
+		holstered_item.attack_hand(user)
+	else
+		return ..()
+
+/obj/item/storage/pouch/pistol/do_quick_equip(mob/user) //что бы при возможности доставалось сначало оружие
+	if(holstered_item)
+		var/obj/item/W = holstered_item
+		if(!storage_datum.remove_from_storage(W, null, user))
+			return FALSE
+		return W
+	return ..()
 
 /obj/item/storage/pouch/pistol/vp70/PopulateContents()
 	new /obj/item/weapon/gun/pistol/vp70(src)

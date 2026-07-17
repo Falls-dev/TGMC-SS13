@@ -22,10 +22,10 @@
 #define VREF_MUTABLE_EMPOWERED_FRAME "VREF_EMPOWERED_FRAME"
 /// A reference for the build counter of a xeno
 #define VREF_MUTABLE_BUILDING_COUNTER "VREF_BUILD_COUNTER"
-// extra reference for the amount of landslide charges we have
-#define VREF_MUTABLE_LANDSLIDE "VREF_LANDSLIDE"
 // extra reference for the amount of earth pillars we have
 #define VREF_MUTABLE_EARTH_PILLAR "VREF_EARTH_PILLAR"
+// Reflects the amount of stacks we have for Primal Wrath's debuff.
+#define VREF_MUTABLE_PRIMAL_WRATH "VREF_PRIMAL_WRATH"
 // extra reference for savage's cooldown
 #define VREF_MUTABLE_SAVAGE_COOLDOWN "VREF_SAVAGE_COOLDOWN"
 // extra define for jab charges

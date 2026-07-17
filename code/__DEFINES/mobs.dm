@@ -650,14 +650,14 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 
 #define RAVAGER_ENDURE_DURATION				10 SECONDS
 #define RAVAGER_ENDURE_DURATION_WARNING		0.7
-#define RAVAGER_ENDURE_HP_LIMIT				-125
+#define RAVAGER_ENDURE_HP_LIMIT				-190
 
 #define RAVAGER_RAGE_DURATION 10 SECONDS
 #define RAVAGER_RAGE_WARNING 0.7
-#define RAVAGER_RAGE_MIN_HEALTH_THRESHOLD 0.75 //The maximum % of HP we can have to trigger Rage
-#define RAVAGER_RAGE_STAGGERSTUN_IMMUNE_THRESHOLD 0.5
-#define RAVAGER_RAGE_ENDURE_INCREASE_PER_SLASH 2 SECONDS //The amount of time each slash during Rage increases Endure's duration
-#define RAVAGER_RAGE_HEALTH_RECOVERY_PER_SLASH 20 //Base amount of healing from slash during Rage
+#define RAVAGER_RAGE_MIN_HEALTH_THRESHOLD 0.5 //The maximum % of HP we can have to trigger Rage
+#define RAVAGER_RAGE_STAGGERSTUN_IMMUNE_THRESHOLD 0.3
+#define RAVAGER_RAGE_ENDURE_INCREASE_PER_SLASH 1 SECONDS //The amount of time each slash during Rage increases Endure's duration
+#define RAVAGER_RAGE_HEALTH_RECOVERY_PER_SLASH 32 //Base amount of healing from slash during Rage
 #define RAVAGER_IMMORTALITY_DURATION 5 SECONDS
 
 //crusher defines
@@ -850,6 +850,18 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define DANCER_MAX_IMPALE_MULT 2.5
 /// The flat damage multiplier done by impale to non-carbon targets
 #define DANCER_NONHUMAN_IMPALE_MULT 1.5
+
+// Behemoth mutation defines
+/// Maximum amount of Earth Pillars that we can create with this mutation active.
+#define FOUNDATIONS_MAXIMUM_AMOUNT 2
+/// Health reduction applied to Earth Pillars as a percentage.
+#define FOUNDATIONS_HEALTH_REDUCTION 0.4
+/// Additional damage provided by Earth Might as a percentage.
+#define EARTH_MIGHT_ADDITIONAL_DAMAGE 1.3
+/// Amount of damage done to Earth Pillars as a percentage
+#define EARTH_MIGHT_PILLAR_DAMAGE 0.5
+/// Additional range given to Seize.
+#define GUIDED_CLAIM_ADDITIONAL_RANGE 2
 
 // Chimera defines
 //Stagger and slowdown stacks applied to adjacent living hostiles before/after a teleport
