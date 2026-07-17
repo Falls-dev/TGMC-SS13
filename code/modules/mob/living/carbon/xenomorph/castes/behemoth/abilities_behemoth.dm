@@ -900,7 +900,7 @@
 
 /datum/action/ability/activable/xeno/geocrush
 	name = "Geocrush"
-	desc = "Attack a target, dealing heavy damage and applying various debuffs."
+	desc = "Attack a target, dealing heavy damage and applying various debuffs; you can also detonate the pillar remotely or push it if you are standing right next to it."
 	action_icon = 'icons/Xeno/actions/behemoth.dmi'
 	action_icon_state = "geocrush"
 	ability_cost = 40
