@@ -1,7 +1,0 @@
-author: "Pak2024"
-delete-after: True
-changes:
-  - rscadd: "Химере дал 10 ап, хантеру 5 ап"
-  - rscadd: "Ввод системы melee ap для ксенов: https://github.com/tgstation/TerraGov-Marine-Corps/pull/14917"
-  - balance: "Реворк бегемота: https://github.com/tgstation/TerraGov-Marine-Corps/pull/18481"
-  - bugfix: "исправил баг, из за которого не работала мутация на ввод реагентов плюс вылезали ошибки"
