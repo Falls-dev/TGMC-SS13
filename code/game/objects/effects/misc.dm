@@ -150,7 +150,7 @@
 	to_chat(user, span_notice("You peer through the fog, but it's impossible to tell what's on the other side..."))
 	return TRUE
 
-/obj/effect/forcefield/fog/attack_alien(mob/living/carbon/xenomorph/xeno_attacker, damage_amount = xeno_attacker.xeno_caste.melee_damage, damage_type = BRUTE, damage_flag = MELEE, effects = TRUE, armor_penetration = 0, isrightclick = FALSE)
+/obj/effect/forcefield/fog/attack_alien(mob/living/carbon/xenomorph/xeno_attacker, damage_amount = xeno_attacker.xeno_caste.melee_damage, damage_type = BRUTE, damage_flag = MELEE, effects = TRUE, armor_penetration = xeno_attacker.xeno_caste.melee_ap, isrightclick = FALSE)
 	return attack_hand(xeno_attacker)
 
 /obj/effect/forcefield/fog/attack_animal(animal_attacker)

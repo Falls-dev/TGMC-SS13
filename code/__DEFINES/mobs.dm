@@ -851,6 +851,18 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// The flat damage multiplier done by impale to non-carbon targets
 #define DANCER_NONHUMAN_IMPALE_MULT 1.5
 
+// Behemoth mutation defines
+/// Maximum amount of Earth Pillars that we can create with this mutation active.
+#define FOUNDATIONS_MAXIMUM_AMOUNT 2
+/// Health reduction applied to Earth Pillars as a percentage.
+#define FOUNDATIONS_HEALTH_REDUCTION 0.4
+/// Additional damage provided by Earth Might as a percentage.
+#define EARTH_MIGHT_ADDITIONAL_DAMAGE 1.3
+/// Amount of damage done to Earth Pillars as a percentage
+#define EARTH_MIGHT_PILLAR_DAMAGE 0.5
+/// Additional range given to Seize.
+#define GUIDED_CLAIM_ADDITIONAL_RANGE 2
+
 // Chimera defines
 //Stagger and slowdown stacks applied to adjacent living hostiles before/after a teleport
 #define CHIMERA_TELEPORT_DEBUFF_STAGGER_STACKS 2 SECONDS

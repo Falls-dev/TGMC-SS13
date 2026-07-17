@@ -332,7 +332,7 @@
 		return PRECRUSH_STOPPED
 
 	switch(charge_datum.charge_type)
-		if(CHARGE_CRUSH, CHARGE_BULL, CHARGE_BEHEMOTH)
+		if(CHARGE_CRUSH, CHARGE_BULL)
 			var/fling_dir = pick((charger.dir & (NORTH|SOUTH)) ? list(WEST, EAST, charger.dir|WEST, charger.dir|EAST) : list(NORTH, SOUTH, charger.dir|NORTH, charger.dir|SOUTH)) //Fling them somewhere not behind nor ahead of the charger.
 			var/fling_dist = min(round(CHARGE_SPEED(charge_datum)) + 1, 3)
 			var/turf/destination = loc

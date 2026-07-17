@@ -192,3 +192,16 @@
 		if(victim.stat == CONSCIOUS && !(victim.species.species_flags & NO_PAIN))
 			victim.emote("scream")
 		victim.take_overall_damage(rand(5, 15), BURN, ACID, updating_health = TRUE)
+
+/mob/living/carbon/xenomorph/proc/on_attack_living(datum/source, mob/living/target, damage, list/damage_mod, list/armor_mod)
+	SIGNAL_HANDLER
+
+	// Toxins from mutations
+	handle_mutation_toxin_attack(target)
+
+	// Healing from mutations
+	if(ishuman(target))
+		var/mob/living/carbon/human/victim = target
+		if(victim.has_status_effect(STATUS_EFFECT_LIFEDRAIN))
+			var/heal_amount = maxHealth * 0.06
+			heal_xeno_damage(heal_amount, FALSE)

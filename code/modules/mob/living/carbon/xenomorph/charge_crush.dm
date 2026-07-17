@@ -199,9 +199,6 @@
 			if(CHARGE_BULL, CHARGE_BULL_HEADBUTT, CHARGE_BULL_GORE) //Xeno Bull
 				if(MODULUS(valid_steps_taken, 4) == 0)
 					playsound(xeno_owner, SFX_ALIEN_FOOTSTEP_LARGE, 50)
-			if(CHARGE_BEHEMOTH)
-				if(MODULUS(valid_steps_taken, 2) == 0)
-					playsound(xeno_owner, SFX_BEHEMOTH_ROLLING, 30)
 
 	lastturf = xeno_owner.loc
 
@@ -232,7 +229,7 @@
 	if(xeno_owner.incapacitated() || xeno_owner.now_pushing)
 		return NONE
 
-	if(charge_type & (CHARGE_BULL|CHARGE_BULL_HEADBUTT|CHARGE_BULL_GORE|CHARGE_BEHEMOTH) && !isliving(crushed))
+	if(charge_type & (CHARGE_BULL|CHARGE_BULL_HEADBUTT|CHARGE_BULL_GORE) && !isliving(crushed))
 		do_stop_momentum()
 		return COMPONENT_MOVABLE_PREBUMP_STOPPED
 

@@ -374,7 +374,7 @@
 	else
 		add_tick += 1
 
-/obj/machinery/miner/attack_alien(mob/living/carbon/xenomorph/xeno_attacker, damage_amount = xeno_attacker.xeno_caste.melee_damage, damage_type = BRUTE, damage_flag = MELEE, effects = TRUE, armor_penetration = 0, isrightclick = FALSE)
+/obj/machinery/miner/attack_alien(mob/living/carbon/xenomorph/xeno_attacker, damage_amount = xeno_attacker.xeno_caste.melee_damage, damage_type = BRUTE, damage_flag = MELEE, effects = TRUE, armor_penetration = xeno_attacker.xeno_caste.melee_ap, isrightclick = FALSE)
 	if(miner_status == MINER_PASSIVE)
 		to_chat(xeno_attacker, span_warning("The drilling rig has entered a deep mining mode and is invulnerable!"))
 		return
