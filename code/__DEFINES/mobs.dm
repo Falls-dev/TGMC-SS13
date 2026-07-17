@@ -657,7 +657,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define RAVAGER_RAGE_MIN_HEALTH_THRESHOLD 0.5 //The maximum % of HP we can have to trigger Rage
 #define RAVAGER_RAGE_STAGGERSTUN_IMMUNE_THRESHOLD 0.3
 #define RAVAGER_RAGE_ENDURE_INCREASE_PER_SLASH 1 SECONDS //The amount of time each slash during Rage increases Endure's duration
-#define RAVAGER_RAGE_HEALTH_RECOVERY_PER_SLASH 30 //Base amount of healing from slash during Rage
+#define RAVAGER_RAGE_HEALTH_RECOVERY_PER_SLASH 32 //Base amount of healing from slash during Rage
 #define RAVAGER_IMMORTALITY_DURATION 5 SECONDS
 
 //crusher defines
