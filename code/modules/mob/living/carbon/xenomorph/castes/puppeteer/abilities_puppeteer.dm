@@ -460,6 +460,7 @@
 /datum/action/ability/activable/xeno/puppet_blessings
 	name = "Bestow Blessing"
 	action_icon_state = "emit_pheromones"
+	action_icon = 'icons/Xeno/actions/general.dmi'
 	ability_cost = 200
 	desc = "Give a permanent upgrade to a puppet."
 	cooldown_duration = 30 SECONDS

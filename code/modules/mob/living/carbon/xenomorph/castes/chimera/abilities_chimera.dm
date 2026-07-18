@@ -68,6 +68,9 @@
 		return fail_activate()
 
 /datum/action/ability/activable/xeno/blink/use_ability(atom/A)
+	var/datum/action/ability/xeno_action/chimera_stealth/S = xeno_owner.actions_by_path[/datum/action/ability/xeno_action/chimera_stealth]
+	if(S)
+		S.force_break_stealth()
 	. = ..()
 	var/turf/T = xeno_owner.loc
 	var/turf/temp_turf = xeno_owner.loc
@@ -315,6 +318,9 @@
 	var/warp_blast_damage = 30
 
 /datum/action/ability/xeno_action/warp_blast/action_activate()
+	var/datum/action/ability/xeno_action/chimera_stealth/S = xeno_owner.actions_by_path[/datum/action/ability/xeno_action/chimera_stealth]
+	if(S)
+		S.force_break_stealth()
 	. = ..()
 	playsound(xeno_owner,'sound/effects/bamf.ogg', 75, TRUE)
 	new /obj/effect/temp_visual/shockwave(get_turf(xeno_owner), range)
@@ -352,6 +358,9 @@
 	return ..()
 
 /datum/action/ability/activable/xeno/body_swap/use_ability(atom/movable/A)
+	var/datum/action/ability/xeno_action/chimera_stealth/S = xeno_owner.actions_by_path[/datum/action/ability/xeno_action/chimera_stealth]
+	if(S)
+		S.force_break_stealth()
 	. = ..()
 	if(!isxeno(A))
 		xeno_owner.balloon_alert(xeno_owner, "We can only swap places with another alien.")
@@ -472,3 +481,144 @@
 		stacks++
 	decay_time = initial(decay_time)
 	update_button_icon()
+
+/datum/action/ability/xeno_action/chimera_stealth
+	name = "Stealth"
+	desc = "Enter stealth mode for 15 seconds. You can move freely while in this state, but attacking or using abilities will reveal you."
+	action_icon_state = "hunter_invisibility"
+	action_icon = 'icons/Xeno/actions/hunter.dmi'
+	ability_cost = 25
+	cooldown_duration = 8 SECONDS
+	keybinding_signals = list(
+		KEYBINDING_NORMAL = COMSIG_XENOABILITY_CHIMERA_STEALTH,
+	)
+
+	var/stealth = FALSE
+	var/stealth_duration = 15 SECONDS
+	var/stealth_end_time = 0
+	var/damage_threshold = 50
+	var/stealth_alpha = 20
+	var/initial_fade_time = 2 SECONDS
+	var/mutable_appearance/timer_overlay
+	var/warning_shown = FALSE
+
+/datum/action/ability/xeno_action/chimera_stealth/give_action(mob/living/L)
+	. = ..()
+	timer_overlay = mutable_appearance(icon = null, icon_state = null, layer = ACTION_LAYER_MAPTEXT)
+	timer_overlay.maptext_width = 32
+	timer_overlay.maptext_height = 32
+	timer_overlay.maptext_x = 0
+	timer_overlay.maptext_y = 19
+	update_button_icon()
+
+/datum/action/ability/xeno_action/chimera_stealth/update_button_icon()
+	. = ..()
+	if(!button)
+		return
+
+	button.cut_overlay(timer_overlay)
+
+	if(stealth)
+		var/time_left = max(0, round((stealth_end_time - world.time) / 10))
+		var/timer_text = "<div align='right' style='font-family: \"Small Fonts\"; font-size: 7pt; color: white; -dm-text-outline: 1px black;'>[time_left]s</div>"
+		timer_overlay.maptext = MAPTEXT(timer_text)
+		button.add_overlay(timer_overlay)
+
+/datum/action/ability/xeno_action/chimera_stealth/action_activate()
+	if(stealth)
+		cancel_stealth("We manually drop our camouflage.")
+		return TRUE
+
+	if(!can_use_action())
+		return FALSE
+
+	stealth_end_time = world.time + stealth_duration
+	stealth = TRUE
+	warning_shown = FALSE
+
+	ADD_TRAIT(xeno_owner, TRAIT_STEALTH, TRAIT_STEALTH)
+	animate(xeno_owner, initial_fade_time, alpha = stealth_alpha, flags = ANIMATION_PARALLEL)
+
+	RegisterSignals(xeno_owner, list(
+		COMSIG_XENOMORPH_ATTACK_LIVING,
+		COMSIG_XENOMORPH_DISARM_HUMAN,
+		COMSIG_XENOMORPH_GRAB,
+		COMSIG_XENOMORPH_ATTACK_OBJ,
+		COMSIG_XENO_LIVING_THROW_HIT,
+		COMSIG_LIVING_IGNITED,
+		COMSIG_XENOMORPH_POUNCE,
+		COMSIG_XENOMORPH_THROW_HIT
+	), PROC_REF(force_break_stealth))
+
+	RegisterSignal(xeno_owner, COMSIG_XENOMORPH_TAKING_DAMAGE, PROC_REF(damage_taken))
+
+	START_PROCESSING(SSprocessing, src)
+	return TRUE
+
+/datum/action/ability/xeno_action/chimera_stealth/process()
+	if(!stealth)
+		STOP_PROCESSING(SSprocessing, src)
+		return
+
+	var/time_remaining = stealth_end_time - world.time
+
+	if(time_remaining <= 5 SECONDS && time_remaining > 0 && !warning_shown)
+		xeno_owner.balloon_alert(xeno_owner, "Camouflage fading! [round(time_remaining/10)]s")
+		warning_shown = TRUE
+
+	if(time_remaining <= 0)
+		cancel_stealth("Our camouflage expires.")
+	else
+		update_button_icon()
+
+/datum/action/ability/xeno_action/chimera_stealth/proc/force_break_stealth()
+	if(stealth)
+		cancel_stealth("Our actions reveal us!")
+
+/datum/action/ability/xeno_action/chimera_stealth/proc/damage_taken(mob/living/carbon/xenomorph/X, damage_taken)
+	SIGNAL_HANDLER
+	if(damage_taken > damage_threshold)
+		cancel_stealth("The heavy impact reveals us!")
+
+/datum/action/ability/xeno_action/chimera_stealth/proc/cancel_stealth(msg)
+	if(!stealth)
+		return
+	stealth = FALSE
+
+	if(msg)
+		to_chat(xeno_owner, span_xenodanger(msg))
+
+	UnregisterSignal(xeno_owner, list(
+		COMSIG_XENOMORPH_ATTACK_LIVING,
+		COMSIG_XENOMORPH_DISARM_HUMAN,
+		COMSIG_XENOMORPH_GRAB,
+		COMSIG_XENOMORPH_ATTACK_OBJ,
+		COMSIG_XENO_LIVING_THROW_HIT,
+		COMSIG_LIVING_IGNITED,
+		COMSIG_XENOMORPH_POUNCE,
+		COMSIG_XENOMORPH_THROW_HIT,
+		COMSIG_XENOMORPH_TAKING_DAMAGE
+	))
+
+	REMOVE_TRAIT(xeno_owner, TRAIT_STEALTH, TRAIT_STEALTH)
+	animate(xeno_owner, 1 SECONDS, alpha = 255, flags = ANIMATION_PARALLEL)
+
+	STOP_PROCESSING(SSprocessing, src)
+	add_cooldown()
+
+	update_button_icon()
+
+// ***************************************
+// *********** One Chimera Army
+// ***************************************
+#define ILUSSION_CHANCE 70
+
+/datum/action/ability/xeno_action/hunter_army/chimera_army
+	name = "One Chimera Army"
+	desc = ""
+	ability_cost = 0
+	cooldown_duration = 0
+	keybind_flags = ABILITY_USE_STAGGERED | ABILITY_IGNORE_SELECTED_ABILITY
+	hidden = TRUE
+
+#undef ILUSSION_CHANCE

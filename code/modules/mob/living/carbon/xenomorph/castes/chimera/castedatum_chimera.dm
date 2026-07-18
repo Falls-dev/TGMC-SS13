@@ -29,7 +29,7 @@
 	caste_traits = null
 
 	// *** Defense *** //
-	soft_armor = list(MELEE = 50, BULLET = 40, LASER = 40, ENERGY = 40, BOMB = 0, BIO = 50, FIRE = 0, ACID = 50)
+	soft_armor = list(MELEE = 50, BULLET = 40, LASER = 40, ENERGY = 40, BOMB = 0, BIO = 50, FIRE = 10, ACID = 50)
 
 	blink_drag_nonfriendly_living_multiplier = 20
 	blink_drag_friendly_multiplier = 4
@@ -39,10 +39,12 @@
 
 	// *** Abilities *** //
 	actions = list(
+		/datum/action/ability/xeno_action/hunter_army/chimera_army,
 		/datum/action/ability/xeno_action/xeno_resting,
 		/datum/action/ability/xeno_action/watch_xeno,
 		/datum/action/ability/activable/xeno/psydrain,
 		/datum/action/ability/activable/xeno/blink,
+		/datum/action/ability/xeno_action/chimera_stealth,
 		/datum/action/ability/activable/xeno/pounce/abduction,
 		/datum/action/ability/activable/xeno/body_swap,
 		/datum/action/ability/xeno_action/warp_blast,
@@ -58,10 +60,12 @@
 
 	// *** Abilities *** //
 	actions = list(
+		/datum/action/ability/xeno_action/hunter_army/chimera_army,
 		/datum/action/ability/xeno_action/xeno_resting,
 		/datum/action/ability/xeno_action/watch_xeno,
 		/datum/action/ability/activable/xeno/psydrain,
 		/datum/action/ability/activable/xeno/blink,
+		/datum/action/ability/xeno_action/chimera_stealth,
 		/datum/action/ability/xeno_action/phantom,
 		/datum/action/ability/activable/xeno/pounce/abduction,
 		/datum/action/ability/activable/xeno/body_swap,

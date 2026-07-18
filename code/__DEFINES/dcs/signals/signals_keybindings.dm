@@ -372,6 +372,7 @@
 #define COMSIG_XENOABILITY_CHIMERA_BLINK "xenoability_chimera_blink"
 #define COMSIG_XENOABILITY_CHIMERA_WARP_BLAST "xenoability_chimera_warp_blast"
 #define COMSIG_XENOABILITY_CHIMERA_BODYSWAP "xenoability_chimera_bodyswap"
+#define COMSIG_XENOABILITY_CHIMERA_STEALTH "xenoability_chimera_stealth"
 #define COMSIG_XENOABILITY_CHIMERA_CRIPPLING_STRIKE "xenoability_chimera_crippling_strike"
 
 #define COMSIG_XENOABILITY_CRESTTOSS_BEHIND "xenoability_cresttoss_behind"

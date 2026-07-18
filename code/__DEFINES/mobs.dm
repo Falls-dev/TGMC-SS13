@@ -729,7 +729,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// Damage on hitting a mob using fire charge
 #define PYROGEN_FIRECHARGE_DAMAGE 10
 /// Bonus damage per fire stack
-#define PYROGEN_FIRECHARGE_DAMAGE_PER_STACK 5
+#define PYROGEN_FIRECHARGE_DAMAGE_PER_STACK 3
 /// Bonus damage for directly hitting someone
 #define PYROGEN_FIREBALL_DIRECT_DAMAGE 20
 /// Damage in a 3x3 AOE when we hit anything

@@ -4,8 +4,8 @@
 	desc = "A reanimated body, crudely pieced together and held in place by an ominous energy tethered to some unknown force."
 	icon = 'icons/Xeno/castes/puppet.dmi'
 	icon_state = "Puppet Running"
-	health = 250
-	maxHealth = 250
+	health = 225
+	maxHealth = 225
 	plasma_stored = 0
 	pixel_x = 0
 	tier = XENO_TIER_MINION
@@ -61,4 +61,4 @@
 		return
 	for(var/datum/status_effect/effect AS in status_effects)
 		if(istype(effect, /datum/status_effect/blessing))
-			holder.overlays += image('icons/mob/screen_alert.dmi', icon_state = "xeno_buff")
+			holder.overlays += image('icons/mob/hud/xeno_misc.dmi', icon_state = initial(effect.id))
