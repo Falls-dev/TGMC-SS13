@@ -5,6 +5,8 @@
 	This is also paired with [/mob/living/carbon/xenomorph/hivemind_end]
 */
 /mob/living/carbon/xenomorph/proc/hivemind_start()
+	if(hive?.living_xeno_ruler == src)
+		return "<span class='hivemind xenoruler'>Hivemind, [span_name("[name]")]"
 	return "<span class='hivemind [(xeno_flags & XENO_LEADER) ? "xenoleader" : ""]'>Hivemind, <b>[span_name("[name]")]</b>"
 
 /**
@@ -14,10 +16,6 @@
 */
 /mob/living/carbon/xenomorph/proc/hivemind_end()
 	return "</span>"
-
-
-/mob/living/carbon/xenomorph/queen/hivemind_start()
-	return "<span class='hivemind xenoqueen'>Hivemind, [span_name("[name]")]"
 
 /mob/living/carbon/xenomorph/king/hivemind_start()
 	return "<span class='game say hivemind xenoshrike'>Hivemind, [span_name("[name]")]"
