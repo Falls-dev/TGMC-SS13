@@ -34,7 +34,7 @@
 	// *** Flags *** //
 	caste_flags = CASTE_IS_INTELLIGENT|CASTE_IS_BUILDER|CASTE_STAGGER_RESISTANT|CASTE_LEADER_TYPE|CASTE_INSTANT_EVOLUTION|CASTE_ACID_BLOOD
 	can_hold_eggs = CAN_HOLD_TWO_HANDS
-	can_flags = CASTE_CAN_HOLD_FACEHUGGERS|CASTE_CAN_HOLD_JELLY|CASTE_CAN_CORRUPT_GENERATOR|CASTE_CAN_BE_GIVEN_PLASMA
+	can_flags = CASTE_CAN_HOLD_FACEHUGGERS|CASTE_CAN_HOLD_JELLY|CASTE_CAN_CORRUPT_GENERATOR|CASTE_CAN_BE_GIVEN_PLASMA|CASTE_CAN_BE_RULER
 	caste_traits = null
 
 	// *** Defense *** //
@@ -83,7 +83,7 @@
 		/datum/action/ability/xeno_action/rally_hive,
 		/datum/action/ability/activable/xeno/command_minions,
 	)
-	
+
 /datum/xeno_caste/queen/young
 	upgrade = XENO_UPGRADE_NORMAL
 

@@ -621,6 +621,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define CASTE_CAN_HOLD_JELLY (1<<5)//whether we can hold fireproof jelly in our hands
 #define CASTE_CAN_CORRUPT_GENERATOR (1<<6) //Can corrupt a generator
 #define CASTE_CAN_RIDE_CRUSHER (1<<7) //Can ride a crusher
+#define CASTE_CAN_BE_RULER (1<<6) // Caste can become a ruler if no queen / shrike / king exists in the hive.
 
 //Charge-Crush
 #define CHARGE_OFF 0

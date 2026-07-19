@@ -25,7 +25,7 @@
 
 	// *** Flags *** //
 	caste_flags = CASTE_EVOLUTION_ALLOWED
-	can_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_BE_GIVEN_PLASMA|CASTE_CAN_BE_LEADER
+	can_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_BE_GIVEN_PLASMA|CASTE_CAN_BE_LEADER|CASTE_CAN_BE_RULER
 	caste_traits = null
 
 	// *** Defense *** //
@@ -36,6 +36,9 @@
 	blink_range = 5
 
 	minimap_icon = "chimera"
+
+	// *** Ruler Abilities *** ///
+	queen_leader_limit = 4
 
 	// *** Abilities *** //
 	actions = list(

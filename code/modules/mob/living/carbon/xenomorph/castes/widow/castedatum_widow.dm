@@ -23,7 +23,7 @@
 
 	// *** Flags *** //
 	caste_flags = CASTE_EVOLUTION_ALLOWED
-	can_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_BE_GIVEN_PLASMA|CASTE_CAN_BE_LEADER|CASTE_CAN_HOLD_FACEHUGGERS|CASTE_CAN_HOLD_JELLY
+	can_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_BE_GIVEN_PLASMA|CASTE_CAN_BE_LEADER|CASTE_CAN_HOLD_FACEHUGGERS|CASTE_CAN_HOLD_JELLY|CASTE_CAN_BE_RULER
 	caste_traits = null
 
 	// *** Defense *** //
@@ -31,6 +31,9 @@
 
 	// *** Minimap Icon *** //
 	minimap_icon = "widow"
+
+	// *** Ruler Abilities *** ///
+	queen_leader_limit = 4
 
 	// *** Widow Abilities *** //
 	max_spiderlings = 5
@@ -47,7 +50,14 @@
 		/datum/action/ability/activable/xeno/leash_ball,
 		/datum/action/ability/xeno_action/create_spiderling,
 		/datum/action/ability/xeno_action/attach_spiderlings,
+		/datum/action/ability/xeno_action/pheromones,
+		/datum/action/ability/xeno_action/pheromones/emit_recovery,
+		/datum/action/ability/xeno_action/pheromones/emit_warding,
+		/datum/action/ability/xeno_action/pheromones/emit_frenzy,
 	)
+
+	// *** Pheromones *** //
+	aura_strength = 2.6 //It's .1 better than a carrier.
 
 /datum/xeno_caste/widow/on_caste_applied(mob/xenomorph)
 	. = ..()
@@ -78,5 +88,9 @@
 		/datum/action/ability/activable/xeno/leash_ball,
 		/datum/action/ability/xeno_action/create_spiderling,
 		/datum/action/ability/xeno_action/attach_spiderlings,
+		/datum/action/ability/xeno_action/pheromones,
+		/datum/action/ability/xeno_action/pheromones/emit_recovery,
+		/datum/action/ability/xeno_action/pheromones/emit_warding,
+		/datum/action/ability/xeno_action/pheromones/emit_frenzy,
 		/datum/action/ability/xeno_action/spider_venom,
 	)
