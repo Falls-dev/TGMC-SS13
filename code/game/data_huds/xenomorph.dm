@@ -164,7 +164,7 @@
 		var/image/I = image('icons/mob/hud/xeno_misc.dmi',src, "leader")
 		holder.overlays += I
 	if(hive.living_xeno_ruler == src)
-		var/image/I = image('icons/mob/hud/xeno.dmi',src, "ruler")
+		var/image/I = image('icons/mob/hud/xeno_misc.dmi',src, "ruler")
 		holder.overlays += I
 	hud_list[QUEEN_OVERWATCH_HUD] = holder
 
