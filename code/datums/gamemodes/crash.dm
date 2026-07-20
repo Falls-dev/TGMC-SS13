@@ -133,6 +133,7 @@
 	shuttle.crashing = FALSE
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CANTERBURRY_LANDING)
 	generate_nuke_disk_spawners()
+	consolidate_squads()
 
 /datum/game_mode/infestation/crash/check_finished(force_end)
 	if(round_finished)
@@ -183,6 +184,81 @@
 /datum/game_mode/infestation/crash/can_summon_dropship(mob/user)
 	to_chat(src, span_warning("This power doesn't work in this gamemode."))
 	return FALSE
+
+/datum/game_mode/infestation/crash/proc/consolidate_squads()
+	var/list/roles_to_check = list(
+		SQUAD_MARINE,
+		SQUAD_CORPSMAN,
+		SQUAD_ENGINEER,
+		SQUAD_SMARTGUNNER,
+		SQUAD_LEADER,
+		FIELD_COMMANDER
+	)
+
+	var/list/squads_with_sl = list()
+	var/list/squads_without_sl = list()
+
+	var/mob/living/carbon/human/best_real_sl
+	var/highest_sl_exp = -1
+
+	var/mob/living/carbon/human/best_orphan
+	var/highest_orphan_exp = -1
+	var/datum/squad/orphan_target_squad
+
+	for(var/datum/squad/S in SSjob.active_squads[FACTION_TERRAGOV])
+		if(S.squad_leader && S.squad_leader.stat != DEAD && S.squad_leader.client)
+			squads_with_sl += S
+
+			var/total_exp = 0
+			for(var/role in roles_to_check)
+				total_exp += S.squad_leader.client.get_exp(role)
+
+			if(total_exp > highest_sl_exp)
+				highest_sl_exp = total_exp
+				best_real_sl = S.squad_leader
+		else
+			squads_without_sl += S
+
+			for(var/mob/living/carbon/human/M in S.marines_list)
+				if(M.stat == DEAD || !M.client)
+					continue
+
+				var/total_exp = 0
+				for(var/role in roles_to_check)
+					total_exp += M.client.get_exp(role)
+
+				if(total_exp > highest_orphan_exp)
+					highest_orphan_exp = total_exp
+					best_orphan = M
+					orphan_target_squad = S
+
+	var/datum/squad/target_squad
+
+	if(length(squads_with_sl))
+		target_squad = best_real_sl.assigned_squad
+	else
+		if(best_orphan && orphan_target_squad)
+			target_squad = orphan_target_squad
+			target_squad.promote_leader(best_orphan)
+			target_squad.message_squad("Внимание! Автоматическая система назначила бойца [best_orphan.real_name] исполняющим обязанности командира отряда.")
+
+	if(target_squad)
+		var/list/marines_to_move = list()
+
+		for(var/datum/squad/S in squads_without_sl)
+			if(S == target_squad)
+				continue
+
+			for(var/mob/living/carbon/human/M in S.marines_list)
+				marines_to_move += M
+
+		if(length(marines_to_move))
+			for(var/mob/living/carbon/human/M in marines_to_move)
+				var/datum/squad/old_squad = M.assigned_squad
+				if(old_squad)
+					old_squad.remove_from_squad(M)
+				target_squad.insert_into_squad(M, give_radio = TRUE)
+			target_squad.message_squad("Внимание! В связи с отсутствием командования в других подразделениях, разрозненные бойцы были переведены под руководство отряда [target_squad.name].")
 
 /// Adds more xeno job slots if needed.
 /datum/game_mode/infestation/crash/proc/balance_scales()
