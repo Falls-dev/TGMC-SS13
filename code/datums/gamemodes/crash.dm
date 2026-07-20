@@ -40,6 +40,8 @@
 	var/larva_check_interval = 1 MINUTES
 	///Last time larva balance was checked
 	var/last_larva_check
+	///Here, we are keeping a record of which squads everyone was originally in, for the purpose of future reallocation.
+	var/list/orphan_marines_cache = list()
 
 /datum/game_mode/infestation/crash/pre_setup()
 	. = ..()
@@ -240,7 +242,7 @@
 		if(best_orphan && orphan_target_squad)
 			target_squad = orphan_target_squad
 			target_squad.promote_leader(best_orphan)
-			target_squad.message_squad("Внимание! Автоматическая система назначила бойца [best_orphan.real_name] исполняющим обязанности командира отряда.")
+			target_squad.message_squad("Автоматическая система назначила бойца [best_orphan.real_name] исполняющим обязанности командира отряда.")
 
 	if(target_squad)
 		var/list/marines_to_move = list()
@@ -256,9 +258,63 @@
 			for(var/mob/living/carbon/human/M in marines_to_move)
 				var/datum/squad/old_squad = M.assigned_squad
 				if(old_squad)
+					orphan_marines_cache[M.ckey] = old_squad
 					old_squad.remove_from_squad(M)
 				target_squad.insert_into_squad(M, give_radio = TRUE)
-			target_squad.message_squad("Внимание! В связи с отсутствием командования в других подразделениях, разрозненные бойцы были переведены под руководство отряда [target_squad.name].")
+			target_squad.message_squad("В связи с отсутствием командования в других подразделениях, разрозненные бойцы были прикомандированы под руководство отряда [target_squad.name].")
+
+/datum/game_mode/infestation/crash/LateSpawn(mob/new_player/player)
+	var/client/C = player.client
+	. = ..()
+	if(C && istype(C.mob, /mob/living/carbon/human))
+		handle_latejoin_squad(C.mob)
+
+/datum/game_mode/infestation/crash/proc/handle_latejoin_squad(mob/living/carbon/human/H)
+	var/datum/squad/S = H.assigned_squad
+	if(!S)
+		return
+
+	var/is_sl = FALSE
+	if(istype(H.job, /datum/job/terragov/squad/leader))
+		is_sl = TRUE
+
+	if(is_sl)
+		var/list/returned_marines = list()
+
+		for(var/mar_ckey in orphan_marines_cache)
+			var/datum/squad/original_squad = orphan_marines_cache[mar_ckey]
+
+			if(original_squad == S)
+				for(var/mob/living/carbon/human/marine in GLOB.human_mob_list)
+					if(marine.ckey == mar_ckey && marine.stat != DEAD && marine.assigned_squad != S)
+						marine.assigned_squad.remove_from_squad(marine)
+						S.insert_into_squad(marine, give_radio = TRUE)
+						returned_marines += marine
+						to_chat(marine, span_notice("Ваш командир прибыл! Вы переведены обратно в отряд [S.name]."))
+						break
+				orphan_marines_cache -= mar_ckey
+
+	else
+		if(!S.squad_leader || S.squad_leader.stat == DEAD || !S.squad_leader.client)
+			var/datum/squad/target_squad
+			var/highest_sl_exp = -1
+			var/list/roles_to_check = list(SQUAD_MARINE, SQUAD_CORPSMAN, SQUAD_ENGINEER, SQUAD_SMARTGUNNER, SQUAD_LEADER, FIELD_COMMANDER)
+
+			for(var/datum/squad/other_squad in SSjob.active_squads[FACTION_TERRAGOV])
+				if(other_squad.squad_leader && other_squad.squad_leader.stat != DEAD && other_squad.squad_leader.client)
+					var/total_exp = 0
+					for(var/role in roles_to_check)
+						total_exp += other_squad.squad_leader.client.get_exp(role)
+
+					if(total_exp > highest_sl_exp)
+						highest_sl_exp = total_exp
+						target_squad = other_squad
+
+			if(target_squad && target_squad != S)
+				orphan_marines_cache[H.ckey] = S
+				S.remove_from_squad(H)
+				target_squad.insert_into_squad(H, give_radio = TRUE)
+				to_chat(H, span_warning("В вашем изначальном отряде нет командования. Вы прикомандированы к отряду [target_squad.name]."))
 
 /// Adds more xeno job slots if needed.
 /datum/game_mode/infestation/crash/proc/balance_scales()
