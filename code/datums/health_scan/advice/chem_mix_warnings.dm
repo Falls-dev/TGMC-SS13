@@ -13,7 +13,7 @@
 		ADVICE_TEXT = "Paracetamol detected — do NOT administer Tramadol.",
 		ADVICE_TOOLTIP = "The patient has Paracetamol in their system. If Tramadol is administered, it will combine with Paracetamol to make a debilitating chemical.",
 		ADVICE_ICON = FA_ICON_WINDOW_CLOSE,
-		ADVICE_ICON_COLOR = "red"
+		ADVICE_ICON_COLOR = "red",
 	)
 
 /datum/scanner_advice/chem_mix_warning/has_helpful_nanites/can_show(mob/living/carbon/human/patient, mob/user)
@@ -24,7 +24,7 @@
 		ADVICE_TEXT = "Nanites detected — only administer Peridaxon Plus, QuickClot and Dylovene.",
 		ADVICE_TOOLTIP = "Nanites rapidly purge all medicines except Peridaxon Plus, Quick Clot/Quick Clot Plus and Dylovene.",
 		ADVICE_ICON = FA_ICON_WINDOW_CLOSE,
-		ADVICE_ICON_COLOR = COLOR_REAGENT_MEDICALNANITES
+		ADVICE_ICON_COLOR = COLOR_REAGENT_MEDICALNANITES,
 	)
 
 /datum/scanner_advice/chem_mix_warning/has_sulfasalazine/can_show(mob/living/carbon/human/patient, mob/user)
@@ -35,5 +35,5 @@
 		ADVICE_TEXT = "Sulfasalazine detected — only administer Spaceacillin, nutriments, sugar and saline glucose.",
 		ADVICE_TOOLTIP = "Sulfasalazine uses the reagents it purges for self-replication. It embeds itself into the deepest tissues of the body, making it impossible to remove from the user after administration.",
 		ADVICE_ICON = FA_ICON_WINDOW_CLOSE,
-		ADVICE_ICON_COLOR = "#266930"
+		ADVICE_ICON_COLOR = "#266930",
 	)

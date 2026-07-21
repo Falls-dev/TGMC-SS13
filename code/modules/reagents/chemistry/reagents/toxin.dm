@@ -11,6 +11,7 @@
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	taste_description = "bitterness"
 	taste_multi = 1.2
+	reagent_ui_priority = REAGENT_UI_TOXINS
 
 /datum/reagent/toxin/on_mob_life(mob/living/L, metabolism)
 	if(toxpwr)
@@ -107,6 +108,7 @@
 	color = COLOR_TOXIN_MINTTOXIN
 	toxpwr = 0
 	taste_description = "mint"
+	reagent_ui_priority = REAGENT_UI_MUNDANE // not currently implimented, so it's inert
 
 /datum/reagent/toxin/carpotoxin
 	name = "Carpotoxin"
@@ -122,6 +124,7 @@
 	color = COLOR_TOXIN_HUSKPOWDER
 	toxpwr = 0.5
 	taste_description = "death"
+	reagent_ui_priority = REAGENT_UI_IMMEDIATE
 
 /datum/reagent/toxin/huskpowder/on_mob_add(mob/living/L, metabolism)
 	if(isyautja(L)||isxeno(L))
@@ -172,6 +175,7 @@
 	description = "A chemical mix good for growing plants with."
 	toxpwr = 0.2 //It's not THAT poisonous.
 	color = COLOR_TOXIN_FERTILIZER
+	reagent_ui_priority = REAGENT_UI_SPACEA // current toxpwr formula makes it do 0.1 toxin, which will be healed by a healthy organ
 
 /datum/reagent/toxin/fertilizer/eznutrient
 	name = "EZ Nutrient"
@@ -241,6 +245,7 @@
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	overdose_threshold = REAGENTS_OVERDOSE * 0.5
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL * 0.5
+	reagent_ui_priority = REAGENT_UI_IMMEDIATE
 
 /datum/reagent/toxin/chloralhydrate/on_mob_life(mob/living/L, metabolism)
 	switch(current_cycle)
@@ -265,6 +270,7 @@
 	toxpwr = 0
 	overdose_threshold = REAGENTS_OVERDOSE
 	trait_flags = CHEARTSTOPPER
+	reagent_ui_priority = REAGENT_UI_IMMEDIATE
 
 /datum/reagent/toxin/potassium_chloride/overdose_process(mob/living/L, metabolism)
 	if(iscarbon(L))
@@ -284,6 +290,7 @@
 	description = "A specific chemical based on Potassium Chloride to stop the heart for surgery. Not safe to eat!"
 	color = COLOR_TOXIN_POTASSIUM_CHLORIDE
 	toxpwr = 2
+	reagent_ui_priority = REAGENT_UI_IMMEDIATE
 
 /datum/reagent/toxin/potassium_chlorophoride/on_mob_life(mob/living/L, metabolism)
 	if(L.stat != UNCONSCIOUS)
@@ -305,6 +312,7 @@
 	custom_metabolism = 0
 	toxpwr = 0
 	taste_description = "ow ow ow"
+	reagent_ui_priority = REAGENT_UI_IMMEDIATE // It's a testing chem
 
 /datum/reagent/toxin/pain/on_mob_life(mob/living/L, metabolism)
 	L.reagent_pain_modifier = volume
@@ -409,6 +417,7 @@
 	custom_metabolism = REAGENTS_METABOLISM * 5
 	medbayblacklist = TRUE
 	reactindeadmob = FALSE
+	reagent_ui_priority = REAGENT_UI_IMMEDIATE
 
 /datum/reagent/toxin/nanites/on_mob_add(mob/living/L, metabolism)
 	to_chat(L, span_userdanger("Your body begins to twist and deform! Get out of the razorburn!"))
@@ -633,6 +642,7 @@
 	custom_metabolism = REAGENTS_METABOLISM * 0.25
 	overdose_threshold = 20
 	overdose_crit_threshold = 50
+	reagent_ui_priority = REAGENT_UI_IMMEDIATE
 
 /datum/reagent/zombium/on_mob_life(mob/living/L, metabolism)
 	. = ..()
