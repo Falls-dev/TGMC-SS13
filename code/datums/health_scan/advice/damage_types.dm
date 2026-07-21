@@ -81,8 +81,8 @@
 
 /datum/scanner_advice/damage/oxy/get_data(mob/living/carbon/human/patient, mob/user)
 	. = list(
-		ADVICE_TEXT = "Administer a single dose of Dexalin Plus to re-oxygenate patient's blood.",
-		ADVICE_TOOLTIP = "If you don't have Dexalin or Dexalin Plus, CPR or treating their other symptoms and waiting for their bloodstream to re-oxygenate will work.",
+		ADVICE_TEXT = "Administer a single dose of Dexalin to re-oxygenate patient's blood.",
+		ADVICE_TOOLTIP = "If you don't have Dexalin, CPR or treating their other symptoms and waiting for their bloodstream to re-oxygenate will work.",
 		ADVICE_ICON = FA_ICON_SYRINGE,
 		ADVICE_ICON_COLOR = COLOR_REAGENT_DEXALIN
 	)
@@ -157,4 +157,17 @@
 		ADVICE_TOOLTIP = "Critical eye damage detected, surgical intervention advised.",
 		ADVICE_ICON = FA_ICON_EYE_SLASH,
 		ADVICE_ICON_COLOR = "red"
+	)
+
+/datum/scanner_advice/low_blood/can_show(mob/living/carbon/human/patient, mob/user)
+	if(patient.blood_volume <= 500 && !patient.reagents.has_reagent(/datum/reagent/medicine/saline_glucose))
+		return TRUE
+	return FALSE
+
+/datum/scanner_advice/low_blood/get_data(mob/living/carbon/human/patient, mob/user)
+	. = list(
+		ADVICE_TEXT = "Administer a single dose of Isotonic solution.",
+		ADVICE_TOOLTIP = "The patient has lost a significant amount of blood. Isotonic solution speeds up blood regeneration significantly.",
+		ADVICE_ICON = FA_ICON_DROPLET_SLASH,
+		ADVICE_ICON_COLOR = "cyan"
 	)
