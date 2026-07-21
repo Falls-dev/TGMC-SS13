@@ -229,6 +229,7 @@
 	A.organ_ref = organ_ref
 	return A
 
+/// Returns a list of autodoc surgeries for autodoc's automatic mode queue
 /proc/generate_autodoc_surgery_list(mob/living/carbon/human/M)
 	if(!ishuman(M))
 		return list()
@@ -652,6 +653,14 @@
 	surgery = 0
 	go_out(AUTODOC_NOTICE_SUCCESS)
 
+/// Populates `patient`'s medical record `autodoc_data` field with applicable surgeries
+/obj/machinery/autodoc/proc/autodoc_scan(mob/living/carbon/human/patient)
+	var/datum/data/record/final_record = find_medical_record(patient, TRUE)
+	final_record.fields["autodoc_data"] = generate_autodoc_surgery_list(patient)
+	use_power(active_power_usage)
+	visible_message(span_notice("\The [src] pings as it stores the scan report of [patient.real_name]."))
+	playsound(loc, 'sound/machines/ping.ogg', 25, 1)
+
 /obj/machinery/autodoc/proc/open_incision(mob/living/carbon/human/target, datum/limb/L)
 	if(target && L && L.surgery_open_stage < 2)
 		sleep(INCISION_MANAGER_MAX_DURATION*surgery_mod)
@@ -772,10 +781,8 @@
 		target.forceMove(src)
 		occupant = target
 		update_icon()
-		var/implants = list(/obj/item/implant/neurostim)
 		var/mob/living/carbon/human/H = occupant
-		var/doc_dat
-		med_scan(H, doc_dat, implants, TRUE)
+		autodoc_scan(H)
 		start_processing()
 		for(var/obj/O in src)
 			qdel(O)
@@ -799,7 +806,7 @@
 	move_inside_wrapper(M, user)
 
 /obj/machinery/autodoc/verb/move_inside()
-	set name = "Enter Med-Pod"
+	set name = "Enter autodoc pod"
 	set category = "IC.Mob"
 	set src in oview(1)
 
@@ -935,9 +942,8 @@
 	grabbed_mob.forceMove(src)
 	occupant = grabbed_mob
 	update_icon()
-	var/implants = list(/obj/item/implant/neurostim)
 	var/mob/living/carbon/human/H = occupant
-	med_scan(H, null, implants, TRUE)
+	autodoc_scan(H)
 	start_processing()
 
 	if(automaticmode)
@@ -1364,39 +1370,29 @@
 		return
 	var/active = ""
 	if(surgery)
-		active += " Surgical procedures are in progress."
+		active += " <b><u>Surgical procedures are in progress.</u></b>"
 	if(!hasHUD(user,"medical"))
 		. += span_notice("It contains: [occupant].[active]")
 		return
-	var/mob/living/carbon/human/H = occupant
-	for(var/datum/data/record/R in GLOB.datacore.medical)
-		if (!R.fields["name"] == H.real_name)
-			continue
-		if(!(R.fields["last_scan_time"]))
-			. += span_deptradio("No scan report on record")
-		else
-			. += span_deptradio("<a href='byond://?src=[text_ref(src)];scanreport=1'>It contains [occupant]: Scan from [R.fields["last_scan_time"]].[active]</a>")
-		break
+	var/datum/data/record/medical_record = find_medical_record(occupant)
+	if(!isnull(medical_record?.fields["historic_scan"]))
+		. += "<a href='byond://?src=[text_ref(src)];scanreport=1'>Occupant's body scan from [medical_record.fields["historic_scan_time"]]...</a>"
+	else
+		. += "[span_deptradio("No body scan report on record for occupant")]"
 
 /obj/machinery/autodoc/Topic(href, href_list)
 	. = ..()
 	if(.)
 		return
-	if (!href_list["scanreport"])
+	if(!href_list["scanreport"])
 		return
 	if(!hasHUD(usr,"medical"))
 		return
 	if(!ishuman(occupant))
 		return
-	var/mob/living/carbon/human/H = occupant
-	for(var/datum/data/record/R in GLOB.datacore.medical)
-		if (!R.fields["name"] == H.real_name)
-			continue
-		if(R.fields["last_scan_time"] && R.fields["last_scan_result"])
-			var/datum/browser/popup = new(usr, "scanresults", "<div align='center'>Last Scan Result</div>", 430, 600)
-			popup.set_content(R.fields["last_scan_result"])
-			popup.open(FALSE)
-		break
+	var/datum/data/record/medical_record = find_medical_record(occupant)
+	var/datum/historic_scan/scan = medical_record.fields["historic_scan"]
+	scan.ui_interact(usr)
 
 /obj/machinery/autodoc/yautja
 	icon = 'icons/obj/machines/yautja_machines.dmi'

@@ -728,7 +728,7 @@
 	return PRECRUSH_PLOWED
 
 /mob/living/carbon/xenomorph/ClickOn(atom/A, params)
-	if(health_scan && isliving(A) && health_analyzer)
-		health_analyzer.attack(A, src)
+	if(health_scan && scanner_functionality && isliving(A))
+		scanner_functionality.analyze_vitals(A, src)
 		return
 	return ..()
