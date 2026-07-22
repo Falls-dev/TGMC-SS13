@@ -234,6 +234,10 @@ SUBSYSTEM_DEF(tts)
 		// If current_target.timed_out is set to TRUE, it means the request failed in some way
 		// and there is no TTS audio file to play.
 		if(timeout < world.time || current_target.timed_out)
+			if(current_target.audio_file)
+				fdel(current_target.audio_file)
+			if(current_target.audio_file_blips)
+				fdel(current_target.audio_file_blips)
 			SHIFT_DATA_ARRAY(queued_tts_messages, tts_target, data)
 			continue
 
@@ -251,6 +255,8 @@ SUBSYSTEM_DEF(tts)
 				else
 					audio_file = new(current_target.audio_file)
 					SEND_SOUND(current_target.target, audio_file)
+				fdel(current_target.audio_file)
+				fdel(current_target.audio_file_blips)
 				SHIFT_DATA_ARRAY(queued_tts_messages, tts_target, data)
 			else if(current_target.when_to_play < world.time)
 				audio_file = new(current_target.audio_file)
@@ -266,6 +272,8 @@ SUBSYSTEM_DEF(tts)
 					arbritrary_delay.when_to_play = world.time + current_target.audio_length
 					arbritrary_delay.audio_file = TTS_ARBRITRARY_DELAY
 					queued_tts_messages[tts_target] += arbritrary_delay
+				fdel(current_target.audio_file)
+				fdel(current_target.audio_file_blips)
 				SHIFT_DATA_ARRAY(queued_tts_messages, tts_target, data)
 
 
@@ -279,7 +287,7 @@ SUBSYSTEM_DEF(tts)
 	if(!fexists("tmp/tts/init.txt"))
 		rustg_file_write("rustg HTTP requests can't write to folders that don't exist, so we need to make it exist.", "tmp/tts/init.txt")
 
-	var/static/regex/contains_alphanumeric = regex("\[a-zA-Z0-9]")
+	var/static/regex/contains_alphanumeric = regex("\[a-zA-Zа-яА-ЯёЁ0-9]")
 	// If there is no alphanumeric char, the output will usually be static, so
 	// don't bother sending
 	if(contains_alphanumeric.Find(message) == 0)

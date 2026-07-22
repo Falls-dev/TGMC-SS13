@@ -55,8 +55,11 @@
 
 	var/list/tts_listeners = filter_tts_listeners(xeno_owner, xeno_listeners, null, RADIO_TTS_HIVEMIND)
 	if(length(tts_listeners))
-		var/list/treated_message = xeno_owner?.treat_message(input)
-		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), xeno_owner, treated_message["tts_message"], xeno_owner.get_default_language(), xeno_owner.voice, xeno_owner.voice_filter, tts_listeners, FALSE, pitch = xeno_owner.pitch, directionality = FALSE)
+		var/treated_message = xeno_owner?.treat_message(input)
+		var/final_tts_text = input
+		if(istype(treated_message, /list) && treated_message["tts_message"])
+			final_tts_text = treated_message["tts_message"]
+		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), xeno_owner, final_tts_text, xeno_owner.get_default_language(), xeno_owner.voice, xeno_owner.voice_filter, tts_listeners, FALSE, pitch = xeno_owner.pitch, directionality = FALSE)
 
 	succeed_activate()
 	add_cooldown()
