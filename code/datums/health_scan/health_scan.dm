@@ -245,6 +245,32 @@
 	data["has_chemicals"] = length(patient.reagents.reagent_list)
 	data["chemicals_lists"] = chemicals_lists
 
+	var/datum/internal_organ/stomach/belly = patient.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/list/stomach_chemicals_lists = list()
+	if(belly && belly.reagents)
+		for(var/datum/reagent/reagent AS in belly.reagents.reagent_list)
+			if(!reagent.scannable)
+				data["has_unknown_chemicals"] = TRUE
+				continue
+
+			var/reagent_overdosed = FALSE
+			if(reagent.overdose_threshold && reagent.volume > reagent.overdose_threshold)
+				reagent_overdosed = TRUE
+
+			stomach_chemicals_lists["[reagent.name]"] = list(
+				"name" = reagent.name,
+				"description" = reagent.description,
+				"amount" = round(reagent.volume, 0.1),
+				"od" = reagent_overdosed,
+				"dangerous" = reagent_overdosed || istype(reagent, /datum/reagent/toxin),
+				"od_threshold" = reagent.overdose_threshold,
+				"crit_od_threshold" = reagent.overdose_crit_threshold,
+				"color" = reagent.color,
+				"ui_priority" = reagent.reagent_ui_priority,
+			)
+	data["has_stomach_chemicals"] = length(stomach_chemicals_lists) > 0
+	data["stomach_chemicals_lists"] = stomach_chemicals_lists
+
 	var/list/limb_data_lists = list()
 	var/infection_message
 	var/internal_bleeding

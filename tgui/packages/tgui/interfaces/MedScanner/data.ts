@@ -132,6 +132,8 @@ export type MedScannerData = {
   has_chemicals: boolean;
   has_unknown_chemicals: boolean;
   chemicals_lists?: Record<string, Chemical>;
+  has_stomach_chemicals: boolean;
+  stomach_chemicals_lists?: Record<string, Chemical>;
 
   // Limbs
   total_flow_rate: number;

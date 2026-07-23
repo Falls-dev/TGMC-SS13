@@ -7,12 +7,14 @@ import { PatientChemicals } from './PatientChemicals';
 import { PatientFooter } from './PatientFooter';
 import { PatientLimbs } from './PatientLimbs';
 import { PatientOrgans } from './PatientOrgans';
+import { PatientStomachChemicals } from './PatientStomachChemicals';
 
 export function MedScanner() {
   const { data } = useBackend<MedScannerData>();
   const {
     species,
     has_chemicals,
+    has_stomach_chemicals,
     limbs_damaged,
     damaged_organs,
     blood_amount,
@@ -39,6 +41,7 @@ export function MedScanner() {
       <Window.Content scrollable>
         <PatientBasics />
         {!!has_chemicals && <PatientChemicals />}
+        {!!has_stomach_chemicals && <PatientStomachChemicals />}
         {!!limbs_damaged && <PatientLimbs />}
         {!!damaged_organs?.length && <PatientOrgans />}
         {!!(
