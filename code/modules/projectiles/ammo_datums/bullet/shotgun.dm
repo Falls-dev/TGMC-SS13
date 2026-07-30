@@ -111,7 +111,7 @@
 	damage_falloff = 3
 
 /datum/ammo/bullet/hefa_buckshot/on_hit_mob(mob/mob_hit, atom/movable/projectile/projectile)
-	staggerstun(mob_hit, projectile, knockback = 2, max_range = 4
+	staggerstun(mob_hit, projectile, knockback = 2, max_range = 4)
 
 /datum/ammo/bullet/shotgun/spread
 	name = "additional buckshot"
