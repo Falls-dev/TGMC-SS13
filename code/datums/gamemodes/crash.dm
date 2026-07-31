@@ -79,7 +79,7 @@
 
 	shuttle.crashing = TRUE
 	SSshuttle.moveShuttleToDock(shuttle.shuttle_id, actual_crash_site, TRUE) // FALSE = instant arrival
-	addtimer(CALLBACK(src, PROC_REF(crash_shuttle), actual_crash_site), 3 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(crash_shuttle), actual_crash_site), 10 MINUTES)
 
 	GLOB.start_squad_landmarks_list = null
 
