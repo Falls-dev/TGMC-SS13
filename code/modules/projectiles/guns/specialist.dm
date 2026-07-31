@@ -632,7 +632,7 @@ Note that this means that snipers will have a slowdown of 3, due to the scope
 	recoil = 1
 	scatter = -100
 	placed_overlay_iconstate = "sadar"
-	windup_delay = 0.4 SECONDS
+	windup_delay = 0 SECONDS
 	///removes backblast damage if false
 	var/backblastdamage = TRUE
 
@@ -925,7 +925,7 @@ Note that this means that snipers will have a slowdown of 3, due to the scope
 
 	attachable_offset = list("muzzle_x" = 33, "muzzle_y" = 18,"rail_x" = 6, "rail_y" = 19, "under_x" = 19, "under_y" = 14, "stock_x" = 19, "stock_y" = 14)
 
-	windup_delay = 0.6 SECONDS
+	windup_delay = 0 SECONDS
 	scatter = -1
 	movement_acc_penalty_mult = 5 //You shouldn't fire this on the move
 
@@ -968,7 +968,7 @@ Note that this means that snipers will have a slowdown of 3, due to the scope
 
 	attachable_offset = list("muzzle_x" = 33, "muzzle_y" = 18,"rail_x" = 6, "rail_y" = 19, "under_x" = 19, "under_y" = 14, "stock_x" = 19, "stock_y" = 14)
 
-	windup_delay = 0.6 SECONDS
+	windup_delay = 0 SECONDS
 	scatter = -1
 	movement_acc_penalty_mult = 5 //You shouldn't fire this on the move
 
@@ -1010,7 +1010,7 @@ Note that this means that snipers will have a slowdown of 3, due to the scope
 
 	attachable_offset = list("muzzle_x" = 53, "muzzle_y" = 20, "rail_x" = 44, "rail_y" = 21, "under_x" = 19, "under_y" = 14, "stock_x" = 19, "stock_y" = 14)
 
-	windup_delay = 0.6 SECONDS
+	windup_delay = 0 SECONDS
 	scatter = -1
 	movement_acc_penalty_mult = 5 //You shouldn't fire this on the move
 
