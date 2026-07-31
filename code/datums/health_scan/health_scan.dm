@@ -277,6 +277,11 @@
 
 	var/total_unknown_implants = 0
 	var/total_flow_rate = 0
+	var/can_see_ib_limb = FALSE
+	if(user.skills.getRating(SKILL_MEDICAL) >= SKILL_MEDICAL_EXPERT || user.skills.getRating(SKILL_SURGERY) >= SKILL_SURGERY_PROFESSIONAL)
+		can_see_ib_limb = TRUE
+	else if(istype(patient.loc, /obj/machinery/bodyscanner) || istype(patient.loc, /obj/machinery/autodoc))
+		can_see_ib_limb = TRUE
 	for(var/datum/limb/limb AS in patient.limbs)
 		if((limb.parent?.limb_status & LIMB_DESTROYED) && !(istype(limb.parent, /datum/limb/groin) && istype(limb.parent, /datum/limb/chest) && istype(limb.parent, /datum/limb/head)))
 			// don't show children of missing limbs
@@ -284,13 +289,15 @@
 			continue
 		var/infected = FALSE
 		var/necrotized = FALSE
+		var/limb_has_ib = FALSE
 
-		if(!internal_bleeding)
-			for(var/datum/wound/wound in limb.wounds)
-				if(!istype(wound, /datum/wound/internal_bleeding))
-					continue
-				internal_bleeding = TRUE
-				total_flow_rate += round(patient.blood_volume - INTERNAL_BLEEDING_FLOW_RATE(patient.blood_volume, wound.damage), 0.1)
+		for(var/datum/wound/wound in limb.wounds)
+			if(!istype(wound, /datum/wound/internal_bleeding))
+				continue
+			limb_has_ib = TRUE
+			internal_bleeding = TRUE
+			total_flow_rate += round(patient.blood_volume - INTERNAL_BLEEDING_FLOW_RATE(patient.blood_volume, wound.damage), 0.1)
+
 		if(limb.germ_level > INFECTION_LEVEL_ONE)
 			infection_message = "Infection detected in subject's [limb.display_name]. Antibiotics recommended."
 			infected = TRUE
@@ -308,7 +315,7 @@
 				total_unknown_implants++
 				implants++
 
-		if(!limb.brute_dam && !limb.burn_dam && !(limb.limb_status & LIMB_DESTROYED) && !(limb.limb_status & LIMB_BROKEN) && !(limb.limb_status & LIMB_BLEEDING) && !(limb.limb_status & LIMB_NECROTIZED) && !implants && !infected)
+		if(!limb.brute_dam && !limb.burn_dam && !(limb.limb_status & LIMB_DESTROYED) && !(limb.limb_status & LIMB_BROKEN) && !(limb.limb_status & LIMB_BLEEDING) && !(limb.limb_status & LIMB_NECROTIZED) && !implants && !infected && !limb_has_ib)
 			continue
 		var/list/current_list = list(
 			"name" = limb.display_name,
@@ -320,6 +327,7 @@
 			"limb_status" = null,
 			"limb_type" = null,
 			"bleeding" = !!(limb.limb_status & LIMB_BLEEDING),
+			"internal_bleeding" = can_see_ib_limb ? limb_has_ib : FALSE,
 			"open_incision" = limb.surgery_open_stage,
 			"necrotized" = necrotized,
 			"infected" = infected,

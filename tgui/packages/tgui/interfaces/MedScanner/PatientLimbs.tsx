@@ -68,7 +68,7 @@ export function PatientLimbs() {
                     : 'Missing limbs can only be fixed through surgical intervention. Head reattachment is only possible for combat robots and synthetics. Only printed limbs work as a replacement.'
                 }
               >
-                <Stack.Item color="grey">Missing</Stack.Item>
+                <Stack.Item color="red" bold>MISSING</Stack.Item>
               </Tooltip>
             ) : (
               <>
@@ -175,6 +175,13 @@ export function PatientLimbs() {
                     tooltip="Necrotized arms or legs cause random dropping of items or falling over, respectively. Organ damage will occur if on the head, chest or groin. Treated by surgery."
                   >
                     [Necrosis]
+                  </MedConditionalBox>
+                  <MedConditionalBox
+                    condition={limb.internal_bleeding}
+                    color="crimson"
+                    tooltip="Internal bleeding detected. Treated by surgery or in cryo."
+                  >
+                    [IB]
                   </MedConditionalBox>
                 </Stack.Item>
               </>
