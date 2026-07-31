@@ -80,6 +80,9 @@ Make your way to the cafeteria for some post-cryosleep chow, and then get equipp
 What you lack alone, you gain standing shoulder to shoulder with the men and women of the TerraGov Marine Corps. Ooh-rah!"})
 
 /datum/job/terragov/squad/standard/npc
+	title = "Squad Marine (NPC)"
+	total_positions = 0
+	job_flags = JOB_FLAG_ALLOWS_PREFS_GEAR|JOB_FLAG_PROVIDES_BANK_ACCOUNT|JOB_FLAG_PROVIDES_SQUAD_HUD|JOB_FLAG_CAN_SEE_ORDERS
 	multiple_outfits = TRUE
 	outfits = list(
 		/datum/outfit/job/npc/tgmc/standard,
@@ -200,6 +203,9 @@ What you lack alone, you gain standing shoulder to shoulder with the men and wom
 Your squaddies will look to you when it comes to construction in the field of battle."})
 
 /datum/job/terragov/squad/engineer/npc
+	title = "Squad Engineer (NPC)"
+	total_positions = 0
+	job_flags = JOB_FLAG_ALLOWS_PREFS_GEAR|JOB_FLAG_PROVIDES_BANK_ACCOUNT|JOB_FLAG_PROVIDES_SQUAD_HUD|JOB_FLAG_CAN_SEE_ORDERS
 	outfit = /datum/outfit/job/npc/tgmc/squad_engineer
 
 /datum/job/terragov/squad/engineer/after_spawn(mob/living/carbon/new_mob, mob/user, latejoin = FALSE)
@@ -263,6 +269,9 @@ Your squaddies will look to you when it comes to construction in the field of ba
 You may not be a fully-fledged doctor, but you stand between life and death when it matters."})
 
 /datum/job/terragov/squad/corpsman/npc
+	title = "Squad Corpsman (NPC)"
+	total_positions = 0
+	job_flags = JOB_FLAG_ALLOWS_PREFS_GEAR|JOB_FLAG_PROVIDES_BANK_ACCOUNT|JOB_FLAG_PROVIDES_SQUAD_HUD|JOB_FLAG_CAN_SEE_ORDERS
 	outfit = /datum/outfit/job/npc/tgmc/corpsman
 
 /datum/job/terragov/squad/corpsman/after_spawn(mob/living/carbon/new_mob, mob/user, latejoin = FALSE)
@@ -322,6 +331,9 @@ You may not be a fully-fledged doctor, but you stand between life and death when
 	to_chat(M, {"\nYou are the smartgunner. Your job is to provide IFF weapons support."})
 
 /datum/job/terragov/squad/smartgunner/npc
+	title = "Squad Smartgunner (NPC)"
+	total_positions = 0
+	job_flags = JOB_FLAG_ALLOWS_PREFS_GEAR|JOB_FLAG_PROVIDES_BANK_ACCOUNT|JOB_FLAG_PROVIDES_SQUAD_HUD|JOB_FLAG_CAN_SEE_ORDERS
 	outfit = /datum/outfit/job/npc/tgmc/smartgunner
 
 /datum/job/terragov/squad/smartgunner/after_spawn(mob/living/carbon/new_mob, mob/user, latejoin = FALSE)
@@ -413,6 +425,9 @@ You can serve a variety of roles, so choose carefully."})
 You are also in charge of communicating with command and letting them know about the situation first hand. Keep out of harm's way."})
 
 /datum/job/terragov/squad/leader/npc
+	title = "Squad Leader (NPC)"
+	total_positions = 0
+	job_flags = JOB_FLAG_ALLOWS_PREFS_GEAR|JOB_FLAG_PROVIDES_BANK_ACCOUNT|JOB_FLAG_PROVIDES_SQUAD_HUD|JOB_FLAG_CAN_SEE_ORDERS
 	outfit = /datum/outfit/job/npc/tgmc/squad_leader
 
 /datum/job/terragov/squad/leader/after_spawn(mob/living/carbon/C, mob/user, latejoin = FALSE)

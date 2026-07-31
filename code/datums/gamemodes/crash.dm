@@ -79,7 +79,7 @@
 
 	shuttle.crashing = TRUE
 	SSshuttle.moveShuttleToDock(shuttle.shuttle_id, actual_crash_site, TRUE) // FALSE = instant arrival
-	addtimer(CALLBACK(src, PROC_REF(crash_shuttle), actual_crash_site), 10 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(crash_shuttle), actual_crash_site), 3 MINUTES)
 
 	GLOB.start_squad_landmarks_list = null
 
@@ -260,7 +260,7 @@
 				if(old_squad)
 					orphan_marines_cache[M.ckey] = old_squad
 					old_squad.remove_from_squad(M)
-				target_squad.insert_into_squad(M, give_radio = TRUE)
+				target_squad.insert_into_squad(M, give_radio = TRUE, radio_from = old_squad)
 			target_squad.message_squad("В связи с отсутствием командования в других подразделениях, разрозненные бойцы были прикомандированы под руководство отряда [target_squad.name].")
 
 /datum/game_mode/infestation/crash/LateSpawn(mob/new_player/player)
@@ -270,6 +270,9 @@
 		handle_latejoin_squad(C.mob)
 
 /datum/game_mode/infestation/crash/proc/handle_latejoin_squad(mob/living/carbon/human/H)
+	if(!shuttle_landed)
+		return
+
 	var/datum/squad/S = H.assigned_squad
 	if(!S)
 		return
@@ -279,8 +282,6 @@
 		is_sl = TRUE
 
 	if(is_sl)
-		var/list/returned_marines = list()
-
 		for(var/mar_ckey in orphan_marines_cache)
 			var/datum/squad/original_squad = orphan_marines_cache[mar_ckey]
 
@@ -288,8 +289,7 @@
 				for(var/mob/living/carbon/human/marine in GLOB.human_mob_list)
 					if(marine.ckey == mar_ckey && marine.stat != DEAD && marine.assigned_squad != S)
 						marine.assigned_squad.remove_from_squad(marine)
-						S.insert_into_squad(marine, give_radio = TRUE)
-						returned_marines += marine
+						S.insert_into_squad(marine, give_radio = TRUE, radio_from = S)
 						to_chat(marine, span_notice("Ваш командир прибыл! Вы переведены обратно в отряд [S.name]."))
 						break
 				orphan_marines_cache -= mar_ckey
@@ -313,7 +313,7 @@
 			if(target_squad && target_squad != S)
 				orphan_marines_cache[H.ckey] = S
 				S.remove_from_squad(H)
-				target_squad.insert_into_squad(H, give_radio = TRUE)
+				target_squad.insert_into_squad(H, give_radio = TRUE, radio_from = S)
 				to_chat(H, span_warning("В вашем изначальном отряде нет командования. Вы прикомандированы к отряду [target_squad.name]."))
 
 /// Adds more xeno job slots if needed.
