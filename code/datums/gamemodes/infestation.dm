@@ -291,32 +291,40 @@
 		return
 	if(!(round_type_flags & MODE_INFESTATION))
 		return
-	var/xeno_candidate = FALSE //Let's guarantee there's at least one xeno.
+	var/xeno_candidate  //Let's guarantee there's at least one xeno.
 	var/marine_candidate = FALSE
 	for(var/level = JOBS_PRIORITY_HIGH; level >= JOBS_PRIORITY_LOW; level--)
 		for(var/p in GLOB.ready_players)
 			var/mob/new_player/player = p
 			if(player.client.prefs.job_preferences[ROLE_XENO_QUEEN] == level && SSjob.AssignRole(player, SSjob.GetJobType(/datum/job/xenomorph/queen)))
-				xeno_candidate = TRUE
+				xeno_candidate = p
 				break
 			if(player.client.prefs.job_preferences[ROLE_XENOMORPH] == level && SSjob.AssignRole(player, SSjob.GetJobType(/datum/job/xenomorph)))
-				xeno_candidate = TRUE
+				xeno_candidate = p
 				break
+		if(xeno_candidate)
+			break
+	for(var/level = JOBS_PRIORITY_HIGH; level >= JOBS_PRIORITY_LOW; level--)
+		for(var/p in GLOB.ready_players)
+			var/mob/new_player/player = p
+			if(p == xeno_candidate)
+				continue
 			for(var/job_title in GLOB.jobs_marines)
 				var/datum/job/J = SSjob.GetJob(job_title)
 				if(!J)
 					continue
-				//тут нету проверки через AssignRole потому что мары требуют отряд для получения роли,
-				//а до начала раунда отряды не создаются.
-				if(player.client.prefs.job_preferences[job_title] == level)
+				if(player.client.prefs.job_preferences[job_title] == level)//проверка через AssignRole для маринов требует отряд, а отряды создаются после начала раунда
 					marine_candidate = TRUE
 					break
-
+			if(marine_candidate)
+				break
+		if(marine_candidate)//навайбкодил да
+			break
 
 	if(!xeno_candidate && !bypass_checks)
 		to_chat(world, "<b>Невозможно начать [name].</b> Кандидат в ксеносы не найден.")
 		return FALSE
-	if(!marine_candidate)
+	if(!marine_candidate && !bypass_checks)
 		to_chat(world, "<b>Невозможно начать [name].</b> Отсутствует пехота.")
 		return FALSE
 
