@@ -169,5 +169,5 @@
 		ADVICE_TEXT = "Administer a single dose of Isotonic solution.",
 		ADVICE_TOOLTIP = "The patient has lost a significant amount of blood. Isotonic solution speeds up blood regeneration significantly.",
 		ADVICE_ICON = FA_ICON_DROPLET_SLASH,
-		ADVICE_ICON_COLOR = "cyan",
+		ADVICE_ICON_COLOR = "red",
 	)

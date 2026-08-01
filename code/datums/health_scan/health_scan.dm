@@ -308,14 +308,18 @@
 		if(limb.hidden)
 			total_unknown_implants++
 		var/implants = 0
+		var/list/known_implants = list()
+		var/in_bodyscanner = istype(patient.loc, /obj/machinery/bodyscanner)
 		if(length(limb.implants))
 			for(var/obj/item/embedded AS in limb.implants)
 				if(embedded.is_beneficial_implant())
+					if(in_bodyscanner && (istype(embedded, /obj/item/implant/skill) || istype(embedded, /obj/item/implant/hud)))
+						known_implants += embedded.name
 					continue
 				total_unknown_implants++
 				implants++
 
-		if(!limb.brute_dam && !limb.burn_dam && !(limb.limb_status & LIMB_DESTROYED) && !(limb.limb_status & LIMB_BROKEN) && !(limb.limb_status & LIMB_BLEEDING) && !(limb.limb_status & LIMB_NECROTIZED) && !implants && !infected && !limb_has_ib)
+		if(!limb.brute_dam && !limb.burn_dam && !(limb.limb_status & LIMB_DESTROYED) && !(limb.limb_status & LIMB_BROKEN) && !(limb.limb_status & LIMB_BLEEDING) && !(limb.limb_status & LIMB_NECROTIZED) && !implants && !infected && !limb_has_ib && !length(known_implants))
 			continue
 		var/list/current_list = list(
 			"name" = limb.display_name,
@@ -332,6 +336,7 @@
 			"necrotized" = necrotized,
 			"infected" = infected,
 			"implants" = implants,
+			"skill_implants" = known_implants,
 			"max_damage" = limb.max_damage * LIMB_MAX_DAMAGE_SEVER_RATIO,
 		)
 		var/limb_type = ""

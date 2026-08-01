@@ -155,6 +155,16 @@ export function PatientLimbs() {
                   >
                     [Implant x{limb.implants}]
                   </MedConditionalBox>
+                  {!!limb.skill_implants?.length && limb.skill_implants.map((implantName, idx) => (
+                    <MedConditionalBox
+                      key={idx}
+                      condition
+                      color="cyan"
+                      tooltip="Beneficial implant detected by bodyscanner."
+                    >
+                      [{implantName}]
+                    </MedConditionalBox>
+                  ))}
                   <MedConditionalBox
                     condition={limb.open_incision}
                     color="red"
