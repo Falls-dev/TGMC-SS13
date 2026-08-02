@@ -33,6 +33,10 @@
 			/obj/item/ammo_magazine/rifle/martini/white = -1,
 			/obj/item/weapon/gun/revolver/coltrifle = -1,
 			/obj/item/ammo_magazine/revolver/rifle = -1,
+			/obj/item/weapon/gun/shotgun/pump/bolt = -1,
+			/obj/item/ammo_magazine/rifle/bolt = -1,
+			/obj/item/ammo_magazine/rifle/boltclip = -1,
+			
 		),
 		"Пистолеты-пулемёты" = list(
 			/obj/item/weapon/gun/smg/vector = -1,
