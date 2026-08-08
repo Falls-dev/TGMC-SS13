@@ -1,0 +1,4 @@
+author: "LordDeferson"
+delete-after: True
+changes:
+  - rscadd: "увеличено время на покрытие кислотой телепорт в виде 4 секунд"
