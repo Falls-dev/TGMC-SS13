@@ -190,7 +190,7 @@
 	.["user_evolution"] = isxeno(user) ? xeno_user.evolution_stored : 0
 
 	.["user_biomass"] = isxeno(user) ? xeno_user.biomass : 0
-	.["user_max_biomass"] = isxeno(user) ? (xeno_user.biomass > 50 ? xeno_user.biomass : 50) : 0
+	.["user_max_biomass"] = isxeno(user) ? (xeno_user.biomass > 100 ? xeno_user.biomass : 100) : 0
 
 	.["user_tracked"] = isxeno(user) && !isnull(xeno_user.tracked) ? REF(xeno_user.tracked) : ""
 

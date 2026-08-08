@@ -254,7 +254,7 @@
 
 	. += "Regeneration power: [max(regen_power * 100, 0)]%"
 
-	. += "Biomass: [biomass]/[biomass > 50 ? biomass : 50]"
+	. += "Biomass: [biomass]/[biomass > 100 ? biomass : 100]"
 
 	var/casteswap_value = ((GLOB.key_to_time_of_caste_swap[key] ? GLOB.key_to_time_of_caste_swap[key] : -INFINITY)  + 10 MINUTES - world.time) * 0.1
 	if(casteswap_value <= 0)
