@@ -611,7 +611,7 @@
 // ***************************************
 // *********** One Chimera Army
 // ***************************************
-#define ILUSSION_CHANCE 70
+#define ILUSSION_CHANCE 50
 
 /datum/action/ability/xeno_action/hunter_army/chimera_army
 	name = "One Chimera Army"
