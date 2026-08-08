@@ -95,7 +95,7 @@
 	damage_falloff = 4
 
 /datum/ammo/bullet/shotgun/buckshot/on_hit_mob(mob/target_mob,atom/movable/projectile/proj)
-	staggerstun(target_mob, proj, paralyze = 2 SECONDS, stagger = 2 SECONDS, knockback = 2, slowdown = 0.5, max_range = 3)
+	staggerstun(target_mob, proj, paralyze = 2 SECONDS, stagger = 2 SECONDS, knockback = 2, slowdown = 0.5, max_range = 2)
 
 /datum/ammo/bullet/hefa_buckshot
 	name = "hefa fragment"
@@ -122,6 +122,9 @@
 	max_range = 10
 	damage = 40
 	damage_falloff = 4
+
+/datum/ammo/bullet/shotgun/spread/on_hit_mob(mob/target_mob,atom/movable/projectile/proj)
+	staggerstun(target_mob, proj, paralyze = 2 SECONDS, stagger = 2 SECONDS, knockback = 2, slowdown = 0.5, max_range = 2)
 
 /datum/ammo/bullet/shotgun/frag
 	name = "shotgun explosive shell"
