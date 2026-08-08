@@ -1,0 +1,8 @@
+author: "LordDeferson"
+delete-after: True
+changes:
+  - balance: "магазин SMG-90 50>80"
+  - balance: "магазин MP-19 30>45"
+  - balance: "урон патрона 10x20мм 17>20"
+  - balance: "коробки с патронами 10x20мм а так же для АП 150>240"
+  - balance: "множитель разброса у MP-19 25%>17%"
