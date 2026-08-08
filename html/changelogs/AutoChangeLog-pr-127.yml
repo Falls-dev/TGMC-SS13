@@ -1,0 +1,4 @@
+author: "LordDeferson"
+delete-after: True
+changes:
+  - balance: "количество биомассы ксено 50>100"
