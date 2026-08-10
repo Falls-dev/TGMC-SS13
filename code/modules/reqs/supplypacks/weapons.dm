@@ -225,6 +225,11 @@
 	contains = list(/obj/item/weapon/gun/energy/lasgun/lasrifle/xray)
 	cost = 500
 
+/datum/supply_packs/weapons/light_beam_cannon
+	name = "Light Beam Cannon"
+	contains = list(/obj/item/weapon/gun/energy/beam_cannon)
+	cost = 400
+
 /datum/supply_packs/weapons/rocketsledge
 	name = "Rocket sledge"
 	contains = list(/obj/item/weapon/twohanded/sledgehammer/rocketsledge)

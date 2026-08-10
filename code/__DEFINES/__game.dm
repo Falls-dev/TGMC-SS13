@@ -25,6 +25,7 @@
 #define MAP_TALOS "Talos"
 #define MAP_LV759 "LV759"
 #define MAP_CALLIOPE_HIGHWAY "Calliope Highway"
+#define MAP_LV522_CHANCES_CLAIM "LV-522 Chance's Claim"
 
 //Object specific defines
 #define CANDLE_LUM 3 //For how bright candles are

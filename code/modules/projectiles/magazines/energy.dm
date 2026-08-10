@@ -240,3 +240,8 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human = loc
 		human.update_inv_back()
+
+/obj/item/cell/lasgun/beam_cannon
+	name = "light beam cannon internal battery"
+	desc = "A specialized high density battery. Quite strange to see one outside of a beam cannon..."
+	maxcharge = 10000

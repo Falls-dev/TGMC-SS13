@@ -68,6 +68,55 @@
 /turf/open/floor/plating/icefloor/warnplate/corner
 	icon_state = "warnplatecorner"
 
+/turf/open/floor/plating/plating_catwalk
+	icon = 'icons/turf/mainship.dmi'
+	icon_state = "plating_catwalk"
+	var/base_state = "plating"
+	name = "catwalk"
+	desc = "Cats really don't like these things."
+	var/covered = TRUE
+	shoefootstep = FOOTSTEP_CATWALK
+	barefootstep = FOOTSTEP_CATWALK
+	mediumxenofootstep = FOOTSTEP_CATWALK
+
+/turf/open/floor/plating/plating_catwalk/Initialize(mapload)
+	. = ..()
+	icon_state = base_state
+	update_turf_overlay()
+
+/turf/open/floor/plating/plating_catwalk/proc/update_turf_overlay()
+	var/image/I = image(icon, src, "catwalk", CATWALK_LAYER)
+	SET_PLANE_EXPLICIT(I, FLOOR_PLANE, src)
+	if(covered)
+		overlays += I
+	else
+		overlays -= I
+		qdel(I)
+
+/turf/open/floor/plating/plating_catwalk/attackby(obj/item/I, mob/user)
+	. = ..()
+	if(.)
+		return
+	if(!istype(I, /obj/item/stack/catwalk))
+		return
+	if(covered)
+		return
+	var/obj/item/stack/catwalk/E = I
+	E.use(1)
+	covered = TRUE
+	update_turf_overlay()
+	return
+
+/turf/open/floor/plating/plating_catwalk/crowbar_act(mob/living/user, obj/item/I)
+	if(!covered)
+		return FALSE
+	I.play_tool_sound(src, 80)
+	var/obj/item/stack/catwalk/catwalk = new(user.loc)
+	catwalk.add_to_stacks(user)
+	covered = FALSE
+	update_turf_overlay()
+	return TRUE
+
 /turf/open/floor/plating/ironsand
 	name = "Iron Sand"
 

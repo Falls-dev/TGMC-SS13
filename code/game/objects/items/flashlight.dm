@@ -205,3 +205,12 @@
 /obj/item/flashlight/lantern/on/Initialize(mapload)
 	. = ..()
 	turn_light(null, TRUE)
+
+/obj/item/flashlight/lamp/tripod
+	name = "tripod lamp"
+	desc = "An emergency light tube mounted onto a tripod."
+	icon_state = "tripod_lamp"
+	light_range = 6
+
+/obj/item/flashlight/lamp/tripod/grey
+	icon_state = "tripod_lamp_grey"

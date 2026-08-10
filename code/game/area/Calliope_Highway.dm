@@ -29,7 +29,7 @@
 	ambience = list('sound/ambience/ambienthum.ogg' = 1)
 
 /area/calliope/interior/oob
-	name = "Calliope - Out Of Bounds"
+	name = "Calliope -  Out Of Bounds"
 	icon_state = "oob"
 	ceiling = CEILING_DEEP_UNDERGROUND
 	always_unpowered = TRUE
@@ -50,24 +50,24 @@
 	max_ambience_cooldown = 12 SECONDS
 
 /area/calliope/exterior/highway/north
-	name = "Север Каллиопы"
+	name = "Calliope - Highway North"
 	icon_state = "scrubland"
 
 /area/calliope/exterior/highway/central
-	name = "Середина Каллиопы"
+	name = "Calliope - Highway Central"
 	icon_state = "stone_fields"
 
 /area/calliope/exterior/highway/south
-	name = "Юг Каллиопы"
+	name = "Calliope - Highway South"
 	icon_state = "scrubland"
 
 /area/calliope/exterior/complex_perimeter
-	name = "Снаружи Комплекса"
+	name = "Calliope Complex - Exterior"
 	icon_state = "complex_border"
 	minimap_color = MINIMAP_AREA_COLONY
 
 /area/calliope/exterior/runoff_river
-	name = "Река"
+	name = "Calliope - Runoff River"
 	icon_state = "rf_river"
 	minimap_color = MINIMAP_WATER
 
@@ -86,128 +86,128 @@
 	)
 
 /area/calliope/exterior/caves/east
-	name = "Восточные Пещеры"
+	name = "Calliope - East Colony Caves"
 	icon_state = "colony_caves_1"
 
 /area/calliope/exterior/caves/west
-	name = "Западные Пещеры"
+	name = "Calliope - West Colony Caves"
 	icon_state = "colony_caves_3"
 
-// Interior zones
+// Interior zones — bunker complex
 /area/calliope/interior/cargo_storage
-	name = "Хранилище/склад"
+	name = "Calliope Complex - Cargo Storage"
 	icon_state = "storage"
 	ceiling = CEILING_METAL
 	minimap_color = MINIMAP_AREA_COLONY
 
 /area/calliope/interior/abandoned_church
-	name = "Заброшенная Церковь"
+	name = "Calliope - Abandoned Church"
 	icon_state = "construction_int"
 	ceiling = CEILING_METAL
 
 /area/calliope/interior/barracks
-	name = "Общежитие"
+	name = "Calliope Complex - Barracks"
 	icon_state = "Colony_int"
 	ceiling = CEILING_METAL
 	minimap_color = MINIMAP_AREA_LZ
 
 /area/calliope/interior/medbay
-	name = "Медбей (Medbay)"
+	name = "Calliope Complex - Medical Bay"
 	icon_state = "med0"
 	ceiling = CEILING_METAL
 	minimap_color = MINIMAP_AREA_MEDBAY
 
 /area/calliope/interior/fuel_depot
-	name = "Топливное Хранилище"
+	name = "Calliope Complex - Fuel Depot"
 	icon_state = "power"
 	ceiling = CEILING_METAL
 	minimap_color = MINIMAP_AREA_ENGI
 
 /area/calliope/interior/hallway
-	name = "Корридор"
+	name = "Calliope Complex - Hallway"
 	icon_state = "colony_int"
 	ceiling = CEILING_METAL
 
 /area/calliope/interior/cafeteria
-	name = "Столовая"
+	name = "Calliope Complex - Cafeteria"
 	icon_state = "colony_int"
 	ceiling = CEILING_METAL
 
 /area/calliope/interior/research_lab
-	name = "РнД (Научная Лаборатория)"
+	name = "Calliope Complex - Research Laboratory"
 	icon_state = "botany0"
 	ceiling = CEILING_METAL
 	minimap_color = MINIMAP_AREA_RESEARCH
 
 /area/calliope/interior/power_station
-	name = "Генераторная"
+	name = "Calliope Complex - Power Station"
 	icon_state = "power"
 	ceiling = CEILING_METAL
 	minimap_color = MINIMAP_AREA_ENGI
 
 /area/calliope/interior/comms_center
-	name = "Коммуникационный Центр"
+	name = "Calliope Complex - Communications Center"
 	icon_state = "ass_line"
 	ceiling = CEILING_METAL
 
 /area/calliope/interior/complex_checkpoint
-	name = "КПП Комплекса"
+	name = "Calliope Complex - Security Checkpoint"
 	icon_state = "Colony_int"
 	ceiling = CEILING_METAL
 	minimap_color = MINIMAP_AREA_SEC
 
 /area/calliope/interior/cargo
-	name = "Карго"
+	name = "Calliope Complex - Cargo Bay"
 	icon_state = "storage"
 	ceiling = CEILING_METAL
 
 /area/calliope/interior/ruins
-	name = "Руины"
+	name = "Calliope - Ruins"
 	icon_state = "construction_int"
 	ceiling = CEILING_UNDERGROUND_METAL
 	minimap_color = MINIMAP_AREA_CAVES
 
 /area/calliope/interior/engineering
-	name = "Инженерная"
+	name = "Calliope Complex - Engineering"
 	icon_state = "power_2"
 	ceiling = CEILING_METAL
 	minimap_color = MINIMAP_AREA_ENGI
 
 /area/calliope/interior/holding
-	name = "Камера заключения"
+	name = "Calliope Complex - Holding Cell"
 	icon_state = "med5"
 	ceiling = CEILING_METAL
 	minimap_color = MINIMAP_AREA_SEC
 
 /area/calliope/interior/armory
-	name = "Оружейная"
+	name = "Calliope Complex - Armory"
 	icon_state = "power_2"
 	ceiling = CEILING_METAL
 	minimap_color = MINIMAP_AREA_SEC
 
 /area/calliope/interior/closet
-	name = "Кладовка"
+	name = "Calliope Complex - Maintenance Closet"
 	icon_state = "storage"
 	ceiling = CEILING_METAL
 
 /area/calliope/interior/observation_deck
-	name = "Смотровая площадка"
+	name = "Calliope Complex - Observation Deck"
 	icon_state = "rf_overlook"
 	ceiling = CEILING_METAL
 
 /area/calliope/interior/buildings
-	name = "Постройки"
+	name = "Calliope - Colony Buildings"
 	icon_state = "colony_int"
 	ceiling = CEILING_METAL
 
 /area/calliope/interior/east_checkpoint
-	name = "Восточное КПП"
+	name = "Calliope Complex - East Security Checkpoint"
 	icon_state = "Colony_int"
 	ceiling = CEILING_METAL
 	minimap_color = MINIMAP_AREA_SEC
 
 /area/calliope/interior/west_checkpoint
-	name = "Западное КПП"
+	name = "Calliope Complex - West Security Checkpoint"
 	icon_state = "Colony_int"
 	ceiling = CEILING_METAL
 	minimap_color = MINIMAP_AREA_SEC

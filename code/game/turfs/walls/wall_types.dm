@@ -483,3 +483,31 @@ INITIALIZE_IMMEDIATE(/turf/closed/wall/indestructible/splashscreen)
 	color = "#c5beb4"
 	desc = "Ancient beyond measure, these walls make up the hull of a vessel of non human origin. Despite this, they can be felled with plastic explosives like any other opaque blocker."
 	resistance_flags = NONE
+
+// Ported from cmss13-pve for LV522 Chance's Claim
+
+/turf/closed/wall/solaris
+	name = "colony wall"
+	icon = 'icons/turf/walls/solaris/solaris.dmi'
+	icon_state = "solaris_interior"
+	desc = "Tough looking walls that have been blasted by sand since the day they were erected. A testament to human willpower."
+	walltype = "solaris_interior"
+
+/turf/closed/wall/solaris/reinforced
+	name = "reinforced colony wall"
+	icon_state = "solaris_interior_r"
+	walltype = "solaris_interior_r"
+
+/turf/closed/wall/solaris/reinforced/hull
+	name = "heavy reinforced colony wall"
+	icon_state = "solaris_interior_h"
+	resistance_flags = RESIST_ALL
+
+/turf/closed/wall/solaris/reinforced/hull/lv522
+	name = "Colony Windbreaker"
+
+/turf/closed/wall/solaris/rock
+	name = "rock wall"
+	icon_state = "solaris_rock"
+	walltype = "solaris_rock"
+	resistance_flags = RESIST_ALL
