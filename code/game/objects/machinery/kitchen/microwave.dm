@@ -176,71 +176,66 @@
 *   Microwave Menu
 ********************/
 
-/obj/machinery/microwave/interact(mob/user) // The microwave Menu
+/obj/machinery/microwave/examine(mob/user)
+	. = ..()
+	if(broken > 0)
+		. += span_warning("It looks broken.")
+		return
+	if(dirty == 100)
+		. += span_warning("It's filthy and needs to be cleaned before use.")
+	if(operating)
+		. += span_notice("It's currently running.")
+		return
+	if(!length(contents) && !reagents.total_volume)
+		. += span_notice("It's empty.")
+		return
+
+	var/list/items_counts = new
+	for(var/obj/O in contents)
+		items_counts[O.name]++
+	. += span_notice("It contains:")
+	for(var/item_name in items_counts)
+		. += span_notice("- [items_counts[item_name]]x [item_name].")
+	for(var/datum/reagent/R in reagents.reagent_list)
+		. += span_notice("- [R.volume] unit\s of [R.name].")
+
+/// Radial menu, RU/TG-style: only pops up when the microwave actually has something to act on.
+/obj/machinery/microwave/interact(mob/user)
 	. = ..()
 	if(.)
 		return
 
-	var/dat = ""
-	if(src.broken > 0)
-		dat = {"<TT>Bzzzzttttt</TT>"}
-	else if(src.operating)
-		dat = {"<TT>Microwaving in progress!<BR>Please wait...!</TT>"}
-	else if(src.dirty==100)
-		dat = {"<TT>This microwave is dirty!<BR>Please clean it before use!</TT>"}
-	else
-		var/list/items_counts = new
-		var/list/items_measures = new
-		var/list/items_measures_p = new
-		for(var/obj/O in contents)
-			var/display_name = O.name
-			if(istype(O,/obj/item/reagent_containers/food/snacks/egg))
-				items_measures[display_name] = "egg"
-				items_measures_p[display_name] = "eggs"
-			if(istype(O,/obj/item/reagent_containers/food/snacks/tofu))
-				items_measures[display_name] = "tofu chunk"
-				items_measures_p[display_name] = "tofu chunks"
-			if(istype(O,/obj/item/reagent_containers/food/snacks/meat)) //any meat
-				items_measures[display_name] = "slab of meat"
-				items_measures_p[display_name] = "slabs of meat"
-			if(istype(O,/obj/item/reagent_containers/food/snacks/donkpocket))
-				display_name = "Turnovers"
-				items_measures[display_name] = "turnover"
-				items_measures_p[display_name] = "turnovers"
-			if(istype(O,/obj/item/reagent_containers/food/snacks/carpmeat))
-				items_measures[display_name] = "fillet of meat"
-				items_measures_p[display_name] = "fillets of meat"
-			items_counts[display_name]++
-		for(var/O in items_counts)
-			var/N = items_counts[O]
-			if (!(O in items_measures))
-				dat += {"<B>[capitalize(O)]:</B> [N] [lowertext(O)]\s<BR>"}
-			else
-				if(N==1)
-					dat += {"<B>[capitalize(O)]:</B> [N] [items_measures[O]]<BR>"}
-				else
-					dat += {"<B>[capitalize(O)]:</B> [N] [items_measures_p[O]]<BR>"}
+	if(broken > 0)
+		balloon_alert(user, "it's broken!")
+		return
+	if(operating)
+		balloon_alert(user, "it's already cooking!")
+		return
+	if(dirty == 100)
+		balloon_alert(user, "it's too dirty!")
+		return
 
-		for(var/datum/reagent/R in reagents.reagent_list)
-			var/display_name = R.name
-			if(R.type == /datum/reagent/consumable/capsaicin)
-				display_name = "Hotsauce"
-			if(R.type == /datum/reagent/consumable/frostoil)
-				display_name = "Coldsauce"
-			dat += {"<B>[display_name]:</B> [R.volume] unit\s<BR>"}
+	if(!length(contents) && !reagents.total_volume)
+		balloon_alert(user, "it's empty!")
+		return
 
-		if (length(items_counts) == 0 && length(reagents.reagent_list) == 0)
-			dat = {"<B>The microwave is empty</B><BR>"}
-		else
-			dat = {"<b>Ingredients:</b><br>[dat]"}
-		dat += {"<HR><BR>
-			<a href='byond://?src=[text_ref(src)];action=cook'>Turn on!</a><br>
-			<a href='byond://?src=[text_ref(src)];action=dispose'>Eject ingredients!</a>
-		"}
+	var/static/image/radial_cook = image(icon = 'icons/mob/radial_actions.dmi', icon_state = "radial_cook")
+	var/static/image/radial_eject = image(icon = 'icons/mob/radial_actions.dmi', icon_state = "radial_eject")
+	var/static/list/radial_options = list("cook" = radial_cook, "eject" = radial_eject)
 
-	var/datum/browser/popup = new(user, "microwave", "<div align='center'>Microwave Controls</div>")
-	popup.set_content(dat)
-	popup.open()
+	var/choice = show_radial_menu(user, src, radial_options, custom_check = CALLBACK(src, PROC_REF(check_interactable), user), require_near = TRUE, tooltips = TRUE)
+	if(!choice || !check_interactable(user))
+		return
+
+	switch(choice)
+		if("cook")
+			cook()
+		if("eject")
+			destroy_contents()
+
+/// Whether the radial menu should stay open / the chosen action should still fire.
+/obj/machinery/microwave/proc/check_interactable(mob/user)
+	return !(broken > 0) && !operating && dirty != 100 && is_operational() && Adjacent(user) && !user.incapacitated()
 
 /***********************************
 *   Microwave Menu Handling/Cooking
@@ -383,16 +378,3 @@
 	ffuu.reagents.add_reagent(/datum/reagent/toxin, amount * 0.1)
 	return ffuu
 
-/obj/machinery/microwave/Topic(href, href_list)
-	. = ..()
-	if(.)
-		return
-
-	switch(href_list["action"])
-		if("cook")
-			cook()
-
-		if("dispose")
-			destroy_contents()
-
-	updateUsrDialog()
