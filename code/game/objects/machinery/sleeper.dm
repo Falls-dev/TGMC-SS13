@@ -6,6 +6,7 @@
 	dir = EAST
 	density = FALSE
 	idle_power_usage = 40
+	interaction_flags = INTERACT_MACHINE_TGUI
 	///The connected sleeper
 	var/obj/machinery/sleeper/connected = null
 
@@ -13,11 +14,6 @@
 	. = ..()
 	set_connected(locate(/obj/machinery/sleeper, get_step(src, REVERSE_DIR(dir))))
 	connected?.set_connected(src)
-
-/obj/machinery/computer/sleep_console/process()
-	if(machine_stat & (NOPOWER|BROKEN))
-		return
-	updateUsrDialog()
 
 ///Set the connected var
 /obj/machinery/computer/sleep_console/proc/set_connected(obj/future_connected)
@@ -33,85 +29,141 @@
 	SIGNAL_HANDLER
 	set_connected(null)
 
-/obj/machinery/computer/sleep_console/interact(mob/user)
+/obj/machinery/computer/sleep_console/process()
+	if(machine_stat & (NOPOWER|BROKEN))
+		return
+	SStgui.update_uis(src)
+
+/obj/machinery/computer/sleep_console/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Sleeper", "Sleeper Console")
+		ui.open()
+
+/obj/machinery/computer/sleep_console/ui_data(mob/user)
+	. = list()
+	.["connected"] = !!connected
+	.["connected_operable"] = connected && !(connected.machine_stat & (NOPOWER|BROKEN))
+	.["hasOccupant"] = connected?.occupant ? TRUE : FALSE
+	.["dialysis"] = connected?.filtering
+	.["stasis"] = connected?.stasis
+	.["amounts"] = connected?.amounts || list()
+	.["maxchem"] = 20
+
+	var/mob/living/occupant = connected?.occupant
+	if(occupant)
+		var/list/occupant_data = list(
+			"name" = occupant.name,
+			"stat" = occupant.stat,
+			"health" = occupant.health,
+			"maxHealth" = occupant.maxHealth,
+			"bruteLoss" = occupant.get_brute_loss(),
+			"oxyLoss" = occupant.get_oxy_loss(),
+			"toxLoss" = occupant.get_tox_loss(),
+			"fireLoss" = occupant.get_fire_loss(),
+			"bodyTemperature" = occupant.bodytemperature,
+			"btCelsius" = occupant.bodytemperature - T0C,
+			"btFaren" = ((occupant.bodytemperature - T0C) * (9.0 / 5.0)) + 32,
+			"temperatureSuitability" = 0,
+			"hasBlood" = FALSE,
+			"totalreagents" = occupant.reagents?.total_volume || 0,
+		)
+
+		if(ishuman(occupant))
+			var/mob/living/carbon/human/human_occupant = occupant
+			if(human_occupant.species)
+				var/datum/species/species = human_occupant.species
+				if(occupant.bodytemperature < species.cold_level_3)
+					occupant_data["temperatureSuitability"] = -3
+				else if(occupant.bodytemperature < species.cold_level_2)
+					occupant_data["temperatureSuitability"] = -2
+				else if(occupant.bodytemperature < species.cold_level_1)
+					occupant_data["temperatureSuitability"] = -1
+				else if(occupant.bodytemperature > species.heat_level_3)
+					occupant_data["temperatureSuitability"] = 3
+				else if(occupant.bodytemperature > species.heat_level_2)
+					occupant_data["temperatureSuitability"] = 2
+				else if(occupant.bodytemperature > species.heat_level_1)
+					occupant_data["temperatureSuitability"] = 1
+
+			var/pulse = human_occupant.handle_pulse()
+			occupant_data["pulse"] = human_occupant.get_pulse(GETPULSE_TOOL)
+			occupant_data["pulse_bad"] = (pulse == PULSE_NONE || pulse == PULSE_THREADY)
+			if(!(human_occupant.species.species_flags & NO_BLOOD))
+				occupant_data["hasBlood"] = TRUE
+				occupant_data["bloodLevel"] = floor(occupant.blood_volume)
+				occupant_data["bloodMax"] = BLOOD_VOLUME_MAXIMUM
+				occupant_data["bloodPercent"] = round(100 * (occupant.blood_volume / BLOOD_VOLUME_MAXIMUM), 0.01)
+
+		.["occupant"] = occupant_data
+
+	var/list/chemicals = list()
+	if(connected)
+		for(var/chemical_path in connected.available_chemicals)
+			var/title = connected.available_chemicals[chemical_path]
+			var/reagent_amount = 0
+			var/injectable = occupant ? TRUE : FALSE
+			var/overdosing = FALSE
+			var/od_warning = FALSE
+
+			if(occupant?.reagents)
+				reagent_amount = occupant.reagents.get_reagent_amount(chemical_path)
+				var/datum/reagent/reagent = occupant.reagents.get_reagent(chemical_path)
+				if(reagent?.overdose_threshold && reagent_amount + 10 > reagent.overdose_threshold)
+					od_warning = TRUE
+				if(reagent?.overdose_threshold && reagent_amount >= reagent.overdose_threshold)
+					overdosing = TRUE
+
+			if(occupant?.stat == DEAD || ismonkey(occupant))
+				injectable = FALSE
+
+			chemicals += list(list(
+				"title" = title,
+				"id" = "[chemical_path]",
+				"occ_amount" = reagent_amount,
+				"pretty_amount" = round(reagent_amount, 0.01),
+				"injectable" = injectable,
+				"overdosing" = overdosing,
+				"od_warning" = od_warning,
+			))
+
+	.["chemicals"] = chemicals
+
+/obj/machinery/computer/sleep_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
-	var/dat = ""
-	if (!connected || (connected.machine_stat & (NOPOWER|BROKEN)))
-		dat += "This console is not connected to a sleeper or the sleeper is non-functional."
-	else
-		var/mob/living/occupant = connected.occupant
-		dat += "<font color='#487553'><B>Occupant Statistics:</B></FONT><BR>"
-		if(occupant)
-			var/t1
-			dat += "<B>Name: [occupant.name]</B><BR>"
-			switch(occupant.stat)
-				if(0)
-					t1 = "Conscious"
-				if(1)
-					t1 = "<font color='#487553'>Unconscious</font>"
-				if(2)
-					t1 = "<font color='#b54646'>*dead*</font>"
-			var/health_ratio = occupant.health * 100 / occupant.maxHealth
-			dat += "[health_ratio > 50 ? "<font color='#487553'>" : "<font color='#b54646'>"]\tHealth %: [health_ratio] ([t1])</FONT><BR>"
-			if(ishuman(occupant))
-				if(connected.filtering)
-					dat += "<A href='byond://?src=[text_ref(src)];togglefilter=1'>Stop Dialysis</A><BR>"
-				else
-					dat += "<HR><A href='byond://?src=[text_ref(src)];togglefilter=1'>Start Dialysis</A><BR>"
-				if(connected.stasis)
-					dat += "<HR><A href='byond://?src=[text_ref(src)];togglestasis=1'>Deactivate Cryostasis</A><BR><HR>"
-				else
-					dat += "<HR><A href='byond://?src=[text_ref(src)];togglestasis=1'>Activate Cryostasis</A><BR><HR>"
-			else
-				dat += "<HR>Dialysis Disabled - Non-human present.<BR><HR>"
-				var/mob/living/carbon/human/patient = occupant
-				var/pulse = patient.handle_pulse()
-				dat += "[pulse == PULSE_NONE || pulse == PULSE_THREADY ? "<font color='#b54646'>" : "<font color='#487553'>"]\t-Pulse, bpm: [patient.get_pulse(GETPULSE_TOOL)]</FONT><BR>"
-			dat += "[occupant.get_brute_loss() < 60 ? "<font color='#487553'>" : "<font color='#b54646'>"]\t-Brute Damage %: [occupant.get_brute_loss()]</FONT><BR>"
-			dat += "[occupant.get_oxy_loss() < 60 ? "<font color='#487553'>" : "<font color='#b54646'>"]\t-Respiratory Damage %: [occupant.get_oxy_loss()]</FONT><BR>"
-			dat += "[occupant.get_tox_loss() < 60 ? "<font color='#487553'>" : "<font color='#b54646'>"]\t-Toxin Content %: [occupant.get_tox_loss()]</FONT><BR>"
-			dat += "[occupant.get_fire_loss() < 60 ? "<font color='#487553'>" : "<font color='#b54646'>"]\t-Burn Severity %: [occupant.get_fire_loss()]</FONT><BR>"
-			dat += "<HR>Knocked Out Summary %: [occupant.AmountUnconscious()] ([round(occupant.AmountUnconscious() * 0.1)] seconds left!)<BR>"
-			for(var/chemical in connected.available_chemicals)
-				dat += "<label style='width:180px; display: inline-block'>[connected.available_chemicals[chemical]] ([round(occupant.reagents.get_reagent_amount(chemical), 0.01)] units)</label> Inject:"
-				for(var/amount in connected.amounts)
-					dat += " <a href ='byond://?src=[text_ref(src)];chemical=[chemical];amount=[amount]'>[amount] units</a>"
-				dat += "<br>"
-			dat += "<A href='byond://?src=[text_ref(src)];refresh=1'>Refresh Meter Readings</A><BR>"
-			dat += "<HR><A href='byond://?src=[text_ref(src)];ejectify=1'>Eject Patient</A>"
-		else
-			dat += "The sleeper is empty."
-	var/datum/browser/popup = new(user, "sleeper", "<div align='center'>Sleeper Console</div>", 400, 670)
-	popup.set_content(dat)
-	popup.open()
 
-/obj/machinery/computer/sleep_console/Topic(href, href_list)
-	. = ..()
-	if(.)
+	if(!connected || (connected.machine_stat & (NOPOWER|BROKEN)))
 		return
 
-	if(href_list["chemical"] && connected && connected.occupant)
-		var/datum/reagent/R = text2path(href_list["chemical"])
-		if(connected.occupant.stat == DEAD)
-			to_chat(usr, span_warning("This person has no life for to preserve anymore."))
-		else if(ismonkey(connected.occupant))
-			to_chat(usr, span_scanner("Unknown biological subject detected, chemical injection not available. Please contact a licensed supplier for further assistance."))
-		else if(!(R in connected.available_chemicals))
-			message_admins("[ADMIN_TPMONTY(usr)] has tried to inject an invalid chem with the sleeper. Looks like an exploit attempt, or a bug.")
-		else
-			var/amount = text2num(href_list["amount"])
+	switch(action)
+		if("chemical")
+			if(!connected.occupant)
+				return
+			if(connected.occupant.stat == DEAD)
+				to_chat(ui.user, span_warning("This person has no life for to preserve anymore."))
+				return
+			if(ismonkey(connected.occupant))
+				to_chat(ui.user, span_scanner("Unknown biological subject detected, chemical injection not available. Please contact a licensed supplier for further assistance."))
+				return
+			var/chemical = text2path(params["chemid"])
+			if(!(chemical in connected.available_chemicals))
+				message_admins("[ADMIN_TPMONTY(ui.user)] has tried to inject an invalid chem with the sleeper. Looks like an exploit attempt, or a bug.")
+				return
+			var/amount = text2num(params["amount"])
 			if(amount == 5 || amount == 10)
-				connected.inject_chemical(usr, R, amount)
-	if(href_list["togglefilter"])
-		connected.toggle_filter()
-	if(href_list["togglestasis"])
-		connected.toggle_stasis()
-	if(href_list["ejectify"])
-		connected.eject()
-
-	updateUsrDialog()
+				connected.inject_chemical(ui.user, chemical, amount)
+			return TRUE
+		if("togglefilter")
+			connected.toggle_filter()
+			return TRUE
+		if("togglestasis")
+			connected.toggle_stasis()
+			return TRUE
+		if("ejectify")
+			connected.eject()
+			return TRUE
 
 /obj/machinery/computer/sleep_console/pred
 	icon = 'icons/obj/machines/yautja_machines.dmi'
