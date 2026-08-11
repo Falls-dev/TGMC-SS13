@@ -157,6 +157,7 @@
 	READ_FILE(S["sound_tts"], sound_tts)
 	READ_FILE(S["volume_tts"], volume_tts)
 	READ_FILE(S["radio_tts_flags"], radio_tts_flags)
+	READ_FILE(S["accessible_tgui_themes"], accessible_tgui_themes)
 	READ_FILE(S["fast_mc_refresh"], fast_mc_refresh)
 	READ_FILE(S["split_admin_tabs"], split_admin_tabs)
 	READ_FILE(S["hear_ooc_anywhere_as_staff"], hear_ooc_anywhere_as_staff)
@@ -394,6 +395,7 @@
 	WRITE_FILE(S["sound_tts"], sound_tts)
 	WRITE_FILE(S["volume_tts"], volume_tts)
 	WRITE_FILE(S["radio_tts_flags"], radio_tts_flags)
+	WRITE_FILE(S["accessible_tgui_themes"], accessible_tgui_themes)
 	WRITE_FILE(S["slot_draw_order"], slot_draw_order_pref)
 	WRITE_FILE(S["status_toggle_flags"], status_toggle_flags)
 

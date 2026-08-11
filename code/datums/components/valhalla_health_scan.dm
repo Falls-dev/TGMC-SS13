@@ -1,16 +1,17 @@
 /mob
 	var/health_scan = FALSE
-	var/obj/item/healthanalyzer/integrated/health_analyzer
+	/// Creates health scan datum to scan with on toggle_health_scan toggle.
+	var/datum/health_scan/scanner_functionality
 
 /mob/proc/toggle_health_scan()
 	if(health_scan)
 		to_chat(src, span_notice("Health scan disabled."))
 		health_scan = FALSE
-		QDEL_NULL(health_analyzer)
+		QDEL_NULL(scanner_functionality)
 	else
 		to_chat(src, span_notice("Health scan enabled."))
 		health_scan = TRUE
-		health_analyzer = new()
+		scanner_functionality = new(src, SKILL_MEDICAL_UNTRAINED)
 
 /datum/action/toggle_health_scan
 	name = "Toggle Health Scan"

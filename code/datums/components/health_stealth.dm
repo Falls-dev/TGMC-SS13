@@ -1,7 +1,7 @@
 /datum/component/health_stealth
 	var/mob/living/carbon/human/wearer
 	///Instant analyzer for the suit
-	var/obj/item/healthanalyzer/integrated/analyzer
+	var/datum/health_scan/analyzer
 	///Actions that the component provides
 	var/list/datum/action/component_actions = list(
 		/datum/action/suit_autodoc/scan = PROC_REF(scan_user)
@@ -11,7 +11,7 @@
 	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-	analyzer = new
+	analyzer = new(parent, SKILL_MEDICAL_UNTRAINED)
 	var/list/new_actions = list()
 	for(var/action_type in component_actions)
 		var/new_action = new action_type(src, FALSE)
@@ -29,7 +29,7 @@
 ///Used to scan the person
 /datum/component/health_stealth/proc/scan_user(datum/source)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(analyzer, TYPE_PROC_REF(/obj/item/healthanalyzer, attack), wearer, wearer, TRUE)
+	INVOKE_ASYNC(analyzer, TYPE_PROC_REF(/datum/health_scan, analyze_vitals), wearer, wearer)
 
 /datum/component/health_stealth/RegisterWithParent()
 	. = ..()
