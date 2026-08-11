@@ -51,6 +51,8 @@ Make your way to the cafeteria for some post-cryosleep chow, and then get equipp
 		<br /><br />
 		<b>Duty</b>: Carry out orders made by your acting Squad Leader, deal with any threats that oppose the TGMC.
 	"}
+	job_difficulty = "Лёгкая"
+	job_duty = "Выполняйте приказы исполняющего обязанности командира отряда и устраняйте любые угрозы для ТГМК."
 	minimap_icon = "private"
 
 /datum/job/terragov/squad/standard/after_spawn(mob/living/carbon/new_mob, mob/user, latejoin = FALSE)
@@ -115,6 +117,8 @@ What you lack alone, you gain standing shoulder to shoulder with the men and wom
 		<br /><br />
 		<b>Duty</b>: Carry out orders made by your acting Squad Leader, deal with any threats that oppose the TGMC.
 	"}
+	job_difficulty = "Лёгкая"
+	job_duty = "Выполняйте приказы исполняющего обязанности командира отряда и устраняйте любые угрозы для ТГМК."
 	minimap_icon = "robot"
 
 /datum/job/terragov/squad/robot/after_spawn(mob/living/carbon/new_mob, mob/user, latejoin = FALSE)
@@ -192,6 +196,8 @@ What you lack alone, you gain standing shoulder to shoulder with the men and wom
 		<br /><br />
 		<b>Duty</b>: Construct and reinforce the FOB that has been ordered by your acting Squad Leader, fix power generators and mining drills in the AO and stay on guard for any dangers that threaten your FOB.
 	"}
+	job_difficulty = "Средняя"
+	job_duty = "Стройте и укрепляйте ПОБ по приказу командира отряда, чините генераторы и буровые установки в районе операции и следите за угрозами для вашей базы."
 	minimap_icon = "engi"
 
 /datum/job/terragov/squad/engineer/radio_help_message(mob/M)
@@ -255,6 +261,8 @@ Your squaddies will look to you when it comes to construction in the field of ba
 		<br /><br />
 		<b>Duty</b>: Tend the injuries of your fellow marines or related personnel, keep them at fighting strength. Evacuate those who are incapacitated or rendered incapable of fighting due to severe wounds or larvae infections.
 	"}
+	job_difficulty = "Сложная"
+	job_duty = "Лечите ранения своих сослуживцев, поддерживая их боеспособность. Эвакуируйте недееспособных или потерявших возможность сражаться из-за тяжёлых ранений или заражения личинкой."
 	minimap_icon = "medic"
 
 /datum/job/terragov/squad/corpsman/radio_help_message(mob/M)
@@ -315,6 +323,8 @@ You may not be a fully-fledged doctor, but you stand between life and death when
 		<br /><br />
 		<b>Duty</b>: Be the backline of your pointmen, provide heavy weapons support with your smart weapon.
 	"}
+	job_difficulty = "Средняя"
+	job_duty = "Прикрывайте передовых бойцов, обеспечивая огневую поддержку тяжёлым умным оружием."
 	minimap_icon = "smartgunner"
 
 /datum/job/terragov/squad/smartgunner/radio_help_message(mob/M)
@@ -405,6 +415,8 @@ You can serve a variety of roles, so choose carefully."})
 		<br /><br />
 		<b>Duty</b>: Be a responsible leader of your squad, make sure your squad communicates frequently all the time and ensure they are working together for the task at hand. Stay safe, as you’re a valuable leader.
 	"}
+	job_difficulty = "Сложная"
+	job_duty = "Будьте ответственным лидером своего отряда, следите за постоянной связью между бойцами и слаженной работой над задачей. Берегите себя — вы ценный командир."
 	minimap_icon = "leader"
 
 /datum/job/terragov/squad/leader/radio_help_message(mob/M)

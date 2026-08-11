@@ -150,3 +150,5 @@ Good luck, but do not expect to survive."})
 		<b>Gamemode Availability</b>: Distress Signal, Nuclear War<br /><br /><br />
 		<b>Duty</b>: Survive with the resources you have against the swarms of xenomorphs intil help arrives.
 	"}
+	job_difficulty = "Экстремальная"
+	job_duty = "Выживайте теми ресурсами, что у вас есть, против полчищ ксеноморфов, пока не подоспеет помощь."
