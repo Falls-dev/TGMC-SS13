@@ -478,7 +478,7 @@ GLOBAL_LIST_EMPTY(ob_type_fuel_requirements)
 	dir = WEST
 	layer = LOW_ITEM_LAYER
 	atom_flags = ON_BORDER|CONDUCT
-	var/orbital_window_page = 0
+	interaction_flags = INTERACT_MACHINE_TGUI
 
 /obj/machinery/computer/orbital_cannon_console/Initialize(mapload)
 	. = ..()
@@ -491,82 +491,70 @@ GLOBAL_LIST_EMPTY(ob_type_fuel_requirements)
 /obj/machinery/computer/orbital_cannon_console/ex_act()
 	return
 
-/obj/machinery/computer/orbital_cannon_console/interact(mob/user)
+/obj/machinery/computer/orbital_cannon_console/can_interact(mob/user)
 	. = ..()
-	if(.)
-		return
+	if(!.)
+		return FALSE
 
 	if(!allowed(user))
-		return
+		return FALSE
 
 	if(!isobserver(user) && user.skills.getRating(SKILL_ENGINEER) < SKILL_ENGINEER_ENGI)
 		user.visible_message(span_notice("[user] fumbles around figuring out how to use the console."),
 		span_notice("You fumble around figuring out how to use the console."))
 		var/fumbling_time = 5 SECONDS * ( SKILL_ENGINEER_ENGI - user.skills.getRating(SKILL_ENGINEER) )
 		if(!do_after(user, fumbling_time, NONE, src, BUSY_ICON_UNSKILLED))
-			return
+			return FALSE
 
-	var/dat
-	if(!GLOB.orbital_cannon)
-		dat += "No Orbital Cannon System Detected!<BR>"
-	else if(!GLOB.orbital_cannon.tray)
-		dat += "Orbital Cannon System Tray is missing!<BR>"
-	else
-		if(orbital_window_page == 1)
-			dat += "<font size=3>Warhead Fuel Requirements:</font><BR>"
-			dat += "- HE Orbital Warhead: <b>[GLOB.ob_type_fuel_requirements[1]] Solid Fuel blocks.</b><BR>"
-			dat += "- Incendiary Orbital Warhead: <b>[GLOB.ob_type_fuel_requirements[2]] Solid Fuel blocks.</b><BR>"
-			dat += "- Cluster Orbital Warhead: <b>[GLOB.ob_type_fuel_requirements[3]] Solid Fuel blocks.</b><BR>"
-			dat += "- Plasma drain Orbital Warhead: <b>[GLOB.ob_type_fuel_requirements[4]] Solid Fuel blocks.</b><BR>"
+	return TRUE
 
-			dat += "<BR><BR><A href='byond://?src=[text_ref(src)];back=1'><font size=3>Back</font></A><BR>"
-		else
-			var/tray_status = "unloaded"
-			if(GLOB.orbital_cannon.chambered_tray)
-				tray_status = "chambered"
-			else if(GLOB.orbital_cannon.loaded_tray)
-				tray_status = "loaded"
-			dat += "Orbital Cannon Tray is <b>[tray_status]</b><BR>"
-			if(GLOB.orbital_cannon.tray.warhead)
-				dat += "[GLOB.orbital_cannon.tray.warhead.name] Detected<BR>"
-			else
-				dat += "No Warhead Detected<BR>"
-			dat += "[GLOB.orbital_cannon.tray.fuel_amt] Solid Fuel Block\s Detected<BR><HR>"
+/obj/machinery/computer/orbital_cannon_console/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "OrbitalCannonConsole", name)
+		ui.open()
 
-			dat += "<A href='byond://?src=[text_ref(src)];load_tray=1'><font size=3>Load Tray</font></A><BR>"
-			dat += "<A href='byond://?src=[text_ref(src)];unload_tray=1'><font size=3>Unload Tray</font></A><BR>"
-			dat += "<A href='byond://?src=[text_ref(src)];chamber_tray=1'><font size=3>Chamber Tray Payload</font></A><BR>"
-			dat += "<BR><A href='byond://?src=[text_ref(src)];check_req=1'><font size=3>Check Fuel Requirements</font></A><BR>"
+/obj/machinery/computer/orbital_cannon_console/ui_data(mob/user)
+	. = list()
+	.["cannon_linked"] = !!GLOB.orbital_cannon
+	.["tray_linked"] = !!(GLOB.orbital_cannon?.tray)
+	.["busy"] = !!(GLOB.orbital_cannon?.ob_cannon_busy)
 
-		dat += "<HR><BR><A href='byond://?src=[text_ref(src)];close=1'><font size=3>Close</font></A><BR>"
+	if(!GLOB.orbital_cannon || !GLOB.orbital_cannon.tray)
+		return
 
+	var/obj/structure/orbital_tray/tray = GLOB.orbital_cannon.tray
 
-	var/datum/browser/popup = new(user, "orbital_console", "<div align='center'>Orbital Cannon System Control Console</div>", 500, 350)
-	popup.set_content(dat)
-	popup.open()
+	.["loaded_tray"] = !!GLOB.orbital_cannon.loaded_tray
+	.["chambered_tray"] = !!GLOB.orbital_cannon.chambered_tray
+	.["warhead"] = tray.warhead?.name
+	.["fuel"] = tray.fuel_amt
 
+	var/list/fuel_requirements = list()
+	if(length(GLOB.ob_type_fuel_requirements) >= 4)
+		fuel_requirements += list(list("name" = "HE Orbital Warhead", "amount" = GLOB.ob_type_fuel_requirements[1]))
+		fuel_requirements += list(list("name" = "Incendiary Orbital Warhead", "amount" = GLOB.ob_type_fuel_requirements[2]))
+		fuel_requirements += list(list("name" = "Cluster Orbital Warhead", "amount" = GLOB.ob_type_fuel_requirements[3]))
+		fuel_requirements += list(list("name" = "Plasma Drain Orbital Warhead", "amount" = GLOB.ob_type_fuel_requirements[4]))
+	.["fuel_requirements"] = fuel_requirements
 
-/obj/machinery/computer/orbital_cannon_console/Topic(href, href_list)
+/obj/machinery/computer/orbital_cannon_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 
-	if(href_list["load_tray"])
-		GLOB.orbital_cannon?.load_tray(usr)
+	switch(action)
+		if("load_tray")
+			GLOB.orbital_cannon?.load_tray(usr)
+			. = TRUE
 
-	else if(href_list["unload_tray"])
-		GLOB.orbital_cannon?.unload_tray(usr)
+		if("unload_tray")
+			GLOB.orbital_cannon?.unload_tray(usr)
+			. = TRUE
 
-	else if(href_list["chamber_tray"])
-		GLOB.orbital_cannon?.chamber_payload(usr)
-
-	else if(href_list["check_req"])
-		orbital_window_page = 1
-
-	else if(href_list["back"])
-		orbital_window_page = 0
-
-	updateUsrDialog()
+		if("chamber_tray")
+			GLOB.orbital_cannon?.chamber_payload(usr)
+			. = TRUE
 
 
 /obj/structure/ship_rail_gun
