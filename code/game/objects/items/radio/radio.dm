@@ -103,35 +103,16 @@
 /obj/item/radio/proc/get_listening()
 	return listening
 
-/obj/item/radio/interact(mob/user)
+/obj/item/radio/attack_self(mob/user)
 	. = ..()
 	if(.)
 		return
 
 	if(unscrewed)
-		return wires.interact(user)
+		wires.interact(user)
+		return
 
-	var/dat
-
-
-	dat += "Microphone: [broadcasting ? "<A href='byond://?src=[text_ref(src)];talk=0'>Engaged</A>" : "<A href='byond://?src=[text_ref(src)];talk=1'>Disengaged</A>"]<BR>"
-	dat += "Speaker: [listening ? "<A href='byond://?src=[text_ref(src)];listen=0'>Engaged</A>" : "<A href='byond://?src=[text_ref(src)];listen=1'>Disengaged</A>"]<BR>"
-	dat += "Frequency: [format_frequency(frequency)]"
-
-	for(var/ch_name in channels)
-		dat += text_sec_channel(ch_name, channels[ch_name])
-
-	var/datum/browser/popup = new(user, "radio", "<div align='center'>[src]</div>")
-	popup.set_content(dat)
-	popup.open()
-
-
-/obj/item/radio/proc/text_sec_channel(chan_name, chan_stat)
-	var/list = !!(chan_stat & FREQ_LISTENING) != 0
-	return {"
-			<B>[chan_name]</B><br>
-			Speaker: <A href='byond://?src=[text_ref(src)];ch_name=[chan_name];listen=[!list]'>[list ? "Engaged" : "Disengaged"]</A><BR>
-			"}
+	ui_interact(user)
 
 
 /obj/item/radio/can_interact(mob/user)
@@ -145,46 +126,95 @@
 	return TRUE
 
 
-/obj/item/radio/Topic(href, href_list)
+/obj/item/radio/ui_state(mob/user)
+	return GLOB.inventory_state
+
+
+/obj/item/radio/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Radio", name)
+		ui.open()
+
+
+/obj/item/radio/ui_data(mob/user)
+	var/list/data = list()
+
+	data["broadcasting"] = broadcasting
+	data["listening"] = listening
+	data["frequency"] = frequency
+	data["minFrequency"] = freerange ? MIN_FREE_FREQ : MIN_FREQ
+	data["maxFrequency"] = freerange ? MAX_FREE_FREQ : MAX_FREQ
+	data["freqlock"] = freqlock
+
+	var/list/radio_channels = list()
+	for(var/channel_name in channels)
+		radio_channels += list(list(
+			"name" = channel_name,
+			"status" = !!(channels[channel_name] & FREQ_LISTENING),
+			"hotkey" = GLOB.channel_tokens[channel_name],
+		))
+	data["channels"] = radio_channels
+
+	data["command"] = command
+	data["useCommand"] = use_command
+	data["subspace"] = subspace_transmission
+	data["subspaceSwitchable"] = subspace_switchable
+	data["headset"] = FALSE
+
+	return data
+
+
+/obj/item/radio/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 
-	if(href_list["track"])
-		var/mob/target = locate(href_list["track"])
-		var/mob/living/silicon/ai/A = locate(href_list["track2"])
-		if(A && target)
-			A.ai_actual_track(target)
-		return
+	switch(action)
+		if("frequency")
+			if(freqlock)
+				return
+			var/tune = params["tune"]
+			var/adjust = text2num(params["adjust"])
+			if(adjust)
+				tune = frequency + (adjust * 10)
+				. = TRUE
+			else if(!isnull(text2num(tune)))
+				tune = text2num(tune) * 10
+				. = TRUE
+			if(.)
+				set_frequency(sanitize_frequency(tune, freerange))
 
-	else if(href_list["freq"])
-		if(freqlock)
-			return
-		var/new_frequency = (frequency + text2num(href_list["freq"]))
-		set_frequency(new_frequency)
+		if("listen")
+			listening = !listening
+			. = TRUE
 
-	else if(href_list["talk"])
-		set_broadcasting(text2num(href_list["talk"]))
+		if("broadcast")
+			broadcasting = !broadcasting
+			. = TRUE
 
-	else if(href_list["listen"])
-		var/chan_name = href_list["ch_name"]
-		if(!chan_name)
-			listening = text2num(href_list["listen"])
-		else
-			if(channels[chan_name] & FREQ_LISTENING)
-				channels[chan_name] &= ~FREQ_LISTENING
+		if("channel")
+			var/channel_name = params["channel"]
+			if(!(channel_name in channels))
+				return
+			if(channels[channel_name] & FREQ_LISTENING)
+				channels[channel_name] &= ~FREQ_LISTENING
 			else
-				channels[chan_name] |= FREQ_LISTENING
-	else if(href_list["wires"])
-		var/t1 = text2num(href_list["wires"])
-		if(!iswirecutter(usr.get_active_held_item()))
-			return
-		if(wires & t1)
-			wires &= ~t1
-		else
-			wires |= t1
+				channels[channel_name] |= FREQ_LISTENING
+			. = TRUE
 
-	updateUsrDialog()
+		if("command")
+			if(!command)
+				return
+			use_command = !use_command
+			. = TRUE
+
+		if("subspace")
+			if(subspace_switchable)
+				subspace_transmission = !subspace_transmission
+				if(!subspace_transmission)
+					channels = list()
+				. = TRUE
 
 /**
  * setter for the listener var, adds or removes this radio from the global radio list if we are also on
