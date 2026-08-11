@@ -148,24 +148,8 @@
 			view_som()
 
 		if("SelectedJob")
-			if(!SSticker)
-				return
-			if(!GLOB.enter_allowed)
-				to_chat(usr, span_warning("Spawning currently disabled, please observe."))
-				return
 			var/datum/job/job_datum = locate(href_list["job_selected"])
-			if(!isxenosjob(job_datum) && (SSmonitor.gamestate == SHUTTERS_CLOSED || (SSmonitor.gamestate == GROUNDSIDE && SSmonitor.current_state <= XENOS_LOSING)))
-				var/datum/job/xeno_job = SSjob.GetJobType(/datum/job/xenomorph)
-				if((xeno_job.total_positions-xeno_job.current_positions) > length(GLOB.alive_xeno_list_hive[XENO_HIVE_NORMAL]) * TOO_MUCH_BURROWED_PROPORTION)
-					if(tgui_alert(src, "There is a lack of xeno players on this round, unbalanced rounds are unfun for everyone. Are you sure you want to play as a marine? ", "Warning : the game is unbalanced", list("Yes", "No")) != "Yes")
-						return
-			if(ispredatorjob(job_datum))
-				if(SSticker.mode.check_predator_late_join(src))
-					SSticker.mode.join_predator(src)
-				return
-			if(!SSticker.mode.CanLateSpawn(src, job_datum)) // Try to assigns job to new player
-				return
-			SSticker.mode.LateSpawn(src)
+			attempt_select_job(job_datum)
 
 		if("continue_join")
 			DIRECT_OUTPUT(usr, browse(null, "window=xenosunbalanced"))
@@ -197,40 +181,7 @@
 	return "\nYou will have to wait at least [SSticker.mode?.respawn_time * 0.1 / 60] minutes before being able to respawn as a marine!"
 
 /mob/new_player/proc/late_choices()
-	var/list/dat = list("<div class='notice'>Round Duration: [DisplayTimeText(world.time - SSticker.round_start_time)]</div>")
-	if(!GLOB.enter_allowed)
-		dat += "<div class='notice red'>You may no longer join the round.</div><br>"
-	dat += "<div class='latejoin-container' style='width: 100%'>"
-	for(var/cat in SSjob.active_joinable_occupations_by_category)
-		var/list/category = SSjob.active_joinable_occupations_by_category[cat]
-		var/datum/job/job_datum = category[1] //use the color of the first job in the category (the department head) as the category color
-		dat += "<fieldset class='latejoin' style='border-color: [job_datum.selection_color]'>"
-		dat += "<legend align='center' style='color: [job_datum.selection_color]'>[job_datum.job_category]</legend>"
-		var/list/dept_dat = list()
-		for(var/job in category)
-			job_datum = job
-			if(!IsJobAvailable(job_datum, TRUE))
-				continue
-			var/command_bold = ""
-			if(job_datum.job_flags & JOB_FLAG_BOLD_NAME_ON_SELECTION)
-				command_bold = " command"
-			var/position_amount
-			if(job_datum.job_flags & JOB_FLAG_HIDE_CURRENT_POSITIONS)
-				position_amount = "?"
-			else if(job_datum.job_flags & JOB_FLAG_SHOW_OPEN_POSITIONS)
-				position_amount = "[job_datum.total_positions - job_datum.current_positions] open positions"
-			else
-				position_amount = job_datum.current_positions
-			dept_dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];lobby_choice=SelectedJob;job_selected=[REF(job_datum)]'>[job_datum.title] ([position_amount])</a>"
-		if(!length(dept_dat))
-			dept_dat += span_nopositions("No positions open.")
-		dat += jointext(dept_dat, "")
-		dat += "</fieldset><br>"
-	dat += "</div>"
-	var/datum/browser/popup = new(src, "latechoices", "Choose Occupation", 680, 580)
-	popup.add_stylesheet("latechoices", 'html/browser/latechoices.css')
-	popup.set_content(jointext(dat, ""))
-	popup.open(FALSE)
+	GLOB.latejoin_menu.ui_interact(src)
 
 
 /mob/new_player/proc/view_manifest()
@@ -354,26 +305,68 @@
 		qdel(src)
 
 
-/mob/new_player/proc/IsJobAvailable(datum/job/job, latejoin = FALSE)
+/// Attempt to latejoin as the given job (from TGUI or legacy href Topic).
+/mob/new_player/proc/attempt_select_job(datum/job/job_datum)
+	if(!SSticker)
+		return FALSE
+	if(!GLOB.enter_allowed)
+		to_chat(src, span_warning("Spawning currently disabled, please observe."))
+		return FALSE
+	if(!job_datum)
+		return FALSE
+	if(!isxenosjob(job_datum) && (SSmonitor.gamestate == SHUTTERS_CLOSED || (SSmonitor.gamestate == GROUNDSIDE && SSmonitor.current_state <= XENOS_LOSING)))
+		var/datum/job/xeno_job = SSjob.GetJobType(/datum/job/xenomorph)
+		if((xeno_job.total_positions - xeno_job.current_positions) > length(GLOB.alive_xeno_list_hive[XENO_HIVE_NORMAL]) * TOO_MUCH_BURROWED_PROPORTION)
+			if(tgui_alert(src, "There is a lack of xeno players on this round, unbalanced rounds are unfun for everyone. Are you sure you want to play as a marine? ", "Warning : the game is unbalanced", list("Yes", "No")) != "Yes")
+				return FALSE
+	if(ispredatorjob(job_datum))
+		if(SSticker.mode.check_predator_late_join(src))
+			SSticker.mode.join_predator(src)
+		return TRUE
+	if(!SSticker.mode.CanLateSpawn(src, job_datum))
+		return FALSE
+	SSticker.mode.LateSpawn(src)
+	return TRUE
+
+/mob/new_player/proc/IsJobAvailable(datum/job/job, latejoin = FALSE, list/reasons)
 	if(!job)
+		if(reasons)
+			reasons += "Invalid job."
 		return FALSE
 	if((job.current_positions >= job.total_positions) && job.total_positions != -1)
+		if(reasons)
+			reasons += "There are no more [job.title] slots available."
 		return FALSE
 	if(is_banned_from(ckey, job.title))
+		if(reasons)
+			reasons += "You are banned from playing as [job.title]."
 		return FALSE
 	if(QDELETED(src))
+		if(reasons)
+			reasons += "You are no longer in the lobby."
 		return FALSE
 	if(!job.player_old_enough(client))
+		if(reasons)
+			reasons += "Your account is too new for [job.title]."
 		return FALSE
-	if(job.required_playtime_remaining(client))
+	var/required_playtime = job.required_playtime_remaining(client)
+	if(required_playtime)
+		if(reasons)
+			reasons += "You need [required_playtime] more minutes of playtime for [job.title]."
 		return FALSE
 	if(!(GLOB.roles_whitelist[ckey] && WHITELIST_PREDATOR) && job == /datum/job/predator)
+		if(reasons)
+			reasons += "You are not whitelisted for this role."
 		return FALSE
 	#ifndef TESTING
 	if(job.boosty_job && SSdiscord.get_boosty_tier(ckey) < BOOSTY_TIER_2)
+		if(reasons)
+			reasons += "This role requires a Boosty subscription."
 		return FALSE
 	#endif
 	if(latejoin && !job.special_check_latejoin(client))
+		if(reasons)
+			reasons += "This role is not available for late join right now."
 		return FALSE
 	return TRUE
 
