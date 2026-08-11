@@ -344,7 +344,15 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", mo
 	if(!istype(M))
 		return
 
-	var/ref = "[REF(user.holder)];[HrefToken()]"
+	if(!M.mob_panel)
+		M.create_player_panel()
+	M.mob_panel.ui_interact(user.mob)
+	log_admin("[key_name(user)] opened the player panel of [key_name(M)].")
+	return
+
+/// Legacy HTML player panel (kept for reference; TGUI panel is used by show_player_panel).
+/proc/show_player_panel_html(mob/M, client/admin_client)
+	var/ref = "[REF(admin_client.holder)];[HrefToken()]"
 	var/body
 
 	body += "<b>[M.name]</b>"
@@ -503,8 +511,8 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", mo
 				body += "<a href='byond://?src=[ref];editappearance=[REF(M)]'>Edit Appearance</a> | "
 				body += "<a href='byond://?src=[ref];randomname=[REF(M)]'>Randomize Name</a>"
 
-	log_admin("[key_name(user)] opened the player panel of [key_name(M)].")
+	log_admin("[key_name(admin_client)] opened the legacy HTML player panel of [key_name(M)].")
 
-	var/datum/browser/browser = new(user.mob, "player_panel_[key_name(M)]", "<div align='center'>Player Panel [key_name(M)]</div>", 575, 555)
+	var/datum/browser/browser = new(admin_client.mob, "player_panel_[key_name(M)]", "<div align='center'>Player Panel [key_name(M)]</div>", 575, 555)
 	browser.set_content(body)
 	browser.open()
