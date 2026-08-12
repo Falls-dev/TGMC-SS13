@@ -48,7 +48,7 @@
 	if(!spidermother)
 		return
 	if(get_dist(src, spidermother) > SPIDERLING_WITHER_RANGE)
-		adjust_brute_loss(25)
+		adjust_brute_loss(75)
 
 /mob/living/carbon/xenomorph/spiderling/Corrupted
 	hivenumber = XENO_HIVE_CORRUPTED

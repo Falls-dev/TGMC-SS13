@@ -93,7 +93,7 @@
 	action_icon_state = "fireball"
 	action_icon = 'icons/Xeno/actions/pyrogen.dmi'
 	desc = "Release a fireball that explodes in a 3x3 area on contact."
-	ability_cost = 300
+	ability_cost = 200
 	cooldown_duration = 15 SECONDS
 	keybinding_signals = list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_FIREBALL,
@@ -101,8 +101,6 @@
 
 /datum/action/ability/activable/xeno/fireball/use_ability(atom/target)
 	playsound(get_turf(xeno_owner), 'sound/effects/wind.ogg', 50)
-	if(!do_after(xeno_owner, 0.6 SECONDS, IGNORE_HELD_ITEM, target, BUSY_ICON_DANGER))
-		return fail_activate()
 
 	if(!can_use_ability(target, FALSE, ABILITY_IGNORE_PLASMA))
 		return fail_activate()

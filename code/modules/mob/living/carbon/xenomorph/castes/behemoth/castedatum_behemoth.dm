@@ -27,7 +27,7 @@
 
 	// *** Flags *** //
 	caste_flags = CASTE_EVOLUTION_ALLOWED|CASTE_IS_STRONG|CASTE_STAGGER_RESISTANT
-	can_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_BE_GIVEN_PLASMA|CASTE_CAN_BE_LEADER
+	can_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_BE_GIVEN_PLASMA|CASTE_CAN_BE_LEADER|CASTE_CAN_BE_RULER
 	caste_traits = null
 
 	// *** Defense *** //
@@ -35,6 +35,9 @@
 
 	// *** Minimap Icon *** //
 	minimap_icon = "behemoth"
+
+	// *** Ruler Abilities *** ///
+	queen_leader_limit = 4
 
 	// *** Abilities *** ///
 	actions = list(

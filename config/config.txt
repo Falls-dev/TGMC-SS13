@@ -186,16 +186,22 @@ NOTIFY_NEW_ACCOUNT_AGE 7
 ##Note: all EXP tracking/restriction require database to be enabled.
 
 ## Unhash this to track player playtime in the database.
-#USE_EXP_TRACKING
+USE_EXP_TRACKING
 
 ## Allows admins to bypass job playtime requirements.
-#USE_EXP_RESTRICTIONS_ADMIN_BYPASS
+USE_EXP_RESTRICTIONS_ADMIN_BYPASS
+
+## Comment this out to stop admins being able to choose their personal ooccolor
+ALLOW_ADMIN_OOCCOLOR
 
 ## Use XP restrictions for command roles
-#USE_EXP_RESTRICTIONS_COMMAND
+USE_EXP_RESTRICTIONS_COMMAND
 
 ## Use playtime in hours restrictions for command
 #USE_EXP_RESTRICTIONS_COMMAND_HOURS
+
+## Comment this out if players don't need locks for non-command roles
+USE_EXP_RESTRICTIONS_OTHER
 
 ##Note: all population caps can be used with each other if desired.
 

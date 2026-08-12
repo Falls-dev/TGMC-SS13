@@ -22,9 +22,9 @@
 #define HEAD_LAYER 13
 #define COLLAR_LAYER 12
 #define SUIT_STORE_LAYER 11
-#define KAMA_LAYER 10
-#define BACK_LAYER 9
-#define CAPE_LAYER 8
+#define BACK_LAYER 10
+#define CAPE_LAYER 9
+#define KAMA_LAYER 8
 #define HANDCUFF_LAYER 7
 #define L_HAND_LAYER 6
 #define R_HAND_LAYER 5
@@ -632,6 +632,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define CASTE_CAN_HOLD_JELLY (1<<5)//whether we can hold fireproof jelly in our hands
 #define CASTE_CAN_CORRUPT_GENERATOR (1<<6) //Can corrupt a generator
 #define CASTE_CAN_RIDE_CRUSHER (1<<7) //Can ride a crusher
+#define CASTE_CAN_BE_RULER (1<<6) // Caste can become a ruler if no queen / shrike / king exists in the hive.
 
 //Charge-Crush
 #define CHARGE_OFF 0
@@ -740,9 +741,9 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// Damage on hitting a mob using fire charge
 #define PYROGEN_FIRECHARGE_DAMAGE 10
 /// Bonus damage per fire stack
-#define PYROGEN_FIRECHARGE_DAMAGE_PER_STACK 5
+#define PYROGEN_FIRECHARGE_DAMAGE_PER_STACK 3
 /// Bonus damage for directly hitting someone
-#define PYROGEN_FIREBALL_DIRECT_DAMAGE 30
+#define PYROGEN_FIREBALL_DIRECT_DAMAGE 20
 /// Damage in a 3x3 AOE when we hit anything
 #define PYROGEN_FIREBALL_AOE_DAMAGE 20
 /// Damage in a 3x3 AOE when we hit a vehicle

@@ -24,7 +24,7 @@
 	max_health = 500
 
 	// *** Flags *** //
-	can_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_BE_GIVEN_PLASMA|CASTE_CAN_BE_LEADER
+	can_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_BE_GIVEN_PLASMA|CASTE_CAN_BE_LEADER|CASTE_CAN_BE_RULER
 	caste_traits = list(TRAIT_STOPS_TANK_COLLISION)
 
 	// *** Defense *** //
@@ -35,6 +35,9 @@
 
 	// *** Minimap Icon *** //
 	minimap_icon = "crusher"
+
+	// *** Ruler Abilities *** ///
+	queen_leader_limit = 4
 
 	// *** Crusher Abilities *** //
 	stomp_damage = 60

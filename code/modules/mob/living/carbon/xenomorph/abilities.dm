@@ -498,7 +498,7 @@
 	if(xeno_owner.current_aura && xeno_owner.current_aura.aura_types[1] == phero_choice)
 		xeno_owner.balloon_alert(xeno_owner, "Stop emitting")
 		QDEL_NULL(xeno_owner.current_aura)
-		if(isxenoqueen(xeno_owner))
+		if(xeno_owner.hive?.living_xeno_ruler == xeno_owner)
 			xeno_owner.hive?.update_leader_pheromones()
 		xeno_owner.hud_set_pheromone()
 		return fail_activate()
@@ -507,7 +507,7 @@
 	xeno_owner.balloon_alert(xeno_owner, "[phero_choice]")
 	playsound(xeno_owner.loc, SFX_ALIEN_DROOL, 25)
 
-	if(isxenoqueen(xeno_owner))
+	if(xeno_owner.hive?.living_xeno_ruler == xeno_owner)
 		xeno_owner.hive?.update_leader_pheromones()
 	xeno_owner.hud_set_pheromone() //Visual feedback that the xeno has immediately started emitting pheromones
 	succeed_activate()
