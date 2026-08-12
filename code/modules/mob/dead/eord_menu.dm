@@ -1,9 +1,10 @@
 /**
  * # EORD menu
  *
- * TGUI popup offered only to /mob/new_player (lobby) when EORD starts or when they
- * log in while EORD is already running. Ghosts and in-round players still get the
- * OOC verbs but not this panel.
+ * TGUI popup offered only to /mob/new_player (lobby) who have End of Round Deathmatch
+ * enabled in preferences (BE_DEATHMATCH), when EORD starts or when they log in while
+ * EORD is already running. Ghosts and in-round players still get the OOC verbs but
+ * not this panel.
  *
  * This is a stateless global controller, similar to [/datum/latejoin_menu]: all of the actual work
  * (spawning the EORD body) is still done by the pre-existing do_eord_respawn()/do_xeno_eord_respawn()
@@ -64,8 +65,10 @@ GLOBAL_DATUM_INIT(eord_menu, /datum/eord_menu, new)
 		return FALSE
 	return TRUE
 
-/// Opens the EORD TGUI menu for a mob/new_player sitting in the lobby while EORD is active.
+/// Opens the EORD TGUI menu for a lobby player who opted into End of Round Deathmatch.
 /proc/open_eord_menu(mob/target)
 	if(!isnewplayer(target) || !target.client)
+		return
+	if(!(target.client.prefs?.be_special & BE_DEATHMATCH))
 		return
 	GLOB.eord_menu.ui_interact(target)
