@@ -1,17 +1,9 @@
 /**
- * Shows a list of currently running polls a player can vote/has voted on
- *
+ * Opens the TGUI polls menu for lobby players.
+ * IRV polls still fall back to the legacy HTML sortable window from within the menu.
  */
 /mob/new_player/proc/handle_playeR_POLLSing()
-	var/list/output = list("<div align='center'><B>Player polls</B><hr><table>")
-	var/rs = REF(src)
-	for(var/p in GLOB.polls)
-		var/datum/poll_question/poll = p
-		if((poll.admin_only && !client.holder) || poll.future_poll)
-			continue
-		output += "<tr bgcolor='#e2e2e2'><td><a href='byond://?src=[rs];viewpoll=[REF(poll)]'><b>[poll.question]</b></a></td></tr>"
-	output += "</table>"
-	src << browse(HTML_SKELETON(jointext(output, "")),"window=playerpolllist;size=500x300")
+	GLOB.poll_menu.ui_interact(src)
 
 /**
  * Redirects a player to the correct poll window based on poll type.

@@ -2119,6 +2119,7 @@
 #include "code\modules\mob\new_player\new_player.dm"
 #include "code\modules\mob\new_player\latejoin_menu.dm"
 #include "code\modules\mob\new_player\poll.dm"
+#include "code\modules\mob\new_player\poll_menu.dm"
 #include "code\modules\mob\new_player\preferences_setup.dm"
 #include "code\modules\mob\new_player\sprite_accessories.dm"
 #include "code\modules\mob\new_player\yautja_hair.dm"
