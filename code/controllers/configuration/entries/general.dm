@@ -288,6 +288,10 @@ Master controller and performance related.
 	max_val = 100   //byond will start crapping out at 50, so this is just ridic
 	var/sync_validate = FALSE
 
+/// When enabled, roundstart slows a few background subsystems (lighting/tgui/statpanels) to reduce mid/late-round lag on smaller servers.
+/datum/config_entry/flag/lazy_subsystem_timings
+	config_entry_value = TRUE
+
 /datum/config_entry/number/fps/ValidateAndSet(str_val)
 	. = ..()
 	if(.)

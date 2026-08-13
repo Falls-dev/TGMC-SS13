@@ -60,6 +60,8 @@ Registers signals, handles the pathfinding element addition/removal alongside ma
 	var/list/ability_list = list()
 	///Count of how many times we've failed to form a path to our goal node
 	var/fail_goal_path_count = 0
+	/// Throttle full hostile get_nearest_target scans while already engaged
+	var/next_hostile_scan_time = 0
 
 /datum/ai_behavior/New(loc, mob/parent_to_assign, atom/escorted_atom)
 	..()
@@ -91,7 +93,6 @@ Registers signals, handles the pathfinding element addition/removal alongside ma
 
 ///Register ai behaviours
 /datum/ai_behavior/proc/start_ai()
-	START_PROCESSING(SSprocessing, src)
 	RegisterSignal(SSdcs, COMSIG_GLOB_AI_GOAL_SET, PROC_REF(set_goal_node))
 	RegisterSignal(mob_parent, COMSIG_OBSTRUCTED_MOVE, TYPE_PROC_REF(/datum/ai_behavior, deal_with_obstacle))
 	RegisterSignals(mob_parent, list(ACTION_GIVEN, ACTION_REMOVED), PROC_REF(refresh_abilities))
@@ -221,26 +222,29 @@ Registers signals, handles the pathfinding element addition/removal alongside ma
 
 ///Finds the closest node to an atom
 /datum/ai_behavior/proc/find_closest_node(atom/target, avoid_node)
+	if(QDELETED(target) || !target.z)
+		return
 	var/closest_distance = MAX_NODE_RANGE //squared because we are using the cheap get dist
 	var/current_closest
-	for(var/obj/effect/ai_node/ai_node AS in GLOB.all_nodes)
-		if(!ai_node)
+	for(var/obj/effect/ai_node/ai_node AS in GLOB.nodes_by_zlevel["[target.z]"])
+		if(QDELETED(ai_node) || ai_node == avoid_node)
 			continue
-		if(ai_node == avoid_node)
-			continue
-		if(ai_node.z != target.z || get_dist(ai_node, target) >= closest_distance)
+		var/distance = get_dist(ai_node, target)
+		if(distance >= closest_distance)
 			continue
 		current_closest = ai_node
-		closest_distance = get_dist(ai_node, target)
+		closest_distance = distance
+		if(!closest_distance)
+			break
 	return current_closest
 
 ///Set the current node to next_node
 /datum/ai_behavior/proc/set_current_node(obj/effect/ai_node/next_node)
 	if(current_node)
 		UnregisterSignal(current_node, COMSIG_QDELETING)
-	if(next_node)
-		RegisterSignal(current_node, COMSIG_QDELETING, PROC_REF(unset_target), TRUE)
 	current_node = next_node
+	if(current_node)
+		RegisterSignal(current_node, COMSIG_QDELETING, PROC_REF(unset_target), TRUE)
 
 ///Signal handler when the ai is blocked by an obstacle
 /datum/ai_behavior/proc/deal_with_obstacle(datum/source, direction)
@@ -385,7 +389,13 @@ Registers signals, handles the pathfinding element addition/removal alongside ma
 /datum/ai_behavior/process()
 	if(!escorted_atom || (get_dist(mob_parent, escorted_atom) > AI_ESCORTING_BREAK_DISTANCE) || mob_parent.z != escorted_atom.z || isainode(escorted_atom))
 		set_escort()
-	var/atom/next_target = get_nearest_target(mob_parent, target_distance, TARGET_HOSTILE, mob_parent.faction, mob_parent.get_xeno_hivenumber(), TRUE)
+	var/atom/next_target
+	// Reuse current combat target briefly to avoid scanning every living/xeno/turret/vehicle every process tick.
+	if(combat_target && !QDELETED(combat_target) && (world.time < next_hostile_scan_time) && (get_dist(mob_parent, combat_target) <= target_distance))
+		next_target = combat_target
+	else
+		next_hostile_scan_time = world.time + 1 SECONDS
+		next_target = get_nearest_target(mob_parent, target_distance, TARGET_HOSTILE, mob_parent.faction, mob_parent.get_xeno_hivenumber(), TRUE)
 	look_for_new_state(next_target)
 	state_process(next_target)
 

@@ -30,9 +30,13 @@
 	..()
 	GLOB.all_nodes += src
 	unique_id = id_counter++
+	if(z)
+		LAZYADD(GLOB.nodes_by_zlevel["[z]"], src)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/ai_node/LateInitialize()
+	if(z && !(src in GLOB.nodes_by_zlevel["[z]"]))
+		LAZYADD(GLOB.nodes_by_zlevel["[z]"], src)
 	make_adjacents()
 	if(SSadvanced_pathfinding.initialized)
 		rustg_add_node_astar(json_encode(serialize()))
@@ -59,6 +63,8 @@
 
 /obj/effect/ai_node/Destroy()
 	GLOB.all_nodes[unique_id + 1] = null
+	if(z)
+		LAZYREMOVE(GLOB.nodes_by_zlevel["[z]"], src)
 	rustg_remove_node_astar("[unique_id]")
 	//Remove our reference to self from nearby adjacent node's adjacent nodes
 	for(var/direction AS in adjacent_nodes)
@@ -105,8 +111,8 @@
 ///Clears the adjacencies of src and repopulates it, it will consider nodes "adjacent" to src should it be less 15 turfs away
 /obj/effect/ai_node/proc/make_adjacents(bypass_diagonal_check = FALSE)
 	adjacent_nodes = list()
-	for(var/obj/effect/ai_node/node AS in GLOB.all_nodes)
-		if(!node || node == src || node.z != z || get_dist(src, node) > MAX_NODE_RANGE || (!bypass_diagonal_check && !Adjacent(node) && ISDIAGONALDIR(get_dir(src, node))))
+	for(var/obj/effect/ai_node/node AS in GLOB.nodes_by_zlevel["[z]"])
+		if(!node || node == src || get_dist(src, node) > MAX_NODE_RANGE || (!bypass_diagonal_check && !Adjacent(node) && ISDIAGONALDIR(get_dir(src, node))))
 			continue
 		if(get_dist(src, adjacent_nodes["[get_dir(src, node)]"]) < get_dist(src, node))
 			continue
