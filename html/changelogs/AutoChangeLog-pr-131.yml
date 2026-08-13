@@ -1,0 +1,5 @@
+author: "NikolaTariZzZ"
+delete-after: True
+changes:
+  - rscadd: "Вернул мосинку маринам."
+  - balance: "Чуть чуть увеличил точность мосинке, уменьшил ей и мартини генри вилд дилей на 0.1."
