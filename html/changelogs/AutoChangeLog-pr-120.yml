@@ -1,0 +1,4 @@
+author: "LordDeferson"
+delete-after: True
+changes:
+  - balance: "Запрет на установку турелей друг-к-другу с 2 до 1"
