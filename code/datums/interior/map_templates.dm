@@ -9,6 +9,10 @@
 	mappath = "[prefix][filename].dmm"
 	return ..()
 
+/datum/map_template/interior/recontank
+	name = "Fallow Recon Vehicle Tracked interior template Copy"
+	filename = "recontank"
+
 /datum/map_template/interior/medium_tank
 	name = "medium tank interior template"
 	filename = "tank"

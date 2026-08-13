@@ -164,6 +164,44 @@
 	max_rounds = 1
 	loading_sound = 'sound/vehicles/weapons/coilgun_cycle.ogg'
 
+// Recon Tank
+/obj/item/ammo_magazine/tank/lowvel_cannon_recon
+	name = "EM-2500 HEAT shell (76mm)"
+	desc = "A 76mm HEAT shell filled for targeting hard targets."
+	caliber = CALIBER_76MM
+	icon_state = "lvrt_cannon_heat"
+	w_class = WEIGHT_CLASS_NORMAL
+	default_ammo = /datum/ammo/rocket/lowvel_heat
+	max_rounds = 1
+	loading_sound = 'sound/vehicles/weapons/ltb_reload.ogg'
+
+/obj/item/ammo_magazine/tank/lowvel_cannon_recon/high_explosive
+	name = "EM-2500 HE shell (76mm)"
+	desc = "A 76mm HE shell filled for targeting large groups of soft targets."
+	caliber = CALIBER_76MM
+	icon_state = "lvrt_cannon_heat"
+	default_ammo = /datum/ammo/rocket/lowvel_high_explosive
+	max_rounds = 1
+	loading_sound = 'sound/vehicles/weapons/ltb_reload.ogg'
+
+/obj/item/ammo_magazine/tank/lowvel_high_explosive_fragmenting_antipersonnel
+	name = "EM-2500 HEFA shell (76mm)"
+	desc = "A 76mm HEFA shell filled with buckshot shrapnel for targeting large groups of soft targets."
+	caliber = CALIBER_76MM
+	icon_state = "lvrt_cannon_hefa"
+	default_ammo = /datum/ammo/rocket/lowvel_high_explosive_fragmenting_antipersonnel
+	max_rounds = 1
+	loading_sound = 'sound/vehicles/weapons/ltb_reload.ogg'
+
+/obj/item/ammo_magazine/tank/lowvel_canister
+	name = "EM-2400 High-Combustion fuel"
+	desc = "A canister filled with High-Combustion fuel."
+	caliber = CALIBER_FUEL_THICK
+	icon_state = "lvrt_flamer"
+	default_ammo = /datum/ammo/flamethrower/blue/lowvel_flamer
+	max_rounds = 50
+	loading_sound = 'sound/vehicles/weapons/ltb_reload.ogg'
+
 // ICC Recon Tank
 /obj/item/ammo_magazine/tank/sarden_clip
 	name = "EM-2600 'SARDEN' APDS Clip (30mm)"
