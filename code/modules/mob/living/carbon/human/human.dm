@@ -150,7 +150,7 @@
 
 	take_overall_damage(modified_severity * 0.5, BRUTE, updating_health = TRUE, max_limbs = 4)
 	take_overall_damage(modified_severity * 0.5, BURN, updating_health = TRUE, max_limbs = 4)
-	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, explosion_throw), modified_severity, direction)explosion_throw(modified_severity, direction)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, explosion_throw), modified_severity, direction)
 
 	TIMER_COOLDOWN_START(src, COOLDOWN_MOB_EX_ACT, 0.1 SECONDS) // this is to prevent x2 damage from mob getting thrown into the explosions wave
 
@@ -918,12 +918,17 @@
 	return TRUE
 
 
-/mob/living/carbon/human/do_camera_update(oldloc, obj/item/radio/headset/mainship/H)
-	if(QDELETED(H?.camera) || oldloc == get_turf(src))
+/mob/living/carbon/human/do_camera_update(obj/item/radio/headset/mainship/H)
+	if(QDELETED(H?.camera))
+		return
+
+	var/turf/newloc = get_turf(src)
+	var/turf/oldloc = H.camera.cameranet_turf
+	if(oldloc == newloc)
 		return
 
 	var/datum/cameranet/net = H.camera.parent_cameranet
-	net.updatePortableCamera(H.camera)
+	net.updatePortableCamera(H.camera, oldloc, newloc, 1 SECONDS)
 
 
 /mob/living/carbon/human/update_camera_location(oldloc)
@@ -937,7 +942,8 @@
 	if(QDELETED(H.camera))
 		return
 
-	addtimer(CALLBACK(src, PROC_REF(do_camera_update), oldloc, H), 1 SECONDS)
+	// Coalesce move spam into one net update; do NOT skip intra-chunk moves — FoV shifts every tile.
+	addtimer(CALLBACK(src, PROC_REF(do_camera_update), H), 1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 
 /mob/living/carbon/human/get_language_holder()

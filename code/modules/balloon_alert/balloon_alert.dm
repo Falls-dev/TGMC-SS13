@@ -11,6 +11,8 @@
 /// Creates text that will float from the atom upwards to the viewer.
 /atom/proc/balloon_alert(mob/viewer, text)
 	SHOULD_NOT_SLEEP(TRUE)
+	if(isnull(viewer))
+		return
 
 	INVOKE_ASYNC(src, PROC_REF(balloon_alert_perform), viewer, text)
 
@@ -33,7 +35,7 @@
 // I would've made the maptext_height update on its own, but I don't know
 // if this would look bad on laggy clients.
 /atom/proc/balloon_alert_perform(mob/viewer, text)
-	var/client/viewer_client = viewer.client
+	var/client/viewer_client = viewer?.client
 	if (isnull(viewer_client))
 		return
 

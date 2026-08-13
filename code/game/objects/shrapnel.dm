@@ -9,6 +9,13 @@
  * * on_hit_coefficient: how high is the chance of hitting mob in the epicenter
  */
 /proc/create_shrapnel(turf/epicenter, shrapnel_number = 10, shrapnel_direction, shrapnel_spread = 45, datum/ammo/shrapnel_type = /datum/ammo/bullet/shrapnel, on_hit_coefficient = 15)
+	// Under heavy cellauto load, structure-death shrapnel floods projectiles and dominates lag.
+	var/active_cells = length(SScellauto.cellauto_cells)
+	if(active_cells > 96)
+		return
+	if(active_cells > 48)
+		shrapnel_number = min(shrapnel_number, 2)
+
 	var/initial_angle = 0
 	var/angle_increment = 0
 

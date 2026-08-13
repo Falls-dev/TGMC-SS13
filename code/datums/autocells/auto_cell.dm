@@ -17,10 +17,10 @@
 		qdel(src)
 		return
 
-	// Attempt to merge the two cells if they end up in the same turf
-	var/datum/automata_cell/our_cell = our_turf.get_cell(type)
-	if(our_cell && merge(our_cell))
-		qdel(src)
+	// Attempt to merge if another cell of this type already occupies the turf.
+	// merge() returns TRUE if WE survive (and qdels the loser); FALSE if we died.
+	var/datum/automata_cell/existing = our_turf.get_cell(type)
+	if(existing && !merge(existing))
 		return
 
 	in_turf = our_turf
@@ -58,7 +58,7 @@
 
 /// Use this proc to merge this cell with another one if the other cell enters the same turf
 /// Return TRUE if this cell should survive the merge (the other one will die/be qdeleted)
-/// Return FALSE if this cell should die and be replaced by the other cell
+/// Return FALSE if this cell died and is replaced by the other cell
 /datum/automata_cell/proc/merge(datum/automata_cell/other_cell)
 	return TRUE
 

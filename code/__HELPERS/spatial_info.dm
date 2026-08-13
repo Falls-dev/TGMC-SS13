@@ -303,7 +303,7 @@
 /// Like view but bypasses luminosity check
 /proc/get_hear(range, atom/source)
 	var/lum = source.luminosity
-	source.luminosity = 6
+	source.luminosity = range + 2
 
 	. = view(range, source)
 	source.luminosity = lum

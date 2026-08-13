@@ -209,13 +209,15 @@
 	var/datum/browser/modal/alert/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout)
 	A.open()
 	A.wait()
+	. = null
 	switch(A.selectedbutton)
 		if(1)
-			return Button1
+			. = Button1
 		if(2)
-			return Button2
+			. = Button2
 		if(3)
-			return Button3
+			. = Button3
+	qdel(A)
 
 /datum/browser/modal
 	var/opentime = 0

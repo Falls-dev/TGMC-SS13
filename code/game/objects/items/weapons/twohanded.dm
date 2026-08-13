@@ -133,24 +133,44 @@
 	item_flags = DELONDROP|TWOHANDED|WIELDED
 	resistance_flags = RESIST_ALL
 
+/// Clears the wielded state on the paired weapon without calling remove_offhand (which would qdel us again).
+/obj/item/weapon/twohanded/offhand/proc/clear_paired_wield(mob/user)
+	if(!user)
+		return
+	var/obj/item/other = (user.l_hand == src) ? user.r_hand : user.l_hand
+	if(!istype(other) || !CHECK_MULTIPLE_BITFIELDS(other.item_flags, TWOHANDED|WIELDED))
+		return
+	other.toggle_wielded(user, FALSE)
+	SEND_SIGNAL(other, COMSIG_ITEM_UNWIELD, user)
+	var/sf = findtext(other.name, " (Wielded)", -10) // 10 == length(" (Wielded)")
+	if(sf)
+		other.name = copytext(other.name, 1, sf)
+	else
+		other.name = "[initial(other.name)]"
+	other.update_worn_icon_state()
+	user.update_inv_l_hand()
+	user.update_inv_r_hand()
+
 /obj/item/weapon/twohanded/offhand/Destroy()
 	if(ismob(loc))
-		var/mob/user = loc
-		var/obj/item/main_hand = user.get_active_held_item()
-		if(main_hand)
-			main_hand.unwield(user)
+		clear_paired_wield(loc)
 	return ..()
 
 /obj/item/weapon/twohanded/offhand/unwield(mob/user)
 	return
 
 /obj/item/weapon/twohanded/offhand/dropped(mob/user)
+	clear_paired_wield(user)
 	return ..()
 
 /obj/item/weapon/twohanded/offhand/forceMove(atom/destination)
-	if(!ismob(destination))
+	// Move first, then self-delete if we left a mob's hands.
+	// qdel-before-parent was a common harddel source (inventory refs + Destroy->unwield cycles).
+	. = ..()
+	if(QDELETED(src))
+		return
+	if(!ismob(loc))
 		qdel(src)
-	return ..()
 
 /*
 * Fireaxe

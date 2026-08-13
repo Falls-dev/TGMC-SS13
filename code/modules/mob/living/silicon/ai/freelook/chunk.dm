@@ -1,8 +1,6 @@
-#define UPDATE_BUFFER_TIME (2.5 SECONDS)
-
 // CAMERA CHUNK
 //
-// A 16x16 grid of the map with a list of turfs that can be seen, are visible and are dimmed.
+// A grid of the map with a list of turfs that can be seen, are visible and are dimmed.
 // Allows the AI Eye to stream these chunks and know what it can and cannot see.
 
 /datum/camerachunk
@@ -57,9 +55,7 @@
  * Updates the chunk, makes sure that it doesn't update too much. If the chunk isn't being watched it will
  * instead be flagged to update the next time an AI Eye moves near it.
  *
- * update_delay_buffer is used for cameras that are moving around, which are cyborg inbuilt cameras and
- * mecha onboard cameras. This buffer should be usually lower than UPDATE_BUFFER_TIME because
- * otherwise a moving camera can run out of its own view before updating static.
+ * update_delay_buffer is used for cameras that are moving around (headset cams, etc).
  */
 /datum/camerachunk/proc/hasChanged(update_now = 0, update_delay_buffer = UPDATE_BUFFER_TIME)
 	if(seenby.len || update_now)
@@ -69,23 +65,26 @@
 
 
 /// The actual updating. It gathers the visible turfs from cameras and puts them into the appropiate lists.
-/// Accepts an optional partial_update argument, that blocks any calls out to chunks that could affect us, like above or below
 /datum/camerachunk/proc/update(partial_update = FALSE)
 	var/list/updated_visible_turfs = list()
 
 	for(var/z_level in lower_z to upper_z)
 		for(var/obj/machinery/camera/current_camera as anything in cameras["[z_level]"])
-			if(!current_camera || !current_camera.can_use())
+			if(!current_camera?.can_use())
 				continue
 
 			var/turf/point = locate(src.x + (CHUNK_SIZE / 2), src.y + (CHUNK_SIZE / 2), z_level)
-			if(get_dist(point, current_camera) > CHUNK_SIZE + (CHUNK_SIZE / 2))
+			if(get_dist(point, current_camera) > MAX_CAMERA_RANGE + (CHUNK_SIZE / 2))
 				continue
 
-			for(var/turf/vis_turf in current_camera.can_see())
-				if(turfs[vis_turf])
-					updated_visible_turfs[vis_turf] = vis_turf
+			// Left-hand & with turfs is a load-bearing performance pattern from tgstation#94530
+			for(var/turf/vis_turf as anything in current_camera.can_see() & turfs)
+				updated_visible_turfs[vis_turf] = vis_turf
 
+	update_with_turfs(updated_visible_turfs)
+
+/// Takes a list of newly visible turfs, updates our static images to match
+/datum/camerachunk/proc/update_with_turfs(list/updated_visible_turfs)
 	///new turfs that we couldnt see last update but can now
 	var/list/newly_visible_turfs = updated_visible_turfs - visibleTurfs
 	///turfs that we could see last update but cant see now
@@ -139,17 +138,19 @@
 	var/turf/upper_turf = get_highest_turf(locate(x, y, lower_z))
 	src.upper_z = upper_turf.z
 
+	// Local caches / AABB bounds (tgstation#94530) — avoid urange()
+	var/list/cameras = src.cameras
+	var/list/turfs = src.turfs
+	var/list/visibleTurfs = src.visibleTurfs
+	var/list/obscuredTurfs = src.obscuredTurfs
+	var/list/active_static_images = src.active_static_images
+	var/lower_x = x
+	var/lower_y = y
+	var/upper_x = min(lower_x + CHUNK_SIZE - 1, world.maxx)
+	var/upper_y = min(lower_y + CHUNK_SIZE - 1, world.maxy)
+
 	for(var/z_level in lower_z to upper_z)
-		var/list/local_cameras = list()
-		for(var/obj/machinery/camera/camera in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE * 0.5), y + (CHUNK_SIZE * 0.5), z_level)))
-			if(camera.can_use())
-				local_cameras += camera
-
-		for(var/mob/living/silicon/sillycone in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE * 0.5), y + (CHUNK_SIZE * 0.5), z_level)))
-			if(sillycone.builtInCamera?.can_use())
-				local_cameras += sillycone.builtInCamera
-
-		cameras["[z_level]"] = local_cameras
+		cameras["[z_level]"] = list()
 
 		var/image/mirror_from = GLOB.cameranet.obscured_images[GET_Z_PLANE_OFFSET(z_level) + 1]
 		var/turf/chunk_corner = locate(x, y, z_level)
@@ -158,21 +159,43 @@
 			our_image.loc = lad
 			turfs[lad] = our_image
 
-		for(var/obj/machinery/camera/camera as anything in local_cameras)
-			if(!camera)
-				continue
+	// Collect cameras that can see into this chunk via AABB (faster than urange)
+	for(var/obj/machinery/camera/camera as anything in GLOB.cameranet.cameras)
+		if(!camera)
+			continue
+		var/turf/camera_loc = get_turf(camera)
+		if(!camera_loc)
+			continue
+		if(camera_loc.z < lower_z || camera_loc.z > upper_z)
+			continue
+		// AABB
+		if(camera_loc.x + MAX_CAMERA_RANGE < lower_x || camera_loc.x - MAX_CAMERA_RANGE > upper_x)
+			continue
+		if(camera_loc.y + MAX_CAMERA_RANGE < lower_y || camera_loc.y - MAX_CAMERA_RANGE > upper_y)
+			continue
+		if(!camera.can_use())
+			continue
 
-			if(!camera.can_use())
-				continue
+		cameras["[camera_loc.z]"] += camera
+		for(var/turf/vis_turf as anything in camera.can_see() & turfs)
+			visibleTurfs[vis_turf] = vis_turf
 
-			for(var/turf/vis_turf in camera.can_see())
-				if(turfs[vis_turf])
-					visibleTurfs[vis_turf] = vis_turf
+	// Also pick up silicon built-in cameras (may or may not be in cameranet.cameras depending on type)
+	for(var/mob/living/silicon/sillycone as anything in GLOB.silicon_mobs)
+		if(!sillycone.builtInCamera?.can_use())
+			continue
+		var/turf/camera_loc = get_turf(sillycone)
+		if(!camera_loc || camera_loc.z < lower_z || camera_loc.z > upper_z)
+			continue
+		if(camera_loc.x + MAX_CAMERA_RANGE < lower_x || camera_loc.x - MAX_CAMERA_RANGE > upper_x)
+			continue
+		if(camera_loc.y + MAX_CAMERA_RANGE < lower_y || camera_loc.y - MAX_CAMERA_RANGE > upper_y)
+			continue
+		cameras["[camera_loc.z]"] |= sillycone.builtInCamera
+		for(var/turf/vis_turf as anything in sillycone.builtInCamera.can_see() & turfs)
+			visibleTurfs[vis_turf] = vis_turf
 
 	for(var/turf/obscured_turf as anything in turfs - visibleTurfs)
 		var/image/new_static = turfs[obscured_turf]
 		active_static_images += new_static
 		obscuredTurfs[obscured_turf] = new_static
-
-#undef UPDATE_BUFFER_TIME
-#undef CHUNK_SIZE
