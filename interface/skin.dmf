@@ -148,6 +148,14 @@ window "mapwindow"
 		text = ""
 		font-size = 9
 		align = left
+	elem "escape_menu"
+		type = BROWSER
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		background-color = none
+		is-visible = false
 
 window "infowindow"
 	elem "infowindow"

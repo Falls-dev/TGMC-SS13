@@ -240,6 +240,8 @@
 
 	tgui_say.initialize()
 
+	initialize_escape_menu()
+
 	// Initialize stat panel
 	stat_panel.initialize(
 		inline_html = file("html/statbrowser.html"),
