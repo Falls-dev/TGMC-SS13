@@ -1,11 +1,14 @@
 #!/bin/sh
-# TGS PreSynchronize: compile YAML changelogs and optionally post new entries to Discord.
+# TGS PreSynchronize: Генерирует чеинжлоги и постит их в игру и в Дискорд
 #
-# Python third-party modules (install via pip):
-#   PyYAML  — only external dependency for tools/ss13_genchangelog.py
+# Петухон модули:
+#   PyYAML - для взаимодействия с YAML файлами (чейнжлоги)
 #
-# Discord notifications (optional): set CHANGELOG_DISCORD_HOOK in config/config.txt
-# on the server (see config/ported_features.txt).
+# Discord: установите CHANGELOG_DISCORD_HOOK полной ссылкой на вебхук
+# Без него скрипт будет генерировать ченжлоги, но не будет постить их в Дискорд
+
+# Дискорд вебхук, уберите решётку перед строкой ниже
+# CHANGELOG_DISCORD_HOOK="${CHANGELOG_DISCORD_HOOK:-https://discord.com/api/webhooks/12345/abcdefg}"
 
 has_python="$(command -v python3)"
 has_git="$(command -v git)"
@@ -31,6 +34,18 @@ echo "Installing pip dependencies (PyYAML for changelog script)..."
 pip3 install -r tools/requirements-changelog.txt
 
 cd "$1"
+
+# Если есть вебхук то скрипт сжирает *.yml и постит сообщение в Дискорд
+if [ -n "$CHANGELOG_DISCORD_HOOK" ]; then
+	echo "Posting pending changelogs to Discord..."
+	# Failures here must not block archive compile / deploy.
+	set +e
+	CHANGELOG_DISCORD_HOOK="$CHANGELOG_DISCORD_HOOK" \
+		python3 tools/ss13_discord_changelog.py html/changelogs --webhook "$CHANGELOG_DISCORD_HOOK"
+	set -e
+else
+	echo "CHANGELOG_DISCORD_HOOK empty; skipping Discord changelog post."
+fi
 
 echo "Running changelog script..."
 python3 tools/ss13_genchangelog.py html/changelogs
