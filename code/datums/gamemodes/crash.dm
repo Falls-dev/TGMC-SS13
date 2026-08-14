@@ -1,6 +1,7 @@
 /datum/game_mode/infestation/crash
 	name = "Crash"
 	config_tag = "Crash"
+	esc_menu_name = "Canterbury" // Потому что спавн происходит прямо на нём а не на Талосе
 	required_players = 2
 	round_type_flags = MODE_INFESTATION|MODE_XENO_SPAWN_PROTECT|MODE_DEAD_GRAB_FORBIDDEN|MODE_DISALLOW_RAILGUN|MODE_PSY_POINTS|MODE_PSY_POINTS_ADVANCED|MODE_SILOS_SPAWN_MINIONS|MODE_ALLOW_XENO_QUICKBUILD|MODE_HAS_MINERS|MODE_ALLOW_MARINE_QUICKBUILD
 	xeno_abilities_flags = ABILITY_CRASH
@@ -49,6 +50,7 @@
 	// Spawn the ship
 	if(TGS_CLIENT_COUNT >= 25)
 		shuttle_id = SHUTTLE_BIGBURY
+		esc_menu_name = "Bigbury" // Заменяем Кантебери
 	if(!SSmapping.shuttle_templates[shuttle_id])
 		message_admins("Gamemode: couldn't find a valid shuttle template for [shuttle_id]")
 		CRASH("Shuttle [shuttle_id] wasn't found and can't be loaded")
