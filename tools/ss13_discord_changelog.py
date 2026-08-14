@@ -31,7 +31,8 @@ import urllib.request
 
 import yaml
 
-DISCORD_MESSAGE_LIMIT = 1900
+# Discord webhook content hard limit is 2000 characters.
+DISCORD_MESSAGE_LIMIT = 2000
 
 # Canonical YAML keys (from tools/pull_request_hooks/changelogConfig.js) plus
 # PR-template aliases (add/fix/del/…).
@@ -109,8 +110,9 @@ def format_discord_changelog(entries):
 
     lines = ['**Changelog**']
     for author in sorted(by_author.keys()):
-        lines.append('')
-        lines.append('**{}**'.format(author))
+        if lines:
+            lines.append('')
+        lines.append('{}:'.format(author))
         for entry in by_author[author]:
             emoji = PREFIX_EMOJI.get(entry['type'], '\U0001f4dd')  # 📝
             # Discord markdown: keep change text plain (no @everyone etc.).
@@ -119,11 +121,16 @@ def format_discord_changelog(entries):
                 .replace('@everyone', '(@everyone)')
                 .replace('@here', '(@here)')
             )
-            lines.append('{} {}'.format(emoji, text))
+            lines.append('* {}: {}'.format(emoji, text))
     return '\n'.join(lines).strip()
 
 
 def split_discord_messages(text, limit=DISCORD_MESSAGE_LIMIT):
+    """Split text into Discord-safe chunks (each <= limit chars).
+
+    Prefers splitting on newlines. A single line longer than the limit is
+    hard-sliced. Empty trailing/leading blank lines inside a chunk are fine.
+    """
     if len(text) <= limit:
         return [text]
 
@@ -131,8 +138,9 @@ def split_discord_messages(text, limit=DISCORD_MESSAGE_LIMIT):
     current = []
     current_len = 0
     for line in text.split('\n'):
+        # +1 for the newline that joins current lines (except first).
         line_len = len(line) + (1 if current else 0)
-        if line_len > limit:
+        if len(line) > limit:
             if current:
                 chunks.append('\n'.join(current))
                 current = []
@@ -149,7 +157,16 @@ def split_discord_messages(text, limit=DISCORD_MESSAGE_LIMIT):
             current_len += line_len
     if current:
         chunks.append('\n'.join(current))
-    return chunks
+
+    # Safety: never return an over-limit chunk.
+    safe = []
+    for chunk in chunks:
+        if len(chunk) <= limit:
+            safe.append(chunk)
+        else:
+            for index in range(0, len(chunk), limit):
+                safe.append(chunk[index:index + limit])
+    return safe
 
 
 def post_discord_webhook(webhook_url, content):
