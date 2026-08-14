@@ -1,20 +1,3 @@
-GLOBAL_VAR(escape_menu_suicide_icon_base64)
-
-/proc/generate_escape_menu_suicide_icon()
-	set waitfor = FALSE
-	if(!isnull(GLOB.escape_menu_suicide_icon_base64))
-		return
-	GLOB.escape_menu_suicide_icon_base64 = ""
-	UNTIL(MC_RUNNING(SSatoms.init_stage))
-	var/mob/living/carbon/human/dummy/marine = generate_or_wait_for_human_dummy("escape_menu_suicide")
-	marine.equipOutfit(/datum/outfit/job/marine/standard, TRUE)
-	var/icon/marine_icon = getFlatIcon(marine)
-	marine_icon.Turn(90)
-	unset_busy_human_dummy("escape_menu_suicide")
-	GLOB.escape_menu_suicide_icon_base64 = icon2base64(marine_icon)
-	for(var/datum/escape_menu/menu as anything in GLOB.escape_menus)
-		menu.send_update(list("suicideIcon" = GLOB.escape_menu_suicide_icon_base64))
-
 GLOBAL_LIST_EMPTY(escape_menus)
 
 /client/var/datum/escape_menu/escape_menu
@@ -22,7 +5,6 @@ GLOBAL_LIST_EMPTY(escape_menus)
 /client/proc/initialize_escape_menu()
 	set waitfor = FALSE
 	sleep(3 SECONDS)
-	generate_escape_menu_suicide_icon()
 	escape_menu = new(src)
 
 /datum/escape_menu
@@ -95,15 +77,15 @@ GLOBAL_LIST_EMPTY(escape_menus)
 		"gmodName" = get_true_gameship_name(),
 		"mapName" = length(SSmapping.configs) ? SSmapping.configs[GROUND_MAP].map_name : "Загрузка...",
 		"shipMapName" = length(SSmapping.configs) ? SSmapping.configs[SHIP_MAP].map_name : "Загрузка...",
-		"gameModeName" = SSticker.mode.name : "Загрузка...",
+		"gameModeName" = SSticker.mode?.name || "Загрузка...",
 		"shiftTime" = stationTimestamp("hh:mm:ss"),
 		"timeDilation" = "[round(SStime_track.time_dilation_current, 1)]",
 	))
 
 /datum/escape_menu/proc/get_true_gameship_name()
-	if(SSticker.mode.esc_menu_name)
+	if(SSticker.mode?.esc_menu_name)
 		return SSticker.mode.esc_menu_name
-	return CONFIG_GET(string/server_name) : "TGMC"
+	return CONFIG_GET(string/server_name) || "TGMC"
 
 /datum/escape_menu/proc/send_init()
 	var/list/resources = list()
@@ -141,7 +123,7 @@ GLOBAL_LIST_EMPTY(escape_menus)
 		"timeDilation" = "[round(SStime_track.time_dilation_current, 1)]",
 		"mapName" = length(SSmapping.configs) ? SSmapping.configs[GROUND_MAP].map_name : "Загрузка...",
 		"shipMapName" = length(SSmapping.configs) ? SSmapping.configs[SHIP_MAP].map_name : "Загрузка...",
-		"gameModeName" = SSticker.mode.name : "Загрузка...",
+		"gameModeName" = SSticker.mode?.name || "Загрузка...",
 		"mapFeedbackLink" = null,
 		"canLeaveBody" = isliving(client?.mob),
 		"canAdminHelp" = (/client/verb/adminhelp in client?.verbs),
@@ -151,7 +133,6 @@ GLOBAL_LIST_EMPTY(escape_menus)
 		"players" = build_player_list(),
 		"ignoredOffline" = build_ignored_offline(),
 		"resources" = resources,
-		"suicideIcon" = GLOB.escape_menu_suicide_icon_base64,
 	))
 
 /datum/escape_menu/proc/build_admin_list()

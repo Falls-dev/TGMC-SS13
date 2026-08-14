@@ -1,15 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Tooltip } from 'tgui-core/components';
 
-import type { ResourceLink } from '../EscapeMenu';
-
-type ServerState = {
-  gmodName: string;
-  canLeaveBody: boolean;
-  canAdminHelp: boolean;
-  hasTicketNotification: boolean;
-  resources: ResourceLink[];
-};
+import type { ServerState } from '../EscapeMenu';
 
 type Props = {
   serverState: ServerState;

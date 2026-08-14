@@ -8,7 +8,6 @@ type Props = {
 };
 
 export function LeaveBodyPage({
-  serverState,
   onNavigate,
   onAction,
   onClose,
@@ -17,25 +16,6 @@ export function LeaveBodyPage({
     <>
       <BackButton onClick={() => onNavigate('home')} />
       <div className="escape-menu__leave-body">
-        <button
-          className="escape-menu__large-button"
-          onClick={() => {
-            onAction('suicide');
-            onClose();
-          }}
-        >
-          <div className="escape-menu__icon-button">
-            <span className="escape-menu-icons96x96 leave-template" />
-            {serverState.suicideIcon && (
-              <img
-                className="escape-menu__suicide-icon-overlay"
-                src={`data:image/png;base64,${serverState.suicideIcon}`}
-                alt=""
-              />
-            )}
-          </div>
-          <div className="escape-menu__large-button-label">Suicide</div>
-        </button>
         <button
           className="escape-menu__large-button"
           onClick={() => {
