@@ -345,97 +345,97 @@
 	linked = new xeno_wanted(get_turf(GLOB.valhalla_button_spawn_landmark[spawn_link]))
 
 /obj/machinery/button/valhalla/xeno_button
-    name = "Marine spawner"
+	name = "Marine spawner"
 
 /obj/machinery/button/valhalla/xeno_button/attack_alien(mob/living/carbon/xenomorph/xeno_attacker, damage_amount, damage_type, damage_flag, effects, armor_penetration, isrightclick)
-    . = ..()
-    spawn_menu(xeno_attacker)
+	. = ..()
+	spawn_menu(xeno_attacker)
 
 /obj/machinery/button/valhalla/xeno_button/attack_hand(mob/living/user)
-    spawn_menu(user)
+	spawn_menu(user)
 
 /obj/machinery/button/valhalla/xeno_button/proc/spawn_menu(mob/user)
-    var/list/options = list()
+	var/list/options = list()
 
-    var/list/job_outfits = list()
-    for(var/type in subtypesof(/datum/outfit/job))
-        if(istype(type, /datum/outfit))
-            continue
-        var/datum/outfit/out = type
-        job_outfits[initial(out.name)] = type
+	var/list/job_outfits = list()
+	for(var/type in subtypesof(/datum/outfit/job))
+		if(istype(type, /datum/outfit))
+			continue
+		var/datum/outfit/out = type
+		job_outfits[initial(out.name)] = type
 
-    job_outfits = sortList(job_outfits)
-    for(var/name in job_outfits)
-        options[name] = job_outfits[name]
+	job_outfits = sortList(job_outfits)
+	for(var/name in job_outfits)
+		options[name] = job_outfits[name]
 
-    var/list/vehicles = list(
-        /obj/vehicle/sealed/armored/multitile,
-        /obj/vehicle/sealed/armored/multitile/apc,
-        /obj/vehicle/sealed/armored/multitile/som_tank,
-        /obj/vehicle/sealed/armored/multitile/campaign,
-        /obj/vehicle/sealed/armored/multitile/icc_lvrt,
-        /obj/vehicle/sealed/armored/multitile/mrap,
-    )
+	var/list/vehicles = list(
+		/obj/vehicle/sealed/armored/multitile,
+		/obj/vehicle/sealed/armored/multitile/apc,
+		/obj/vehicle/sealed/armored/multitile/som_tank,
+		/obj/vehicle/sealed/armored/multitile/campaign,
+		/obj/vehicle/sealed/armored/multitile/icc_lvrt,
+		/obj/vehicle/sealed/armored/multitile/mrap,
+	)
 
-    for(var/veh_type in vehicles)
-        var/obj/vehicle/sealed/armored/multitile/V = veh_type
-        options[initial(V.name)] = veh_type
+	for(var/veh_type in vehicles)
+		var/obj/vehicle/sealed/armored/multitile/V = veh_type
+		options[initial(V.name)] = veh_type
 
-    var/list/sentries = list(
-        /obj/item/weapon/gun/sentry/basic/premade/radial,
+	var/list/sentries = list(
+		/obj/item/weapon/gun/sentry/basic/premade/radial,
 		/obj/item/weapon/gun/sentry/mini/premade/radial,
 		/obj/item/weapon/gun/sentry/sniper/premade/radial,
 		/obj/item/weapon/gun/sentry/shotgun/premade/radial,
 		/obj/item/weapon/gun/sentry/flamer/premade/radial,
-    )
+	)
 
-    for(var/item_type in sentries)
-        var/obj/item/I = item_type
-        options[initial(I.name)] = item_type
+	for(var/item_type in sentries)
+		var/obj/item/I = item_type
+		options[initial(I.name)] = item_type
 
-    var/choice = tgui_input_list(user, "So, what are we spawning?", "Valhalla spawner", options)
-    if(!choice || !options[choice])
-        return
+	var/choice = tgui_input_list(user, "So, what are we spawning?", "Valhalla spawner", options)
+	if(!choice || !options[choice])
+		return
 
-    var/turf/spawn_turf = get_turf(GLOB.valhalla_button_spawn_landmark[spawn_link])
-    if(!spawn_turf)
-        return
+	var/turf/spawn_turf = get_turf(GLOB.valhalla_button_spawn_landmark[spawn_link])
+	if(!spawn_turf)
+		return
 
-    QDEL_NULL(linked)
+	QDEL_NULL(linked)
 
-    for(var/atom/movable/AM in spawn_turf)
-        if(istype(AM, /obj/machinery/deployable/mounted/sentry) || istype(AM, /mob/living) || istype(AM, /obj/vehicle))
-            qdel(AM)
+	for(var/atom/movable/AM in spawn_turf)
+		if(istype(AM, /obj/machinery/deployable/mounted/sentry) || istype(AM, /mob/living) || istype(AM, /obj/vehicle))
+			qdel(AM)
 
-    turf_check(user)
+	turf_check(user)
 
-    var/selected = options[choice]
+	var/selected = options[choice]
 
-    if(ispath(selected, /datum/outfit))
-        var/mob/living/carbon/human/H = new /mob/living/carbon/human(spawn_turf)
-        linked = H
-        var/datum/outfit/O = selected
-        if(O != "Naked")
-            H.equipOutfit(O, FALSE)
+	if(ispath(selected, /datum/outfit))
+		var/mob/living/carbon/human/H = new /mob/living/carbon/human(spawn_turf)
+		linked = H
+		var/datum/outfit/O = selected
+		if(O != "Naked")
+			H.equipOutfit(O, FALSE)
 
-    else if(ispath(selected, /obj/vehicle))
-        linked = new selected(spawn_turf)
+	else if(ispath(selected, /obj/vehicle))
+		linked = new selected(spawn_turf)
 
-    else if(ispath(selected, /obj/item))
-        var/obj/item/I = new selected(spawn_turf)
-        linked = I
+	else if(ispath(selected, /obj/item))
+		var/obj/item/I = new selected(spawn_turf)
+		linked = I
 
-        if(istype(I, /obj/item/weapon/gun/sentry))
-            var/current_spawn_link = spawn_link
-            spawn(1)
-                var/turf/T = get_turf(GLOB.valhalla_button_spawn_landmark[current_spawn_link])
-                if(T)
-                    var/obj/machinery/deployable/mounted/sentry/S = locate(/obj/machinery/deployable/mounted/sentry) in T
-                    if(S)
-                        linked = S
+		if(istype(I, /obj/item/weapon/gun/sentry))
+			var/current_spawn_link = spawn_link
+			spawn(1)
+				var/turf/T = get_turf(GLOB.valhalla_button_spawn_landmark[current_spawn_link])
+				if(T)
+					var/obj/machinery/deployable/mounted/sentry/S = locate(/obj/machinery/deployable/mounted/sentry) in T
+					if(S)
+						linked = S
 
-    else
-        linked = new selected(spawn_turf)
+	else
+		linked = new selected(spawn_turf)
 
 /obj/machinery/button/valhalla/vehicle_button
 	name = "Vehicle Spawner"
