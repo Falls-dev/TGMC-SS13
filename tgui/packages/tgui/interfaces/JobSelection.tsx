@@ -19,7 +19,6 @@ type Job = {
   position_label: string;
   description: string;
   duty: string;
-  difficulty: string;
 };
 
 type Department = {
@@ -64,7 +63,7 @@ const alertColor = (level: number) => {
 };
 
 /**
- * Builds the plain-text tooltip for a job: duty (+difficulty) if present, otherwise falls back to
+ * Builds the plain-text tooltip for a job: duty (aka description) if present, otherwise falls back to
  * the unavailable reason. Never falls back to the raw (huge, HTML-tagged) job.description.
  */
 function jobTooltip(job: Job): string {
@@ -72,11 +71,8 @@ function jobTooltip(job: Job): string {
     return job.unavailable_reason;
   }
   const lines: string[] = [];
-  if (job.difficulty) {
-    lines.push(`Difficulty: ${job.difficulty}`);
-  }
   if (job.duty) {
-    lines.push(`Duty: ${job.duty}`);
+    lines.push(`${job.duty}`);
   }
   return lines.join('\n');
 }
