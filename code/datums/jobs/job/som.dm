@@ -52,8 +52,7 @@ Make your way to the cafeteria for some post-cryosleep chow, and then get equipp
 		<br /><br />
 		<b>Duty</b>: Carry out orders made by your acting Squad Leader, deal with any threats that oppose the Sons of Mars.
 	"}
-	job_difficulty = "Лёгкая"
-	job_duty = "Выполняйте приказы исполняющего обязанности командира отряда и устраняйте любые угрозы для Сынов Марса."
+	job_desc = "Выполняйте приказы исполняющего обязанности командира отряда и устраняйте любые угрозы для Сынов Марса."
 
 /datum/job/som/squad/standard/after_spawn(mob/living/carbon/new_mob, mob/user, latejoin = FALSE)
 	. = ..()
@@ -103,8 +102,7 @@ What you lack alone, you gain standing shoulder to shoulder with the men and wom
 		<br /><br />
 		<b>Duty</b>: Construct and reinforce the FOB that has been ordered by your acting Squad Leader, fix power generators and mining drills in the AO and stay on guard for any dangers that threaten your FOB.
 	"}
-	job_difficulty = "Средняя"
-	job_duty = "Стройте и укрепляйте ПОБ по приказу командира отряда, чините генераторы и буровые установки в районе операции и следите за угрозами для вашей базы."
+	job_desc = "Стройте и укрепляйте по приказу командира отряда, чините генераторы и буровые установки в районе операции и следите за угрозами для вашей базы."
 	minimap_icon = "engi"
 
 /datum/job/som/squad/engineer/after_spawn(mob/living/carbon/new_mob, mob/user, latejoin = FALSE)
@@ -154,8 +152,7 @@ Your squaddies will look to you when it comes to construction in the field of ba
 		<br /><br />
 		<b>Duty</b>: Tend the injuries of your fellow marines or related personnel, keep them at fighting strength.
 	"}
-	job_difficulty = "Сложная"
-	job_duty = "Лечите ранения своих сослуживцев, поддерживая их боеспособность."
+	job_desc = "Лечите ранения своих сослуживцев, поддерживая их боеспособность."
 
 /datum/job/som/squad/medic/after_spawn(mob/living/carbon/new_mob, mob/user, latejoin = FALSE)
 	. = ..()
@@ -201,8 +198,7 @@ You may not be a fully-fledged doctor, but you stand between life and death when
 		<br /><br />
 		<b>Duty</b>: Show your comrades how a true Son of Mars acts, and crush our enemies without mercy!.
 	"}
-	job_difficulty = "Средняя"
-	job_duty = "Покажите товарищам, как действует настоящий Сын Марса, и без пощады сокрушайте врагов!"
+	job_desc = "Покажите товарищам, как действует настоящий Сын Марса, и без пощады сокрушайте врагов!"
 
 /datum/job/som/squad/veteran/after_spawn(mob/living/carbon/new_mob, mob/user, latejoin = FALSE)
 	. = ..()
@@ -254,8 +250,7 @@ You may not be a fully-fledged doctor, but you stand between life and death when
 		<br /><br />
 		<b>Duty</b>: Be a responsible leader of your squad, make sure your squad communicates frequently all the time and ensure they are working together for the task at hand. Stay safe, as you’re a valuable leader.
 	"}
-	job_difficulty = "Сложная"
-	job_duty = "Будьте ответственным лидером своего отряда, следите за постоянной связью между бойцами и слаженной работой над задачей. Берегите себя — вы ценный командир."
+	job_desc = "Будьте ответственным лидером своего отряда, следите за постоянной связью между бойцами и слаженной работой над задачей. Берегите себя - вы ценный командир."
 
 /datum/job/som/squad/leader/after_spawn(mob/living/carbon/C, mob/user, latejoin = FALSE)
 	. = ..()

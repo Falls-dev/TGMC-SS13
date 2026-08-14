@@ -45,8 +45,7 @@ GLOBAL_LIST_INIT(latejoin_menu_department_colors, list(
 		for(var/datum/job/job_datum as anything in category)
 			department_jobs[job_datum.title] = list(
 				"command" = !!(job_datum.job_flags & JOB_FLAG_BOLD_NAME_ON_SELECTION),
-				"duty" = job_datum.job_duty,
-				"difficulty" = job_datum.job_difficulty,
+				"duty" = job_datum.job_desc,
 			)
 
 	return list("departments_static" = departments)

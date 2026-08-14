@@ -17,8 +17,7 @@
 		<b>Gamemode Availability</b>: Crash, Nuclear War<br /><br /><br />
 		<b>Duty</b>: Spread the hive, obey the will of your Hive Leader and the Queen Mother. Kill or capture those who get into your way. Protect the hive whenever possible. Amass your numbers.
 	"}
-	job_difficulty = "Разная"
-	job_duty = "Расширяйте улей, подчиняйтесь воле вашего лидера улья и Королевы-матери. Убивайте или захватывайте тех, кто встанет на вашем пути. Защищайте улей при любой возможности. Увеличивайте численность."
+	job_desc = "Расширяйте улей, подчиняйтесь воле вашего лидера улья и матери. Убивайте или захватывайте тех, кто встанет на вашем пути. Защищайте улей при любой возможности. Увеличивайте численность."
 	/**
 	 * This is the amount of "free" xeno jobs opened at the start, even before marines job contributes to the total.
 	 * This is a counter to prevent adding more jobs that necessary
@@ -73,8 +72,7 @@
 		<b>Gamemode Availability</b>: Crash, Nuclear War<br /><br /><br />
 		<b>Duty</b>: Lead the hive and ensure success isn’t snatched away by your enemies. Manage the supply of psypoints
 	"}
-	job_difficulty = "Изматывающая"
-	job_duty = "Ведите улей и не позволяйте врагам вырвать победу из ваших лап. Управляйте запасом псиочков."
+	job_desc = "Ведите улей и не позволяйте врагам вырвать победу из ваших лап."
 
 /datum/job/xenomorph/queen/return_spawn_type(datum/preferences/prefs)
 	return /mob/living/carbon/xenomorph/shrike

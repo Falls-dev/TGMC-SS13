@@ -73,10 +73,8 @@ GLOBAL_PROTECT(exp_specialmap)
 	/// Description shown in the player's job preferences
 	var/html_description = ""
 
-	/// Short duty blurb (plain text, Russian) shown in TGUI job tooltips. Derived from the "Duty" line of html_description.
-	var/job_duty = ""
-	/// Short difficulty blurb (plain text, Russian) shown in TGUI job tooltips. Derived from the "Difficulty" line of html_description.
-	var/job_difficulty = ""
+	/// Short description shown in TGUI job tooltips
+	var/job_desc = ""
 
 	///string; typepath for the icon that this job will show on the minimap
 	var/minimap_icon
