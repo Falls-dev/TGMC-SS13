@@ -103,12 +103,18 @@ def collect_pending_entries(yml_dir):
 
 
 def format_discord_changelog(entries):
-    """Group by author; one emoji line per change."""
+    """Group by author; one emoji line per change.
+
+    Example:
+        AuthorName:
+        * ✅: added stuff
+        * ♿: fixed stuff
+    """
     by_author = {}
     for entry in entries:
         by_author.setdefault(entry['author'], []).append(entry)
 
-    lines = ['**Changelog**']
+    lines = []
     for author in sorted(by_author.keys()):
         if lines:
             lines.append('')
