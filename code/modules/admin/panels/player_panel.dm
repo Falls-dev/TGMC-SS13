@@ -447,7 +447,8 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", mo
 		<br> Humanoid:
 		<a href='byond://?src=[ref];transform=human;mob=[REF(M)]'>Human</a> |
 		<a href='byond://?src=[ref];transform=synthetic;mob=[REF(M)]'>Synthetic</a> |
-		<a href='byond://?src=[ref];transform=early_synth;mob=[REF(M)]'>Early_Synth</a> |
+		<a href='byond://?src=[ref];transform=engineer_synth;mob=[REF(M)]'>Engineer_Synth</a> |
+		<a href='byond://?src=[ref];transform=medical_synth;mob=[REF(M)]'>Medical_Synth</a> |
 		<a href='byond://?src=[ref];transform=vatborn;mob=[REF(M)]'>Vatborn</a> |
 		<a href='byond://?src=[ref];transform=vatgrown;mob=[REF(M)]'>Vatgrown</a> |
 		<a href='byond://?src=[ref];transform=combat_robot;mob=[REF(M)]'>Combat_Robot</a> |

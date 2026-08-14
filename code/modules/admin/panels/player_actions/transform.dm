@@ -19,7 +19,8 @@ GLOBAL_LIST_INIT(pp_transformables, list(
 	"Humanoid" = list(
 		list(name = "Human", key = "human", color = "green"),
 		list(name = "Synthetic", key = "synthetic", color = "green"),
-		list(name = "Early Synth", key = "early_synth", color = "green"),
+		list(name = "Engineer Synth", key = "engineer_synth", color = "green"),
+		list(name = "Medical Synth", key = "medical_synth", color = "green"),
 		list(name = "Vatborn", key = "vatborn", color = "green"),
 		list(name = "Vatgrown", key = "vatgrown", color = "green"),
 		list(name = "Combat Robot", key = "combat_robot", color = "green"),
@@ -176,8 +177,13 @@ GLOBAL_LIST_INIT(pp_transformables, list(
 			new_mob = target.change_mob_type(/mob/living/carbon/human, location, null, delmob)
 		if("synthetic")
 			new_mob = target.change_mob_type(/mob/living/carbon/human/species/synthetic, location, null, delmob)
-		if("early_synth")
-			new_mob = target.change_mob_type(/mob/living/carbon/human/species/synthetic/early, location, null, delmob)
+		if("early_synth", "engineer_synth")
+			// #118 renamed early -> engineer; keep both path strings so this compiles in test-merge and standalone.
+			var/engineer_path = text2path("/mob/living/carbon/human/species/synthetic/engineer") || text2path("/mob/living/carbon/human/species/synthetic/early") || /mob/living/carbon/human/species/synthetic
+			new_mob = target.change_mob_type(engineer_path, location, null, delmob)
+		if("medical_synth")
+			var/medical_path = text2path("/mob/living/carbon/human/species/synthetic/medical") || /mob/living/carbon/human/species/synthetic
+			new_mob = target.change_mob_type(medical_path, location, null, delmob)
 		if("sectoid")
 			new_mob = target.change_mob_type(/mob/living/carbon/human/species/sectoid, location, null, delmob)
 		if("vatborn")
