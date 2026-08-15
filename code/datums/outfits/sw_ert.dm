@@ -763,7 +763,7 @@
 
 /datum/outfit/job/sw/ert/stormtrooper/standard
 	w_uniform = /obj/item/clothing/under/marine/veteran/sw/imptechnician/black
-	wear_suit = /obj/item/clothing/suit/storage/marine/sw/stormtrooper
+	wear_suit = /obj/item/clothing/suit/storage/marine/clone/stormtrooper
 	head = /obj/item/clothing/head/helmet/marine/sw/repstormtrooper
 	belt = /obj/item/storage/belt/marine
 	suit_store = /obj/item/weapon/gun/energy/lasgun/lasrifle/plasma/rifle/standard
@@ -812,7 +812,7 @@
 
 /datum/outfit/job/sw/ert/stormtrooper/airborne
 	w_uniform = /obj/item/clothing/under/marine/veteran/sw/imptechnician/black
-	wear_suit = /obj/item/clothing/suit/storage/marine/sw/stormtrooper
+	wear_suit = /obj/item/clothing/suit/storage/marine/clone/stormtrooper
 	head = /obj/item/clothing/head/helmet/marine/sw/imperial/airborne
 	belt = /obj/item/storage/belt/marine
 
@@ -917,7 +917,7 @@
 	name = "Imperial Storm Surgeon"
 	jobtype = /datum/job/sw/ert/stormtrooper/surgeon
 	w_uniform = /obj/item/clothing/under/marine/veteran/sw/imptechnician
-	wear_suit = /obj/item/clothing/suit/storage/marine/sw/stormsurgeon
+	wear_suit = /obj/item/clothing/suit/storage/marine/clone/stormsurgeon
 	head = /obj/item/clothing/head/helmet/marine/sw/stormsurgeon
 	glasses = /obj/item/clothing/glasses/hud/health
 	belt = /obj/item/storage/belt/lifesaver/full
@@ -941,7 +941,7 @@
 	name = "Imperial Storm Radioman"
 	jobtype = /datum/job/sw/ert/stormtrooper/radio
 	w_uniform = /obj/item/clothing/under/marine/veteran/sw/imptechnician
-	wear_suit = /obj/item/clothing/suit/storage/marine/sw/stormradio
+	wear_suit = /obj/item/clothing/suit/storage/marine/clone/stormradio
 	head = /obj/item/clothing/head/helmet/marine/sw/stormradio
 	glasses = /obj/item/clothing/glasses/meson
 	gloves = /obj/item/clothing/gloves/marine/insulated
@@ -994,7 +994,7 @@
 /datum/outfit/job/sw/ert/stormtrooper/officer/armored
 	name = "Imperial Stormtrooper Officer (Armored)"
 	jobtype = /datum/job/sw/ert/stormtrooper/officer
-	wear_suit = /obj/item/clothing/suit/storage/marine/sw/stormtrooper
+	wear_suit = /obj/item/clothing/suit/storage/marine/clone/stormtrooper
 	head = /obj/item/clothing/head/helmet/marine/sw/imp_stormofficer
 	belt_contents = list(
 		/obj/item/cell/lasgun/plasma = 6,
