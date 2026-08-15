@@ -73,6 +73,7 @@ type Limb = {
   missing: boolean;
   bleeding: boolean;
   implants: boolean;
+  skill_implants?: string[];
   internal_bleeding: boolean;
   limb_status?: LimbStatuses;
   limb_type?: LimbTypes;
