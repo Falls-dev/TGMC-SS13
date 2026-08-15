@@ -527,6 +527,9 @@
 	READ_FILE(S["citizenship"], citizenship)
 	READ_FILE(S["religion"], religion)
 
+	READ_FILE(S["tts_voice"], tts_voice)
+	READ_FILE(S["tts_pitch"], tts_pitch)
+
 	READ_FILE(S["med_record"], med_record)
 	READ_FILE(S["sec_record"], sec_record)
 	READ_FILE(S["gen_record"], gen_record)
@@ -793,6 +796,9 @@
 
 	WRITE_FILE(S["citizenship"], citizenship)
 	WRITE_FILE(S["religion"], religion)
+
+	WRITE_FILE(S["tts_voice"], tts_voice)
+	WRITE_FILE(S["tts_pitch"], tts_pitch)
 
 	WRITE_FILE(S["med_record"], med_record)
 	WRITE_FILE(S["sec_record"], sec_record)

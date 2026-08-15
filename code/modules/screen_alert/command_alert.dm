@@ -103,8 +103,11 @@
 	if(!length(tts_listeners))
 		return
 	var/list/treated_message = human_owner?.treat_message(text) //we only treat the text here since it adds stutter to the text announcement otherwise
+	var/final_tts_text = text
+	if(istype(treated_message, /list) && treated_message["tts_message"])
+		final_tts_text = treated_message["tts_message"]
 	var/list/extra_filters = list(TTS_FILTER_RADIO)
 	if(isrobot(human_owner))
 		extra_filters += TTS_FILTER_SILICON
-	INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), human_owner, treated_message["tts_message"], human_owner.get_default_language(), human_owner.voice, human_owner.voice_filter, tts_listeners, FALSE, pitch = human_owner.pitch, special_filters = extra_filters.Join("|"), directionality = FALSE)
+	INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), human_owner, final_tts_text, human_owner?.get_default_language(), human_owner?.voice, human_owner?.voice_filter, tts_listeners, FALSE, pitch = human_owner?.pitch, special_filters = extra_filters.Join("|"), directionality = FALSE)
 

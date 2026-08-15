@@ -62,7 +62,10 @@
 	tts_listeners = filter_tts_listeners(src, tts_listeners, tts_flags = ((xeno_flags & XENO_LEADER) || (xeno_caste?.caste_flags & CASTE_LEADER_TYPE) || hive.living_xeno_ruler == src) ? RADIO_TTS_HIVEMIND|RADIO_TTS_COMMAND : RADIO_TTS_HIVEMIND)
 	if(length(tts_listeners))
 		var/list/treated_message = treat_message(message)
-		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, treated_message["tts_message"], get_default_language(), voice, voice_filter, tts_listeners, FALSE, pitch = pitch, directionality = FALSE)
+		var/final_tts_text = message
+		if(istype(treated_message, /list) && treated_message["tts_message"])
+			final_tts_text = treated_message["tts_message"]
+		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, final_tts_text, get_default_language(), voice, voice_filter, tts_listeners, FALSE, pitch = pitch, directionality = FALSE)
 
 	return TRUE
 
