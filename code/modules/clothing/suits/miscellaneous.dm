@@ -210,35 +210,35 @@
 	siemens_coefficient = 2
 
 //swimsuit
-/obj/item/clothing/under/swimsuit
+/obj/item/clothing/under/marine/veteran/swimsuit
 	siemens_coefficient = 1
 	armor_protection_flags = NONE
 
-/obj/item/clothing/under/swimsuit/black
+/obj/item/clothing/under/marine/veteran/swimsuit/black
 	name = "black swimsuit"
 	desc = "An oldfashioned black swimsuit."
 	icon_state = "swim_black"
 	siemens_coefficient = 1
 
-/obj/item/clothing/under/swimsuit/blue
+/obj/item/clothing/under/marine/veteran/swimsuit/blue
 	name = "blue swimsuit"
 	desc = "An oldfashioned blue swimsuit."
 	icon_state = "swim_blue"
 	siemens_coefficient = 1
 
-/obj/item/clothing/under/swimsuit/purple
+/obj/item/clothing/under/marine/veteran/swimsuit/purple
 	name = "purple swimsuit"
 	desc = "An oldfashioned purple swimsuit."
 	icon_state = "swim_purp"
 	siemens_coefficient = 1
 
-/obj/item/clothing/under/swimsuit/green
+/obj/item/clothing/under/marine/veteran/swimsuit/green
 	name = "green swimsuit"
 	desc = "An oldfashioned green swimsuit."
 	icon_state = "swim_green"
 	siemens_coefficient = 1
 
-/obj/item/clothing/under/swimsuit/red
+/obj/item/clothing/under/marine/veteran/swimsuit/red
 	name = "red swimsuit"
 	desc = "An oldfashioned red swimsuit."
 	icon_state = "swim_red"
