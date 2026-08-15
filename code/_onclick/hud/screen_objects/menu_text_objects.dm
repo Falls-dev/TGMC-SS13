@@ -40,6 +40,35 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/text/lobby)
 	icon = 'icons/UI_Icons/lobbytext.dmi'
 	icon_state = "tgmc"
 
+///Shows the current map's infestation level and the mean across all ground maps.
+/atom/movable/screen/text/lobby/infestation_progress
+	screen_loc = "CENTER,TOP"
+	//maptext_height = 112
+	//maptext_width = 560
+	//maptext_x = -280
+	maptext_y = -96
+
+/atom/movable/screen/text/lobby/infestation_progress/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_GAMEMODE_LOADED, TYPE_PROC_REF(/atom/movable/screen/text/lobby, update_text))
+
+/atom/movable/screen/text/lobby/infestation_progress/update_text()
+	var/datum/map_config/current_map = SSmapping.configs[GROUND_MAP]
+	var/map_name = current_map?.map_name
+	if(!map_name)
+		return
+	var/map_progress = SSpersistence.get_infestation_map_progress(map_name)
+	var/global_progress = SSpersistence.get_average_infestation_progress()
+	maptext = span_lobbytext("<b>КСЕНОМОРФЫ В РЕГИОНЕ</b><br>Текущая карта — [map_name]: [round(map_progress, 0.1)]%<br>[infestation_progress_bar(map_progress)]<br>Все карты: [round(global_progress, 0.1)]%<br>[infestation_progress_bar(global_progress)]")
+
+///Renders a compact 0-100% progress bar for the lobby maptext.
+/proc/infestation_progress_bar(progress)
+	var/filled_segments = round(progress / 5)
+	var/bar = ""
+	for(var/segment in 1 to 20)
+		bar += segment <= filled_segments ? "█" : "░"
+	return "<span style='color:#a020f0'>[bar]</span>"
+
 ///Clickable UI lobby objects which do stuff on Click() when pressed
 /atom/movable/screen/text/lobby/clickable
 	maptext = "кодер момент"
