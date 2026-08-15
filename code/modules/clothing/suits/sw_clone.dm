@@ -41,8 +41,6 @@
 		/obj/item/armor_module/storage/integrated,
 		/obj/item/armor_module/armor/badge,
 	)
-	icon_state_variants = list("black")
-	current_variant = "black"
 	starting_attachments = list(/obj/item/armor_module/storage/pocket)
 
 // ----- Republic -----
@@ -158,7 +156,7 @@
 
 // ----- Empire -----
 
-/obj/item/clothing/suit/storage/marine/sw/darth
+/obj/item/clothing/suit/storage/marine/clone/darth
 	name = "\improper Dark Lord armor"
 	desc = "A dark mechanical life-support suit. Breathing sounds ominously mechanical."
 	icon_state = "darth_armor"
@@ -166,7 +164,7 @@
 	soft_armor = list(MELEE = 60, BULLET = 85, LASER = 80, ENERGY = 80, BOMB = 65, BIO = 75, FIRE = 90, ACID = 60)
 	slowdown = SLOWDOWN_ARMOR_HEAVY
 
-/obj/item/clothing/suit/storage/marine/sw/stormtrooper
+/obj/item/clothing/suit/storage/marine/clone/stormtrooper
 	name = "\improper Stormtrooper armor"
 	desc = "Standard Imperial plastoid armor covering most of the body."
 	icon_state = "stormtrooper_armor"
@@ -174,7 +172,7 @@
 	soft_armor = list(MELEE = 45, BULLET = 70, LASER = 60, ENERGY = 60, BOMB = 50, BIO = 50, FIRE = 55, ACID = 50)
 	slowdown = SLOWDOWN_ARMOR_MEDIUM
 
-/obj/item/clothing/suit/storage/marine/sw/stormsurgeon
+/obj/item/clothing/suit/storage/marine/clone/stormsurgeon
 	name = "\improper Imperial stormtrooper surgeon armor"
 	desc = "Stormtrooper armor with mint green highlights for field medics."
 	icon_state = "sturmsurgeon_armor"
@@ -182,7 +180,7 @@
 	soft_armor = list(MELEE = 45, BULLET = 70, LASER = 60, ENERGY = 60, BOMB = 50, BIO = 50, FIRE = 55, ACID = 50)
 	slowdown = SLOWDOWN_ARMOR_MEDIUM
 
-/obj/item/clothing/suit/storage/marine/sw/stormradio
+/obj/item/clothing/suit/storage/marine/clone/stormradio
 	name = "\improper Imperial stormtrooper radioman armor"
 	desc = "Lightened stormtrooper armor with removed plates for added mobility."
 	icon_state = "stormradio_armor"
