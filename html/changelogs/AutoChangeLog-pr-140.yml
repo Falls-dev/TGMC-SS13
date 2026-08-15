@@ -1,0 +1,4 @@
+author: "SanecMan"
+delete-after: True
+changes:
+  - bugfix: "Фикс ЗВ и ГТА ЕРТ"
