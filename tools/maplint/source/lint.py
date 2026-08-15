@@ -238,11 +238,26 @@ class Lint:
         (width, height) = map_data.size()
 
         for pop, contents in map_data.pops.items():
-            for typepath_extra, rules in self.rules.items():
-                for content_index, content in enumerate(contents):
-                    if not typepath_extra.matches_path(content.path):
-                        continue
+            for content_index, content in enumerate(contents):
+                matching = [
+                    (typepath_extra, rules)
+                    for typepath_extra, rules in self.rules.items()
+                    if typepath_extra.matches_path(content.path)
+                ]
+                if not matching:
+                    continue
 
+                # Most specific rule wins so path exemptions can override "*".
+                def specificity(typepath_extra: TypepathExtra) -> int:
+                    if typepath_extra.wildcard:
+                        return 0
+                    segments = len(typepath_extra.typepath.segments)
+                    return segments * 2 + (1 if typepath_extra.exact else 0)
+
+                best = max(specificity(tp) for tp, _ in matching)
+                matching = [(tp, rules) for tp, rules in matching if specificity(tp) == best]
+
+                for typepath_extra, rules in matching:
                     failures = rules.run(content, contents, content_index)
                     if len(failures) == 0:
                         continue

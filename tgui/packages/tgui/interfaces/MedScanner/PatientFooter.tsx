@@ -10,10 +10,7 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import {
-  SPACING_PIXELS,
-  TEMP_LEVELS_TO_DATA,
-} from './constants';
+import { SPACING_PIXELS, TEMP_LEVELS_TO_DATA } from './constants';
 import { MedScannerData, TempLevels } from './data';
 import { getBloodColor } from './helpers';
 import { MedBoxedTag } from './MedBoxedTag';
@@ -57,7 +54,8 @@ export function PatientFooter() {
               <Tooltip
                 content={
                   <Box>
-                    {Math.trunc(blood_amount)}/{Math.trunc(regular_blood_amount)}cl
+                    {Math.trunc(blood_amount)}/
+                    {Math.trunc(regular_blood_amount)}cl
                     {total_flow_rate ? ` (${total_flow_rate}cl/2s)` : ''}
                   </Box>
                 }
@@ -96,7 +94,7 @@ export function PatientFooter() {
         <LabeledList.Item label="Pulse">{pulse}</LabeledList.Item>
       </LabeledList>
       {!!internal_bleeding && (
-        <NoticeBox color={'red'} mt={'8px'} mb={'0px'} warning>
+        <NoticeBox color={'red'} mt={'8px'} mb={'0px'}>
           Internal Bleeding Detected!
         </NoticeBox>
       )}

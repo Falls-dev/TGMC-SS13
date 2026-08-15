@@ -43,28 +43,29 @@
 		slot_l_hand_str = 'icons/mob/inhands/clothing/hats_left.dmi',
 		slot_r_hand_str = 'icons/mob/inhands/clothing/hats_right.dmi',
 	)
-	attachments_allowed = list()
-	starting_attachments = list()
-	marine_helmet_flags = NONE
-	armor_protection_flags = HEAD
-	soft_armor = list(MELEE = 30, BULLET = 35, LASER = 40, ENERGY = 35, BOMB = 25, BIO = 0, FIRE = 10, ACID = 5)
+	// SOM medium helmet (modular/som)
+	soft_armor = list(MELEE = 45, BULLET = 70, LASER = 60, ENERGY = 60, BOMB = 50, BIO = 50, FIRE = 55, ACID = 50)
 	inventory_flags = COVEREYES|BLOCKSHARPOBJ
 	inv_hide_flags = HIDEEARS|HIDEEYES|HIDETOPHAIR
-
-/obj/item/clothing/head/helmet/marine/sw/heavy
-	soft_armor = list(MELEE = 45, BULLET = 50, LASER = 55, ENERGY = 50, BOMB = 35, BIO = 0, FIRE = 15, ACID = 10)
 
 /obj/item/clothing/head/helmet/marine/sw/rebel
 	name = "\improper Rebel trooper helmet"
 	desc = "A reinforced plastoid helmet of the Rebel Alliance."
 	icon_state = "rebel_helmet"
 	worn_icon_state = "rebel_helmet"
+	attachments_allowed = list()
+	starting_attachments = list()
+	inventory_flags = BLOCKSHARPOBJ
+	inv_hide_flags = HIDEEARS|HIDETOPHAIR
+	// SOM light
+	soft_armor = list(MELEE = 35, BULLET = 60, LASER = 50, ENERGY = 50, BOMB = 45, BIO = 45, FIRE = 50, ACID = 40)
 
 /obj/item/clothing/head/helmet/marine/sw/rebel/black
-	name = "\improper Rebel trooper helmet, dark"
-	desc = "A dark variant of the Rebel Alliance trooper helmet."
+	name = "\improper Rebel trooper black helmet"
+	desc = "A black variant of the Rebel Alliance trooper helmet."
 	icon_state = "rebel_helmet_black"
 	worn_icon_state = "rebel_helmet_black"
+	soft_armor = list(MELEE = 40, BULLET = 65, LASER = 55, ENERGY = 55, BOMB = 50, BIO = 45, FIRE = 50, ACID = 45)
 
 /obj/item/clothing/head/helmet/marine/sw/clone/phase2
 	name = "\improper Phase II clone trooper helmet"
@@ -77,12 +78,14 @@
 	desc = "A phase II helmet bearing the blue markings of the 501st Legion."
 	icon_state = "replicant2_501st"
 	worn_icon_state = "replicant2_501st"
+	soft_armor = list(MELEE = 50, BULLET = 75, LASER = 65, ENERGY = 65, BOMB = 55, BIO = 55, FIRE = 60, ACID = 55)
 
 /obj/item/clothing/head/helmet/marine/sw/clone/battalion212
 	name = "\improper 212th Battalion clone trooper helmet"
 	desc = "A phase II helmet bearing the orange markings of the 212th Attack Battalion."
 	icon_state = "replicant2_212th"
 	worn_icon_state = "replicant2_212th"
+	soft_armor = list(MELEE = 50, BULLET = 75, LASER = 65, ENERGY = 65, BOMB = 55, BIO = 55, FIRE = 60, ACID = 55)
 
 /obj/item/clothing/head/helmet/marine/sw/clone/scout
 	name = "\improper Clone scout trooper helmet"
@@ -101,6 +104,8 @@
 	desc = "A plastoid helmet used by clone commandos of the Republic Army."
 	icon_state = "replicant_commando"
 	worn_icon_state = "replicant_commando"
+	// SOM leader / heavy
+	soft_armor = list(MELEE = 60, BULLET = 80, LASER = 70, ENERGY = 70, BOMB = 60, BIO = 55, FIRE = 65, ACID = 55)
 
 /obj/item/clothing/head/helmet/marine/sw/clone/artillery
 	name = "\improper Clone artillery crew helmet"
@@ -137,6 +142,7 @@
 	desc = "A phase I helmet with red markings denoting captain rank."
 	icon_state = "repcaptain_helmet"
 	worn_icon_state = "repcaptain_helmet"
+	soft_armor = list(MELEE = 60, BULLET = 80, LASER = 70, ENERGY = 70, BOMB = 60, BIO = 55, FIRE = 65, ACID = 55)
 
 /obj/item/clothing/head/helmet/marine/sw/clone/pilot
 	name = "\improper Clone pilot helmet, phase I"
@@ -149,12 +155,15 @@
 	desc = "A phase I helmet with yellow markings denoting commander rank."
 	icon_state = "repcommander_helmet"
 	worn_icon_state = "repcommander_helmet"
+	soft_armor = list(MELEE = 60, BULLET = 80, LASER = 70, ENERGY = 70, BOMB = 60, BIO = 55, FIRE = 65, ACID = 55)
 
 /obj/item/clothing/head/helmet/marine/sw/clone/mp
 	name = "\improper Clone military police helmet"
 	desc = "A highly reinforced plastoid helmet of the Republic military police."
 	icon_state = "repmp_helmet"
 	worn_icon_state = "repmp_helmet"
+	// SOM veteran
+	soft_armor = list(MELEE = 50, BULLET = 75, LASER = 65, ENERGY = 65, BOMB = 55, BIO = 55, FIRE = 60, ACID = 55)
 
 /obj/item/clothing/head/sw/cap/repensign
 	name = "\improper Republic Navy ensign cap"
@@ -203,6 +212,8 @@
 	desc = "A reinforced airborne helmet of the Imperial Army."
 	icon_state = "repairborne_helmet"
 	worn_icon_state = "repairborne_helmet"
+	// SOM lorica (breacher)
+	soft_armor = list(MELEE = 60, BULLET = 85, LASER = 80, ENERGY = 80, BOMB = 65, BIO = 55, FIRE = 70, ACID = 60)
 
 /obj/item/clothing/head/helmet/marine/sw/clone/corps41
 	name = "\improper 41st Elite Corps clone trooper helmet"
@@ -221,12 +232,15 @@
 	desc = "A reinforced plastoid helmet of the Emperor's Royal Guard."
 	icon_state = "redguard"
 	worn_icon_state = "redguard"
+	// SOM lorica
+	soft_armor = list(MELEE = 60, BULLET = 85, LASER = 80, ENERGY = 80, BOMB = 65, BIO = 55, FIRE = 70, ACID = 60)
 
 /obj/item/clothing/head/helmet/marine/sw/senateguard
 	name = "\improper Senate Guard helmet"
 	desc = "A reinforced plastoid helmet of the Galactic Senate Guard."
 	icon_state = "senateguard"
 	worn_icon_state = "senateguard"
+	soft_armor = list(MELEE = 60, BULLET = 85, LASER = 80, ENERGY = 80, BOMB = 65, BIO = 55, FIRE = 70, ACID = 60)
 
 /obj/item/clothing/head/helmet/marine/sw/stormsurgeon
 	name = "\improper Imperial stormtrooper surgeon helmet"

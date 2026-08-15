@@ -6,3 +6,25 @@
   - step_y
   - plane
   - layer
+
+# Van interiors are assembled from shared base types with per-tile icon_state/layer edits.
+"/turf/closed/interior/van":
+  banned_variables:
+  - icon
+  - step_x
+  - step_y
+  - plane
+
+"/obj/effect/vehicle_roof/van":
+  banned_variables:
+  - icon
+  - step_x
+  - step_y
+  - plane
+
+"/obj/structure/periscope/interior_viewport/simple/windshield":
+  banned_variables:
+  - icon
+  - step_x
+  - step_y
+  - plane

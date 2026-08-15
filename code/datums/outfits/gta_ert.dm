@@ -1,22 +1,27 @@
+// GTA:SA street ERTs — Ballas / Grove
+// wear_suit = modular rownin (+ SW-style lamp/storage modules) so suit_contents work in spawn_humans
+
 /datum/outfit/job/gta/ert
 	id = /obj/item/card/id/silver
 	ears = /obj/item/radio/headset/distress/dutch
 	shoes = /obj/item/clothing/shoes/black
 	gloves = /obj/item/clothing/gloves/black
 	back = /obj/item/storage/backpack/lightpack
-	suit_contents = list(
-		/obj/item/explosive/grenade/stick = 2,
-	)
+	// NO suit_contents on base — leaf outfits equip rownin first
 
 /datum/outfit/job/gta/ert/ballas/standard
 	name = "Ballas Gang Member"
 	jobtype = /datum/job/gta/ert/ballas/standard
 	w_uniform = /obj/item/clothing/under/fun/ballas1
+	wear_suit = /obj/item/clothing/suit/modular/rownin/gta
 	head = /obj/item/clothing/head/fun/bandana_ballas
 	suit_store = /obj/item/weapon/gun/smg/uzi/mag_harness
 	belt = /obj/item/storage/belt/knifepouch
 	r_pocket = /obj/item/storage/pouch/medical_injectors/firstaid
 	l_pocket = /obj/item/storage/pouch/grenade
+	suit_contents = list(
+		/obj/item/explosive/grenade/stick = 2,
+	)
 	backpack_contents = list(
 		/obj/item/radio = 1,
 		/obj/item/tool/crowbar/red = 1,
@@ -30,11 +35,16 @@
 	name = "Ballas Gang Medic"
 	jobtype = /datum/job/gta/ert/ballas/medic
 	w_uniform = /obj/item/clothing/under/fun/ballas2
+	wear_suit = /obj/item/clothing/suit/modular/rownin/gta/medic
 	head = /obj/item/clothing/head/fun/bandana_ballas
 	belt = /obj/item/storage/belt/lifesaver/full
 	glasses = /obj/item/clothing/glasses/hud/health
 	suit_store = /obj/item/weapon/gun/smg/uzi/mag_harness
 	l_pocket = /obj/item/storage/pouch/medical_injectors/medic
+	suit_contents = list(
+		/obj/item/stack/medical/heal_pack/gauze = 1,
+		/obj/item/stack/medical/heal_pack/ointment = 1,
+	)
 	backpack_contents = list(
 		/obj/item/defibrillator = 1,
 		/obj/item/radio = 1,
@@ -48,6 +58,7 @@
 	name = "Ballas OG"
 	jobtype = /datum/job/gta/ert/ballas/leader
 	w_uniform = /obj/item/clothing/under/fun/ballas3
+	wear_suit = /obj/item/clothing/suit/modular/rownin/gta/leader
 	head = /obj/item/clothing/head/fun/bandana_ballas
 	suit_store = /obj/item/weapon/gun/rifle/m16/ugl
 	belt = /obj/item/storage/belt/marine
@@ -78,11 +89,15 @@
 	name = "Grove Street Gang Member"
 	jobtype = /datum/job/gta/ert/grove/standard
 	w_uniform = /obj/item/clothing/under/fun/grove1
+	wear_suit = /obj/item/clothing/suit/modular/rownin/gta
 	head = /obj/item/clothing/head/fun/bandana_grove
 	suit_store = /obj/item/weapon/gun/smg/uzi/mag_harness
 	belt = /obj/item/storage/belt/knifepouch
 	r_pocket = /obj/item/storage/pouch/medical_injectors/firstaid
 	l_pocket = /obj/item/storage/pouch/grenade
+	suit_contents = list(
+		/obj/item/explosive/grenade/stick = 2,
+	)
 	backpack_contents = list(
 		/obj/item/radio = 1,
 		/obj/item/tool/crowbar/red = 1,
@@ -96,11 +111,16 @@
 	name = "Grove Street Gang Medic"
 	jobtype = /datum/job/gta/ert/grove/medic
 	w_uniform = /obj/item/clothing/under/fun/grove2
+	wear_suit = /obj/item/clothing/suit/modular/rownin/gta/medic
 	head = /obj/item/clothing/head/fun/bandana_grove
 	belt = /obj/item/storage/belt/lifesaver/full
 	glasses = /obj/item/clothing/glasses/hud/health
 	suit_store = /obj/item/weapon/gun/smg/uzi/mag_harness
 	l_pocket = /obj/item/storage/pouch/medical_injectors/medic
+	suit_contents = list(
+		/obj/item/stack/medical/heal_pack/gauze = 1,
+		/obj/item/stack/medical/heal_pack/ointment = 1,
+	)
 	backpack_contents = list(
 		/obj/item/defibrillator = 1,
 		/obj/item/radio = 1,
@@ -114,6 +134,7 @@
 	name = "Grove Street OG"
 	jobtype = /datum/job/gta/ert/grove/leader
 	w_uniform = /obj/item/clothing/under/fun/grove3
+	wear_suit = /obj/item/clothing/suit/modular/rownin/gta/leader
 	head = /obj/item/clothing/head/fun/bandana_grove
 	suit_store = /obj/item/weapon/gun/rifle/mpi_km/grenadier
 	belt = /obj/item/storage/belt/marine/som
