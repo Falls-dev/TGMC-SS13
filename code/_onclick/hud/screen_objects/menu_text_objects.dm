@@ -51,7 +51,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/text/lobby)
 
 /atom/movable/screen/text/lobby/infestation_progress/update_text()
 	var/global_progress = SSpersistence.get_infestation_progress()
-	maptext = span_lobbytext("<b>КСЕНОМОРФЫ В РЕГИОНЕ</b><br>Глобальный прогресс: [round(global_progress, 0.1)]%<br>[infestation_progress_bar(global_progress)]")
+	maptext = span_lobbytext("<b>КСЕНОМОРФЫ В РЕГИОНЕ: [round(global_progress, 0.1)]%</b><br>[infestation_progress_bar(global_progress)]")
 
 ///Renders a compact 0-100% progress bar for the lobby maptext.
 /proc/infestation_progress_bar(progress)
