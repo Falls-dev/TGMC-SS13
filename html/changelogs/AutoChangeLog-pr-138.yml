@@ -1,5 +1,0 @@
-author: "SanecMan"
-delete-after: True
-changes:
-  - server: "Исправил подачу чеинжлогов в Дискорд"
-  - server: "Пофикшены тесты в гитхотабыче"
