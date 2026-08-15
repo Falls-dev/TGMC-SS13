@@ -50,8 +50,8 @@ SUBSYSTEM_DEF(persistence)
 	var/list/custom_loadouts = list()
 	///When were the last rounds of specific game mode played, in ticks
 	var/list/last_modes_round_date
-	///Xenomorph regional infestation progress, keyed by ground map name.
-	var/list/infestation_progress_by_map = list()
+	///Global xenomorph infestation progress shared between all maps.
+	var/list/infestation_progress = list("progress" = 50, "season" = 1)
 	///Whether infestation progress has been read from disk during this server runtime.
 	var/infestation_progress_loaded = FALSE
 
@@ -71,60 +71,44 @@ SUBSYSTEM_DEF(persistence)
 	save_infestation_progress()
 	return
 
-///Loads the xenomorph infestation progress for every ground map.
+///Loads the global xenomorph infestation progress.
 /datum/controller/subsystem/persistence/proc/load_infestation_progress()
 	var/json_file = file("data/infestation_progress.json")
 	if(!fexists(json_file))
-		infestation_progress_by_map = list()
+		infestation_progress = list("progress" = 50, "season" = 1)
 		infestation_progress_loaded = TRUE
 		return
 	var/list/loaded_progress = safe_json_decode(file2text(json_file))
-	infestation_progress_by_map = islist(loaded_progress) ? loaded_progress : list()
+	infestation_progress = islist(loaded_progress) ? loaded_progress : list("progress" = 50, "season" = 1)
 	infestation_progress_loaded = TRUE
 
-///Saves the xenomorph infestation progress for every ground map.
+///Saves the global xenomorph infestation progress.
 /datum/controller/subsystem/persistence/proc/save_infestation_progress()
 	var/json_file = file("data/infestation_progress.json")
 	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(infestation_progress_by_map))
+	WRITE_FILE(json_file, json_encode(infestation_progress))
 
-///Returns the persistent infestation entry for a map, creating a fresh season if needed.
-/datum/controller/subsystem/persistence/proc/get_infestation_map_entry(map_name)
+///Returns the persistent global infestation entry, creating a fresh season if needed.
+/datum/controller/subsystem/persistence/proc/get_infestation_entry()
 	// Also supports live code updates: an already-created persistence subsystem
 	// has not executed Initialize() with the new loading proc yet.
 	if(!infestation_progress_loaded)
 		load_infestation_progress()
-	var/list/map_entry = infestation_progress_by_map[map_name]
-	if(!islist(map_entry))
-		map_entry = list("progress" = 50, "season" = 1)
-		infestation_progress_by_map[map_name] = map_entry
-	if(!isnum(map_entry["progress"]))
-		map_entry["progress"] = 50
-	if(!isnum(map_entry["season"]))
-		map_entry["season"] = 1
-	map_entry["progress"] = min(100, max(0, map_entry["progress"]))
-	return map_entry
+	if(!islist(infestation_progress))
+		infestation_progress = list("progress" = 50, "season" = 1)
+	if(!isnum(infestation_progress["progress"]))
+		infestation_progress["progress"] = 50
+	if(!isnum(infestation_progress["season"]))
+		infestation_progress["season"] = 1
+	infestation_progress["progress"] = min(100, max(0, infestation_progress["progress"]))
+	return infestation_progress
 
-///Returns the xenomorph control percentage for a map. New maps start balanced at 50%.
-/datum/controller/subsystem/persistence/proc/get_infestation_map_progress(map_name)
-	if(!map_name)
-		return 50
-	var/list/map_entry = get_infestation_map_entry(map_name)
-	return map_entry["progress"]
+///Returns the global xenomorph control percentage.
+/datum/controller/subsystem/persistence/proc/get_infestation_progress()
+	var/list/infestation_entry = get_infestation_entry()
+	return infestation_entry["progress"]
 
-///Returns the arithmetic mean infestation level across every configured ground map.
-/datum/controller/subsystem/persistence/proc/get_average_infestation_progress()
-	var/list/ground_maps = config.maplist[GROUND_MAP]
-	if(!length(ground_maps))
-		return 50
-	var/total_progress = 0
-	var/map_count = 0
-	for(var/map_name in ground_maps)
-		total_progress += get_infestation_map_progress(map_name)
-		map_count++
-	return map_count ? total_progress / map_count : 50
-
-///Applies one completed Infestation round to the current ground map's regional progress.
+///Applies one completed Infestation round to the global progress.
 /datum/controller/subsystem/persistence/proc/apply_infestation_round_result(datum/game_mode/infestation/mode)
 	var/progress_change
 	switch(mode.round_finished)
@@ -141,24 +125,23 @@ SUBSYSTEM_DEF(persistence)
 	if(iscrashgamemode(mode) || isdistrocrashgamemode(mode))
 		progress_change /= 5
 
-	var/map_name = SSmapping.configs[GROUND_MAP].map_name
-	var/list/map_entry = get_infestation_map_entry(map_name)
-	var/old_progress = map_entry["progress"]
+	var/list/infestation_entry = get_infestation_entry()
+	var/old_progress = infestation_entry["progress"]
 	var/new_progress = min(100, max(0, old_progress + progress_change))
 	var/new_season = FALSE
 	if(new_progress == 0 || new_progress == 100)
 		new_progress = 50
-		map_entry["season"]++
+		infestation_entry["season"]++
 		new_season = TRUE
-	map_entry["progress"] = new_progress
-	var/season = map_entry["season"]
+	infestation_entry["progress"] = new_progress
+	var/season = infestation_entry["season"]
 
-	log_game("Infestation progress on [map_name]: [old_progress]% -> [new_progress]% ([mode.round_finished])[new_season ? "; season [season] started" : ""]")
+	log_game("Global infestation progress: [old_progress]% -> [new_progress]% ([mode.round_finished])[new_season ? "; season [season] started" : ""]")
 	if(new_season)
 		send_ooc_announcement(
-			sender_override = "Regional Infestation",
-			title = "[map_name]: новый сезон",
-			text = "Показатель ксеноморфов достиг [old_progress + progress_change >= 100 ? "100" : "0"]%. Регион очищен, прогресс сброшен до 50%.",
+			sender_override = "Global Infestation",
+			title = "Новый сезон",
+			text = "Показатель ксеноморфов достиг [old_progress + progress_change >= 100 ? "100" : "0"]%. Прогресс сброшен до 50%.",
 			play_sound = FALSE,
 			style = OOC_ALERT_GAME,
 		)
