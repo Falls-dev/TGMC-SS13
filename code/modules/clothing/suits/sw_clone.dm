@@ -43,7 +43,6 @@
 	)
 	icon_state_variants = list("black")
 	current_variant = "black"
-	allowed_uniform_type = /obj/item/clothing/under
 	starting_attachments = list(/obj/item/armor_module/storage/pocket)
 
 // ----- Republic -----
