@@ -331,6 +331,12 @@ body,
     gap: 0.4rem 0.8rem;
   }
 
+  &__player-empty {
+    font-size: 1.8rem;
+    color: #999;
+    padding: 0.4rem 0;
+  }
+
   &__player-entry {
     color: white;
     font-family: 'Pixellari', monospace;

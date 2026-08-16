@@ -14,19 +14,23 @@ export function PlayersPage({ serverState, onNavigate, onAction }: Props) {
     <>
       <BackButton onClick={() => onNavigate('home')} />
       <div className="escape-menu__player-list">
-        <PlayerSection title="Players">
-          {players.map((player) => (
-            <PlayerEntry
-              key={player.ckey}
-              player={player}
-              onToggleIgnore={() =>
-                onAction('toggle_ignore', { ckey: player.ckey })
-              }
-            />
-          ))}
+        <PlayerSection title="Игроки">
+          {players.length === 0 ? (
+            <div className="escape-menu__player-empty">Никого онлайн</div>
+          ) : (
+            players.map((player) => (
+              <PlayerEntry
+                key={player.ckey}
+                player={player}
+                onToggleIgnore={() =>
+                  onAction('toggle_ignore', { ckey: player.ckey })
+                }
+              />
+            ))
+          )}
         </PlayerSection>
         {ignoredOffline.length > 0 && (
-          <PlayerSection title="Ignored (Offline)">
+          <PlayerSection title="Игнор (оффлайн)">
             {ignoredOffline.map((ckey) => (
               <div
                 key={ckey}
@@ -54,7 +58,7 @@ function BackButton({ onClick }: { onClick: () => void }) {
         <span className="escape-menu-icons40x40 template" />
         <span className="escape-menu-icons40x40 back escape-menu__icon-overlay" />
       </div>
-      <span>Back</span>
+      <span>Назад</span>
     </button>
   );
 }

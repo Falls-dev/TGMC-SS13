@@ -45,7 +45,7 @@ export function HomePage({
         <div className="escape-menu__title">
           <div className="escape-menu__subtitle">Ещё один день на...</div>
           <div className="escape-menu__station-name">
-            {serverState.gameshipName}
+            {serverState.gameshipName || 'TGMC'}
           </div>
         </div>
         <div className="escape-menu__buttons">
@@ -95,7 +95,7 @@ export function HomePage({
               (collapsing ? ' escape-menu__resource-list--collapsing' : '')
             }
           >
-            {serverState.resources.map((resource) => (
+            {(serverState.resources ?? []).map((resource) => (
               <Tooltip
                 key={resource.id}
                 position="top"

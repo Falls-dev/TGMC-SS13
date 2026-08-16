@@ -74,7 +74,32 @@ function reducer(state: State, action: Action): State {
     case 'serverUpdate':
       return {
         ...state,
-        serverState: { ...state.serverState!, ...action.state },
+        serverState: {
+          gameshipName: '',
+          roundId: '',
+          mapName: '',
+          shipMapName: '',
+          gameModeName: '',
+          mapFeedbackLink: null,
+          serverTime: '',
+          shiftTime: '',
+          timeDilation: '0',
+          canLeaveBody: false,
+          canAdminHelp: false,
+          canSeeNotes: false,
+          hasTicketNotification: false,
+          resources: [],
+          players: [],
+          ignoredOffline: [],
+          ...state.serverState,
+          ...action.state,
+          players: action.state.players ?? state.serverState?.players ?? [],
+          ignoredOffline:
+            action.state.ignoredOffline ??
+            state.serverState?.ignoredOffline ??
+            [],
+          resources: action.state.resources ?? state.serverState?.resources ?? [],
+        },
       };
   }
 }
