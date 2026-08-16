@@ -493,16 +493,11 @@ This maintains a list of ip addresses that are able to bypass topic filtering.
 /datum/config_entry/number/tgui_max_chunk_count
 	default = 32
 
-// DISCORD ROLE STUFFS
+// БУСТИ
 
-/datum/config_entry/string/discord_token
+/// УРЛ до внешнего АПИ
+/datum/config_entry/string/boosty_api_url
+	default = "https://change.me/v1/level"
 
-//yes ID is a number but config is a string
-
-/datum/config_entry/string/discord_guildid
-
-/datum/config_entry/string/discord_boosty_roleid_tier_1
-
-/datum/config_entry/string/discord_boosty_roleid_tier_2
-
-/datum/config_entry/string/discord_boosty_roleid_tier_3
+/// Токен
+/datum/config_entry/string/boosty_api_token

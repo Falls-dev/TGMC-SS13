@@ -33,10 +33,13 @@ SUBSYSTEM_DEF(discord)
 	var/list/account_link_cache = list()
 	/// list of people who tried to use Boosty styff, so we don't call the API every time
 	var/list/boosty_cache = list()
+	/// Manual Boosty tier overrides from config/boosty.txt (ckey = tier)
+	var/list/boosty_overrides = list()
 	/// Is TGS enabled (If not we won't fire because otherwise this is useless)
 	var/enabled = FALSE
 
 /datum/controller/subsystem/discord/Initialize(start_timeofday)
+	load_boosty_overrides()
 	// Check for if we are using TGS, otherwise return and disables firing
 	if(world.TgsAvailable())
 		enabled = TRUE // Allows other procs to use this (Account linking, etc)
@@ -101,76 +104,75 @@ SUBSYSTEM_DEF(discord)
 	var/regex/num_only = regex("\[^0-9\]", "g")
 	return num_only.Replace(input, "")
 
+/// Loads manual Boosty tier overrides from config/boosty.txt
+/datum/controller/subsystem/discord/proc/load_boosty_overrides(filename = "config/boosty.txt")
+	boosty_overrides = list()
+	if(!fexists(filename))
+		return
+	for(var/line in file2list(filename))
+		if(!line)
+			continue
+		line = trim(line)
+		if(!length(line) || copytext(line, 1, 2) == "#")
+			continue
+		var/list/parts = splittext(line, "=")
+		if(length(parts) < 2)
+			continue
+		var/override_ckey = ckey(parts[1])
+		var/tier = text2num(trim(parts[2]))
+		if(!override_ckey || isnull(tier))
+			continue
+		tier = clamp(tier, BOOSTY_TIER_0, BOOSTY_TIER_3)
+		boosty_overrides[override_ckey] = tier
+
 /datum/controller/subsystem/discord/proc/get_boosty_tier(ckey, silent = TRUE)
 	#ifdef TESTING
 	if(!silent)
-		to_chat(src, span_warning("Test mod gave you tier 3 boost"))
+		to_chat(usr, span_warning("Test mod gave you tier 3 boost"))
 	return BOOSTY_TIER_3
 	#endif
 
-	// Safety checks
-	if(!CONFIG_GET(flag/sql_enabled))
-		if(!silent)
-			to_chat(src, span_warning("This feature requires the SQL backend to be running."))
+	if(!ckey)
 		return BOOSTY_TIER_0
 
-	// ss is still starting
-	if(!SSdiscord)
-		if(!silent)
-			to_chat(src, span_notice("The server is still starting up. Please wait before attempting to link your account!"))
-		return BOOSTY_TIER_0
+	ckey = ckey(ckey)
 
-	if(!SSdiscord.enabled)
-		if(!silent)
-			to_chat(usr, span_warning("TGS is not enabled"))
-		return BOOSTY_TIER_0
+	// Manual overrides from config/boosty.txt take priority over the API
+	if(ckey in boosty_overrides)
+		return boosty_overrides[ckey]
 
-	//use cache if possible
-	if(boosty_cache[ckey])
+	// Use cache if possible (including tier 0)
+	if(ckey in boosty_cache)
 		return boosty_cache[ckey]
 
-	var/discord_id = lookup_id(ckey)
-
-	if(!discord_id) // Account is not linked
+	var/api_url = CONFIG_GET(string/boosty_api_url)
+	var/api_token = CONFIG_GET(string/boosty_api_token)
+	if(!api_url || !api_token)
 		if(!silent)
-			to_chat(usr, "Link your discord account via the linkdiscord verb in the OOC tab first");
+			to_chat(usr, span_warning("Boosty API is not configured."))
 		return BOOSTY_TIER_0
 
-	var/url = "https://discord.com/api/guilds/[CONFIG_GET(string/discord_guildid)]/members/[discord_id]"
-	// Make the request
+	var/url = "[api_url]?token=[url_encode(api_token)]&q=ss13_nick&who=[url_encode(ckey)]"
 	var/datum/http_request/req = new()
-	req.prepare(RUSTG_HTTP_METHOD_GET, url, "", list("Authorization" = "Bot [CONFIG_GET(string/discord_token)]"))
+	req.prepare(RUSTG_HTTP_METHOD_GET, url, "")
 	req.begin_async()
 	UNTIL(req.is_complete())
 	var/datum/http_response/res = req.into_response()
 
-	var/list/data = list()
-
-	try
-		data = json_decode(res.body)
-	catch(var/exception/e)
+	if(res.errored || !res.body)
 		if(!silent)
-			to_chat(usr, span_warning("JSON parsing FAILED: [e]: [res.body]"))
+			var/error_text = res.error
+			if(!error_text)
+				error_text = "empty response"
+			to_chat(usr, span_warning("Failed to check Boosty tier: [error_text]"))
 		return BOOSTY_TIER_0
 
-	if(!data["roles"])
+	var/tier = text2num(trim(res.body))
+	if(isnull(tier))
 		if(!silent)
-			to_chat(usr, span_warning("Failed to check discord roles"));
+			to_chat(usr, span_warning("Invalid Boosty API response: [res.body]"))
 		return BOOSTY_TIER_0
 
-	//save cache and return tier
-
-	if(CONFIG_GET(string/discord_boosty_roleid_tier_3) in data["roles"])
-		boosty_cache[ckey] = BOOSTY_TIER_3
-		return BOOSTY_TIER_3
-
-	if(CONFIG_GET(string/discord_boosty_roleid_tier_2) in data["roles"])
-		boosty_cache[ckey] = BOOSTY_TIER_2
-		return BOOSTY_TIER_2
-
-	if(CONFIG_GET(string/discord_boosty_roleid_tier_1) in data["roles"])
-		boosty_cache[ckey] = BOOSTY_TIER_1
-		return BOOSTY_TIER_1
-
-	boosty_cache[ckey] = BOOSTY_TIER_0
-	return BOOSTY_TIER_0
+	tier = clamp(tier, BOOSTY_TIER_0, BOOSTY_TIER_3)
+	boosty_cache[ckey] = tier
+	return tier

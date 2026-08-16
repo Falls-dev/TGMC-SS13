@@ -5,6 +5,7 @@
 	set desc = "Link your discord account to your BYOND account."
 
 	// Safety checks
+
 	if(!CONFIG_GET(flag/sql_enabled))
 		to_chat(src, span_warning("This feature requires the SQL backend to be running."))
 		return
@@ -15,6 +16,14 @@
 
 	if(!SSdiscord.enabled)
 		to_chat(src, span_warning("This feature requires the server is running on the TGS toolkit."))
+		return
+
+	// Мне до пизды возиться с редиректом выпиливанием кнопок и прочим мракобесием
+	var/know_how = tgui_alert(usr, "Мы перешли на другую систему линкования аккаунтов! Теперь достаточно написать особенному Дискорд боту в личные сообщения чтобы зарегестрироваться. Открываем?", "⬜🟦🟥", list("Да", "Нет"))
+	if(know_how == "Да")
+		DIRECT_OUTPUT(src, link("https://discord.com/oauth2/authorize?client_id=1418676032667648061"))
+		return
+	else
 		return
 
 	var/stored_id = SSdiscord.lookup_id(usr.ckey)
@@ -75,25 +84,15 @@
 /client/verb/boosty_roly()
 	set category = "OOC.Discord"
 	set name = "Check Boosty"
-	set desc = "Checking if you have permission to bind to boosty"
+	set desc = "Check your Boosty subscription tier"
 
-	// Safety checks
-	if(!CONFIG_GET(flag/sql_enabled))
-		to_chat(src, span_warning("This feature requires the SQL backend to be running."))
-		return
-
-	// ss is still starting
 	if(!SSdiscord)
-		to_chat(src, span_notice("The server is still starting up. Please wait before attempting to link your account!"))
+		to_chat(src, span_notice("The server is still starting up. Please wait before checking your Boosty tier!"))
 		return
 
-	// check that tgs is alive and well
-	if(!SSdiscord.enabled)
-		to_chat(src, span_warning("This feature requires the server is running on the TGS toolkit."))
-		return
 	var/tier = SSdiscord.get_boosty_tier(usr.ckey, FALSE)
 	if(!tier)
-		to_chat(usr, span_notice("You don't have a boosty permission"))
+		to_chat(usr, span_notice("You don't have a Boosty subscription."))
 		return
 
-	to_chat(usr, span_notice("Boosty discord role is verified. Your current tier is [tier]"))
+	to_chat(usr, span_notice("Boosty subscription verified. Your current tier is [tier]."))
