@@ -25,7 +25,7 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	)
 	// initialize() re-detects control type; keep embedded-browser messaging path
 	window.is_browser = TRUE
-	// 516.1680+ WebView2 transparency (also set in skin.dmf; winset covers stale skins)
+	// 516.1680+ only — older clients error on unknown inner-background-color
 	if(client.byond_build >= 1680)
 		winset(client, "mapwindow.escape_menu", "inner-background-color=transparent")
 	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/escape_menu_font))

@@ -11,7 +11,35 @@ const COLOR_DARK_BG_DARKER = '#171717';
 const COLOR_DARK_BUTTON = '#494949';
 const COLOR_DARK_TEXT = '#a4bad6';
 
+/** inner-background-color exists only on 516.1680+ WebView2 */
+const INNER_BG_MIN_BUILD = 1680;
+
 let setClientThemeTimer: NodeJS.Timeout;
+let supportsInnerBackground: boolean | undefined;
+
+const applyInnerBackground = (props: Record<string, string>) => {
+  if (!Object.keys(props).length) {
+    return;
+  }
+  if (supportsInnerBackground === true) {
+    Byond.winset(props);
+    return;
+  }
+  if (supportsInnerBackground === false || !Byond.BLINK) {
+    supportsInnerBackground = false;
+    return;
+  }
+  Byond.winget('', 'byond_build')
+    .then((build) => {
+      supportsInnerBackground = Number(build) >= INNER_BG_MIN_BUILD;
+      if (supportsInnerBackground) {
+        Byond.winset(props);
+      }
+    })
+    .catch(() => {
+      supportsInnerBackground = false;
+    });
+};
 
 /**
  * Darkmode preference, originally by Kmc2000.
@@ -33,7 +61,7 @@ export const setClientTheme = (name) => {
   }, 1500);
 
   if (name === 'light') {
-    return Byond.winset({
+    Byond.winset({
       // Main windows
       'infowindow.background-color': 'none',
       'infowindow.text-color': '#000000',
@@ -41,7 +69,6 @@ export const setClientTheme = (name) => {
       'info.text-color': '#000000',
       'browseroutput.background-color': 'none',
       'browseroutput.text-color': '#000000',
-      'browseroutput.inner-background-color': '#EEEEEE',
       'outputwindow.background-color': 'none',
       'outputwindow.text-color': '#000000',
       'mainwindow.background-color': 'none',
@@ -67,7 +94,6 @@ export const setClientTheme = (name) => {
       'statwindow.background-color': 'none',
       'statwindow.text-color': '#000000',
       'statbrowser.background-color': 'none',
-      'statbrowser.inner-background-color': '#EEEEEE',
       // Say, OOC, me Buttons etc.
       'saybutton.background-color': 'none',
       'saybutton.text-color': '#000000',
@@ -82,10 +108,15 @@ export const setClientTheme = (name) => {
       'input.background-color': '#FFFFFF',
       'input.text-color': '#000000',
     });
+    applyInnerBackground({
+      'browseroutput.inner-background-color': '#EEEEEE',
+      'statbrowser.inner-background-color': '#EEEEEE',
+    });
+    return;
   }
 
   if (name === 'dark') {
-    return Byond.winset({
+    Byond.winset({
       // Main windows
       'infowindow.background-color': COLOR_DARK_BG,
       'infowindow.text-color': COLOR_DARK_TEXT,
@@ -93,7 +124,6 @@ export const setClientTheme = (name) => {
       'info.text-color': COLOR_DARK_TEXT,
       'browseroutput.background-color': COLOR_DARK_BG,
       'browseroutput.text-color': COLOR_DARK_TEXT,
-      'browseroutput.inner-background-color': COLOR_DARK_BG,
       'outputwindow.background-color': COLOR_DARK_BG,
       'outputwindow.text-color': COLOR_DARK_TEXT,
       'mainwindow.background-color': COLOR_DARK_BG,
@@ -119,7 +149,6 @@ export const setClientTheme = (name) => {
       'statwindow.background-color': COLOR_DARK_BG_DARKER,
       'statwindow.text-color': COLOR_DARK_TEXT,
       'statbrowser.background-color': COLOR_DARK_BG_DARKER,
-      'statbrowser.inner-background-color': COLOR_DARK_BG_DARKER,
       // Say, OOC, me Buttons etc.
       'saybutton.background-color': COLOR_DARK_BG,
       'saybutton.text-color': COLOR_DARK_TEXT,
@@ -133,6 +162,10 @@ export const setClientTheme = (name) => {
       'tooltip.text-color': COLOR_DARK_TEXT,
       'input.background-color': COLOR_DARK_BG_DARKER,
       'input.text-color': COLOR_DARK_TEXT,
+    });
+    applyInnerBackground({
+      'browseroutput.inner-background-color': COLOR_DARK_BG,
+      'statbrowser.inner-background-color': COLOR_DARK_BG_DARKER,
     });
   }
 };

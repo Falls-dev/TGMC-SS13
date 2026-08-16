@@ -51,6 +51,13 @@
   // Backwards compatibility
   window.__windowId__ = Byond.windowId;
 
+  // Trident engine version (pre-Chromium BYOND clients)
+  Byond.TRIDENT = (function () {
+    var groups = navigator.userAgent.match(/Trident\/(\d+).+?;/i);
+    var majorVersion = groups && groups[1];
+    return majorVersion ? parseInt(majorVersion, 10) : null;
+  })();
+
   // Blink engine version
   Byond.BLINK = (function () {
     var groups = navigator.userAgent.match(/Chrome\/(\d+)\./);
@@ -59,8 +66,12 @@
   })();
 
   // Basic checks to detect whether this page runs in BYOND
+  // Keep TRIDENT like RU/CMSS13 so older IE clients still work.
   var isByond =
-    (Byond.BLINK !== null || window.cef_to_byond || !!nativeTopic) &&
+    (Byond.TRIDENT !== null ||
+      Byond.BLINK !== null ||
+      window.cef_to_byond ||
+      !!nativeTopic) &&
     location.hostname === '127.0.0.1' &&
     location.search !== '?external';
   //As of BYOND 515 the path doesn't seem to include tmp dir anymore if you're trying to open tgui in external browser and looking why it doesn't work
@@ -113,8 +124,12 @@
       }
     }
 
-    // Prefer location.href first — on some 516.1680+ builds cef_to_byond
-    // is present but does not reliably deliver winset/command calls.
+    // Pre-1680 Chromium (RU/CMSS13 path): cef_to_byond is reliable.
+    // 1680+ with native Topic: prefer location.href — cef can be a stub.
+    if (window.cef_to_byond && !nativeTopic) {
+      cef_to_byond('byond://' + url);
+      return;
+    }
     if (url.length < 2048) {
       location.href = 'byond://' + url;
       return;
@@ -445,7 +460,10 @@
     if (
       location.hostname === '127.0.0.1' &&
       location.search !== '?external' &&
-      (Byond.BLINK !== null || window.cef_to_byond || nativeTopic)
+      (Byond.TRIDENT !== null ||
+        Byond.BLINK !== null ||
+        window.cef_to_byond ||
+        nativeTopic)
     ) {
       isByond = true;
       Byond.IS_BYOND = true;

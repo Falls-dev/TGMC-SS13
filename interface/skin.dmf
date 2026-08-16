@@ -155,7 +155,6 @@ window "mapwindow"
 		anchor1 = 0,0
 		anchor2 = 100,100
 		background-color = none
-		inner-background-color = transparent
 		is-visible = false
 
 window "infowindow"
