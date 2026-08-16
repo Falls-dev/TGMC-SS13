@@ -1,4 +1,4 @@
-# Python deps for changelog scripts (TGS PreSynchronize, CI check_changelogs.sh):
+# Python deps for changelog scripts (GitHub Actions compile_changelogs, TGS PreSynchronize):
 #   tools/ss13_genchangelog.py
 #   tools/ss13_discord_changelog.py
 # Everything else those scripts use is Python 3 stdlib (json, urllib, argparse, …).
