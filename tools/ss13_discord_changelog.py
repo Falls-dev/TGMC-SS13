@@ -8,13 +8,13 @@ ss13_discord_changelog.py - Post pending YAML changelogs to a Discord webhook.
 Based on ss13_genchangelog.py. Reads the same pending html/changelogs/*.yml
 files that Auto Changelog creates from PR :cl: blocks, formats them, and
 POSTs to Discord. Does NOT compile/archive/delete YAML — run
-ss13_genchangelog.py after this (PreSynchronize does that).
+ss13_genchangelog.py after this.
 
 Pipeline:
   1. PR merged with :cl: ... /:cl: in the body
   2. .github auto_changelog writes html/changelogs/AutoChangeLog-pr-N.yml
-  3. TGS PreSynchronize:
-       a) this script → Discord
+  3. .github compile_changelogs:
+       a) this script → Discord (secret CHANGELOG_DISCORD_HOOK)
        b) ss13_genchangelog.py → html/changelogs/archive/YYYY-MM.yml (+ delete YAML)
 '''
 
