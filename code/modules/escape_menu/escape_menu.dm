@@ -49,7 +49,6 @@ GLOBAL_LIST_EMPTY(escape_menus)
 		"serverTime" = time_stamp("hh:mm:ss"),
 		"shiftTime" = (SSticker.round_start_time == 0) ? "Pre-Game" : stationTimestamp("hh:mm:ss"),
 		"timeDilation" = "[round(SStime_track.time_dilation_current, 1)]",
-		"admins" = build_admin_list(),
 		"players" = build_player_list(),
 		"ignoredOffline" = build_ignored_offline(),
 	))
@@ -74,10 +73,10 @@ GLOBAL_LIST_EMPTY(escape_menus)
 /datum/escape_menu/proc/on_round_start()
 	SIGNAL_HANDLER
 	send_update(list(
-		"gmodName" = get_true_gameship_name(),
+		"gameshipName" = get_true_gameship_name(),
 		"mapName" = length(SSmapping.configs) ? SSmapping.configs[GROUND_MAP].map_name : "Загрузка...",
 		"shipMapName" = length(SSmapping.configs) ? SSmapping.configs[SHIP_MAP].map_name : "Загрузка...",
-		"gameModeName" = SSticker.mode?.name || "Загрузка...",
+		"gameModeName" = GLOB.master_mode,
 		"shiftTime" = stationTimestamp("hh:mm:ss"),
 		"timeDilation" = "[round(SStime_track.time_dilation_current, 1)]",
 	))
@@ -116,42 +115,27 @@ GLOBAL_LIST_EMPTY(escape_menus)
 		resources += list(list("id" = "bug", "label" = "Карта", "tooltip" = "Посмотреть игровые карты"))
 
 	window.send_message("init", list(
-		"gmodName" = get_true_gameship_name(),
-		"roundId" = GLOB.round_id || "Unset",
+		"gameshipName" = get_true_gameship_name(),
+		"roundId" = GLOB.round_id || "ДЕБАГ",
 		"serverTime" = time_stamp("hh:mm:ss"),
-		"shiftTime" = (SSticker.round_start_time == 0) ? "Pre-Game" : stationTimestamp("hh:mm:ss"),
+		"shiftTime" = (SSticker.round_start_time == 0) ? "12:00:00" : stationTimestamp("hh:mm:ss"),
 		"timeDilation" = "[round(SStime_track.time_dilation_current, 1)]",
 		"mapName" = length(SSmapping.configs) ? SSmapping.configs[GROUND_MAP].map_name : "Загрузка...",
 		"shipMapName" = length(SSmapping.configs) ? SSmapping.configs[SHIP_MAP].map_name : "Загрузка...",
-		"gameModeName" = SSticker.mode?.name || "Загрузка...",
+		"gameModeName" = GLOB.master_mode,
 		"mapFeedbackLink" = null,
 		"canLeaveBody" = isliving(client?.mob),
 		"canAdminHelp" = (/client/verb/adminhelp in client?.verbs),
 		"canSeeNotes" = CONFIG_GET(flag/see_own_notes),
 		"hasTicketNotification" = !isnull(client?.current_ticket),
-		"admins" = build_admin_list(),
 		"players" = build_player_list(),
 		"ignoredOffline" = build_ignored_offline(),
 		"resources" = resources,
 	))
 
-/datum/escape_menu/proc/build_admin_list()
-	var/list/result = list()
-	for(var/client/admin as anything in GLOB.admins)
-		result += list(list(
-			"ckey" = admin.ckey,
-			"displayName" = admin.holder?.fakekey || admin.ckey,
-			"rank" = admin.holder?.rank?.name,
-			"feedbackLink" = null,
-			"ping" = round(admin.avgping, 1),
-			"ignored" = (admin.ckey in client?.prefs?.ignoring),
-			"isSelf" = (admin.ckey == client?.ckey),
-		))
-	return result
-
 /datum/escape_menu/proc/build_player_list()
 	var/list/result = list()
-	for(var/client/player as anything in GLOB.clients - GLOB.admins)
+	for(var/client/player as anything in GLOB.clients)
 		result += list(list(
 			"ckey" = player.ckey,
 			"displayName" = player.ckey,
