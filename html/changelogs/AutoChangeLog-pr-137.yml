@@ -1,4 +1,0 @@
-author: "SanecMan"
-delete-after: True
-changes:
-  - rscadd: "Добавлено меню на Escape. Для корректной работы обновитесь на 516.1680 и выше."
