@@ -282,8 +282,11 @@ TGUI_MAX_CHUNK_COUNT 32
 #TGS_EVENT_APPROVAL_MESSAGING
 #TGS_ADMINLESS_MESSAGING
 
-BOOSTY_API_URL https://change.me/v1/level
-## Base URL for Aperture API (search/tier). Leave empty to disable API calls.
+## Gosuslugi API URL
+#KAIN_API_URL https://api.aperture13.online
 
-## Token for Aperture API
-BOOSTY_API_TOKEN testtoken12345
+## Gosuslugi API Token
+#KAIN_API_TOKEN what_pumpkin
+
+## Discord bot invite URL for registration
+DISCORD_BOT_URL https://discord.com/oauth2/authorize?client_id=1234567890
