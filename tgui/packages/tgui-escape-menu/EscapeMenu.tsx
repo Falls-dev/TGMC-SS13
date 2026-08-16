@@ -23,7 +23,7 @@ export type PlayerInfo = {
 };
 
 export type ServerState = {
-  gmodName: string;
+  gameshipName: string;
   roundId: string;
   mapName: string;
   shipMapName: string;
@@ -37,7 +37,6 @@ export type ServerState = {
   canSeeNotes: boolean;
   hasTicketNotification: boolean;
   resources: ResourceLink[];
-  admins: PlayerInfo[];
   players: PlayerInfo[];
   ignoredOffline: string[];
 };

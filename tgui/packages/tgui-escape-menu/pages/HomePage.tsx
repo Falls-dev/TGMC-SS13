@@ -45,7 +45,7 @@ export function HomePage({
         <div className="escape-menu__title">
           <div className="escape-menu__subtitle">Ещё один день на...</div>
           <div className="escape-menu__station-name">
-            {serverState.gmodName}
+            {serverState.gameshipName}
           </div>
         </div>
         <div className="escape-menu__buttons">

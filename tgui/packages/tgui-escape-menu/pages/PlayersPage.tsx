@@ -7,29 +7,15 @@ type Props = {
 };
 
 export function PlayersPage({ serverState, onNavigate, onAction }: Props) {
+  const players = serverState.players ?? [];
+  const ignoredOffline = serverState.ignoredOffline ?? [];
+
   return (
     <>
       <BackButton onClick={() => onNavigate('home')} />
       <div className="escape-menu__player-list">
-        {serverState.admins.length > 0 ? (
-          <PlayerSection title="Admins">
-            {serverState.admins.map((admin) => (
-              <PlayerEntry
-                key={admin.ckey}
-                player={admin}
-                onToggleIgnore={() =>
-                  onAction('toggle_ignore', { ckey: admin.ckey })
-                }
-              />
-            ))}
-          </PlayerSection>
-        ) : (
-          <div className="escape-menu__player-section-title">
-            No Admins Online!
-          </div>
-        )}
         <PlayerSection title="Players">
-          {serverState.players.map((player) => (
+          {players.map((player) => (
             <PlayerEntry
               key={player.ckey}
               player={player}
@@ -39,9 +25,9 @@ export function PlayersPage({ serverState, onNavigate, onAction }: Props) {
             />
           ))}
         </PlayerSection>
-        {serverState.ignoredOffline.length > 0 && (
+        {ignoredOffline.length > 0 && (
           <PlayerSection title="Ignored (Offline)">
-            {serverState.ignoredOffline.map((ckey) => (
+            {ignoredOffline.map((ckey) => (
               <div
                 key={ckey}
                 className="escape-menu__player-entry escape-menu__player-entry--ignored"
@@ -111,21 +97,6 @@ function PlayerEntry({
           <span className="escape-menu__player-ping"> ({player.ping}ms)</span>
         )}
       </span>
-      {player.rank && (
-        <span
-          className={
-            'escape-menu__player-rank' +
-            (player.feedbackLink ? ' escape-menu__player-rank--link' : '')
-          }
-          onClick={
-            player.feedbackLink
-              ? () => Byond.command(`.url ${player.feedbackLink}`)
-              : undefined
-          }
-        >
-          {player.rank}
-        </span>
-      )}
     </div>
   );
 }
