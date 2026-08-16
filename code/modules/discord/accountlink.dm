@@ -2,84 +2,48 @@
 /client/verb/linkdiscord()
 	set category = "OOC.Discord"
 	set name = "Link Discord Account"
-	set desc = "Link your discord account to your BYOND account."
+	set desc = "Register your account via the Discord bot."
 
-	// Safety checks
-
-	if(!CONFIG_GET(flag/sql_enabled))
-		to_chat(src, span_warning("This feature requires the SQL backend to be running."))
+	var/bot_url = CONFIG_GET(string/discord_bot_url)
+	if(!bot_url)
+		to_chat(src, span_warning("Регистрация временно недоступна."))
 		return
 
-	if(!SSdiscord) // SS is still starting
-		to_chat(src, span_notice("The server is still starting up. Please wait before attempting to link your account!"))
-		return
-
-	if(!SSdiscord.enabled)
-		to_chat(src, span_warning("This feature requires the server is running on the TGS toolkit."))
-		return
-
-	// Мне до пизды возиться с редиректом выпиливанием кнопок и прочим мракобесием
-	var/know_how = tgui_alert(usr, "Мы перешли на другую систему линкования аккаунтов! Теперь достаточно написать особенному Дискорд боту в личные сообщения чтобы зарегестрироваться. Открываем?", "⬜🟦🟥", list("Да", "Нет"))
-	if(know_how == "Да")
-		DIRECT_OUTPUT(src, link("https://discord.com/oauth2/authorize?client_id=1418676032667648061"))
-		return
-	else
-		return
-
-	var/stored_id = SSdiscord.lookup_id(usr.ckey)
-	if(!stored_id) // Account is not linked
-		var/know_how = tgui_alert(usr, "Do you know how to get a Discord user ID? This ID is NOT your Discord username and numbers! (Pressing NO will open a guide.)", "Question", list("Yes", "No", "Cancel Linking"))
-
-		if(know_how == "No") // Opens discord support on how to collect IDs
-			DIRECT_OUTPUT(src, link("https://tgstation13.org/wiki/How_to_find_your_Discord_User_ID"))
-		if(know_how == "Cancel Linking")
-			return
-		var/entered_id = tgui_input_text(usr, "Please enter your Discord ID (18-ish digits)", "Enter Discord ID")
-		SSdiscord.account_link_cache[replacetext(lowertext(usr.ckey), " ", "")] = "[entered_id]" // Prepares for TGS-side verification, also fuck spaces
-		tgui_alert(usr, "Account link started. Please ping the bot of the server you\'re currently on, followed by \"verify [usr.ckey]\" in Discord to successfully verify your account (Example: @Mr_Terry verify [usr.ckey])")
-
-	else // Account is already linked
-		var/choice = tgui_alert(usr, "You already have the Discord Account [stored_id] linked to [usr.ckey]. Would you like to link a different account?", "Already Linked", list("Yes", "No"))
-		if(choice == "Yes")
-			var/know_how = tgui_alert(usr, "Do you know how to get a Discord user ID? This ID is NOT your Discord username and numbers! (Pressing NO will open a guide.)", "Question", list("Yes", "No", "Cancel Linking"))
-			if(know_how == "No")
-				DIRECT_OUTPUT(src, link("https://tgstation13.org/wiki/How_to_find_your_Discord_User_ID"))
-
-			if(know_how == "Cancel Linking")
-				return
-
-			var/entered_id = tgui_input_text(usr, "Please enter your Discord ID (18-ish digits)", "Enter Discord ID")
-			SSdiscord.account_link_cache[replacetext(lowertext(usr.ckey), " ", "")] = "[entered_id]" // Prepares for TGS-side verification, also fuck spaces
-			tgui_alert(usr, "Account link started. Please ping the bot of the server you\'re currently on, followed by \"verify [usr.ckey]\" in Discord to successfully verify your account (Example: @Mr_Terry verify [usr.ckey])")
+	var/choice = tgui_alert(usr, "Для привязки аккаунта нужно пройти регистрацию в Discord-боте. Открыть бота?", "Регистрация", list("Да", "Нет"))
+	if(choice == "Да")
+		DIRECT_OUTPUT(src, link(bot_url))
 
 /client/verb/check_discord()
 	set category = "OOC.Discord"
 	set name = "Check Discord ID"
-	set desc = "Verify or reverify your discord account against your linked ckey"
+	set desc = "Check your Discord registration status"
 
-	// Safety checks
-	if(!CONFIG_GET(flag/sql_enabled))
-		to_chat(src, span_warning("This feature requires the SQL backend to be running."))
-		return
-
-	// ss is still starting
 	if(!SSdiscord)
-		to_chat(src, span_notice("The server is still starting up. Please wait before attempting to link your account!"))
+		to_chat(src, span_notice("Сервер ещё запускается. Подождите немного."))
 		return
 
-	// check that tgs is alive and well
-	if(!SSdiscord.enabled)
-		to_chat(src, span_warning("This feature requires the server is running on the TGS toolkit."))
+	if(!SSdiscord.is_aperture_api_configured())
+		to_chat(src, span_warning("Возникла ошибка, попробуйте позднее."))
 		return
 
-	// check that account is linked with discord
-	var/stored_id = SSdiscord.lookup_id(usr.ckey)
-	if(!stored_id) // Account is not linked
-		to_chat(usr, "Link your discord account via the linkdiscord verb in the OOC tab first");
+	var/result = SSdiscord.lookup_registration(usr.ckey)
+	if(result == 0)
+		to_chat(usr, span_notice("Данные не найдены. Вы точно регистрировались?"))
 		return
 
-	// honey its time for your role flattening
-	to_chat(usr, span_notice("Discord - [stored_id] - verified"))
+	if(!islist(result))
+		to_chat(usr, span_warning("Возникла ошибка, попробуйте позднее."))
+		return
+
+	var/list/data = result
+	var/active = text2num(data["active"])
+	switch(active)
+		if(1)
+			to_chat(usr, span_notice("Регистрация не завершена. Продолжите регистрацию через бота или обратитесь к администрации за помощью."))
+		if(2)
+			to_chat(usr, span_notice("Вы зарегестрированы."))
+		else
+			to_chat(usr, span_warning("Возникла ошибка, попробуйте позднее."))
 
 /client/verb/boosty_roly()
 	set category = "OOC.Discord"
@@ -87,12 +51,20 @@
 	set desc = "Check your Boosty subscription tier"
 
 	if(!SSdiscord)
-		to_chat(src, span_notice("The server is still starting up. Please wait before checking your Boosty tier!"))
+		to_chat(src, span_notice("Сервер ещё запускается. Подождите немного."))
 		return
 
-	var/tier = SSdiscord.get_boosty_tier(usr.ckey, FALSE)
-	if(!tier)
-		to_chat(usr, span_notice("You don't have a Boosty subscription."))
+	var/tier = SSdiscord.get_boosty_tier(usr.ckey, TRUE)
+	if(isnull(tier))
+		to_chat(usr, span_warning("Возникла ошибка, попробуйте позднее."))
 		return
 
-	to_chat(usr, span_notice("Boosty subscription verified. Your current tier is [tier]."))
+	if(tier == BOOSTY_TIER_0)
+		to_chat(usr, span_notice("У вас нет подписки."))
+		return
+
+	if(tier >= BOOSTY_TIER_1 && tier <= BOOSTY_TIER_3)
+		to_chat(usr, span_notice("У вас [tier] уровень подписки."))
+		return
+
+	to_chat(usr, span_warning("Возникла ошибка, попробуйте позднее."))

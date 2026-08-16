@@ -493,11 +493,8 @@ This maintains a list of ip addresses that are able to bypass topic filtering.
 /datum/config_entry/number/tgui_max_chunk_count
 	default = 32
 
-// БУСТИ
+/datum/config_entry/string/KAIN_API_URL
 
-/// УРЛ до внешнего АПИ
-/datum/config_entry/string/boosty_api_url
-	default = "https://change.me/v1/level"
+/datum/config_entry/string/KAIN_API_TOKEN
 
-/// Токен
-/datum/config_entry/string/boosty_api_token
+/datum/config_entry/string/discord_bot_url
