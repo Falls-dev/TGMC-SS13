@@ -282,8 +282,8 @@ TGUI_MAX_CHUNK_COUNT 32
 #TGS_EVENT_APPROVAL_MESSAGING
 #TGS_ADMINLESS_MESSAGING
 
-## АПИ для Бусти
 BOOSTY_API_URL https://change.me/v1/level
+## Base URL for Aperture API (search/tier). Leave empty to disable API calls.
 
-## Токен для АПИ Бусти
+## Token for Aperture API
 BOOSTY_API_TOKEN testtoken12345
