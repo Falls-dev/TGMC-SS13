@@ -25,7 +25,7 @@ SUBSYSTEM_DEF(input)
 		"Any+UP" = "\"KeyUp \[\[*\]\]\"",
 		"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
 		"Tab" = "\".winset \\\"input.focus=true ? map.focus=true : input.focus=true\\\"\"",
-		"Escape" = "Reset-Held-Keys",
+		"Escape" = "\".winset \\\"[SKIN_ESCAPE_MENU].is-visible=true?[SKIN_ESCAPE_MENU].is-visible=false:[SKIN_ESCAPE_MENU].is-visible=true\\\"\\n.output [SKIN_ESCAPE_MENU]:update [ESCAPE_MENU_TOGGLE_MESSAGE]\\nReset-Held-Keys\"",
 	)
 
 

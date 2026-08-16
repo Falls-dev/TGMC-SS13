@@ -47,6 +47,7 @@ module.exports = (env = {}, argv) => {
       tgui: ['./packages/tgui'],
       'tgui-panel': ['./packages/tgui-panel'],
       'tgui-say': ['./packages/tgui-say'],
+      'tgui-escape-menu': ['./packages/tgui-escape-menu/index.tsx'],
     },
     output: {
       path: argv.useTmpFolder
@@ -65,6 +66,10 @@ module.exports = (env = {}, argv) => {
         tgui: path.resolve(__dirname, './packages/tgui'),
         'tgui-panel': path.resolve(__dirname, './packages/tgui-panel'),
         'tgui-say': path.resolve(__dirname, './packages/tgui-say'),
+        'tgui-escape-menu': path.resolve(
+          __dirname,
+          './packages/tgui-escape-menu',
+        ),
         'tgui-dev-server': path.resolve(
           __dirname,
           './packages/tgui-dev-server',
