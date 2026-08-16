@@ -18,6 +18,11 @@
 	set name = "Check Discord ID"
 	set desc = "Check your Discord registration status"
 
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_CHECK_DISCORD))
+		to_chat(src, span_warning("Подождите немного перед повторной проверкой."))
+		return
+	TIMER_COOLDOWN_START(src, COOLDOWN_CHECK_DISCORD, 3 SECONDS)
+
 	if(!SSdiscord)
 		to_chat(src, span_notice("Сервер ещё запускается. Подождите немного."))
 		return
@@ -49,6 +54,11 @@
 	set category = "OOC.Discord"
 	set name = "Check Boosty"
 	set desc = "Check your Boosty subscription tier"
+
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_CHECK_DISCORD))
+		to_chat(src, span_warning("Подождите немного перед повторной проверкой."))
+		return
+	TIMER_COOLDOWN_START(src, COOLDOWN_CHECK_DISCORD, 3 SECONDS)
 
 	if(!SSdiscord)
 		to_chat(src, span_notice("Сервер ещё запускается. Подождите немного."))
