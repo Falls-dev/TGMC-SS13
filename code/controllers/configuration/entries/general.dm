@@ -218,6 +218,11 @@ Administrative related.
 	config_entry_value = 15
 	min_val = 0
 
+/// Max lines retained per STUI log tab (System Tabbed User Interface).
+/datum/config_entry/number/STUI_length
+	config_entry_value = 150
+	min_val = 10
+
 /datum/config_entry/number/afk_period	//time in ds until a player is considered inactive
 	config_entry_value = 3000
 	integer = FALSE

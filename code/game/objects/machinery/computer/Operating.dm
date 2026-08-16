@@ -5,6 +5,7 @@
 	icon_state = "computer_small"
 	screen_overlay = "operating"
 	circuit = /obj/item/circuitboard/computer/operating
+	interaction_flags = INTERACT_MACHINE_TGUI
 	var/mob/living/carbon/human/victim = null
 	var/obj/machinery/optable/table = null
 
@@ -20,40 +21,37 @@
 	table = null
 	return ..()
 
-/obj/machinery/computer/operating/interact(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/computer/operating/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "OperatingComputer", name)
+		ui.open()
 
-	var/dat
-	if(src.table && (src.table.check_victim()))
-		src.victim = src.table.victim
-		dat += {"
-<B>Patient Information:</B><BR>
-<BR>
-<B>Name:</B> [src.victim.real_name]<BR>
-<B>Age:</B> [src.victim.age]<BR>
-<B>Blood Type:</B> [src.victim.blood_type]<BR>
-<BR>
-<B>Health:</B> [src.victim.health]<BR>
-<B>Brute Damage:</B> [src.victim.get_brute_loss()]<BR>
-<B>Toxins Damage:</B> [src.victim.get_tox_loss()]<BR>
-<B>Fire Damage:</B> [src.victim.get_fire_loss()]<BR>
-<B>Suffocation Damage:</B> [src.victim.get_oxy_loss()]<BR>
-<B>Patient Status:</B> [src.victim.stat ? "Non-Responsive" : "Stable"]<BR>
-<B>Heartbeat rate:</B> [victim.get_pulse(GETPULSE_TOOL)]<BR>
-"}
-	else
-		src.victim = null
-		dat += {"
-<B>Patient Information:</B><BR>
-<BR>
-<B>No Patient Detected</B>
-"}
+/obj/machinery/computer/operating/ui_data(mob/user)
+	. = list()
+	.["hasTable"] = !!table
 
-	var/datum/browser/popup = new(user, "op", "<div align='center'>Operating Computer</div>")
-	popup.set_content(dat)
-	popup.open()
+	if(table?.check_victim())
+		victim = table.victim
+		if(ishuman(victim))
+			var/mob/living/carbon/human/H = victim
+			.["patient"] = list(
+				"name" = H.real_name,
+				"age" = H.age,
+				"blood_type" = H.blood_type,
+				"health" = H.health,
+				"maxHealth" = H.maxHealth,
+				"bruteLoss" = H.get_brute_loss(),
+				"toxLoss" = H.get_tox_loss(),
+				"fireLoss" = H.get_fire_loss(),
+				"oxyLoss" = H.get_oxy_loss(),
+				"stat" = H.stat,
+				"pulse" = H.get_pulse(GETPULSE_TOOL),
+			)
+			return
+
+	victim = null
+	.["patient"] = null
 
 /obj/machinery/computer/operating/valhalla
 	use_power = NO_POWER_USE

@@ -37,3 +37,6 @@
 	if(message)
 		entry += "\n[message]"
 	logger.Log(LOG_CATEGORY_HREF_TGUI, entry)
+	GLOB.STUI?.tgui.Add("\[[time_stamp()]]TGUI: [entry]")
+	if(GLOB.STUI)
+		GLOB.STUI.processing |= STUI_LOG_TGUI

@@ -16,6 +16,7 @@
 	idle_power_usage = 5
 	active_power_usage = 100
 	max_integrity = 300
+	interaction_flags = INTERACT_MACHINE_TGUI
 
 	/// associative lazylist of the form: list(mob calling us = hologram representing that mob).
 	/// this is only populated for holopads answering calls from another holopad
@@ -78,46 +79,97 @@
 		. += span_notice("The status display reads: Current projection range: <b>[holo_range]</b> units.")
 
 
-/obj/machinery/holopad/interact(mob/user)
+/obj/machinery/holopad/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Holopad", name)
+		ui.open()
+
+/obj/machinery/holopad/ui_data(mob/user)
+	. = list()
+	.["calling"] = !!outgoing_call
+	.["on_network"] = on_network
+	.["on_cooldown"] = last_request + 200 >= world.time
+	.["holo_calls"] = list()
+
+	for(var/datum/holocall/HC as anything in holo_calls)
+		var/caller_name = HC.user
+		if(HC.calling_holopad)
+			caller_name = get_area(HC.calling_holopad) || caller_name
+		.["holo_calls"] += list(list(
+			"ref" = REF(HC),
+			"caller" = caller_name,
+			"connected" = HC.connected_holopad == src,
+		))
+
+/obj/machinery/holopad/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 
-	if(outgoing_call)
+	if(!is_operational())
 		return
 
-	var/dat
-	if(temp)
-		dat = temp
-	else
-		if(on_network)
-			dat += "<a href='byond://?src=[REF(src)];AIrequest=1'>Request an AI's presence</a><br>"
-			dat += "<a href='byond://?src=[REF(src)];Holocall=1'>Call another holopad</a><br>"
+	switch(action)
+		if("AIrequest")
+			if(isAI(ui.user))
+				return
+			if(last_request + 200 < world.time)
+				last_request = world.time
+				to_chat(ui.user, span_info("You requested an AI's presence."))
+				var/area/area = get_area(src)
+				for(var/mob/living/silicon/ai/AI as anything in GLOB.ai_list)
+					if(!AI.client)
+						continue
+					to_chat(AI, span_info("Your presence is requested at <a href='byond://?src=[REF(AI)];jumptoholopad=[REF(src)]'>\the [area]</a>."))
+					playsound(AI, 'sound/machines/two_tones_beep.ogg', 30, 1)
+					SEND_GLOBAL_SIGNAL(COMSIG_GLOB_HOLOPAD_AI_CALLED, src)
+			else
+				to_chat(ui.user, span_info("A request for AI presence was already sent recently."))
+			return TRUE
 
-		if(LAZYLEN(holo_calls))
-			dat += "=====================================================<br>"
+		if("holocall")
+			if(outgoing_call)
+				return
+			if(ui.user.loc != loc)
+				to_chat(ui.user, span_warning("You must stand on the holopad to make a call!"))
+				return
+			var/list/callnames = list()
+			for(var/obj/machinery/holopad/I as anything in holopads)
+				var/area/A = get_area(I)
+				if(A)
+					LAZYADD(callnames[A], I)
+			callnames -= get_area(src)
+			var/result = tgui_input_list(ui.user, "Choose an area to call", "Holocall", callnames)
+			if(QDELETED(ui.user) || !result || outgoing_call)
+				return
+			if(ui.user.loc == loc)
+				new /datum/holocall(ui.user, src, callnames[result])
+			return TRUE
 
-		if(on_network)
-			var/one_answered_call = FALSE
-			var/one_unanswered_call = FALSE
-			for(var/datum/holocall/HC AS in holo_calls)
-				if(HC.connected_holopad != src)
-					dat += "<a href='byond://?src=[REF(src)];connectcall=[REF(HC)]'>Answer call from [get_area(HC.calling_holopad)]</a><br>"
-					one_unanswered_call = TRUE
-				else
-					one_answered_call = TRUE
+		if("connectcall")
+			var/datum/holocall/call_to_connect = locate(params["call"]) in holo_calls
+			if(!QDELETED(call_to_connect))
+				call_to_connect.Answer(src)
+			return TRUE
 
-			if(one_answered_call && one_unanswered_call)
-				dat += "=====================================================<br>"
-			//we loop twice for formatting
-			for(var/datum/holocall/HC AS in holo_calls)
-				if(HC.connected_holopad == src)
-					dat += "<a href='byond://?src=[REF(src)];disconnectcall=[REF(HC)]'>Disconnect call from [HC.user]</a><br>"
+		if("disconnectcall")
+			var/datum/holocall/call_to_disconnect = locate(params["call"]) in holo_calls
+			if(!QDELETED(call_to_disconnect))
+				call_to_disconnect.Disconnect(src)
+			return TRUE
 
+		if("rejectall")
+			for(var/datum/holocall/call_to_reject as anything in holo_calls)
+				if(call_to_reject.connected_holopad == src)
+					continue
+				call_to_reject.Disconnect(src)
+			return TRUE
 
-	var/datum/browser/popup = new(user, "holopad", name, 300, 175)
-	popup.set_content(dat)
-	popup.open()
+		if("hang_up")
+			if(outgoing_call)
+				outgoing_call.Disconnect()
+			return TRUE
 
 //setters
 /**

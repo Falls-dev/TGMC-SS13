@@ -73,6 +73,9 @@ GLOBAL_PROTECT(exp_specialmap)
 	/// Description shown in the player's job preferences
 	var/html_description = ""
 
+	/// Short description shown in TGUI job tooltips
+	var/job_desc = ""
+
 	///string; typepath for the icon that this job will show on the minimap
 	var/minimap_icon
 

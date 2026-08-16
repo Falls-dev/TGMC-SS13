@@ -65,68 +65,78 @@
 			dump_everything()
 		qdel(src)
 
+/obj/machinery/suit_storage_unit/examine(mob/user)
+	. = ..()
+	if(isUV)
+		. += span_warning("It's currently running a UV cauterisation cycle. Please wait.")
+		return
+	. += span_notice("Helmet compartment: [inserted_helmet ? inserted_helmet.name : "empty"].")
+	. += span_notice("Suit compartment: [inserted_suit ? inserted_suit.name : "empty"].")
+	. += span_notice("Mask compartment: [inserted_mask ? inserted_mask.name : "empty"].")
+	. += span_notice("Tank compartment: [inserted_tank ? inserted_tank.name : "empty"].")
+	. += span_notice("The unit's doors are [isopen ? "open" : "closed"].")
+
+/// Radial menu, RU/TG-style: buttons for the actions/contents that are actually available right now.
 /obj/machinery/suit_storage_unit/interact(mob/user)
 	. = ..()
 	if(.)
 		return
-	var/dat
 
-	if(isUV) //The thing is running its cauterisation cycle. You have to wait.
-		dat+= "<font color ='red'><B>Unit is cauterising contents with UV ray. Please wait.</font></B><BR>"
-
-	else
-		dat+= "[span_notice("<font size = 4><B>U-Stor-It Suit Storage Unit, model DS1900</B>")]<BR>"
-		dat+= "<B>Welcome to the Unit control panel.</B><HR>"
-
-		dat += "<font color='black'>Helmet storage compartment: <B>[inserted_helmet ? inserted_helmet.name : "</font><font color ='grey'>No helmet detected."]</B></font><BR>"
-		if(inserted_helmet && isopen)
-			dat += "<A href='byond://?src=[text_ref(src)];dispense_helmet=1'>Dispense helmet</A><BR>"
-
-		dat += "<font color='black'>Suit storage compartment: <B>[inserted_suit ? inserted_suit.name : "</font><font color ='grey'>No exosuit detected."]</B></font><BR>"
-		if(inserted_suit && isopen)
-			dat += "<A href='byond://?src=[text_ref(src)];dispense_suit=1'>Dispense suit</A><BR>"
-
-		dat += "<font color='black'>Breathmask storage compartment: <B>[inserted_mask ? inserted_mask.name : "</font><font color ='grey'>No breathmask detected."]</B></font><BR>"
-		if(inserted_mask  && isopen)
-			dat += "<A href='byond://?src=[text_ref(src)];dispense_mask=1'>Dispense mask</A><BR>"
-
-		dat += "<font color='black'>Tank storage compartment: <B>[inserted_tank ? inserted_tank.name : "</font><font color ='grey'>No tank detected."]</B></font><BR>"
-		if(inserted_tank  && isopen)
-			dat += "<A href='byond://?src=[text_ref(src)];dispense_tank=1'>Dispense tank</A><BR>"
-
-		dat+= "<HR><font color='black'>Unit is: [isopen ? "Open" : "Closed"] - <A href='byond://?src=[text_ref(src)];toggle_open=1'>[isopen ? "Close" : "Open"] Unit</A></font><BR>"
-
-		dat += "<A href='byond://?src=[text_ref(src)];start_UV=1'>Start Disinfection cycle</A><BR>"
-
-	var/datum/browser/popup = new(user, "suit_storage_unit", "<div align='center'>Suit storage unit</div>", 400, 500)
-	popup.set_content(dat)
-	popup.open()
-
-/obj/machinery/suit_storage_unit/Topic(href, href_list) //I fucking HATE this proc
-	. = ..()
-	if(.)
+	if(machine_stat & NOPOWER)
+		balloon_alert(user, "no power!")
 		return
 
-	if(href_list["dispense_helmet"])
-		dispense_helmet()
+	if(isUV) //The thing is running its cauterisation cycle. You have to wait.
+		balloon_alert(user, "unit is cauterising, please wait!")
+		return
 
-	if(href_list["dispense_suit"])
-		dispense_suit()
+	var/list/choices = list()
 
-	if(href_list["dispense_mask"])
-		dispense_mask()
+	if(isopen)
+		choices["close"] = image(icon = 'icons/mob/radial_actions.dmi', icon_state = "radial_close")
+		if(inserted_helmet)
+			choices["dispense_helmet"] = inserted_helmet
+		if(inserted_suit)
+			choices["dispense_suit"] = inserted_suit
+		if(inserted_mask)
+			choices["dispense_mask"] = inserted_mask
+		if(inserted_tank)
+			choices["dispense_tank"] = inserted_tank
+	else
+		choices["open"] = image(icon = 'icons/mob/radial_actions.dmi', icon_state = "radial_open")
+		choices["disinfect"] = image(icon = 'icons/mob/radial_actions.dmi', icon_state = "radial_disinfect")
 
-	if(href_list["dispense_tank"])
-		dispense_tank()
+	if(!length(choices))
+		balloon_alert(user, "nothing to do!")
+		return
 
-	if(href_list["toggle_open"])
-		toggle_open()
+	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, PROC_REF(check_interactable), user), require_near = TRUE, tooltips = TRUE)
+	if(!choice || !check_interactable(user))
+		return
 
-	if(href_list["start_UV"])
-		start_UV(usr)
+	switch(choice)
+		if("open")
+			if(!isopen)
+				toggle_open(user)
+		if("close")
+			if(isopen)
+				toggle_open(user)
+		if("disinfect")
+			start_UV(user)
+		if("dispense_helmet")
+			dispense_helmet()
+		if("dispense_suit")
+			dispense_suit()
+		if("dispense_mask")
+			dispense_mask()
+		if("dispense_tank")
+			dispense_tank()
 
-	updateUsrDialog()
 	update_icon()
+
+/// Whether the radial menu should stay open / the chosen action should still fire.
+/obj/machinery/suit_storage_unit/proc/check_interactable(mob/user)
+	return !(machine_stat & NOPOWER) && !isUV && Adjacent(user) && !user.incapacitated()
 
 /obj/machinery/suit_storage_unit/proc/dispense_helmet()
 	if(inserted_helmet)

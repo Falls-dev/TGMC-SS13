@@ -21,6 +21,7 @@ GLOBAL_VAR_INIT(current_orbit,STANDARD_ORBIT)
 	anchored = TRUE
 	idle_power_usage = 10
 	req_access = list(ACCESS_MARINE_BRIDGE)
+	interaction_flags = INTERACT_MACHINE_TGUI
 	///boolean the spaceship it currently in the process of changing orbits
 	var/changing_orbit = TRUE
 	///boolean there is an authorized person logged into this console. TRUE = logged in authorized person
@@ -81,76 +82,83 @@ GLOBAL_VAR_INIT(current_orbit,STANDARD_ORBIT)
 
 	return myAPC?.terminal?.powernet?.avail
 
-/obj/machinery/computer/navigation/interact(mob/user)
+/obj/machinery/computer/navigation/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "NavigationConsole", name)
+		ui.open()
+
+/obj/machinery/computer/navigation/ui_static_data(mob/user)
+	. = list()
+	.["ship_map_name"] = SSmapping.configs[SHIP_MAP]?.map_name || "Unknown Vessel"
+	.["required_power"] = REQUIRED_POWER_AMOUNT
+	.["high_orbit"] = HIGH_ORBIT
+	.["standard_orbit"] = STANDARD_ORBIT
+	.["low_orbit"] = LOW_ORBIT
+
+/obj/machinery/computer/navigation/ui_data(mob/user)
+	. = list()
+	var/power_amount = get_power_amount()
+	.["authenticated"] = authenticated
+	.["current_orbit"] = GLOB.current_orbit
+	.["power_amount"] = power_amount
+	.["engines_ready"] = can_change_orbit(silent = TRUE)
+	.["can_change_orbit"] = power_amount >= REQUIRED_POWER_AMOUNT
+	.["changing_orbit"] = changing_orbit
+
+/obj/machinery/computer/navigation/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 
-	var/dat
+	var/mob/user = ui.user
 
-	if(authenticated)
-		dat += "<BR>\[ <A href='byond://?src=[text_ref(src)];logout=1'>LOG OUT</A>]"
-		dat += "<center><h4>[SSmapping.configs[SHIP_MAP].map_name]</h4></center>"//get the current ship map name
-
-		dat += "<br><center><h3>[GLOB.current_orbit]</h3></center>" //display the current orbit level
-		dat += "<br><center>Power Level: [get_power_amount()]|Engines prepared: [can_change_orbit(silent = TRUE) ? "Ready" : "Recalculating"]</center>" //display ship nav stats, power level, cooldown.
-
-		if(get_power_amount() >= REQUIRED_POWER_AMOUNT)
-			dat += "<center><b><a href='byond://?src=[text_ref(src)];UP=1'>Increase orbital level</a>|" //move farther away, current_orbit++
-			dat += "<a href='byond://?src=[REF(src)];DOWN=1'>Decrease orbital level</a>|" //move closer in, current_orbit--
-		else
-			dat += "<center><h4>Insufficient Power Reserves to change orbit"
-			dat += "<br>"
-
-		dat += "</b></center>"
-
-	else
-		dat += "<BR>\[ <A href='byond://?src=[text_ref(src)];login=1'>LOG IN</A> \]"
-
-	var/datum/browser/popup = new(user, "Navigation", "<div align='center'>Navigation</div>")
-	popup.set_content(dat)
-	popup.open()
-
-
-/obj/machinery/computer/navigation/Topic(href, href_list)
-	. = ..()
-	if(.)
-		return
-
-	if(href_list["login"])
-		if(isAI(usr))
-			authenticated = AUTHORIZED_PLUS
-			updateUsrDialog()
-			addtimer(VARSET_CALLBACK(src, authenticated, FALSE), AUTO_LOGOUT_TIME) //autologout
-			return
-		var/mob/living/carbon/human/C = usr
-		var/obj/item/card/id/I = C.get_active_held_item()
-		if(istype(I))
-			if(check_access(I))
-				authenticated = AUTHORIZED
-			if(ACCESS_MARINE_BRIDGE in I.access)
+	switch(action)
+		if("login")
+			if(isAI(user))
 				authenticated = AUTHORIZED_PLUS
-			addtimer(VARSET_CALLBACK(src, authenticated, FALSE), AUTO_LOGOUT_TIME) //autologout
-		else
-			I = C.wear_id
-			if(istype(I))
-				if(check_access(I))
-					authenticated = AUTHORIZED
-				if(ACCESS_MARINE_BRIDGE in I.access)
-					authenticated = AUTHORIZED_PLUS
-				addtimer(VARSET_CALLBACK(src, authenticated, FALSE), AUTO_LOGOUT_TIME) //autologout
-	if(href_list["logout"])
-		authenticated = FALSE
+				addtimer(VARSET_CALLBACK(src, authenticated, FALSE), AUTO_LOGOUT_TIME)
+				. = TRUE
+				return
+			if(!ishuman(user))
+				return FALSE
+			var/mob/living/carbon/human/human_user = user
+			var/obj/item/card/id/id_card = human_user.get_active_held_item()
+			if(!istype(id_card))
+				id_card = human_user.wear_id
+			if(!istype(id_card))
+				return FALSE
+			if(check_access(id_card))
+				authenticated = AUTHORIZED
+			if(ACCESS_MARINE_BRIDGE in id_card.access)
+				authenticated = AUTHORIZED_PLUS
+			if(authenticated)
+				addtimer(VARSET_CALLBACK(src, authenticated, FALSE), AUTO_LOGOUT_TIME)
+			. = TRUE
 
-	if (href_list["UP"])
-		do_orbit_checks("UP")
-		TIMER_COOLDOWN_START(src, COOLDOWN_ORBIT_CHANGE, 1 MINUTES)
+		if("logout")
+			authenticated = FALSE
+			. = TRUE
 
-	else if (href_list["DOWN"])
-		do_orbit_checks("DOWN")
-		TIMER_COOLDOWN_START(src, COOLDOWN_ORBIT_CHANGE, 1 MINUTES)
+		if("UP")
+			if(!authenticated)
+				return FALSE
+			if(get_power_amount() < REQUIRED_POWER_AMOUNT)
+				to_chat(user, span_warning("Insufficient power reserves to change orbit."))
+				return FALSE
+			do_orbit_checks("UP")
+			TIMER_COOLDOWN_START(src, COOLDOWN_ORBIT_CHANGE, 1 MINUTES)
+			. = TRUE
 
-	updateUsrDialog()
+		if("DOWN")
+			if(!authenticated)
+				return FALSE
+			if(get_power_amount() < REQUIRED_POWER_AMOUNT)
+				to_chat(user, span_warning("Insufficient power reserves to change orbit."))
+				return FALSE
+			do_orbit_checks("DOWN")
+			TIMER_COOLDOWN_START(src, COOLDOWN_ORBIT_CHANGE, 1 MINUTES)
+			. = TRUE
 
 
 /obj/machinery/computer/navigation/proc/do_orbit_checks(direction)
