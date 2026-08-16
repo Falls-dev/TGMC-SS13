@@ -190,7 +190,7 @@
 	else
 		icon_state = icon_opened
 
-/obj/structure/closet/bodybag/attack_alien(mob/living/carbon/xenomorph/xeno_attacker, damage_amount = xeno_attacker.xeno_caste.melee_damage, damage_type = BRUTE, damage_flag = MELEE, effects = TRUE, armor_penetration = 0, isrightclick = FALSE)
+/obj/structure/closet/bodybag/attack_alien(mob/living/carbon/xenomorph/xeno_attacker, damage_amount = xeno_attacker.xeno_caste.melee_damage, damage_type = BRUTE, damage_flag = MELEE, effects = TRUE, armor_penetration = xeno_attacker.xeno_caste.melee_ap, isrightclick = FALSE)
 	if(xeno_attacker.status_flags & INCORPOREAL)
 		return FALSE
 	if(opened)
@@ -314,14 +314,11 @@
 		return
 	if(!hasHUD(user,"medical"))
 		return
-	for(var/datum/data/record/medical_record AS in GLOB.datacore.medical)
-		if(medical_record.fields["name"] != occupant.real_name)
-			continue
-		if(!(medical_record.fields["last_scan_time"]))
-			. += span_deptradio("No scan report on record")
-		else
-			. += span_deptradio("<a href='byond://?src=[text_ref(src)];scanreport=1'>Scan from [medical_record.fields["last_scan_time"]]</a>")
-		break
+	var/datum/data/record/medical_record = find_medical_record(bodybag_occupant)
+	if(!isnull(medical_record?.fields["historic_scan"]))
+		. += "<a href='byond://?src=[text_ref(src)];scanreport=1'>Occupant's body scan from [medical_record.fields["historic_scan_time"]]...</a>"
+	else
+		. += "[span_deptradio("No body scan report on record for occupant")]"
 	if(occupant.stat != DEAD)
 		return
 	var/timer = 0 // variable for DNR timer check
@@ -347,14 +344,11 @@
 		if(get_dist(usr, src) > WORLD_VIEW_NUM)
 			to_chat(usr, span_warning("[src] is too far away."))
 			return
-		for(var/datum/data/record/R in GLOB.datacore.medical)
-			if(R.fields["name"] != bodybag_occupant.real_name)
-				continue
-			if(R.fields["last_scan_time"] && R.fields["last_scan_result"])
-				var/datum/browser/popup = new(usr, "scanresults", "<div align='center'>Last Scan Result</div>", 430, 600)
-				popup.set_content(R.fields["last_scan_result"])
-				popup.open(FALSE)
-			break
+		var/datum/data/record/medical_record = find_medical_record(bodybag_occupant)
+		if(isnull(medical_record))
+			return
+		var/datum/historic_scan/scan = medical_record.fields["historic_scan"]
+		scan.ui_interact(usr)
 
 /obj/item/trash/used_stasis_bag
 	name = "used stasis bag"

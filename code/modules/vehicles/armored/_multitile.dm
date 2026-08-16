@@ -22,6 +22,7 @@
 	hard_armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 0, BIO = 20, FIRE = 0, ACID = 0)
 	permitted_mods = list(
 		/obj/item/tank_module/overdrive,
+		/obj/item/tank_module/heavy_armor,
 		/obj/item/tank_module/ability/zoom,
 		/obj/item/tank_module/ability/smoke_launcher,
 	)

@@ -8,6 +8,9 @@
 	GLOB.admin_activities.Add(text)
 	logger.Log(LOG_CATEGORY_ADMIN, text, data)
 	logger.Log(LOG_CATEGORY_COMPAT_GAME, "ADMIN: [text]")
+	GLOB.STUI?.admin.Add("\[[time_stamp()]]ADMIN: [text]")
+	if(GLOB.STUI)
+		GLOB.STUI.processing |= STUI_LOG_ADMIN
 
 /// General logging for admin actions
 /proc/log_admin_private(text, list/data)
@@ -20,12 +23,18 @@
 	GLOB.admin_activities.Add(text)
 	logger.Log(LOG_CATEGORY_ADMIN_PRIVATE_ASAY, text, data)
 	logger.Log(LOG_CATEGORY_COMPAT_GAME, "ADMINPRIVATE: ASAY: [text]")
+	GLOB.STUI?.staff.Add("\[[time_stamp()]]ASAY: [text]")
+	if(GLOB.STUI)
+		GLOB.STUI.processing |= STUI_LOG_STAFF_CHAT
 
 /// Logging for MentorSay (MSAY) messages
 /proc/log_mentorsay(text, list/data)
 	GLOB.admin_activities.Add(text)
 	logger.Log(LOG_CATEGORY_ADMIN_PRIVATE_MSAY, text, data)
 	logger.Log(LOG_CATEGORY_COMPAT_GAME, "ADMINPRIVATE: MSAY: [text]")
+	GLOB.STUI?.staff.Add("\[[time_stamp()]]MSAY: [text]")
+	if(GLOB.STUI)
+		GLOB.STUI.processing |= STUI_LOG_STAFF_CHAT
 
 /// Logging for DeadchatSay (DSAY) messages
 /proc/log_dsay(text, list/data)

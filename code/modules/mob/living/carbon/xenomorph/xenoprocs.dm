@@ -254,7 +254,7 @@
 
 	. += "Regeneration power: [max(regen_power * 100, 0)]%"
 
-	. += "Biomass: [biomass]/[biomass > 50 ? biomass : 50]"
+	. += "Biomass: [biomass]/[biomass > 100 ? biomass : 100]"
 
 	var/casteswap_value = ((GLOB.key_to_time_of_caste_swap[key] ? GLOB.key_to_time_of_caste_swap[key] : -INFINITY)  + 10 MINUTES - world.time) * 0.1
 	if(casteswap_value <= 0)
@@ -484,14 +484,14 @@
 			return
 	return ..()
 
-//When the Queen's pheromones are updated, or we add/remove a leader, update leader pheromones
-/mob/living/carbon/xenomorph/proc/handle_xeno_leader_pheromones(mob/living/carbon/xenomorph/queen/Q)
+//When the Ruler's pheromones are updated, or we add/remove a leader, update leader pheromones
+/mob/living/carbon/xenomorph/proc/handle_xeno_leader_pheromones(mob/living/carbon/xenomorph/ruler)
 	QDEL_NULL(leader_current_aura)
-	if(QDELETED(Q) || !(xeno_flags & XENO_LEADER) || !Q.current_aura || Q.loc.z != loc.z) //We are no longer a leader, or the Queen attached to us has dropped from her ovi, disabled her pheromones or even died
-		to_chat(src, span_xenowarning("Our pheromones wane. The Queen is no longer granting us her pheromones."))
+	if(QDELETED(ruler) || !(xeno_flags & XENO_LEADER) || !ruler.current_aura || ruler.loc.z != loc.z) //We are no longer a leader, or the Queen attached to us has dropped from her ovi, disabled her pheromones or even died
+		to_chat(src, span_xenowarning("Our pheromones wane. The Ruler is no longer granting us her pheromones."))
 	else
-		leader_current_aura = SSaura.add_emitter(src, Q.current_aura.aura_types.Copy(), Q.current_aura.range, Q.current_aura.strength, Q.current_aura.duration, Q.current_aura.faction, Q.current_aura.hive_number)
-		to_chat(src, span_xenowarning("Our pheromones have changed. The Queen has new plans for the Hive."))
+		leader_current_aura = SSaura.add_emitter(src, ruler.current_aura.aura_types.Copy(), ruler.current_aura.range, ruler.current_aura.strength, ruler.current_aura.duration, ruler.current_aura.faction, ruler.current_aura.hive_number)
+		to_chat(src, span_xenowarning("Our pheromones have changed. The Ruler has new plans for the Hive."))
 
 
 /mob/living/carbon/xenomorph/proc/update_spits(skip_ammo_choice = FALSE)
@@ -728,7 +728,7 @@
 	return PRECRUSH_PLOWED
 
 /mob/living/carbon/xenomorph/ClickOn(atom/A, params)
-	if(health_scan && isliving(A) && health_analyzer)
-		health_analyzer.attack(A, src)
+	if(health_scan && scanner_functionality && isliving(A))
+		scanner_functionality.analyze_vitals(A, src)
 		return
 	return ..()

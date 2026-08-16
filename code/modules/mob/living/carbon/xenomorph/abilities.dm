@@ -498,7 +498,7 @@
 	if(xeno_owner.current_aura && xeno_owner.current_aura.aura_types[1] == phero_choice)
 		xeno_owner.balloon_alert(xeno_owner, "Stop emitting")
 		QDEL_NULL(xeno_owner.current_aura)
-		if(isxenoqueen(xeno_owner))
+		if(xeno_owner.hive?.living_xeno_ruler == xeno_owner)
 			xeno_owner.hive?.update_leader_pheromones()
 		xeno_owner.hud_set_pheromone()
 		return fail_activate()
@@ -507,7 +507,7 @@
 	xeno_owner.balloon_alert(xeno_owner, "[phero_choice]")
 	playsound(xeno_owner.loc, SFX_ALIEN_DROOL, 25)
 
-	if(isxenoqueen(xeno_owner))
+	if(xeno_owner.hive?.living_xeno_ruler == xeno_owner)
 		xeno_owner.hive?.update_leader_pheromones()
 	xeno_owner.hud_set_pheromone() //Visual feedback that the xeno has immediately started emitting pheromones
 	succeed_activate()
@@ -1409,3 +1409,26 @@
 /datum/action/ability/xeno_action/blessing_menu/action_activate()
 	xeno_owner.hive.purchases.interact(xeno_owner)
 	return succeed_activate()
+
+// ***************************************
+// *********** Xeno Warnings
+// ***************************************
+/obj/effect/temp_visual/xeno_warning
+	icon = 'icons/xeno/Effects.dmi'
+	icon_state = "generic_warning"
+	layer = BELOW_MOB_LAYER
+
+/obj/effect/temp_visual/xeno_warning/Initialize(mapload, _duration = 0.5 SECONDS, _color = COLOR_VIOLET)
+	. = ..()
+	duration = _duration
+	color = _color
+	animate(src, time = duration - 0.5 SECONDS)
+	animate(alpha = 0, time = 0.5 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)
+	notify_ai_hazard()
+
+/// Warns nearby players, in any way or form, of an incoming ability and the range it will affect.
+/proc/xeno_warning(list/turf/target_turfs, duration, color)
+	if(!length(target_turfs))
+		CRASH("do_warning([length(target_turfs)]): improper argument")
+	for(var/turf/target_turf AS in target_turfs)
+		new /obj/effect/temp_visual/xeno_warning(target_turf, duration, color)

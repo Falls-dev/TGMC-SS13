@@ -456,14 +456,11 @@
 			to_chat(usr, span_warning("[src] is too far away."))
 			return
 
-		for(var/datum/data/record/medical_record in GLOB.datacore.medical)
-			if(!(medical_record.fields["name"] == real_name))
-				continue
-			if(medical_record.fields["last_scan_time"] && medical_record.fields["last_scan_result"])
-				var/datum/browser/popup = new(usr, "scanresults", "<div align='center'>Last Scan Result</div>", 430, 600)
-				popup.set_content(medical_record.fields["last_scan_result"])
-				popup.open(FALSE)
-			break
+		var/datum/data/record/medical_record = find_medical_record(src)
+		if(isnull(medical_record))
+			return
+		var/datum/historic_scan/scan = medical_record.fields["historic_scan"]
+		scan.ui_interact(usr)
 
 	if(href_list["lookitem"])
 		var/obj/item/I = locate(href_list["lookitem"])
@@ -601,11 +598,7 @@
 	set name = "View Crew Manifest"
 	set category = "IC"
 
-	var/dat = GLOB.datacore.get_manifest()
-
-	var/datum/browser/popup = new(src, "manifest", "<div align='center'>Crew Manifest</div>", 370, 420)
-	popup.set_content(dat)
-	popup.open(FALSE)
+	GLOB.crew_manifest.open_ui(src)
 
 
 /mob/living/carbon/human/species
@@ -966,7 +959,7 @@
 /mob/living/carbon/human/attack_ghost(mob/dead/observer/user)
 	if(!user.health_scan)
 		return FALSE
-	user.health_analyzer.analyze_vitals(src, user)
+	user.scanner_functionality.analyze_vitals(src, user)
 	return TRUE
 
 ///Checks if we have an AI behavior active

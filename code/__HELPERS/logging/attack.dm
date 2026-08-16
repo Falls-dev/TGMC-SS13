@@ -1,6 +1,9 @@
 /// Generic attack logging
 /proc/log_attack(text, list/data)
 	logger.Log(LOG_CATEGORY_ATTACK, text)
+	GLOB.STUI?.attack.Add("\[[time_stamp()]]ATTACK: [text]")
+	if(GLOB.STUI)
+		GLOB.STUI.processing |= STUI_LOG_ATTACK
 
 /// Generic attack logging for friendly fire
 /proc/log_ffattack(text, list/data)

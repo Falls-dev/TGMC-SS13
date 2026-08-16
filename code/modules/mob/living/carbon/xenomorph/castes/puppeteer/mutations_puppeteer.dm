@@ -1,132 +1,137 @@
-//*********************//
-//        Shell        //
-//*********************//
-/datum/mutation_upgrade/shell/flesh_for_life
+#define STATUS_EFFECT_PUPPETEER_FLESH_FOR_LIFE /datum/status_effect/puppeteer/flesh_for_life
+#define STATUS_EFFECT_PUPPETEER_SUFFOCATING_PRESENCE /datum/status_effect/puppeteer/suffocating_presence
+#define STATUS_EFFECT_PUPPETEER_SHIFTING_COSTS /datum/status_effect/puppeteer/shifting_costs
+
+/datum/xeno_mutation/puppeteer
+	category = "Enhancement"
+	caste_restrictions = list("puppeteer")
+
+/datum/status_effect/puppeteer
+	duration = -1
+	status_type = STATUS_EFFECT_UNIQUE
+	/// The xenomorph that owns this status effect.
+	var/mob/living/carbon/xenomorph/xenomorph_owner
+
+/datum/xeno_mutation/puppeteer/flesh_for_life
 	name = "Flesh For Life"
-	desc = "If damage taken would put you into critical, lose 1.5/1.25/1x amount of plasma instead."
-	/// For the first structure, the amount of plasma to consume for each point of damage.
-	var/plasma_per_damage_initial = 1.75
-	/// For each structure, the amount of plasma to consume for each point of damage.
-	var/plasma_per_damage_per_structure = -0.25
+	desc = "If damage taken would put you into critical, lose plasma instead."
+	cost = 10
+	icon_state = "xenobuff_generic"
+	tier = 1
+	parent_name = null
+	child_name = null
+	status_effect_type = STATUS_EFFECT_PUPPETEER_FLESH_FOR_LIFE
+	buff_desc = "Critical damage is paid in plasma (1.25 plasma per damage)."
 
-/datum/mutation_upgrade/shell/flesh_for_life/get_desc_for_alert(new_amount)
-	if(!new_amount)
-		return ..()
-	return "If damage taken would put you into critical, lose [get_plasma_per_damage(new_amount)]x amount of plasma instead."
+/atom/movable/screen/alert/status_effect/puppeteer/flesh_for_life
+	name = "Flesh For Life"
+	desc = "Critical damage is paid in plasma instead."
+	icon_state = "xenobuff_attack"
 
-/datum/mutation_upgrade/shell/flesh_for_life/on_mutation_enabled()
+/datum/status_effect/puppeteer/flesh_for_life
+	id = "upgrade_puppeteer_flesh_for_life"
+	alert_type = /atom/movable/screen/alert/status_effect/puppeteer/flesh_for_life
+	/// Plasma consumed per point of mitigated damage.
+	var/plasma_per_damage = 1.25
+
+/datum/status_effect/puppeteer/flesh_for_life/on_apply()
+	xenomorph_owner = owner
 	RegisterSignals(xenomorph_owner, list(COMSIG_XENOMORPH_BRUTE_DAMAGE, COMSIG_XENOMORPH_BURN_DAMAGE), PROC_REF(on_damage))
-	return ..()
+	return TRUE
 
-/datum/mutation_upgrade/shell/flesh_for_life/on_mutation_disabled()
+/datum/status_effect/puppeteer/flesh_for_life/on_remove()
 	UnregisterSignal(xenomorph_owner, list(COMSIG_XENOMORPH_BRUTE_DAMAGE, COMSIG_XENOMORPH_BURN_DAMAGE))
 	return ..()
 
-/// If they receive damage that would put them into critical, subtract damage as long they have plasma.
-/datum/mutation_upgrade/shell/flesh_for_life/proc/on_damage(datum/source, amount, list/amount_mod)
+/// If damage would put the owner into critical, spend plasma to reduce that damage.
+/datum/status_effect/puppeteer/flesh_for_life/proc/on_damage(datum/source, amount, list/amount_mod)
 	SIGNAL_HANDLER
 	if(xenomorph_owner.stat == DEAD)
 		return
 	var/damage_until_threshold = xenomorph_owner.health - xenomorph_owner.get_crit_threshold()
 	if(damage_until_threshold > amount)
 		return
-	var/plasma_per_damage = get_plasma_per_damage(get_total_structures())
 	var/damage_reduction = min(amount, xenomorph_owner.plasma_stored / plasma_per_damage)
 	xenomorph_owner.use_plasma(ROUND_UP(damage_reduction * plasma_per_damage))
 	amount_mod += damage_reduction
 
-/// Returns the amount of plasma to consume for each point of damage.
-/datum/mutation_upgrade/shell/flesh_for_life/proc/get_plasma_per_damage(structure_count)
-	return plasma_per_damage_initial + (plasma_per_damage_per_structure * structure_count)
-
-//*********************//
-//         Spur        //
-//*********************//
-/datum/mutation_upgrade/spur/suffocating_presence
+/datum/xeno_mutation/puppeteer/suffocating_presence
 	name = "Suffocating Presence"
-	desc = "Dreadful Presence will inflict a temporary effect that deals 4/6/8 stamina damage every second instead."
-	/// For the first structure, the amount of stamina damage that Dreadful Presence should be doing per second.
-	var/damage_initial = 2
-	/// For each structure, the amount of stamina damage that Dreadful Presence should be doing per second.
-	var/damage_per_structure = 2
+	desc = "Dreadful Presence also applies a stamina drain over time."
+	cost = 10
+	icon_state = "xenobuff_generic"
+	tier = 1
+	parent_name = null
+	child_name = null
+	status_effect_type = STATUS_EFFECT_PUPPETEER_SUFFOCATING_PRESENCE
+	buff_desc = "Dreadful Presence drains 6 stamina per second."
 
-/datum/mutation_upgrade/spur/suffocating_presence/get_desc_for_alert(new_amount)
-	if(!new_amount)
-		return ..()
-	return "Dreadful Presence will inflict a temporary effect that deals [get_damage(new_amount)] stamina damage every second instead."
+/atom/movable/screen/alert/status_effect/puppeteer/suffocating_presence
+	name = "Suffocating Presence"
+	desc = "Dreadful Presence drains stamina over time."
+	icon_state = "xenobuff_attack"
 
-/datum/mutation_upgrade/spur/suffocating_presence/on_mutation_enabled()
-	. = ..()
+/datum/status_effect/puppeteer/suffocating_presence
+	id = "upgrade_puppeteer_suffocating_presence"
+	alert_type = /atom/movable/screen/alert/status_effect/puppeteer/suffocating_presence
+	/// Stamina damage per second applied by Dreadful Presence.
+	var/stamina_damage = 6
+
+/datum/status_effect/puppeteer/suffocating_presence/on_apply()
+	xenomorph_owner = owner
 	var/datum/action/ability/xeno_action/dreadful_presence/dreadful_ability = xenomorph_owner.actions_by_path[/datum/action/ability/xeno_action/dreadful_presence]
 	if(!dreadful_ability)
-		return
-	dreadful_ability.stamina_draining += get_damage(0)
+		return FALSE
+	dreadful_ability.stamina_draining += stamina_damage
+	return TRUE
 
-/datum/mutation_upgrade/spur/suffocating_presence/on_mutation_disabled()
-	. = ..()
+/datum/status_effect/puppeteer/suffocating_presence/on_remove()
 	var/datum/action/ability/xeno_action/dreadful_presence/dreadful_ability = xenomorph_owner.actions_by_path[/datum/action/ability/xeno_action/dreadful_presence]
-	if(!dreadful_ability)
-		return
-	dreadful_ability.stamina_draining -= get_damage(0)
+	if(dreadful_ability)
+		dreadful_ability.stamina_draining -= stamina_damage
+	return ..()
 
-/datum/mutation_upgrade/spur/suffocating_presence/on_structure_update(previous_amount, new_amount)
-	. = ..()
-	var/datum/action/ability/xeno_action/dreadful_presence/dreadful_ability = xenomorph_owner.actions_by_path[/datum/action/ability/xeno_action/dreadful_presence]
-	if(!dreadful_ability)
-		return
-	dreadful_ability.stamina_draining += get_damage(new_amount - previous_amount, FALSE)
-
-/// Returns the amount of stamina damage that Dreadful Presence should be doing per second.
-/datum/mutation_upgrade/spur/suffocating_presence/proc/get_damage(structure_count, include_initial = TRUE)
-	return (include_initial ? damage_initial : 0) + (damage_per_structure * structure_count)
-
-//*********************//
-//         Veil        //
-//*********************//
-/datum/mutation_upgrade/veil/shifting_costs
+/datum/xeno_mutation/puppeteer/shifting_costs
 	name = "Shifting Costs"
-	desc = "Stitch Puppet's cost is 20% of its original cost. Bestow Blessing costs 40/30/20% more."
-	/// For the first structure, the multiplier to add as Stitch Puppet's initial ability cost to its current cost.
-	var/puppet_multiplier_initial = -0.8
-	/// For the first structure, the multiplier to add as Bestow Blessings' initial ability cost to its current cost.
-	var/blessings_multiplier_initial = 0.5
-	/// For each structure, the multiplier to add as Bestow Blessings' initial ability cost to its current cost.
-	var/blessings_multiplier_per_structure = -0.1
+	desc = "Stitch Puppet is much cheaper, but Bestow Blessings costs more."
+	cost = 10
+	icon_state = "xenobuff_generic"
+	tier = 1
+	parent_name = null
+	child_name = null
+	status_effect_type = STATUS_EFFECT_PUPPETEER_SHIFTING_COSTS
+	buff_desc = "Puppet costs 20% of original; Blessings cost 130%."
 
-/datum/mutation_upgrade/veil/shifting_costs/get_desc_for_alert(new_amount)
-	if(!new_amount)
-		return ..()
-	return "Stitch Puppet's cost is [PERCENT(1 + puppet_multiplier_initial)]% of its original cost. Bestow Blessings' cost is [PERCENT(1 + get_blessings_multiplier(new_amount))]% of its original cost."
+/atom/movable/screen/alert/status_effect/puppeteer/shifting_costs
+	name = "Shifting Costs"
+	desc = "Puppet is cheaper; Blessings cost more."
+	icon_state = "xenobuff_attack"
 
-/datum/mutation_upgrade/veil/shifting_costs/on_mutation_enabled()
-	. = ..()
+/datum/status_effect/puppeteer/shifting_costs
+	id = "upgrade_puppeteer_shifting_costs"
+	alert_type = /atom/movable/screen/alert/status_effect/puppeteer/shifting_costs
+	/// Multiplier added to Stitch Puppet's initial cost.
+	var/puppet_multiplier = -0.8
+	/// Multiplier added to Bestow Blessings' initial cost.
+	var/blessings_multiplier = 0.3
+
+/datum/status_effect/puppeteer/shifting_costs/on_apply()
+	xenomorph_owner = owner
 	var/datum/action/ability/activable/xeno/puppet/puppet_ability = xenomorph_owner.actions_by_path[/datum/action/ability/activable/xeno/puppet]
 	if(!puppet_ability)
-		return
+		return FALSE
 	var/datum/action/ability/activable/xeno/puppet_blessings/blessings_ability = xenomorph_owner.actions_by_path[/datum/action/ability/activable/xeno/puppet_blessings]
 	if(!blessings_ability)
-		return
-	puppet_ability.ability_cost += initial(puppet_ability.ability_cost) * puppet_multiplier_initial
-	blessings_ability.ability_cost += initial(blessings_ability.ability_cost) * get_blessings_multiplier(0)
+		return FALSE
+	puppet_ability.ability_cost += initial(puppet_ability.ability_cost) * puppet_multiplier
+	blessings_ability.ability_cost += initial(blessings_ability.ability_cost) * blessings_multiplier
+	return TRUE
 
-/datum/mutation_upgrade/veil/shifting_costs/on_mutation_disabled()
-	. = ..()
+/datum/status_effect/puppeteer/shifting_costs/on_remove()
 	var/datum/action/ability/activable/xeno/puppet/puppet_ability = xenomorph_owner.actions_by_path[/datum/action/ability/activable/xeno/puppet]
-	if(!puppet_ability)
-		return
+	if(puppet_ability)
+		puppet_ability.ability_cost -= initial(puppet_ability.ability_cost) * puppet_multiplier
 	var/datum/action/ability/activable/xeno/puppet_blessings/blessings_ability = xenomorph_owner.actions_by_path[/datum/action/ability/activable/xeno/puppet_blessings]
-	if(!blessings_ability)
-		return
-	puppet_ability.ability_cost -= initial(puppet_ability.ability_cost) * puppet_multiplier_initial
-	blessings_ability.ability_cost -= initial(blessings_ability.ability_cost) * get_blessings_multiplier(0)
-
-/datum/mutation_upgrade/veil/shifting_costs/on_structure_update(previous_amount, new_amount)
-	. = ..()
-	var/datum/action/ability/activable/xeno/puppet_blessings/blessings_ability = xenomorph_owner.actions_by_path[/datum/action/ability/activable/xeno/puppet_blessings]
-	if(!blessings_ability)
-		return
-	blessings_ability.ability_cost += initial(blessings_ability.ability_cost) * get_blessings_multiplier(new_amount - previous_amount, FALSE)
-
-/// Returns the multiplier to add as Bestow Blessings' initial ability cost to its current cost.
-/datum/mutation_upgrade/veil/shifting_costs/proc/get_blessings_multiplier(structure_count, include_initial = TRUE)
-	return (include_initial ? blessings_multiplier_initial : 0) + (blessings_multiplier_initial * structure_count)
+	if(blessings_ability)
+		blessings_ability.ability_cost -= initial(blessings_ability.ability_cost) * blessings_multiplier
+	return ..()

@@ -169,8 +169,8 @@
 		return
 
 	// Cap passive biomass gain at 50 (but allow refunds to exceed this)
-	if(biomass < 50)
-		biomass = min(biomass + biomass_gain, 50)
+	if(biomass < 100)
+		biomass = min(biomass + biomass_gain, 100)
 
 /// Calculate passive biomass gain rate per minute
 /mob/living/carbon/xenomorph/proc/get_passive_biomass_gain_rate()
@@ -206,7 +206,7 @@
 		biomass_gain_rate += 99.9 / 60.0
 
 	// No passive gain if biomass is already above 50
-	if(biomass > 50)
+	if(biomass > 100)
 		biomass_gain_rate = 0.0
 
 	return biomass_gain_rate

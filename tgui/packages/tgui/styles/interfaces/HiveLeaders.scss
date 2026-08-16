@@ -1,0 +1,17 @@
+.xeno_list {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+
+  .Table__row {
+    height: 40px;
+  }
+
+  .Table__row .Table__cell {
+    vertical-align: middle;
+  }
+}
+
+.noPadCell {
+  padding: 2px;
+}

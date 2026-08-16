@@ -8,6 +8,7 @@
 	icon = 'icons/obj/machines/drone_fab.dmi'
 	icon_state = "drone_fab_idle"
 	resistance_flags = RESIST_ALL
+	interaction_flags = INTERACT_MACHINE_TGUI
 	/// List of everything in queue
 	var/list/queue = list()
 	///Current item being printed
@@ -26,57 +27,49 @@
 	else
 		icon_state = "drone_fab_idle"
 
-/obj/machinery/dropship_part_fabricator/interact(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/dropship_part_fabricator/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "DropshipFabricator", name)
+		ui.open()
 
-	var/datum/browser/popup = new(user, "dropship_part_fab", "<div align='center'>Dropship Part Fabricator</div>")
-	popup.set_content(generate_content())
-	popup.open()
+/obj/machinery/dropship_part_fabricator/ui_data(mob/user)
+	. = list()
+	.["points"] = SSpoints.dropship_points
+	.["busy"] = busy
+	.["nopower"] = !!(machine_stat & NOPOWER)
+	.["printing"] = printing ? initial(printing.name) : null
 
-/obj/machinery/dropship_part_fabricator/proc/generate_content()
-	var/dat
-	dat += "<h4>Points Available: [SSpoints.dropship_points]</h4>"
-	dat += "<a href='byond://?src=[text_ref(src)];choice=clear'>CLEAR PRINT QUEUE</a><br>"
+	var/list/queue_data = list()
+	for(var/queue_entry in queue)
+		var/obj/structure/queued_type = queue_entry[1]
+		queue_data += list(list("name" = initial(queued_type.name)))
+	.["queue"] = queue_data
 
-	dat += find_equipment()
+	.["categories"] = get_categories()
 
-	dat += "<h3>Fabricating:</h3>"
-	dat += "- " + (printing ? "[initial(printing.name)]" : "Nothing") + "<br>"
+/// Returns a list of categories (name + items) available to build on this fabricator
+/obj/machinery/dropship_part_fabricator/proc/get_categories()
+	. = list()
+	. += list(build_category("Condor Equipment", /obj/structure/dropship_equipment/cas))
+	. += list(build_category("Condor Ammo", /obj/structure/ship_ammo/cas))
+	. += list(build_category("Tadpole Equipment", /obj/structure/dropship_equipment/shuttle))
 
-	dat += "<h3>Production Queue:</h3>"
-	for(var/item_to_print in queue)
-		var/obj/structure/toprint = item_to_print[1]
-		dat += ("- " + initial(toprint.name) + "<br>")
-
-	return dat
-
-/// Returns dats of all equipment of types listed
-/obj/machinery/dropship_part_fabricator/proc/find_equipment()
-	. += "<h3>Condor Equipment:</h3>"
-	for(var/build_type in typesof(/obj/structure/dropship_equipment/cas))
-		var/obj/structure/dropship_equipment/cas/DEC = build_type
-		var/build_name = initial(DEC.name)
-		var/build_cost = initial(DEC.point_cost)
-		if(build_cost)
-			. += "<a href='byond://?src=[text_ref(src)];choice=[build_type]'>[build_name] ([build_cost])</a><br>"
-
-	. += "<h3>Condor Ammo:</h3>"
-	for(var/build_type in typesof(/obj/structure/ship_ammo/cas))
-		var/obj/structure/ship_ammo/cas/SAC = build_type
-		var/build_name = initial(SAC.name)
-		var/build_cost = initial(SAC.point_cost)
-		if(build_cost)
-			. += "<a href='byond://?src=[text_ref(src)];choice=[build_type]'>[build_name] ([build_cost])</a><br>"
-
-	. += "<h3>Tadpole Equipment:</h3>"
-	for(var/build_type in typesof(/obj/structure/dropship_equipment/shuttle))
-		var/obj/structure/dropship_equipment/shuttle/DES = build_type
-		var/build_name = initial(DES.name)
-		var/build_cost = initial(DES.point_cost)
-		if(build_cost)
-			. += "<a href='byond://?src=\ref[src];choice=[build_type]'>[build_name] ([build_cost])</a><br>"
+/// Builds the item list tgui data for every buildable type under base_type
+/obj/machinery/dropship_part_fabricator/proc/build_category(category_name, base_type)
+	var/list/items = list()
+	for(var/build_type in typesof(base_type))
+		var/obj/structure/prototype = build_type
+		var/build_cost = get_cost(build_type)
+		if(!build_cost)
+			continue
+		items += list(list(
+			"id" = "[build_type]",
+			"name" = initial(prototype.name),
+			"desc" = initial(prototype.desc),
+			"cost" = build_cost,
+		))
+	return list("name" = category_name, "items" = items)
 
 /// Starts the printing process, does point calculations
 /obj/machinery/dropship_part_fabricator/proc/build_dropship_part(part_type, mob/user)
@@ -149,32 +142,34 @@
 	busy = FALSE
 	update_icon()
 
-/obj/machinery/dropship_part_fabricator/Topic(href, href_list)
+/obj/machinery/dropship_part_fabricator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 
-	if(href_list["choice"])
-		if(href_list["choice"] == "clear")
+	switch(action)
+		if("clear")
 			queue = list()
 			balloon_alert_to_viewers("Entire queue cleared")
-			return
+			. = TRUE
 
-		var/build_type = text2path(href_list["choice"])
-		if(!build_type)
-			return
+		if("build")
+			var/build_type = text2path(params["id"])
+			if(!build_type)
+				return
 
-		if(SSpoints.dropship_points < get_cost(build_type))
-			balloon_alert_to_viewers("Not enough points")
-			return
+			if(SSpoints.dropship_points < get_cost(build_type))
+				balloon_alert(usr, "Not enough points")
+				return
 
-		if(busy)
-			balloon_alert_to_viewers("Part added to queue")
-			queue.Add(list(list(build_type, usr)))
-			return
+			if(busy)
+				balloon_alert(usr, "Part added to queue")
+				queue.Add(list(list(build_type, usr)))
+				. = TRUE
+				return
 
-		build_dropship_part(build_type, usr)
-		return
+			build_dropship_part(build_type, usr)
+			. = TRUE
 
 /obj/machinery/dropship_part_fabricator/attack_powerloader(mob/living/user, obj/item/powerloader_clamp/attached_clamp)
 	if(busy)
@@ -222,12 +217,7 @@
 	. = ..()
 	icon_state += "_tadpole"
 
-/obj/machinery/dropship_part_fabricator/tadpole/find_equipment()
-	. += "<h3>Tadpole Equipment:</h3>"
-	for(var/build_type in typesof(/obj/structure/dropship_equipment/shuttle))
-		var/obj/structure/dropship_equipment/shuttle/DES = build_type
-		var/build_name = initial(DES.name)
-		var/build_cost = initial(DES.point_cost)
-		if(build_cost)
-			. += "<a href='byond://?src=\ref[src];choice=[build_type]'>[build_name] ([build_cost])</a><br>"
+/obj/machinery/dropship_part_fabricator/tadpole/get_categories()
+	. = list()
+	. += list(build_category("Tadpole Equipment", /obj/structure/dropship_equipment/shuttle))
 

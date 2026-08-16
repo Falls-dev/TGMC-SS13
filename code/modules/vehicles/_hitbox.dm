@@ -255,6 +255,17 @@
 	bound_x = 0
 	bound_y = -32
 
+/obj/hitbox/medium/owner_turned(datum/source, old_dir, new_dir)
+	. = ..()
+	if(!.)
+		return
+	var/list/old_locs = locs.Copy()
+	bound_height = vehicle_length
+	bound_width = vehicle_width
+	bound_x = initial(bound_x)
+	bound_y = initial(bound_y)
+	SEND_SIGNAL(src, COMSIG_MULTITILE_VEHICLE_ROTATED, loc, new_dir, null, old_locs)
+
 /obj/hitbox/medium/on_attempt_drive(atom/movable/movable_parent, mob/living/user, direction)
 	if(ISDIAGONALDIR(direction))
 		return COMPONENT_DRIVER_BLOCK_MOVE

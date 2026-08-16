@@ -109,6 +109,8 @@
 /obj/structure/gun_breech/proc/on_main_fire(obj/item/ammo_magazine/owner_ammo)
 	if(owner_ammo.default_ammo.ammo_behavior_flags & AMMO_ENERGY) // todo add puffs of smoke that fly out
 		return
+	if(owner_ammo.default_ammo.ammo_behavior_flags & AMMO_FLAME) // flamers don't produce casings
+		return
 	if(owner_ammo.max_rounds == 1)
 		return
 	//todo get an animation for bullets flying out

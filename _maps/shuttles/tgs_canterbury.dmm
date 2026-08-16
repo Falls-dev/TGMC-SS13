@@ -160,8 +160,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/cable,
-/obj/machinery/mech_bay_recharge_port,
+/obj/vehicle/ridden/powerloader,
 /turf/open/floor/mainship/metal,
 /area/shuttle/canterbury)
 "ay" = (
@@ -171,7 +170,6 @@
 	id = "starboard_umbilical_outer";
 	name = "outer door-control"
 	},
-/obj/vehicle/ridden/powerloader,
 /turf/open/floor/mainship/metal,
 /area/shuttle/canterbury)
 "aA" = (
@@ -222,12 +220,12 @@
 /turf/open/floor/mainship/metal,
 /area/shuttle/canterbury)
 "aN" = (
-/obj/structure/dropship_equipment/shuttle/weapon_holder/machinegun,
 /obj/machinery/light/small{
 	dir = 8;
 	status = 0
 	},
 /obj/effect/turf_decal/warning_stripes/box,
+/obj/structure/dropship_equipment/shuttle/weapon_holder/machinegun,
 /turf/open/floor/mainship/metal/full,
 /area/shuttle/canterbury)
 "aO" = (
@@ -317,7 +315,7 @@
 /obj/item/storage/box/crate/sentry,
 /obj/item/storage/box/crate/sentry,
 /turf/open/floor/mainship/orange{
-	dir = 8
+	dir = 10
 	},
 /area/shuttle/canterbury)
 "bn" = (
@@ -531,11 +529,6 @@
 	dir = 4
 	},
 /area/shuttle/canterbury/medical)
-"ci" = (
-/obj/effect/landmark/start/job/crash/squadsmartgunner,
-/obj/structure/cable,
-/turf/open/floor/plating/plating_catwalk/dark,
-/area/shuttle/canterbury)
 "ck" = (
 /obj/item/radio/intercom{
 	dir = 1;
@@ -1091,7 +1084,7 @@ aj
 as
 ab
 aL
-bO
+aJ
 aD
 aD
 aD
@@ -1116,7 +1109,7 @@ am
 at
 ab
 cP
-bO
+aJ
 Cf
 bt
 Hv
@@ -1141,7 +1134,7 @@ ac
 ab
 ab
 cQ
-bO
+aJ
 cT
 an
 aV
@@ -1165,8 +1158,8 @@ aa
 aa
 an
 ax
-ci
-bO
+cQ
+aJ
 cU
 an
 aW

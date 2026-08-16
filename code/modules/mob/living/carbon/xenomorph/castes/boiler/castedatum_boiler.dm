@@ -27,7 +27,7 @@
 
 	// *** Flags *** //
 	caste_flags = CASTE_ACID_BLOOD|CASTE_EVOLUTION_ALLOWED
-	can_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_BE_GIVEN_PLASMA|CASTE_CAN_BE_LEADER|CASTE_CAN_HOLD_FACEHUGGERS|CASTE_CAN_HOLD_JELLY
+	can_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_BE_GIVEN_PLASMA|CASTE_CAN_BE_LEADER|CASTE_CAN_HOLD_FACEHUGGERS|CASTE_CAN_HOLD_JELLY|CASTE_CAN_BE_RULER
 	caste_traits = null
 
 	// *** Defense *** //
@@ -39,6 +39,9 @@
 
 	// *** Minimap Icon *** //
 	minimap_icon = "boiler"
+
+	// *** Ruler Abilities *** ///
+	queen_leader_limit = 4
 
 	// *** Boiler Abilities *** //
 	max_ammo = 7

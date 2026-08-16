@@ -25,6 +25,8 @@
 	gun_firemode_list = list(GUN_FIREMODE_AUTOMATIC, GUN_FIREMODE_BURSTFIRE, GUN_FIREMODE_AUTOBURST)
 	gun_skill_category = SKILL_SMGS
 
+	aim_fire_delay = 0.1 SECONDS
+	aim_speed_modifier = 1
 	fire_delay = 0.3 SECONDS
 	burst_amount = 3
 	recoil_unwielded = 0.5
@@ -49,7 +51,7 @@
 	silenced_sound = 'sound/weapons/guns/smgs/MP-19/MP19_SIL.ogg'
 	caliber = CALIBER_10X20_CASELESS //codex
 	gun_firemode_list = list(GUN_FIREMODE_AUTOMATIC, GUN_FIREMODE_AUTOBURST)
-	max_shells = 30 //codex
+	max_shells = 45 //codex
 	equip_slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	type_of_casings = null
 	default_ammo_type = /obj/item/ammo_magazine/smg/mp19
@@ -70,6 +72,7 @@
 		/obj/item/attachable/magnetic_harness,
 		/obj/item/attachable/gyro,
 		/obj/item/attachable/motiondetector,
+		/obj/item/attachable/b11_scope,
 	)
 	starting_attachment_types = list(/obj/item/attachable/foldable/mp19stock)
 
@@ -95,7 +98,7 @@
 	autoburst_delay = 0.1 SECONDS
 	autoburst_delay = 0.1 SECONDS //this makes it fuller auto
 	burst_accuracy_bonus = -0.3
-	burst_scatter_mult = 25
+	burst_scatter_mult = 17
 
 /obj/item/weapon/gun/smg/mp19/compact
 	starting_attachment_types = list(/obj/item/attachable/foldable/mp19stock, /obj/item/attachable/reddot, /obj/item/attachable/compensator, /obj/item/attachable/lasersight)
@@ -124,7 +127,7 @@
 		slot_r_hand_str = 'icons/mob/inhands/gun/submachinegun_righthand_1.dmi',
 	)
 	caliber = CALIBER_10X20_CASELESS //codex
-	max_shells = 50 //codex
+	max_shells = 80 //codex
 	equip_slot_flags = ITEM_SLOT_BACK
 	wield_delay = 0.7 SECONDS
 	force = 20
@@ -146,12 +149,12 @@
 		/obj/item/attachable/motiondetector,
 		/obj/item/attachable/buildasentry,
 		/obj/item/attachable/shoulder_mount,
+		/obj/item/attachable/b11_scope,
 	)
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
 	gun_firemode_list = list(GUN_FIREMODE_AUTOMATIC)
 	attachable_offset = list("muzzle_x" = 32, "muzzle_y" = 15,"rail_x" = 22, "rail_y" = 22, "under_x" = 17, "under_y" = 15, "stock_x" = 24, "stock_y" = 10)
-	aim_fire_delay = 0.1 SECONDS
 	aim_speed_modifier = 0.55
 	accuracy_mult = 1.05
 	accuracy_mult_unwielded = 0.9
@@ -212,10 +215,11 @@
 		/obj/item/weapon/gun/flamer/mini_flamer,
 		/obj/item/weapon/gun/grenade_launcher/underslung,
 		/obj/item/attachable/gyro,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 
 	attachable_offset = list("muzzle_x" = 43, "muzzle_y" = 19,"rail_x" = 22, "rail_y" = 23, "under_x" = 32, "under_y" = 14, "stock_x" = 24, "stock_y" = 16)
-	aim_fire_delay = 0.1 SECONDS
 
 	aim_slowdown = 0.25
 	accuracy_mult = 1.15
@@ -267,6 +271,7 @@
 		/obj/item/weapon/gun/flamer/mini_flamer,
 		/obj/item/weapon/gun/grenade_launcher/underslung,
 		/obj/item/attachable/gyro,
+		/obj/item/attachable/b11_scope,
 	)
 
 	attachable_offset = list("muzzle_x" = 33, "muzzle_y" = 17,"rail_x" = 9, "rail_y" = 20, "under_x" = 24, "under_y" = 14, "stock_x" = 24, "stock_y" = 16)
@@ -306,6 +311,7 @@
 		/obj/item/attachable/burstfire_assembly,
 		/obj/item/attachable/magnetic_harness,
 		/obj/item/attachable/gyro,
+		/obj/item/attachable/b11_scope,
 	)
 
 	item_map_variant_flags = NONE
@@ -347,6 +353,7 @@
 		/obj/item/attachable/flashlight,
 		/obj/item/attachable/magnetic_harness,
 		/obj/item/attachable/scope,
+		/obj/item/attachable/b11_scope,
 	)
 
 	attachable_offset = list("muzzle_x" = 33, "muzzle_y" = 18,"rail_x" = 12, "rail_y" = 21, "under_x" = 28, "under_y" = 17, "stock_x" = 28, "stock_y" = 17)
@@ -384,6 +391,7 @@
 		/obj/item/attachable/reddot,
 		/obj/item/attachable/flashlight,
 		/obj/item/attachable/magnetic_harness,
+		/obj/item/attachable/b11_scope,
 	)
 	starting_attachment_types = list(/obj/item/attachable/foldable/skorpion_stock)
 	attachable_offset = list("muzzle_x" = 29, "muzzle_y" = 21,"rail_x" = 10, "rail_y" = 24, "under_x" = 23, "under_y" = 15, "stock_x" = -21, "stock_y" = -1)
@@ -439,12 +447,13 @@
 		/obj/item/attachable/gyro,
 		/obj/item/attachable/lasersight,
 		/obj/item/attachable/foldable/bipod,
+		/obj/item/attachable/b11_scope,
 	)
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
 	attachable_offset = list("muzzle_x" = 38, "muzzle_y" = 19,"rail_x" = 13, "rail_y" = 21, "under_x" = 26, "under_y" = 15, "stock_x" = 19, "stock_y" = 13)
 	aim_fire_delay = 0.15 SECONDS
-	aim_speed_modifier = 2.5
+	aim_speed_modifier = 2
 
 	starting_attachment_types = list(
 		/obj/item/attachable/stock/ppsh,
@@ -531,6 +540,7 @@
 		/obj/item/attachable/scope/mini,
 		/obj/item/attachable/magnetic_harness,
 		/obj/item/attachable/motiondetector,
+		/obj/item/attachable/b11_scope,
 	)
 
 	attachable_offset = list("muzzle_x" = 38, "muzzle_y" = 20,"rail_x" = 13, "rail_y" = 22, "under_x" = 31, "under_y" = 15, "stock_x" = 24, "stock_y" = 10)
@@ -638,6 +648,7 @@
 		/obj/item/attachable/magnetic_harness,
 		/obj/item/attachable/gyro,
 		/obj/item/attachable/motiondetector,
+		/obj/item/attachable/b11_scope,
 	)
 	starting_attachment_types = list(/obj/item/attachable/foldable/icc_machinepistol)
 
@@ -701,13 +712,12 @@
 		/obj/item/weapon/gun/flamer/mini_flamer,
 		/obj/item/weapon/gun/grenade_launcher/underslung/mpi/removeable,
 		/obj/item/weapon/gun/rifle/pepperball/pepperball_mini,
+		/obj/item/attachable/b11_scope,
 	)
 	starting_attachment_types = list(/obj/item/attachable/stock/icc_pdw)
 
 	attachable_offset = list("muzzle_x" = 30, "muzzle_y" = 17,"rail_x" = 13, "rail_y" = 20, "under_x" = 31, "under_y" = 13, "stock_x" = 9, "stock_y" = 10)
 	actions_types = list(/datum/action/item_action/aim_mode)
-	aim_fire_delay = 0.1 SECONDS
-	aim_speed_modifier = 0.55
 
 	burst_amount = 1
 	fire_delay = 0.15 SECONDS
@@ -774,6 +784,7 @@
 		/obj/item/weapon/gun/flamer/mini_flamer,
 		/obj/item/weapon/gun/grenade_launcher/underslung,
 		/obj/item/weapon/gun/energy/lasgun/lasrifle/pocket_beam,
+		/obj/item/attachable/b11_scope,
 	)
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER
@@ -787,7 +798,6 @@
 	wield_delay = 0.5 SECONDS
 
 	akimbo_additional_delay = 0.5
-	aim_fire_delay = 0.1 SECONDS
 	aim_speed_modifier = 0 //no slowdown
 	aim_slowdown = 0
 
@@ -841,11 +851,11 @@
 		/obj/item/weapon/gun/flamer/mini_flamer,
 		/obj/item/weapon/gun/grenade_launcher/underslung,
 		/obj/item/attachable/gyro,
+		/obj/item/attachable/b11_scope,
 	)
 
 	attachable_offset = list("muzzle_x" = 30, "muzzle_y" = 18,"rail_x" = 14, "rail_y" = 21, "under_x" = 24, "under_y" = 15, "stock_x" = 24, "stock_y" = 16)
 	actions_types = list(/datum/action/item_action/aim_mode)
-	aim_fire_delay = 0.1 SECONDS
 
 	aim_slowdown = 0.25
 	accuracy_mult = 0.55

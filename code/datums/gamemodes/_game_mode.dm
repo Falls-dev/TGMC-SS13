@@ -6,6 +6,7 @@ GLOBAL_VAR(common_report) //Contains common part of roundend report
 /datum/game_mode
 	var/name = ""
 	var/config_tag = null
+	var/esc_menu_name = null
 	var/votable = TRUE
 	var/required_players = 0
 	var/maximum_players = INFINITY
@@ -155,6 +156,8 @@ GLOBAL_VAR(common_report) //Contains common part of roundend report
 	if(round_type_flags & MODE_SILO_RESPAWN)
 		var/datum/hive_status/normal/HN = GLOB.hive_datums[XENO_HIVE_NORMAL]
 		HN.RegisterSignals(SSdcs, list(COMSIG_GLOB_OPEN_TIMED_SHUTTERS_LATE, COMSIG_GLOB_OPEN_SHUTTERS_EARLY), TYPE_PROC_REF(/datum/hive_status/normal, set_siloless_collapse_timer))
+	if(length(SSmapping.configs) && SSmapping.configs[SHIP_MAP] && esc_menu_name == null)
+		esc_menu_name = SSmapping.configs[SHIP_MAP].map_name
 
 /datum/game_mode/proc/new_player_topic(mob/new_player/NP, href, list/href_list)
 	return FALSE
@@ -300,6 +303,8 @@ GLOBAL_LIST_INIT(bioscan_locations, list(
 	SIGNAL_HANDLER
 	add_verb(source, /mob/proc/eord_respawn)
 	add_verb(source, /mob/proc/eord_xeno_respawn)
+	if(isnewplayer(source))
+		open_eord_menu(source)
 
 /datum/game_mode/proc/end_of_round_deathmatch()
 	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_LOGIN, PROC_REF(grant_eord_respawn)) // New mobs can now respawn into EORD
@@ -316,6 +321,7 @@ GLOBAL_LIST_INIT(bioscan_locations, list(
 		add_verb(M, /mob/proc/eord_respawn)
 		add_verb(M, /mob/proc/eord_xeno_respawn)
 		if(isnewplayer(M))
+			open_eord_menu(M)
 			continue
 		if(!(M.client?.prefs?.be_special & BE_DEATHMATCH))
 			continue

@@ -206,18 +206,57 @@
 	name = "Stitch Puppet"
 	action_icon_state = "stitch_puppet"
 	action_icon = 'icons/Xeno/actions/puppeteer.dmi'
-	desc = "Uses 125 biomass to create a flesh homunculus to do your bidding, at an adjacent target location."
-	ability_cost = 125
-	cooldown_duration = 25 SECONDS
+	desc = "Creates a flesh homunculus to do your bidding, at an adjacent target location."
+	cooldown_duration = 20 SECONDS
 	target_flags = ABILITY_TURF_TARGET
+	use_state_flags = ABILITY_USE_LYING|ABILITY_IGNORE_COOLDOWN
 	keybinding_signals = list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_PUPPET,
 	)
+	var/current_charges = 3
+	var/max_charges = 3
+
+/datum/action/ability/activable/xeno/puppet/give_action(mob/living/L)
+	. = ..()
+	var/max_puppets = xeno_owner?.xeno_caste.max_puppets ? xeno_owner.xeno_caste.max_puppets : 4
+	desc = "Creates a flesh homunculus to do your bidding, at an adjacent target location. You can only deploy [max_puppets] puppets at one time."
+
+	var/mutable_appearance/counter_maptext = mutable_appearance(icon = null, icon_state = null, layer = ACTION_LAYER_MAPTEXT)
+	counter_maptext.pixel_x = 16
+	counter_maptext.pixel_y = -4
+	counter_maptext.maptext = MAPTEXT("[current_charges]/[max_charges]")
+	visual_references[VREF_MUTABLE_PUPPET_CHARGES] = counter_maptext
+
+/datum/action/ability/activable/xeno/puppet/remove_action(mob/living/carbon/xenomorph/X)
+	button.cut_overlay(visual_references[VREF_MUTABLE_PUPPET_CHARGES])
+	visual_references[VREF_MUTABLE_PUPPET_CHARGES] = null
+	return ..()
+
+/datum/action/ability/activable/xeno/puppet/update_button_icon()
+	button.cut_overlay(visual_references[VREF_MUTABLE_PUPPET_CHARGES])
+	var/mutable_appearance/number = visual_references[VREF_MUTABLE_PUPPET_CHARGES]
+	number?.maptext = MAPTEXT("[current_charges]/[max_charges]")
+	visual_references[VREF_MUTABLE_PUPPET_CHARGES] = number
+	button.add_overlay(visual_references[VREF_MUTABLE_PUPPET_CHARGES])
+	return ..()
+
+/datum/action/ability/activable/xeno/puppet/on_cooldown_finish()
+	current_charges = clamp(current_charges + 1, 0, max_charges)
+	update_button_icon()
+	if(current_charges < max_charges)
+		cooldown_timer = addtimer(CALLBACK(src, PROC_REF(on_cooldown_finish)), cooldown_duration, TIMER_STOPPABLE)
+		return
+	return ..()
 
 /datum/action/ability/activable/xeno/puppet/can_use_ability(atom/target, silent = FALSE, override_flags)
 	. = ..()
 	if(!.)
-		return
+		return FALSE
+
+	if(current_charges <= 0)
+		if(!silent)
+			xeno_owner.balloon_alert(xeno_owner, "no charges")
+		return FALSE
 
 	if(isclosedturf(target))
 		if(!silent)
@@ -236,19 +275,19 @@
 		return FALSE
 
 	xeno_owner.face_atom(target)
-	//reverse gib here
 	xeno_owner.visible_message(span_warning("[xeno_owner] begins to vomit out biomass and skillfully sews various bits and pieces together!"))
-	if(!do_after(xeno_owner, 8 SECONDS, IGNORE_HELD_ITEM, target, BUSY_ICON_CLOCK, extra_checks = CALLBACK(xeno_owner, TYPE_PROC_REF(/mob, break_do_after_checks), list("health" = xeno_owner.health))))
+	if(!do_after(xeno_owner, 5 SECONDS, IGNORE_HELD_ITEM, target, BUSY_ICON_CLOCK, extra_checks = CALLBACK(xeno_owner, TYPE_PROC_REF(/mob, break_do_after_checks), list("health" = xeno_owner.health))))
 		return FALSE
+
 	xeno_owner.visible_message(span_warning("[xeno_owner] forms a repulsive puppet!"))
-	succeed_activate()
-
-/datum/action/ability/activable/xeno/puppet/use_ability(atom/target)
 	var/turf/target_turf = get_turf(target)
-
-	var/datum/action/ability/activable/xeno/refurbish_husk/huskaction = owner.actions_by_path[/datum/action/ability/activable/xeno/refurbish_husk]
 	huskaction.add_puppet(new /mob/living/carbon/xenomorph/puppet(target_turf, owner))
+
+	current_charges--
+	update_button_icon()
 	add_cooldown()
+	succeed_activate()
+	return TRUE
 
 // ***************************************
 // *********** Organic Bomb
@@ -421,6 +460,7 @@
 /datum/action/ability/activable/xeno/puppet_blessings
 	name = "Bestow Blessing"
 	action_icon_state = "emit_pheromones"
+	action_icon = 'icons/Xeno/actions/general.dmi'
 	ability_cost = 200
 	desc = "Give a permanent upgrade to a puppet."
 	cooldown_duration = 30 SECONDS

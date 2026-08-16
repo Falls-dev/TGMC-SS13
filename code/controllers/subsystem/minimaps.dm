@@ -241,7 +241,7 @@ SUBSYSTEM_DEF(minimaps)
 			if(target_turf.z == updator.ztarget)
 				updator.raw_blips += blip
 	if(ismovableatom(target))
-		RegisterSignal(target, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_z_change))
+		RegisterSignal(target, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_z_change), override = TRUE)
 		blip.RegisterSignal(target, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/image, minimap_on_move))
 	removal_cbs[target] = CALLBACK(src, PROC_REF(removeimage), blip, target, hud_flags)
 	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(remove_marker), override = TRUE) //override for atoms that were on a late loaded z-level, overrides the remove_earlyadd above

@@ -296,14 +296,14 @@
 	icon_state = "laser_battery"
 	desc = "A high-capacity laser battery used to power laser beam weapons. Moving this will require some sort of lifter."
 	travelling_time = 1 SECONDS
-	ammo_count = 150
-	max_ammo_count = 150
+	ammo_count = 300
+	max_ammo_count = 300
 	ammo_used_per_firing = 50
 	equipment_type = /obj/structure/dropship_equipment/cas/weapon/laser_beam_gun
 	ammo_name = "charge"
 	transferable_ammo = TRUE
 	warning_sound = 'sound/effects/nightvision.ogg'
-	point_cost = 150
+	point_cost = 100
 	///The length of the beam that will come out of when we fire do both ends xxxoxxx where o is where you click
 	var/laze_radius = 5
 	ammo_type = CAS_LASER_BATTERY

@@ -1,3 +1,5 @@
-# Python deps for tools/ss13_genchangelog.py (TGS PreSynchronize, CI check_changelogs.sh)
-# Everything else the script uses is Python 3 stdlib (json, urllib, argparse, …).
+# Python deps for changelog scripts (GitHub Actions compile_changelogs, TGS PreSynchronize):
+#   tools/ss13_genchangelog.py
+#   tools/ss13_discord_changelog.py
+# Everything else those scripts use is Python 3 stdlib (json, urllib, argparse, …).
 PyYAML>=6.0.1,<7

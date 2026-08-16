@@ -67,6 +67,11 @@
 	attack_self(user)
 
 
+///Intercoms are anchored fixtures, not held items, so use a distance-based UI state instead of the inventory one.
+/obj/item/radio/intercom/ui_state(mob/user)
+	return GLOB.physical_state
+
+
 /obj/item/radio/intercom/can_receive(freq, list/levels)
 	if(levels != RADIO_NO_Z_LEVEL_RESTRICTION)
 		var/turf/position = get_turf(src)

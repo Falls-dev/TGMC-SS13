@@ -8,6 +8,7 @@
 	idle_power_usage = 2
 	active_power_usage = 6
 	power_channel = ENVIRON
+	interaction_flags = INTERACT_MACHINE_TGUI
 	light_power = 0.5
 	light_range = 0.7
 	///This gets set to TRUE on all devices except the one where the initial request was made.
@@ -45,10 +46,12 @@
 		if(active && event_source)
 			event_source.confirmed = TRUE
 			event_source.event_confirmed_by = user
+			SStgui.update_uis(src)
+			SStgui.update_uis(event_source)
 
 		else if(screen == 2)
 			event_triggered_by = user
-			broadcast_request() //This is the device making the initial event request. It needs to broadcast to other devices
+			broadcast_request()
 
 /obj/machinery/keycard_auth/update_icon_state()
 	. = ..()
@@ -63,7 +66,7 @@
 	. += emissive_appearance(icon, "[icon_state]_emissive", src, alpha = src.alpha)
 
 /obj/machinery/keycard_auth/proc/update_emissives()
-	if(icon_state == "auth_on") // aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+	if(icon_state == "auth_on")
 		set_light(initial(light_range), initial(light_power), LIGHT_COLOR_KEYCARD_BLUE)
 		update_icon(UPDATE_OVERLAYS)
 	else
@@ -78,87 +81,100 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/keycard_auth/interact(mob/user)
-	. = ..()
-	if(.)
-		return
-
+/obj/machinery/keycard_auth/ui_interact(mob/user, datum/tgui/ui)
 	if(issilicon(user))
 		synth_activation = 1
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "KeycardAuth", name)
+		ui.open()
 
-	var/dat
-	dat += "This device is used to trigger some high security events. It requires the simultaneous swipe of two high-level ID cards."
-	dat += "<br><hr><br>"
+/obj/machinery/keycard_auth/ui_data(mob/user)
+	. = list()
+	.["waiting"] = busy || (screen == 2 && !active)
+	.["auth_required"] = active && !!event_source
+	.["event"] = active && event_source ? event_source.event : event
+	.["is_silicon"] = issilicon(user)
+	.["maint_access"] = GLOB.maint_all_access
 
-	if(screen == 1)
-		dat += "Select an event to trigger:<ul>"
-		for(var/iter_level_text AS in SSsecurity_level.available_levels)
-			var/datum/security_level/iter_level_datum = SSsecurity_level.available_levels[iter_level_text]
-			if(!(iter_level_datum.sec_level_flags & SEC_LEVEL_FLAG_CAN_SWITCH_WITH_AUTH))
-				continue
-			dat += "<li><A href='byond://?src=[text_ref(src)];trigger_event=[iter_level_datum.name]'>Set alert level to [iter_level_datum.name]</A></li>"
+	var/list/available_events = list()
+	for(var/iter_level_text AS in SSsecurity_level.available_levels)
+		var/datum/security_level/iter_level_datum = SSsecurity_level.available_levels[iter_level_text]
+		if(!(iter_level_datum.sec_level_flags & SEC_LEVEL_FLAG_CAN_SWITCH_WITH_AUTH))
+			continue
+		available_events += list(list(
+			"name" = iter_level_datum.name,
+			"ref" = iter_level_datum.name,
+		))
+	.["available_events"] = available_events
 
-		dat += "<li><A href='byond://?src=[text_ref(src)];trigger_event=Grant Emergency Maintenance Access'>Grant Emergency Maintenance Access</A></li>"
-		dat += "<li><A href='byond://?src=[text_ref(src)];trigger_event=Revoke Emergency Maintenance Access'>Revoke Emergency Maintenance Access</A></li>"
-		dat += "</ul>"
-
-	else if(screen == 2)
-		dat += "Please swipe your card to authorize the following event: <b>[event]</b>"
-		dat += "<p><A href='byond://?src=[text_ref(src)];reset=1'>Back</A>"
-
-	else if(screen == 3)
-		dat += "Do you want to trigger the following event using your Silicon Privileges: <b>[event]</b>"
-		dat += "<p><A href='byond://?src=[text_ref(src)];silicon_activate_event=1'>Activate</A>"
-		dat += "<p><A href='byond://?src=[text_ref(src)];reset=1'>Back</A>"
-
-	var/datum/browser/popup = new(user, "keycard_auth", "<div align='center'>Keycard Authentication Device</div>", 500, 250)
-	popup.set_content(dat)
-	popup.open(FALSE)
-
-/obj/machinery/keycard_auth/Topic(href, href_list)
+/obj/machinery/keycard_auth/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
+	if(busy)
+		return FALSE
 
-	if(href_list["trigger_event"])
-		event = href_list["trigger_event"]
-		if(synth_activation)
-			screen = 3
-		else
-			screen = 2
+	var/mob/user = ui.user
 
-	if(href_list["silicon_activate_event"])
-		trigger_event(event)
-		log_game("[key_name(event_triggered_by)] triggered event [event].")
-		message_admins("[ADMIN_TPMONTY(event_triggered_by)] triggered event [event].")
-		reset()
+	switch(action)
+		if("trigger_event")
+			event = params["event"]
+			if(!event)
+				return FALSE
+			event_triggered_by = user
+			if(synth_activation)
+				trigger_event(event)
+				log_game("[key_name(event_triggered_by)] triggered event [event].")
+				message_admins("[ADMIN_TPMONTY(event_triggered_by)] triggered event [event].")
+				reset()
+			else
+				screen = 2
+				broadcast_request()
+			. = TRUE
 
-	if(href_list["reset"])
-		reset()
+		if("auth_swipe")
+			if(!(active && event_source))
+				return FALSE
+			var/obj/item/card/id/id_card = user.get_active_held_item()
+			if(!istype(id_card))
+				id_card = user.get_idcard()
+			if(!istype(id_card) || !(ACCESS_MARINE_BRIDGE in id_card.access))
+				to_chat(user, span_warning("You need a bridge-level ID to authorize this."))
+				return FALSE
+			event_source.confirmed = TRUE
+			event_source.event_confirmed_by = user
+			. = TRUE
 
-	updateUsrDialog()
+		if("reset")
+			reset()
+			. = TRUE
 
 /obj/machinery/keycard_auth/proc/reset()
 	active = FALSE
 	event = ""
 	screen = 1
 	confirmed = FALSE
+	busy = FALSE
 	synth_activation = 0
 	event_source = null
 	icon_state = "auth_off"
 	update_emissives()
 	event_triggered_by = null
 	event_confirmed_by = null
+	SStgui.update_uis(src)
 
 /obj/machinery/keycard_auth/proc/broadcast_request()
 	icon_state = "auth_on"
 	update_emissives()
+	busy = TRUE
 	for(var/obj/machinery/keycard_auth/KA in GLOB.machines)
 		if(KA == src)
 			continue
 		KA.reset()
 		KA.receive_request(src)
 	addtimer(CALLBACK(src, PROC_REF(finish_confirm)), confirm_delay)
+	SStgui.update_uis(src)
 
 /obj/machinery/keycard_auth/proc/finish_confirm()
 	if(confirmed)
@@ -177,6 +193,7 @@
 	icon_state = "auth_on"
 	update_emissives()
 	addtimer(CALLBACK(src, PROC_REF(confirm)), confirm_delay)
+	SStgui.update_uis(src)
 
 /obj/machinery/keycard_auth/proc/confirm()
 	event_source = null
@@ -184,6 +201,7 @@
 	update_emissives()
 	active = FALSE
 	busy = FALSE
+	SStgui.update_uis(src)
 
 /obj/machinery/keycard_auth/proc/trigger_event()
 	var/potential_alert_level = SSsecurity_level.text_level_to_number(event)

@@ -50,7 +50,7 @@
 		return
 
 	.["biomass"] = xeno.biomass
-	.["max_biomass"] = xeno.biomass > 50 ? xeno.biomass : 50
+	.["max_biomass"] = xeno.biomass > 100 ? xeno.biomass : 100
 	.["mutations"] = get_mutations_data(xeno)
 	.["current_caste"] = lowertext(xeno.xeno_caste.caste_name)
 

@@ -153,7 +153,7 @@
 	keybinding_signals = list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_BULLGORE,
 	)
-	cooldown_duration = 8 SECONDS
+	cooldown_duration = 6 SECONDS
 	ability_cost = 60
 	var/turf/last_turf
 	var/charge_duration

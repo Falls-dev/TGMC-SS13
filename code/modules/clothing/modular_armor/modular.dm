@@ -252,6 +252,31 @@
 	slowdown = SLOWDOWN_ARMOR_MEDIUM
 	allowed_uniform_type = /obj/item/clothing/under/rank/clown/erp
 
+// GTA ERT — light rownin kits (modules mirrored from SW/SOM-style loadouts)
+/obj/item/clothing/suit/modular/rownin/gta
+	name = "\improper street rownin skeleton"
+	desc = "A light modular harness popular with gang shooters who want mobility over plating."
+	starting_attachments = list(
+		/obj/item/armor_module/module/better_shoulder_lamp,
+		/obj/item/armor_module/storage/grenade,
+	)
+
+/obj/item/clothing/suit/modular/rownin/gta/medic
+	name = "\improper street medic rownin skeleton"
+	desc = "A light modular harness with a med pouch rack — for whoever is stuck patching the set."
+	starting_attachments = list(
+		/obj/item/armor_module/module/better_shoulder_lamp,
+		/obj/item/armor_module/storage/medical,
+	)
+
+/obj/item/clothing/suit/modular/rownin/gta/leader
+	name = "\improper street OG rownin skeleton"
+	desc = "A light modular harness with a general pouch — room for binos, radios, and bad decisions."
+	starting_attachments = list(
+		/obj/item/armor_module/module/better_shoulder_lamp,
+		/obj/item/armor_module/storage/general,
+	)
+
 /obj/item/clothing/suit/modular/hardsuit_exoskeleton
 	name = "\improper FleckTex WY-01 modular exoskeleton"
 	desc = "FleckTex Dynamics brand new modular hardsuit exoskeleton, designed for full compatiability with jaeger modules. Comes with pre-installed light armour-plating and a shoulder lamp. Mount armor pieces to it by clicking on the frame with the components. Use Alt-Click to remove any attached items."

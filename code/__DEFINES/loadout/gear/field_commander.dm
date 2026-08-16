@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(commander_gear_listed_products, list(
 	/obj/item/tool/pickaxe/plasmacutter = list(CAT_FCSUP, "Plasma cutter", 23, "yellow"),
 	/obj/item/clothing/glasses/welding/superior = list(CAT_FCSUP, "Superior welding goggles", 2, "yellow"),
 	/obj/item/armor_module/module/welding/superior = list(CAT_FCSUP, "Superior welding module", 2, "yellow"),
-	/obj/item/healthanalyzer/gloves = list(CAT_FCSUP, "Health scanner gloves", 2, "yellow"),
+	/obj/item/clothing/gloves/healthanalyzer = list(CAT_FCSUP, "Health scanner gloves", 2, "yellow"),
 	/obj/item/reagent_containers/hypospray/autoinjector/sulfasalazine = list(CAT_FCSUP, "Sulfasalazine autoinjector", 10, "cyan"),
 	/obj/item/reagent_containers/hypospray/autoinjector/dexalinplus = list(CAT_FCSUP, "Injector (Dexalin)", 1, "cyan"),
 	/obj/item/reagent_containers/hypospray/autoinjector/synaptizine = list(CAT_FCSUP, "Injector (Synaptizine)", 2, "cyan"),

@@ -162,6 +162,8 @@ SUBSYSTEM_DEF(points)
 	//Just in case
 	if(!length_char(SSpoints.shoppinglist[our_order.faction]))
 		return
+	if(!("[our_order.id]" in SSpoints.shoppinglist[our_order.faction]))
+		return
 
 	//Finally create the supply box
 

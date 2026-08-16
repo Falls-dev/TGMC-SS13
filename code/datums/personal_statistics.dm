@@ -42,6 +42,7 @@ GLOBAL_LIST_EMPTY(personal_statistics_list)
 
 	//We are watching
 	var/friendly_fire_damage = 0
+	var/friendly_fire_recieved = 0
 
 	var/projectiles_caught = 0
 	var/projectiles_reflected = 0
@@ -98,6 +99,22 @@ GLOBAL_LIST_EMPTY(personal_statistics_list)
 	var/impregnations = 0
 	var/items_snatched = 0
 
+	// Behemoth stats
+	/// Amount of times we used Seize successfully.
+	var/seize_uses = 0
+	/// Amount of Earth Pillars we created.
+	var/earth_pillars_created = 0
+	/// Amount of Earth Pillars we threw.
+	var/earth_pillars_thrown = 0
+	/// Amount of integrity we repaired on Earth Pillars.
+	var/earth_pillar_repairs = 0
+	/// Amount of damage dealt with Landslide.
+	var/landslide_damage = 0
+	/// Amount of damage dealt with Geocrush.
+	var/geocrush_damage = 0
+	/// Amount of health we recovered with Primal Wrath.
+	var/primal_wrath_healing = 0
+
 	//Close air support
 	var/cas_cannon_shots = 0
 	var/cas_laser_shots = 0
@@ -136,7 +153,14 @@ GLOBAL_LIST_EMPTY(personal_statistics_list)
 		stats += "Landed [melee_hits] melee attack\s."
 		stats += melee_damage ? "[melee_damage] melee damage dealt!" : "You dealt no melee damage."
 		stats += ""
+	if(landslide_damage)
+		stats += "[landslide_damage] of your melee damage was inflicted by Landslide."
+		stats += ""
+	if(geocrush_damage)
+		stats += "[geocrush_damage] of your melee damage was inflicted by Geocrush."
+		stats += ""
 	stats += friendly_fire_damage ? "You caused [friendly_fire_damage] damage to allies...<br>" : "You avoided committing acts of friendly fire!<br>"
+	stats += friendly_fire_recieved ? "You recieved [friendly_fire_recieved] damage from allies...<br>" : "You avoided receiving friendly fire!<br>"
 
 	if(projectiles_caught)
 		stats += "[projectiles_caught] projectile\s caught by psychic shield."
@@ -179,6 +203,8 @@ GLOBAL_LIST_EMPTY(personal_statistics_list)
 	stats += deaths ? "You died [deaths] time\s." : "You survived the whole round."
 	if(shrapnel_removed)
 		stats += "Removed [shrapnel_removed] piece\s of shrapnel."
+	if(primal_wrath_healing)
+		stats += "Recovered [primal_wrath_healing] health using Primal Wrath"
 
 	//Downtime
 	var/list/downtime_stats = list()
@@ -197,6 +223,14 @@ GLOBAL_LIST_EMPTY(personal_statistics_list)
 
 	//Support & logistics
 	var/list/support_stats = list()
+	if(seize_uses)
+		support_stats += "Successfully used Seize [seize_uses] time\s."
+	if(earth_pillars_created)
+		support_stats += "Created [earth_pillars_created] Earth Pillar\s."
+	if(earth_pillars_thrown)
+		support_stats += "Threw [earth_pillars_thrown] Earth Pillar\s."
+	if(earth_pillar_repairs)
+		support_stats += "Repaired [earth_pillar_repairs] damage on Earth Pillar\s."
 	if(weeds_planted)
 		support_stats += "Planted [weeds_planted] weed node\s."
 	if(structures_built)
@@ -330,8 +364,12 @@ The alternative is scattering them everywhere under their respective objects whi
 	var/datum/personal_statistics/personal_statistics = GLOB.personal_statistics_list[ckey]
 	personal_statistics.projectiles_hit++
 	personal_statistics.projectile_damage += damage
+
+	var/datum/personal_statistics/victim_personal_statistics = GLOB.personal_statistics_list[victim.ckey]
+
 	if(faction == victim.faction)
 		personal_statistics.friendly_fire_damage += damage	//FF multiplier already included by the way
+		victim_personal_statistics?.friendly_fire_recieved += damage
 	return TRUE
 
 ///Record what reagents and how much of them were transferred to a mob into their ckey's /datum/personal_statistics

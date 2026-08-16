@@ -323,13 +323,12 @@
 
 #define COMSIG_XENOABILITY_BANELING_EXPLODE "xenoability_baneling_explode"
 
-#define COMSIG_XENOABILITY_BEHEMOTH_ROLL "xenoability_behemoth_roll"
-#define COMSIG_XENOABILITY_LANDSLIDE "xenoability_landslide"
-#define COMSIG_XENOABILITY_CANCEL_LANDSLIDE "xenoability_cancel_landslide"
 #define COMSIG_XENOABILITY_EARTH_RISER "xenoability_earth_riser"
 #define COMSIG_XENOABILITY_EARTH_RISER_ALTERNATE "xenoability_earth_riser_alternate"
-#define COMSIG_XENOABILITY_EARTH_PILLAR_THROW "xenoability_earth_pillar_throw"
-#define COMSIG_XENOABILITY_SEISMIC_FRACTURE "xenoability_seismic_fracture"
+#define COMSIG_XENOABILITY_BEHEMOTH_SEIZE "xenoability_behemoth_seize"
+#define COMSIG_XENOABILITY_BEHEMOTH_SEIZE_ALTERNATE "xenoability_behemoth_seize_alternate"
+#define COMSIG_XENOABILITY_LANDSLIDE "xenoability_landslide"
+#define COMSIG_XENOABILITY_GEOCRUSH "xenoability_geocrush"
 #define COMSIG_XENOABILITY_PRIMAL_WRATH "xenoability_primal_wrath"
 
 #define COMSIG_XENOABILITY_ABDUCT "xenoability_abduct"
@@ -344,7 +343,6 @@
 #define COMSIG_XENOABILITY_CREATE_SPIDERLING "xenoability_create_spiderling"
 #define COMSIG_XENOABILITY_ATTACH_SPIDERLINGS "xenoability_attach_spiderlings"
 #define COMSIG_XENOABILITY_WEB_SPIT "xenoability_web_spit"
-#define COMSIG_XENOABILITY_CREATE_HUGGER "xenoability_create_hugger"
 #define COMSIG_XENOABILITY_UNLEASH_SPIDERLINGS "xenoability_unleash_spiderlings"
 #define COMSIG_XENOABILITY_RECALL_SPIDERLINGS "xenoability_recall_spiderlings"
 
@@ -374,6 +372,7 @@
 #define COMSIG_XENOABILITY_CHIMERA_BLINK "xenoability_chimera_blink"
 #define COMSIG_XENOABILITY_CHIMERA_WARP_BLAST "xenoability_chimera_warp_blast"
 #define COMSIG_XENOABILITY_CHIMERA_BODYSWAP "xenoability_chimera_bodyswap"
+#define COMSIG_XENOABILITY_CHIMERA_STEALTH "xenoability_chimera_stealth"
 #define COMSIG_XENOABILITY_CHIMERA_CRIPPLING_STRIKE "xenoability_chimera_crippling_strike"
 
 #define COMSIG_XENOABILITY_CRESTTOSS_BEHIND "xenoability_cresttoss_behind"
