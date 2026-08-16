@@ -282,19 +282,11 @@ TGUI_MAX_CHUNK_COUNT 32
 #TGS_EVENT_APPROVAL_MESSAGING
 #TGS_ADMINLESS_MESSAGING
 
-# Changelog Discord Webhook
-#CHANGELOG_DISCORD_HOOK https://example.com
+## Gosuslugi API URL
+# KAIN_API_URL https://change.me
 
-# дедикайтед
-## Discord TGS or other bot token.
-DISCORD_TOKEN YOUR_SECRET_TOKEN
+## Gosuslugi API Token
+# KAIN_API_TOKEN what_pumpkin
 
-## Discord guild id.
-DISCORD_GUILDID YOUR_DISCORD_GUILDID
-
-## Discord boosty role id.
-DISCORD_BOOSTY_ROLEID_TIER_1 YOUR_BOOSTY_ROLEID_TIER1
-
-DISCORD_BOOSTY_ROLEID_TIER_2 YOUR_BOOSTY_ROLEID_TIER2
-
-DISCORD_BOOSTY_ROLEID_TIER_3 YOUR_BOOSTY_ROLEID_TIER3
+## Discord bot invite URL for registration
+DISCORD_BOT_URL https://discord.com/...

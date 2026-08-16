@@ -33,10 +33,13 @@ SUBSYSTEM_DEF(discord)
 	var/list/account_link_cache = list()
 	/// list of people who tried to use Boosty styff, so we don't call the API every time
 	var/list/boosty_cache = list()
+	/// Manual Boosty tier overrides from config/boosty.txt (ckey = tier)
+	var/list/boosty_overrides = list()
 	/// Is TGS enabled (If not we won't fire because otherwise this is useless)
 	var/enabled = FALSE
 
 /datum/controller/subsystem/discord/Initialize(start_timeofday)
+	load_boosty_overrides()
 	// Check for if we are using TGS, otherwise return and disables firing
 	if(world.TgsAvailable())
 		enabled = TRUE // Allows other procs to use this (Account linking, etc)
@@ -101,76 +104,135 @@ SUBSYSTEM_DEF(discord)
 	var/regex/num_only = regex("\[^0-9\]", "g")
 	return num_only.Replace(input, "")
 
-/datum/controller/subsystem/discord/proc/get_boosty_tier(ckey, silent = TRUE)
+/// Loads manual Boosty tier overrides from config/boosty.txt
+/datum/controller/subsystem/discord/proc/load_boosty_overrides(filename = "config/boosty.txt")
+	boosty_overrides = list()
+	if(!fexists(filename))
+		return
+	for(var/line in file2list(filename))
+		if(!line)
+			continue
+		line = trim(line)
+		if(!length(line) || copytext(line, 1, 2) == "#")
+			continue
+		var/list/parts = splittext(line, "=")
+		if(length(parts) < 2)
+			continue
+		var/override_ckey = ckey(parts[1])
+		var/tier = text2num(trim(parts[2]))
+		if(!override_ckey || isnull(tier))
+			continue
+		tier = clamp(tier, BOOSTY_TIER_0, BOOSTY_TIER_3)
+		boosty_overrides[override_ckey] = tier
+
+/// Чекер на то, настроен ли KAIN API
+/datum/controller/subsystem/discord/proc/is_aperture_api_configured()
+	return !!CONFIG_GET(string/KAIN_API_URL) && !!CONFIG_GET(string/KAIN_API_TOKEN)
+
+/// Формирует URL адрес для GET-запроса к KAIN API
+/datum/controller/subsystem/discord/proc/build_aperture_api_url(endpoint, lookup_ckey)
+	var/base = CONFIG_GET(string/KAIN_API_URL)
+	if(copytext(base, length(base)) == "/")
+		base = copytext(base, 1, length(base))
+	return "[base]/[endpoint]?token=[url_encode(CONFIG_GET(string/KAIN_API_TOKEN))]&q=ss13_nick&who=[url_encode(lookup_ckey)]"
+
+/**
+ * Выполняет GET-запрос к KAIN API
+ * Возвращает http_response если пришёл успешный ответ
+ * Или возвращает null если API не настроен либо запрос не удался
+ */
+/datum/controller/subsystem/discord/proc/aperture_api_get(endpoint, lookup_ckey)
+	if(!is_aperture_api_configured() || !lookup_ckey)
+		return null
+	var/datum/http_request/req = new()
+	req.prepare(RUSTG_HTTP_METHOD_GET, build_aperture_api_url(endpoint, lookup_ckey), "")
+	req.begin_async()
+	UNTIL(req.is_complete())
+	return req.into_response()
+
+/**
+ * Выполняет поиск регистрации в Discord через по аргументу/search
+ * Варианты ответа:
+ * - Если ничего не найдено то 0
+ * - Если найдено то список JSON
+ * - Если ошибка то null
+ */
+/datum/controller/subsystem/discord/proc/lookup_registration(lookup_ckey)
+	if(!lookup_ckey)
+		return null
+	lookup_ckey = ckey(lookup_ckey)
+
+	var/datum/http_response/res = aperture_api_get("search", lookup_ckey)
+	if(!res || res.errored)
+		return null
+
+	if(res.status_code && res.status_code != 200)
+		return null
+
+	var/body = trim(res.body)
+	if(!body)
+		return null
+
+	if(body == "0")
+		return 0
+
+	var/list/data
+	try
+		data = json_decode(body)
+	catch
+		return null
+
+	if(!islist(data))
+		return null
+	return data
+
+/**
+ * Возвращает уровень Boosty
+ * Если "fail_null" равен `TRUE` то при ошибках возвращается "null", иначе возвращается "BOOSTY_TIER_0"
+ * Желательно "fail_null" ставить в значение "FALSE" чтобы не срало ошибками
+ */
+/datum/controller/subsystem/discord/proc/get_boosty_tier(ckey, fail_null = FALSE)
+// Для тестов выставляем автоматически третий тир
 	#ifdef TESTING
-	if(!silent)
-		to_chat(src, span_warning("Test mod gave you tier 3 boost"))
 	return BOOSTY_TIER_3
 	#endif
 
-	// Safety checks
-	if(!CONFIG_GET(flag/sql_enabled))
-		if(!silent)
-			to_chat(src, span_warning("This feature requires the SQL backend to be running."))
-		return BOOSTY_TIER_0
+	if(!ckey)
+		return fail_null ? null : BOOSTY_TIER_0
 
-	// ss is still starting
-	if(!SSdiscord)
-		if(!silent)
-			to_chat(src, span_notice("The server is still starting up. Please wait before attempting to link your account!"))
-		return BOOSTY_TIER_0
+	ckey = ckey(ckey) // Костыль
 
-	if(!SSdiscord.enabled)
-		if(!silent)
-			to_chat(usr, span_warning("TGS is not enabled"))
-		return BOOSTY_TIER_0
+	// Уровни установленные в config/boosty.txt имеют приоритет выше
+	if(ckey in boosty_overrides)
+		return boosty_overrides[ckey]
 
-	//use cache if possible
-	if(boosty_cache[ckey])
+	// Брать данные из кэша чтоб не дёргать каждый раз API
+	if(ckey in boosty_cache)
 		return boosty_cache[ckey]
 
-	var/discord_id = lookup_id(ckey)
+	// Нет API - нет запроса
+	if(!is_aperture_api_configured())
+		return fail_null ? null : BOOSTY_TIER_0
 
-	if(!discord_id) // Account is not linked
-		if(!silent)
-			to_chat(usr, "Link your discord account via the linkdiscord verb in the OOC tab first");
-		return BOOSTY_TIER_0
+	var/datum/http_response/res = aperture_api_get("tier", ckey)
+	if(!res || res.errored)
+		return fail_null ? null : BOOSTY_TIER_0
 
-	var/url = "https://discord.com/api/guilds/[CONFIG_GET(string/discord_guildid)]/members/[discord_id]"
-	// Make the request
-	var/datum/http_request/req = new()
-	req.prepare(RUSTG_HTTP_METHOD_GET, url, "", list("Authorization" = "Bot [CONFIG_GET(string/discord_token)]"))
-	req.begin_async()
-	UNTIL(req.is_complete())
-	var/datum/http_response/res = req.into_response()
+	if(res.status_code && res.status_code != 200)
+		return fail_null ? null : BOOSTY_TIER_0
 
-	var/list/data = list()
+	var/body = trim(res.body)
+	if(!body)
+		return fail_null ? null : BOOSTY_TIER_0
 
-	try
-		data = json_decode(res.body)
-	catch(var/exception/e)
-		if(!silent)
-			to_chat(usr, span_warning("JSON parsing FAILED: [e]: [res.body]"))
-		return BOOSTY_TIER_0
+	var/tier = text2num(body)
+	if(isnull(tier))
+		return fail_null ? null : BOOSTY_TIER_0
 
-	if(!data["roles"])
-		if(!silent)
-			to_chat(usr, span_warning("Failed to check discord roles"));
-		return BOOSTY_TIER_0
+	// Допустимыми ответами API являются только значения от 0 до 3
+	// Остальное считается ошибкой
+	if(tier < BOOSTY_TIER_0 || tier > BOOSTY_TIER_3)
+		return fail_null ? null : BOOSTY_TIER_0
 
-	//save cache and return tier
-
-	if(CONFIG_GET(string/discord_boosty_roleid_tier_3) in data["roles"])
-		boosty_cache[ckey] = BOOSTY_TIER_3
-		return BOOSTY_TIER_3
-
-	if(CONFIG_GET(string/discord_boosty_roleid_tier_2) in data["roles"])
-		boosty_cache[ckey] = BOOSTY_TIER_2
-		return BOOSTY_TIER_2
-
-	if(CONFIG_GET(string/discord_boosty_roleid_tier_1) in data["roles"])
-		boosty_cache[ckey] = BOOSTY_TIER_1
-		return BOOSTY_TIER_1
-
-	boosty_cache[ckey] = BOOSTY_TIER_0
-	return BOOSTY_TIER_0
+	boosty_cache[ckey] = tier
+	return tier
