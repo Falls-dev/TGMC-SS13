@@ -39,9 +39,11 @@ const SafeContents = ({ data, title }) => {
         <Table.Cell bold>{title}</Table.Cell>
         <Table.Cell bold>Quantity</Table.Cell>
       </Table.Row>
-      {Object.entries(data).map(([key, item]: [string, any]) => {
-        const name = typeof item === 'object' && item !== null ? (item.name || key) : key;
-        const count = typeof item === 'object' && item !== null ? (item.count || 1) : item;
+      {Object.entries(data).map(([key, item]) => {
+        const name =
+          typeof item === 'object' && item !== null ? item.name || key : key;
+        const count =
+          typeof item === 'object' && item !== null ? item.count || 1 : item;
 
         return (
           <Table.Row key={key}>
@@ -54,8 +56,12 @@ const SafeContents = ({ data, title }) => {
   );
 };
 
-const InputContents = (props) => <SafeContents data={props.input} title="Input" />;
-const OutputContents = (props) => <SafeContents data={props.output} title="Output" />;
+const InputContents = (props) => (
+  <SafeContents data={props.input} title="Input" />
+);
+const OutputContents = (props) => (
+  <SafeContents data={props.output} title="Output" />
+);
 
 export const Assembler = (props) => {
   const { act, data } = useBackend();
@@ -129,7 +135,10 @@ const Pack = (props) => {
 
   const { name, inputs, outputs } = item;
 
-  return !!inputs && typeof inputs === 'object' && !!outputs && typeof outputs === 'object' ? (
+  return !!inputs &&
+    typeof inputs === 'object' &&
+    !!outputs &&
+    typeof outputs === 'object' ? (
     <Collapsible color="gray" title={<PackName name={name} pl={0} />}>
       <Table>
         <InputContents input={inputs} />
@@ -175,7 +184,9 @@ const Category = (props) => {
 
   const filterSearch = (entry) =>
     should_filter && filter
-      ? supplypackscontents[entry]?.name?.toLowerCase().includes(filter.toLowerCase())
+      ? supplypackscontents[entry]?.name
+          ?.toLowerCase()
+          .includes(filter.toLowerCase())
       : true;
 
   return (

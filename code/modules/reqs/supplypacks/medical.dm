@@ -183,7 +183,7 @@
 /datum/supply_packs/medical/healthanalyzer_gloves
 	name = "Health scanner gloves"
 	notes = "contains health scanner gloves."
-	contains = list(/obj/item/healthanalyzer/gloves)
+	contains = list(/obj/item/clothing/gloves/healthanalyzer)
 	cost = 60
 	containertype = /obj/structure/closet/crate/secure/surgery
 	access = ACCESS_MARINE_MEDBAY

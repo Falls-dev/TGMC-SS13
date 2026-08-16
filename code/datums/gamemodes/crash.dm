@@ -1,6 +1,7 @@
 /datum/game_mode/infestation/crash
 	name = "Crash"
 	config_tag = "Crash"
+	esc_menu_name = "Canterbury" // Потому что спавн происходит прямо на нём а не на Талосе
 	required_players = 2
 	round_type_flags = MODE_INFESTATION|MODE_XENO_SPAWN_PROTECT|MODE_DEAD_GRAB_FORBIDDEN|MODE_DISALLOW_RAILGUN|MODE_PSY_POINTS|MODE_PSY_POINTS_ADVANCED|MODE_SILOS_SPAWN_MINIONS|MODE_ALLOW_XENO_QUICKBUILD|MODE_HAS_MINERS|MODE_ALLOW_MARINE_QUICKBUILD
 	xeno_abilities_flags = ABILITY_CRASH
@@ -40,6 +41,8 @@
 	var/larva_check_interval = 1 MINUTES
 	///Last time larva balance was checked
 	var/last_larva_check
+	///Here, we are keeping a record of which squads everyone was originally in, for the purpose of future reallocation.
+	var/list/orphan_marines_cache = list()
 
 /datum/game_mode/infestation/crash/pre_setup()
 	. = ..()
@@ -47,6 +50,7 @@
 	// Spawn the ship
 	if(TGS_CLIENT_COUNT >= 25)
 		shuttle_id = SHUTTLE_BIGBURY
+		esc_menu_name = "Bigbury" // Заменяем Кантебери
 	if(!SSmapping.shuttle_templates[shuttle_id])
 		message_admins("Gamemode: couldn't find a valid shuttle template for [shuttle_id]")
 		CRASH("Shuttle [shuttle_id] wasn't found and can't be loaded")
@@ -133,6 +137,7 @@
 	shuttle.crashing = FALSE
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CANTERBURRY_LANDING)
 	generate_nuke_disk_spawners()
+	consolidate_squads()
 
 /datum/game_mode/infestation/crash/check_finished(force_end)
 	if(round_finished)
@@ -183,6 +188,135 @@
 /datum/game_mode/infestation/crash/can_summon_dropship(mob/user)
 	to_chat(src, span_warning("This power doesn't work in this gamemode."))
 	return FALSE
+
+/datum/game_mode/infestation/crash/proc/consolidate_squads()
+	var/list/roles_to_check = list(
+		SQUAD_MARINE,
+		SQUAD_CORPSMAN,
+		SQUAD_ENGINEER,
+		SQUAD_SMARTGUNNER,
+		SQUAD_LEADER,
+		FIELD_COMMANDER
+	)
+
+	var/list/squads_with_sl = list()
+	var/list/squads_without_sl = list()
+
+	var/mob/living/carbon/human/best_real_sl
+	var/highest_sl_exp = -1
+
+	var/mob/living/carbon/human/best_orphan
+	var/highest_orphan_exp = -1
+	var/datum/squad/orphan_target_squad
+
+	for(var/datum/squad/S in SSjob.active_squads[FACTION_TERRAGOV])
+		if(S.squad_leader && S.squad_leader.stat != DEAD && S.squad_leader.client)
+			squads_with_sl += S
+
+			var/total_exp = 0
+			for(var/role in roles_to_check)
+				total_exp += S.squad_leader.client.get_exp(role)
+
+			if(total_exp > highest_sl_exp)
+				highest_sl_exp = total_exp
+				best_real_sl = S.squad_leader
+		else
+			squads_without_sl += S
+
+			for(var/mob/living/carbon/human/M in S.marines_list)
+				if(M.stat == DEAD || !M.client)
+					continue
+
+				var/total_exp = 0
+				for(var/role in roles_to_check)
+					total_exp += M.client.get_exp(role)
+
+				if(total_exp > highest_orphan_exp)
+					highest_orphan_exp = total_exp
+					best_orphan = M
+					orphan_target_squad = S
+
+	var/datum/squad/target_squad
+
+	if(length(squads_with_sl))
+		target_squad = best_real_sl.assigned_squad
+	else
+		if(best_orphan && orphan_target_squad)
+			target_squad = orphan_target_squad
+			target_squad.promote_leader(best_orphan)
+			target_squad.message_squad("Автоматическая система назначила бойца [best_orphan.real_name] исполняющим обязанности командира отряда.")
+
+	if(target_squad)
+		var/list/marines_to_move = list()
+
+		for(var/datum/squad/S in squads_without_sl)
+			if(S == target_squad)
+				continue
+
+			for(var/mob/living/carbon/human/M in S.marines_list)
+				marines_to_move += M
+
+		if(length(marines_to_move))
+			for(var/mob/living/carbon/human/M in marines_to_move)
+				var/datum/squad/old_squad = M.assigned_squad
+				if(old_squad)
+					orphan_marines_cache[M.ckey] = old_squad
+					old_squad.remove_from_squad(M)
+				target_squad.insert_into_squad(M, give_radio = TRUE, radio_from = old_squad)
+			target_squad.message_squad("В связи с отсутствием командования в других подразделениях, разрозненные бойцы были прикомандированы под руководство отряда [target_squad.name].")
+
+/datum/game_mode/infestation/crash/LateSpawn(mob/new_player/player)
+	var/client/C = player.client
+	. = ..()
+	if(C && istype(C.mob, /mob/living/carbon/human))
+		handle_latejoin_squad(C.mob)
+
+/datum/game_mode/infestation/crash/proc/handle_latejoin_squad(mob/living/carbon/human/H)
+	if(!shuttle_landed)
+		return
+
+	var/datum/squad/S = H.assigned_squad
+	if(!S)
+		return
+
+	var/is_sl = FALSE
+	if(istype(H.job, /datum/job/terragov/squad/leader))
+		is_sl = TRUE
+
+	if(is_sl)
+		for(var/mar_ckey in orphan_marines_cache)
+			var/datum/squad/original_squad = orphan_marines_cache[mar_ckey]
+
+			if(original_squad == S)
+				for(var/mob/living/carbon/human/marine in GLOB.human_mob_list)
+					if(marine.ckey == mar_ckey && marine.stat != DEAD && marine.assigned_squad != S)
+						marine.assigned_squad.remove_from_squad(marine)
+						S.insert_into_squad(marine, give_radio = TRUE, radio_from = S)
+						to_chat(marine, span_notice("Ваш командир прибыл! Вы переведены обратно в отряд [S.name]."))
+						break
+				orphan_marines_cache -= mar_ckey
+
+	else
+		if(!S.squad_leader || S.squad_leader.stat == DEAD || !S.squad_leader.client)
+			var/datum/squad/target_squad
+			var/highest_sl_exp = -1
+			var/list/roles_to_check = list(SQUAD_MARINE, SQUAD_CORPSMAN, SQUAD_ENGINEER, SQUAD_SMARTGUNNER, SQUAD_LEADER, FIELD_COMMANDER)
+
+			for(var/datum/squad/other_squad in SSjob.active_squads[FACTION_TERRAGOV])
+				if(other_squad.squad_leader && other_squad.squad_leader.stat != DEAD && other_squad.squad_leader.client)
+					var/total_exp = 0
+					for(var/role in roles_to_check)
+						total_exp += other_squad.squad_leader.client.get_exp(role)
+
+					if(total_exp > highest_sl_exp)
+						highest_sl_exp = total_exp
+						target_squad = other_squad
+
+			if(target_squad && target_squad != S)
+				orphan_marines_cache[H.ckey] = S
+				S.remove_from_squad(H)
+				target_squad.insert_into_squad(H, give_radio = TRUE, radio_from = S)
+				to_chat(H, span_warning("В вашем изначальном отряде нет командования. Вы прикомандированы к отряду [target_squad.name]."))
 
 /// Adds more xeno job slots if needed.
 /datum/game_mode/infestation/crash/proc/balance_scales()

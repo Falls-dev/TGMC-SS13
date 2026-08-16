@@ -204,6 +204,52 @@
 		return
 	proj.proj_max_range = 0
 
+/datum/ammo/rocket/lowvel_heat
+	name = "Low Velocity HEAT shell"
+	icon_state = "recoilless_rifle_heat"
+	hud_state = "shell_heat"
+	ammo_behavior_flags = AMMO_SNIPER
+	shell_speed = 1
+	damage = 200
+	penetration = 100
+	sundering = 0
+
+/datum/ammo/rocket/lowvel_heat/drop_nade(turf/target_turf)
+	cell_explosion(target_turf, 50, 25)
+
+/datum/ammo/rocket/lowvel_high_explosive
+	name = "Low Velocity HE shell"
+	damage = 50
+	penetration = 100
+	sundering = 10
+	ammo_behavior_flags = AMMO_SNIPER // We want this to specifically go over onscreen range.
+	shell_speed = 1
+
+/datum/ammo/rocket/lowvel_high_explosive/drop_nade(turf/target_turf)
+	cell_explosion(target_turf, 125, 60)
+
+/datum/ammo/rocket/lowvel_high_explosive_fragmenting_antipersonnel
+	name = "Low Velocity HEFA shell"
+	icon_state = "recoilless_rifle_le"
+	hud_state = "shell_le"
+	damage = 50
+	penetration = 100
+	sundering = 10
+	ammo_behavior_flags = AMMO_SNIPER // We want this to specifically go over onscreen range.
+	shell_speed = 1
+
+/datum/ammo/rocket/lowvel_high_explosive_fragmenting_antipersonnel/drop_nade(turf/target_turf)
+	cell_explosion(target_turf, 125, 40)
+	create_shrapnel(target_turf, 20, shrapnel_type = /datum/ammo/bullet/shrapnel/metal)
+
+/datum/ammo/flamethrower/blue/lowvel_flamer
+	name = "spraying flames"
+	icon_state = "spray_flamer"
+	max_range = 7
+	shell_speed = 0.8
+	damage = 50
+	burn_time = 0.7 SECONDS
+
 /datum/ammo/rocket/icc_lowvel_heat
 	name = "Low Velocity HEAT shell"
 	icon_state = "recoilless_rifle_heat"

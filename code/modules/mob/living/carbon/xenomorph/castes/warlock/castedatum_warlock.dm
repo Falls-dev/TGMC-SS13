@@ -15,13 +15,17 @@
 	max_health = 375
 	spit_types = list(/datum/ammo/energy/xeno/psy_blast)
 
-	can_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_BE_GIVEN_PLASMA|CASTE_CAN_BE_LEADER
+	can_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_BE_GIVEN_PLASMA|CASTE_CAN_BE_LEADER|CASTE_CAN_BE_RULER
 	caste_traits = null
 	soft_armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 40, BOMB = 10, BIO = 35, FIRE = 10, ACID = 35)
 	shield_strength = 650
 	crush_strength = 50
 	blast_strength = 45
 	minimap_icon = "warlock"
+
+	// *** Ruler Abilities *** ///
+	queen_leader_limit = 4
+
 	actions = list(
 		/datum/action/ability/xeno_action/xeno_resting,
 		/datum/action/ability/xeno_action/watch_xeno,
@@ -30,8 +34,15 @@
 		/datum/action/ability/activable/xeno/psy_blast,
 		/datum/action/ability/activable/xeno/psychic_shield,
 		/datum/action/ability/activable/xeno/transfer_plasma/drone,
+		/datum/action/ability/xeno_action/pheromones,
+		/datum/action/ability/xeno_action/pheromones/emit_recovery,
+		/datum/action/ability/xeno_action/pheromones/emit_warding,
+		/datum/action/ability/xeno_action/pheromones/emit_frenzy,
 		/datum/action/ability/xeno_action/psychic_whisper,
 	)
+
+	// *** Pheromones *** //
+	aura_strength = 2.6 //It's .1 better than a carrier.
 
 /datum/xeno_caste/warlock/normal
 	upgrade = XENO_UPGRADE_NORMAL
@@ -51,6 +62,10 @@
 		/datum/action/ability/activable/xeno/psychic_shield,
 		/datum/action/ability/xeno_action/toggle_warlock_zoom,
 		/datum/action/ability/activable/xeno/transfer_plasma/drone,
+		/datum/action/ability/xeno_action/pheromones,
+		/datum/action/ability/xeno_action/pheromones/emit_recovery,
+		/datum/action/ability/xeno_action/pheromones/emit_warding,
+		/datum/action/ability/xeno_action/pheromones/emit_frenzy,
 		/datum/action/ability/xeno_action/psychic_whisper,
 )
 	spit_types = list(/datum/ammo/energy/xeno/psy_blast, /datum/ammo/energy/xeno/psy_blast/psy_lance)

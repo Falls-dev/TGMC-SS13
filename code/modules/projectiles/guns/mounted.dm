@@ -440,6 +440,8 @@
 		/obj/item/attachable/bayonetknife/som,
 		/obj/item/attachable/scope/mini,
 		/obj/item/attachable/scope/unremovable/mg27,
+		/obj/item/attachable/b11_scope,
+		/obj/item/attachable/b15_scope,
 	)
 	attachable_offset = list("muzzle_x" = 45, "muzzle_y" = 19,"rail_x" = 18, "rail_y" = 24, "under_x" = 28, "under_y" = 13, "stock_x" = 0, "stock_y" = 0)
 

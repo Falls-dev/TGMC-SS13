@@ -32,6 +32,8 @@
 #define VREF_MUTABLE_JAB "VREF_JAB"
 // create spiderling charges
 #define VREF_MUTABLE_SPIDERLING_CHARGES "VREF_SPIDERLING_CHARGES"
+// create puppet charges
+#define VREF_MUTABLE_PUPPET_CHARGES "VREF_PUPPET_CHARGES"
 // extra reference for how many boiler acid globs we have
 #define VREF_MUTABLE_AMMO_COUNTER "VREF_AMMO_COUNTER"
 

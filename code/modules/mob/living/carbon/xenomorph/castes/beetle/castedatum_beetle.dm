@@ -34,6 +34,7 @@
 	minimap_icon = "xenominion"
 
 	crest_defense_armor = 20
+	crest_defense_slowdown = 0.6
 
 	actions = list(
 		/datum/action/ability/xeno_action/xeno_resting,

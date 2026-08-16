@@ -988,7 +988,7 @@
 /datum/status_effect/blessing/warding/on_apply()
 	if(!isxeno(owner))
 		return FALSE
-	armor_modifier = getArmor(37.8 * strength, 8.1 * strength, 13.5 * strength, 8.1 * strength)
+	armor_modifier = getArmor(15, 15, 15, 15)
 	owner.soft_armor = owner.soft_armor.attachArmor(armor_modifier)
 	return TRUE
 

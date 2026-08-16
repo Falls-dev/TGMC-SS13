@@ -1,6 +1,7 @@
 /datum/game_mode/infestation/crash/zombie
 	name = "Zombie Crash"
 	config_tag = "Zombie Crash"
+	esc_menu_name = "Canterbury" // Потому что спавн происходит прямо на нём а не на Талосе
 	required_players = 1
 	valid_job_types = list(
 		/datum/job/terragov/squad/standard = -1,

@@ -114,6 +114,11 @@ export function settingsMiddleware(store) {
 
     const settings = selectSettings(store.getState());
 
+    // loadSettings may omit theme in edge cases — still sync skin/statbrowser
+    if (type === loadSettings.type && settings?.theme) {
+      setClientTheme(settings.theme);
+    }
+
     // Update stat panel settings
     setStatTabsStyle(settings.statTabsStyle);
 

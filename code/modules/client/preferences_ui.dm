@@ -285,13 +285,20 @@
 	var/client/current_client = CLIENT_FROM_VAR(usr)
 	var/mob/user = current_client.mob
 
+	var/list/male_voices = list("Мужской 1", "Мужской 2")
+	var/list/female_voices = list("Женский 1", "Женский 2", "Женский 3")
+
 	switch(action)
 		if("changeslot")
 			if(!load_character(text2num(params["changeslot"])))
 				random_character()
 				real_name = random_unique_name(gender)
 				save_character()
-				update_preview_icon()
+			if(gender == MALE && (tts_voice in female_voices))
+				tts_voice = pick(male_voices)
+			else if(gender == FEMALE && (tts_voice in male_voices))
+				tts_voice = pick(female_voices)
+			update_preview_icon()
 
 		if("tab_change")
 			tab_index = params["tabIndex"]
@@ -522,6 +529,10 @@
 				f_style = "Shaved"
 			else
 				underwear = 1
+			if(gender == MALE && (tts_voice in female_voices))
+				tts_voice = pick(male_voices)
+			else if(gender == FEMALE && (tts_voice in male_voices))
+				tts_voice = pick(female_voices)
 			update_preview_icon()
 
 
@@ -751,21 +762,27 @@
 				voices = json_decode(text_data)
 			if(!length(voices))
 				return
-			var/choice = tgui_input_list(ui.user, "What do you sound like?", "TTS", voices)
+			var/list/filtered_voices = list()
+			for(var/v in voices)
+				if(gender == MALE && (v in male_voices))
+					filtered_voices += v
+				else if(gender == FEMALE && (v in female_voices))
+					filtered_voices += v
+			var/choice = tgui_input_list(ui.user, "What do you sound like?", "TTS", filtered_voices)
 			if(!choice)
 				return
 			tts_voice = choice
 			if(TIMER_COOLDOWN_RUNNING(user, COOLDOWN_TRY_TTS))
 				return
 			TIMER_COOLDOWN_START(ui.user, COOLDOWN_TRY_TTS, 0.5 SECONDS)
-			INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), ui.user.client, "Hello, this is my voice.", speaker = choice, local = TRUE, special_filters = isrobot(GLOB.all_species[species]) ? TTS_FILTER_SILICON : "", pitch = tts_pitch)
+			INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), ui.user.client, "Так звучит мой голос.", speaker = choice, local = TRUE, special_filters = isrobot(GLOB.all_species[species]) ? TTS_FILTER_SILICON : "", pitch = tts_pitch)
 
 		if("tts_pitch")
 			tts_pitch = clamp(text2num(params["newValue"]), -12, 12)
 			if(TIMER_COOLDOWN_RUNNING(user, COOLDOWN_TRY_TTS))
 				return
 			TIMER_COOLDOWN_START(ui.user, COOLDOWN_TRY_TTS, 0.5 SECONDS)
-			INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), ui.user.client, "Hello, this is my voice.", speaker = tts_voice, local = TRUE, special_filters = isrobot(GLOB.all_species[species]) ? TTS_FILTER_SILICON : "", pitch = tts_pitch)
+			INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), ui.user.client, "Так звучит мой голос.", speaker = tts_voice, local = TRUE, special_filters = isrobot(GLOB.all_species[species]) ? TTS_FILTER_SILICON : "", pitch = tts_pitch)
 
 		if("squad")
 			var/new_squad = params["newValue"]

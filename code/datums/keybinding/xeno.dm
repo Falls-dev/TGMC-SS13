@@ -1270,6 +1270,13 @@
 	keybind_signal = COMSIG_XENOABILITY_CHIMERA_BODYSWAP
 	hotkey_keys = list("X")
 
+/datum/keybinding/xeno/chimera_stealth
+	name = "stealth"
+	full_name = "Chimera: Toogle Stealth"
+	description = "Activates invisibility."
+	keybind_signal = COMSIG_XENOABILITY_CHIMERA_STEALTH
+	hotkey_keys = list("C")
+
 /datum/keybinding/xeno/crippling_strike
 	name = "crippling_strike"
 	full_name = "Chimera: Crippling Strike"
@@ -1342,13 +1349,6 @@
 	description = "Stun and blind the target with a web projectile"
 	keybind_signal = COMSIG_XENOABILITY_WEB_SPIT
 	hotkey_keys = list("R")
-
-/datum/keybinding/xeno/create_hugger
-	name = "Create Facehugger"
-	full_name = "Widow: Create Facehugger"
-	description = "Create a facehugger."
-	keybind_signal = COMSIG_XENOABILITY_CREATE_HUGGER
-	hotkey_keys = list("G")
 
 /datum/keybinding/xeno/widow_unleash
 	name = "Unleash Spiderlings"

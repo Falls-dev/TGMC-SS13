@@ -33,6 +33,10 @@
 			/obj/item/ammo_magazine/rifle/martini/white = -1,
 			/obj/item/weapon/gun/revolver/coltrifle = -1,
 			/obj/item/ammo_magazine/revolver/rifle = -1,
+			/obj/item/weapon/gun/shotgun/pump/bolt = -1,
+			/obj/item/ammo_magazine/rifle/bolt = -1,
+			/obj/item/ammo_magazine/rifle/boltclip = -1,
+			
 		),
 		"Пистолеты-пулемёты" = list(
 			/obj/item/weapon/gun/smg/vector = -1,
@@ -706,6 +710,8 @@
 			/obj/item/attachable/magnetic_harness = -1,
 			/obj/item/attachable/reddot = -1,
 			/obj/item/attachable/b7_scope = -1,
+			/obj/item/attachable/b11_scope = -1,
+			/obj/item/attachable/b15_scope = -1,
 			/obj/item/attachable/motiondetector = -1,
 			/obj/item/attachable/scope/marine = -1,
 			/obj/item/attachable/scope/mini = -1,
