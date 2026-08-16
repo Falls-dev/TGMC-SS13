@@ -710,6 +710,8 @@
 			/obj/item/attachable/magnetic_harness = -1,
 			/obj/item/attachable/reddot = -1,
 			/obj/item/attachable/b7_scope = -1,
+			/obj/item/attachable/b11_scope = -1,
+			/obj/item/attachable/b15_scope = -1,
 			/obj/item/attachable/motiondetector = -1,
 			/obj/item/attachable/scope/marine = -1,
 			/obj/item/attachable/scope/mini = -1,

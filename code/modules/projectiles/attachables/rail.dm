@@ -15,6 +15,22 @@
 	slot = ATTACHMENT_SLOT_RAIL
 	add_aim_mode = TRUE
 
+/obj/item/attachable/b11_scope
+	name = "B11 smart scope"
+	desc = "Similar to the B7 sight, but barely slows you down when aiming."
+	icon_state = "smoll"
+	slot = ATTACHMENT_SLOT_RAIL
+	add_aim_mode = TRUE
+	aim_mode_movement_mult = -0.8
+
+/obj/item/attachable/b15_scope
+	name = "B15 smart scope"
+	desc = "Similar to the B7 sight, but causes virtually no reduction in fire rate when aiming."
+	icon_state = "big"
+	slot = ATTACHMENT_SLOT_RAIL
+	add_aim_mode = TRUE
+	aim_mode_delay_mod = -0.7
+
 /obj/item/attachable/m16sight
 	name = "M16 iron sights"
 	desc = "The iconic carry-handle iron sights for the m16. Usually removed once the user finds something worthwhile to attach to the rail."

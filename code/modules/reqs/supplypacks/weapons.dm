@@ -22,6 +22,16 @@
 	contains = list(/obj/item/weapon/gun/rifle/pepperball)
 	cost = 100
 
+/datum/supply_packs/weapons/b11
+	name = "B11 smart scope"
+	contains = list(/obj/item/attachable/b11_scope)
+	cost = 150
+
+/datum/supply_packs/weapons/b15
+	name = "B15 smart scope"
+	contains = list(/obj/item/attachable/b15_scope)
+	cost = 150
+
 /datum/supply_packs/weapons/railgun
 	name = "SR-220 railgun"
 	contains = list(/obj/item/weapon/gun/rifle/railgun)
