@@ -493,11 +493,13 @@ This maintains a list of ip addresses that are able to bypass topic filtering.
 /datum/config_entry/number/tgui_max_chunk_count
 	default = 32
 
-// БУСТИ
+// APERTURE / BOOSTY API
 
-/// УРЛ до внешнего АПИ
-/datum/config_entry/string/boosty_api_url
-	default = "https://change.me/v1/level"
+/// Base URL for Aperture API (e.g. https://api.aperture13.online). Empty = API disabled, no requests.
+/datum/config_entry/string/KAIN_API_URL
 
-/// Токен
-/datum/config_entry/string/boosty_api_token
+/// Token for Aperture API
+/datum/config_entry/string/KAIN_API_TOKEN
+
+/// Discord bot invite/authorize URL for account registration
+/datum/config_entry/string/discord_bot_url

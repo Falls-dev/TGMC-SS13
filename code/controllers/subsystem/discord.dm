@@ -125,54 +125,114 @@ SUBSYSTEM_DEF(discord)
 		tier = clamp(tier, BOOSTY_TIER_0, BOOSTY_TIER_3)
 		boosty_overrides[override_ckey] = tier
 
-/datum/controller/subsystem/discord/proc/get_boosty_tier(ckey, silent = TRUE)
+/// Чекер на то, настроен ли KAIN API
+/datum/controller/subsystem/discord/proc/is_aperture_api_configured()
+	return !!CONFIG_GET(string/KAIN_API_URL) && !!CONFIG_GET(string/KAIN_API_TOKEN)
+
+/// Формирует URL адрес для GET-запроса к KAIN API
+/datum/controller/subsystem/discord/proc/build_aperture_api_url(endpoint, lookup_ckey)
+	var/base = CONFIG_GET(string/KAIN_API_URL)
+	if(copytext(base, length(base)) == "/")
+		base = copytext(base, 1, length(base))
+	return "[base]/[endpoint]?token=[url_encode(CONFIG_GET(string/KAIN_API_TOKEN))]&q=ss13_nick&who=[url_encode(lookup_ckey)]"
+
+/**
+ * Выполняет GET-запрос к KAIN API
+ * Возвращает http_response если пришёл успешный ответ
+ * Или возвращает null если API не настроен либо запрос не удался
+ */
+/datum/controller/subsystem/discord/proc/aperture_api_get(endpoint, lookup_ckey)
+	if(!is_aperture_api_configured() || !lookup_ckey)
+		return null
+	var/datum/http_request/req = new()
+	req.prepare(RUSTG_HTTP_METHOD_GET, build_aperture_api_url(endpoint, lookup_ckey), "")
+	req.begin_async()
+	UNTIL(req.is_complete())
+	return req.into_response()
+
+/**
+ * Выполняет поиск регистрации в Discord через по аргументу/search
+ * Варианты ответа:
+ * - Если ничего не найдено то 0
+ * - Если найдено то список JSON
+ * - Если ошибка то null
+ */
+/datum/controller/subsystem/discord/proc/lookup_registration(lookup_ckey)
+	if(!lookup_ckey)
+		return null
+	lookup_ckey = ckey(lookup_ckey)
+
+	var/datum/http_response/res = aperture_api_get("search", lookup_ckey)
+	if(!res || res.errored)
+		return null
+
+	if(res.status_code && res.status_code != 200)
+		return null
+
+	var/body = trim(res.body)
+	if(!body)
+		return null
+
+	if(body == "0")
+		return 0
+
+	var/list/data
+	try
+		data = json_decode(body)
+	catch
+		return null
+
+	if(!islist(data))
+		return null
+	return data
+
+/**
+ * Возвращает уровень Boosty
+ * Если "fail_null" равен `TRUE` то при ошибках возвращается "null", иначе возвращается "BOOSTY_TIER_0"
+ * Желательно "fail_null" ставить в значение "FALSE" чтобы не срало ошибками
+ */
+/datum/controller/subsystem/discord/proc/get_boosty_tier(ckey, fail_null = FALSE)
+// Для тестов выставляем автоматически третий тир
 	#ifdef TESTING
-	if(!silent)
-		to_chat(usr, span_warning("Test mod gave you tier 3 boost"))
 	return BOOSTY_TIER_3
 	#endif
 
 	if(!ckey)
-		return BOOSTY_TIER_0
+		return fail_null ? null : BOOSTY_TIER_0
 
-	ckey = ckey(ckey)
+	ckey = ckey(ckey) // Костыль
 
-	// Manual overrides from config/boosty.txt take priority over the API
+	// Уровни установленные в config/boosty.txt имеют приоритет выше
 	if(ckey in boosty_overrides)
 		return boosty_overrides[ckey]
 
-	// Use cache if possible (including tier 0)
+	// Брать данные из кэша чтоб не дёргать каждый раз API
 	if(ckey in boosty_cache)
 		return boosty_cache[ckey]
 
-	var/api_url = CONFIG_GET(string/boosty_api_url)
-	var/api_token = CONFIG_GET(string/boosty_api_token)
-	if(!api_url || !api_token)
-		if(!silent)
-			to_chat(usr, span_warning("Boosty API is not configured."))
-		return BOOSTY_TIER_0
+	// Нет API - нет запроса
+	if(!is_aperture_api_configured())
+		return fail_null ? null : BOOSTY_TIER_0
 
-	var/url = "[api_url]?token=[url_encode(api_token)]&q=ss13_nick&who=[url_encode(ckey)]"
-	var/datum/http_request/req = new()
-	req.prepare(RUSTG_HTTP_METHOD_GET, url, "")
-	req.begin_async()
-	UNTIL(req.is_complete())
-	var/datum/http_response/res = req.into_response()
+	var/datum/http_response/res = aperture_api_get("tier", ckey)
+	if(!res || res.errored)
+		return fail_null ? null : BOOSTY_TIER_0
 
-	if(res.errored || !res.body)
-		if(!silent)
-			var/error_text = res.error
-			if(!error_text)
-				error_text = "empty response"
-			to_chat(usr, span_warning("Failed to check Boosty tier: [error_text]"))
-		return BOOSTY_TIER_0
+	if(res.status_code && res.status_code != 200)
+		return fail_null ? null : BOOSTY_TIER_0
 
-	var/tier = text2num(trim(res.body))
+	var/body = trim(res.body)
+	if(!body)
+		return fail_null ? null : BOOSTY_TIER_0
+
+	var/tier = text2num(body)
 	if(isnull(tier))
-		if(!silent)
-			to_chat(usr, span_warning("Invalid Boosty API response: [res.body]"))
-		return BOOSTY_TIER_0
+		return fail_null ? null : BOOSTY_TIER_0
 
-	tier = clamp(tier, BOOSTY_TIER_0, BOOSTY_TIER_3)
+	// Допустимыми ответами API являются только значения от 0 до 3
+	// Остальное считается ошибкой
+	if(tier < BOOSTY_TIER_0 || tier > BOOSTY_TIER_3)
+		return fail_null ? null : BOOSTY_TIER_0
+
 	boosty_cache[ckey] = tier
 	return tier
