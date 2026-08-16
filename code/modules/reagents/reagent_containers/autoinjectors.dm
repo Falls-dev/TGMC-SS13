@@ -343,12 +343,28 @@
 
 /obj/item/reagent_containers/hypospray/autoinjector/sulfasalazine
 	name = "sulfasalazine autoinjector"
-	desc = "An auto-injector loaded with sulfasalazine, an agent that restores itself at the expense of other reagents and purge them, but has a great healing effect"
-	icon_state = "autoinjector-6"
+	desc = "An auto-injector loaded with sulfasalazine, an agent that restores itself at the expense of other reagents and purge them, but has a great healing effect. WARNING: It embeds itself into the deepest tissues of the body, making it impossible to remove from the user after administration"
 	amount_per_transfer_from_this = 1
 	volume = 1
+	reagent_flags = NONE
 	list_reagents = list(/datum/reagent/medicine/sulfasalazine = 1)
 	free_refills = FALSE
+
+/obj/item/reagent_containers/hypospray/autoinjector/sulfasalazine/afterattack(atom/A, mob/living/user)
+	if(!ishuman(A))
+		balloon_alert(user, "Can only inject humans.")
+		return
+	. = ..()
+	update_icon()
+
+/obj/item/reagent_containers/hypospray/autoinjector/sulfasalazine/is_drawable()
+	return FALSE
+
+/obj/item/reagent_containers/hypospray/autoinjector/sulfasalazine/update_icon_state()
+	if(!reagents?.total_volume)
+		icon_state = "autoinjector-6X"
+	else
+		icon_state = "autoinjector-6"
 
 /obj/item/reagent_containers/hypospray/autoinjector/pain //made for debugging
 	name = "liquid pain autoinjector"

@@ -1,3 +1,24 @@
+
+/atom/movable/screen/map_view/preference_preview
+	/// All the plane masters that need to be applied.
+	var/atom/movable/screen/background/screen_bg
+
+/atom/movable/screen/map_view/preference_preview/Destroy()
+	QDEL_NULL(screen_bg)
+	return ..()
+
+/atom/movable/screen/map_view/preference_preview/generate_view(map_key)
+	. = ..()
+	screen_bg = new
+	screen_bg.del_on_map_removal = FALSE
+	screen_bg.assigned_map = assigned_map
+	screen_bg.icon_state = "clear"
+	screen_bg.fill_rect(1, 1, 4, 1)
+
+/atom/movable/screen/map_view/preference_preview/display_to_client(client/show_to)
+	show_to.register_map_obj(screen_bg)
+	return ..()
+
 /datum/preferences/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -5,15 +26,11 @@
 		ui = new(user, src, "PlayerPreferences", "Preferences")
 		ui.set_autoupdate(FALSE)
 		ui.open()
-		// HACK: Without this the character starts out really tiny because of some BYOND bug.
-		// You can fix it by changing a preference, so let's just forcably update the body to emulate this.
-		// Lemon from the future: this issue appears to replicate if the byond map (what we're relaying here)
-		// Is shown while the client's mouse is on the screen. As soon as their mouse enters the main map, it's properly scaled
-		// I hate this place
-		addtimer(CALLBACK(src, PROC_REF(update_preview_icon)), 1 SECONDS)
+		screen_main.display_to(user, ui.window)
 
 /datum/preferences/ui_close(mob/user)
 	. = ..()
+	user.client?.clear_map(map_name)
 	user.client?.clear_character_previews()
 
 /datum/preferences/ui_state(mob/user)
@@ -140,6 +157,7 @@
 			data["tgui_input"] = tgui_input
 			data["tgui_input_big_buttons"] = tgui_input_big_buttons
 			data["tgui_input_buttons_swap"] = tgui_input_buttons_swap
+			data["auto_open_changelogs"] = auto_open_changelogs
 			data["clientfps"] = clientfps
 			data["chat_on_map"] = chat_on_map
 			data["max_chat_length"] = max_chat_length
@@ -168,6 +186,7 @@
 			data["fast_mc_refresh"] = fast_mc_refresh
 			data["split_admin_tabs"] = split_admin_tabs
 			data["hear_ooc_anywhere_as_staff"] = hear_ooc_anywhere_as_staff
+			data["show_ooc_country_flag"] = show_ooc_country_flag
 			data["volume_adminhelp"] = volume_adminhelp
 			data["volume_adminmusic"] = volume_adminmusic
 			data["volume_ambience"] = volume_ambience
@@ -201,6 +220,7 @@
 	. = list()
 	switch(tab_index)
 		if(CHARACTER_CUSTOMIZATION, PRED_CHARACTER_CUSTOMIZATION)
+			update_preview_icon()
 			.["mapRef"] = "player_pref_map"
 		if(GEAR_CUSTOMIZATION)
 			.["clothing"] = list(
@@ -265,13 +285,20 @@
 	var/client/current_client = CLIENT_FROM_VAR(usr)
 	var/mob/user = current_client.mob
 
+	var/list/male_voices = list("Мужской 1", "Мужской 2")
+	var/list/female_voices = list("Женский 1", "Женский 2", "Женский 3")
+
 	switch(action)
 		if("changeslot")
 			if(!load_character(text2num(params["changeslot"])))
 				random_character()
 				real_name = random_unique_name(gender)
 				save_character()
-				update_preview_icon()
+			if(gender == MALE && (tts_voice in female_voices))
+				tts_voice = pick(male_voices)
+			else if(gender == FEMALE && (tts_voice in male_voices))
+				tts_voice = pick(female_voices)
+			update_preview_icon()
 
 		if("tab_change")
 			tab_index = params["tabIndex"]
@@ -502,6 +529,10 @@
 				f_style = "Shaved"
 			else
 				underwear = 1
+			if(gender == MALE && (tts_voice in female_voices))
+				tts_voice = pick(male_voices)
+			else if(gender == FEMALE && (tts_voice in male_voices))
+				tts_voice = pick(female_voices)
 			update_preview_icon()
 
 
@@ -731,21 +762,27 @@
 				voices = json_decode(text_data)
 			if(!length(voices))
 				return
-			var/choice = tgui_input_list(ui.user, "What do you sound like?", "TTS", voices)
+			var/list/filtered_voices = list()
+			for(var/v in voices)
+				if(gender == MALE && (v in male_voices))
+					filtered_voices += v
+				else if(gender == FEMALE && (v in female_voices))
+					filtered_voices += v
+			var/choice = tgui_input_list(ui.user, "What do you sound like?", "TTS", filtered_voices)
 			if(!choice)
 				return
 			tts_voice = choice
 			if(TIMER_COOLDOWN_RUNNING(user, COOLDOWN_TRY_TTS))
 				return
 			TIMER_COOLDOWN_START(ui.user, COOLDOWN_TRY_TTS, 0.5 SECONDS)
-			INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), ui.user.client, "Hello, this is my voice.", speaker = choice, local = TRUE, special_filters = isrobot(GLOB.all_species[species]) ? TTS_FILTER_SILICON : "", pitch = tts_pitch)
+			INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), ui.user.client, "Так звучит мой голос.", speaker = choice, local = TRUE, special_filters = isrobot(GLOB.all_species[species]) ? TTS_FILTER_SILICON : "", pitch = tts_pitch)
 
 		if("tts_pitch")
 			tts_pitch = clamp(text2num(params["newValue"]), -12, 12)
 			if(TIMER_COOLDOWN_RUNNING(user, COOLDOWN_TRY_TTS))
 				return
 			TIMER_COOLDOWN_START(ui.user, COOLDOWN_TRY_TTS, 0.5 SECONDS)
-			INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), ui.user.client, "Hello, this is my voice.", speaker = tts_voice, local = TRUE, special_filters = isrobot(GLOB.all_species[species]) ? TTS_FILTER_SILICON : "", pitch = tts_pitch)
+			INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), ui.user.client, "Так звучит мой голос.", speaker = tts_voice, local = TRUE, special_filters = isrobot(GLOB.all_species[species]) ? TTS_FILTER_SILICON : "", pitch = tts_pitch)
 
 		if("squad")
 			var/new_squad = params["newValue"]
@@ -847,6 +884,9 @@
 
 		if("tgui_input_buttons_swap")
 			tgui_input_buttons_swap = !tgui_input_buttons_swap
+
+		if("auto_open_changelogs")
+			auto_open_changelogs = !auto_open_changelogs
 
 		if("clientfps")
 			var/desiredfps = text2num(params["newValue"])
@@ -1108,6 +1148,8 @@
 
 		if("hear_ooc_anywhere_as_staff")
 			hear_ooc_anywhere_as_staff = !hear_ooc_anywhere_as_staff
+		if("show_ooc_country_flag")
+			show_ooc_country_flag = !show_ooc_country_flag
 
 		if("volume_adminhelp")
 			volume_adminhelp = params["newValue"]

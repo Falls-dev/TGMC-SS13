@@ -41,18 +41,6 @@
 			"icon_state": "trooper"
 		}
 	],
-	"mjolnir_visor": [
-		{
-			"type": "hyperscale",
-			"icon_state": "mjolnir"
-		}
-	],
-	"mjolnir_open_visor": [
-		{
-			"type": "hyperscale",
-			"icon_state": "mjolnir_open"
-		}
-	],
 	"kabuto_visor": [
 		{
 			"type": "hyperscale",
@@ -87,6 +75,18 @@
 		{
 			"type": "hyperscale",
 			"icon_state": "eod"
+		}
+	],
+	"mjolnir_visor": [
+		{
+			"type": "hyperscale",
+			"icon_state": "mjolnir"
+		}
+	],
+	"mjolnir_open_visor": [
+		{
+			"type": "hyperscale",
+			"icon_state": "mjolnir_open"
 		}
 	],
 	"r_light": [
@@ -156,15 +156,33 @@
 		}
 	],
 	"markone_visor": [
-	{
-		"type": "hyperscale",
-		"icon_state": "markone"
-	}
-],
-	"foureye_visor": [
 		{
 			"type": "hyperscale",
-			"icon_state": "foureye"
+			"icon_state": "markone"
+		}
+	],
+	"foureye_visor": [
+			{
+				"type": "hyperscale",
+				"icon_state": "foureye"
+			}
+	],
+	"phobos_visor": [
+	{
+		"type": "hyperscale",
+		"icon_state": "phobos"
+	}
+	],
+	"clementia_visor": [
+		{
+			"type": "hyperscale",
+			"icon_state": "clementia"
+		}
+	],
+	"hephaestus_visor": [
+		{
+			"type": "hyperscale",
+			"icon_state": "hephaestus"
 		}
 	]
 }

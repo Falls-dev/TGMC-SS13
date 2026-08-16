@@ -1,6 +1,9 @@
 /// Logging for generic/unsorted game messages
 /proc/log_game(text, list/data)
 	logger.Log(LOG_CATEGORY_GAME, text, data)
+	GLOB.STUI?.game.Add("\[[time_stamp()]]GAME: [text]")
+	if(GLOB.STUI)
+		GLOB.STUI.processing |= STUI_LOG_GAME_CHAT
 
 /// Logging for emotes
 /proc/log_emote(text, list/data)
@@ -13,10 +16,16 @@
 /// Logging for messages sent in OOC
 /proc/log_ooc(text, list/data)
 	logger.Log(LOG_CATEGORY_GAME_OOC, text, data)
+	GLOB.STUI?.ooc.Add("\[[time_stamp()]]OOC: [text]")
+	if(GLOB.STUI)
+		GLOB.STUI.processing |= STUI_LOG_OOC_CHAT
 
 /// Logging for messages sent in LOOC
 /proc/log_looc(text, list/data)
 	logger.Log(LOG_CATEGORY_GAME_LOOC, text, data)
+	GLOB.STUI?.ooc.Add("\[[time_stamp()]]LOOC: [text]")
+	if(GLOB.STUI)
+		GLOB.STUI.processing |= STUI_LOG_OOC_CHAT
 
 /// Logging for messages sent in XOOC
 /proc/log_xooc(text, list/data)

@@ -11,6 +11,7 @@
 		"Uniforms" = list(
 			/obj/item/clothing/under/marine/robotic = -1,
 			/obj/item/clothing/under/marine = -1,
+			/obj/item/clothing/under/marine/hyperscale = -1,
 			/obj/item/clothing/under/marine/camo = -1,
 			/obj/item/clothing/under/marine/camo/desert = -1,
 			/obj/item/clothing/under/marine/camo/snow = -1,
@@ -39,6 +40,7 @@
 		"Gloves" = list(
 			/obj/item/clothing/gloves/marine = -1,
 			/obj/item/clothing/gloves/marine/fingerless = -1,
+			/obj/item/clothing/gloves/marine/hyperscale = -1,
 			/obj/item/clothing/gloves/marine/veteran/marine = -1,
 			/obj/item/clothing/gloves/marine/separatist = -1,
 			/obj/item/clothing/gloves/white = -1,

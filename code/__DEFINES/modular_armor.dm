@@ -150,63 +150,86 @@
 #define ARMOR_PALETTES_LIST list(\
 		"Default Armor" = list(\
 			"Drab" = ARMOR_PALETTE_DRAB,\
+			"Brown" = ARMOR_PALETTE_BROWN,\
 			"Wood" = ARMOR_PALETTE_WOOD,\
 			"Snow" = ARMOR_PALETTE_SNOW,\
+			"Ice" = ARMOR_PALETTE_ICE,\
 			"Storm" = ARMOR_PALETTE_STORM,\
 			"Desert" = ARMOR_PALETTE_DESERT,\
 			"Black" = ARMOR_PALETTE_BLACK,\
 			"Grey" = ARMOR_PALETTE_GREY,\
 			"Silver" = ARMOR_PALETTE_SILVER,\
 			"Gun Metal" = ARMOR_PALETTE_GUN_METAL,\
+			"Night Slate" = ARMOR_PALETTE_NIGHT_SLATE,\
 			"Fall" = ARMOR_PALETTE_FALL,\
 			"Steel" = ARMOR_PALETTE_STEEL,\
-			"Syndie Black" = ARMOR_PALETTE_SYNDIE_BLACK,\
+			"Nightshade" = ARMOR_PALETTE_NIGHTSHADE,\
+			"Syndicate Black" = ARMOR_PALETTE_SYNDIE_BLACK,\
 		),\
 		"Pink" = list(\
 			"Pearl Pink" = ARMOR_PALETTE_PEARL_PINK,\
+			"Mountbatten" = ARMOR_PALETTE_MOUNTBATTEN,\
 			"Coral" = ARMOR_PALETTE_CORAL_PINK,\
 			"Azalea" = ARMOR_PALETTE_AZALEA_PINK,\
 		),\
 		"Red" = list(\
-			"Copper" = ARMOR_PALETTE_COPPER,\
 			"Red" = ARMOR_PALETTE_LIGHT_RED,\
 			"Blood Red" = ARMOR_PALETTE_BLOOD_RED,\
+			"Dark Red" = ARMOR_PALETTE_RED,\
+			"Copper" = ARMOR_PALETTE_COPPER,\
 			"Alpha" = ARMOR_PALETTE_ALPHA,\
+			"Syndicate Red" = ARMOR_PALETTE_SYNDIE_RED,\
+			"Gorlex Red" = ARMOR_PALETTE_GORLEX_RED,\
 		),\
 		"Orange" = list(\
+			"Orange" = ARMOR_PALETTE_ORANGE,\
+			"Hazard" = ARMOR_PALETTE_HAZARD,\
+			"Blaze" = ARMOR_PALETTE_BLAZE,\
+			"Persimmon" = ARMOR_PALETTE_PERSIMMON,\
 			"Ginger" = ARMOR_PALETTE_GINGER,\
 			"Earth" = ARMOR_PALETTE_EARTH,\
 		),\
 		"Yellow" = list(\
 			"Yellow" = ARMOR_PALETTE_LIGHT_YELLOW,\
+			"Gold" = ARMOR_PALETTE_YELLOW,\
+			"Olive" = ARMOR_PALETTE_OLIVE,\
 			"Angelic Gold" = ARMOR_PALETTE_ANGELIC,\
 			"Cathay Spice" = ARMOR_PALETTE_CATHAY,\
 			"Bravo" = ARMOR_PALETTE_BRAVO,\
 		),\
 		"Green" = list(\
 			"Green" = ARMOR_PALETTE_GREEN,\
-			"Greyish Turquoise" = ARMOR_PALETTE_GREYISH_TURQUOISE,\
 			"Lime" = ARMOR_PALETTE_LIME,\
-			"Leaf" = ARMOR_PALETTE_LEAF,\
 			"Forest" = ARMOR_PALETTE_FOREST,\
-			"Rifle Green" = ARMOR_PALETTE_RIFLE_GREEN,\
 			"Pine" = ARMOR_PALETTE_PINE,\
+			"Emerald" = ARMOR_PALETTE_EMERALD,\
+			"Mint" = ARMOR_PALETTE_MINT,\
+			"Kelly Green" = ARMOR_PALETTE_KELLY_GREEN,\
+			"Leaf" = ARMOR_PALETTE_LEAF,\
+			"Greyish Turquoise" = ARMOR_PALETTE_GREYISH_TURQUOISE,\
+			"Rifle Green" = ARMOR_PALETTE_RIFLE_GREEN,\
 		),\
 		"Blue" = list(\
-			"Dark Blue" = ARMOR_PALETTE_BLUE,\
+			"Blue" = ARMOR_PALETTE_NAVY,\
+			"Turquoise" = ARMOR_PALETTE_LIGHT_BLUE,\
 			"Teal" = ARMOR_PALETTE_TEAL,\
-			"Stone Blue" = ARMOR_PALETTE_STONE_BLUE,\
 			"Sea Blue" = ARMOR_PALETTE_SEA_BLUE,\
 			"Cloud" = ARMOR_PALETTE_CLOUD,\
+			"Cornflower" = ARMOR_PALETTE_CORNFLOWER,\
+			"Stone Blue" = ARMOR_PALETTE_STONE_BLUE,\
+			"Dark Blue" = ARMOR_PALETTE_BLUE,\
 			"Delta" = ARMOR_PALETTE_DELTA,\
 			"Dark Blue" = ARMOR_PALETTE_DARK_BLUE,\
+			"Space Cadet" = ARMOR_PALETTE_SPACE_CADET,\
 		),\
 		"Purple" = list(\
-			"Red Violet" = ARMOR_PALETTE_MAGENTA,\
+			"Purple" = ARMOR_PALETTE_IRIS_PURPLE,\
 			"Violet" = ARMOR_PALETTE_VIOLET,\
 			"Heron" = ARMOR_PALETTE_HERON,\
+			"Lilac" = ARMOR_PALETTE_LILAC,\
 			"Grape" = ARMOR_PALETTE_GRAPE,\
-			"Charlie" = ARMOR_PALETTE_LILAC,\
+			"Red Violet" = ARMOR_PALETTE_MAGENTA,\
+			"Charlie" = ARMOR_PALETTE_CHARLIE,\
 		),\
 	)
 #define VISOR_PALETTES_LIST list(\

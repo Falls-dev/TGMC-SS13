@@ -302,6 +302,7 @@ const MutationTree = (props: {
   );
 };
 
+// eslint-disable-next-line complexity
 const MutationNode = (props: { mutation: MutationEntry; level: number }) => {
   const { mutation, level } = props;
   const { act, data } = useBackend<MutationData>();
@@ -456,9 +457,9 @@ const MutationNode = (props: { mutation: MutationEntry; level: number }) => {
       mb={1}
       p={1.5}
       backgroundColor="rgba(0, 0, 0, 0.3)"
-      borderRadius="4px"
-      border={`2px solid ${nodeColor === 'good' ? '#00ff00' : nodeColor === 'average' ? '#ffff00' : nodeColor === 'blue' ? '#0080ff' : '#ff0000'}`}
       style={{
+        border: `2px solid ${nodeColor === 'good' ? '#00ff00' : nodeColor === 'average' ? '#ffff00' : nodeColor === 'blue' ? '#0080ff' : '#ff0000'}`,
+        borderRadius: '4px',
         marginLeft: `${level === 1 ? 12 : level === 2 ? 20 : level * 8}px`,
         position: 'relative',
         opacity: purchased || canPurchase || (unlocked && !canAfford) ? 1 : 0.5, // Full opacity for purchased/available/unlocked, dimmed for locked
@@ -600,7 +601,7 @@ const MutationNode = (props: { mutation: MutationEntry; level: number }) => {
               </Button>
             </Flex.Item>
           </Flex>
-          <Divider mb={0.5} />
+          <Divider />
           <Box fontSize="1em" color="white" mt={1.8}>
             {desc}
           </Box>
@@ -756,7 +757,7 @@ const MutationEntryComponent = (props: { mutation: MutationEntry }) => {
         <Box bold fontSize="1.2em" mb={1}>
           {name}
         </Box>
-        <Divider mb={1} />
+        <Divider />
         <Box mb={2} italic>
           {desc}
         </Box>

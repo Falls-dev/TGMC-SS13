@@ -5,6 +5,7 @@
 	icon_state = "arcade"
 	screen_overlay = "arcade_screen"
 	circuit = /obj/item/circuitboard/computer/arcade
+	interaction_flags = INTERACT_MACHINE_TGUI
 	var/enemy_name = "Space Villain"
 	var/temp = "Sponsored by Nanotrasen and the TerraGov Marine Corps" //Temporary message, for attack messages, etc
 	var/player_hp = 30 //Player health/attack points
@@ -49,85 +50,84 @@
 	name = (name_action + name_part1 + name_part2)
 
 
-/obj/machinery/computer/arcade/interact(mob/user)
-	. = ..()
-	if(.)
-		return
-	var/dat
-	dat += "<center><h4>[src.enemy_name]</h4></center>"
+/obj/machinery/computer/arcade/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Arcade", name)
+		ui.open()
 
-	dat += "<br><center><h3>[src.temp]</h3></center>"
-	dat += "<br><center>Health: [src.player_hp]|Magic: [src.player_mp]|Enemy Health: [src.enemy_hp]</center>"
+/obj/machinery/computer/arcade/ui_data(mob/user)
+	. = list(
+		"enemy_name" = enemy_name,
+		"temp" = temp,
+		"player_hp" = player_hp,
+		"player_mp" = player_mp,
+		"enemy_hp" = enemy_hp,
+		"enemy_mp" = enemy_mp,
+		"gameover" = gameover,
+		"blocked" = blocked,
+	)
 
-	if (src.gameover)
-		dat += "<center><b><a href='byond://?src=[text_ref(src)];newgame=1'>New Game</a>"
-	else
-		dat += "<center><b><a href='byond://?src=[text_ref(src)];attack=1'>Attack</a>|"
-		dat += "<a href='byond://?src=[REF(src)];heal=1'>Heal</a>|"
-		dat += "<a href='byond://?src=[REF(src)];charge=1'>Recharge Power</a>"
-
-	dat += "</b></center>"
-
-	var/datum/browser/popup = new(user, "arcade", "<div align='center'>Arcade</div>")
-	popup.set_content(dat)
-	popup.open()
-
-
-/obj/machinery/computer/arcade/Topic(href, href_list)
+/obj/machinery/computer/arcade/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 
-	if (!src.blocked && !src.gameover)
-		if (href_list["attack"])
-			src.blocked = 1
-			var/attackamt = rand(2,6)
-			src.temp = "Your sword strikes for [attackamt] damage!"
-			src.updateUsrDialog()
+	switch(action)
+		if("attack")
+			if(blocked || gameover)
+				return
+			blocked = 1
+			var/attackamt = rand(2, 6)
+			temp = "Your sword strikes for [attackamt] damage!"
+			SStgui.update_uis(src)
 			if(turtle > 0)
 				turtle--
-
 			sleep(1 SECONDS)
-			src.enemy_hp -= attackamt
-			src.arcade_action()
-
-		else if (href_list["heal"])
-			src.blocked = 1
-			var/pointamt = rand(1,3)
-			var/healamt = rand(6,8)
-			src.temp = "You use [pointamt] magic to heal for [healamt] damage!"
-			src.updateUsrDialog()
+			enemy_hp -= attackamt
+			arcade_action()
+			SStgui.update_uis(src)
+			return TRUE
+		if("heal")
+			if(blocked || gameover)
+				return
+			blocked = 1
+			var/pointamt = rand(1, 3)
+			var/healamt = rand(6, 8)
+			temp = "You use [pointamt] magic to heal for [healamt] damage!"
+			SStgui.update_uis(src)
 			turtle++
-
 			sleep(1 SECONDS)
-			src.player_mp -= pointamt
-			src.player_hp += healamt
-			src.blocked = 1
-			src.updateUsrDialog()
-			src.arcade_action()
-
-		else if (href_list["charge"])
-			src.blocked = 1
-			var/chargeamt = rand(4,7)
-			src.temp = "You regain [chargeamt] points"
-			src.player_mp += chargeamt
+			player_mp -= pointamt
+			player_hp += healamt
+			arcade_action()
+			SStgui.update_uis(src)
+			return TRUE
+		if("charge")
+			if(blocked || gameover)
+				return
+			blocked = 1
+			var/chargeamt = rand(4, 7)
+			temp = "You regain [chargeamt] points"
+			player_mp += chargeamt
 			if(turtle > 0)
 				turtle--
-
-			src.updateUsrDialog()
+			SStgui.update_uis(src)
 			sleep(1 SECONDS)
-			src.arcade_action()
-
-	else if (href_list["newgame"]) //Reset everything
-		temp = "New Round"
-		player_hp = 30
-		player_mp = 10
-		enemy_hp = 45
-		enemy_mp = 20
-		gameover = 0
-		turtle = 0
-
-	updateUsrDialog()
+			arcade_action()
+			SStgui.update_uis(src)
+			return TRUE
+		if("newgame")
+			temp = "New Round"
+			player_hp = 30
+			player_mp = 10
+			enemy_hp = 45
+			enemy_mp = 20
+			gameover = 0
+			turtle = 0
+			blocked = 0
+			SStgui.update_uis(src)
+			return TRUE
 
 
 /obj/machinery/computer/arcade/proc/arcade_action()

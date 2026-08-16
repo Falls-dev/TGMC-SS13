@@ -192,7 +192,7 @@
 		dump_contents()
 		qdel(src)
 
-/obj/structure/closet/attack_alien(mob/living/carbon/xenomorph/xeno_attacker, damage_amount = xeno_attacker.xeno_caste.melee_damage, damage_type = BRUTE, damage_flag = MELEE, effects = TRUE, armor_penetration = 0, isrightclick = FALSE)
+/obj/structure/closet/attack_alien(mob/living/carbon/xenomorph/xeno_attacker, damage_amount = xeno_attacker.xeno_caste.melee_damage, damage_type = BRUTE, damage_flag = MELEE, effects = TRUE, armor_penetration = xeno_attacker.xeno_caste.melee_ap, isrightclick = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -487,6 +487,7 @@
 	new /obj/item/clothing/mask/bandanna/bravo(src)
 	new /obj/item/clothing/head/squad_headband/bravo(src)
 	new /obj/item/clothing/under/marine/squad/neck/bravo(src)
+	new /obj/item/clothing/under/marine/bravo_hawaii(src)
 	new /obj/effect/spawner/random/misc/plushie/fiftyfifty(src)
 
 /obj/structure/closet/marine/charlie

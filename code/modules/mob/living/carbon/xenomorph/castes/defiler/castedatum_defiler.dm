@@ -29,13 +29,17 @@
 	// *** Flags *** //
 	caste_flags = CASTE_EVOLUTION_ALLOWED
 	can_hold_eggs = CAN_HOLD_ONE_HAND
-	can_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_BE_GIVEN_PLASMA|CASTE_CAN_BE_LEADER|CASTE_CAN_HOLD_JELLY
+	can_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_BE_GIVEN_PLASMA|CASTE_CAN_BE_LEADER|CASTE_CAN_HOLD_JELLY|CASTE_CAN_BE_RULER
 	caste_traits = list(TRAIT_CAN_VENTCRAWL)
 
 	// *** Defense *** //
 	soft_armor = list(MELEE = 55, BULLET = 60, LASER = 60, ENERGY = 55, BOMB = 30, BIO = 40, FIRE = 20, ACID = 40)
+
 	// *** Minimap Icon *** //
 	minimap_icon = "defiler"
+
+	// *** Ruler Abilities *** ///
+	queen_leader_limit = 4
 
 	actions = list(
 		/datum/action/ability/xeno_action/xeno_resting,
@@ -65,9 +69,7 @@
 	// *** Pheromones *** //
 	aura_strength = 2.6 //It's .1 better than a carrier.
 
-
 	additional_stacks = 2
-
 
 /datum/xeno_caste/defiler/normal
 	upgrade = XENO_UPGRADE_NORMAL

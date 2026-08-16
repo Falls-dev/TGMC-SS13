@@ -38,7 +38,6 @@
 			/obj/item/reagent_containers/hypospray/autoinjector/alkysine = 20,
 			/obj/item/reagent_containers/hypospray/autoinjector/imidazoline = 20,
 			/obj/item/reagent_containers/hypospray/autoinjector/medicalnanites = 20,
-			/obj/item/reagent_containers/hypospray/autoinjector/sulfasalazine = 20,
 		),
 		"Heal Pack" = list(
 			/obj/item/stack/medical/heal_pack/gauze = -1,
@@ -89,7 +88,6 @@
 			/obj/item/reagent_containers/hypospray/autoinjector/imidazoline = -1,
 			/obj/item/reagent_containers/hypospray/autoinjector/quickclot = -1,
 			/obj/item/reagent_containers/hypospray/autoinjector/medicalnanites = -1,
-			/obj/item/reagent_containers/hypospray/autoinjector/sulfasalazine = 20,
 			/obj/item/reagent_containers/hypospray/autoinjector/russian_red = -1,
 		),
 		"Heal Pack" = list(
@@ -102,7 +100,7 @@
 		"Misc" = list(
 			/obj/item/defibrillator = -1,
 			/obj/item/healthanalyzer = -1,
-			/obj/item/healthanalyzer/gloves = -1,
+			/obj/item/clothing/gloves/healthanalyzer = -1,
 			/obj/item/bodybag/cryobag = -1,
 		),
 		"Valhalla" = list(

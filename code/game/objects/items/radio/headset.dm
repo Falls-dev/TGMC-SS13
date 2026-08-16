@@ -365,7 +365,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	if(!can_interact(usr))
 		return FALSE
 
-	interact(usr)
+	ui_interact(usr)
 
 
 /obj/item/radio/headset/mainship/can_interact(mob/user)
@@ -379,41 +379,32 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	return TRUE
 
 
+/obj/item/radio/headset/mainship/ui_data(mob/user)
+	. = ..()
+	.["headset"] = TRUE
+	.["headsetHudOn"] = headset_hud_on
+	.["slDirection"] = sl_direction
 
-/obj/item/radio/headset/mainship/interact(mob/user)
+
+/obj/item/radio/headset/mainship/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 
-	var/dat = {"
-	<b><A href='byond://?src=[text_ref(src)];headset_hud_on=1'>Squad HUD: [headset_hud_on ? "On" : "Off"]</A></b><BR>
-	<BR>
-	<b><A href='byond://?src=[text_ref(src)];sl_direction=1'>Squad Leader Directional Indicator: [sl_direction ? "On" : "Off"]</A></b><BR>
-	<BR>"}
+	switch(action)
+		if("headset_hud")
+			if(headset_hud_on)
+				disable_squadhud()
+			else
+				enable_squadhud()
+			. = TRUE
 
-	var/datum/browser/popup = new(user, "radio")
-	popup.set_content(dat)
-	popup.open()
-
-
-/obj/item/radio/headset/mainship/Topic(href, href_list)
-	. = ..()
-	if(.)
-		return
-
-	if(href_list["headset_hud_on"])
-		if(headset_hud_on)
-			disable_squadhud()
-		else
-			enable_squadhud()
-
-	if(href_list["sl_direction"])
-		if(sl_direction)
-			disable_sl_direction()
-		else
-			enable_sl_direction()
-
-	updateUsrDialog()
+		if("sl_direction")
+			if(sl_direction)
+				disable_sl_direction()
+			else
+				enable_sl_direction()
+			. = TRUE
 
 
 /obj/item/radio/headset/mainship/st

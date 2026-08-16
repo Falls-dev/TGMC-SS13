@@ -78,8 +78,7 @@
 		beaker = I
 		user.transferItemToLoc(I, src)
 		update_icon()
-		updateUsrDialog()
-		return FALSE
+		return TRUE
 
 	else if(length(holdingitems) >= limit)
 		to_chat(user, "The machine cannot hold anymore items.")
@@ -97,8 +96,7 @@
 		if(!length(I.contents))
 			to_chat(user, "You empty the plant bag into the All-In-One grinder.")
 
-		updateUsrDialog()
-		return FALSE
+		return TRUE
 
 	else if(!is_type_in_list(I, blend_items) && !is_type_in_list(I, juice_items))
 		to_chat(user, "Cannot refine into a reagent.")
@@ -106,81 +104,101 @@
 
 	user.transferItemToLoc(I, src)
 	holdingitems += I
-	updateUsrDialog()
-	return FALSE
+	return TRUE
 
+/obj/machinery/reagentgrinder/examine(mob/user)
+	. = ..()
+	if(operating)
+		. += span_notice("It's currently working. Please wait.")
+		return
+
+	if(length(holdingitems))
+		. += span_notice("Its processing chamber contains:")
+		for(var/obj/item/O in holdingitems)
+			. += span_notice("- \a [O.name].")
+	else
+		. += span_notice("Its processing chamber is empty.")
+
+	if(beaker)
+		if(length(beaker.reagents.reagent_list))
+			. += span_notice("It has a beaker attached, containing:")
+			for(var/datum/reagent/R in beaker.reagents.reagent_list)
+				. += span_notice("- [R.volume]u of [R.name].")
+		else
+			. += span_notice("It has an empty beaker attached.")
+	else
+		. += span_warning("It has no beaker attached.")
+
+/// Radial menu, RU/TG-style: Grind/Juice/Eject. Right-click to detach the beaker instead.
 /obj/machinery/reagentgrinder/interact(mob/user)
 	. = ..()
 	if(.)
 		return
-	var/is_chamber_empty = 0
-	var/is_beaker_ready = 0
-	var/processing_chamber = ""
-	var/beaker_contents = ""
-	var/dat = ""
 
-	if(!operating)
-		for (var/obj/item/O in holdingitems)
-			processing_chamber += "\A [O.name]<BR>"
-
-		if(!processing_chamber)
-			is_chamber_empty = 1
-			processing_chamber = "Nothing."
-		if(!beaker)
-			beaker_contents = "<B>No beaker attached.</B><br>"
-		else
-			is_beaker_ready = 1
-			beaker_contents = "<B>The beaker contains:</B><br>"
-			var/anything = 0
-			for(var/datum/reagent/R in beaker.reagents.reagent_list)
-				anything = 1
-				beaker_contents += "[R.volume] - [R.name]<br>"
-			if(!anything)
-				beaker_contents += "Nothing<br>"
-
-		dat = {"
-			<b>Processing chamber contains:</b><br>
-			[processing_chamber]<br>
-			[beaker_contents]<hr>
-		"}
-		if(is_beaker_ready && !is_chamber_empty && !(machine_stat & (NOPOWER|BROKEN)))
-			dat += "<A href='byond://?src=[text_ref(src)];action=grind'>Grind the reagents</a><BR>"
-			dat += "<A href='byond://?src=[text_ref(src)];action=juice'>Juice the reagents</a><BR><BR>"
-		if(length(holdingitems) > 0)
-			dat += "<A href='byond://?src=[text_ref(src)];action=eject'>Eject the reagents</a><BR>"
-		if(beaker)
-			dat += "<A href='byond://?src=[text_ref(src)];action=detach'>Detach the beaker</a><BR>"
-	else
-		dat += "Please wait..."
-
-	var/datum/browser/popup = new(user, "reagentgrinder", "<div align='center'>All-In-One Grinder</div>")
-	popup.set_content(dat)
-	popup.open()
-
-/obj/machinery/reagentgrinder/Topic(href, href_list)
-	. = ..()
-	if(.)
+	if(operating)
+		balloon_alert(user, "still working!")
 		return
-	switch(href_list["action"])
+
+	var/is_chamber_empty = !length(holdingitems)
+	if(is_chamber_empty && !beaker)
+		balloon_alert(user, "it's empty!")
+		return
+
+	var/list/choices = list()
+	if(beaker && !is_chamber_empty && !(machine_stat & (NOPOWER|BROKEN)))
+		choices["grind"] = image(icon = 'icons/mob/radial_actions.dmi', icon_state = "radial_grind")
+		choices["juice"] = image(icon = 'icons/mob/radial_actions.dmi', icon_state = "radial_juice")
+	if(!is_chamber_empty)
+		choices["eject"] = image(icon = 'icons/mob/radial_actions.dmi', icon_state = "radial_eject")
+
+	if(!length(choices))
+		return
+
+	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, PROC_REF(check_interactable), user), require_near = TRUE, tooltips = TRUE)
+	if(!choice || !check_interactable(user))
+		return
+
+	switch(choice)
 		if("grind")
 			grind()
 		if("juice")
 			juice()
 		if("eject")
 			eject()
-		if("detach")
-			detach()
-	updateUsrDialog()
 
-/obj/machinery/reagentgrinder/proc/detach()
+/// Whether the radial menu should stay open / the chosen action should still fire.
+/obj/machinery/reagentgrinder/proc/check_interactable(mob/user)
+	return !operating && !(machine_stat & (NOPOWER|BROKEN)) && Adjacent(user) && !user.incapacitated()
 
-	if(usr.stat != 0)
+/// RMB: detach/eject the attached beaker without opening the radial menu.
+/obj/machinery/reagentgrinder/RightClick(mob/user)
+	. = ..()
+	if(!istype(user))
+		return .
+	//Consume the click regardless, so a plain RMB doesn't also fall through into an UnarmedAttack/interact().
+	. = TRUE
+	if(!Adjacent(user) || user.incapacitated())
+		balloon_alert(user, "you can't reach!")
+		return .
+	if(operating)
+		balloon_alert(user, "still working!")
+		return .
+	detach(user)
+
+/obj/machinery/reagentgrinder/proc/detach(mob/user)
+	if(user && user.stat != CONSCIOUS)
 		return
 	if(!beaker)
 		return
-	beaker.loc = src.loc
+	var/obj/item/reagent_containers/old_beaker = beaker
 	beaker = null
 	update_icon()
+	if(user)
+		if(!user.put_in_active_hand(old_beaker) && !user.put_in_inactive_hand(old_beaker))
+			old_beaker.forceMove(get_turf(src))
+		balloon_alert(user, "detaches the beaker")
+	else
+		old_beaker.forceMove(get_turf(src))
 
 /obj/machinery/reagentgrinder/proc/eject()
 

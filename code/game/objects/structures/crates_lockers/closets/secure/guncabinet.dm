@@ -41,6 +41,7 @@
 	new /obj/item/ammo_magazine/flamer_tank/large(src)
 	new /obj/item/weapon/gun/smg/m25(src)
 	new /obj/item/weapon/gun/revolver/mateba(src)
+	new /obj/item/toy/plush/dragon(src)
 
 	var/list/to_spawn = list(
 		/obj/item/ammo_magazine/shotgun/incendiary = 2, // Incendiaries are quite rare, soo...

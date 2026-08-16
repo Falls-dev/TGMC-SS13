@@ -283,7 +283,7 @@ GLOBAL_VAR_INIT(refid_filter, TYPEID(filter(type="angular_blur")))
 
 #define isreagentcontainer(A) (istype(A, /obj/item/reagent_containers)) //Checks for if something is a reagent container.
 
-#define isearthpillar(A) (istype(A, /obj/structure/earth_pillar))
+#define isearthpillar(A) (istype(A, /obj/structure/xeno/earth_pillar))
 
 #define isfire(A) (istype(A, /obj/fire))
 
@@ -313,6 +313,7 @@ GLOBAL_VAR_INIT(refid_filter, TYPEID(filter(type="angular_blur")))
 //Gamemode
 #define iscrashgamemode(O) (istype(O, /datum/game_mode/infestation/crash))
 #define iswarfaregamemode(O) (istype(O, /datum/game_mode/infestation/warfare))
+#define isdistrocrashgamemode(O) (istype(O, /datum/game_mode/infestation/distro_crush))
 #define iszombiecrashgamemode(O) (istype(O, /datum/game_mode/infestation/crash/zombie))
 #define isinfestationgamemode(O) (istype(O, /datum/game_mode/infestation))
 #define isexterminationgamemode(O) (istype(O, /datum/game_mode/infestation/distress/extermination))

@@ -315,7 +315,7 @@
 		/obj/item/cell/super,
 		/obj/item/cell/potato,
 		/obj/item/assembly/signaler,
-		/obj/item/detpack,
+		/obj/item/explosive/plastique/detpack,
 		/obj/item/circuitboard,
 		/obj/item/lightreplacer,
 		/obj/item/tool/surgery/solderingtool,

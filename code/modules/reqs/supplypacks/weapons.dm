@@ -7,6 +7,11 @@
 	contains = list(/obj/item/weapon/gun/energy/lasgun/lasrifle/tesla)
 	cost = 600
 
+/datum/supply_packs/weapons/e50
+	name = "E-50 laser emitter"
+	contains = list(/obj/item/weapon/gun/energy/lasgun/lasrifle/e50)
+	cost = 400
+
 /datum/supply_packs/weapons/tx55
 	name = "AR-55 OICW rifle"
 	contains = list(/obj/item/weapon/gun/rifle/tx55)
@@ -16,6 +21,16 @@
 	name = "PB-12 pepperball gun"
 	contains = list(/obj/item/weapon/gun/rifle/pepperball)
 	cost = 100
+
+/datum/supply_packs/weapons/b11
+	name = "B11 smart scope"
+	contains = list(/obj/item/attachable/b11_scope)
+	cost = 150
+
+/datum/supply_packs/weapons/b15
+	name = "B15 smart scope"
+	contains = list(/obj/item/attachable/b15_scope)
+	cost = 150
 
 /datum/supply_packs/weapons/railgun
 	name = "SR-220 railgun"
@@ -222,7 +237,7 @@
 
 /datum/supply_packs/weapons/rocketsledge
 	name = "Rocket sledge"
-	contains = list(/obj/item/weapon/twohanded/rocketsledge)
+	contains = list(/obj/item/weapon/twohanded/sledgehammer/rocketsledge)
 	cost = 600
 
 /datum/supply_packs/weapons/chainsaw

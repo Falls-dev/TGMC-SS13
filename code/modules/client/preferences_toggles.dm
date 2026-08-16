@@ -108,6 +108,19 @@
 
 	to_chat(src, span_notice("You will [(prefs.toggles_chat & CHAT_LOOC) ? "now" : "no longer"] see messages on the LOOC channel."))
 
+/client/verb/toggle_ooc_country_flag()
+	set category = "Preferences.Chat"
+	set name = "Toggle OOC Country Flag"
+
+	if(!(CONFIG_GET(flag/ooc_country_flags)))
+		to_chat(src, span_warning("OOC country flags are disabled on this server."))
+		return
+
+	prefs.show_ooc_country_flag = !prefs.show_ooc_country_flag
+	prefs.save_preferences()
+
+	to_chat(src, span_notice("Your country flag will [(prefs.show_ooc_country_flag) ? "now" : "no longer"] appear before your name in OOC chat."))
+
 /client/verb/toggle_special()
 	set category = "Preferences"
 	set name = "Toggle Special Roles"

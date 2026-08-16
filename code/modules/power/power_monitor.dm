@@ -12,11 +12,17 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 300
 	active_power_usage = 300
+	interaction_flags = INTERACT_MACHINE_TGUI
 	light_range = 1
 	light_power = 0.5
 	light_color = LIGHT_COLOR_EMISSIVE_YELLOW
 	/// Screen overlay icon
 	var/screen_overlay = "power"
+	///Supply/demand history for the UI
+	var/list/history = list()
+	var/record_size = 60
+	var/record_interval = 5 SECONDS
+	var/next_record = 0
 
 /obj/machinery/power/monitor/core
 	name = "Core Power Monitoring"
@@ -26,6 +32,8 @@
 
 /obj/machinery/power/monitor/Initialize(mapload)
 	. = ..()
+	history["supply"] = list()
+	history["demand"] = list()
 	var/obj/structure/cable/attached = null
 	var/turf/T = loc
 	if(isturf(T))
@@ -34,49 +42,56 @@
 		powernet = attached.powernet
 	update_icon()
 
-/obj/machinery/power/monitor/interact(mob/user)
-	. = ..()
-	if(.)
+/obj/machinery/power/monitor/process()
+	if(powernet)
+		record()
+
+/obj/machinery/power/monitor/proc/record()
+	if(world.time < next_record)
 		return
+	next_record = world.time + record_interval
 
-	var/t
-	t += "<BR><HR><A href='byond://?src=[text_ref(src)];update=1'>Refresh</A>"
-	t += "<BR><HR><A href='byond://?src=[text_ref(src)];close=1'>Close</A>"
+	var/list/supply = history["supply"]
+	supply += powernet ? powernet.avail : 0
+	if(length(supply) > record_size)
+		supply.Cut(1, 2)
 
-	if(!powernet)
-		t += span_warning(" No connection")
-	else
+	var/list/demand = history["demand"]
+	demand += powernet ? powernet.viewload : 0
+	if(length(demand) > record_size)
+		demand.Cut(1, 2)
 
-		var/list/L = list()
-		for(var/obj/machinery/power/terminal/term in powernet.nodes)
-			if(istype(term.master, /obj/machinery/power/apc))
-				var/obj/machinery/power/apc/A = term.master
-				L += A
+/obj/machinery/power/monitor/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "PowerMonitor", name)
+		ui.open()
 
-		t += "<PRE>Total power: [powernet.avail] W<BR>Total load:  [num2text(powernet.viewload,10)] W<BR>"
+/obj/machinery/power/monitor/ui_data(mob/user)
+	. = list()
+	.["attached"] = !!powernet
+	.["supply"] = powernet ? powernet.avail : 0
+	.["demand"] = powernet ? powernet.viewload : 0
+	.["supply_text"] = DisplayPower(powernet ? powernet.avail : 0)
+	.["demand_text"] = DisplayPower(powernet ? powernet.viewload : 0)
+	.["history"] = history
 
-		t += "<FONT SIZE=-1>"
-
-		if(length(L) > 0)
-			var/total_demand = 0
-			t += "Area                           Eqp./Lgt./Env.  Load   Cell<HR>"
-
-			var/list/S = list(" Off","AOff","  On", " AOn")
-			var/list/chg = list("N","C","F")
-
-			for(var/obj/machinery/power/apc/A in L)
-
-				t += copytext(add_trailing("\The [A.area]", 30, " "), 1, 30)
-				t += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_leading(num2text(A.lastused_total), 6, " ")]  [A.cell ? "[add_leading(num2text(round(A.cell.percent())), 3, " ")]% [chg[A.charging+1]]" : "  N/C"]<BR>"
-				total_demand += A.lastused_total
-
-			t += "<HR>Total demand: [total_demand] W</FONT>"
-		t += "</PRE>"
-
-	var/datum/browser/popup = new(user, "powcomp", "<div align='center'>Power Monitoring</div>", 420, 900)
-	popup.set_content(t)
-	popup.open(FALSE)
-	onclose(user, "powcomp")
+	var/list/areas = list()
+	if(powernet)
+		for(var/obj/machinery/power/terminal/term AS in powernet.nodes)
+			var/obj/machinery/power/apc/apc = term.master
+			if(!istype(apc))
+				continue
+			areas += list(list(
+				"name" = "[apc.area]",
+				"charge" = apc.cell ? round(apc.cell.percent()) : 0,
+				"load" = DisplayPower(apc.lastused_total),
+				"charging" = apc.charging,
+				"eqp" = apc.equipment,
+				"lgt" = apc.lighting,
+				"env" = apc.environ,
+			))
+	.["areas"] = areas
 
 /obj/machinery/power/monitor/update_icon()
 	. = ..()

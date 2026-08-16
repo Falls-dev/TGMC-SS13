@@ -74,5 +74,5 @@
 	r_pocket_contents = list(
 		/obj/item/binoculars = 1,
 		/obj/item/assembly/signaler = 1,
-		/obj/item/detpack = 1,
+		/obj/item/explosive/plastique/detpack = 1,
 	)

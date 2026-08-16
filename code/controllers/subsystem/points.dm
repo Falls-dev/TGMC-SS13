@@ -141,7 +141,7 @@ SUBSYSTEM_DEF(points)
 	if(!fast_delivery_is_active)
 		to_chat(user, span_warning("Fast delivery is not ready"))
 		return FALSE
-	if(!iscrashgamemode(SSticker.mode)  && !iswarfaregamemode(SSticker.mode)) // no RO on crash
+	if(!iscrashgamemode(SSticker.mode) && !isdistrocrashgamemode(SSticker.mode) && !iswarfaregamemode(SSticker.mode)) // no RO on crash
 		if(FAST_DELIVERY_COST > supply_points[our_order.faction])
 			to_chat(user, span_warning("Cargo does not have enough points for fast delivery."))
 			return
@@ -161,6 +161,8 @@ SUBSYSTEM_DEF(points)
 
 	//Just in case
 	if(!length_char(SSpoints.shoppinglist[our_order.faction]))
+		return
+	if(!("[our_order.id]" in SSpoints.shoppinglist[our_order.faction]))
 		return
 
 	//Finally create the supply box

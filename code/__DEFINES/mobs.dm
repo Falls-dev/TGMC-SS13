@@ -22,9 +22,9 @@
 #define HEAD_LAYER 13
 #define COLLAR_LAYER 12
 #define SUIT_STORE_LAYER 11
-#define KAMA_LAYER 10
-#define BACK_LAYER 9
-#define CAPE_LAYER 8
+#define BACK_LAYER 10
+#define CAPE_LAYER 9
+#define KAMA_LAYER 8
 #define HANDCUFF_LAYER 7
 #define L_HAND_LAYER 6
 #define R_HAND_LAYER 5
@@ -258,6 +258,17 @@ GLOBAL_LIST_INIT(xenoupgradetiers, list(XENO_UPGRADE_BASETYPE, XENO_UPGRADE_INVA
 #define LIMB_WOUND_SALVED (1<<1)
 #define LIMB_WOUND_DISINFECTED (1<<2)
 #define LIMB_WOUND_CLAMPED (1<<3)
+
+/// If the limb's total damage percent is higher than this, it can be severed.
+#define LIMB_MAX_DAMAGE_SEVER_RATIO 0.8
+/// Factor for limb blood flow rate
+#define LIMB_FLOW_FACTOR 60
+/// Macro for a limb's blood flow rate based on its brute damage
+#define LIMB_FLOW_RATE(limb_brute) (limb_brute / LIMB_FLOW_FACTOR)
+/// Factor for IB wound flow rate
+#define INTERNAL_BLEEDING_FLOW_FACTOR 30
+/// Macro for an IB wound's blood flow rate based on blood volume and wound severity
+#define INTERNAL_BLEEDING_FLOW_RATE(blood_volume, intensity) (blood_volume - intensity / INTERNAL_BLEEDING_FLOW_FACTOR)
 
 /////////////////MOVE DEFINES//////////////////////
 #define MOVE_INTENT_WALK 0
@@ -621,6 +632,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define CASTE_CAN_HOLD_JELLY (1<<5)//whether we can hold fireproof jelly in our hands
 #define CASTE_CAN_CORRUPT_GENERATOR (1<<6) //Can corrupt a generator
 #define CASTE_CAN_RIDE_CRUSHER (1<<7) //Can ride a crusher
+#define CASTE_CAN_BE_RULER (1<<6) // Caste can become a ruler if no queen / shrike / king exists in the hive.
 
 //Charge-Crush
 #define CHARGE_OFF 0
@@ -650,14 +662,14 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 
 #define RAVAGER_ENDURE_DURATION				10 SECONDS
 #define RAVAGER_ENDURE_DURATION_WARNING		0.7
-#define RAVAGER_ENDURE_HP_LIMIT				-125
+#define RAVAGER_ENDURE_HP_LIMIT				-190
 
 #define RAVAGER_RAGE_DURATION 10 SECONDS
 #define RAVAGER_RAGE_WARNING 0.7
-#define RAVAGER_RAGE_MIN_HEALTH_THRESHOLD 0.75 //The maximum % of HP we can have to trigger Rage
-#define RAVAGER_RAGE_STAGGERSTUN_IMMUNE_THRESHOLD 0.5
-#define RAVAGER_RAGE_ENDURE_INCREASE_PER_SLASH 2 SECONDS //The amount of time each slash during Rage increases Endure's duration
-#define RAVAGER_RAGE_HEALTH_RECOVERY_PER_SLASH 20 //Base amount of healing from slash during Rage
+#define RAVAGER_RAGE_MIN_HEALTH_THRESHOLD 0.5 //The maximum % of HP we can have to trigger Rage
+#define RAVAGER_RAGE_STAGGERSTUN_IMMUNE_THRESHOLD 0.3
+#define RAVAGER_RAGE_ENDURE_INCREASE_PER_SLASH 1 SECONDS //The amount of time each slash during Rage increases Endure's duration
+#define RAVAGER_RAGE_HEALTH_RECOVERY_PER_SLASH 32 //Base amount of healing from slash during Rage
 #define RAVAGER_IMMORTALITY_DURATION 5 SECONDS
 
 //crusher defines
@@ -729,9 +741,9 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// Damage on hitting a mob using fire charge
 #define PYROGEN_FIRECHARGE_DAMAGE 10
 /// Bonus damage per fire stack
-#define PYROGEN_FIRECHARGE_DAMAGE_PER_STACK 5
+#define PYROGEN_FIRECHARGE_DAMAGE_PER_STACK 3
 /// Bonus damage for directly hitting someone
-#define PYROGEN_FIREBALL_DIRECT_DAMAGE 30
+#define PYROGEN_FIREBALL_DIRECT_DAMAGE 20
 /// Damage in a 3x3 AOE when we hit anything
 #define PYROGEN_FIREBALL_AOE_DAMAGE 20
 /// Damage in a 3x3 AOE when we hit a vehicle
@@ -850,6 +862,18 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define DANCER_MAX_IMPALE_MULT 2.5
 /// The flat damage multiplier done by impale to non-carbon targets
 #define DANCER_NONHUMAN_IMPALE_MULT 1.5
+
+// Behemoth mutation defines
+/// Maximum amount of Earth Pillars that we can create with this mutation active.
+#define FOUNDATIONS_MAXIMUM_AMOUNT 2
+/// Health reduction applied to Earth Pillars as a percentage.
+#define FOUNDATIONS_HEALTH_REDUCTION 0.4
+/// Additional damage provided by Earth Might as a percentage.
+#define EARTH_MIGHT_ADDITIONAL_DAMAGE 1.3
+/// Amount of damage done to Earth Pillars as a percentage
+#define EARTH_MIGHT_PILLAR_DAMAGE 0.5
+/// Additional range given to Seize.
+#define GUIDED_CLAIM_ADDITIONAL_RANGE 2
 
 // Chimera defines
 //Stagger and slowdown stacks applied to adjacent living hostiles before/after a teleport

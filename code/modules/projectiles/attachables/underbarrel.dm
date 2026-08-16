@@ -94,3 +94,25 @@
 	icon_state = "rapidfire"
 	slot = ATTACHMENT_SLOT_UNDER
 	burst_mod = 2
+	gun_firemode_list_mod = list(GUN_FIREMODE_AUTOMATIC)
+	var/list/saved_firemode_list
+
+/obj/item/attachable/burstfire_assembly/on_attach(attaching_item, mob/user)
+	if(istype(attaching_item, /obj/item/weapon/gun))
+		var/obj/item/weapon/gun/G = attaching_item
+		saved_firemode_list = G.gun_firemode_list.Copy()
+	return ..()
+
+/obj/item/attachable/burstfire_assembly/on_detach(detaching_item, mob/user)
+	var/obj/item/weapon/gun/G = detaching_item
+	if(!istype(G)) return
+	. = ..()
+	for(var/mode in G.gun_firemode_list - saved_firemode_list)
+		G.gun_firemode_list -= mode
+	if(!(G.gun_firemode in G.gun_firemode_list))
+		G.gun_firemode = G.gun_firemode_list[1]
+	if(length(G.gun_firemode_list) == 1)
+		var/datum/action/A = locate(/datum/action/item_action/firemode) in G.actions
+		if(A)
+			A.remove_action(user)
+			qdel(A)

@@ -1,5 +1,10 @@
 #define TELEPORTING_COST 650
 
+//get_acid_delay() usese for how long it take time to apply acid on item/object/wall. References from code/game/atoms/_atom.dm code/game/turfs/walls/r_wall.dm code/game/turfs/walls/walls.dm
+//acid dealay for deployable teleporter machinery
+/obj/machinery/deployable/teleporter/get_acid_delay()
+	return 4 SECONDS
+
 /obj/machinery/deployable/teleporter
 	density = FALSE
 	max_integrity = 200
@@ -164,6 +169,10 @@
 		icon_state = default_icon_state + "_on"
 		return
 	icon_state = default_icon_state
+
+//acid delay for teleporter item
+/obj/item/teleporter_kit/get_acid_delay()
+	return 4 SECONDS
 
 /obj/item/teleporter_kit
 	name = "\improper ASRS Bluespace teleporter"

@@ -32,6 +32,9 @@
 /* Log to the logfile only. */
 /proc/log_runtime(text, list/data)
 	logger.Log(LOG_CATEGORY_RUNTIME, text, data)
+	GLOB.STUI?.runtime.Add("\[[time_stamp()]]RUNTIME: [text]")
+	if(GLOB.STUI)
+		GLOB.STUI.processing |= STUI_LOG_RUNTIME
 
 /proc/log_signal(text, list/data)
 	logger.Log(LOG_CATEGORY_SIGNAL, text, data)

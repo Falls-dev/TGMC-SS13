@@ -22,7 +22,7 @@
 	max_health = 570
 
 	// *** Flags *** //
-	can_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_BE_GIVEN_PLASMA|CASTE_CAN_BE_LEADER|CASTE_CAN_HOLD_FACEHUGGERS|CASTE_CAN_HOLD_JELLY
+	can_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_BE_GIVEN_PLASMA|CASTE_CAN_BE_LEADER|CASTE_CAN_HOLD_FACEHUGGERS|CASTE_CAN_HOLD_JELLY|CASTE_CAN_BE_RULER
 	caste_traits = null
 	caste_flags = CASTE_EVOLUTION_ALLOWED|CASTE_ACID_BLOOD
 
@@ -42,6 +42,9 @@
 
 	// *** Minimap Icon *** //
 	minimap_icon = "praetorian"
+
+	// *** Ruler Abilities *** ///
+	queen_leader_limit = 4
 
 	// *** Abilities *** //
 	actions = list(
@@ -132,4 +135,53 @@
 		/datum/action/ability/activable/xeno/tail_trip,
 		/datum/action/ability/activable/xeno/charge/acid_dash,
 		/datum/action/ability/activable/xeno/baton_pass,
+	)
+
+/datum/xeno_caste/praetorian/oppressor
+	caste_type_path = /mob/living/carbon/xenomorph/praetorian/oppressor
+	base_caste_type_path = /mob/living/carbon/xenomorph/praetorian
+	upgrade_name = ""
+	caste_name = "Praetorian"
+	display_name = "Oppressor"
+	upgrade = XENO_UPGRADE_BASETYPE
+	caste_desc = "A giant melee monster with a weird tail! It looks pretty strong."
+
+	// +2 melee damage
+	melee_damage = 25
+
+	// +10 armor
+	soft_armor = list(MELEE = 55, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 20, BIO = 50, FIRE = 60, ACID = 50)
+
+	actions = list(
+		/datum/action/ability/xeno_action/xeno_resting,
+		/datum/action/ability/xeno_action/watch_xeno,
+		/datum/action/ability/activable/xeno/psydrain,
+		/datum/action/ability/xeno_action/place_acidwell,
+		/datum/action/ability/activable/xeno/corrosive_acid,
+		/datum/action/ability/activable/xeno/oppressor/abduct,
+		/datum/action/ability/activable/xeno/oppressor/dislocate,
+		/datum/action/ability/activable/xeno/oppressor/advance,
+		/datum/action/ability/activable/xeno/oppressor/tail_lash,
+	)
+
+/datum/xeno_caste/praetorian/oppressor/normal
+	upgrade = XENO_UPGRADE_NORMAL
+
+/datum/xeno_caste/praetorian/oppressor/primordial
+	upgrade_name = "Primordial"
+	caste_desc = "A fearsome entity adept at using its brute strength to immobilize and relocate its foes. Approach with extreme caution or risk being torn from your comrades."
+	upgrade = XENO_UPGRADE_PRIMO
+	primordial_message = "With relentless power, we shatter their formations, seizing them in our grasp and rendering them helpless."
+
+	actions = list(
+		/datum/action/ability/xeno_action/xeno_resting,
+		/datum/action/ability/xeno_action/watch_xeno,
+		/datum/action/ability/activable/xeno/psydrain,
+		/datum/action/ability/xeno_action/place_acidwell,
+		/datum/action/ability/activable/xeno/corrosive_acid,
+		/datum/action/ability/activable/xeno/oppressor/abduct,
+		/datum/action/ability/activable/xeno/oppressor/dislocate,
+		/datum/action/ability/activable/xeno/oppressor/advance,
+		/datum/action/ability/activable/xeno/oppressor/tail_lash,
+		/datum/action/ability/activable/xeno/item_throw,
 	)

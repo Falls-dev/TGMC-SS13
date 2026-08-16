@@ -397,6 +397,13 @@ export const GameSettings = (props) => {
                 rightLabel={'Disabled'}
               />
               <ToggleFieldPreference
+                label="Automatically open changelogs"
+                value="auto_open_changelogs"
+                action="auto_open_changelogs"
+                leftLabel={'Enabled'}
+                rightLabel={'Disabled'}
+              />
+              <ToggleFieldPreference
                 label="Radial medical wheel"
                 value="radialmedicalpref"
                 action="radialmedicalpref"

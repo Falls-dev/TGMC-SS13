@@ -20,7 +20,7 @@
 	// *** Plasma *** //
 	plasma_max = 400
 	plasma_gain = 5
-	plasma_regen_limit = 0.1
+	plasma_regen_limit = 0.15
 	plasma_icon_state = "fury"
 
 	// *** Health *** //
@@ -28,20 +28,23 @@
 
 	// *** Flags *** //
 	caste_flags = CASTE_INNATE_PLASMA_REGEN|CASTE_PLASMADRAIN_IMMUNE|CASTE_EVOLUTION_ALLOWED
-	can_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_BE_LEADER|CASTE_CAN_HOLD_FACEHUGGERS|CASTE_CAN_HOLD_JELLY
+	can_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_BE_LEADER|CASTE_CAN_HOLD_FACEHUGGERS|CASTE_CAN_HOLD_JELLY|CASTE_CAN_BE_RULER
 	caste_traits = null
 
 	// *** Defense *** //
-	soft_armor = list(MELEE = 20, BULLET = 15, LASER = 15, ENERGY = 20, BOMB = 10, BIO = 20, FIRE = 10, ACID = 20)
+	soft_armor = list(MELEE = 20, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 25, BIO = 20, FIRE = 10, ACID = 20)
 
 	// *** Minimap Icon *** //
 	minimap_icon = "gorger"
+
+	// *** Ruler Abilities *** ///
+	queen_leader_limit = 4
 
 	// *** Gorger Abilities *** //
 	overheal_max = 275
 	drain_plasma_gain = 75
 	carnage_plasma_gain = 150
-	feast_plasma_drain = 20
+	feast_plasma_drain = 15
 
 	actions = list(
 		/datum/action/ability/xeno_action/xeno_resting,
@@ -54,6 +57,14 @@
 		/datum/action/ability/activable/xeno/feast,
 		/datum/action/ability/activable/xeno/devour,
 	)
+
+/datum/xeno_caste/gorger/on_caste_applied(mob/xenomorph)
+	. = ..()
+	xenomorph.AddElement(/datum/element/plasma_on_attack, 0.25)
+
+/datum/xeno_caste/gorger/on_caste_removed(mob/xenomorph)
+	. = ..()
+	xenomorph.RemoveElement(/datum/element/plasma_on_attack, 0.25)
 
 /datum/xeno_caste/gorger/normal
 	upgrade = XENO_UPGRADE_NORMAL

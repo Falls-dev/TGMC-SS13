@@ -241,17 +241,17 @@
 			var/image/access_overlay = image('icons/obj/doors/overlays.dmi', "unres_[heading]", layer = DOOR_HELPER_LAYER, pixel_y = -4)
 			switch(heading)
 				if(NORTH)
-					access_overlay.pixel_x = 0
-					access_overlay.pixel_y = 32
+					access_overlay.pixel_w = 0
+					access_overlay.pixel_z = 32
 				if(SOUTH)
-					access_overlay.pixel_x = 0
-					access_overlay.pixel_y = -32
+					access_overlay.pixel_w = 0
+					access_overlay.pixel_z = -32
 				if(EAST)
-					access_overlay.pixel_x = 32
-					access_overlay.pixel_y = 0
+					access_overlay.pixel_w = 32
+					access_overlay.pixel_z = 0
 				if(WEST)
-					access_overlay.pixel_x = -32
-					access_overlay.pixel_y = 0
+					access_overlay.pixel_w = -32
+					access_overlay.pixel_z = 0
 			. += access_overlay
 
 /obj/machinery/door/airlock/do_animate(animation)
@@ -279,7 +279,7 @@
 				flick("door_deny", src)
 
 //Prying open doors
-/obj/machinery/door/airlock/attack_alien(mob/living/carbon/xenomorph/xeno_attacker, damage_amount = xeno_attacker.xeno_caste.melee_damage, damage_type = BRUTE, damage_flag = MELEE, effects = TRUE, armor_penetration = 0, isrightclick = FALSE)
+/obj/machinery/door/airlock/attack_alien(mob/living/carbon/xenomorph/xeno_attacker, damage_amount = xeno_attacker.xeno_caste.melee_damage, damage_type = BRUTE, damage_flag = MELEE, effects = TRUE, armor_penetration = xeno_attacker.xeno_caste.melee_ap, isrightclick = FALSE)
 	if(xeno_attacker.status_flags & INCORPOREAL)
 		return FALSE
 

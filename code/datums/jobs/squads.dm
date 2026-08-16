@@ -104,7 +104,7 @@
 	return length(marines_list)
 
 
-/datum/squad/proc/insert_into_squad(mob/living/carbon/human/new_squaddie, give_radio = FALSE, forced = FALSE)
+/datum/squad/proc/insert_into_squad(mob/living/carbon/human/new_squaddie, give_radio = FALSE, forced = FALSE, datum/squad/radio_from = null)
 	if(!forced && !(new_squaddie.job in SSjob.active_occupations))
 		CRASH("attempted to insert marine [new_squaddie] from squad [name] while having job [isnull(new_squaddie.job) ? "null" : new_squaddie.job.title]")
 
@@ -129,7 +129,8 @@
 	if(give_radio && !istype(headset))
 		if(new_squaddie.wear_ear)
 			new_squaddie.dropItemToGround(new_squaddie.wear_ear)
-		headset = new()
+		var/datum/squad/squad_for_radio = radio_from || src
+		headset = new /obj/item/radio/headset/mainship/marine(null, squad_for_radio, new_squaddie.job?.type)
 		new_squaddie.equip_to_slot_or_del(headset, SLOT_EARS)
 
 	if(istype(headset))

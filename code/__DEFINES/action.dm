@@ -22,19 +22,33 @@
 #define VREF_MUTABLE_EMPOWERED_FRAME "VREF_EMPOWERED_FRAME"
 /// A reference for the build counter of a xeno
 #define VREF_MUTABLE_BUILDING_COUNTER "VREF_BUILD_COUNTER"
-// extra reference for the amount of landslide charges we have
-#define VREF_MUTABLE_LANDSLIDE "VREF_LANDSLIDE"
 // extra reference for the amount of earth pillars we have
 #define VREF_MUTABLE_EARTH_PILLAR "VREF_EARTH_PILLAR"
+// Reflects the amount of stacks we have for Primal Wrath's debuff.
+#define VREF_MUTABLE_PRIMAL_WRATH "VREF_PRIMAL_WRATH"
 // extra reference for savage's cooldown
 #define VREF_MUTABLE_SAVAGE_COOLDOWN "VREF_SAVAGE_COOLDOWN"
 // extra define for jab charges
 #define VREF_MUTABLE_JAB "VREF_JAB"
 // create spiderling charges
 #define VREF_MUTABLE_SPIDERLING_CHARGES "VREF_SPIDERLING_CHARGES"
+// create puppet charges
+#define VREF_MUTABLE_PUPPET_CHARGES "VREF_PUPPET_CHARGES"
 // extra reference for how many boiler acid globs we have
 #define VREF_MUTABLE_AMMO_COUNTER "VREF_AMMO_COUNTER"
 
+// extra reference for how many globadier acid mines we have
+#define VREF_MUTABLE_ACID_MINES_COUNTER "VREF_ACIDMINE_COUNTER"
+// extra reference for how many globadier grenades we have
+#define VREF_MUTABLE_GLOB_GRENADES_COUNTER "VREF_GLOBGRENADE_COUNTER"
+// extra reference for how many globadier gas mines we have
+#define VREF_MUTABLE_GAS_MINES_COUNTER "VREF_GASMINE_COUNTER"
+// extra reference for how long untill we recharge a new globadier grenade
+#define VREF_MUTABLE_GLOB_GRENADES_CHARGETIMER "VREF_GLOBGRENADE_CHARGETIMER"
+// extra reference for how long untill we recharge a new acid mine
+#define VREF_MUTABLE_GAS_MINE_TIMER "VREF_GASMINE_CHARGETIMER"
+// extra reference for how long untill we recharge a new gas mine
+#define VREF_MUTABLE_ACID_MINE_TIMER "VREF_ACIDMINE_CHARGETIMER"
 
 /// Actions that toggle on click/trigger
 #define ACTION_TOGGLE "toggle"

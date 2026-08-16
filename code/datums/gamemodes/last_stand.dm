@@ -1,6 +1,7 @@
 /datum/game_mode/last_stand
 	name = "Last Stand"
 	config_tag = "Last Stand"
+	esc_menu_name = "Last Stand"
 	xeno_abilities_flags = ABILITY_LAST_STAND
 	round_type_flags = MODE_XENO_SPAWN_PROTECT
 	valid_job_types = list(

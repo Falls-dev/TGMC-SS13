@@ -157,3 +157,9 @@
 	var/time_entered_cryo = 0
 	///The z level this mob is currently registered in
 	var/registered_z = null
+
+/mob/living/proc/has_blur_protection()
+	for(var/obj/item/clothing/C in get_equipped_items())
+		if(C.GetComponent(/datum/component/blur_protection))
+			return TRUE
+	return FALSE

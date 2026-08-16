@@ -175,6 +175,16 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/text/lobby)
 	maptext = span_lobbytext("МАНИФЕСТ КСЕНОМОРФОВ")
 	icon_state = "manifest_xeno"
 
+/atom/movable/screen/text/lobby/clickable/x_manifest/update_text()
+	var/queue_len = 0
+
+	if(GLOB.hive_datums)
+		var/datum/hive_status/hive = GLOB.hive_datums[XENO_HIVE_NORMAL]
+		if(hive)
+			queue_len = LAZYLEN(hive.candidates)
+
+		maptext = span_lobbytext("МАНИФЕСТ КСЕНОМОРФОВ<br>ОЧЕРЕДЬ НА ЛЯРВУ: [queue_len]")
+
 /atom/movable/screen/text/lobby/clickable/x_manifest/Click()
 	. = ..()
 	var/mob/new_player/player = hud.mymob

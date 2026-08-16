@@ -21,9 +21,10 @@ if ! { [ -x "$has_python" ] && [ -x "$has_pip" ] && [ -x "$has_git" ];  }; then
 fi
 
 echo "Installing pip dependencies..."
-pip3 install PyYaml beautifulsoup4
+# Debian/Ubuntu PEP 668 blocks system-wide pip without this flag.
+pip3 install --break-system-packages PyYaml beautifulsoup4
 
-cd $1
+cd "$1"
 
 echo "Running changelog script..."
 python3 tools/ss13_genchangelog.py html/changelogs

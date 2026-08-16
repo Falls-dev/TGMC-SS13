@@ -15,7 +15,7 @@
 	speed = -0.8
 
 	// *** Plasma *** //
-	plasma_max = 270 //High plasma is need for charging
+	plasma_max = 300 //High plasma is need for charging
 	plasma_gain = 18
 
 	// *** Health *** //

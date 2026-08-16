@@ -17,6 +17,7 @@
 		<b>Gamemode Availability</b>: Crash, Nuclear War<br /><br /><br />
 		<b>Duty</b>: Spread the hive, obey the will of your Hive Leader and the Queen Mother. Kill or capture those who get into your way. Protect the hive whenever possible. Amass your numbers.
 	"}
+	job_desc = "Расширяйте улей, подчиняйтесь воле вашего лидера улья и матери. Убивайте или захватывайте тех, кто встанет на вашем пути. Защищайте улей при любой возможности. Увеличивайте численность."
 	/**
 	 * This is the amount of "free" xeno jobs opened at the start, even before marines job contributes to the total.
 	 * This is a counter to prevent adding more jobs that necessary
@@ -37,7 +38,7 @@
 	Talk in Hivemind using <strong>;</strong>, <strong>.a</strong>, or <strong>,a</strong> (e.g. ';My life for the queen!')")
 
 /datum/job/xenomorph/handle_special_preview(client/parent)
-	parent.show_character_previews(image('icons/Xeno/castes/larva.dmi', icon_state = "Bloody Larva"), list(SOUTH))
+	parent.show_character_previews(image('icons/Xeno/castes/larva/larva.dmi', icon_state = "Bloody Larva"), list(SOUTH))
 	return TRUE
 
 /datum/job/xenomorph/add_job_positions(amount)
@@ -71,6 +72,7 @@
 		<b>Gamemode Availability</b>: Crash, Nuclear War<br /><br /><br />
 		<b>Duty</b>: Lead the hive and ensure success isn’t snatched away by your enemies. Manage the supply of psypoints
 	"}
+	job_desc = "Ведите улей и не позволяйте врагам вырвать победу из ваших лап."
 
 /datum/job/xenomorph/queen/return_spawn_type(datum/preferences/prefs)
 	return /mob/living/carbon/xenomorph/shrike
@@ -84,7 +86,7 @@
 	Talk in Hivemind using <strong>;</strong>, <strong>.a</strong>, or <strong>,a</strong> (e.g. ';My life for the hive!')")
 
 /datum/job/xenomorph/queen/handle_special_preview(client/parent)
-	parent.show_character_previews(image('icons/Xeno/castes/larva.dmi', icon_state = "Larva"), list(SOUTH))
+	parent.show_character_previews(image('icons/Xeno/castes/larva/larva.dmi', icon_state = "Larva"), list(SOUTH))
 	return TRUE
 
 /datum/job/xenomorph/facehugger

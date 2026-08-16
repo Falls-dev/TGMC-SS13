@@ -170,6 +170,8 @@
 #define COMSIG_CLIENT_MOB_LOGOUT "client_mob_logout" //! Called on the client that just logged out from the mob: (/mob)
 #define COMSIG_CLIENT_GET_LARVA_QUEUE_POSITION "client_get_larva_queue_position" //! from /datum/component/larva_queue
 #define COMSIG_CLIENT_SET_LARVA_QUEUE_POSITION "client_set_larva_queue_position" //! from /datum/component/larva_queue
+// from /client/proc/change_view() : (new_size)
+#define COMSIG_VIEW_SET "view_set"
 
 // /atom signals
 #define COMSIG_ATOM_ATTACKBY "atom_attackby"			        //from base of atom/attackby(): (/obj/item, /mob/living)
@@ -616,8 +618,6 @@
 #define COMSIG_LIVING_WEEDS_AT_LOC_CREATED "living_weeds_at_loc_created"	///from obj/alien/weeds/Initialize()
 #define COMSIG_LIVING_WEEDS_ADJACENT_REMOVED "living_weeds_adjacent_removed"	///from obj/alien/weeds/Destroy()
 
-#define COMSIG_LIVING_UPDATE_PLANE_BLUR "living_update_plane_blur"
-	#define COMPONENT_CANCEL_BLUR (1<<0)
 ///From base of mob/living/set_jump_component()
 #define COMSIG_LIVING_SET_JUMP_COMPONENT "living_set_jump_component"
 
@@ -645,7 +645,6 @@
 #define COMSIG_DROPSHIP_EQUIPMENT_UNEQUIPPED "shuttle_equipment_unequipped"
 
 // xeno stuff
-#define COMSIG_HIVE_BECOME_RULER "hive_become_ruler"
 #define COMSIG_HIVE_XENO_DEATH "hive_xeno_death"
 #define COMSIG_HIVE_XENO_MOTHER_PRE_CHECK "hive_xeno_mother_pre_check"		//from datum/hive_status/normal/proc/attempt_to_spawn_larva()
 #define COMSIG_HIVE_XENO_MOTHER_CHECK "hive_xeno_mother_check"				//from /datum/hive_status/normal/proc/spawn_larva()
@@ -875,6 +874,9 @@
 /// From [/datum/controller/subsystem/security_level/proc/set_level]
 /// `/datum/security_level/next_level`, `/datum/security_level/previous_level`
 #define COMSIG_SECURITY_LEVEL_CHANGED "security_level_changed"
+
+/// From [/datum/health_scan/proc/ui_data]: `mob/living/carbon/human/patient`, `list/data`
+#define COMSIG_HEALTH_SCAN_DATA "health_scan_data"
 
 /// From /area/proc/fire_alert() and /area/proc/fire_reset()
 #define COMSIG_AREA_FIRE_ALARM_SET "area_fire_alarm_set"

@@ -67,7 +67,7 @@
 
 //Hot hot Aliens on Aliens action.
 //Actually just used for eating people.
-/mob/living/carbon/xenomorph/attack_alien(mob/living/carbon/xenomorph/xeno_attacker, damage_amount = xeno_attacker.xeno_caste.melee_damage, damage_type = BRUTE, damage_flag = MELEE, effects = TRUE, armor_penetration = 0, isrightclick = FALSE)
+/mob/living/carbon/xenomorph/attack_alien(mob/living/carbon/xenomorph/xeno_attacker, damage_amount = xeno_attacker.xeno_caste.melee_damage, damage_type = BRUTE, damage_flag = MELEE, effects = TRUE, armor_penetration = xeno_attacker.xeno_caste.melee_ap, isrightclick = FALSE)
 	if(status_flags & INCORPOREAL || xeno_attacker.status_flags & INCORPOREAL) //Incorporeal xenos cannot attack or be attacked
 		return
 
@@ -139,10 +139,10 @@
 		ghost_rider.take_damage(burn_level / 2, BURN, ACID)
 		return
 	if(!ishuman(affected))
-		return
+		return FALSE
 	var/mob/living/carbon/human/human_affected = affected
 	if(human_affected.stat == DEAD)
-		return
+		return FALSE
 	if(human_affected.status_flags & (INCORPOREAL|GODMODE))
 		return
 	if(human_affected.pass_flags & PASS_FIRE)
@@ -160,6 +160,7 @@
 	else
 		affected_human.apply_status_effect(STATUS_EFFECT_MELTING_FIRE, PYROGEN_MELTING_FIRE_EFFECT_STACK, creator)
 	affected_human.take_overall_damage(PYROGEN_MELTING_FIRE_DAMAGE, BURN, FIRE, updating_health = TRUE, max_limbs = 2)
+	return TRUE // For shattering fire
 
 ///////////////////////////////
 //        SHATTERING FIRE    //
@@ -171,9 +172,11 @@
 	icon_state = "violet_1"
 	flame_color = "violet"
 
-/obj/fire/melting_fire/shattering/handle_human(mob/living/carbon/human/affected_human)
-	..()
-	affected_human.apply_status_effect(STATUS_EFFECT_SHATTER, 3 SECONDS)
+/obj/fire/melting_fire/shattering/affect_atom(atom/affected)
+	. = ..()
+	if(.) // parent proc only returns true if it applies its effects to a human, so affected must be a human, ergo no type validation needed
+		var/mob/living/carbon/human/victim = affected
+		victim.apply_status_effect(STATUS_EFFECT_SHATTER, 3 SECONDS)
 
 /obj/fire/melting_fire/melting_acid
 	name = "melting acid fire"

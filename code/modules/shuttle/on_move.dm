@@ -14,6 +14,8 @@
 		return
 
 	for(var/atom/thing AS in contents)
+		if(istype(thing, /mob/dead/observer))
+			continue
 		SEND_SIGNAL(thing, COMSIG_MOVABLE_SHUTTLE_CRUSH, shuttle)
 		if(isliving(thing))
 			var/mob/living/M = thing

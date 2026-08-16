@@ -103,6 +103,11 @@
 	contains = list(/obj/item/storage/box/visual/grenade/drain)
 	cost = 700
 
+/datum/supply_packs/explosives/boomvest
+	name = "Bomb vest"
+	contains = list(/obj/item/clothing/suit/storage/marine/boomvest)
+	cost = 2000
+
 /datum/supply_packs/explosives/plastique
 	name = "C4 plastic explosive"
 	contains = list(/obj/item/explosive/plastique)
@@ -115,7 +120,17 @@
 
 /datum/supply_packs/explosives/detpack
 	name = "Detpack explosive"
-	contains = list(/obj/item/detpack)
+	contains = list(/obj/item/explosive/plastique/detpack)
+	cost = 50
+
+/datum/supply_packs/explosive/plastique_trench
+	name = "Trench charge"
+	contains = list(/obj/item/explosive/plastique/trench)
+	cost = 30
+
+/datum/supply_packs/explosive/detpack_trench
+	name = "Better trench charge"
+	contains = list(/obj/item/explosive/plastique/detpack/trench)
 	cost = 50
 
 /datum/supply_packs/explosives/mortar

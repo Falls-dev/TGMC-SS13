@@ -109,7 +109,7 @@ ADMIN_VERB(command_report, R_FUN, "Command Report", "Create a custom command rep
 	message_admins("[ADMIN_TPMONTY(user.mob)] has created a command report.")
 
 ADMIN_VERB(narrate_global, R_FUN, "Global Narrate", "Directly send text to everyone", ADMIN_CATEGORY_FUN)
-	var/msg = tgui_input_text(user, "Enter the text you wish to appear to everyone.", "Global Narrate", multiline = TRUE , encode = FALSE, max_length = INFINITY)
+	var/msg = tgui_input_text(user, "Enter the text you wish to appear to everyone.", "Global Narrate", multiline = TRUE , encode = FALSE)
 
 	if(!msg)
 		return
@@ -212,12 +212,13 @@ ADMIN_VERB(sound_file, R_SOUND, "Play Imported Sound", "Play a sound imported fr
 	message_admins("[ADMIN_TPMONTY(user.mob)] played sound '[S]' for [heard_midi] player(s). [length(GLOB.clients) - heard_midi] player(s) [style == "Global" ? "have disabled admin midis" : "were out of view"].")
 
 ADMIN_VERB(sound_web, R_SOUND, "Play Internet Sound", "Play a sound using a link to a website.", ADMIN_CATEGORY_FUN)
-	var/ytdl = CONFIG_GET(string/invoke_yt_dlp)
-	if(!ytdl)
-		to_chat(user, span_warning("yt-dlp was not configured, action unavailable."))
+	var/ytdl = get_configured_yt_dlp()
+	var/cobalt = CONFIG_GET(string/cobalt_base_api)
+	if(!ytdl && !cobalt)
+		to_chat(user, span_warning("Neither yt-dlp nor cobalt.tools was configured, action unavailable."))
 		return
 
-	var/web_sound_input = input("Enter content URL (supported sites only)", "Play Internet Sound via yt-dlp") as text|null
+	var/web_sound_input = input("Enter content URL (supported sites only)", "Play Internet Sound") as text|null
 	if(!istext(web_sound_input) || !length(web_sound_input))
 		return
 
@@ -228,48 +229,37 @@ ADMIN_VERB(sound_web, R_SOUND, "Play Internet Sound", "Play a sound using a link
 		to_chat(user, span_warning("For yt-dlp shortcuts like ytsearch: please use the appropriate full url from the website."))
 		return
 
-	var/web_sound_url = ""
+	var/datum/internet_media/backend
+	if(cobalt)
+		backend = new /datum/internet_media/cobalt()
+	else
+		backend = new /datum/internet_media/yt_dlp()
+
+	var/datum/media_response/media = backend.get_media(web_sound_input)
+	if(!media)
+		to_chat(user, span_warning("[backend.error]"))
+		return
+
+	var/web_sound_url = media.url
+	var/title = media.title
 	var/list/music_extra_data = list()
-	var/title
 	var/show = FALSE
 
-	var/list/output = world.shelleo("[ytdl] --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height<=360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist -- \"[shell_url_scrub(web_sound_input)]\"")
-	var/errorlevel = output[SHELLEO_ERRORLEVEL]
-	var/stdout = output[SHELLEO_STDOUT]
-	var/stderr = output[SHELLEO_STDERR]
-
-	if(errorlevel)
-		to_chat(user, span_warning("yt-dlp URL retrieval FAILED: [stderr]"))
-		return
-
-	var/list/data = list()
-	try
-		data = json_decode(stdout)
-	catch(var/exception/e)
-		to_chat(user, span_warning("yt-dlp JSON parsing FAILED: [e]: [stdout]"))
-		return
-
-	if(data["url"])
-		web_sound_url = data["url"]
-		title = data["title"]
-		music_extra_data["duration"] = DisplayTimeText(data["duration"] * 1 SECONDS)
-		music_extra_data["link"] = data["webpage_url"]
-		music_extra_data["artist"] = data["artist"]
-		music_extra_data["upload_date"] = data["upload_date"]
-		music_extra_data["album"] = data["album"]
+	if(title)
+		music_extra_data["duration"] = media.start_time ? DisplayTimeText(media.start_time * 1 SECONDS) : null
+		music_extra_data["link"] = web_sound_input
 		switch(tgui_alert(user, "Show the title of and link to this song to the players?\n[title]", "Play Internet Sound", list("Yes", "No", "Cancel")))
 			if("Yes")
-				music_extra_data["title"] = data["title"]
+				music_extra_data["title"] = title
 				show = TRUE
 			if("No")
 				music_extra_data["link"] = "Song Link Hidden"
 				music_extra_data["title"] = "Song Title Hidden"
-				music_extra_data["artist"] = "Song Artist Hidden"
-				music_extra_data["upload_date"] = "Song Upload Date Hidden"
-				music_extra_data["album"] = "Song Album Hidden"
 				show = FALSE
 			else
 				return
+	else
+		music_extra_data["link"] = web_sound_input
 
 	if(web_sound_url && !findtext(web_sound_url, GLOB.is_http_protocol))
 		to_chat(user, span_warning("BLOCKED: Content URL not using http(s) protocol"))
@@ -295,12 +285,12 @@ ADMIN_VERB(sound_web, R_SOUND, "Play Internet Sound", "Play a sound using a link
 	switch(anon)
 		if("Yes")
 			if(show)
-				to_show_text = "[user.ckey] played: <a href='[data["webpage_url"]]'>[title]</a>"
+				to_show_text = "[user.ckey] played: <a href='[music_extra_data["link"]]'>[title]</a>"
 			else
 				to_show_text = "[user.ckey] played some music"
 		if("No")
 			if(show)
-				to_show_text = "An admin played: <a href='[data["webpage_url"]]'>[title]</a>"
+				to_show_text = "An admin played: <a href='[music_extra_data["link"]]'>[title]</a>"
 		else
 			return
 	for(var/i as anything in targets)
@@ -332,7 +322,7 @@ ADMIN_VERB(music_stop, R_SOUND, "Stop Playing Music", "Stop currently playing in
 	message_admins("[ADMIN_TPMONTY(user.mob)] stopped the currently playing music.")
 
 ADMIN_VERB(announce, R_FUN, "Admin Announce", "Do an admin announcement to all players.", ADMIN_CATEGORY_FUN)
-	var/message = tgui_input_text(user, "Global message to send:", "Admin Announce", multiline = TRUE, encode = FALSE, max_length = INFINITY)
+	var/message = tgui_input_text(user, "Global message to send:", "Admin Announce", multiline = TRUE, encode = FALSE)
 
 	message = noscript(message)
 

@@ -227,6 +227,12 @@ GLOBAL_LIST_INIT(loadout_instantiate_default_contents, typecacheof(list(
 	/obj/item/storage/fancy/cigarettes,
 	/obj/item/storage/pouch/surgery,
 	/obj/item/armor_module/storage/uniform/surgery_webbing,
+	/obj/item/storage/box/explosive_mines,
+	/obj/item/storage/box/explosive_mines/large,
+	/obj/item/storage/syringe_case/meralyne,
+	/obj/item/storage/syringe_case/dermaline,
+	/obj/item/storage/syringe_case/meraderm,
+	/obj/item/storage/syringe_case/nanoblood,
 )))
 
 //Defines use for the visualisation of loadouts

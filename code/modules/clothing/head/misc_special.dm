@@ -81,6 +81,32 @@
 	flip_up()
 	AddComponent(/datum/component/clothing_tint, TINT_5, FALSE)
 
+
+/obj/item/clothing/head/welding/advanced
+	name = "Advanced welding helmet"
+	desc = "Heavy-duty welding helmet with extra armor plating. Comes with a built-in gear slots."
+	icon_state = "adv_welding"
+	worn_icon_state = "adv_welding"
+	soft_armor = MARINE_ARMOR_HEAVY
+	armor_features_flags = ARMOR_NO_DECAP
+	inventory_flags = BLOCKSHARPOBJ
+	storage_type = /datum/storage/internal/marinehelmet
+
+/obj/item/clothing/head/welding/advanced/tagilla
+	name = "Advanced welding helmet"
+	desc = "A heavy welded helmet with the word 'УБЕЙ' across the front. It is imposing and remarkably resistant to melee attacks and bullets. Unfortunately, it is also vulnerable to acid."
+	icon_state = "tagilla"
+	worn_icon_state = "tagilla"
+	soft_armor = list(MELEE = 75, BULLET = 85, LASER = 85, ENERGY = 75, BOMB = 45, BIO = 40, FIRE = 65, ACID = 40)
+
+/obj/item/clothing/head/welding/advanced/tagilla/flip_up()
+	. = ..()
+	soft_armor = getArmor(melee = 60, bullet = 70, laser = 70, energy = 60, bomb = 45, bio = 40, fire = 65, acid = 40)
+
+/obj/item/clothing/head/welding/advanced/tagilla/flip_down()
+	. = ..()
+	soft_armor = getArmor(melee = 75, bullet = 85, laser = 85, energy = 75, bomb = 45, bio = 40, fire = 65, acid = 40)
+
 /*
 * Cakehat
 */

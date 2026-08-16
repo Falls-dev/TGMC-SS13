@@ -95,8 +95,6 @@
 	holder.icon = 'icons/mob/hud/xeno_health.dmi'
 	var/plasma_amount = xeno_caste.plasma_max? round(plasma_stored * 100 / xeno_caste.plasma_max, 10) : 0
 	holder.overlays += xeno_caste.plasma_icon_state? "[xeno_caste.plasma_icon_state][plasma_amount]" : null
-	var/wrath_amount = xeno_caste.wrath_max? round(wrath_stored * 100 / xeno_caste.wrath_max, 10) : 0
-	holder.overlays += "wrath[wrath_amount]"
 
 /mob/living/carbon/xenomorph/proc/hud_set_pheromone()
 	var/image/holder = hud_list[PHEROMONE_HUD]
@@ -157,13 +155,16 @@
 	holder.icon_state = ""
 	if(stat == DEAD)
 		return
-	if(!hive?.living_xeno_queen)
+	if(!hive?.living_xeno_ruler)
 		return
-	if(hive.living_xeno_queen.observed_xeno == src)
+	if(hive.living_xeno_ruler.observed_xeno == src)
 		holder.icon = 'icons/mob/hud/xeno_misc.dmi'
 		holder.icon_state = "queen_overwatch"
 	if(xeno_flags & XENO_LEADER)
 		var/image/I = image('icons/mob/hud/xeno_misc.dmi',src, "leader")
+		holder.overlays += I
+	if(hive.living_xeno_ruler == src)
+		var/image/I = image('icons/mob/hud/xeno_misc.dmi',src, "ruler")
 		holder.overlays += I
 	hud_list[QUEEN_OVERWATCH_HUD] = holder
 

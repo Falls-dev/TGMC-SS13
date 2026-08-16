@@ -100,7 +100,7 @@
 			return
 
 		if(CHECK_BITFIELD(item_to_deploy.item_flags, IS_SENTRY))
-			for(var/obj/machinery/deployable/mounted/sentry/sentry in urange(2, location))
+			for(var/obj/machinery/deployable/mounted/sentry/sentry in urange(1, location))
 				user.balloon_alert(user, "Слишком близко к [sentry]!")
 				return
 		user.balloon_alert(user, "Вы начали установку...")
@@ -111,7 +111,7 @@
 			location.balloon_alert(user, "No room to deploy")
 			return
 		if(CHECK_BITFIELD(item_to_deploy.item_flags, IS_SENTRY))
-			for(var/obj/machinery/deployable/mounted/sentry/sentry in urange(2, location))
+			for(var/obj/machinery/deployable/mounted/sentry/sentry in urange(1, location))
 				user.balloon_alert(user, "Слишком близко к [sentry]!")
 				return
 		user.temporarilyRemoveItemFromInventory(item_to_deploy)

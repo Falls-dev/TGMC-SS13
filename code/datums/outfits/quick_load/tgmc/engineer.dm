@@ -77,7 +77,7 @@
 		/obj/item/storage/box/explosive_mines/large = 1,
 		/obj/item/storage/box/explosive_mines = 1,
 		/obj/item/stack/cable_coil = 1,
-		/obj/item/detpack = 3,
+		/obj/item/explosive/plastique/detpack = 3,
 		/obj/item/explosive/plastique = 2,
 		/obj/item/storage/box/mre = 1,
 		/obj/item/reagent_containers/hypospray/autoinjector/dylovene = 1,

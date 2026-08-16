@@ -50,6 +50,13 @@ export const TextInputModal = (props) => {
     setInput(sanitizedInput);
   };
 
+  const finiteMaxLength =
+    typeof max_length === 'number' &&
+    Number.isFinite(max_length) &&
+    max_length > 0
+      ? max_length
+      : undefined;
+
   const visualMultiline = multiline || input.length >= 30;
   // Dynamically changes the window height based on the message.
   const windowHeight =
@@ -81,7 +88,7 @@ export const TextInputModal = (props) => {
                 autoSelect
                 fluid
                 height={multiline || input.length >= 30 ? '100%' : '1.8rem'}
-                maxLength={max_length}
+                maxLength={finiteMaxLength}
                 onEscape={() => act('cancel')}
                 onChange={onType}
                 placeholder="Type something..."
@@ -91,7 +98,7 @@ export const TextInputModal = (props) => {
             <Stack.Item>
               <InputButtons
                 input={input}
-                message={`${input.length}/${max_length || '∞'}`}
+                message={`${input.length}/${finiteMaxLength ?? '∞'}`}
               />
             </Stack.Item>
           </Stack>

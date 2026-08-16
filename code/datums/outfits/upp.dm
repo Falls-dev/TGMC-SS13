@@ -103,7 +103,7 @@
 
 	r_pocket_contents = list(
 		/obj/item/assembly/signaler = 1,
-		/obj/item/detpack = 2,
+		/obj/item/explosive/plastique/detpack = 2,
 		/obj/item/explosive/grenade/smokebomb/cloak = 1,
 	)
 

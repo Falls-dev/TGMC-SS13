@@ -13,7 +13,7 @@
 	playsound(loc, SFX_INCENDIARY_EXPLOSION, 35)
 	qdel(src)
 
-/proc/flame_radius(radius = 1, turf/epicenter, burn_intensity = 25, burn_duration = 25, burn_damage = 25, fire_stacks = 15, colour = FLAME_COLOR_RED) //~Art updated fire.
+/proc/flame_radius(radius = 1, turf/epicenter, burn_intensity = 25, burn_duration = 25, burn_damage = 25, fire_stacks = 15, colour = "red", fire_type = /obj/fire/flamer) //~Art updated fire.
 	if(!epicenter)
 		return
 	if(!isturf(epicenter))
@@ -24,7 +24,7 @@
 
 	for(var/t in filled_turfs(epicenter, radius, "circle", pass_flags_checked = PASS_AIR))
 		var/turf/turf_to_flame = t
-		turf_to_flame.ignite(randfloat(burn_duration*0.75, burn_duration), burn_intensity, colour, burn_damage, fire_stacks)
+		turf_to_flame.ignite(randfloat(burn_duration*0.75, burn_duration), burn_intensity, colour, burn_damage, fire_stacks, fire_type)
 
 /obj/item/explosive/grenade/incendiary/som
 	name = "\improper S30-I incendiary grenade"

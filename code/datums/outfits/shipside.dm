@@ -86,7 +86,6 @@
 	gloves = /obj/item/clothing/gloves/insulated
 	glasses = /obj/item/clothing/glasses/sunglasses/aviator
 	head = /obj/item/clothing/head/helmet/marine/pilot
-	r_pocket = /obj/item/clothing/glasses/night/imager_goggles
 	l_pocket = /obj/item/hud_tablet/pilot
 
 /datum/outfit/job/command/mech_pilot

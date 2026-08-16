@@ -5,7 +5,11 @@ param(
 cd $game_path
 
 Write-Host "Installing pip dependencies..."
-pip3 install PyYaml beautifulsoup4
+pip3 install --break-system-packages PyYaml beautifulsoup4
+if(!$?){
+    # Older pip may not know --break-system-packages; retry plain install.
+    pip3 install PyYaml beautifulsoup4
+}
 if(!$?){
     Write-Host "pip3 returned non-zero!"
     exit $LASTEXITCODE

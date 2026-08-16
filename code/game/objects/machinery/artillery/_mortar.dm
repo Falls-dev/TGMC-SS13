@@ -386,6 +386,9 @@
 	if(amount_to_fire > length(chamber_items))
 		amount_to_fire = length(chamber_items)
 	for(var/turf/spread_turf in RANGE_TURFS(firing_spread, target))
+		var/area/B = get_area(spread_turf)
+		if(istype(B) && B.ceiling >= CEILING_UNDERGROUND)
+			continue
 		turf_list += spread_turf
 	//Probably easier to declare and update a counter than it is to keep accessing a client and datum multiple times
 	var/shells_fired = 0

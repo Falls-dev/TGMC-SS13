@@ -150,7 +150,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(/datum/str
 	if(stat != DEAD && user.a_intent == INTENT_HELP)
 		handle_automated_speech(1) //assured speak/emote
 
-/mob/living/simple_animal/parrot/attack_alien(mob/living/carbon/xenomorph/xeno_attacker, damage_amount = xeno_attacker.xeno_caste.melee_damage, damage_type = BRUTE, damage_flag = MELEE, effects = TRUE, armor_penetration = 0, isrightclick = FALSE)
+/mob/living/simple_animal/parrot/attack_alien(mob/living/carbon/xenomorph/xeno_attacker, damage_amount = xeno_attacker.xeno_caste.melee_damage, damage_type = BRUTE, damage_flag = MELEE, effects = TRUE, armor_penetration = xeno_attacker.xeno_caste.melee_ap, isrightclick = FALSE)
 	return attack_hand(xeno_attacker)
 
 /mob/living/simple_animal/parrot/attack_animal(mob/living/simple_animal/M)

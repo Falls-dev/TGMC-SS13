@@ -206,7 +206,6 @@ GLOBAL_LIST_INIT(xeno_ai_spawnable, list(
 #define CHARGE_BULL (1<<1)
 #define CHARGE_BULL_HEADBUTT (1<<2)
 #define CHARGE_BULL_GORE (1<<3)
-#define CHARGE_BEHEMOTH (1<<4)
 
 #define STOP_CRUSHER_ON_DEL (1<<0)
 

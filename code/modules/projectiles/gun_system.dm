@@ -226,11 +226,11 @@
 	///Modifies projectile damage by a % when a marine gets passed, but not hit
 	var/iff_marine_damage_falloff = 0
 	///Determines how fire delay is changed when aim mode is active
-	var/aim_fire_delay = 0
+	var/aim_fire_delay = 0.15
 	///Holds the values modifying aim_fire_delay
 	var/list/aim_fire_delay_mods = list()
 	///Determines character slowdown from aim mode. Default is 66%
-	var/aim_speed_modifier = 6
+	var/aim_speed_modifier = 5
 	/// Time to enter aim mode, generally one second.
 	var/aim_time = 1 SECONDS
 
@@ -545,7 +545,9 @@
 	//ammo level overlays
 	if(ammo_level_icon && length(chamber_items) && rounds > 0 && chamber_items[current_chamber_position].loc == src)
 		var/remaining = CEILING(min(rounds / max_rounds, 1) * 100, 25)
-		var/image/ammo_overlay = image(icon, icon_state = "[ammo_level_icon]_[remaining]", pixel_x = icon_overlay_x_offset, pixel_y = icon_overlay_y_offset)
+		var/image/ammo_overlay = image(icon, icon_state = "[ammo_level_icon]_[remaining]")
+		ammo_overlay.pixel_w = icon_overlay_x_offset
+		ammo_overlay.pixel_z = icon_overlay_y_offset
 		. += ammo_overlay
 
 /obj/item/weapon/gun/update_worn_icon_state()

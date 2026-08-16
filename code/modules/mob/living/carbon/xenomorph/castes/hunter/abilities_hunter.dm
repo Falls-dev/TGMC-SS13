@@ -597,7 +597,7 @@
 // ***************************************
 // *********** One Hunter Army
 // ***************************************
-#define ILUSSION_CHANCE 70
+#define ILUSSION_CHANCE 40
 #define ILLUSION_LIFETIME 5 SECONDS
 
 /datum/action/ability/xeno_action/hunter_army

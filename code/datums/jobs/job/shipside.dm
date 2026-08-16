@@ -35,6 +35,7 @@
 		<b>Gamemode Availability</b>: Nuclear War<br /><br /><br />
 		<b>Duty</b>: Lead the TGMC platoon and complete your mission. Support the marines and communicate with your command staff, execute orders.
 	"}
+	job_desc = "Возглавьте операцию и выполните поставленную задачу. Поддерживайте морпехов морально и отдавайте приказы."
 	minimap_icon = "captain"
 
 /datum/job/terragov/command/captain/radio_help_message(mob/M)
@@ -104,6 +105,7 @@ Godspeed, captain! And remember, you are not above the law."})
 		<b>Gamemode Availability</b>: Crash, Nuclear War<br /><br /><br />
 		<b>Duty</b>: Lead your platoon on the field. Take advantage of the military staff and assets you will need for the mission, keep good relations between command and the marines. Assist the captain if available.
 	"}
+	job_desc = "Руководите миссией на поле боя. Используйте ресурсы и технику, необходимые для выполнения поставленых задач. Помогайте капитану, если он на связи."
 	minimap_icon = "fieldcommander"
 
 /datum/job/terragov/command/fieldcommander/radio_help_message(mob/M)
@@ -159,6 +161,7 @@ Make the TGMC proud!"})
 		<b>Gamemode Availability</b>: Nuclear War<br /><br /><br />
 		<b>Duty</b>: Take charge of one of the four squads, be their eyes and ears providing intel and additional shipside support via Orbital Bombardments.
 	"}
+	job_desc = "Возьмите на себя один из четырёх отрядов, будьте их глазами и ушами - снабжайте разведданными и поддерживайте Орбитальными Бомбардировками с корабля."
 
 	minimap_icon = "staffofficer"
 
@@ -223,6 +226,7 @@ You are in charge of logistics and the overwatch system. You are also in line to
 		<b>Gamemode Availability</b>: Nuclear War<br /><br /><br />
 		<b>Duty</b>: Pilot the Tadpole, a versatile dropship capable of fulfilling roles ranging from ambulance to mobile bunker.
 	"}
+	job_desc = "Станьте пилотом универсального десантного корабля, способного выполнять различные роли от быстрого десанта до мобильного бункера."
 	minimap_icon = "transportofficer"
 
 /datum/job/terragov/command/transportofficer/after_spawn(mob/living/carbon/new_mob, mob/user, latejoin = FALSE)
@@ -278,6 +282,7 @@ You are to ensure the Tadpole's survival and to transport marines around, acting
 		<b>Gamemode Availability</b>: Nuclear War<br /><br /><br />
 		<b>Duty</b>: Pilot the Condor, a modular attack aircraft that provides close air support with a variety of weapons ranging from the inbuilt gatling to wing mounted rockets.
 	"}
+	job_desc = "Станьте пилотом модульного штурмового самолёта, обеспечивающего огневую поддержку с воздуха разнообразным вооружением: от встроенного пулемёта до подвесных ракет."
 	minimap_icon = "pilot"
 
 /datum/job/terragov/command/pilot/after_spawn(mob/living/carbon/new_mob, mob/user, latejoin = FALSE)
@@ -336,6 +341,7 @@ Though you are an officer, your authority is limited to the dropship and the Con
 		<b>Gamemode Availability</b>: Nuclear War<br /><br /><br />
 		<b>Duty</b>: Act as the spearhead of the operation
 	"}
+	job_desc = "Соберите свой собственный боевой мех и ворвитесь в бой с противником."
 	minimap_icon = "mech_pilot"
 
 /datum/job/terragov/command/mech_pilot/radio_help_message(mob/M)
@@ -388,6 +394,7 @@ You can serve your Division in a variety of roles, so choose carefully."})
 		<b>Gamemode Availability</b>: Nuclear War<br /><br /><br />
 		<b>Duty</b>: Transport and support the frontline troops
 	"}
+	job_desc = "Перевозите и поддерживайте отряды на передовой."
 	minimap_icon = "transport_crew"
 
 /datum/job/terragov/command/transport_crewman/radio_help_message(mob/M)
@@ -443,6 +450,7 @@ You can serve your Division in a variety of roles, so choose carefully."})
 		<b>Gamemode Availability</b>: Nuclear War<br /><br /><br />
 		<b>Duty</b>: Provide heavy fire support
 	"}
+	job_desc = "Обеспечивайте тяжёлую огневую поддержку."
 	minimap_icon = "assault_crew"
 
 /datum/job/terragov/command/assault_crewman/add_job_points(amount)
@@ -502,6 +510,7 @@ You can serve your Division in a variety of roles, so choose carefully."})
 		<b>Gamemode Availability</b>: Nuclear War<br /><br /><br />
 		<b>Duty</b>: Transport and support the frontline troops
 	"}
+	job_desc = "Перевозите и поддерживайте отряды на передовой."
 	minimap_icon = "transport_crew"
 
 /datum/job/terragov/command/transport_crewman/radio_help_message(mob/M)
@@ -558,6 +567,7 @@ You can serve your Division in a variety of roles, so choose carefully."})
 		<b>Gamemode Availability</b>: Nuclear War<br /><br /><br />
 		<b>Duty</b>: Maintain the ship, be in charge of the engines. Be the secondary engineer to a forward operating base, prepare the shipside defenses if needed. Help the Pilot Officer in preparing the dropship.
 	"}
+	job_desc = "Обслуживайте корабль и отвечайте за генераторы. Будьте вторым инженером на корабле, готовьте оборону корабля при необходимости. Помогайте пилоту в подготовке мобильного десантного корабля."
 	minimap_icon = "st"
 
 /datum/job/terragov/requisitions/tech/after_spawn(mob/living/carbon/new_mob, mob/user, latejoin = FALSE)
@@ -622,6 +632,7 @@ requisitions line and later on to be ready to send supplies for marines who are 
 		<b>Gamemode Availability</b>: Nuclear War<br /><br /><br />
 		Requisition supplies to the battlefield. Ensure that the marines are reparing miners for more points. Supply the marines with deluxe equipment to ensure success.
 	"}
+	job_desc = "Снабжайте поле боя через отдел снабжения. Следите за работой буров для получения очков и выдавайте морпехам необходимое снаряжение."
 	minimap_icon = "requisition"
 
 
@@ -687,6 +698,7 @@ A happy ship is a well-functioning ship."})
 		<b>Gamemode Availability</b>: Crash, Nuclear War<br /><br /><br />
 		<b>Duty</b>: Communicate and lead your fellow medical staff (if available), supervise the medical department. Coordinate and teach fellow medical staff and corpsmen what they’re doing for treating an injury. Be the sole doctor in the Canterbury.
 	"}
+	job_desc = "Руководите медицинским персоналом (если он есть) и курируйте медицинский отдел. Координируйте и обучайте врачей правильному лечению ранений. Будьте единственным врачом, если больше некому."
 	minimap_icon = "chief_medical"
 
 /datum/job/terragov/medical/professor/radio_help_message(mob/M)
@@ -744,6 +756,7 @@ Make sure that the doctors and nurses are doing their jobs and keeping the marin
 		<b>Gamemode Availability</b>: Nuclear War<br /><br /><br />
 		<b>Duty</b>: Tend severely wounded patients to your aid in the form of surgery, repair broken bones and damaged organs, fix internal bleeding and prevent the birth of a xenomorph larva. Develop superior healing medicines.
 	"}
+	job_desc = "Оказывайте помощь тяжелораненым с помощью хирургии: сращивайте кости, восстанавливайте повреждённые органы, останавливайте внутренние кровотечения и предотвращайте развитие лярвы внутри заражённых. Разрабатывайте улучшенные лечебные препараты."
 	minimap_icon = "medical"
 
 /datum/job/terragov/medical/medicalofficer/after_spawn(mob/living/carbon/new_mob, mob/user, latejoin = FALSE)
@@ -801,6 +814,7 @@ You are also an expert when it comes to medication and treatment. If you do not 
 		<b>Gamemode Availability</b>: Nuclear War<br /><br /><br />
 		<b>Duty</b>: Research extraterrestrial life aboard the ship if provided by Nanotrasen/TerraGov, synthesize chemicals for the benefit of the marines. Find out the cause of why and when. Learn new things for humankind. Act as a secondary medical officer in practice.
 	"}
+	job_desc = "Проводите археологические раскопки, исследуйте мёртвых ксеноморфов. Будьте запасным медиком на случай необходимости."
 	minimap_icon = "researcher"
 
 /datum/job/terragov/medical/researcher/radio_help_message(mob/M)
@@ -864,6 +878,7 @@ It is also recommended that you gear up like a regular marine, or your 'internsh
 		<b>Gamemode Availability</b>: Nuclear War<br /><br /><br />
 		<b>Duty</b>: Manage relations between Nanotrasen and TerraGov Marine Corps. Report your findings via faxes. Reply if you’re called.
 	"}
+	job_desc = "Поддерживайте отношения между Нанотрайзен и ТерраГов. Докладывайте обо всём по факсу. Будьте фотографом."
 	minimap_icon = "cl"
 
 /datum/job/terragov/civilian/liaison/after_spawn(mob/living/carbon/new_mob, mob/user, latejoin = FALSE)
@@ -928,6 +943,7 @@ Use your office fax machine to communicate with corporate headquarters or to acq
 		<b>Gamemode Availability</b>: Crash, Nuclear War<br /><br /><br />
 		<b>Duty</b>: Support and assist in every department of the TerraGov Marine Corps, use your incredibly developed skills to help the marines during their missions. You can talk to other synthetics or the AI on the :n channel. Serve your purpose.
 	"}
+	job_desc = "Будьте универсальным рабочим. Помогайте различным отделам а также морпехам на поле боя."
 	minimap_icon = "synth"
 
 /datum/job/terragov/silicon/synthetic/get_special_name(client/preference_source)
@@ -1007,6 +1023,7 @@ In addition, being a Synthetic gives you knowledge in every field and specializa
 		<b>Gamemode Availability</b>: Nuclear War<br /><br /><br />
 		<b>Duty</b>: Assist the crew whenever you’re needed, be the doorknob of the ship. Recon the areas for threats via cameras, report your findings to the crew at various communication channels. Follow your laws.
 	"}
+	job_desc = "Помогайте экипажу в мере своих сил. Ведите разведку через камеры, докладывайте экипажу по разным каналам связи. Соблюдайте свои законы."
 	minimap_icon = "ai" // this is saved for making minimap icon later for ai core
 
 /datum/job/terragov/silicon/ai/get_special_name(client/preference_source)
@@ -1061,6 +1078,7 @@ If you require any help, use <b>mentorhelp</b> to ask mentors about what you're 
 		<b>Duty</b>: Your primary job is to uphold the law, order, peace and stability aboard the ship. Marines can get rowdy after a few weeks of cryosleep!
 		In addition, you are tasked with the security of high-ranking personnel, including the command staff. Keep them safe!
 	"}
+	job_desc = "Ваша главная задача - поддерживать закон, порядок и стабильность на борту корабля. Также вы являетесь целью номер один для морпехов. Удачи."
 
 	minimap_icon = "military_police"
 
@@ -1129,6 +1147,7 @@ If you require any help, use <b>mentorhelp</b> to ask mentors about what you're 
 		<b>Gamemode Availability</b>: Distress<br /><br /><br />
 		<b>Duty</b>: Your primary job is to HONK! Do pranks and funny jokes, tell anecdotes, annoy marines, try not to die, try to resist pepperball, survive, for the glore of the Honkmother! HONK!
 	"}
+	job_desc = "Устраивайте розыгрыши и шутки, рассказывайте анекдоты, доставайте морпехов, старайтесь не умереть, терпите, выживайте — во славу Хонкоматери! ХОНК!"
 
 	minimap_icon = "clown"
 

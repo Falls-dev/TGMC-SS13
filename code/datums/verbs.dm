@@ -85,7 +85,7 @@
 				if(childname == "[child.type]")
 					var/list/tree = splittext(childname, "/")
 					childname = tree[length(tree)]
-				.[child.type] = "parent=[url_encode(type)];name=[childname]"
+				.[child.type] = "parent=[url_encode(type)];name=[url_encode(childname)]"
 				. += childlist
 
 	for(var/thing in verblist)

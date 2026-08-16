@@ -55,8 +55,11 @@
 
 	var/list/tts_listeners = filter_tts_listeners(xeno_owner, xeno_listeners, null, RADIO_TTS_HIVEMIND)
 	if(length(tts_listeners))
-		var/list/treated_message = xeno_owner?.treat_message(input)
-		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), xeno_owner, treated_message["tts_message"], xeno_owner.get_default_language(), xeno_owner.voice, xeno_owner.voice_filter, tts_listeners, FALSE, pitch = xeno_owner.pitch, directionality = FALSE)
+		var/treated_message = xeno_owner?.treat_message(input)
+		var/final_tts_text = input
+		if(istype(treated_message, /list) && treated_message["tts_message"])
+			final_tts_text = treated_message["tts_message"]
+		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), xeno_owner, final_tts_text, xeno_owner.get_default_language(), xeno_owner.voice, xeno_owner.voice_filter, tts_listeners, FALSE, pitch = xeno_owner.pitch, directionality = FALSE)
 
 	succeed_activate()
 	add_cooldown()
@@ -212,7 +215,7 @@
 /datum/action/ability/xeno_action/set_xeno_lead/proc/set_xeno_leader(mob/living/carbon/xenomorph/selected_xeno)
 	xeno_owner.balloon_alert(xeno_owner, "Xeno promoted")
 	selected_xeno.balloon_alert(selected_xeno, "Promoted to leader")
-	to_chat(selected_xeno, span_xenoannounce("[xeno_owner] has selected us as a Hive Leader. The other Xenomorphs must listen to us. We will also act as a beacon for the Queen's pheromones."))
+	to_chat(selected_xeno, span_xenoannounce("[xeno_owner] has selected us as a Hive Leader. The other Xenomorphs must listen to us. We will also act as a beacon for the Ruler's pheromones."))
 
 	xeno_owner.hive.add_leader(selected_xeno)
 	selected_xeno.hud_set_queen_overwatch()

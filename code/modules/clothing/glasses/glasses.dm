@@ -113,9 +113,6 @@
 	else if(istype(I, /obj/item/clothing/glasses/meson))
 		eyepatch = new /obj/item/clothing/glasses/meson/eyepatch
 		to_chat(user, span_notice("You fasten the meson projector to the inside of the eyepatch."))
-	if(istype(I, /obj/item/clothing/glasses/night/imager_goggles))
-		eyepatch = new /obj/item/clothing/glasses/night/imager_goggles/eyepatch
-		to_chat(user, span_notice("You fasten the optical scanner to the inside of the eyepatch."))
 	if(!eyepatch)
 		return
 	qdel(I)
@@ -178,14 +175,7 @@
 		return
 	var/obj/item/clothing/glasses/our_glasses
 
-	if(istype(our_item, /obj/item/clothing/glasses/night/imager_goggles))
-		if(prescription)
-			our_glasses = new /obj/item/clothing/glasses/night/optgoggles/prescription
-		else
-			our_glasses = new /obj/item/clothing/glasses/night/optgoggles
-		to_chat(user, span_notice("You fasten the optical imaging scanner to the inside of the goggles."))
-
-	else if(istype(our_item, /obj/item/clothing/glasses/hud/health))
+	if(istype(our_item, /obj/item/clothing/glasses/hud/health))
 		if(prescription)
 			our_glasses = new /obj/item/clothing/glasses/hud/medgoggles/prescription
 		else
@@ -344,9 +334,6 @@
 	else if(istype(I, /obj/item/clothing/glasses/night/m56_goggles))
 		our_glasses = new /obj/item/clothing/glasses/night/sunglasses
 		to_chat(user, span_notice("You fasten the KTLD sight to the inside of the glasses."))
-	else if(istype(I, /obj/item/clothing/glasses/night/imager_goggles))
-		our_glasses = new /obj/item/clothing/glasses/night/imager_goggles/sunglasses
-		to_chat(user, span_notice("You fasten the optical imager scaner to the inside of the glasses."))
 	if(!our_glasses)
 		return
 	qdel(I)
@@ -419,9 +406,6 @@
 	if(istype(our_item, /obj/item/clothing/glasses/hud/health))
 		our_glasses = new /obj/item/clothing/glasses/hud/orange_glasses
 		to_chat(user, span_notice("You fasten the medical hud projector to the inside of the glasses."))
-	else if(istype(our_item, /obj/item/clothing/glasses/night/imager_goggles))
-		our_glasses = new /obj/item/clothing/glasses/night/imager_goggles/orange_glasses
-		to_chat(user, span_notice("You fasten the optical imager scaner to the inside of the glasses."))
 	else if(istype(our_item, /obj/item/clothing/glasses/meson))
 		our_glasses = new /obj/item/clothing/glasses/meson/orange_glasses
 		to_chat(user, span_notice("You fasten the optical meson scaner to the inside of the glasses."))
@@ -439,15 +423,6 @@
 		slot_glasses_str = 'icons/mob/clothing/eyes.dmi')
 	icon_state = "meson_orange"
 	worn_icon_state = "meson_orange"
-	deactive_state = "deactivated_orange"
-
-/obj/item/clothing/glasses/night/imager_goggles/orange_glasses
-	name = "Orange glasses"
-	desc = "A pair of orange glasses. This pair has been fitted with an internal optical imager scanner."
-	worn_icon_list = list(
-		slot_glasses_str = 'icons/mob/clothing/eyes.dmi')
-	icon_state = "optical_orange"
-	worn_icon_state = "optical_orange"
 	deactive_state = "deactivated_orange"
 
 /obj/item/clothing/glasses/hud/orange_glasses

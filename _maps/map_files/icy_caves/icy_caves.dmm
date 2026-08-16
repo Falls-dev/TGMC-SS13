@@ -128,7 +128,7 @@
 	dir = 1
 	},
 /turf/open/shuttle/dropship/seven,
-/area/space)
+/area/icy_caves/caves/northwestmonorail)
 "aB" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/engineering/structure/handheld_lighting,
@@ -457,7 +457,7 @@
 	dir = 4
 	},
 /turf/open/shuttle/dropship/floor,
-/area/space)
+/area/icy_caves/caves/northwestmonorail)
 "cj" = (
 /obj/structure/shuttle/engine/propulsion/burst/left,
 /turf/open/floor/plating,
@@ -1118,7 +1118,7 @@
 	dir = 8
 	},
 /turf/open/shuttle/dropship/seven,
-/area/space)
+/area/icy_caves/caves/northwestmonorail)
 "fu" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/drained{
@@ -2104,6 +2104,10 @@
 	dir = 4
 	},
 /area/icy_caves/caves/northwestmonorail)
+"lw" = (
+/obj/effect/landmark/weed_node,
+/turf/open/floor/plating/ground/snow/layer2,
+/area/icy_caves/caves)
 "lx" = (
 /obj/machinery/light{
 	dir = 8
@@ -2389,6 +2393,10 @@
 	},
 /turf/open/floor/tile/dark,
 /area/icy_caves/outpost/LZ2)
+"mR" = (
+/obj/effect/landmark/weed_node,
+/turf/open/floor/plating/ground/snow/layer1,
+/area/icy_caves/caves)
 "mX" = (
 /obj/machinery/light{
 	dir = 4
@@ -3000,11 +3008,6 @@
 /obj/item/paper/crumpled/bloody,
 /turf/open/floor/tile/dark,
 /area/icy_caves/caves/northwestmonorail/morgue)
-"qa" = (
-/turf/open/floor/mainship_hull/dir{
-	dir = 8
-	},
-/area/space)
 "qb" = (
 /obj/machinery/conveyor{
 	dir = 5
@@ -4581,7 +4584,7 @@
 	dir = 2
 	},
 /turf/open/shuttle/escapepod/plain,
-/area/space)
+/area/icy_caves/caves/northwestmonorail)
 "wW" = (
 /obj/effect/ai_node,
 /turf/open/floor/plating,
@@ -4784,7 +4787,7 @@
 	dir = 2
 	},
 /turf/open/floor/mainship_hull,
-/area/space)
+/area/icy_caves/caves/northwestmonorail)
 "yf" = (
 /obj/structure/sink{
 	dir = 1
@@ -4856,7 +4859,7 @@
 	dir = 4
 	},
 /turf/open/shuttle/dropship/seven,
-/area/space)
+/area/icy_caves/caves/northwestmonorail)
 "yw" = (
 /obj/structure/closet/secure_closet/scientist,
 /obj/machinery/light,
@@ -4903,7 +4906,7 @@
 /turf/open/floor/mainship_hull/dir{
 	dir = 8
 	},
-/area/space)
+/area/icy_caves/caves/northwestmonorail)
 "yH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1
@@ -5616,16 +5619,6 @@
 /obj/structure/cable,
 /turf/open/floor/tile/dark,
 /area/icy_caves/outpost/dorms)
-"BY" = (
-/obj/structure/lattice,
-/obj/structure/monorail{
-	dir = 6
-	},
-/obj/structure/monorail{
-	dir = 10
-	},
-/turf/open/shuttle/escapepod/plain,
-/area/space)
 "BZ" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
@@ -6063,7 +6056,7 @@
 /turf/open/floor/mainship_hull/dir{
 	dir = 4
 	},
-/area/space)
+/area/icy_caves/caves/northwestmonorail)
 "Ej" = (
 /obj/structure/table,
 /obj/item/stack/nanopaste,
@@ -6280,7 +6273,7 @@
 	dir = 4
 	},
 /turf/open/shuttle/dropship/seven,
-/area/space)
+/area/icy_caves/caves/northwestmonorail)
 "Fl" = (
 /obj/effect/ai_node,
 /obj/effect/landmark/weed_node,
@@ -6545,7 +6538,7 @@
 "Gl" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
 /turf/open/floor/plating/ground/snow/layer2,
-/area/icy_caves/outpost/LZ2)
+/area/icy_caves/caves)
 "Gm" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 4
@@ -6651,7 +6644,7 @@
 	dir = 2
 	},
 /turf/open/shuttle/escapepod/plain,
-/area/space)
+/area/icy_caves/caves/northwestmonorail)
 "GO" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/ground/snow/layer1,
@@ -6789,7 +6782,7 @@
 "Hx" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
 /turf/open/floor/plating/ground/snow/layer1,
-/area/icy_caves/outpost/outside)
+/area/icy_caves/caves)
 "HA" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
@@ -6802,14 +6795,6 @@
 /obj/effect/ai_node,
 /turf/open/floor/tile/dark,
 /area/icy_caves/outpost/LZ1)
-"HC" = (
-/obj/structure/monorail,
-/obj/structure/lattice,
-/obj/structure/monorail{
-	dir = 4
-	},
-/turf/open/floor/mainship_hull,
-/area/space)
 "HE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
@@ -6961,9 +6946,8 @@
 /turf/open/floor/plating,
 /area/icy_caves/outpost/garage)
 "Ii" = (
-/obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/open/floor/plating/ground/snow/layer0,
-/area/icy_caves/outpost/outside)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/icy_caves/caves)
 "Ij" = (
 /obj/effect/spawner/random/misc/structure/barrel,
 /obj/structure/cable,
@@ -8190,7 +8174,7 @@
 /area/icy_caves/caves/northwestmonorail)
 "NW" = (
 /turf/open/shuttle/dropship/seven,
-/area/space)
+/area/icy_caves/caves/northwestmonorail)
 "NY" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 6
@@ -8327,11 +8311,6 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /turf/open/floor/wood,
 /area/icy_caves/outpost/office)
-"OI" = (
-/turf/open/floor/mainship_hull/dir{
-	dir = 4
-	},
-/area/space)
 "OL" = (
 /obj/machinery/light{
 	dir = 1
@@ -8616,7 +8595,7 @@
 	dir = 8
 	},
 /turf/open/shuttle/dropship/seven,
-/area/space)
+/area/icy_caves/caves/northwestmonorail)
 "Qp" = (
 /obj/machinery/light{
 	dir = 8
@@ -9319,16 +9298,6 @@
 	},
 /turf/open/floor/tile/dark,
 /area/icy_caves/outpost/research)
-"TZ" = (
-/obj/structure/lattice,
-/obj/structure/monorail{
-	dir = 10
-	},
-/obj/structure/monorail{
-	dir = 6
-	},
-/turf/open/shuttle/escapepod/plain,
-/area/space)
 "Ua" = (
 /obj/structure/cable,
 /obj/effect/landmark/weed_node,
@@ -9882,9 +9851,6 @@
 "Wx" = (
 /turf/open/floor/plating/ground/snow/layer2,
 /area/icy_caves/caves/west)
-"Wy" = (
-/turf/open/shuttle/dropship/floor,
-/area/space)
 "WA" = (
 /turf/open/floor/tile/dark/red2{
 	dir = 8
@@ -10106,7 +10072,7 @@
 	dir = 2
 	},
 /turf/open/shuttle/dropship/floor,
-/area/space)
+/area/icy_caves/caves/northwestmonorail)
 "Xz" = (
 /obj/effect/spawner/random/misc/structure/broken_reinforced_window/colonyspawn,
 /obj/structure/cable,
@@ -10131,7 +10097,7 @@
 	dir = 4
 	},
 /turf/open/shuttle/dropship/seven,
-/area/space)
+/area/icy_caves/caves/northwestmonorail)
 "XE" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/dark,
@@ -10168,7 +10134,7 @@
 	},
 /obj/structure/dropship_piece/two/front,
 /turf/open/shuttle/dropship/seven,
-/area/space)
+/area/icy_caves/caves/northwestmonorail)
 "XM" = (
 /obj/structure/bed/chair,
 /obj/effect/landmark/corpsespawner/colonist,
@@ -10417,9 +10383,6 @@
 /obj/structure/cable,
 /turf/open/floor/tile/dark,
 /area/icy_caves/caves/northwestmonorail/hallway)
-"YQ" = (
-/turf/closed/wall/r_wall/unmeltable,
-/area/space)
 "YR" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 10
@@ -13303,8 +13266,8 @@ EM
 "}
 (18,1,1) = {"
 EM
-YQ
-YQ
+pl
+pl
 XV
 XV
 XV
@@ -13459,7 +13422,7 @@ EM
 "}
 (19,1,1) = {"
 ni
-qa
+jL
 yF
 jL
 Me
@@ -13615,7 +13578,7 @@ EM
 "}
 (20,1,1) = {"
 ni
-BY
+Od
 wT
 Od
 JR
@@ -13771,7 +13734,7 @@ EM
 "}
 (21,1,1) = {"
 ni
-HC
+RM
 yd
 RM
 cL
@@ -13785,13 +13748,13 @@ lV
 fv
 MA
 Xy
-Wy
-Wy
-Wy
+lV
+lV
+lV
 ch
-Wy
-Wy
-Wy
+lV
+lV
+lV
 UZ
 qI
 Gx
@@ -13927,7 +13890,7 @@ EM
 "}
 (22,1,1) = {"
 ni
-TZ
+YB
 GN
 YB
 cF
@@ -14083,7 +14046,7 @@ EM
 "}
 (23,1,1) = {"
 ni
-OI
+IP
 Eh
 IP
 DU
@@ -14239,8 +14202,8 @@ EM
 "}
 (24,1,1) = {"
 EM
-YQ
-YQ
+pl
+pl
 XV
 XV
 IF
@@ -24828,8 +24791,8 @@ li
 li
 li
 li
-li
-DD
+QP
+Yl
 SC
 Yl
 ZP
@@ -25284,12 +25247,12 @@ DD
 DD
 jS
 IE
-DD
-ow
-ow
-ow
-KE
-ow
+Yl
+Ii
+Ii
+Ii
+lw
+Ii
 ZP
 ZP
 ZP
@@ -25440,7 +25403,7 @@ DD
 DD
 DD
 DD
-DD
+Yl
 wD
 Mr
 Mr
@@ -25596,7 +25559,7 @@ DD
 IE
 DD
 DD
-IE
+SC
 wD
 Yl
 Yl
@@ -27000,7 +26963,7 @@ Ee
 tH
 pR
 pR
-pR
+Ii
 Gl
 Yl
 Yl
@@ -27156,7 +27119,7 @@ fu
 tH
 pR
 pR
-Za
+Yl
 Gl
 SC
 Yl
@@ -27312,7 +27275,7 @@ rn
 tH
 Id
 Za
-Za
+Yl
 Hx
 QP
 Yl
@@ -27468,9 +27431,9 @@ tH
 tH
 pR
 pR
-XO
-Ii
-Za
+QP
+wD
+Yl
 Yl
 Yl
 Yl
@@ -27624,9 +27587,9 @@ XO
 XO
 pR
 pR
-XO
-Ii
-Za
+QP
+wD
+Yl
 QP
 Yl
 Yl
@@ -27780,9 +27743,9 @@ Za
 Za
 XO
 XO
-XO
-Ii
-vC
+QP
+wD
+SC
 QP
 Yl
 Yl
@@ -27936,9 +27899,9 @@ XO
 Za
 XO
 YJ
-Za
-Ii
-Za
+Yl
+wD
+Yl
 Yl
 Yl
 ZP
@@ -28092,7 +28055,7 @@ ZI
 XO
 Za
 XO
-pR
+Ii
 Gl
 ZI
 ZI
@@ -28248,7 +28211,7 @@ ZI
 XO
 Za
 XO
-YJ
+mR
 Sb
 ZI
 ZI

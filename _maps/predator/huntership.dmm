@@ -1162,7 +1162,7 @@
 	color = "#6b675e";
 	resistance_flags = 1
 	},
-/obj/item/weapon/twohanded/rocketsledge{
+/obj/item/weapon/twohanded/sledgehammer/rocketsledge{
 	anchored = 1;
 	pixel_x = 2;
 	pixel_y = 4

@@ -682,6 +682,7 @@ ColorTone(rgb, tone)
 	else
 		return BlendRGB(tone, "#ffffff", (gray - tone_gray) / ((255 - tone_gray) || 1))
 
+
 /// Create a single [/icon] from a given [/atom] or [/image].
 ///
 /// Very low-performance. Should usually only be used for HTML, where BYOND's
@@ -720,7 +721,7 @@ ColorTone(rgb, tone)
 			layers[current] = current_layer; \
 		}
 
-	var/static/icon/flat_template = icon('icons/effects/effects.dmi', "nothing")
+	var/static/icon/flat_template = icon('icons/blanks/32x32.dmi', "nothing")
 	var/icon/flat = icon(flat_template)
 
 	if(!appearance || appearance.alpha <= 0)
@@ -742,7 +743,7 @@ ColorTone(rgb, tone)
 
 	var/render_icon = curicon
 
-	if(render_icon)
+	if (render_icon)
 		if(!icon_exists(curicon, curstate))
 			if(icon_exists(curicon, ""))
 				curstate = ""
@@ -777,7 +778,7 @@ ColorTone(rgb, tone)
 		var/image/copy
 		// Add the atom's icon itself, without pixel_x/y offsets.
 		if(render_icon)
-			copy = image(icon = curicon, icon_state = curstate, layer = appearance.layer, dir = base_icon_dir)
+			copy = image(icon=curicon, icon_state=curstate, layer=appearance.layer, dir=base_icon_dir)
 			copy.color = appearance.color
 			copy.alpha = appearance.alpha
 			copy.blend_mode = curblend
@@ -836,7 +837,7 @@ ColorTone(rgb, tone)
 			addY1 = min(flatY1, layer_image.pixel_y + layer_image.pixel_z + 1)
 			addY2 = max(flatY2, layer_image.pixel_y + layer_image.pixel_z + add.Height())
 
-			if(
+			if (
 				addX1 != flatX1 \
 				&& addX2 != flatX2 \
 				&& addY1 != flatY1 \
@@ -857,6 +858,7 @@ ColorTone(rgb, tone)
 
 			// Blend the overlay into the flattened icon
 			flat.Blend(add, blendMode2iconMode(curblend), layer_image.pixel_x + layer_image.pixel_w + 2 - flatX1, layer_image.pixel_y + layer_image.pixel_z + 2 - flatY1)
+
 
 		if(appearance.alpha < 255)
 			flat.Blend(rgb(255, 255, 255, appearance.alpha), ICON_MULTIPLY)
@@ -883,6 +885,7 @@ ColorTone(rgb, tone)
 		return final_icon
 
 	#undef PROCESS_OVERLAYS_OR_UNDERLAYS
+
 
 /proc/getHologramIcon(icon/A, safety = TRUE)//If safety is on, a new icon is not created.
 	var/icon/flat_icon = safety ? A : new(A)//Has to be a new icon to not constantly change the same icon.
@@ -933,7 +936,7 @@ ColorTone(rgb, tone)
 /image/proc/setDir(newdir)
 	dir = newdir
 
-///Signal handler for keeping an image in the same direction as a parent atom.
+///Signal handler for keeping an image in the same direction as a parent atom, due to images outside of overlays/viscontents not updating automatically
 /image/proc/on_owner_dir_change(datum/source, old_dir, new_dir)
 	SIGNAL_HANDLER
 	setDir(new_dir)
@@ -970,11 +973,7 @@ ColorTone(rgb, tone)
 	WRITE_FILE(dummySave["dummy"], icon)
 	var/iconData = dummySave.ExportText("dummy")
 	var/list/partial = splittext(iconData, "{")
-	. = replacetext(copytext_char(partial[2], 3, -5), "\n", "")  //if cleanup fails we want to still return the correct base64
-	dummySave.Unlock()
-	dummySave = null
-	fdel("tmp/dummySave.sav")  //if you get the idea to try and make this more optimized, make sure to still call unlock on the savefile after every write to unlock it.
-
+	return replacetext(copytext_char(partial[2], 3, -5), "\n", "") //if cleanup fails we want to still return the correct base64
 
 ///given a text string, returns whether it is a valid dmi icons folder path
 /proc/is_valid_dmi_file(icon_path)
@@ -1007,7 +1006,7 @@ ColorTone(rgb, tone)
 	if(isicon(icon) && isfile(icon))
 		//icons compiled in from 'icons/path/to/dmi_file.dmi' at compile time are weird and arent really /icon objects,
 		///but they pass both isicon() and isfile() checks. theyre the easiest case since stringifying them gives us the path we want
-		var/icon_ref = text_ref(icon)
+		var/icon_ref = "\ref[icon]"
 		var/locate_icon_string = "[locate(icon_ref)]"
 
 		icon_path = locate_icon_string
@@ -1018,7 +1017,7 @@ ColorTone(rgb, tone)
 		// the rsc reference returned by fcopy_rsc() will be stringifiable to "icons/path/to/dmi_file.dmi"
 		var/rsc_ref = fcopy_rsc(icon)
 
-		var/icon_ref = text_ref(rsc_ref)
+		var/icon_ref = "\ref[rsc_ref]"
 
 		var/icon_path_string = "[locate(icon_ref)]"
 
@@ -1028,7 +1027,7 @@ ColorTone(rgb, tone)
 		var/rsc_ref = fcopy_rsc(icon)
 		//if its the text path of an existing dmi file, the rsc reference returned by fcopy_rsc() will be stringifiable to a dmi path
 
-		var/rsc_ref_ref = text_ref(rsc_ref)
+		var/rsc_ref_ref = "\ref[rsc_ref]"
 		var/rsc_ref_string = "[locate(rsc_ref_ref)]"
 
 		icon_path = rsc_ref_string
@@ -1157,7 +1156,8 @@ ColorTone(rgb, tone)
 
 	return "<img class='icon icon-[A.icon_state]' src='data:image/png;base64,[bicon_cache[key]]'>"
 
-///Costlier version of icon2html() that uses getFlatIcon() to account for overlays, underlays, etc. Use with extreme moderation, ESPECIALLY on mobs.
+
+//Costlier version of icon2html() that uses getFlatIcon() to account for overlays, underlays, etc. Use with extreme moderation, ESPECIALLY on mobs.
 /proc/costly_icon2html(thing, target, sourceonly = FALSE)
 	if(!thing)
 		return
@@ -1168,59 +1168,32 @@ ColorTone(rgb, tone)
 	var/icon/I = getFlatIcon(thing)
 	return icon2html(I, target, sourceonly = sourceonly)
 
-/// # If you already have a human and need to get its flat icon, call `get_flat_existing_human_icon()` instead.
-/// For creating consistent icons for human looking simple animals.
-/proc/get_flat_human_icon(icon_id, datum/job/job, datum/preferences/prefs, dummy_key, showDirs = GLOB.cardinals, outfit_override = null)
+
+//For creating consistent icons for human looking simple animals
+/proc/get_flat_human_icon(icon_id, datum/job/J, datum/preferences/prefs, dummy_key, showDirs = GLOB.cardinals, outfit_override)
 	var/static/list/humanoid_icon_cache = list()
-	if(icon_id && humanoid_icon_cache[icon_id])
+	if(!icon_id || !humanoid_icon_cache[icon_id])
+		var/mob/living/carbon/human/dummy/body = generate_or_wait_for_human_dummy(dummy_key)
+		if(prefs)
+			prefs.copy_to(body,TRUE,FALSE)
+		if(J)
+			J.equip_dummy(body, outfit_override = outfit_override)
+		else if(outfit_override)
+			body.equipOutfit(outfit_override, visualsOnly = TRUE)
+
+
+		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
+		for(var/D in showDirs)
+			body.setDir(D)
+			var/icon/partial = getFlatIcon(body)
+			out_icon.Insert(partial, dir = D)
+
+		humanoid_icon_cache[icon_id] = out_icon
+		dummy_key ? unset_busy_human_dummy(dummy_key) : qdel(body)
+		return out_icon
+	else
 		return humanoid_icon_cache[icon_id]
 
-	var/mob/living/carbon/human/dummy/body = generate_or_wait_for_human_dummy(dummy_key)
-
-	if(prefs)
-		prefs.copy_to(body, TRUE, FALSE)
-
-	if(job)
-		job.equip_dummy(body, outfit_override = outfit_override)
-	else if(outfit_override)
-		body.equipOutfit(outfit_override, TRUE)
-
-	var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
-	for(var/direction in showDirs)
-		var/icon/partial = getFlatIcon(body, defdir = direction)
-		out_icon.Insert(partial, dir = direction)
-
-	humanoid_icon_cache[icon_id] = out_icon
-	dummy_key ? unset_busy_human_dummy(dummy_key) : qdel(body)
-	return out_icon
-
-/**
- * A simpler version of get_flat_human_icon() that uses an existing human as a base to create the icon.
- * Does not feature caching yet, since I could not think of a good way to cache them without having a possibility
- * of using the cached version when we don't want to, so only use this proc if you just need this flat icon
- * generated once and handle the caching yourself if you need to access that icon multiple times, or
- * refactor this proc to feature caching of icons.
- *
- * Arguments:
- * * existing_human - The human we want to get a flat icon out of.
- * * directions_to_output - The directions of the resulting flat icon, defaults to all cardinal directions.
- */
-/proc/get_flat_existing_human_icon(mob/living/carbon/human/existing_human, directions_to_output = GLOB.cardinals)
-	RETURN_TYPE(/icon)
-	if(!existing_human || !istype(existing_human))
-		CRASH("Attempted to call get_flat_existing_human_icon on a [existing_human ? existing_human.type : "null"].")
-
-	// We need to force the dir of the human so we can take those pictures, we'll set it back afterwards.
-	var/initial_human_dir = existing_human.dir
-	existing_human.dir = SOUTH
-	var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
-	for(var/direction in directions_to_output)
-		var/icon/partial = getFlatIcon(existing_human, defdir = direction)
-		out_icon.Insert(partial, dir = direction)
-
-	existing_human.dir = initial_human_dir
-
-	return out_icon
 
 GLOBAL_LIST_EMPTY(transformation_animation_objects)
 /**
@@ -1304,17 +1277,10 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	if(y_dimension < world.icon_size)
 		y_offset *= -1
 
-	image_to_center.pixel_x = x_offset
-	image_to_center.pixel_y = y_offset
+	image_to_center.pixel_w = x_offset
+	image_to_center.pixel_z = y_offset
 
 	return image_to_center
-
-/// Returns a list containing the width and height of an icon file
-/proc/get_icon_dimensions(icon_path)
-	if (isnull(GLOB.icon_dimensions[icon_path]))
-		var/icon/my_icon = icon(icon_path)
-		GLOB.icon_dimensions[icon_path] = list("width" = my_icon.Width(), "height" = my_icon.Height())
-	return GLOB.icon_dimensions[icon_path]
 
 /// Strips all underlays on a different plane from an appearance.
 /// Returns the stripped appearance.
@@ -1356,3 +1322,34 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		stack_trace("State [state] in file [file] does not exist.")
 
 	return FALSE
+
+/// Returns a list containing the width and height of an icon file
+/proc/get_icon_dimensions(icon_path)
+	// Icons can be a real file(), a rsc backed file(), a dynamic rsc (dyn.rsc) reference (known as a cache reference in byond docs), or an /icon which is pointing to one of those.
+	// Runtime generated dynamic icons are an unbounded concept cache identity wise, the same icon can exist millions of ways and holding them in a list as a key can lead to unbounded memory usage if called often by consumers.
+	// Check distinctly that this is something that has this unspecified concept, and thus that we should not cache.
+	if (!isfile(icon_path) || !length("[icon_path]"))
+		var/icon/my_icon = icon(icon_path)
+		return list("width" = my_icon.Width(), "height" = my_icon.Height())
+	if (isnull(GLOB.icon_dimensions[icon_path]))
+		var/icon/my_icon = icon(icon_path)
+		GLOB.icon_dimensions[icon_path] = list("width" = my_icon.Width(), "height" = my_icon.Height())
+	return GLOB.icon_dimensions[icon_path]
+
+#define CACHED_WIDTH_INDEX "width"
+#define CACHED_HEIGHT_INDEX "height"
+
+/atom/proc/get_cached_width()
+	if (isnull(icon))
+		return 0
+	var/list/dimensions = get_icon_dimensions(icon)
+	return dimensions[CACHED_WIDTH_INDEX]
+
+/atom/proc/get_cached_height()
+	if (isnull(icon))
+		return 0
+	var/list/dimensions = get_icon_dimensions(icon)
+	return dimensions[CACHED_HEIGHT_INDEX]
+
+#undef CACHED_WIDTH_INDEX
+#undef CACHED_HEIGHT_INDEX

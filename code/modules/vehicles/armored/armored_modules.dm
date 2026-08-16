@@ -79,6 +79,31 @@
 	owner.move_delay += 0.15 SECONDS
 	return ..()
 
+/obj/item/tank_module/heavy_armor
+	name = "heavy armor module"
+	desc = "An experimental armor package that significantly increases survivability at the cost of mobility."
+	icon_state = "heavy_armor"
+	attached_to_hull = TRUE
+
+/obj/item/tank_module/heavy_armor/on_equip(obj/vehicle/sealed/armored/vehicle, mob/living/user)
+	. = ..()
+	if(!.)
+		return
+
+	vehicle.ram_damage += 100
+	vehicle.move_delay += 0.35 SECONDS
+	vehicle.max_integrity += 550
+	vehicle.obj_integrity += 550
+
+/obj/item/tank_module/heavy_armor/on_unequip()
+	owner.move_delay -= 0.35 SECONDS
+	owner.ram_damage -= 100
+	owner.max_integrity -= 550
+	owner.obj_integrity -= 550
+	owner.obj_integrity = max(0, owner.obj_integrity)
+
+	return ..()
+
 /obj/item/tank_module/passenger
 	name = "passenger module"
 	desc = "A module that increases the carrying capacity of a vehicle with extra seats."

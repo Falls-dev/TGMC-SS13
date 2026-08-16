@@ -19,7 +19,7 @@
 /atom/proc/balloon_alert_to_viewers(message, self_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs)
 	SHOULD_NOT_SLEEP(TRUE)
 
-	var/list/hearers = get_hearers_in_view(vision_distance, src)
+	var/list/hearers = get_hearers_in_view(vision_distance, src, RECURSIVE_CONTENTS_CLIENT_MOBS)
 	hearers -= ignored_mobs
 
 	for (var/mob/hearer in hearers)
@@ -33,8 +33,6 @@
 // I would've made the maptext_height update on its own, but I don't know
 // if this would look bad on laggy clients.
 /atom/proc/balloon_alert_perform(mob/viewer, text)
-	if(QDELETED(src) || !viewer || QDELETED(viewer))
-		return
 	var/client/viewer_client = viewer.client
 	if (isnull(viewer_client))
 		return

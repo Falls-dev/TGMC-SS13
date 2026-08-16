@@ -259,6 +259,12 @@
 	description = "Create a smokescreen for a getaway."
 	keybind_signal = COMSIG_XENOABILITY_ACID_SHROUD_SELECT
 
+/datum/keybinding/xeno/acid_shroud_melter
+	name = "Melter: Acid Shroud"
+	full_name = "Melter: Acid Shroud"
+	description = "Create a smokescreen for a getaway."
+	keybind_signal = COMSIG_XENOABILITY_ACID_SHROUD_MELTER
+
 /datum/keybinding/xeno/acid_charge
 	name = "acid_charge"
 	full_name = "Bull: Acid charge"
@@ -724,6 +730,18 @@
 	keybind_signal = COMSIG_XENOABILITY_ACID_DASH
 	hotkey_keys = list("E")
 
+/datum/keybinding/xeno/acid_dash_melter
+	name = "Melter: Acid Dash"
+	full_name = "Melter: Acid Dash"
+	description = "Quickly dash, leaving acid in your path and knocking down the first marine hit. Has reset potential."
+	keybind_signal = COMSIG_XENOABILITY_ACID_DASH_MELTER
+
+/datum/keybinding/xeno/acidic_missile
+	name = "Melter: Acidic Missile"
+	full_name = "Melter: Acid Missile"
+	description = "Begin building up acid. If you're already building up acid, launch yourself at a target and splash acid all around you."
+	keybind_signal = COMSIG_XENOABILITY_ACIDIC_MISSILE
+
 /datum/keybinding/xeno/dodge
 	name = "Dodge"
 	full_name = "Dancer: Dodge"
@@ -758,6 +776,47 @@
 	description = "Inject another xenomorph with your built-up adrenaline, increasing their movement speed considerably for 6 seconds. Puts dodge on cooldown when used. Less effect on quick xenos."
 	keybind_signal = COMSIG_XENOABILITY_BATONPASS
 	hotkey_keys = list("C")
+
+/datum/keybinding/xeno/abduct
+	name = "Abduct"
+	full_name = "Oppressor: Abduct"
+	description = "After a delay, grab marines from a 7 tiles away. Canceling early has consequences."
+	keybind_signal = COMSIG_XENOABILITY_ABDUCT
+	hotkey_keys = list("Q")
+
+/datum/keybinding/xeno/dislocate
+	name = "Dislocate"
+	full_name = "Oppressor: Dislocate"
+	description = "Punch a marine and knock them back by two tiles."
+	keybind_signal = COMSIG_XENOABILITY_DISLOCATE
+	hotkey_keys = list("F")
+
+/datum/keybinding/xeno/item_throw
+	name = "Item Throw"
+	full_name = "Oppressor: Item Throw"
+	description = "Pick up an item and throw it. Damage and range varies based on item's size."
+	keybind_signal = COMSIG_XENOABILITY_ITEM_THROW
+	hotkey_keys = list("Z")
+
+/datum/keybinding/xeno/tail_lash
+	name = "Tail Lash"
+	full_name = "Oppressor: Tail Lash"
+	description = "Knock back marines in a 2x3 radius where you're facing by two tiles."
+	keybind_signal = COMSIG_XENOABILITY_TAIL_LASH
+	hotkey_keys = list("C")
+
+/datum/keybinding/xeno/tail_lash_select
+	name = "Tail Lash (Select)"
+	full_name = "Oppressor: Select Tail Lash"
+	description = "Knock back marines in a 2x3 radius where you're facing by two tiles."
+	keybind_signal = COMSIG_XENOABILITY_TAIL_LASH_SELECT
+
+/datum/keybinding/xeno/advance_oppressor
+	name = "Advance (Oppressor)"
+	full_name = "Oppressor: Advance"
+	description = "Launch yourself with tremendous speed toward a location. Hitting a marine will cause them to be launched incredibly far."
+	keybind_signal = COMSIG_XENOABILITY_ADVANCE_OPPRESSOR
+	hotkey_keys = list("E")
 
 /datum/keybinding/xeno/screech
 	name = "screech"
@@ -942,6 +1001,41 @@
 	keybind_signal = COMSIG_XENOABILITY_SCATTER_SPIT
 	hotkey_keys = list("V")
 
+/datum/keybinding/xeno/toss_grenade
+	name = "toss_grenade"
+	full_name = "GLobadier: Toss Grenade"
+	description = "Toss a grenade at your target."
+	keybind_signal = COMSIG_XENOABILITY_TOSS_GRENADE
+	hotkey_keys = list("R")
+
+/datum/keybinding/xeno/pick_grenade
+	name = "pick_grenade"
+	full_name = "Globadier: Pick Grenade"
+	description = "Pick which grenade to use with Toss Grenade."
+	keybind_signal = COMSIG_XENOABILITY_PICK_GRENADE
+	hotkey_keys = list("F")
+
+/datum/keybinding/xeno/acid_mine
+	name = "acid_mine"
+	full_name = "Globadier: Place Mine"
+	description = "Place a Mine at your location. Its effects depend on your selected grenade."
+	keybind_signal = COMSIG_XENOABILITY_ACID_MINE
+	hotkey_keys = list("G")
+
+/datum/keybinding/xeno/gas_mine
+	name = "gas_mine"
+	full_name = "Globadier: Gas Mine"
+	description = "Place a Gas Mine at your location."
+	keybind_signal = COMSIG_XENOABILITY_GAS_MINE
+	hotkey_keys = list("H")
+
+/datum/keybinding/xeno/acid_rocket
+	name = "acid_rocket"
+	full_name = "GLobadier: Acid Rocket"
+	description = "Fire a acid rocket at your target, after a short charge up."
+	keybind_signal = COMSIG_XENOABILITY_ACID_ROCKET
+	hotkey_keys = list("Y")
+
 /datum/keybinding/xeno/slime_grenade
 	name = "slime_grenade"
 	full_name = "Spitter: Slime Grenade"
@@ -1032,39 +1126,46 @@
 	keybind_signal = COMSIG_XENOABILITY_FLURRY
 	hotkey_keys = list("Q")
 
-/datum/keybinding/xeno/landslide
-	name = "Landslide"
-	full_name = "Behemoth: Landslide"
-	description = "Rush forward in the selected direction, damaging enemies caught in a wide path."
-	keybind_signal = COMSIG_XENOABILITY_LANDSLIDE
-	hotkey_keys = list("Z")
-
-/datum/keybinding/xeno/cancel_landslide
-	name = "Cancel Landslide"
-	full_name = "Behemoth: Cancel Landslide"
-	description = "Cancels landslide without having to select the ability"
-	keybind_signal = COMSIG_XENOABILITY_CANCEL_LANDSLIDE
-
 /datum/keybinding/xeno/earth_riser
 	name = "Earth Riser"
 	full_name = "Behemoth: Earth Riser"
-	description = "Raise a pillar of earth at the selected location. This solid structure can be used for defense, and it interacts with other abilities for offensive usage."
+	description = "Create or interact with an Earth Pillar. If holding one, you will instead throw it."
 	keybind_signal = COMSIG_XENOABILITY_EARTH_RISER
-	hotkey_keys = list("C")
+	hotkey_keys = list("R")
 
 /datum/keybinding/xeno/earth_riser_alternate
 	name = "Destroy Earth Pillar"
 	full_name = "Behemoth: Destroy Earth Pillar"
-	description = "Destroy active Earth Pillars created by Earth Riser, starting by the oldest one."
+	description = "Destroy active Earth Pillars, from oldest to newest."
 	keybind_signal = COMSIG_XENOABILITY_EARTH_RISER_ALTERNATE
 	hotkey_keys = list("ShiftC")
 
-/datum/keybinding/xeno/seismic_fracture
-	name = "Seismic Fracture"
-	full_name = "Behemoth: Seismic Fracture"
-	description = "Blast the earth around the selected location, inflicting heavy damage in a large radius."
-	keybind_signal = COMSIG_XENOABILITY_SEISMIC_FRACTURE
-	hotkey_keys = list("V")
+/datum/keybinding/xeno/behemoth_seize
+	name = "Targeted Seize"
+	full_name = "Behemoth: Seize (Targeted)"
+	description = "Dash towards a target Earth Pillar and grab it."
+	keybind_signal = COMSIG_XENOABILITY_BEHEMOTH_SEIZE
+
+/datum/keybinding/xeno/behemoth_seize_alternate
+	name = "Seize Nearest"
+	full_name = "Behemoth: Seize (Nearest)"
+	description = "Dash towards the nearest Earth Pillar and grab it."
+	keybind_signal = COMSIG_XENOABILITY_BEHEMOTH_SEIZE_ALTERNATE
+	hotkey_keys = list("E")
+
+/datum/keybinding/xeno/landslide
+	name = "Landslide"
+	full_name = "Behemoth: Landslide"
+	description = "Charge forward in the nearest cardinal direction, affecting eligible targets in a wide path."
+	keybind_signal = COMSIG_XENOABILITY_LANDSLIDE
+	hotkey_keys = list("C")
+
+/datum/keybinding/xeno/geocrush
+	name = "Geocrush"
+	full_name = "Behemoth: Geocrush"
+	description = "Recover all damage recently received, and gain a brief moment of invulnerability, in exchange for a stacking debuff."
+	keybind_signal = COMSIG_XENOABILITY_GEOCRUSH
+	hotkey_keys = list("F")
 
 /datum/keybinding/xeno/primal_wrath
 	name = "Primal Wrath"
@@ -1169,6 +1270,13 @@
 	keybind_signal = COMSIG_XENOABILITY_CHIMERA_BODYSWAP
 	hotkey_keys = list("X")
 
+/datum/keybinding/xeno/chimera_stealth
+	name = "stealth"
+	full_name = "Chimera: Toogle Stealth"
+	description = "Activates invisibility."
+	keybind_signal = COMSIG_XENOABILITY_CHIMERA_STEALTH
+	hotkey_keys = list("C")
+
 /datum/keybinding/xeno/crippling_strike
 	name = "crippling_strike"
 	full_name = "Chimera: Crippling Strike"
@@ -1241,13 +1349,6 @@
 	description = "Stun and blind the target with a web projectile"
 	keybind_signal = COMSIG_XENOABILITY_WEB_SPIT
 	hotkey_keys = list("R")
-
-/datum/keybinding/xeno/create_hugger
-	name = "Create Facehugger"
-	full_name = "Widow: Create Facehugger"
-	description = "Create a facehugger."
-	keybind_signal = COMSIG_XENOABILITY_CREATE_HUGGER
-	hotkey_keys = list("G")
 
 /datum/keybinding/xeno/widow_unleash
 	name = "Unleash Spiderlings"

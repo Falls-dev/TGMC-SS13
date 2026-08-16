@@ -40,7 +40,7 @@
 /datum/supply_packs/clothing/Med_hud_implant
 	name = "Medical HUD implanter"
 	contains = list(/obj/item/implanter/hud/medical)
-	cost = 125
+	cost = 75
 
 /datum/supply_packs/clothing/officer_outfits
 	name = "Officer outfits"

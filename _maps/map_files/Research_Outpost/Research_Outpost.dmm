@@ -513,7 +513,9 @@
 "cz" = (
 /obj/effect/ai_node,
 /turf/open/floor/plating/ground/mars/random/cave,
-/area/outpost/caves/south_west)
+/area/outpost/caves/south_east{
+	ceiling = 4
+	})
 "cB" = (
 /turf/open/floor/plating/ground/mars/dirttosand{
 	dir = 8
@@ -1632,7 +1634,9 @@
 /area/outpost/caves/north_west)
 "ho" = (
 /turf/open/floor/plating/ground/mars/random/cave,
-/area/outpost/caves/south_west)
+/area/outpost/caves/south_east{
+	ceiling = 4
+	})
 "hq" = (
 /obj/effect/ai_node,
 /turf/open/floor/marking/asteroidwarning,
@@ -2932,7 +2936,7 @@
 /obj/effect/landmark/fog_blocker/xeno_spawn,
 /obj/effect/landmark/fog_blocker/xeno_spawn,
 /turf/open/floor/plating/ground/mars/random/cave,
-/area/outpost/caves/south)
+/area/outpost/caves/north_east)
 "mU" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/marking/asteroidwarning{
@@ -4717,7 +4721,9 @@
 "ux" = (
 /obj/effect/landmark/xeno_silo_spawn,
 /turf/open/floor/plating/ground/mars/random/cave,
-/area/outpost/caves/south_west)
+/area/outpost/caves/south_east{
+	ceiling = 4
+	})
 "uB" = (
 /turf/open/floor/tile/dark/blue2{
 	dir = 8
@@ -5189,7 +5195,9 @@
 "wE" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
 /turf/open/floor/plating/ground/mars/random/cave,
-/area/outpost/caves/south_west)
+/area/outpost/caves/south_east{
+	ceiling = 4
+	})
 "wF" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/plating/ground/mars/cavetodirt{
@@ -5615,7 +5623,7 @@
 /obj/effect/landmark/fog_blocker/xeno_spawn,
 /obj/effect/ai_node,
 /turf/open/floor/plating/ground/mars/random/cave,
-/area/outpost/caves/south)
+/area/outpost/caves/north_east)
 "yz" = (
 /turf/open/floor/tile/damaged/five,
 /area/outpost/cargo)
@@ -5742,10 +5750,6 @@
 	dir = 8
 	},
 /area/outpost/science/hydponics)
-"zd" = (
-/obj/effect/landmark/xeno_silo_spawn,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/outpost/caves/south)
 "ze" = (
 /obj/structure/table,
 /obj/item/reagent_containers/glass/beaker/noreact,
@@ -6796,8 +6800,13 @@
 /turf/open/floor/tile/dark/brown2,
 /area/outpost/arrivals)
 "Eg" = (
-/turf/closed/mineral/smooth/bigred,
-/area/outpost/caves/south_east)
+/obj/effect/landmark/weed_node,
+/turf/open/floor/plating/ground/mars/cavetodirt{
+	dir = 1
+	},
+/area/outpost/caves/south_east{
+	ceiling = 4
+	})
 "Eh" = (
 /turf/open/floor/plating/ground/mars/dirttosand{
 	dir = 5
@@ -6917,10 +6926,6 @@
 "EE" = (
 /turf/closed/mineral/smooth/bigred/indestructible,
 /area/bigredv2/caves/rock)
-"EF" = (
-/obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/outpost/caves/south)
 "EG" = (
 /turf/closed/wall/r_wall,
 /area/outpost/science/hydponics)
@@ -7501,9 +7506,12 @@
 /turf/open/floor/plating/asteroidfloor,
 /area/outpost/yard/south)
 "Ht" = (
-/obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/outpost/caves/south_east)
+/turf/open/floor/plating/ground/mars/cavetodirt{
+	dir = 1
+	},
+/area/outpost/caves/south_east{
+	ceiling = 4
+	})
 "Hu" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/marking/asteroidwarning,
@@ -8658,7 +8666,7 @@
 "My" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
 /turf/closed/mineral/smooth/bigred,
-/area/outpost/caves/south_east)
+/area/outpost/caves/north_east)
 "Mz" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/power/apc/drained,
@@ -9948,10 +9956,6 @@
 /obj/effect/landmark/weed_node,
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/outpost/caves/north_west)
-"RZ" = (
-/obj/effect/landmark/xeno_silo_spawn,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/outpost/caves/south_east)
 "Sb" = (
 /turf/open/floor/tile/dark/brown2/corner{
 	dir = 8
@@ -10299,7 +10303,7 @@
 	dir = 2
 	},
 /turf/open/floor/plating/ground/mars/random/cave,
-/area/outpost/caves/south_east)
+/area/outpost/caves/north_east)
 "TE" = (
 /obj/machinery/light{
 	dir = 8
@@ -10484,7 +10488,9 @@
 "Uu" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/plating/ground/mars/random/cave,
-/area/outpost/caves/south_west)
+/area/outpost/caves/south_east{
+	ceiling = 4
+	})
 "Uv" = (
 /turf/open/floor/plating/ground/mars/cavetodirt{
 	dir = 9
@@ -17435,15 +17441,15 @@ Jc
 Tr
 QY
 yW
-wQ
-hK
-hK
-hK
-hK
-wQ
-hK
-hK
-hK
+cz
+ho
+ho
+ho
+ho
+cz
+ho
+ho
+ho
 yW
 yW
 yW
@@ -17555,16 +17561,16 @@ GQ
 VI
 oy
 QY
-hK
-IH
-hK
-hK
-hK
-hK
-hK
-hK
-hK
-hK
+ho
+Uu
+ho
+ho
+ho
+ho
+ho
+ho
+ho
+ho
 yW
 yW
 yW
@@ -17676,16 +17682,16 @@ IA
 oV
 OI
 QY
-hK
-hK
-hK
-hK
-IH
-hK
-hK
-hK
-IH
-hK
+ho
+ho
+ho
+ho
+Uu
+ho
+ho
+ho
+Uu
+ho
 yW
 yW
 yW
@@ -17797,16 +17803,16 @@ JV
 JV
 SU
 QY
-hK
-hK
-hK
-hK
-hK
-hK
-hK
-hK
-hK
-hK
+ho
+ho
+ho
+ho
+ho
+ho
+ho
+ho
+ho
+ho
 yW
 yW
 yW
@@ -17918,16 +17924,16 @@ QY
 QY
 QY
 QY
-hK
-IH
-hK
-hK
-hK
-hK
-hK
-hK
-hK
-hK
+ho
+Uu
+ho
+ho
+ho
+ho
+ho
+ho
+ho
+ho
 yW
 yW
 yW
@@ -18035,19 +18041,19 @@ Cy
 Cy
 my
 Mr
-wM
-hK
-hK
-hK
-hK
-hK
-hK
+Ht
+ho
+ho
+ho
+ho
+ho
+ho
 yW
 yW
-hK
-hK
-IH
-hK
+ho
+ho
+Uu
+ho
 yW
 yW
 yW
@@ -18156,13 +18162,13 @@ Nx
 Cy
 Hf
 Mr
-mC
+Eg
 mS
-EF
-EF
-EF
+ct
+ct
+ct
 yy
-EF
+ct
 ja
 ja
 ja
@@ -18278,12 +18284,12 @@ AT
 Mr
 Mr
 yW
-EF
-hK
-hK
-hK
-hK
-hK
+ct
+Yx
+Yx
+Yx
+Yx
+Yx
 yW
 yW
 yW
@@ -18400,14 +18406,14 @@ Mr
 Mr
 yW
 ja
-hK
-hK
-hK
-hK
-hK
-hK
-IH
-hK
+Yx
+Yx
+Yx
+Yx
+Yx
+Yx
+Lf
+Yx
 yW
 ja
 yW
@@ -18522,14 +18528,14 @@ yW
 yW
 ja
 yW
-hK
-IH
-hK
-hK
-hK
-hK
-hK
-hK
+Yx
+Lf
+Yx
+Yx
+Yx
+Yx
+Yx
+Yx
 ja
 yW
 yW
@@ -18643,14 +18649,14 @@ yW
 yW
 ja
 yW
-hK
-hK
-hK
-hK
-hK
-hK
-zd
-hK
+Yx
+Yx
+Yx
+Yx
+Yx
+Yx
+Hn
+Yx
 ja
 yW
 yW
@@ -18766,12 +18772,12 @@ ja
 yW
 yW
 yW
-hK
-hK
-hK
-hK
-hK
-IH
+Yx
+Yx
+Yx
+Yx
+Yx
+Lf
 ja
 yW
 yW
@@ -18887,12 +18893,12 @@ ja
 yW
 yW
 yW
-hK
-IH
-hK
-hK
-hK
-hK
+Yx
+Lf
+Yx
+Yx
+Yx
+Yx
 ja
 yW
 yW
@@ -19008,12 +19014,12 @@ ja
 yW
 yW
 yW
-hK
-hK
-hK
-hK
-hK
-hK
+Yx
+Yx
+Yx
+Yx
+Yx
+Yx
 ja
 yW
 yW
@@ -19128,12 +19134,12 @@ yW
 ja
 ja
 ja
-EF
-EF
-EF
-EF
-EF
-EF
+ct
+ct
+ct
+ct
+ct
+ct
 ja
 ja
 yW
@@ -19249,11 +19255,11 @@ yW
 yW
 yW
 yW
-hK
-hK
-hK
-hK
-hK
+ho
+ho
+ho
+ho
+ho
 yW
 yW
 yW
@@ -19370,11 +19376,11 @@ yW
 yW
 yW
 yW
-hK
-hK
-hK
-hK
-hK
+ho
+ho
+ho
+ho
+ho
 yW
 yW
 yW
@@ -24814,9 +24820,9 @@ Kt
 ZL
 lg
 ys
-Hm
-Pn
-Hm
+ho
+Uu
+ho
 yW
 yW
 yW
@@ -24935,9 +24941,9 @@ Ya
 nA
 uX
 ys
-Hm
-Hm
-Hm
+ho
+ho
+ho
 yW
 yW
 yW
@@ -25056,9 +25062,9 @@ ys
 ys
 ys
 ys
-Hm
-Hm
-Hm
+ho
+ho
+ho
 yW
 yW
 yW
@@ -25177,10 +25183,10 @@ yW
 yW
 yW
 yW
-Hm
-Pn
-Hm
-Hm
+ho
+Uu
+ho
+ho
 yW
 yW
 yW
@@ -25298,10 +25304,10 @@ yW
 yW
 yW
 yW
-Hm
-Hm
-Hm
-Hm
+ho
+ho
+ho
+ho
 yW
 yW
 yW
@@ -25420,10 +25426,10 @@ yW
 yW
 yW
 yW
-Hm
-Hm
-Hm
-Hm
+ho
+ho
+ho
+ho
 yW
 yW
 yW
@@ -25541,10 +25547,10 @@ yW
 yW
 yW
 yW
-Hm
-Hm
-Hm
-Hm
+ho
+ho
+ho
+ho
 yW
 yW
 yW
@@ -25662,10 +25668,10 @@ yW
 yW
 yW
 yW
-Hm
-Hm
-Pn
-Hm
+ho
+ho
+Uu
+ho
 yW
 yW
 yW
@@ -25783,10 +25789,10 @@ yW
 yW
 yW
 yW
-eH
-Hm
-Hm
-Hm
+cz
+ho
+ho
+ho
 yW
 yW
 yW
@@ -25903,10 +25909,10 @@ yW
 yW
 yW
 yW
-Hm
-Hm
-Hm
-Hm
+ho
+ho
+ho
+ho
 yW
 yW
 yW
@@ -26024,9 +26030,9 @@ yW
 yW
 yW
 yW
-Hm
-Hm
-Hm
+ho
+ho
+ho
 yW
 yW
 yW
@@ -26144,10 +26150,10 @@ yW
 yW
 yW
 yW
-Hm
-Pn
-Hm
-Hm
+Yx
+Lf
+Yx
+Yx
 yW
 yW
 yW
@@ -26265,9 +26271,9 @@ yW
 yW
 yW
 yW
-Hm
-Hm
-Hm
+Yx
+Yx
+Yx
 yW
 yW
 yW
@@ -26386,9 +26392,9 @@ yW
 yW
 ja
 ja
-Ht
-Ht
-Ht
+ct
+ct
+ct
 My
 gw
 gw
@@ -26506,10 +26512,10 @@ Vg
 yW
 yW
 ja
-eH
-Hm
-Hm
-eH
+NR
+Yx
+Yx
+NR
 My
 gw
 gw
@@ -26624,13 +26630,13 @@ vr
 io
 Dk
 TD
-Hm
-Hm
-Ht
-Hm
-Hm
-Hm
-RZ
+Yx
+Yx
+ct
+Yx
+Yx
+Yx
+Hn
 My
 gw
 gw
@@ -26745,13 +26751,13 @@ Jo
 io
 Dk
 TD
-Hm
-Hm
-Ht
-eH
-Pn
-Hm
-Hm
+Yx
+Yx
+ct
+NR
+Lf
+Yx
+Yx
 My
 gw
 gw
@@ -26866,13 +26872,13 @@ vr
 io
 Dk
 TD
-Hm
-Pn
-Ht
-Hm
-Hm
-Hm
-Hm
+Yx
+Lf
+ct
+Yx
+Yx
+Yx
+Yx
 My
 gw
 gw
@@ -26987,13 +26993,13 @@ vr
 Qz
 Dk
 TD
-Hm
-Hm
-Ht
-Hm
-Hm
-Hm
-Hm
+Yx
+Yx
+ct
+Yx
+Yx
+Yx
+Yx
 My
 gw
 gw
@@ -27110,11 +27116,11 @@ yW
 Vg
 yW
 yW
-Ht
-Ht
-Ht
-Ht
-Ht
+ct
+ct
+ct
+ct
+ct
 My
 gw
 gw
@@ -27231,12 +27237,12 @@ yW
 Vg
 yW
 yW
-Hm
-Hm
-Hm
-Pn
-Hm
-Eg
+Yx
+Yx
+Yx
+Lf
+Yx
+lJ
 gw
 gw
 gw
@@ -27351,13 +27357,13 @@ hY
 yW
 Vg
 yW
-Pn
-Hm
-eH
-Hm
-Hm
-Hm
-Eg
+Lf
+Yx
+NR
+Yx
+Yx
+Yx
+lJ
 gw
 gw
 gw
@@ -27472,13 +27478,13 @@ mv
 yW
 Vg
 yW
-Hm
-Hm
-Hm
-Pn
-Hm
-Hm
-Eg
+Yx
+Yx
+Yx
+Lf
+Yx
+Yx
+lJ
 gw
 gw
 gw
@@ -27593,13 +27599,13 @@ yW
 yW
 Vg
 yW
-Hm
-Hm
-Hm
-Hm
-Hm
-Eg
-Eg
+Yx
+Yx
+Yx
+Yx
+Yx
+lJ
+lJ
 gw
 gw
 gw
@@ -27715,12 +27721,12 @@ yW
 Vg
 yW
 yW
-Pn
-Hm
-Hm
-Hm
-Eg
-Eg
+Lf
+Yx
+Yx
+Yx
+lJ
+lJ
 gw
 gw
 gw
@@ -27836,12 +27842,12 @@ mO
 du
 yW
 yW
-Hm
-Hm
-Hm
-Eg
-Eg
-Eg
+Yx
+Yx
+Yx
+lJ
+lJ
+lJ
 gw
 gw
 gw

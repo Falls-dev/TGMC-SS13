@@ -39,6 +39,19 @@
 	color = "#660088"
 	baseturfs = /turf/closed/cordon/debug
 
+#define BEHEMOTH_ROCK_EATING_MESSAGES pick(list(\
+	"We eat away at the stone. It tastes good, as expected of our primary diet.",\
+	"Yum... Delicious rock. A fitting meal for us, the hardiest of creatures.",\
+	"This boulder — its flavor fills us with glee! Our palate is thoroughly satisfied.",\
+	"These minerals are tasty. We want more...",\
+	"Will eating this stone make our hide tougher?",\
+	"A delectable flavor. Just one bite is not enough...",\
+	"One bite, two bites... why not just eat the whole thing?",\
+	"The stone. The rock. The boulder. The crag. Its name matters not when we consume it, for it is reduced to naught.",\
+	"This boulder could have other uses... is eating it a good idea?",\
+	"Delicious. Delectable. Simply exquisite.",\
+))
+
 /turf/closed/mineral
 	name = "rock"
 	icon = 'icons/turf/walls.dmi'
@@ -73,20 +86,12 @@
 
 /turf/closed/mineral/attack_alien(mob/living/carbon/xenomorph/xeno_user, isrightclick = FALSE)
 	. = ..()
-	if(isxenobehemoth(xeno_user))
-		xeno_user.do_attack_animation(src)
-		playsound(src, 'sound/effects/alien/behemoth/earth_pillar_eating.ogg', 10, TRUE)
-		xeno_user.visible_message(span_xenowarning("\The [xeno_user] eats away at the [src.name]!"), \
-		span_xenonotice(pick(
-			"We eat away at the stone. It tastes good, as expected of our primary diet.",
-			"Mmmmm... Delicious rock. A fitting meal for the hardiest of creatures.",
-			"This boulder -- its flavor fills us with glee. Our palate is thoroughly satisfied.",
-			"These minerals are tasty! We want more!",
-			"Eating this stone makes us think; is our hide tougher? It is. It must be...",
-			"A delectable flavor. Just one bite is not enough...",
-			"One bite, two bites... why not just finish the whole rock?",
-			"The stone. The rock. The boulder. Its name matters not when we consume it.",
-			"Delicious, delectable, simply exquisite. Just a few more minerals and it'd be perfect...")), null, 5)
+	if(!isxenobehemoth(xeno_user))
+		return
+	xeno_user.do_attack_animation(src)
+	playsound(src, 'sound/effects/alien/behemoth/earth_pillar_eating.ogg', 10, TRUE)
+	xeno_user.visible_message(span_xenowarning("\The [xeno_user] eats away at the [src.name]!"), \
+	span_xenonotice(BEHEMOTH_ROCK_EATING_MESSAGES), null, 5)
 
 /turf/closed/plasmacutter_act(mob/living/user, obj/item/tool/pickaxe/plasmacutter/I)
 	if(user.do_actions)

@@ -226,7 +226,7 @@
 
 /mob/living/carbon/xenomorph/Initialize(mapload, do_not_set_as_ruler)
 	. = ..()
-	RegisterSignal(src, COMSIG_XENOMORPH_ATTACK_LIVING, PROC_REF(on_mutation_attack_living))
+	RegisterSignal(src, COMSIG_XENOMORPH_ATTACK_LIVING, PROC_REF(on_attack_living))
 
 /mob/living/carbon/xenomorph/proc/on_mutation_attack_living(datum/source, mob/living/target, damage, list/damage_mod, list/armor_mod)
 	SIGNAL_HANDLER

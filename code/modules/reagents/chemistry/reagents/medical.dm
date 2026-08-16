@@ -3,6 +3,7 @@
 	taste_description = "bitterness"
 	reagent_state = LIQUID
 	taste_description = "bitterness"
+	reagent_ui_priority = REAGENT_UI_MEDICINE
 
 /datum/reagent/medicine/inaprovaline
 	name = "Inaprovaline"
@@ -11,6 +12,7 @@
 	overdose_threshold = REAGENTS_OVERDOSE*2
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL*2
 	trait_flags = TACHYCARDIC
+	reagent_ui_priority = REAGENT_UI_UNIQUE
 
 /datum/reagent/medicine/inaprovaline/on_mob_add(mob/living/L, metabolism)
 	ADD_TRAIT(L, TRAIT_IGNORE_SUFFOCATION, REAGENT_TRAIT(src))
@@ -94,6 +96,7 @@
 	purge_rate = 5
 	overdose_threshold = REAGENTS_OVERDOSE*2
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL*2
+	reagent_ui_priority = REAGENT_UI_UNIQUE
 
 /datum/reagent/medicine/paracetamol/on_mob_life(mob/living/L, metabolism)
 	L.reagent_pain_modifier += PAIN_REDUCTION_HEAVY
@@ -110,8 +113,8 @@
 
 /datum/reagent/medicine/paracetamol/overdose_process(mob/living/L, metabolism)
 	L.hallucination = max(L.hallucination, 2)
-	L.reagent_pain_modifier += PAIN_REDUCTION_VERY_LIGHT
-	L.apply_damage(0.5*effect_str, TOX)
+	L.reagent_pain_modifier -= PAIN_REDUCTION_VERY_LIGHT
+	L.apply_damage(1.5*effect_str, TOX)
 
 /datum/reagent/medicine/paracetamol/overdose_crit_process(mob/living/L, metabolism)
 	L.apply_damage(3*effect_str, TOX)
@@ -126,6 +129,7 @@
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	overdose_threshold = REAGENTS_OVERDOSE
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL
+	reagent_ui_priority = REAGENT_UI_BKTT
 
 /datum/reagent/medicine/tramadol/on_mob_life(mob/living/L)
 	L.reagent_pain_modifier += PAIN_REDUCTION_VERY_HEAVY
@@ -147,6 +151,7 @@
 	color = COLOR_REAGENT_OXYCODONE
 	overdose_threshold = REAGENTS_OVERDOSE * 0.5
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL * 0.5
+	reagent_ui_priority = REAGENT_UI_BKTT
 
 /datum/reagent/medicine/oxycodone/on_mob_add(mob/living/L, metabolism)
 	if(TIMER_COOLDOWN_RUNNING(L, name))
@@ -236,6 +241,7 @@
 	purge_rate = 2.5
 	overdose_threshold = REAGENTS_OVERDOSE
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL
+	reagent_ui_priority = REAGENT_UI_BKTT
 
 /datum/reagent/medicine/kelotane/on_mob_life(mob/living/L, metabolism)
 	var/target_temp = L.get_standard_bodytemperature()
@@ -265,6 +271,7 @@
 	color = COLOR_REAGENT_DERMALINE
 	overdose_threshold = REAGENTS_OVERDOSE*0.5
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL*0.5
+	reagent_ui_priority = REAGENT_UI_BKTT
 
 /datum/reagent/medicine/dermaline/on_mob_life(mob/living/L, metabolism)
 	var/target_temp = L.get_standard_bodytemperature()
@@ -365,6 +372,7 @@
 	overdose_threshold = REAGENTS_OVERDOSE
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL
 	taste_description = "grossness"
+	reagent_ui_priority = REAGENT_UI_BKTT
 
 /datum/reagent/medicine/tricordrazine/on_mob_life(mob/living/L, metabolism)
 
@@ -393,6 +401,7 @@
 	overdose_threshold = REAGENTS_OVERDOSE
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL
 	taste_description = "a roll of gauze"
+	reagent_ui_priority = REAGENT_UI_BKTT
 
 /datum/reagent/medicine/dylovene/on_mob_add(mob/living/L, metabolism)
 	L.add_stamina_regen_modifier(name, -0.5)
@@ -465,6 +474,7 @@
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	purge_list = list(/datum/reagent/toxin/mindbreaker)
 	purge_rate = 5
+	reagent_ui_priority = REAGENT_UI_BKTT
 
 /datum/reagent/medicine/synaptizine/on_mob_add(mob/living/L, metabolism)
 	if(TIMER_COOLDOWN_RUNNING(L, name))
@@ -560,6 +570,7 @@
 	custom_metabolism = REAGENTS_METABOLISM * 2
 	overdose_threshold = 5
 	overdose_crit_threshold = 6
+	reagent_ui_priority = REAGENT_UI_IMMEDIATE
 
 /datum/reagent/medicine/neuraline/on_mob_add(mob/living/L, metabolism)
 	var/mob/living/carbon/human/H = L
@@ -645,6 +656,7 @@
 	custom_metabolism = REAGENTS_METABOLISM * 5
 	overdose_threshold = REAGENTS_OVERDOSE * 0.5   //so it makes the OD threshold effectively 15 so two pills is too much but one is fine
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL / 2.5 //and this makes the Critical OD 20
+	reagent_ui_priority = REAGENT_UI_IMMEDIATE
 
 /datum/reagent/medicine/russian_red/on_mob_add(mob/living/L, metabolism)
 	var/mob/living/carbon/human/H = L
@@ -763,6 +775,7 @@
 	overdose_threshold = REAGENTS_OVERDOSE/30
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL/25
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
+	reagent_ui_priority = REAGENT_UI_IMMEDIATE
 
 /datum/reagent/medicine/peridaxon_plus/on_mob_life(mob/living/L, metabolism)
 	L.reagents.add_reagent(/datum/reagent/toxin, 5)
@@ -795,6 +808,7 @@
 	purge_rate = 2.5
 	overdose_threshold = REAGENTS_OVERDOSE
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL
+	reagent_ui_priority = REAGENT_UI_BKTT
 
 /datum/reagent/medicine/bicaridine/on_mob_life(mob/living/L, metabolism)
 	L.heal_overall_damage(effect_str, 0)
@@ -822,6 +836,7 @@
 	color = COLOR_REAGENT_MERALYNE
 	overdose_threshold = REAGENTS_OVERDOSE*0.5
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL*0.5
+	reagent_ui_priority = REAGENT_UI_BKTT
 
 /datum/reagent/medicine/meralyne/on_mob_life(mob/living/L, metabolism)
 	L.heal_overall_damage(2*effect_str, 0)
@@ -850,6 +865,7 @@
 	overdose_threshold = REAGENTS_OVERDOSE * 0.5 //Was 4, now 6 //Now 15
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL * 0.5
 	custom_metabolism = REAGENTS_METABOLISM * 0.25
+	reagent_ui_priority = REAGENT_UI_SPACEA
 
 /datum/reagent/medicine/quickclot/on_mob_life(mob/living/L, metabolism)
 	L.adjust_blood_volume(0.2)
@@ -880,6 +896,7 @@
 	overdose_threshold = REAGENTS_OVERDOSE/5 //6u
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL/5 //12u
 	custom_metabolism = REAGENTS_METABOLISM * 2.5
+	reagent_ui_priority = REAGENT_UI_IMMEDIATE
 	///The IB wound this dose of QCP will cure, if it lasts long enough
 	var/datum/wound/internal_bleeding/target_IB
 	///Ticks remaining before the target_IB is cured
@@ -952,6 +969,7 @@
 	color = COLOR_REAGENT_NANOBLOOD
 	overdose_threshold = REAGENTS_OVERDOSE/5 //6u
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL/5 //10u
+	reagent_ui_priority = REAGENT_UI_IMMEDIATE
 
 /datum/reagent/medicine/nanoblood/on_mob_life(mob/living/L, metabolism)
 	L.adjust_blood_volume(3.4)
@@ -980,6 +998,7 @@
 	overdose_crit_threshold = 20
 	addiction_threshold = 0.4 // Adios Addiction Virus
 	taste_multi = 2
+	reagent_ui_priority = REAGENT_UI_IMMEDIATE
 
 /datum/reagent/medicine/ultrazine/on_mob_add(mob/living/L, metabolism)
 	. = ..()
@@ -1107,6 +1126,7 @@
 	overdose_threshold = REAGENTS_OVERDOSE
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL
 	taste_description = "fish"
+	reagent_ui_priority = REAGENT_UI_BKTT
 
 /datum/reagent/medicine/rezadone/on_mob_life(mob/living/L, metabolism)
 	switch(current_cycle)
@@ -1142,6 +1162,7 @@
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL
 	purge_list = list(/datum/reagent/medicine/xenojelly)
 	purge_rate = 5
+	reagent_ui_priority = REAGENT_UI_SPACEA
 
 /datum/reagent/medicine/spaceacillin/overdose_process(mob/living/L, metabolism)
 	L.apply_damage(effect_str, TOX)
@@ -1155,6 +1176,7 @@
 	color = COLOR_REAGENT_POLYHEXANIDE
 	custom_metabolism = REAGENTS_METABOLISM * 2
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL
+	reagent_ui_priority = REAGENT_UI_TOXINS
 
 /datum/reagent/medicine/polyhexanide/on_mob_life(mob/living/L, metabolism)
 	switch(current_cycle)
@@ -1209,6 +1231,7 @@
 	color = COLOR_REAGENT_ETHYLREDOXRAZINE
 	overdose_threshold = REAGENTS_OVERDOSE
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL
+	reagent_ui_priority = REAGENT_UI_BASE
 
 /datum/reagent/medicine/ethylredoxrazine/on_mob_life(mob/living/L, metabolism)
 	L.dizzy(-1)
@@ -1241,6 +1264,7 @@
 	purge_rate = 5
 	taste_description = "punishment"
 	taste_multi = 8
+	reagent_ui_priority = REAGENT_UI_UNIQUE
 
 /datum/reagent/hypervene/on_mob_life(mob/living/carbon/human/L, metabolism)
 	L.reagent_shock_modifier -= PAIN_REDUCTION_HEAVY //Significant pain while metabolized.
@@ -1267,6 +1291,7 @@
 	color = COLOR_REAGENT_ROULETTIUM
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	taste_description = "Poor life choices"
+	reagent_ui_priority = REAGENT_UI_TOXINS
 
 /datum/reagent/medicine/roulettium/on_mob_life(mob/living/L, metabolism)
 	L.reagent_shock_modifier += PAIN_REDUCTION_VERY_HEAVY * 4
@@ -1283,6 +1308,7 @@
 	reagent_state = LIQUID
 	color = COLOR_REAGENT_LEMOLINE
 	taste_description = "piss"
+	reagent_ui_priority = REAGENT_UI_BASE
 
 /datum/reagent/medicine/bihexajuline
 	name = "Bihexajuline"
@@ -1322,6 +1348,7 @@
 	taste_description = "bitterness"
 	reagent_state = LIQUID
 	taste_description = "bitterness"
+	reagent_ui_priority = REAGENT_UI_IMMEDIATE
 
 /datum/reagent/medicine/research/quietus
 	name = "Quietus"
@@ -1391,6 +1418,7 @@
 	taste_description = "metal, followed by mild burning"
 	overdose_threshold = REAGENTS_OVERDOSE * 1.2 //slight buffer to keep you safe
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL * 1.7
+	reagent_ui_priority = REAGENT_UI_UNIQUE
 	purge_rate = 5
 	purge_list = list(
 		/datum/reagent/medicine/bicaridine,
@@ -1518,38 +1546,100 @@
 	return ..()
 
 /datum/reagent/medicine/sulfasalazine
-	name = "sulfasalazine"
-	description = "Sulfasalazine, a self-restoring agent that has great healing effects at the cost of purging all the other reagents."
+	name = "Sulfasalazine"
+	description = "Sulfasalazine, a self-restoring agent that has great healing effects, but it also purges most other reagents."
 	color = COLOR_REAGENT_SULFASALAZINE
 	custom_metabolism = 0
-	purge_rate = 5
+	reagent_ui_priority = REAGENT_UI_UNIQUE
+	purge_rate = 10
 	var/absorbtion = 0
 	var/max_absorbtion = 10
-	var/max_reagent = 50
+	var/max_reagent = 125
 
 /datum/reagent/medicine/sulfasalazine/on_mob_life(mob/living/L, metabolism)
-	if(absorbtion > 0 && volume < max_reagent)
-		L.reagents.add_reagent(/datum/reagent/medicine/sulfasalazine, 3.5)
+	L.adjust_tox_loss(-0.5 * effect_str)
+	L.reagent_pain_modifier += PAIN_REDUCTION_HEAVY
+
+	if(!ishuman(L))
+		return ..()
+	var/mob/living/carbon/human/human = L
+
+	if(volume > 100 && prob(10))
+		var/datum/internal_organ/organ = human.get_damaged_organ()
+		if(organ)
+			L.adjust_tox_loss(15 * effect_str)
+			holder.remove_reagent(/datum/reagent/medicine/sulfasalazine, 25)
+			organ.heal_organ_damage(15 * effect_str)
+			return ..()
+
+	if(volume > 100 && prob(10))
+		for(var/datum/limb/i_limb in human.limbs)
+			for(var/datum/wound/internal_bleeding/i_bleed in i_limb.wounds)
+				L.adjust_tox_loss(15 * effect_str)
+				holder.remove_reagent(/datum/reagent/medicine/sulfasalazine, 25)
+				i_bleed.damage = max(0, i_bleed.damage - 100)
+		return ..()
+
+	if(L.bodytemperature < 169)
+		purge_rate = 0
+	else
+		purge_rate = 10
 
 	if(absorbtion > 0)
+		if(volume < max_reagent)
+			L.reagents.add_reagent(/datum/reagent/medicine/sulfasalazine, 2.5)
 		absorbtion--
 
-	if (volume > 5 && L.get_brute_loss(organic_only = TRUE) && absorbtion <= 0)
-		L.heal_overall_damage(4*effect_str, 0)
-		holder.remove_reagent(/datum/reagent/medicine/sulfasalazine, 3.5)
+	if(volume > 5)
+		if(L.get_brute_loss(organic_only = TRUE))
+			absorbtion = -5
+			L.heal_overall_damage(4*effect_str, 0)
+			holder.remove_reagent(/datum/reagent/medicine/sulfasalazine, 2)
+		if(L.get_fire_loss(organic_only = TRUE))
+			absorbtion = -5
+			L.heal_overall_damage(0, 4*effect_str)
+			holder.remove_reagent(/datum/reagent/medicine/sulfasalazine, 2)
 
-	if (volume > 5 && L.get_fire_loss(organic_only = TRUE) && absorbtion <= 0)
-		L.heal_overall_damage(0, 4*effect_str)
-		holder.remove_reagent(/datum/reagent/medicine/sulfasalazine, 3.5)
+	var/static/list/excluded_reagents_sulfa = list(
+		/datum/reagent/medicine/sulfasalazine,
+		/datum/reagent/medicine/spaceacillin,
+		/datum/reagent/consumable/nutriment,
+		/datum/reagent/consumable/sugar,
+		/datum/reagent/medicine/saline_glucose,
+	)
+
+	var/static/list/reduced_purge_reagents = list(
+		/datum/reagent/toxin,
+		/datum/reagent/hypervene,
+	)
 
 	for(var/datum/reagent/R in L.reagents.reagent_list)
-		//we dont purge themself
-		if(R.type != /datum/reagent/medicine/sulfasalazine)
-			var/purge = min(R.volume, purge_rate)
-			L.reagents.remove_reagent(R.type, purge)
-			absorbtion = min(absorbtion + purge, max_absorbtion)
+		if(is_type_in_list(R, excluded_reagents_sulfa))
+			continue
+
+		var/current_purge_rate = purge_rate
+
+		if(current_purge_rate > 0 && is_type_in_list(R, reduced_purge_reagents))
+			current_purge_rate = 5
+
+		var/purge = min(R.volume, current_purge_rate)
+		L.reagents.remove_reagent(R.type, purge)
+		absorbtion = min(absorbtion + purge, max_absorbtion)
 
 	return ..()
+
+/datum/reagent/medicine/sulfasalazine/on_mob_delete(mob/living/L, metabolism)
+	to_chat(L, span_userdanger("You feel the Sulfasalazine stirring deep within your tissues..."))
+	var/datum/weakref/sulfa_issue = WEAKREF(L)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(restore_sulfasalazine), sulfa_issue), 7.5 SECONDS)
+
+/proc/restore_sulfasalazine(datum/weakref/sulfa_issue)
+	var/mob/living/L = sulfa_issue.resolve()
+	if(!L)
+		return
+
+	to_chat(L, span_userdanger("The Sulfasalazine erupts back into your bloodstream!"))
+	L.reagents.add_reagent(/datum/reagent/medicine/sulfasalazine, 5)
 
 /datum/reagent/histamine
 	name = "Histamine"
@@ -1625,6 +1715,7 @@
 	overdose_threshold = REAGENTS_OVERDOSE*0.2
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL*0.2
 	custom_metabolism = REAGENTS_METABOLISM * 5
+	reagent_ui_priority = REAGENT_UI_IMMEDIATE
 
 /datum/reagent/medicine/regrow/on_mob_add(mob/living/L, metabolism)
 	if(volume < 5 || L.stat == DEAD || (!ishuman(L)))
@@ -1658,3 +1749,54 @@
 /datum/reagent/medicine/regrow/overdose_crit_process(mob/living/L, metabolism)
 	L.reagent_shock_modifier -= PAIN_REDUCTION_SUPER_HEAVY
 	L.apply_damages(effect_str, effect_str, effect_str * 4)
+
+/datum/reagent/medicine/experimental_medical_salve
+	name = "Experimental Medical Salve"
+	description = "A new drug made by BioCourse Pharmaceuticals. Quickly restores health and stamina initially, then lesser healing before purging itself."
+	color = COLOR_REAGENT_EMSALVE
+	custom_metabolism = REAGENTS_METABOLISM * 0.1 //since it purges itself this prevents people from using one unit to spam the early healing
+	/// Used for particles. Holds the particles instead of the mob. See particle_holder for documentation.
+	var/obj/effect/abstract/particle_holder/particle_holder
+
+/datum/reagent/medicine/experimental_medical_salve/reaction_mob(mob/living/L, method = TOUCH, volume, show_message = TRUE, touch_protection = 0)
+	if(!(method in list(TOUCH, VAPOR)))
+		return
+	return ..()
+
+/datum/reagent/medicine/experimental_medical_salve/on_mob_life(mob/living/L, metabolism)
+	L.reagent_shock_modifier += PAIN_REDUCTION_HEAVY
+	switch(current_cycle)
+		if(1 to 5) // big burst of healing + stamina initially
+			if(!particle_holder)
+				particle_holder = new(L, /particles/healing_cross)
+			L.heal_overall_damage(4*effect_str, 4*effect_str)
+			L.adjust_stamina_loss(-4*effect_str)
+		if(6 to 25) // smaller gradual healing
+			L.heal_overall_damage(1.5*effect_str, 1.5*effect_str)
+		if(26 to INFINITY) // purges itself quickly
+			if(particle_holder)
+				qdel(particle_holder)
+				particle_holder = null
+			holder.remove_reagent(/datum/reagent/medicine/experimental_medical_salve, 10)
+	return ..()
+
+/datum/reagent/medicine/experimental_medical_salve/on_mob_delete(mob/living/L, metabolism)
+	if(particle_holder)
+		qdel(particle_holder)
+		particle_holder = null
+	return ..()
+
+/particles/healing_cross
+	icon = 'icons/effects/particles/generic_particles.dmi'
+	icon_state = "cross"
+	width = 500
+	height = 500
+	count = 10
+	spawning = 1
+	gravity = list(0, 0.1)
+	color = LIGHT_COLOR_WHITE
+	lifespan = 13
+	fade = 5
+	fadein = 5
+	friction = generator(GEN_NUM, 0.1, 0.15)
+	position = generator(GEN_SQUARE, 0, 16)

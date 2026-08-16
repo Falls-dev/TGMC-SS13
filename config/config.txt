@@ -35,16 +35,16 @@ ALLOW_SHUTDOWN
 #TTS_NO_WHISPER
 
 ## Link to a HTTP server that's been set up on a server. Docker-compose file can be found in tools/tts
-#TTS_HTTP_URL http://localhost:5002
+TTS_HTTP_URL http://127.0.0.1:5002
 
 ## Token that can be used to prevent misuse of your TTS server that you've set up.
-#TTS_HTTP_TOKEN coolio
+TTS_HTTP_TOKEN coolio
 
 ## The maximum number of concurrent tts http requests that can be made by the server at once.
-#TTS_MAX_CONCURRENT_REQUESTS 4
+TTS_MAX_CONCURRENT_REQUESTS 4
 
 ## The number of seconds before tts https requests timeout (0 for infinite not recommended)
-#TTS_HTTP_TIMEOUT_SECONDS 30
+TTS_HTTP_TIMEOUT_SECONDS 30
 
 ## Add voices to the TTS voice blacklist.
 #TTS_VOICE_BLACKLIST Sans Undertale
@@ -122,8 +122,16 @@ POPUP_ADMIN_PM
 # Addressed listed below are except from any incoming topic filering
 # TOPIC_FILTERING_WHITELIST 127.0.0.1
 
-## Only enable this if you have youtube-dl installed!
-# INVOKE_YOUTUBEDL youtube-dl
+## Play Internet Sound - yt-dlp (either key works; INVOKE_YOUTUBEDL is legacy alias)
+# INVOKE_YT_DLP yt-dlp
+# INVOKE_YOUTUBEDL yt-dlp
+
+## Play Internet Sound - cobalt.tools (used if set; preferred over yt-dlp when both are set)
+# COBALT_BASE_API https://api.cobalt.tools/
+# COBALT_API_KEY
+
+## OOC country flags (ip-api.com). Players can hide their flag in prefs.
+#OOC_COUNTRY_FLAGS
 
 ## End of round chat message
 # END_OF_ROUND_CHANNEL game-updates
@@ -136,6 +144,15 @@ POPUP_ADMIN_PM
 SECOND_TOPIC_LIMIT 10
 
 MINUTE_TOPIC_LIMIT 100
+
+## IPINTEL — proxy/VPN detection via getipintel.net
+## Requires a real contact email. Default placeholder disables the feature.
+## DB cache needs the ipintel table (see SQL/ipintel.sql).
+# IPINTEL_RATING_BAD 0.9
+# IPINTEL_EMAIL your.email@example.com
+# IPINTEL_SAVE_GOOD 12
+# IPINTEL_SAVE_BAD 1
+# IPINTEL_DOMAIN check.getipintel.net
 
 ## Deny all new connections by ckeys we haven't seen before (exempts admins and only denies the connection if the database is enabled and connected)
 ##	Requires database
@@ -169,16 +186,22 @@ NOTIFY_NEW_ACCOUNT_AGE 7
 ##Note: all EXP tracking/restriction require database to be enabled.
 
 ## Unhash this to track player playtime in the database.
-#USE_EXP_TRACKING
+USE_EXP_TRACKING
 
 ## Allows admins to bypass job playtime requirements.
-#USE_EXP_RESTRICTIONS_ADMIN_BYPASS
+USE_EXP_RESTRICTIONS_ADMIN_BYPASS
+
+## Comment this out to stop admins being able to choose their personal ooccolor
+ALLOW_ADMIN_OOCCOLOR
 
 ## Use XP restrictions for command roles
-#USE_EXP_RESTRICTIONS_COMMAND
+USE_EXP_RESTRICTIONS_COMMAND
 
 ## Use playtime in hours restrictions for command
 #USE_EXP_RESTRICTIONS_COMMAND_HOURS
+
+## Comment this out if players don't need locks for non-command roles
+USE_EXP_RESTRICTIONS_OTHER
 
 ##Note: all population caps can be used with each other if desired.
 
@@ -259,6 +282,10 @@ TGUI_MAX_CHUNK_COUNT 32
 #TGS_EVENT_APPROVAL_MESSAGING
 #TGS_ADMINLESS_MESSAGING
 
+# Changelog Discord Webhook
+#CHANGELOG_DISCORD_HOOK https://example.com
+
+# дедикайтед
 ## Discord TGS or other bot token.
 DISCORD_TOKEN YOUR_SECRET_TOKEN
 

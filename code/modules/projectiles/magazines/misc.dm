@@ -218,13 +218,13 @@
 
 /obj/item/ammo_magazine/packet/p10x20mm
 	name = "packet of 10x20mm"
-	desc = "A packet containing 125 rounds of 10x20mm caseless."
+	desc = "A packet containing 240 rounds of 10x20mm caseless."
 	icon_state = "box_10x20mm"
 	caliber = CALIBER_10X20_CASELESS
 	default_ammo = /datum/ammo/bullet/smg
 	w_class = WEIGHT_CLASS_SMALL
-	current_rounds = 150
-	max_rounds = 150
+	current_rounds = 240
+	max_rounds = 240
 
 /obj/item/ammo_magazine/packet/p4570
 	name = "packet of .45-70"
@@ -350,7 +350,7 @@
 	used_casings = 5
 
 /obj/item/ammo_magazine/packet/p10x20mm/ap
-	desc = "A packet containing 125 rounds of 10x20mm caseless."
+	desc = "A packet containing 240 rounds of 10x20mm caseless."
 	icon_state = "box_10x20mm_ap"
 	default_ammo = /datum/ammo/bullet/smg/ap
 
@@ -388,3 +388,23 @@
 	max_rounds = 27
 	w_class = WEIGHT_CLASS_SMALL
 	icon_state_mini = "musket_sack_s"
+
+/obj/item/ammo_magazine/packet/p41ae
+	name = "packet of .41 AE"
+	desc = "A packet containing 160 rounds of .41 AE rounds."
+	caliber = CALIBER_41AE
+	icon_state = "41AE"
+	default_ammo = /datum/ammo/bullet/smg/heavy
+	w_class = WEIGHT_CLASS_SMALL
+	current_rounds = 165
+	max_rounds = 165
+
+/obj/item/ammo_magazine/packet/p41ae_squashhead
+	name = "packet of .41 AE squashhead"
+	desc = "A packet containing 160 rounds of .41 AE squashhead rounds."
+	caliber = CALIBER_41AE
+	icon_state = "41AE_squash"
+	default_ammo = /datum/ammo/bullet/smg/squash
+	w_class = WEIGHT_CLASS_SMALL
+	current_rounds = 165
+	max_rounds = 165

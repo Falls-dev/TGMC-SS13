@@ -11,17 +11,18 @@
 	wound_type = "shrike" //used to match appropriate wound overlays
 
 	// *** Melee Attacks *** //
-	melee_damage = 23
+	melee_damage = 24
 
 	// *** Speed *** //
-	speed = -0.6
+	speed = -0.7
+	weeds_speed_mod = -0.2
 
 	// *** Plasma *** //
 	plasma_max = 925
 	plasma_gain = 55
 
 	// *** Health *** //
-	max_health = 400
+	max_health = 450
 
 	// *** Evolution *** //
 	maximum_active_caste = 1
@@ -30,7 +31,7 @@
 	// *** Flags *** //
 	caste_flags = CASTE_IS_INTELLIGENT|CASTE_IS_STRONG|CASTE_IS_BUILDER|CASTE_INSTANT_EVOLUTION|CASTE_EVOLUTION_ALLOWED|CASTE_LEADER_TYPE
 	can_hold_eggs = CAN_HOLD_TWO_HANDS
-	can_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_HOLD_FACEHUGGERS|CASTE_CAN_BE_GIVEN_PLASMA|CASTE_CAN_BE_LEADER|CASTE_CAN_CORRUPT_GENERATOR|CASTE_CAN_HOLD_JELLY
+	can_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_HOLD_FACEHUGGERS|CASTE_CAN_BE_GIVEN_PLASMA|CASTE_CAN_BE_LEADER|CASTE_CAN_CORRUPT_GENERATOR|CASTE_CAN_HOLD_JELLY|CASTE_CAN_BE_RULER
 	caste_traits = null
 
 	// *** Defense *** //
@@ -41,6 +42,9 @@
 
 	// *** Minimap Icon *** //
 	minimap_icon = "xenoshrike"
+
+	// *** Queen Abilities *** //
+	queen_leader_limit = 4
 
 	// *** Abilities *** //
 	actions = list(

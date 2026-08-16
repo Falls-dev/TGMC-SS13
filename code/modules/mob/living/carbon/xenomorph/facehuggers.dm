@@ -117,7 +117,7 @@
 		icon_state = "[initial(icon_state)]"
 
 //Deal with picking up facehuggers. "attack_alien" is the universal 'xenos click something while unarmed' proc.
-/obj/item/clothing/mask/facehugger/attack_alien(mob/living/carbon/xenomorph/xeno_attacker, damage_amount = xeno_attacker.xeno_caste.melee_damage, damage_type = BRUTE, damage_flag = MELEE, effects = TRUE, armor_penetration = 0, isrightclick = FALSE)
+/obj/item/clothing/mask/facehugger/attack_alien(mob/living/carbon/xenomorph/xeno_attacker, damage_amount = xeno_attacker.xeno_caste.melee_damage, damage_type = BRUTE, damage_flag = MELEE, effects = TRUE, armor_penetration = xeno_attacker.xeno_caste.melee_ap, isrightclick = FALSE)
 	if(xeno_attacker.status_flags & INCORPOREAL)
 		return
 
@@ -281,12 +281,9 @@
 
 /obj/item/clothing/mask/facehugger/update_overlays()
 	. = ..()
-	if(overlays)
-		cut_overlays()
-
 	if(!about_to_jump)
 		return
-	add_overlay(image('icons/effects/danger.dmi', "danger_xeno"))
+	. += image('icons/obj/items/grenade.dmi', "danger")
 
 ///Applies an alert overlay when the hugger is about to jump
 /obj/item/clothing/mask/facehugger/proc/apply_danger_overlay()

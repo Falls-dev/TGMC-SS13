@@ -26,7 +26,7 @@
 	max_health = 380
 
 	// *** Evolution *** //
-	evolution_threshold = 900
+	evolution_threshold = 225
 
 	// *** Flags *** //
 	caste_flags = CASTE_EVOLUTION_ALLOWED|CASTE_FIRE_IMMUNE

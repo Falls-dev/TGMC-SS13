@@ -14,6 +14,13 @@
 	)
 	cost = 300
 
+/datum/supply_packs/medical/Sulfasalazine
+	name = "Sulfasalazine autoinjector"
+	contains = list(
+		/obj/item/reagent_containers/hypospray/autoinjector/sulfasalazine,
+	)
+	cost = 250
+
 /datum/supply_packs/medical/biomass
 	name = "Biomass beaker"
 	contains = list(
@@ -176,7 +183,7 @@
 /datum/supply_packs/medical/healthanalyzer_gloves
 	name = "Health scanner gloves"
 	notes = "contains health scanner gloves."
-	contains = list(/obj/item/healthanalyzer/gloves)
+	contains = list(/obj/item/clothing/gloves/healthanalyzer)
 	cost = 60
 	containertype = /obj/structure/closet/crate/secure/surgery
 	access = ACCESS_MARINE_MEDBAY
@@ -278,9 +285,9 @@
 	)
 	cost = 50
 
-/datum/supply_packs/medical/bkkt_dispenser
-	name = "BKKT Dispenser"
-	notes = "contains one BKKT dispenser."
+/datum/supply_packs/medical/bktt_dispenser
+	name = "BKTT Dispenser"
+	notes = "contains one BKTT dispenser."
 	contains = list(/obj/item/storage/reagent_tank/bktt)
 	cost = 120
 
@@ -348,9 +355,9 @@
 	contains = list(/obj/item/reagent_containers/hypospray/autoinjector/neuraline)
 	cost = 70
 
-/datum/supply_packs/medical/bkkt_kit
-	name = "BKKT pill bottles kit"
-	notes = "contains pill bottles BKKT."
+/datum/supply_packs/medical/bktt_kit
+	name = "BKTT pill bottles kit"
+	notes = "contains pill bottles BKTT."
 	contains = list(
 		/obj/item/storage/pill_bottle/bicaridine,
 		/obj/item/storage/pill_bottle/kelotane,

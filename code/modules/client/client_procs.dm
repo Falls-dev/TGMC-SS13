@@ -240,6 +240,8 @@
 
 	tgui_say.initialize()
 
+	initialize_escape_menu()
+
 	// Initialize stat panel
 	stat_panel.initialize(
 		inline_html = file("html/statbrowser.html"),
@@ -308,13 +310,15 @@
 	load_player_predator_info()
 //RUTGMC EDIT
 
+	check_ip_intel()
+
 	send_resources()
 
 	apply_clickcatcher()
 
 	if(prefs.lastchangelog != GLOB.changelog_hash) //bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, span_info("You have unread updates in the changelog."))
-		if(CONFIG_GET(flag/aggressive_changelog))
+		if(CONFIG_GET(flag/aggressive_changelog) || prefs.auto_open_changelogs)
 			changes()
 		else
 			winset(src, "infowindow.changelog", "font-style=bold")
@@ -373,6 +377,11 @@
 	Master.UpdateTickRate()
 
 	fully_created = TRUE
+
+	if(CONFIG_GET(flag/ooc_country_flags))
+		spawn(0)
+			if(src)
+				ip2country(address, src)
 
 //////////////////
 //  DISCONNECT  //
@@ -500,10 +509,15 @@
 /client/proc/send_resources()
 #if (PRELOAD_RSC == 0)
 	var/static/next_external_rsc = 0
+	var/static/list/external_rsc_url_keys = list()
 	var/list/external_rsc_urls = CONFIG_GET(keyed_list/external_rsc_urls)
-	if(length(external_rsc_urls))
-		next_external_rsc = WRAP(next_external_rsc+1, 1, length(external_rsc_urls) + 1)
-		preload_rsc = external_rsc_urls[next_external_rsc]
+	if(!length(external_rsc_url_keys) && length(external_rsc_urls))
+		for(var/url in external_rsc_urls)
+			if(external_rsc_urls[url])
+				external_rsc_url_keys += url
+	if(length(external_rsc_url_keys))
+		next_external_rsc = WRAP(next_external_rsc + 1, 1, length(external_rsc_url_keys) + 1)
+		preload_rsc = external_rsc_url_keys[next_external_rsc]
 #endif
 
 	spawn (10) //removing this spawn causes all clients to not get verbs.
@@ -911,6 +925,7 @@
 		new_size = CONFIG_GET(string/default_view_square)
 
 	view = new_size
+	SEND_SIGNAL(src, COMSIG_VIEW_SET, new_size)
 	apply_clickcatcher()
 	mob.reload_fullscreens()
 	attempt_auto_fit_viewport()
@@ -1070,3 +1085,11 @@ GLOBAL_VAR_INIT(automute_on, null)
 		if("Set-Tab")
 			stat_tab = payload["tab"]
 			SSstatpanels.immediate_send_stat_data(src)
+
+/client/proc/check_ip_intel()
+	set waitfor = 0
+	if(CONFIG_GET(string/ipintel_email))
+		var/datum/ipintel/res = get_ip_intel(address)
+		if(res.intel >= CONFIG_GET(number/ipintel_rating_bad))
+			message_admins(span_adminnotice("Proxy Detection: [key_name_admin(src)] IP intel rated [round(res.intel * 100)]% likely to be a Proxy/VPN."))
+		ip_intel = res.intel

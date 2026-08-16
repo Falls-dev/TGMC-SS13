@@ -27,6 +27,20 @@
   // BYOND API object
   // ------------------------------------------------------
 
+  // 516.1680+ may inject a host Byond with native Topic. Grab Topic first, then
+  // always use a plain API object (RU/Official style). Mutating the host object
+  // breaks older Chromium clients (e.g. 516.1661) → white TGUI / no ready.
+  var hostByond = window.Byond;
+  var nativeTopic =
+    hostByond && typeof hostByond.Topic === 'function'
+      ? hostByond.Topic.bind(hostByond)
+      : null;
+  var nativeCommand =
+    hostByond && typeof hostByond.command === 'function'
+      ? hostByond.command.bind(hostByond)
+      : null;
+  // Keep host ref so late Topic injection can still be bound after we wipe.
+  var hostByondRef = hostByond && typeof hostByond === 'object' ? hostByond : null;
   var Byond = (window.Byond = {});
 
   // Expose inlined metadata
@@ -34,6 +48,13 @@
 
   // Backwards compatibility
   window.__windowId__ = Byond.windowId;
+
+  // Trident engine version (pre-Chromium BYOND clients)
+  Byond.TRIDENT = (function () {
+    var groups = navigator.userAgent.match(/Trident\/(\d+).+?;/i);
+    var majorVersion = groups && groups[1];
+    return majorVersion ? parseInt(majorVersion, 10) : null;
+  })();
 
   // Blink engine version
   Byond.BLINK = (function () {
@@ -44,7 +65,10 @@
 
   // Basic checks to detect whether this page runs in BYOND
   var isByond =
-    (Byond.BLINK !== null || window.cef_to_byond) &&
+    (Byond.TRIDENT !== null ||
+      Byond.BLINK !== null ||
+      window.cef_to_byond ||
+      !!nativeTopic) &&
     location.hostname === '127.0.0.1' &&
     location.search !== '?external';
   //As of BYOND 515 the path doesn't seem to include tmp dir anymore if you're trying to open tgui in external browser and looking why it doesn't work
@@ -74,6 +98,11 @@
     if (!isByond) {
       return;
     }
+    // 516.1680+: native Topic for message/topic payloads
+    if ((!path || path === '') && nativeTopic) {
+      nativeTopic(params || {});
+      return;
+    }
     // Build the URL
     var url = (path || '') + '?';
     var i = 0;
@@ -92,14 +121,22 @@
       }
     }
 
-    // If we're a Chromium client, just use the fancy method
-    if (window.cef_to_byond) {
+    // Blink/WebView (516+): always prefer location.href.
+    // cef_to_byond is reliable on older Trident/early CEF, but is often a
+    // stub on 516.1680+ even when present — using it first whitescreens TGUI.
+    if (Byond.BLINK !== null) {
+      if (url.length < 2048) {
+        location.href = 'byond://' + url;
+        return;
+      }
+      if (window.cef_to_byond) {
+        cef_to_byond('byond://' + url);
+        return;
+      }
+    } else if (window.cef_to_byond) {
       cef_to_byond('byond://' + url);
       return;
-    }
-
-    // Perform a standard call via location.href
-    if (url.length < 2048) {
+    } else if (url.length < 2048) {
       location.href = 'byond://' + url;
       return;
     }
@@ -128,6 +165,20 @@
   };
 
   Byond.topic = function (params) {
+    // Refresh Topic if host re-injected it after our wipe
+    var host = window.Byond !== Byond ? window.Byond : null;
+    if (
+      !nativeTopic &&
+      host &&
+      typeof host.Topic === 'function' &&
+      host.Topic !== Byond.topic
+    ) {
+      nativeTopic = host.Topic.bind(host);
+    }
+    if (nativeTopic) {
+      nativeTopic(params || {});
+      return;
+    }
     return Byond.call('', params);
   };
 
@@ -376,6 +427,78 @@
 
   // Icon cache
   Byond.iconRefMap = {};
+
+  // inner-background-color is 516.1680+ (native Topic era). Never probe via
+  // winget('') — that yields "Element default. not found" on older clients.
+  Byond.supportsInnerBackground = !!nativeTopic;
+
+  // 516.1679+ may inject/replace window.Byond after our script runs.
+  // Re-assert our plain API and refresh native Topic when ready.
+  var ensureByondApi = function () {
+    var current = window.Byond;
+    if (
+      current &&
+      current !== Byond &&
+      typeof current.Topic === 'function' &&
+      current.Topic !== Byond.topic
+    ) {
+      hostByondRef = current;
+      nativeTopic = current.Topic.bind(current);
+      Byond.supportsInnerBackground = true;
+    }
+    if (
+      !nativeTopic &&
+      hostByondRef &&
+      typeof hostByondRef.Topic === 'function'
+    ) {
+      nativeTopic = hostByondRef.Topic.bind(hostByondRef);
+      Byond.supportsInnerBackground = true;
+    }
+    if (
+      current &&
+      current !== Byond &&
+      typeof current.command === 'function' &&
+      current.command !== Byond.command
+    ) {
+      nativeCommand = current.command.bind(current);
+    }
+    try {
+      window.Byond = Byond;
+    } catch (err) {
+      if (current && typeof current === 'object') {
+        for (var key in Byond) {
+          if (hasOwn.call(Byond, key)) {
+            try {
+              current[key] = Byond[key];
+            } catch (e) {}
+          }
+        }
+      }
+    }
+    if (
+      location.hostname === '127.0.0.1' &&
+      location.search !== '?external' &&
+      (Byond.TRIDENT !== null ||
+        Byond.BLINK !== null ||
+        window.cef_to_byond ||
+        nativeTopic)
+    ) {
+      isByond = true;
+      Byond.IS_BYOND = true;
+    }
+  };
+  ensureByondApi();
+  window.addEventListener('byond-ready', ensureByondApi);
+  document.addEventListener('byond-ready', ensureByondApi);
+  // Topic can appear slightly after first paint on 1680+
+  var topicPolls = 0;
+  var topicPoll = setInterval(function () {
+    ensureByondApi();
+    topicPolls += 1;
+    if (nativeTopic || topicPolls >= 20) {
+      clearInterval(topicPoll);
+    }
+  }, 50);
 })();
 
 // Error handling
