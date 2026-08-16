@@ -23,6 +23,11 @@ GLOBAL_LIST_EMPTY(escape_menus)
 		inline_css = file("tgui/public/tgui-escape-menu.bundle.css"),
 		inline_js = file("tgui/public/tgui-escape-menu.bundle.js"),
 	)
+	// initialize() re-detects control type; keep embedded-browser messaging path
+	window.is_browser = TRUE
+	// 516.1680+ WebView2 transparency (also set in skin.dmf; winset covers stale skins)
+	if(client.byond_build >= 1680)
+		winset(client, "mapwindow.escape_menu", "inner-background-color=transparent")
 	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/escape_menu_font))
 	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/escape_menu_sounds))
 	window.send_asset(get_asset_datum(/datum/asset/spritesheet/escape_menu_icons))

@@ -13,7 +13,7 @@
     <!-- tgui:ntos-error -->
     <!-- tgui:inline-css -->
   </head>
-  <body>
+  <body style="background-color: var(--color-base)">
     <!-- tgui:assets -->
     <!-- tgui:inline-html-start -->
     <!-- tgui:inline-html -->
@@ -54,8 +54,19 @@ o8o        `8    "888"  `Y8bood8P'  8""88888P'
     </noscript>
 
     <script>
-      // Signal tgui that we're ready to receive updates
-      Byond.sendMessage('ready');
+      // Signal tgui that we're ready to receive updates.
+      // 516.1679+ may need byond-ready before host Byond.Topic works; allow retries.
+      (function () {
+        var sendReady = function () {
+          if (!window.Byond || typeof Byond.sendMessage !== 'function') return;
+          Byond.sendMessage('ready');
+        };
+        sendReady();
+        window.addEventListener('byond-ready', sendReady);
+        document.addEventListener('byond-ready', sendReady);
+        setTimeout(sendReady, 0);
+        setTimeout(sendReady, 100);
+      })();
     </script>
   </body>
 </html>

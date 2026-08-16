@@ -27,7 +27,23 @@
   // BYOND API object
   // ------------------------------------------------------
 
-  var Byond = (window.Byond = {});
+  // 516.1679+ injects a host Byond object (Topic since 516.1680).
+  // Extending it preserves native Topic; replacing it can break all TGUI.
+  var nativeByond = window.Byond;
+  var nativeTopic =
+    nativeByond && typeof nativeByond.Topic === 'function'
+      ? nativeByond.Topic.bind(nativeByond)
+      : null;
+  var nativeCommand =
+    nativeByond && typeof nativeByond.command === 'function'
+      ? nativeByond.command.bind(nativeByond)
+      : null;
+  var Byond = nativeByond && typeof nativeByond === 'object' ? nativeByond : {};
+  try {
+    window.Byond = Byond;
+  } catch (err) {
+    // Host object may be non-writable; keep local reference.
+  }
 
   // Expose inlined metadata
   Byond.windowId = parseMetaTag('tgui:windowId');
@@ -44,7 +60,7 @@
 
   // Basic checks to detect whether this page runs in BYOND
   var isByond =
-    (Byond.BLINK !== null || window.cef_to_byond) &&
+    (Byond.BLINK !== null || window.cef_to_byond || !!nativeTopic) &&
     location.hostname === '127.0.0.1' &&
     location.search !== '?external';
   //As of BYOND 515 the path doesn't seem to include tmp dir anymore if you're trying to open tgui in external browser and looking why it doesn't work
@@ -74,6 +90,11 @@
     if (!isByond) {
       return;
     }
+    // 516.1680+: prefer native Topic for href/Topic calls
+    if ((!path || path === '') && nativeTopic) {
+      nativeTopic(params || {});
+      return;
+    }
     // Build the URL
     var url = (path || '') + '?';
     var i = 0;
@@ -92,15 +113,14 @@
       }
     }
 
-    // If we're a Chromium client, just use the fancy method
-    if (window.cef_to_byond) {
-      cef_to_byond('byond://' + url);
-      return;
-    }
-
-    // Perform a standard call via location.href
+    // Prefer location.href first — on some 516.1680+ builds cef_to_byond
+    // is present but does not reliably deliver winset/command calls.
     if (url.length < 2048) {
       location.href = 'byond://' + url;
+      return;
+    }
+    if (window.cef_to_byond) {
+      cef_to_byond('byond://' + url);
       return;
     }
     // Send an HTTP request to DreamSeeker's HTTP server.
@@ -128,10 +148,23 @@
   };
 
   Byond.topic = function (params) {
+    if (
+      !nativeTopic &&
+      window.Byond &&
+      typeof window.Byond.Topic === 'function' &&
+      window.Byond.Topic !== Byond.topic
+    ) {
+      nativeTopic = window.Byond.Topic.bind(window.Byond);
+    }
+    if (nativeTopic) {
+      nativeTopic(params || {});
+      return;
+    }
     return Byond.call('', params);
   };
 
   Byond.command = function (command) {
+    // Always use winset command= — more reliable than host command() for .output
     return Byond.call('winset', {
       command: command,
     });
@@ -376,6 +409,51 @@
 
   // Icon cache
   Byond.iconRefMap = {};
+
+  // 516.1679+ may inject/replace window.Byond after our script runs.
+  // Keep our API on window.Byond and refresh native Topic when ready.
+  var ensureByondApi = function () {
+    var host = window.Byond;
+    if (host && typeof host.Topic === 'function' && host.Topic !== Byond.topic) {
+      nativeTopic = host.Topic.bind(host);
+      try {
+        Byond.Topic = nativeTopic;
+      } catch (err) {}
+    }
+    if (
+      host &&
+      typeof host.command === 'function' &&
+      host.command !== Byond.command
+    ) {
+      nativeCommand = host.command.bind(host);
+    }
+    if (host !== Byond) {
+      try {
+        window.Byond = Byond;
+      } catch (err) {
+        if (host && typeof host === 'object') {
+          for (var key in Byond) {
+            if (hasOwn.call(Byond, key)) {
+              try {
+                host[key] = Byond[key];
+              } catch (e) {}
+            }
+          }
+        }
+      }
+    }
+    if (
+      location.hostname === '127.0.0.1' &&
+      location.search !== '?external' &&
+      (Byond.BLINK !== null || window.cef_to_byond || nativeTopic)
+    ) {
+      isByond = true;
+      Byond.IS_BYOND = true;
+    }
+  };
+  ensureByondApi();
+  window.addEventListener('byond-ready', ensureByondApi);
+  document.addEventListener('byond-ready', ensureByondApi);
 })();
 
 // Error handling
