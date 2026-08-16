@@ -1,0 +1,4 @@
+author: "SanecMan"
+delete-after: True
+changes:
+  - rscadd: "Добавлено пиво"
