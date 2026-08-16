@@ -1,0 +1,5 @@
+author: "Misterionno"
+delete-after: True
+changes:
+  - balance: "Вернул 2 стартовых слота танкистам."
+  - rscadd: "Добавлен новый модуль тяжёлой брони для танка"
