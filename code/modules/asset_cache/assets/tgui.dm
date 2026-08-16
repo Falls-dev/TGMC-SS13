@@ -36,8 +36,8 @@
 
 /datum/asset/simple/namespaced/escape_menu_font
 	assets = list(
-		"Pixellari.ttf" = file("interface/fonts/Pixellari.ttf"),
-		"Grand9K_Pixel.ttf" = file("interface/fonts/Grand9K_Pixel.ttf"),
+		"Pixellari_modif.ttf" = file("interface/fonts/Pixellari_modif.ttf"),
+		"Grand9K_Pixel_modif.ttf" = file("interface/fonts/Grand9K_Pixel_modif.ttf"),
 	)
 	parents = list(
 		"fonts.css" = file("tgui/packages/tgui-escape-menu/styles/fonts.css"),
