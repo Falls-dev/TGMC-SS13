@@ -31,6 +31,8 @@
 @include meta.load-css('./interfaces/ClanMenu.scss');
 @include meta.load-css('./interfaces/NuclearBomb.scss');
 @include meta.load-css('./interfaces/StripMenu.scss');
+@include meta.load-css('./interfaces/CrewManifest.scss');
+@include meta.load-css('./interfaces/HiveLeaders.scss');
 
 // Layouts
 @include meta.load-css('./layouts/Layout.scss');

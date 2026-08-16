@@ -185,19 +185,11 @@
 
 
 /mob/new_player/proc/view_manifest()
-	var/dat = GLOB.datacore.get_manifest(ooc = TRUE)
-
-	var/datum/browser/popup = new(src, "manifest", "<div align='center'>Crew Manifest</div>", 400, 420)
-	popup.set_content(dat)
-	popup.open(FALSE)
+	GLOB.crew_manifest.open_ui(src)
 
 /// Proc for lobby button "View Hive" to see current leader/queen status.
 /mob/new_player/proc/view_xeno_manifest()
-	var/dat = GLOB.datacore.get_xeno_manifest()
-
-	var/datum/browser/popup = new(src, "xenomanifest", "<div align='center'>Xeno Manifest</div>", 400, 420)
-	popup.set_content(dat)
-	popup.open(FALSE)
+	open_hive_leaders_tgui(src)
 
 /mob/new_player/proc/view_lore()
 	var/output = "<div align='center'>"

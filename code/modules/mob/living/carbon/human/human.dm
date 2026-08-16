@@ -601,11 +601,7 @@
 	set name = "View Crew Manifest"
 	set category = "IC"
 
-	var/dat = GLOB.datacore.get_manifest()
-
-	var/datum/browser/popup = new(src, "manifest", "<div align='center'>Crew Manifest</div>", 370, 420)
-	popup.set_content(dat)
-	popup.open(FALSE)
+	GLOB.crew_manifest.open_ui(src)
 
 
 /mob/living/carbon/human/species
