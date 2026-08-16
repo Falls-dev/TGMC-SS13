@@ -283,10 +283,10 @@ TGUI_MAX_CHUNK_COUNT 32
 #TGS_ADMINLESS_MESSAGING
 
 ## Gosuslugi API URL
-#KAIN_API_URL https://api.aperture13.online
+# KAIN_API_URL https://change.me
 
 ## Gosuslugi API Token
-#KAIN_API_TOKEN what_pumpkin
+# KAIN_API_TOKEN what_pumpkin
 
 ## Discord bot invite URL for registration
-DISCORD_BOT_URL https://discord.com/oauth2/authorize?client_id=1234567890
+DISCORD_BOT_URL https://discord.com/...
