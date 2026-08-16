@@ -4,7 +4,6 @@ on:
   schedule:
     - cron: "0 0 * * *"
   workflow_dispatch:
-  # When Auto Changelog commits pending YAML after a merge, post to Discord and archive.
   push:
     branches:
       - master
@@ -46,20 +45,6 @@ jobs:
         with:
           fetch-depth: 25
           persist-credentials: false
-
-      - name: "Post pending changelogs to Discord"
-        if: steps.value_holder.outputs.ACTIONS_ENABLED
-        continue-on-error: true
-        env:
-          CHANGELOG_DISCORD_HOOK: ${{ secrets.CHANGELOG_DISCORD_HOOK }}
-        run: |
-          if [ -z "$CHANGELOG_DISCORD_HOOK" ]; then
-            echo "CHANGELOG_DISCORD_HOOK secret empty; skipping Discord post."
-            exit 0
-          fi
-          pending="$(find html/changelogs -maxdepth 1 -type f -name '*.yml' ! -name 'example.yml' | wc -l)"
-          echo "Pending changelog YAML files: $pending"
-          python tools/ss13_discord_changelog.py html/changelogs --webhook "$CHANGELOG_DISCORD_HOOK"
 
       - name: "Compile"
         if: steps.value_holder.outputs.ACTIONS_ENABLED
