@@ -706,9 +706,13 @@ function set_theme(which) {
 	if (which == "light") {
 		document.body.className = "";
 		document.documentElement.className = 'light';
+		document.body.style.backgroundColor = "#ffffff";
+		document.documentElement.style.backgroundColor = "#ffffff";
 	} else if (which == "dark") {
 		document.body.className = "dark";
 		document.documentElement.className = 'dark';
+		document.body.style.backgroundColor = "#151515";
+		document.documentElement.style.backgroundColor = "#151515";
 	}
 }
 

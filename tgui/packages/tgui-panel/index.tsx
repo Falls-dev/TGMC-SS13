@@ -71,11 +71,7 @@ function setupApp() {
   // Dispatch incoming messages as store actions
   Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
 
-  // Unhide the panel. Newer skins nest this under output_selector, while older
-  // TGMC skins keep legacy_output_selector directly under outputwindow.
-  Byond.winset('output_selector.legacy_output_selector', {
-    left: 'output_browser',
-  });
+  // Unhide the panel (TGMC skin: legacy_output_selector under outputwindow)
   Byond.winset('legacy_output_selector', {
     left: 'output_browser',
   });

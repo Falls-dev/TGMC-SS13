@@ -27,23 +27,21 @@
   // BYOND API object
   // ------------------------------------------------------
 
-  // 516.1679+ injects a host Byond object (Topic since 516.1680).
-  // Extending it preserves native Topic; replacing it can break all TGUI.
-  var nativeByond = window.Byond;
+  // 516.1680+ may inject a host Byond with native Topic. Grab Topic first, then
+  // always use a plain API object (RU/Official style). Mutating the host object
+  // breaks older Chromium clients (e.g. 516.1661) → white TGUI / no ready.
+  var hostByond = window.Byond;
   var nativeTopic =
-    nativeByond && typeof nativeByond.Topic === 'function'
-      ? nativeByond.Topic.bind(nativeByond)
+    hostByond && typeof hostByond.Topic === 'function'
+      ? hostByond.Topic.bind(hostByond)
       : null;
   var nativeCommand =
-    nativeByond && typeof nativeByond.command === 'function'
-      ? nativeByond.command.bind(nativeByond)
+    hostByond && typeof hostByond.command === 'function'
+      ? hostByond.command.bind(hostByond)
       : null;
-  var Byond = nativeByond && typeof nativeByond === 'object' ? nativeByond : {};
-  try {
-    window.Byond = Byond;
-  } catch (err) {
-    // Host object may be non-writable; keep local reference.
-  }
+  // Keep host ref so late Topic injection can still be bound after we wipe.
+  var hostByondRef = hostByond && typeof hostByond === 'object' ? hostByond : null;
+  var Byond = (window.Byond = {});
 
   // Expose inlined metadata
   Byond.windowId = parseMetaTag('tgui:windowId');
@@ -66,7 +64,6 @@
   })();
 
   // Basic checks to detect whether this page runs in BYOND
-  // Keep TRIDENT like RU/CMSS13 so older IE clients still work.
   var isByond =
     (Byond.TRIDENT !== null ||
       Byond.BLINK !== null ||
@@ -101,7 +98,7 @@
     if (!isByond) {
       return;
     }
-    // 516.1680+: prefer native Topic for href/Topic calls
+    // 516.1680+: native Topic for message/topic payloads
     if ((!path || path === '') && nativeTopic) {
       nativeTopic(params || {});
       return;
@@ -124,18 +121,23 @@
       }
     }
 
-    // Pre-1680 Chromium (RU/CMSS13 path): cef_to_byond is reliable.
-    // 1680+ with native Topic: prefer location.href — cef can be a stub.
-    if (window.cef_to_byond && !nativeTopic) {
+    // Blink/WebView (516+): always prefer location.href.
+    // cef_to_byond is reliable on older Trident/early CEF, but is often a
+    // stub on 516.1680+ even when present — using it first whitescreens TGUI.
+    if (Byond.BLINK !== null) {
+      if (url.length < 2048) {
+        location.href = 'byond://' + url;
+        return;
+      }
+      if (window.cef_to_byond) {
+        cef_to_byond('byond://' + url);
+        return;
+      }
+    } else if (window.cef_to_byond) {
       cef_to_byond('byond://' + url);
       return;
-    }
-    if (url.length < 2048) {
+    } else if (url.length < 2048) {
       location.href = 'byond://' + url;
-      return;
-    }
-    if (window.cef_to_byond) {
-      cef_to_byond('byond://' + url);
       return;
     }
     // Send an HTTP request to DreamSeeker's HTTP server.
@@ -163,13 +165,15 @@
   };
 
   Byond.topic = function (params) {
+    // Refresh Topic if host re-injected it after our wipe
+    var host = window.Byond !== Byond ? window.Byond : null;
     if (
       !nativeTopic &&
-      window.Byond &&
-      typeof window.Byond.Topic === 'function' &&
-      window.Byond.Topic !== Byond.topic
+      host &&
+      typeof host.Topic === 'function' &&
+      host.Topic !== Byond.topic
     ) {
-      nativeTopic = window.Byond.Topic.bind(window.Byond);
+      nativeTopic = host.Topic.bind(host);
     }
     if (nativeTopic) {
       nativeTopic(params || {});
@@ -179,7 +183,6 @@
   };
 
   Byond.command = function (command) {
-    // Always use winset command= — more reliable than host command() for .output
     return Byond.call('winset', {
       command: command,
     });
@@ -425,34 +428,49 @@
   // Icon cache
   Byond.iconRefMap = {};
 
+  // inner-background-color is 516.1680+ (native Topic era). Never probe via
+  // winget('') — that yields "Element default. not found" on older clients.
+  Byond.supportsInnerBackground = !!nativeTopic;
+
   // 516.1679+ may inject/replace window.Byond after our script runs.
-  // Keep our API on window.Byond and refresh native Topic when ready.
+  // Re-assert our plain API and refresh native Topic when ready.
   var ensureByondApi = function () {
-    var host = window.Byond;
-    if (host && typeof host.Topic === 'function' && host.Topic !== Byond.topic) {
-      nativeTopic = host.Topic.bind(host);
-      try {
-        Byond.Topic = nativeTopic;
-      } catch (err) {}
+    var current = window.Byond;
+    if (
+      current &&
+      current !== Byond &&
+      typeof current.Topic === 'function' &&
+      current.Topic !== Byond.topic
+    ) {
+      hostByondRef = current;
+      nativeTopic = current.Topic.bind(current);
+      Byond.supportsInnerBackground = true;
     }
     if (
-      host &&
-      typeof host.command === 'function' &&
-      host.command !== Byond.command
+      !nativeTopic &&
+      hostByondRef &&
+      typeof hostByondRef.Topic === 'function'
     ) {
-      nativeCommand = host.command.bind(host);
+      nativeTopic = hostByondRef.Topic.bind(hostByondRef);
+      Byond.supportsInnerBackground = true;
     }
-    if (host !== Byond) {
-      try {
-        window.Byond = Byond;
-      } catch (err) {
-        if (host && typeof host === 'object') {
-          for (var key in Byond) {
-            if (hasOwn.call(Byond, key)) {
-              try {
-                host[key] = Byond[key];
-              } catch (e) {}
-            }
+    if (
+      current &&
+      current !== Byond &&
+      typeof current.command === 'function' &&
+      current.command !== Byond.command
+    ) {
+      nativeCommand = current.command.bind(current);
+    }
+    try {
+      window.Byond = Byond;
+    } catch (err) {
+      if (current && typeof current === 'object') {
+        for (var key in Byond) {
+          if (hasOwn.call(Byond, key)) {
+            try {
+              current[key] = Byond[key];
+            } catch (e) {}
           }
         }
       }
@@ -472,6 +490,15 @@
   ensureByondApi();
   window.addEventListener('byond-ready', ensureByondApi);
   document.addEventListener('byond-ready', ensureByondApi);
+  // Topic can appear slightly after first paint on 1680+
+  var topicPolls = 0;
+  var topicPoll = setInterval(function () {
+    ensureByondApi();
+    topicPolls += 1;
+    if (nativeTopic || topicPolls >= 20) {
+      clearInterval(topicPoll);
+    }
+  }, 50);
 })();
 
 // Error handling
