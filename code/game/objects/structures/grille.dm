@@ -7,6 +7,7 @@
 	density = TRUE
 	anchored = TRUE
 	coverage = 10
+	screen_loc = E3D_TYPE_FLOOR
 	atom_flags = CONDUCT
 	allow_pass_flags = PASS_AIR|PASS_PROJECTILE|PASS_GRILLE
 	layer = OBJ_LAYER

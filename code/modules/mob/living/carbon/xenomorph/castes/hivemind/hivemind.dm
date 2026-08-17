@@ -22,7 +22,7 @@
 
 	see_invisible = SEE_INVISIBLE_LIVING
 	invisibility = INVISIBILITY_MAXIMUM
-	sight = SEE_MOBS|SEE_TURFS|SEE_OBJS
+	sight = SEE_MOBS|SEE_TURFS|SEE_OBJS|E3D_SEE_ZOOM
 	move_on_shuttle = TRUE
 	initial_language_holder = /datum/language_holder/hivemind
 

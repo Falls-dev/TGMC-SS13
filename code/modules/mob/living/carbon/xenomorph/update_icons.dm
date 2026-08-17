@@ -52,7 +52,7 @@
 	remove_overlay(R_HAND_LAYER)
 	if(r_hand)
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-			r_hand.screen_loc = ui_rhand
+			SET_SCREEN_LOC(r_hand, ui_rhand)
 			client.screen += r_hand
 
 		overlays_standing[R_HAND_LAYER] = r_hand.make_worn_icon(inhands = TRUE, slot_name = slot_r_hand_str, default_icon = 'icons/mob/inhands/items_righthand_1.dmi', default_layer = R_HAND_LAYER)
@@ -62,7 +62,7 @@
 	remove_overlay(L_HAND_LAYER)
 	if(l_hand)
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-			l_hand.screen_loc = ui_lhand
+			SET_SCREEN_LOC(l_hand, ui_lhand)
 			client.screen += l_hand
 
 		overlays_standing[L_HAND_LAYER] = l_hand.make_worn_icon(inhands = TRUE, slot_name = slot_l_hand_str, default_icon = 'icons/mob/inhands/items_lefthand_1.dmi', default_layer = L_HAND_LAYER)

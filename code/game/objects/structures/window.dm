@@ -7,6 +7,7 @@
 	density = TRUE
 	anchored = TRUE
 	layer = ABOVE_WINDOW_LAYER
+	screen_loc = E3D_TYPE_EDGE
 	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR | IGNORE_DENSITY
 	atom_flags = ON_BORDER|DIRLOCK
 	allow_pass_flags = PASS_GLASS
@@ -412,6 +413,7 @@
 	static_frame = TRUE
 	atom_flags = NONE //This is not a border object; it takes up the entire tile.
 	explosion_block = 2
+	screen_loc = E3D_TYPE_SMOOTHWALL
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(
 		SMOOTH_GROUP_WINDOW_FULLTILE,

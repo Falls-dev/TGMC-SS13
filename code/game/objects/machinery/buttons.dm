@@ -9,6 +9,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 5
+	screen_loc = E3D_TYPE_WALLMOUNT
 	soft_armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 10, BIO = 100, FIRE = 90, ACID = 70)
 	light_range = 1
 	light_power = 0.3

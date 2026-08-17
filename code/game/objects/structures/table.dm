@@ -10,6 +10,7 @@
 	density = TRUE
 	anchored = TRUE
 	layer = TABLE_LAYER
+	screen_loc = E3D_TYPE_TABLE
 	obj_flags = CAN_BE_HIT | IGNORE_DENSITY
 	climbable = TRUE
 	resistance_flags = XENO_DAMAGEABLE

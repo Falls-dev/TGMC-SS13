@@ -7,6 +7,7 @@
 	opacity = TRUE
 	density = TRUE
 	dir = EAST
+	screen_loc = E3D_TYPE_BASICWALL
 	allow_pass_flags = NONE
 	move_resist = MOVE_FORCE_VERY_STRONG
 	layer = OPEN_DOOR_LAYER

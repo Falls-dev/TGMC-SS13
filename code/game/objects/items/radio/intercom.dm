@@ -6,6 +6,7 @@
 	anchored = TRUE
 	w_class = WEIGHT_CLASS_BULKY
 	canhear_range = 2
+	screen_loc = E3D_TYPE_WALLMOUNT
 	atom_flags = CONDUCT|NOBLOODY
 	light_range = 1.5
 	light_power = 0.5
