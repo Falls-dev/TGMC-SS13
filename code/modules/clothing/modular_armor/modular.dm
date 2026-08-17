@@ -433,11 +433,43 @@
 	if(attachments_by_slot[ATTACHMENT_SLOT_STORAGE] && istype(attachments_by_slot[ATTACHMENT_SLOT_STORAGE], /obj/item/armor_module/storage))
 		var/obj/item/armor_module/storage/storage_module = attachments_by_slot[ATTACHMENT_SLOT_STORAGE]
 		if(storage_module.show_storage)
-			for(var/obj/item/stored AS in storage_module.contents)
-				if(istype(stored, /obj/item/ammo_magazine/handful))
-					standing.overlays += mutable_appearance(storage_module.show_storage_icon, icon_state = stored.icon_state, layer = COLLAR_LAYER)
-				else
-					standing.overlays += mutable_appearance(storage_module.show_storage_icon, icon_state = initial(stored.icon_state), layer = COLLAR_LAYER)
+			var/datum/storage/internal/marinehelmet/helmet_storage
+			if(istype(storage_module.storage_datum, /datum/storage/internal/marinehelmet))
+				helmet_storage = storage_module.storage_datum
+			var/has_cosmetics = FALSE
+
+			if(helmet_storage)
+				for(var/list/cosmetic in helmet_storage.helmet_cosmetics)
+					if(islist(cosmetic))
+						has_cosmetics = TRUE
+						break
+
+			if(has_cosmetics)
+				for(var/list/cosmetic in helmet_storage.helmet_cosmetics)
+					if(!islist(cosmetic))
+						continue
+
+					var/cosmetic_state = cosmetic["helmet_icon_state"]
+					if(!cosmetic_state)
+						continue
+
+					standing.overlays += mutable_appearance(
+						storage_module.show_storage_icon,
+						icon_state = cosmetic_state
+					)
+			else
+				for(var/obj/item/stored AS in storage_module.contents)
+					if(istype(stored, /obj/item/ammo_magazine/handful))
+						standing.overlays += mutable_appearance(
+							storage_module.show_storage_icon,
+							icon_state = stored.icon_state
+						)
+					else
+						standing.overlays += mutable_appearance(
+							storage_module.show_storage_icon,
+							icon_state = initial(stored.icon_state)
+						)
+
 	if(attachments_by_slot[ATTACHMENT_SLOT_VISOR])
 		return standing
 	standing.pixel_x = visorless_offset_x

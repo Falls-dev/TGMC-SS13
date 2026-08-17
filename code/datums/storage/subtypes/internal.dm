@@ -413,9 +413,20 @@
 	max_storage_space = 3
 	storage_slots = 2
 	max_w_class = WEIGHT_CLASS_TINY
+	var/list/helmet_cosmetics = list(null, null)
+	var/list/helmet_cosmetic_slots
 
 /datum/storage/internal/marinehelmet/New(atom/parent)
 	. = ..()
+	helmet_cosmetic_slots = list(
+		new /atom/movable/screen/helmet_cosmetic,
+		new /atom/movable/screen/helmet_cosmetic,
+	)
+	for(var/i in 1 to length(helmet_cosmetic_slots))
+		var/atom/movable/screen/helmet_cosmetic/slot = helmet_cosmetic_slots[i]
+		slot.master = src
+		slot.cosmetic_index = i
+		slot.screen_loc = "[5 + i]:16,2:16"
 	set_holdable(
 		cant_hold_list = list(
 			/obj/item/stack/sheet,
@@ -433,6 +444,125 @@
 			/obj/item/ammo_magazine/handful,
 		)
 	)
+
+/datum/storage/internal/marinehelmet/Destroy(force = FALSE, ...)
+	QDEL_LIST(helmet_cosmetic_slots)
+	helmet_cosmetics = null
+	return ..()
+
+/datum/storage/internal/marinehelmet/show_to(mob/user)
+	. = ..()
+	if(!user?.client)
+		return
+	closer.screen_loc = "8:16,2:16"
+	user.client.screen += helmet_cosmetic_slots
+	for(var/i in 1 to length(helmet_cosmetic_slots))
+		var/atom/movable/screen/helmet_cosmetic/slot = helmet_cosmetic_slots[i]
+		slot.update_cosmetic(helmet_cosmetics[i])
+
+/datum/storage/internal/marinehelmet/hide_from(mob/user)
+	if(user?.client)
+		user.client.screen -= helmet_cosmetic_slots
+	return ..()
+
+/datum/storage/internal/marinehelmet/proc/set_helmet_cosmetic(index, obj/item/item, mob/user)
+	if(index < 1 || index > 2 || !istype(item))
+		return FALSE
+	if(HAS_TRAIT(item, TRAIT_NODROP))
+		return FALSE
+	if(item.item_flags & (ITEM_ABSTRACT|HAND_ITEM))
+		return FALSE
+	if(length(can_hold) && !is_type_in_typecache(item, can_hold))
+		return FALSE
+	if(is_type_in_typecache(item, cant_hold))
+		return FALSE
+	if(!is_type_in_typecache(item, storage_type_limits) && item.w_class > max_w_class)
+		return FALSE
+
+	var/obj/item/clothing/head/modular/helmet = parent.loc
+	if(!istype(helmet))
+		return FALSE
+
+	var/mutable_appearance/item_appearance = new(item.appearance)
+	helmet_cosmetics[index] = list(
+		"appearance" = item_appearance,
+		"icon_state" = initial(item.icon_state),
+		"helmet_icon_state" = initial(item.icon_state),
+		"type" = item.type,
+	)
+
+	helmet.update_icon()
+	for(var/mob/M in can_see_content())
+		show_to(M)
+	return TRUE
+
+
+/datum/storage/internal/marinehelmet/proc/remove_helmet_cosmetic(index)
+	if(index < 1 || index > 2)
+		return FALSE
+	if(isnull(helmet_cosmetics[index]))
+		return FALSE
+
+	helmet_cosmetics[index] = null
+	var/obj/item/clothing/head/modular/helmet = parent.loc
+	if(istype(helmet))
+		helmet.update_icon()
+	for(var/mob/M in can_see_content())
+		show_to(M)
+	return TRUE
+
+/atom/movable/screen/helmet_cosmetic
+	name = "helmet cosmetic slot"
+	icon = 'icons/mob/screen/generic.dmi'
+	icon_state = "block"
+	color = "#3b82f6"
+	plane = ABOVE_HUD_PLANE
+	mouse_over_pointer = MOUSE_HAND_POINTER
+	var/cosmetic_index = 0
+
+/atom/movable/screen/helmet_cosmetic/Click(location, control, params)
+	if(!ishuman(usr) || usr.incapacitated(TRUE))
+		return TRUE
+	var/list/modifiers = params2list(params)
+	if(modifiers["right-click"])
+		return TRUE
+	var/datum/storage/internal/marinehelmet/storage = master
+	if(!istype(storage))
+		return TRUE
+
+	var/mob/living/carbon/human/user = usr
+	var/obj/item/item_in_hand = user.get_active_held_item()
+	if(item_in_hand)
+		storage.set_helmet_cosmetic(cosmetic_index, item_in_hand, user)
+	else
+		storage.remove_helmet_cosmetic(cosmetic_index)
+	return TRUE
+
+/atom/movable/screen/helmet_cosmetic/proc/update_cosmetic(list/cosmetic)
+	overlays.Cut()
+	if(!islist(cosmetic))
+		return
+
+	var/mutable_appearance/appearance = cosmetic["appearance"]
+	if(!appearance)
+		return
+	appearance.appearance_flags |= APPEARANCE_UI
+	overlays += appearance
+
+/atom/movable/screen/helmet_cosmetic/MouseDrop_T(atom/movable/O, mob/user)
+	. = ..()
+	if(!ishuman(user) || user.incapacitated(TRUE))
+		return TRUE
+	if(!istype(O, /obj/item))
+		return TRUE
+	var/datum/storage/internal/marinehelmet/storage = master
+	if(!istype(storage))
+		return TRUE
+	if(storage.helmet_cosmetics[cosmetic_index])
+		return TRUE
+
+	storage.set_helmet_cosmetic(cosmetic_index, O, user)
+	return TRUE
 
 /datum/storage/internal/ammo_rack //Hey isn't this great? Due to this storage refactor, deployables can have storage too!
 	storage_slots = 10
