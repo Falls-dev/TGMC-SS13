@@ -506,7 +506,7 @@
 	return TRUE
 
 /atom/movable/screen/helmet_cosmetic
-	name = "helmet cosmetic slot"
+	name = "cosmetic storage"
 	icon = 'icons/mob/screen/generic.dmi'
 	icon_state = "block"
 	color = "#3b82f6"
@@ -538,7 +538,8 @@
 		return
 
 	var/mutable_appearance/appearance = new(cosmetic.appearance)
-	appearance.appearance_flags |= APPEARANCE_UI
+	appearance.appearance_flags |= (APPEARANCE_UI | RESET_COLOR)
+	appearance.plane = FLOAT_PLANE
 	overlays += appearance
 
 /atom/movable/screen/helmet_cosmetic/MouseDrop_T(atom/movable/O, mob/user)
