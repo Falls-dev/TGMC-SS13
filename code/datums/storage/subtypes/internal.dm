@@ -479,19 +479,11 @@
 	if(!is_type_in_typecache(item, storage_type_limits) && item.w_class > max_w_class)
 		return FALSE
 
+	var/obj/item/cloned_item = new item.type()
+	helmet_cosmetics[index] = cloned_item
 	var/obj/item/clothing/head/modular/helmet = parent.loc
-	if(!istype(helmet))
-		return FALSE
-
-	var/mutable_appearance/item_appearance = new(item.appearance)
-	helmet_cosmetics[index] = list(
-		"appearance" = item_appearance,
-		"icon_state" = initial(item.icon_state),
-		"helmet_icon_state" = initial(item.icon_state),
-		"type" = item.type,
-	)
-
-	helmet.update_icon()
+	if(istype(helmet))
+		helmet.update_icon()
 	for(var/mob/M in can_see_content())
 		show_to(M)
 	return TRUE
@@ -500,10 +492,12 @@
 /datum/storage/internal/marinehelmet/proc/remove_helmet_cosmetic(index)
 	if(index < 1 || index > 2)
 		return FALSE
-	if(isnull(helmet_cosmetics[index]))
+	var/obj/item/item = helmet_cosmetics[index]
+	if(!item)
 		return FALSE
 
 	helmet_cosmetics[index] = null
+	qdel(item)
 	var/obj/item/clothing/head/modular/helmet = parent.loc
 	if(istype(helmet))
 		helmet.update_icon()
@@ -538,14 +532,12 @@
 		storage.remove_helmet_cosmetic(cosmetic_index)
 	return TRUE
 
-/atom/movable/screen/helmet_cosmetic/proc/update_cosmetic(list/cosmetic)
+/atom/movable/screen/helmet_cosmetic/proc/update_cosmetic(obj/item/cosmetic)
 	overlays.Cut()
-	if(!islist(cosmetic))
+	if(!istype(cosmetic))
 		return
 
-	var/mutable_appearance/appearance = cosmetic["appearance"]
-	if(!appearance)
-		return
+	var/mutable_appearance/appearance = new(cosmetic.appearance)
 	appearance.appearance_flags |= APPEARANCE_UI
 	overlays += appearance
 

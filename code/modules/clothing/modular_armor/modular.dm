@@ -439,23 +439,20 @@
 			var/has_cosmetics = FALSE
 
 			if(helmet_storage)
-				for(var/list/cosmetic in helmet_storage.helmet_cosmetics)
-					if(islist(cosmetic))
+				for(var/obj/item/cosmetic in helmet_storage.helmet_cosmetics)
+					if(istype(cosmetic))
 						has_cosmetics = TRUE
 						break
 
 			if(has_cosmetics)
-				for(var/list/cosmetic in helmet_storage.helmet_cosmetics)
-					if(!islist(cosmetic))
-						continue
+				for(var/obj/item/cosmetic in helmet_storage.helmet_cosmetics)
 
-					var/cosmetic_state = cosmetic["helmet_icon_state"]
-					if(!cosmetic_state)
+					if(!istype(cosmetic))
 						continue
 
 					standing.overlays += mutable_appearance(
 						storage_module.show_storage_icon,
-						icon_state = cosmetic_state
+						icon_state = initial(cosmetic.icon_state)
 					)
 			else
 				for(var/obj/item/stored AS in storage_module.contents)
