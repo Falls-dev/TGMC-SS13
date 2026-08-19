@@ -160,7 +160,7 @@
 	full_name = "Activate combat robot autorepair"
 	description = "Activate combat robot's autorepair"
 	keybind_signal = COMSIG_KB_ROBOT_AUTOREPAIR
-code/datums/status_effects/gun_skill.dm
+
 /datum/keybinding/human/stims_menu
 	hotkey_keys = list("g")
 	name = "stims menu"

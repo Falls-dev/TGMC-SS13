@@ -5,6 +5,7 @@
 	inherent_traits = list(TRAIT_TOO_TALL)
 	inherent_actions = list(/datum/action/supersoldier_stims)
 	namepool = /datum/namepool/prototype_supersoldier
+	species_flags = HAS_SKIN_TONE|HAS_LIPS|HAS_UNDERWEAR
 
 /datum/species/human/prototype_supersoldier/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
