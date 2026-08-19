@@ -479,7 +479,9 @@
 	if(!is_type_in_typecache(item, storage_type_limits) && item.w_class > max_w_class)
 		return FALSE
 
+	item.update_icon()
 	var/obj/item/cloned_item = new item.type()
+	cloned_item.appearance = item.appearance
 	helmet_cosmetics[index] = cloned_item
 	var/obj/item/clothing/head/modular/helmet = parent.loc
 	if(istype(helmet))
@@ -538,7 +540,7 @@
 		return
 
 	var/mutable_appearance/appearance = new(cosmetic.appearance)
-	appearance.appearance_flags |= (APPEARANCE_UI | RESET_COLOR)
+	appearance.appearance_flags |= RESET_COLOR
 	appearance.plane = FLOAT_PLANE
 	overlays += appearance
 
