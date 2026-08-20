@@ -123,6 +123,11 @@
 			"choice" = "points",
 			)
 
+	var/list/taken_kits = list()
+	for(var/path in GLOB.specialist_kits_taken)
+		taken_kits += "[path]"
+	.["taken_kits"] = taken_kits
+
 /obj/machinery/marine_selector/ui_act(action, list/params)
 	. = ..()
 	if(.)
@@ -150,6 +155,13 @@
 				if(icon_deny)
 					flick(icon_deny, src)
 				return
+
+			if(item_category == CAT_SPECKIT && !ispath(vendor_role, /datum/job/fallen))
+				if(GLOB.specialist_kits_taken[idx])
+					to_chat(usr, span_warning("That set is already taken."))
+					if(icon_deny)
+						flick(icon_deny, src)
+					return
 
 			var/turf/T = loc
 			if(length(T.contents) > 25)
@@ -195,6 +207,8 @@
 
 			if(use_points && (item_category in user_id.marine_points))
 				user_id.marine_points[item_category] -= cost
+			if(item_category == CAT_SPECKIT && !ispath(vendor_role, /datum/job/fallen))
+				GLOB.specialist_kits_taken[idx] = TRUE
 			. = TRUE
 			user_id.id_flags |= USED_GHMME
 
@@ -281,6 +295,20 @@
 
 /obj/machinery/marine_selector/clothes/smartgun/valhalla
 	vendor_role = /datum/job/fallen/marine/smartgunner
+	resistance_flags = INDESTRUCTIBLE
+
+/obj/machinery/marine_selector/clothes/specialist
+	name = "\improper GHMME Automated Weapons Specialist Closet"
+	req_access = list(ACCESS_MARINE_SPECPREP)
+	vendor_role = /datum/job/terragov/squad/specialist
+	gives_webbing = FALSE
+
+/obj/machinery/marine_selector/clothes/specialist/Initialize(mapload)
+	. = ..()
+	listed_products = GLOB.specialist_clothes_listed_products
+
+/obj/machinery/marine_selector/clothes/specialist/valhalla
+	vendor_role = /datum/job/fallen/marine/specialist
 	resistance_flags = INDESTRUCTIBLE
 
 /obj/machinery/marine_selector/clothes/leader
@@ -424,6 +452,21 @@
 
 /obj/machinery/marine_selector/gear/smartgun/valhalla
 	vendor_role = /datum/job/fallen/marine/smartgunner
+	resistance_flags = INDESTRUCTIBLE
+
+/obj/machinery/marine_selector/gear/specialist
+	name = "\improper NEXUS automated weapons specialist equipment rack"
+	desc = "An automated equipment rack hooked up to a colossal storage of specialist weapons kits. Only one of each kit may be chosen per round."
+	icon_state = "marinearmory"
+	vendor_role = /datum/job/terragov/squad/specialist
+	req_access = list(ACCESS_MARINE_SPECPREP)
+
+/obj/machinery/marine_selector/gear/specialist/Initialize(mapload)
+	. = ..()
+	listed_products = GLOB.specialist_gear_listed_products
+
+/obj/machinery/marine_selector/gear/specialist/valhalla
+	vendor_role = /datum/job/fallen/marine/specialist
 	resistance_flags = INDESTRUCTIBLE
 
 /obj/machinery/marine_selector/gear/leader
@@ -771,6 +814,7 @@
 #undef MARINE_TOTAL_BUY_POINTS
 #undef ROBOT_TOTAL_BUY_POINTS
 #undef SMARTGUNNER_TOTAL_BUY_POINTS
+#undef SPECIALIST_TOTAL_BUY_POINTS
 #undef LEADER_TOTAL_BUY_POINTS
 #undef MEDIC_TOTAL_BUY_POINTS
 #undef ENGINEER_TOTAL_BUY_POINTS

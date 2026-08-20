@@ -75,6 +75,13 @@
 	minimal_access = list(ACCESS_MARINE_PREP, ACCESS_MARINE_SMARTPREP, ACCESS_MARINE_DROPSHIP)
 	outfit = /datum/outfit/job/marine/smartgunner
 
+/datum/job/fallen/marine/specialist
+	title = ROLE_FALLEN(SQUAD_SPECIALIST)
+	skills_type = /datum/skills/specialist
+	access = list(ACCESS_MARINE_PREP, ACCESS_MARINE_SPECPREP)
+	minimal_access = list(ACCESS_MARINE_PREP, ACCESS_MARINE_SPECPREP, ACCESS_MARINE_DROPSHIP)
+	outfit = /datum/outfit/job/marine/specialist
+
 /datum/job/fallen/marine/leader
 	title = ROLE_FALLEN(SQUAD_LEADER)
 	skills_type = /datum/skills/sl

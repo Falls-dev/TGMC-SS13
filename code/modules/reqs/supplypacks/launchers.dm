@@ -107,6 +107,16 @@
 	contains = list(/obj/item/ammo_magazine/rifle/tx54/incendiary)
 	cost = 60
 
+/datum/supply_packs/launchers/tx54_incendiary/g
+	name = "GL-54 G-fuel incendiary grenade magazine"
+	contains = list(/obj/item/ammo_magazine/rifle/tx54/incendiary/G)
+	cost = 75
+
+/datum/supply_packs/launchers/tx54_incendiary/x
+	name = "GL-54 X-fuel incendiary grenade magazine"
+	contains = list(/obj/item/ammo_magazine/rifle/tx54/incendiary/X)
+	cost = 90
+
 /datum/supply_packs/launchers/tx54_smoke
 	name = "GL-54 tactical smoke grenade magazine"
 	contains = list(/obj/item/ammo_magazine/rifle/tx54/smoke)
@@ -120,6 +130,16 @@
 /datum/supply_packs/launchers/tx54_smoke/tangle
 	name = "GL-54 tanglefoot grenade magazine"
 	contains = list(/obj/item/ammo_magazine/rifle/tx54/smoke/tangle)
+	cost = 48
+
+/datum/supply_packs/launchers/tx54_smoke/antigas
+	name = "GL-54 antigas grenade magazine"
+	contains = list(/obj/item/ammo_magazine/rifle/tx54/smoke/antigas)
+	cost = 36
+
+/datum/supply_packs/launchers/tx54_healing_foam
+	name = "GL-54 healing foam grenade magazine"
+	contains = list(/obj/item/ammo_magazine/rifle/tx54/healing_foam)
 	cost = 48
 
 /datum/supply_packs/launchers/singleshot_launcher

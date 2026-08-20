@@ -91,6 +91,7 @@ GLOBAL_LIST_INIT(playable_squad_icons, list(
 	"engi",
 	"medic",
 	"smartgunner",
+	"spec",
 ))
 
 GLOBAL_LIST_INIT(playable_icons, list(
@@ -132,6 +133,7 @@ GLOBAL_LIST_INIT(playable_icons, list(
 	"sentinel",
 	"spiderling",
 	"spitter",
+	"spec",
 	"st",
 	"staffofficer",
 	"synth",
