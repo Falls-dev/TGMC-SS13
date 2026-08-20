@@ -498,16 +498,8 @@ This maintains a list of ip addresses that are able to bypass topic filtering.
 /datum/config_entry/number/tgui_max_chunk_count
 	default = 32
 
-// DISCORD ROLE STUFFS
+/datum/config_entry/string/KAIN_API_URL
 
-/datum/config_entry/string/discord_token
+/datum/config_entry/string/KAIN_API_TOKEN
 
-//yes ID is a number but config is a string
-
-/datum/config_entry/string/discord_guildid
-
-/datum/config_entry/string/discord_boosty_roleid_tier_1
-
-/datum/config_entry/string/discord_boosty_roleid_tier_2
-
-/datum/config_entry/string/discord_boosty_roleid_tier_3
+/datum/config_entry/string/discord_bot_url
