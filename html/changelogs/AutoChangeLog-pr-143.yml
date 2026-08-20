@@ -1,5 +1,0 @@
-author: "SanecMan"
-delete-after: True
-changes:
-  - refactor: "Интеграция Дискорда заменена на интеграцию Госуслуг"
-  - config: "Добавлен эндпоинт для API вместе с токеном"

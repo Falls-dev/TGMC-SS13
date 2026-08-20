@@ -58,7 +58,11 @@
 	var/gender = NEUTER // Determines if the accessory will be skipped or included in random hair generations
 	var/locked = FALSE		//Is this part locked from roundstart selection? Used for parts that apply effects
 
+<<<<<<< HEAD
 	var/list/species_allowed = list("Human","Human Hero", "Synthetic", "Engineer Synthetic", "Medical Synthetic", "Vat-Grown", "Vatborn", "Prototype Supersoldier") // Restrict some styles to specific species
+=======
+	var/list/species_allowed = list("Human","Human Hero", "Synthetic", "Engineer Synthetic", "Medical Synthetic", "Vat-Grown", "Vatborn") // Restrict some styles to specific species
+>>>>>>> robots-pr
 	var/do_colouration = TRUE	// Whether or not the accessory can be affected by colouration
 
 	var/datum/greyscale_config/greyscale_config
@@ -73,7 +77,11 @@
 */
 
 /datum/sprite_accessory/hair
+<<<<<<< HEAD
 	species_allowed = list("Human","Synthetic","Engineer Synthetic", "Medical Synthetic", "Vat-Grown", "Vatborn", "Prototype Supersoldier")
+=======
+	species_allowed = list("Human","Synthetic","Engineer Synthetic", "Medical Synthetic", "Vat-Grown", "Vatborn")
+>>>>>>> robots-pr
 	icon = 'icons/mob/Human_face.dmi'
 
 /datum/sprite_accessory/hair/bald
@@ -1175,7 +1183,11 @@
 /datum/sprite_accessory/hair_gradient
 	icon = 'icons/mob/hair_gradients.dmi'
 	gender = NEUTER
+<<<<<<< HEAD
 	species_allowed = list("Human","Synthetic","Engineer Synthetic", "Medical Synthetic", "Vat-Grown", "Vatborn", "Prototype Supersoldier")
+=======
+	species_allowed = list("Human","Synthetic", "Engineer Synthetic", "Medical Synthetic", "Vat-Grown", "Vatborn")
+>>>>>>> robots-pr
 
 /datum/sprite_accessory/hair_gradient/none
 	name = "None"
@@ -1226,7 +1238,11 @@
 	name = "Shaved"
 	icon_state = "bald"
 	gender = NEUTER
+<<<<<<< HEAD
 	species_allowed = list("Human","Synthetic","Engineer Synthetic", "Medical Synthetic", "Vat-Grown", "Vatborn", "Prototype Supersoldier")
+=======
+	species_allowed = list("Human","Synthetic", "Engineer Synthetic", "Medical Synthetic", "Vat-Grown", "Vatborn")
+>>>>>>> robots-pr
 
 /datum/sprite_accessory/facial_hair/watson
 	name = "Watson Mustache"
