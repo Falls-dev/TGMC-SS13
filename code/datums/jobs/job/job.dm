@@ -93,7 +93,9 @@ GLOBAL_PROTECT(exp_specialmap)
 		outfits.Cut()
 		for(var/path in options_list)
 			outfits += new path
-	exp_requirements = 0 // Костыль для спиливания таймолок
+	exp_requirements = 0
+	exp_type = ""
+	exp_type_department = ""
 
 /datum/job/proc/get_whitelist_status(list/roles_whitelist, client/player)
 	if(!roles_whitelist)
