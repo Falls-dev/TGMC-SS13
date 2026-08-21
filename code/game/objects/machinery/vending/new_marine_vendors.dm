@@ -306,11 +306,11 @@
 /obj/machinery/marine_selector/clothes/specialist/Initialize(mapload)
 	. = ..()
 	listed_products = GLOB.specialist_clothes_listed_products
-
+/*
 /obj/machinery/marine_selector/clothes/specialist/valhalla
 	vendor_role = /datum/job/fallen/marine/specialist
 	resistance_flags = INDESTRUCTIBLE
-
+*/
 /obj/machinery/marine_selector/clothes/leader
 	name = "\improper GHMME Automated Leader Closet"
 	req_access = list(ACCESS_MARINE_LEADER)
@@ -464,11 +464,11 @@
 /obj/machinery/marine_selector/gear/specialist/Initialize(mapload)
 	. = ..()
 	listed_products = GLOB.specialist_gear_listed_products
-
+/*
 /obj/machinery/marine_selector/gear/specialist/valhalla
 	vendor_role = /datum/job/fallen/marine/specialist
 	resistance_flags = INDESTRUCTIBLE
-
+*/
 /obj/machinery/marine_selector/gear/leader
 	name = "\improper NEXUS automated squad leader's equipment rack"
 	desc = "An automated equipment rack hooked up to a colossal storage of basic cat-herding devices."
