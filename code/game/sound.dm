@@ -297,6 +297,8 @@ A good representation is: 'byond applies a volume reduction to the sound every X
 			soundin = pick('sound/weapons/guns/fire/mp38_1.ogg', 'sound/weapons/guns/fire/mp38_2.ogg')
 		if(SFX_SLAM)
 			soundin = pick('sound/effects/slam1.ogg', 'sound/effects/slam2.ogg', 'sound/effects/slam3.ogg')
+		if(SFX_THROW)
+			soundin = pick('sound/effects/throwing/swoosh1.ogg', 'sound/effects/throwing/swoosh2.ogg', 'sound/effects/throwing/swoosh3.ogg', 'sound/effects/throwing/swoosh4.ogg', 'sound/effects/throwing/throw.ogg')
 
 		// Xeno
 		if(SFX_ACID_HIT)
