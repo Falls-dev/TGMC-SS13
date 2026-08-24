@@ -1314,6 +1314,10 @@ So if we are on the 32th absolute pixel coordinate we are on tile 1, but if we a
 		victim_feedback += "We burst into flames!! Auuugh! Resist to put out the flames!"
 
 	if(feedback_flags & BULLET_FEEDBACK_SCREAM && stat == CONSCIOUS)
+		var/datum/xenomorph_skin/skin_datum = current_skin
+		if(skin_datum && skin_datum.pain_sound)
+			playsound(loc, skin_datum.pain_sound, 30, 1)
+			return
 		emote(prob(70) ? "hiss" : "roar")
 
 	to_chat(src, span_userdanger("[victim_feedback.Join(" ")]"))

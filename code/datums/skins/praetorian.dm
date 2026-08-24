@@ -5,7 +5,6 @@
 /datum/xenomorph_skin/praetorian/rouny
 	name = "Rouny"
 	icon = 'icons/Xeno/castes/praetorian/rouny.dmi'
-	access_needed = BOOSTY_TIER_3
 
 /datum/xenomorph_skin/praetorian/tacticool
 	name = "Tacticool"
