@@ -1119,6 +1119,27 @@
 	keybind_signal = COMSIG_XENOABILITY_JAB
 	hotkey_keys = list("C")
 
+/datum/keybinding/xeno/encased_plates
+	name = "encased_plates"
+	full_name = "Warrior (Bulwark): Encased Plates"
+	description = "Raise or lower your armored plates."
+	keybind_signal = COMSIG_XENOABILITY_ENCASED_PLATES
+	hotkey_keys = list("C")
+
+/datum/keybinding/xeno/plate_bash
+	name = "plate_bash"
+	full_name = "Warrior (Bulwark): Plate Bash"
+	description = "Dash at a target and shove it. While encased: launches adjacent targets away with knockdown."
+	keybind_signal = COMSIG_XENOABILITY_PLATE_BASH
+	hotkey_keys = list("V")
+
+/datum/keybinding/xeno/reflective_shield
+	name = "reflective_shield"
+	full_name = "Warrior (Bulwark): Reflective Shield"
+	description = "Lock your facing and reflect frontal bullets back at the firer."
+	keybind_signal = COMSIG_XENOABILITY_REFLECTIVE_SHIELD
+	hotkey_keys = list("B")
+
 /datum/keybinding/xeno/flurry
 	name = "flurry"
 	full_name = "Warrior: Flurry"
