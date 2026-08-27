@@ -5,3 +5,7 @@
 /datum/xenomorph_skin/panther/rouny
 	name = "Rouny"
 	icon = 'icons/Xeno/castes/panther/rouny.dmi'
+
+/datum/xenomorph_skin/panther/MaLO
+	name = "MaLO"
+	icon = 'icons/Xeno/castes/panther/MaLO.dmi'

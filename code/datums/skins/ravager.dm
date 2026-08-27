@@ -9,3 +9,4 @@
 /datum/xenomorph_skin/ravager/bonehead
 	name = "Bonehead"
 	icon = 'icons/Xeno/castes/ravager/bone.dmi'
+	select_sound = 'sound/voice/alien/ravanger_bone/pick_doom.ogg'

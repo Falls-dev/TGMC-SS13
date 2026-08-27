@@ -20,6 +20,11 @@
 	icon = 'icons/Xeno/castes/drone/hornet.dmi'
 	effects_icon = 'icons/Xeno/castes/drone/hornet_effects.dmi'
 	access_needed = BOOSTY_TIER_2
+	select_sound = 'sound/voice/alien/drone_hornet/hornet_pick.ogg'
+	death_sound = 'sound/voice/alien/drone_hornet/hornet_death.ogg'
+	attack_sound = 'sound/voice/alien/drone_hornet/hornet_gitgud.ogg'
+	attack_sound_chance = 25
+	pain_sound = 'sound/voice/alien/drone_hornet/hornet_damage.ogg'
 
 /datum/xenomorph_skin/drone/gambler
 	name = "Gambler"
