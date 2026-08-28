@@ -88,7 +88,6 @@
 /mob/living/carbon/xenomorph/warrior/bulwark/Corrupted/fallen
 	hivenumber = XENO_HIVE_FALLEN
 
-
 /mob/living/carbon/xenomorph/warrior/bulwark/handle_special_state()
 	if(reflective_active)
 		icon_state = "[xeno_caste.caste_name] Shield Reflective"
@@ -104,7 +103,6 @@
 	if(reflective_active && new_dir != dir)
 		return
 	return ..()
-
 
 /mob/living/carbon/xenomorph/warrior/bulwark/modify_by_armor(damage_amount, armor_type, penetration, def_zone, attack_dir)
 	. = ..()
@@ -125,32 +123,28 @@
 	if(proj.ammo.ammo_behavior_flags & AMMO_SKIPS_ALIENS)
 		return FALSE
 
-	// НАПРАВЛЕННАЯ БРОНЯ (должно быть здесь)
-	if(cardinal_move & REVERSE_DIR(dir)) // спереди
+	if(cardinal_move & REVERSE_DIR(dir))
 		proj.damage = max(proj.damage - front_armor_bonus, 0)
-	else if(cardinal_move != dir) // сбоку (сзади нет бонуса)
+	else if(cardinal_move != dir)
 		proj.damage = max(proj.damage - side_armor_bonus, 0)
 
-	// Спереди + щит активен + отражаемый тип
 	if(reflective_active && (cardinal_move & REVERSE_DIR(dir)))
 		if(!(proj.ammo.ammo_behavior_flags & (AMMO_XENO|AMMO_SNIPER)) && !istype(proj.ammo, /datum/ammo/rocket))
-			proj.damage *= 0.5      // отражённый выстрел несёт половину урона
+			proj.damage *= 0.5
 			proj.sundering = 0
-			reflect_shot(proj)      // новый снаряд в стрелка
-			proj.damage = 0         // оригинал гаснет на нас
+			reflect_shot(proj)
+			proj.damage = 0
 			reflecting_hit = TRUE
-			return TRUE             // движок сам остановит и удалит оригинал
+			return TRUE
 
 	return ..()
 
-// Оригиналу не даём себя ударить (он и так с 0 урона, но on_hit_mob у некоторых амм может вешать эффекты)
 /mob/living/carbon/xenomorph/warrior/bulwark/do_projectile_hit(atom/movable/projectile/proj)
 	if(reflecting_hit)
 		reflecting_hit = FALSE
 		return
 	return ..()
 
-// Отражённый выстрел — новый снаряд, как это делают движковые отражающие поверхности
 /mob/living/carbon/xenomorph/warrior/bulwark/proc/reflect_shot(atom/movable/projectile/P)
 	var/atom/shooter = P.firer
 	if(!shooter)

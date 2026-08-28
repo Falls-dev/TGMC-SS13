@@ -89,13 +89,13 @@
 	plasma_max = 400
 
 	// *** Health *** //
-	max_health = 600
+	max_health = 450
 
 	// *** Defense *** //
 	soft_armor = list(MELEE = 40, BULLET = 60, LASER = 60, ENERGY = 40, BOMB = 30, BIO = 50, FIRE = 25, ACID = 50)
 
 	// *** Bulwark stance config *** //
-	var/plates_armor = 10
+	var/plates_armor = 5
 	var/plates_slowdown = 1.35
 
 	actions = list(

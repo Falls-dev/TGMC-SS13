@@ -912,11 +912,10 @@
 			if(!ishuman(AM))
 				AM.Shake(duration = 0.5 SECONDS)
 
-	// AOE knockback в радиусе 1
 	for(var/mob/living/carbon/human/H in orange(1, B))
 		if(H.stat == DEAD || H.issamexenohive(B))
 			continue
-		H.apply_damage(30, BRUTE, blocked = BOMB)
+		H.apply_damage(30, BRUTE, blocked = MELEE)
 		H.Knockdown(1 SECONDS)
 		shake_camera(H, 2, 1)
 		var/throw_dir = get_dir(B, H)
