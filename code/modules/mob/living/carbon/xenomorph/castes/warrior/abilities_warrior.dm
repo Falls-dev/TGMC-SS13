@@ -662,7 +662,7 @@
 	name = "Encased Plates"
 	desc = "Raise your plates: +front armor and knockdown immunity, but slower movement and weaker claws."
 	action_icon_state = "encased_plates"
-	action_icon = 'icons/Xeno/actions/warrior.dmi'  // ← ЯВНО
+	action_icon = 'icons/Xeno/actions/warrior.dmi'
 	cooldown_duration = 1 SECONDS
 	keybinding_signals = list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_ENCASED_PLATES,
@@ -708,6 +708,12 @@
 	B.plates_active = on
 	B.update_icons()
 
+/datum/action/ability/xeno_action/toggle_plates/remove_action(mob/living/carbon/xenomorph/X)
+	var/mob/living/carbon/xenomorph/warrior/bulwark/B = X
+	if(B?.plates_active)
+		set_plates(FALSE, TRUE)
+	return ..()
+
 // ***************************************
 // *********** Plate Bash
 // ***************************************
@@ -716,7 +722,7 @@
 	name = "Plate Bash"
 	desc = "Dash up to 2 tiles and shove the target 1 tile away. While encased: adjacent only, but launches 3 tiles with knockdown and stun."
 	action_icon_state = "plate_bash"
-	action_icon = 'icons/Xeno/actions/warrior.dmi'  // ← ЯВНО
+	action_icon = 'icons/Xeno/actions/warrior.dmi'
 	cooldown_duration = 5 SECONDS
 	ability_cost = 35
 	keybinding_signals = list(
@@ -746,9 +752,9 @@
 
 	if(!B.plates_active)
 		xeno_owner.throw_at(get_step_towards(victim, xeno_owner), 2, 3, owner)
-		add_cooldown()
 	if(!xeno_owner.Adjacent(victim))
 		succeed_activate()
+		add_cooldown()
 		return
 
 	owner.visible_message(
@@ -777,7 +783,6 @@
 /datum/action/ability/xeno_action/tail_sweep/bulwark
 	cooldown_duration = 15 SECONDS
 	ability_cost = 30
-	// action_icon наследуется от родителя tail_sweep
 
 /datum/action/ability/xeno_action/tail_sweep/bulwark/action_activate()
 	var/hit_mob = FALSE
@@ -792,7 +797,9 @@
 	. = ..()
 
 	if(!hit_mob)
-		cooldown_timer = world.time + (cooldown_duration / 3)
+		cooldown_duration = cooldown_duration / 3
+		add_cooldown()
+		cooldown_duration = initial(cooldown_duration)
 
 // ***************************************
 // *********** Reflective Shield
@@ -802,7 +809,7 @@
 	name = "Reflective Shield"
 	desc = "Lock your facing and reflect frontal bullets back for half damage, up to 6 seconds. You cannot attack while active. Cooldown 6-18s."
 	action_icon_state = "reflective_shield"
-	action_icon = 'icons/Xeno/actions/warrior.dmi'  // ← ЯВНО
+	action_icon = 'icons/Xeno/actions/warrior.dmi'
 	ability_cost = 80
 	cooldown_duration = 6 SECONDS
 	keybinding_signals = list(
@@ -828,7 +835,7 @@
 	var/mob/living/carbon/xenomorph/warrior/bulwark/B = xeno_owner
 	if(active)
 		deactivate()
-		return succeed_activate()
+		return succeed_activate(0)
 
 	active = TRUE
 	start_time = world.time
@@ -858,3 +865,82 @@
 	add_cooldown()
 	cooldown_duration = initial(cooldown_duration)
 	to_chat(B, span_xenowarning("We adjust our plates and stance back to normal."))
+
+// ***************************************
+// *********** Shield Shatter (Primordial)
+// ***************************************
+
+/datum/action/ability/xeno_action/shield_shatter
+	name = "Shield Shatter"
+	desc = "Detonate your plates outward, throwing nearby enemies back. Sends your Reflective Shield into an 18 second cooldown. Primordial only."
+	action_icon_state = "psy_shield_reflect" // посмотри в warlock.dmi state взрыва щита и подставь нужный
+	action_icon = 'icons/Xeno/actions/warlock.dmi'
+	cooldown_duration = 30 SECONDS
+	keybinding_signals = list(
+		KEYBINDING_NORMAL = COMSIG_XENOABILITY_SHIELD_SHATTER,
+	)
+
+/datum/action/ability/xeno_action/shield_shatter/can_use_action(silent, override_flags)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/mob/living/carbon/xenomorph/warrior/bulwark/B = xeno_owner
+	if(!istype(B))
+		return FALSE
+	if(!istype(B.xeno_caste, /datum/xeno_caste/warrior/bulwark/primordial))
+		if(!silent)
+			to_chat(owner, span_xenowarning("Only a primordial bulwark can shatter its plates!"))
+		return FALSE
+	if(!B.plates_active)
+		if(!silent)
+			to_chat(owner, span_xenowarning("We must encase our plates first!"))
+		return FALSE
+
+/datum/action/ability/xeno_action/shield_shatter/action_activate()
+	var/mob/living/carbon/xenomorph/warrior/bulwark/B = xeno_owner
+
+	playsound(B, 'sound/effects/bamf.ogg', 75, TRUE)
+	playsound(B, 'sound/voice/alien/roar_warlock.ogg', 25)
+	B.visible_message(
+		span_xenowarning("[B] shatters its plates outward!"),
+		span_xenowarning("We shatter our plates outward!"))
+
+
+	for(var/turf/T AS in RANGE_TURFS(1, B))
+		T.Shake(duration = 0.5 SECONDS)
+		for(var/atom/movable/AM AS in T)
+			if(!ishuman(AM))
+				AM.Shake(duration = 0.5 SECONDS)
+
+	// AOE knockback в радиусе 1
+	for(var/mob/living/carbon/human/H in orange(1, B))
+		if(H.stat == DEAD || H.issamexenohive(B))
+			continue
+		H.apply_damage(30, BRUTE, blocked = BOMB)
+		H.Knockdown(1 SECONDS)
+		shake_camera(H, 2, 1)
+		var/throw_dir = get_dir(B, H)
+		if(throw_dir)
+			H.throw_at(get_ranged_target_turf(H, throw_dir, 3), 3, 2, B, TRUE)
+
+
+	shake_camera(B, 1, 1)
+
+	var/datum/action/ability/xeno_action/reflective_shield/RS = xeno_owner.actions_by_path[/datum/action/ability/xeno_action/reflective_shield]
+	if(RS?.active)
+		RS.deactivate()
+	if(RS)
+		RS.cooldown_duration = 18 SECONDS
+		RS.add_cooldown()
+		RS.cooldown_duration = initial(RS.cooldown_duration)
+
+	succeed_activate()
+	add_cooldown()
+
+/obj/effect/temp_visual/shield_shatter
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "shield_shatter"
+	duration = 1 SECONDS
+	layer = ABOVE_ALL_MOB_LAYER
+	pixel_x = -32
+	pixel_y = -32

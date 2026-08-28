@@ -60,17 +60,12 @@
 	caste_base_type = /datum/xeno_caste/warrior/bulwark
 	name = "Bulwark Warrior"
 	icon = 'icons/Xeno/castes/warrior/bulwark.dmi'
-
-	// Стойки
+	skins = null
 	var/plates_active = FALSE
 	var/reflective_active = FALSE
-
-	// Направленная броня (пассив +10/+10, в пластинах +20/0)
 	var/front_armor_bonus = 10
 	var/side_armor_bonus = 10
-
-	// Штраф когтей в пластинах
-	var/claw_damage_penalty = 0
+	var/reflecting_hit = FALSE
 
 /mob/living/carbon/xenomorph/warrior/bulwark/primordial
 	upgrade = XENO_UPGRADE_PRIMO
@@ -93,7 +88,6 @@
 /mob/living/carbon/xenomorph/warrior/bulwark/Corrupted/fallen
 	hivenumber = XENO_HIVE_FALLEN
 
-// *********** Иконки стоек ***********
 
 /mob/living/carbon/xenomorph/warrior/bulwark/handle_special_state()
 	if(reflective_active)
@@ -104,27 +98,18 @@
 		return TRUE
 	return FALSE
 
-// *********** Лок направления (DIRLOCK в билде нет) ***********
+// *********** DIRLOCK ***********
 
 /mob/living/carbon/xenomorph/warrior/bulwark/setDir(new_dir)
 	if(reflective_active && new_dir != dir)
 		return
 	return ..()
 
-// *********** Броня: +50% мили + направленная ***********
 
 /mob/living/carbon/xenomorph/warrior/bulwark/modify_by_armor(damage_amount, armor_type, penetration, def_zone, attack_dir)
 	. = ..()
 	if(armor_type == MELEE)
 		. *= 1.5
-	// Направленная броня: спереди и сбоку, сзади — нет
-	if(attack_dir)
-		if(attack_dir == REVERSE_DIR(dir))
-			. = max(. - front_armor_bonus, 0)
-		else if(attack_dir != dir)
-			. = max(. - side_armor_bonus, 0)
-
-// *********** Запрет атак под щитом ***********
 
 /mob/living/carbon/xenomorph/warrior/bulwark/UnarmedAttack(atom/A, mods)
 	if(reflective_active)
@@ -132,16 +117,19 @@
 		return
 	return ..()
 
-// *********** Само отражение ***********
-
-
-var/reflecting_hit = FALSE
+// *********** Reflection ***********
 
 /mob/living/carbon/xenomorph/warrior/bulwark/projectile_hit(atom/movable/projectile/proj, cardinal_move, uncrossing)
 	if(SEND_SIGNAL(src, COMSIG_XENO_PROJECTILE_HIT, proj, cardinal_move, uncrossing) & COMPONENT_PROJECTILE_DODGE)
 		return FALSE
 	if(proj.ammo.ammo_behavior_flags & AMMO_SKIPS_ALIENS)
 		return FALSE
+
+	// НАПРАВЛЕННАЯ БРОНЯ (должно быть здесь)
+	if(cardinal_move & REVERSE_DIR(dir)) // спереди
+		proj.damage = max(proj.damage - front_armor_bonus, 0)
+	else if(cardinal_move != dir) // сбоку (сзади нет бонуса)
+		proj.damage = max(proj.damage - side_armor_bonus, 0)
 
 	// Спереди + щит активен + отражаемый тип
 	if(reflective_active && (cardinal_move & REVERSE_DIR(dir)))

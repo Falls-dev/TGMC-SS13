@@ -97,7 +97,6 @@
 	// *** Bulwark stance config *** //
 	var/plates_armor = 10
 	var/plates_slowdown = 1.35
-	var/plates_damage_penalty = 8
 
 	actions = list(
 		/datum/action/ability/xeno_action/xeno_resting,
@@ -115,4 +114,18 @@
 
 /datum/xeno_caste/warrior/bulwark/primordial
 	upgrade_name = "Primordial"
+	caste_desc = "A living bastion. Its shield can shatter outward, throwing enemies back."
+	primordial_message = "Our shield protects. Our shield destroys."
 	upgrade = XENO_UPGRADE_PRIMO
+
+	actions = list(
+		/datum/action/ability/xeno_action/xeno_resting,
+		/datum/action/ability/xeno_action/watch_xeno,
+		/datum/action/ability/activable/xeno/psydrain,
+		/datum/action/ability/xeno_action/empower,
+		/datum/action/ability/xeno_action/toggle_plates,
+		/datum/action/ability/activable/xeno/plate_bash,
+		/datum/action/ability/xeno_action/tail_sweep/bulwark,
+		/datum/action/ability/xeno_action/reflective_shield,
+		/datum/action/ability/xeno_action/shield_shatter,
+	)
