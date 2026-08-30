@@ -545,6 +545,120 @@
 	if(owner.health <= minimum_health)
 		owner.remove_status_effect(STATUS_EFFECT_XENO_PSYCHIC_LINK)
 
+// ***************************************
+// *********** Nerta Link
+// ***************************************
+/obj/effect/ebeam/nerta_link
+	name = "nerta link"
+
+/datum/status_effect/nerta_link
+	id = "nerta_link"
+	status_type = STATUS_EFFECT_UNIQUE
+	tick_interval = 2 SECONDS
+	alert_type = null
+	var/mob/living/carbon/human/link_target
+	var/obj/item/armor_module/module/nerta/owner_module
+	var/obj/item/armor_module/module/nerta/target_module
+	var/link_range = 7
+	var/datum/beam/current_beam
+
+/datum/status_effect/nerta_link/on_creation(mob/living/new_owner, mob/living/carbon/human/new_target, obj/item/armor_module/module/nerta/new_owner_module, obj/item/armor_module/module/nerta/new_target_module, new_range = 7)
+	owner = new_owner
+	link_target = new_target
+	owner_module = new_owner_module
+	target_module = new_target_module
+	link_range = new_range
+	if(!ishuman(owner) || !ishuman(link_target) || !owner_module || !target_module)
+		return FALSE
+	RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_DEATH), PROC_REF(handle_link_update))
+	RegisterSignals(link_target, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_DEATH), PROC_REF(handle_link_update))
+	handle_link_update()
+	return ..()
+
+/datum/status_effect/nerta_link/on_remove()
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_DEATH))
+	UnregisterSignal(link_target, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_DEATH))
+	toggle_beam(FALSE)
+	if(owner_module)
+		owner_module.linked_module = null
+		owner_module.active = FALSE
+		owner_module.update_action_icon()
+	if(target_module)
+		target_module.linked_module = null
+		target_module.active = FALSE
+		target_module.update_action_icon()
+	link_target = null
+	owner_module = null
+	target_module = null
+	return ..()
+
+/datum/status_effect/nerta_link/tick()
+	if(!is_valid_link())
+		qdel(src)
+		return
+	if(!is_link_in_range())
+		toggle_beam(FALSE)
+		return
+
+	redistribute_damage(owner, link_target, BRUTE, 10)
+	redistribute_damage(owner, link_target, BURN, 10)
+
+/datum/status_effect/nerta_link/proc/handle_link_update()
+	SIGNAL_HANDLER
+	if(!is_valid_link())
+		qdel(src)
+		return
+	toggle_beam(is_link_in_range())
+	if(owner_module)
+		owner_module.update_action_icon()
+	if(target_module)
+		target_module.update_action_icon()
+
+/datum/status_effect/nerta_link/proc/is_valid_link()
+	var/mob/living/carbon/human/owner_human = owner
+	if(QDELETED(owner) || QDELETED(link_target) || owner.stat == DEAD || link_target.stat == DEAD)
+		return FALSE
+	if(!owner_human)
+		return FALSE
+	if(QDELETED(owner_module) || QDELETED(target_module))
+		return FALSE
+	if(!owner_module.active || !target_module.active)
+		return FALSE
+	if(owner_module.linked_module != target_module || target_module.linked_module != owner_module)
+		return FALSE
+	if(owner_human.wear_suit != owner_module.parent || link_target.wear_suit != target_module.parent)
+		return FALSE
+	return TRUE
+
+/datum/status_effect/nerta_link/proc/is_link_in_range()
+	if(QDELETED(owner) || QDELETED(link_target))
+		return FALSE
+	return get_dist(owner, link_target) <= link_range
+
+/datum/status_effect/nerta_link/proc/redistribute_damage(mob/living/carbon/human/first, mob/living/carbon/human/second, damage_type, remaining_transfer)
+	var/first_loss = damage_type == BRUTE ? first.getBruteLoss() : first.getFireLoss()
+	var/second_loss = damage_type == BRUTE ? second.getBruteLoss() : second.getFireLoss()
+	var/damage_gap = abs(first_loss - second_loss)
+	if(damage_gap <= 0 || remaining_transfer <= 0)
+		return remaining_transfer
+
+	var/transfer_amount = min(remaining_transfer, damage_gap / 2)
+	if(transfer_amount <= 0)
+		return remaining_transfer
+
+	var/mob/living/carbon/human/source = first_loss > second_loss ? first : second
+	var/mob/living/carbon/human/receiver = source == first ? second : first
+	source.heal_overall_damage(transfer_amount, 0, updating_health = TRUE)
+	receiver.take_overall_damage(transfer_amount, damage_type, updating_health = TRUE, max_limbs = 1)
+
+	return remaining_transfer - transfer_amount
+
+/datum/status_effect/nerta_link/proc/toggle_beam(toggle)
+	QDEL_NULL(current_beam)
+	if(!toggle || !owner || !link_target)
+		return
+	current_beam = owner.beam(link_target, icon_state = "blood_light", beam_type = /obj/effect/ebeam/nerta_link)
+
 #undef PSYCHIC_LINK_COLOR
 #undef CALC_DAMAGE_REDUCTION
 
