@@ -231,6 +231,9 @@
 #define TRAIT_HIVE_TARGET "hive_target"//mob is targeted for draining by the hive
 #define TRAIT_RESEARCHED "researched" // Whether the thing has been researched/probed
 #define TRAIT_STAGGERIMMUNE	"stagger_immunity" //Immunity to stagger
+#define TRAIT_REFLECTIVE_SHIELD "reflective_shield"
+#define TRAIT_PLATES "bulwark_plates"
+#define TRAIT_REFLECTIVESHIELD "bulwark_reflective_shield"
 #define TRAIT_STAGGER_RESISTANT	"stagger_resistant" //Resistance to certain sources of stagger
 #define TRAIT_SLOWDOWNIMMUNE "slowdown_immunity" //Immunity to slowdown
 #define TRAIT_EARDAMAGE_IMMUNE "eardmgimmune" //immune to getting deaf through ear dmg

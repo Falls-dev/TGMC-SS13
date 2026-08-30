@@ -223,6 +223,10 @@
 #define COMSIG_XENOABILITY_TOLERATE "xenoability_bulltolerate"
 
 #define COMSIG_XENOABILITY_TAIL_SWEEP "xenoability_tail_sweep"
+#define COMSIG_XENOABILITY_ENCASED_PLATES "xenoability_encased_plates"
+#define COMSIG_XENOABILITY_PLATE_BASH "xenoability_plate_bash"
+#define COMSIG_XENOABILITY_REFLECTIVE_SHIELD "xenoability_reflective_shield"
+#define COMSIG_XENOABILITY_SHIELD_SHATTER "xenoability_shield_shatter"
 #define COMSIG_XENOABILITY_FORWARD_CHARGE "xenoability_forward_charge"
 #define COMSIG_XENOABILITY_CREST_DEFENSE "xenoability_crest_defense"
 #define COMSIG_XENOABILITY_FORTIFY "xenoability_fortify"

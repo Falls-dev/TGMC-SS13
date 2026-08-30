@@ -52,3 +52,111 @@
 
 /mob/living/carbon/xenomorph/warrior/Corrupted/fallen
 	hivenumber = XENO_HIVE_FALLEN
+// ***************************************
+// *********** Bulwark
+// ***************************************
+
+/mob/living/carbon/xenomorph/warrior/bulwark
+	caste_base_type = /datum/xeno_caste/warrior/bulwark
+	name = "Bulwark Warrior"
+	icon = 'icons/Xeno/castes/warrior/bulwark.dmi'
+	skins = null
+	var/plates_active = FALSE
+	var/reflective_active = FALSE
+	var/front_armor_bonus = 10
+	var/side_armor_bonus = 10
+	var/reflecting_hit = FALSE
+
+/mob/living/carbon/xenomorph/warrior/bulwark/primordial
+	upgrade = XENO_UPGRADE_PRIMO
+
+/mob/living/carbon/xenomorph/warrior/bulwark/Corrupted
+	hivenumber = XENO_HIVE_CORRUPTED
+
+/mob/living/carbon/xenomorph/warrior/bulwark/Alpha
+	hivenumber = XENO_HIVE_ALPHA
+
+/mob/living/carbon/xenomorph/warrior/bulwark/Beta
+	hivenumber = XENO_HIVE_BETA
+
+/mob/living/carbon/xenomorph/warrior/bulwark/Zeta
+	hivenumber = XENO_HIVE_ZETA
+
+/mob/living/carbon/xenomorph/warrior/bulwark/admeme
+	hivenumber = XENO_HIVE_ADMEME
+
+/mob/living/carbon/xenomorph/warrior/bulwark/Corrupted/fallen
+	hivenumber = XENO_HIVE_FALLEN
+
+/mob/living/carbon/xenomorph/warrior/bulwark/handle_special_state()
+	if(reflective_active)
+		icon_state = "[xeno_caste.caste_name] Shield Reflective"
+		return TRUE
+	if(plates_active)
+		icon_state = "[xeno_caste.caste_name] Shield"
+		return TRUE
+	return FALSE
+
+// *********** DIRLOCK ***********
+
+/mob/living/carbon/xenomorph/warrior/bulwark/setDir(new_dir)
+	if(reflective_active && new_dir != dir)
+		return
+	return ..()
+
+/mob/living/carbon/xenomorph/warrior/bulwark/modify_by_armor(damage_amount, armor_type, penetration, def_zone, attack_dir)
+	. = ..()
+	if(armor_type == MELEE)
+		. *= 1.5
+
+/mob/living/carbon/xenomorph/warrior/bulwark/UnarmedAttack(atom/A, mods)
+	if(reflective_active)
+		to_chat(src, span_xenowarning("We cannot attack while our reflective shield is raised!"))
+		return
+	return ..()
+
+// *********** Reflection ***********
+
+/mob/living/carbon/xenomorph/warrior/bulwark/projectile_hit(atom/movable/projectile/proj, cardinal_move, uncrossing)
+	if(SEND_SIGNAL(src, COMSIG_XENO_PROJECTILE_HIT, proj, cardinal_move, uncrossing) & COMPONENT_PROJECTILE_DODGE)
+		return FALSE
+	if(proj.ammo.ammo_behavior_flags & AMMO_SKIPS_ALIENS)
+		return FALSE
+
+	if(cardinal_move & REVERSE_DIR(dir))
+		proj.damage = max(proj.damage - front_armor_bonus, 0)
+	else if(cardinal_move != dir)
+		proj.damage = max(proj.damage - side_armor_bonus, 0)
+
+	if(reflective_active && (cardinal_move & REVERSE_DIR(dir)))
+		if(!(proj.ammo.ammo_behavior_flags & (AMMO_XENO|AMMO_SNIPER)) && !istype(proj.ammo, /datum/ammo/rocket))
+			proj.damage *= 0.5
+			proj.sundering = 0
+			reflect_shot(proj)
+			proj.damage = 0
+			reflecting_hit = TRUE
+			return TRUE
+
+	return ..()
+
+/mob/living/carbon/xenomorph/warrior/bulwark/do_projectile_hit(atom/movable/projectile/proj)
+	if(reflecting_hit)
+		reflecting_hit = FALSE
+		return
+	return ..()
+
+/mob/living/carbon/xenomorph/warrior/bulwark/proc/reflect_shot(atom/movable/projectile/P)
+	var/atom/shooter = P.firer
+	if(!shooter)
+		return
+	var/atom/movable/projectile/N
+	if(istype(P, /atom/movable/projectile/hitscan))
+		var/atom/movable/projectile/hitscan/HP = P // каст к хитскану
+		var/atom/movable/projectile/hitscan/H = new(get_turf(src))
+		H.effect_icon = HP.effect_icon
+		N = H
+	else
+		N = new(get_turf(src))
+	N.generate_bullet(P.ammo)
+	N.damage = P.damage
+	N.fire_at(shooter, src, src, N.ammo.max_range, recursivity = TRUE)
