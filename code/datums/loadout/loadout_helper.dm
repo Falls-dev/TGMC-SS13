@@ -47,6 +47,14 @@
 		item_info = listed_products[item_type]
 		if(item_info[1] == CAT_ESS)
 			return FALSE
+		if(item_info[1] == CAT_SPECKIT)
+			if(!istype(user.job, /datum/job/fallen) && GLOB.specialist_kits_taken[item_type])
+				return FALSE
+			if(!buy_category(CAT_SPECKIT, seller))
+				return FALSE
+			if(!istype(user.job, /datum/job/fallen))
+				GLOB.specialist_kits_taken[item_type] = TRUE
+			return TRUE
 		if(seller.available_points[item_info[1]] < item_info[3])
 			return FALSE
 		seller.available_points[item_info[1]] -= item_info[3]

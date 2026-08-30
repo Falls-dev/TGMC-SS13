@@ -1875,7 +1875,9 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 					if(H.assigned_squad)
 						squad_to_insert_into = H.assigned_squad
 					else
-						squad_to_insert_into = pick(SSjob.active_squads[J.faction])
+						var/list/available_squads = SSjob.active_squads[J.faction]
+						if(length(available_squads))
+							squad_to_insert_into = pick(available_squads)
 				H.apply_assigned_role_to_spawn(J, H.client, squad_to_insert_into, admin_action = TRUE)
 				if(href_list["doequip"])
 					H.equip_role_outfit(J)

@@ -310,6 +310,7 @@ GLOBAL_LIST_EMPTY(active_cas_targets)
 	var/medic_count = 0
 	var/engi_count = 0
 	var/smart_count = 0
+	var/spec_count = 0
 	var/marine_count = 0
 	var/living_count = 0
 	var/SL_z
@@ -387,6 +388,9 @@ GLOBAL_LIST_EMPTY(active_cas_targets)
 			if(SQUAD_SMARTGUNNER)
 				smart_count++
 				role_rank = 3
+			if(SQUAD_SPECIALIST)
+				spec_count++
+				role_rank = 3
 			if(SQUAD_MARINE)
 				marine_count++
 				role_rank = 4
@@ -411,6 +415,7 @@ GLOBAL_LIST_EMPTY(active_cas_targets)
 	.["medic_count"] = medic_count
 	.["engi_count"] = engi_count
 	.["smart_count"] = smart_count
+	.["spec_count"] = spec_count
 	.["marine_count"] = marine_count
 	.["living_count"] = living_count
 	.["total_deployed"] = current_squad.get_total_members()

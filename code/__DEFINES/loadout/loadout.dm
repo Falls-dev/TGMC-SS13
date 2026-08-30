@@ -23,6 +23,8 @@
 #define CAT_ENGSUP "ENGINEERING SUPPLIES"
 #define CAT_LEDSUP "LEADER SUPPLIES"
 #define CAT_SGSUP "SMARTGUNNER SUPPLIES"
+#define CAT_SPECSUP "SPECIALIST SUPPLIES"
+#define CAT_SPECKIT "SPECIALIST SETS"
 #define CAT_FCSUP "COMMANDER SUPPLIES"
 #define CAT_SYNTH "SYNTHETIC SUPPLIES"
 #define CAT_MARINE "MARINE SUPPLIES"
@@ -37,6 +39,8 @@
 #define LEADER_TOTAL_BUY_POINTS 45
 /// How many points the leader can spend
 #define SMARTGUNNER_TOTAL_BUY_POINTS 45
+/// How many points a weapons specialist can spend
+#define SPECIALIST_TOTAL_BUY_POINTS 45
 /// How many points a medic can spend on pills
 #define MEDIC_TOTAL_BUY_POINTS 45
 /// How many points an engineer can spend
@@ -50,6 +54,7 @@ GLOBAL_LIST_INIT(default_marine_points, list(
 	CAT_MARINE = MARINE_TOTAL_BUY_POINTS,
 	CAT_ROBOT = ROBOT_TOTAL_BUY_POINTS,
 	CAT_SGSUP = SMARTGUNNER_TOTAL_BUY_POINTS,
+	CAT_SPECSUP = SPECIALIST_TOTAL_BUY_POINTS,
 	CAT_ENGSUP = ENGINEER_TOTAL_BUY_POINTS,
 	CAT_LEDSUP = LEADER_TOTAL_BUY_POINTS,
 	CAT_MEDSUP = MEDIC_TOTAL_BUY_POINTS,
@@ -79,6 +84,7 @@ GLOBAL_LIST_INIT(marine_selector_cats, list(
 	CAT_GLA = 1,
 	CAT_MAS = 1,
 	CAT_ESS = 1,
+	CAT_SPECKIT = 1,
 	CAT_POU = 2,
 ))
 
@@ -248,3 +254,6 @@ GLOBAL_LIST_INIT(loadout_instantiate_default_contents, typecacheof(list(
 #define CURRENT_LOADOUT_VERSION 15
 
 GLOBAL_LIST_INIT(accepted_loadout_versions, list(5, 6, 7, 8, 9, 10, 11, 13, 14, 15))
+
+/// Typepaths of specialist kit bundles already vended this round. Shared across all specialists.
+GLOBAL_LIST_EMPTY(specialist_kits_taken)

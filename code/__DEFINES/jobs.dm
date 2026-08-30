@@ -10,8 +10,9 @@
 #define JOB_DISPLAY_ORDER_MECH_PILOT 6
 #define JOB_DISPLAY_ORDER_SQUAD_LEADER 7
 #define JOB_DISPLAY_ORDER_SQUAD_SMARTGUNNER 8
-#define JOB_DISPLAY_ORDER_SQUAD_CORPSMAN 9
-#define JOB_DISPLAY_ORDER_SUQAD_ENGINEER 10
+#define JOB_DISPLAY_ORDER_SQUAD_SPECIALIST 9
+#define JOB_DISPLAY_ORDER_SQUAD_CORPSMAN 10
+#define JOB_DISPLAY_ORDER_SUQAD_ENGINEER 11
 #define JOB_DISPLAY_ORDER_SQUAD_MARINE 11
 #define JOB_DISPLAY_ORDER_SQUAD_ROBOT 12
 #define JOB_DISPLAY_ORDER_XENO_QUEEN 13
@@ -133,6 +134,7 @@ GLOBAL_LIST_INIT(jobs_medical, list(
 GLOBAL_LIST_INIT(jobs_marines, list(
 	SQUAD_LEADER,
 	SQUAD_SMARTGUNNER,
+	SQUAD_SPECIALIST,
 	SQUAD_CORPSMAN,
 	SQUAD_ENGINEER,
 	SQUAD_MARINE,
@@ -155,6 +157,7 @@ GLOBAL_LIST_INIT(jobs_regular_all, list(
 	FIELD_RESEARCHER,
 	SQUAD_LEADER,
 	SQUAD_SMARTGUNNER,
+	SQUAD_SPECIALIST,
 	SQUAD_CORPSMAN,
 	SQUAD_ENGINEER,
 	SQUAD_MARINE,
@@ -225,4 +228,4 @@ GLOBAL_LIST_INIT(jobs_fallen_marine, typecacheof(list(/datum/job/fallen/marine),
 #define COCOON_ORIGIN "xenos from cocoon that reached its endlife"
 #define SILO_ORIGIN "xenos from silo generation"
 
-#define SQUAD_MAX_POSITIONS(total_positions) CEILING(total_positions / length(SSjob.active_squads), 1)
+#define SQUAD_MAX_POSITIONS(total_positions) CEILING((total_positions) / max(length(SSjob.active_squads[FACTION_TERRAGOV]), 1), 1)
