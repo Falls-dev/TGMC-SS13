@@ -299,7 +299,7 @@
 		if(auto_evasion && xeno_owner.plasma_stored >= ability_cost)
 			action_activate()
 	var/turf/current_turf = get_turf(xeno_owner) //location of after image SFX
-	playsound(current_turf, pick('sound/effects/throw.ogg','sound/effects/alien/tail_swipe1.ogg', 'sound/effects/alien/tail_swipe2.ogg'), 25, 1) //sound effects
+	playsound(current_turf, pick(SFX_THROW,'sound/effects/alien/tail_swipe1.ogg', 'sound/effects/alien/tail_swipe2.ogg'), 25, 1) //sound effects
 	var/obj/effect/temp_visual/after_image/after_image
 	for(var/i=0 to 2) //number of after images
 		after_image = new /obj/effect/temp_visual/after_image(current_turf, owner) //Create the after image.

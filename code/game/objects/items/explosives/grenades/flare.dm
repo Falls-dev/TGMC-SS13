@@ -19,6 +19,33 @@
 	var/fuel = 0
 	var/lower_fuel_limit = 300
 	var/upper_fuel_limit = 450
+	/// Tint for the greyscale flare flame
+	var/flame_tint = "#ddbbbb"
+	/// Color correction, added to the whole flame overlay
+	var/flame_base_tint = "#ff0000"
+	// "But, why are there two colors?"
+	// The flame_tint is applied multiplicatively to the greyscale animation
+	// However it represents levels within the flame, not the color of the flame as a whole.
+	// To get around this, we additively apply flame_base_tint for coloring.
+
+/obj/item/explosive/grenade/flare/update_icon()
+	overlays?.Cut()
+	. = ..()
+	if(active)
+		icon_state = "[initial(icon_state)]_active"
+		var/image/flame = image('icons/obj/items/grenade.dmi', src, "flare_flame")
+		flame.color = flame_tint
+		flame.appearance_flags = KEEP_APART|RESET_COLOR|RESET_TRANSFORM
+		var/image/flame_base = image('icons/obj/items/grenade.dmi', src, "flare_flame")
+		flame_base.color = flame_base_tint
+		flame_base.appearance_flags = KEEP_APART|RESET_COLOR
+		flame_base.blend_mode = BLEND_ADD
+		flame.overlays += flame_base
+		overlays += flame
+	else if(!active)
+		icon_state = "[initial(icon_state)]_empty"
+	else
+		icon_state = "[initial(icon_state)]"
 
 /obj/item/explosive/grenade/flare/dissolvability(acid_strength)
 	return 2
@@ -87,17 +114,6 @@
 	if(!active)
 		turn_on(user)
 
-/obj/item/explosive/grenade/flare/update_icon_state()
-	if(active && fuel > 0)
-		icon_state = "[initial(icon_state)]_active"
-		worn_icon_state = "[initial(worn_icon_state)]_active"
-	else if(!fuel)
-		icon_state = "[initial(icon_state)]_empty"
-		worn_icon_state = "[initial(worn_icon_state)]_empty"
-	else
-		icon_state = initial(icon_state)
-		worn_icon_state = initial(worn_icon_state)
-
 
 ///Shuts the flare off
 /obj/item/explosive/grenade/flare/proc/turn_off()
@@ -123,6 +139,19 @@
 	playsound(src,'sound/items/flare.ogg', 15, 1)
 	START_PROCESSING(SSobj, src)
 
+/obj/item/explosive/grenade/flare/animation_spin(speed = 5, loop_amount = -1, clockwise = TRUE, sections = 3, anim_flags = NONE, angular_offset = 0, pixel_fuzz = 0)
+	clockwise = pick(TRUE, FALSE)
+	angular_offset = rand(360)
+	pixel_fuzz = 16
+	return ..(speed, loop_amount, clockwise, sections, anim_flags, angular_offset, pixel_fuzz)
+
+/obj/item/explosive/grenade/flare/pickup()
+	if(transform)
+		apply_transform(matrix()) // reset rotation
+	pixel_x = 0
+	pixel_y = 0
+	return ..()
+
 //Starts on
 /obj/item/explosive/grenade/flare/on/Initialize(mapload)
 	. = ..()
@@ -146,6 +175,8 @@
 	light_color = LIGHT_COLOR_GREEN
 	var/datum/squad/user_squad
 	var/obj/effect/overlay/temp/laser_target/cas/target
+	flame_base_tint = "#00aa00"
+	flame_tint = "#aaccaa"
 
 /obj/item/explosive/grenade/flare/cas/turn_on(mob/living/carbon/human/user)
 	. = ..()
@@ -170,12 +201,13 @@
 
 ///Flares that the tadpole flare launcher launches
 /obj/item/explosive/grenade/flare/strongerflare
-	icon_state = "stronger_flare_grenade"
 	lower_fuel_limit = 10
 	upper_fuel_limit = 20
 	light_system = STATIC_LIGHT//movable light has a max range
 	light_color = LIGHT_COLOR_CYAN
 	light_range = 12
+	flame_base_tint = "#7de1e1"
+	flame_tint = "#acd8d8"
 
 /obj/item/explosive/grenade/flare/strongerflare/throw_impact(atom/hit_atom, speed)
 	. = ..()

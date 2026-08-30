@@ -187,7 +187,7 @@
 
 	visible_message(span_warning("[src] throws [thrown_thing]."), null, null, 5)
 
-	playsound(src, 'sound/effects/throw.ogg', 30, 1)
+	playsound(src, SFX_THROW, min(10*min(get_dist(loc,target),thrown_thing.throw_range), 30), 1)
 
 	thrown_thing.throw_at(target, thrown_thing.throw_range + throw_modifiers["range_modifier"], max(1, thrown_thing.throw_speed + throw_modifiers["speed_modifier"]), src, spin_throw, !throw_modifiers["targetted_throw"], throw_modifiers["targetted_throw"])
 
