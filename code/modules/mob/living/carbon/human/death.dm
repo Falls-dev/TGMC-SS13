@@ -41,6 +41,13 @@
 		return ..()
 	if(species.death_message)
 		deathmessage = species.death_message
+
+	var/mob/living/carbon/xenomorph/X = last_damage_source
+	if(istype(X))
+		var/datum/xenomorph_skin/skin_datum = X.current_skin
+		if(skin_datum?.kill_sound)
+			playsound(X.loc, skin_datum.kill_sound, 50, TRUE)
+
 	if(!silent && species.death_sound)
 		playsound(loc, species.death_sound, 50, TRUE)
 	return ..()
