@@ -60,11 +60,6 @@
 /obj/effect/landmark/weed_node,
 /turf/open/floor/plating/ground/mars/random/cave/rock,
 /area/bigredv2/caves/northeast/garbledradio)
-"I" = (
-/obj/effect/ai_node,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast)
 "J" = (
 /obj/effect/landmark/fog_blocker,
 /turf/open/floor/plating/ground/mars/random/cave,
@@ -1822,7 +1817,7 @@ s
 s
 X
 X
-I
+v
 X
 X
 X

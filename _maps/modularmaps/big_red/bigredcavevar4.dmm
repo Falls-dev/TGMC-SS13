@@ -25,10 +25,6 @@
 /obj/effect/landmark/miner_platinum,
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/bigredv2/caves/east/garbledradio)
-"ah" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/east/garbledradio)
 "ai" = (
 /obj/effect/landmark/xeno_resin_door,
 /turf/open/floor/plating/ground/mars/random/cave,
@@ -134,10 +130,6 @@
 /obj/effect/landmark/fog_blocker,
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/bigredv2/caves/east/garbledradio)
-"aX" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/east)
 "aY" = (
 /obj/effect/landmark/xeno_resin_door,
 /turf/open/floor/plating/ground/mars/random/cave,
@@ -1301,7 +1293,7 @@ af
 ad
 ad
 ad
-ah
+ad
 ad
 ad
 aR
@@ -1417,7 +1409,7 @@ ad
 ad
 ad
 ad
-ah
+ad
 ad
 ad
 ad
@@ -1904,7 +1896,7 @@ aj
 aj
 aj
 aj
-aX
+aj
 aj
 aj
 aY
@@ -2077,7 +2069,7 @@ aj
 aj
 ac
 aj
-aX
+aj
 aj
 aj
 aj
@@ -2230,7 +2222,7 @@ aj
 aj
 ac
 aj
-aX
+aj
 aj
 aj
 aj
@@ -2459,7 +2451,7 @@ aR
 aR
 aj
 aj
-aX
+aj
 aj
 aj
 aK

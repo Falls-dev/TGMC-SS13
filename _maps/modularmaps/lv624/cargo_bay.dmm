@@ -81,11 +81,6 @@
 /obj/structure/cable,
 /turf/open/floor/tile/dark,
 /area/lv624/lazarus/quartstorage/dome)
-"mS" = (
-/obj/effect/landmark/excavation_site_spawner,
-/obj/effect/landmark/weed_node,
-/turf/open/floor/tile/dark,
-/area/lv624/lazarus/quartstorage/dome)
 "mX" = (
 /obj/structure/largecrate/supply/supplies/tables_racks,
 /turf/open/floor/plating,
@@ -245,7 +240,6 @@
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 8
 	},
-/obj/effect/landmark/excavation_site_spawner,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/dark,
 /area/lv624/lazarus/quartstorage/dome)
@@ -533,7 +527,7 @@ CG
 wF
 CG
 jV
-mS
+KN
 gJ
 Iu
 "}
@@ -693,7 +687,7 @@ Iu
 (13,1,1) = {"
 Iu
 gJ
-mS
+KN
 kz
 Cp
 Cp

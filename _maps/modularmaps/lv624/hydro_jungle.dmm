@@ -180,10 +180,6 @@
 /obj/effect/landmark/weed_node,
 /turf/open/ground/grass,
 /area/lv624/ground/compound/ne)
-"qj" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/jungle7)
 "rd" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /turf/open/floor/plating/ground/dirt,
@@ -442,10 +438,6 @@
 	dir = 8
 	},
 /area/lv624/ground/compound/ne)
-"Iy" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/ground/grass,
-/area/lv624/ground/jungle7)
 "Jm" = (
 /obj/structure/flora/jungle/vines,
 /obj/structure/flora/jungle/vines,
@@ -624,10 +616,6 @@
 	dir = 4
 	},
 /area/lv624/ground/jungle9)
-"Wv" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/ground/grass,
-/area/lv624/ground/jungle9)
 "Wz" = (
 /obj/structure/flora/jungle/vines,
 /turf/open/floor/plating/ground/dirtgrassborder{
@@ -670,10 +658,6 @@
 	dir = 8
 	},
 /area/lv624/ground/jungle7)
-"YW" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/ground/grass,
-/area/lv624/ground/compound/ne)
 "Zw" = (
 /turf/open/floor/plating/ground/dirtgrassborder/corner,
 /area/lv624/ground/compound/ne)
@@ -687,7 +671,7 @@
 
 (1,1,1) = {"
 GG
-qj
+nd
 nd
 nd
 fN
@@ -703,7 +687,7 @@ jf
 Xl
 jf
 jf
-Wv
+jf
 CR
 Xl
 "}
@@ -786,7 +770,7 @@ GW
 jf
 Bw
 MK
-Wv
+jf
 Xl
 jf
 jf
@@ -843,7 +827,7 @@ RS
 gZ
 CE
 ZF
-Iy
+Vq
 dI
 wy
 ly
@@ -1042,7 +1026,7 @@ wR
 DT
 xR
 Vq
-Iy
+Vq
 Vq
 EC
 Vq
@@ -1074,7 +1058,7 @@ wf
 wf
 wf
 Vy
-YW
+dI
 dI
 bL
 dI

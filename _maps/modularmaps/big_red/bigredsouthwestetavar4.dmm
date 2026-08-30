@@ -189,10 +189,6 @@
 	dir = 5
 	},
 /area/bigredv2/outside/nanotrasen_lab/inside)
-"pu" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/south)
 "pP" = (
 /obj/structure/table,
 /obj/effect/spawner/random/engineering/technology_scanner,
@@ -341,15 +337,6 @@
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/bigredv2/caves/south)
-"Dj" = (
-/obj/structure/bed/chair{
-	dir = 4
-	},
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/tile/dark/red2{
-	dir = 4
-	},
-/area/bigredv2/outside/nanotrasen_lab/inside)
 "DG" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
@@ -375,10 +362,6 @@
 /obj/effect/ai_node,
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/nanotrasen_lab/inside)
-"Fb" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/south)
 "FS" = (
 /turf/open/floor/tile/dark/red2{
 	dir = 1
@@ -1559,7 +1542,7 @@ dO
 dO
 dO
 dO
-pu
+IX
 UK
 IX
 vo
@@ -1976,7 +1959,7 @@ dO
 IX
 Qf
 IX
-pu
+IX
 IX
 dO
 dO
@@ -2035,7 +2018,7 @@ dO
 IX
 IX
 IX
-pu
+IX
 IX
 IX
 IX
@@ -2153,7 +2136,7 @@ RO
 IX
 IX
 RO
-Fb
+Qf
 IX
 IX
 IX
@@ -2495,7 +2478,7 @@ dO
 IX
 UK
 vo
-pu
+IX
 IX
 IX
 UK
@@ -2801,7 +2784,7 @@ ex
 Qt
 lp
 ge
-Dj
+lp
 Qt
 lp
 ge

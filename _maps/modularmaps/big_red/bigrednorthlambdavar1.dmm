@@ -5,18 +5,9 @@
 	dir = 1
 	},
 /area/bigredv2/caves/lambda_lab)
-"c" = (
-/obj/effect/ai_node,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast)
 "g" = (
 /turf/closed/wall/r_wall,
 /area/bigredv2/caves/rock)
-"h" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast)
 "j" = (
 /obj/machinery/chem_dispenser,
 /turf/open/floor/tile/whiteyellow{
@@ -776,7 +767,7 @@ G
 G
 G
 G
-h
+H
 H
 H
 k
@@ -1831,7 +1822,7 @@ G
 G
 H
 H
-c
+p
 H
 H
 H

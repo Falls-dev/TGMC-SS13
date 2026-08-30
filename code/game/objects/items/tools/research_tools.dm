@@ -64,29 +64,89 @@
 	return ..()
 
 /obj/item/tool/research/excavation_tool
-	name = "subterrain scanner and excavator"
-	desc = "A tool for locating and uncovering underground resources."
-	icon = 'icons/obj/items/surgery_tools.dmi'
-	icon_state = "alien_drill"
+    name = "Archaeological omni-brush"
+    desc = "A high-precision archaeological brush. Use it in your hand to change the soil removal step (1, 2, 5, 10, 20, 30 cm)."
+    icon = 'icons/obj/items/surgery_tools.dmi'
+    icon_state = "omni_brush_1"
+    skill_type = SKILL_MEDICAL
+    skill_threshold = SKILL_MEDICAL_EXPERT
+    var/list/dig_sizes = list(1, 2, 5, 10, 20, 30)
+    var/dig_mode_index = 1
 
 /obj/item/tool/research/excavation_tool/examine(mob/user)
-	. = ..()
-	. += span_danger("Use In-Hand when near an excavation site to start escavating it.")
+    . = ..()
+    var/current_size = dig_sizes[dig_mode_index]
+    . += span_notice("Current brush step: [current_size] cm")
 
 /obj/item/tool/research/excavation_tool/attack_self(mob/user)
-	. = ..()
-	if(user.skills.getRating(skill_type) < skill_threshold)
-		balloon_alert(user, "Not skilled enough")
-		return
-	balloon_alert_to_viewers("Escavating...")
-	if(!do_after(user, 10 SECONDS, NONE, user.loc, BUSY_ICON_GENERIC, BUSY_ICON_GENERIC, PROGRESS_BRASS))
-		return
+    dig_mode_index++
+    if(dig_mode_index > length(dig_sizes))
+        dig_mode_index = 1
+    var/current_size = dig_sizes[dig_mode_index]
 
-	for(var/obj/effect/landmark/excavation_site_spawner/spawner_to_check in urange(2, user.loc)) // doesn't work with range() for some reason?
-		if(!spawner_to_check.rewards_typepath) // excavate only those that are set up
-			continue
-		spawner_to_check.excavate_site()
-		balloon_alert(user, "Found it!")
-		return
+    icon_state = "omni_brush_[current_size]"
 
-	balloon_alert(user, "Nothing to escavate!")
+    balloon_alert(user, "Brush: [current_size] cm")
+
+/obj/item/tool/research/excavation_tool/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+    if(!proximity_flag)
+        return ..()
+
+    var/turf/T = get_turf(target)
+    if(!T)
+        return ..()
+
+    var/datum/dig_site/S = SSxeno_archaeology?.get_site_at(T)
+    if(!S)
+        balloon_alert(user, "There's nothing here")
+        return
+
+    if(user.skills.getRating(skill_type) < skill_threshold)
+        balloon_alert(user, "Skill issue")
+        return
+
+    var/current_size = dig_sizes[dig_mode_index]
+
+    user.visible_message(span_notice("[user] begins to carefully remove the soil..."), \
+    span_notice("You begin careful excavation [S.site_name]..."))
+
+    var/dig_time = 3 SECONDS + (current_size * 0.1 SECONDS)
+
+    if(!do_after(user, dig_time, target = T))
+        return
+
+    S = SSxeno_archaeology?.get_site_at(T)
+    if(!S)
+        return
+
+    S.current_depth += current_size
+
+    if(S.current_depth == S.target_depth)
+        user.visible_message(span_notice("[user] retrieves the remains"), \
+        span_boldnotice("You have cleared the fossil."))
+
+        spawn_remains(T, S.tier)
+        SSxeno_archaeology.clear_site(S)
+
+    else if(S.current_depth > S.target_depth)
+        user.visible_message(span_danger("There is a crunching sound coming from [S.site_name]!"), \
+        span_danger("You hear the crunch!"))
+
+        new /obj/item/research_resource/remains/tier_zero(T)
+        SSxeno_archaeology.clear_site(S)
+
+    else
+        to_chat(user, span_info("You have cleared the soil layer."))
+
+/obj/item/tool/research/excavation_tool/proc/spawn_remains(turf/T, tier)
+    switch(tier)
+        if(0)
+            new /obj/item/research_resource/remains/tier_zero(T)
+        if(1)
+            new /obj/item/research_resource/remains/tier_one(T)
+        if(2)
+            new /obj/item/research_resource/remains/tier_two(T)
+        if(3)
+            new /obj/item/research_resource/remains/tier_three(T)
+        if(4)
+            new /obj/item/research_resource/remains/tier_four(T)

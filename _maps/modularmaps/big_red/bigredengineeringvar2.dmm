@@ -53,10 +53,6 @@
 	dir = 4
 	},
 /area/bigredv2/outside/c)
-"dv" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
 "dw" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 5
@@ -716,11 +712,6 @@
 /obj/effect/landmark/weed_node,
 /turf/open/floor,
 /area/bigredv2/outside/engineering)
-"Oc" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
 "Of" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
@@ -1243,7 +1234,7 @@ Vs
 ib
 ib
 ib
-dv
+ib
 ib
 GH
 LF
@@ -1292,7 +1283,7 @@ Bi
 xf
 "}
 (13,1,1) = {"
-Oc
+Jv
 bN
 wt
 Ie
@@ -1532,7 +1523,7 @@ TD
 fr
 fr
 Jv
-dv
+ib
 Jv
 ib
 GH

@@ -953,10 +953,6 @@
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/office_complex)
-"SQ" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/tile/whiteyellow/full,
-/area/bigredv2/outside/office_complex)
 "SX" = (
 /obj/machinery/atmospherics/pipe/manifold/green/hidden,
 /obj/structure/cable,
@@ -1662,7 +1658,7 @@ Yj
 BU
 eB
 aR
-SQ
+bZ
 HQ
 zZ
 Uk
