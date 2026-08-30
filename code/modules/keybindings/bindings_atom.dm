@@ -22,6 +22,10 @@
 	if((movement_dir & EAST) && (movement_dir & WEST))
 		movement_dir &= ~(EAST|WEST)
 
+	// Rotate the movement direction by the 3D camera yaw
+	if(movement_dir && user.e3d_angle)
+		movement_dir = turn(movement_dir, round(user.e3d_angle, 45))
+
 	//turn without moving while using the movement lock key.
 	if(user.movement_locked)
 		keybind_face_direction(movement_dir)

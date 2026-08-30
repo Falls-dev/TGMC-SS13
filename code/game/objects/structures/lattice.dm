@@ -7,6 +7,7 @@
 	anchored = TRUE
 	layer = LATTICE_LAYER
 	plane = FLOOR_PLANE
+	screen_loc = E3D_TYPE_FLOOR
 	//	flags = CONDUCT
 
 /obj/structure/lattice/Initialize(mapload)

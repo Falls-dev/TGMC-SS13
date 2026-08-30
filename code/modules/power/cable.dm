@@ -18,6 +18,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	icon_state = "l2-1-2-4-8-node"
 	color = COLOR_YELLOW
 	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
+	screen_loc = E3D_TYPE_FLOOR
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT
 	plane = FLOOR_PLANE

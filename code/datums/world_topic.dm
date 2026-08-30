@@ -87,3 +87,24 @@
 	. = 0
 	for (var/client/C in GLOB.clients)
 		++.
+
+/datum/world_topic/webclient_login
+	keyword = "webclient_login_token"
+
+/datum/world_topic/webclient_login/TryRun(list/input)
+	var/config_key = CONFIG_GET(string/comms_key)
+	if(config_key && input["key"] != config_key)
+		return "Bad Key"
+	return ..()
+
+/datum/world_topic/webclient_login/Run(list/input)
+	var/token = input["webclient_login_token"]
+	var/info = input["webclient_login_info"]
+	if(!fexists(WEBCLIENT_PATCHES))
+		log_world("webclient_patches: [WEBCLIENT_PATCHES] not found next to the .dmb")
+		return
+	var/result = call_ext(WEBCLIENT_PATCHES, "set_webclient_auth")(token, info)
+	if(result)
+		log_world("webclient_patches error: [result]")
+	else
+		log_world("webclient_patches: accepted login token")

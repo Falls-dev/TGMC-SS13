@@ -63,14 +63,21 @@
     return majorVersion ? parseInt(majorVersion, 10) : null;
   })();
 
+  // 3D webclient serves browse() iframes from 127.0.0.2, not 127.0.0.1.
+  var isByondHost =
+    location.hostname === '127.0.0.1' ||
+    location.hostname === '127.0.0.2' ||
+    location.hostname === 'localhost';
+
   // Basic checks to detect whether this page runs in BYOND
   var isByond =
-    (Byond.TRIDENT !== null ||
+    !!window.byond ||
+    ((Byond.TRIDENT !== null ||
       Byond.BLINK !== null ||
       window.cef_to_byond ||
       !!nativeTopic) &&
-    location.hostname === '127.0.0.1' &&
-    location.search !== '?external';
+    isByondHost &&
+    location.search !== '?external');
   //As of BYOND 515 the path doesn't seem to include tmp dir anymore if you're trying to open tgui in external browser and looking why it doesn't work
   //&& location.pathname.indexOf('/tmp') === 0
 
@@ -121,6 +128,11 @@
       }
     }
 
+    // Webclient
+    if (window.byond) {
+      window.byond.go('byond://' + url);
+      return;
+    }
     // Blink/WebView (516+): always prefer location.href.
     // cef_to_byond is reliable on older Trident/early CEF, but is often a
     // stub on 516.1680+ even when present — using it first whitescreens TGUI.
@@ -476,12 +488,13 @@
       }
     }
     if (
-      location.hostname === '127.0.0.1' &&
-      location.search !== '?external' &&
-      (Byond.TRIDENT !== null ||
-        Byond.BLINK !== null ||
-        window.cef_to_byond ||
-        nativeTopic)
+      !!window.byond ||
+      (isByondHost &&
+        location.search !== '?external' &&
+        (Byond.TRIDENT !== null ||
+          Byond.BLINK !== null ||
+          window.cef_to_byond ||
+          nativeTopic))
     ) {
       isByond = true;
       Byond.IS_BYOND = true;

@@ -555,7 +555,7 @@ GLOBAL_LIST_EMPTY(damage_icon_parts)
 	if(!w_uniform)
 		return
 	if(client && hud_used?.hud_shown && hud_used.inventory_shown)
-		w_uniform.screen_loc = ui_iclothing
+		SET_SCREEN_LOC(w_uniform, ui_iclothing)
 		client.screen += w_uniform
 
 	if(wear_suit?.inv_hide_flags & HIDEJUMPSUIT)
@@ -572,7 +572,7 @@ GLOBAL_LIST_EMPTY(damage_icon_parts)
 		return
 
 	if(client && hud_used?.hud_shown)
-		wear_id.screen_loc = ui_id
+		SET_SCREEN_LOC(wear_id, ui_id)
 		client.screen += wear_id
 
 	if(w_uniform?.displays_id || istype(wear_id, /obj/item/card/id/dogtag))
@@ -584,7 +584,7 @@ GLOBAL_LIST_EMPTY(damage_icon_parts)
 	remove_overlay(GLOVES_LAYER)
 	if(gloves)
 		if(client && hud_used?.hud_shown && hud_used.inventory_shown)
-			gloves.screen_loc = ui_gloves
+			SET_SCREEN_LOC(gloves, ui_gloves)
 			client.screen += gloves
 		overlays_standing[GLOVES_LAYER] = gloves.make_worn_icon(species.name, slot_gloves_str, default_icon = 'icons/mob/clothing/hands.dmi', default_layer = GLOVES_LAYER)
 		apply_overlay(GLOVES_LAYER)
@@ -614,7 +614,7 @@ GLOBAL_LIST_EMPTY(damage_icon_parts)
 	if(!glasses)
 		return
 	if(client &&  hud_used?.hud_shown && hud_used.inventory_shown)
-		glasses.screen_loc = ui_glasses
+		SET_SCREEN_LOC(glasses, ui_glasses)
 		client.screen += glasses
 
 	var/glasses_layer = GLASSES_LAYER
@@ -630,7 +630,7 @@ GLOBAL_LIST_EMPTY(damage_icon_parts)
 		return
 
 	if(client && hud_used?.hud_shown && hud_used.inventory_shown)
-		wear_ear.screen_loc = ui_wear_ear
+		SET_SCREEN_LOC(wear_ear, ui_wear_ear)
 		client.screen += wear_ear
 	if((head?.inv_hide_flags & HIDEEARS) || (wear_mask?.inv_hide_flags & HIDEEARS))
 		return
@@ -642,7 +642,7 @@ GLOBAL_LIST_EMPTY(damage_icon_parts)
 	remove_overlay(SHOES_LAYER)
 	if(shoes)
 		if(client && hud_used?.hud_shown && hud_used.inventory_shown)
-			shoes.screen_loc = ui_shoes
+			SET_SCREEN_LOC(shoes, ui_shoes)
 			client.screen += shoes
 	if(wear_suit?.inv_hide_flags & HIDESHOES)
 		return
@@ -662,7 +662,7 @@ GLOBAL_LIST_EMPTY(damage_icon_parts)
 		return
 
 	if(client && hud_used?.hud_shown)
-		s_store.screen_loc = ui_sstore1
+		SET_SCREEN_LOC(s_store, ui_sstore1)
 		client.screen += s_store
 
 	overlays_standing[SUIT_STORE_LAYER] = s_store.make_worn_icon(species.name, slot_s_store_str, default_icon = 'icons/mob/suit_slot.dmi', default_layer = SUIT_STORE_LAYER)
@@ -674,7 +674,7 @@ GLOBAL_LIST_EMPTY(damage_icon_parts)
 		return
 
 	if(client && hud_used?.hud_shown && hud_used.inventory_shown)
-		head.screen_loc = ui_head
+		SET_SCREEN_LOC(head, ui_head)
 		client.screen += head
 
 	overlays_standing[HEAD_LAYER] = head.make_worn_icon(species.name, slot_head_str, default_icon = 'icons/mob/clothing/headwear/head_0.dmi', default_layer = HEAD_LAYER)
@@ -688,7 +688,7 @@ GLOBAL_LIST_EMPTY(damage_icon_parts)
 		return
 
 	if(client && hud_used?.hud_shown)
-		belt.screen_loc = ui_belt
+		SET_SCREEN_LOC(belt, ui_belt)
 		client.screen += belt
 
 	overlays_standing[BELT_LAYER] = belt.make_worn_icon(species.name, slot_belt_str, default_icon = 'icons/mob/clothing/belt.dmi', default_layer = BELT_LAYER)
@@ -702,7 +702,7 @@ GLOBAL_LIST_EMPTY(damage_icon_parts)
 		return
 
 	if(client && hud_used?.hud_shown && hud_used.inventory_shown)
-		wear_suit.screen_loc = ui_oclothing
+		SET_SCREEN_LOC(wear_suit, ui_oclothing)
 		client.screen += wear_suit
 
 	overlays_standing[SUIT_LAYER] = wear_suit.make_worn_icon(species.name, slot_wear_suit_str, default_icon = 'icons/mob/clothing/suits/suit_0.dmi', default_layer = SUIT_LAYER)
@@ -712,11 +712,11 @@ GLOBAL_LIST_EMPTY(damage_icon_parts)
 /mob/living/carbon/human/update_inv_pockets()
 	if(l_store)
 		if(client && hud_used?.hud_shown)
-			l_store.screen_loc = ui_storage1
+			SET_SCREEN_LOC(l_store, ui_storage1)
 			client.screen += l_store
 	if(r_store)
 		if(client && hud_used?.hud_shown)
-			r_store.screen_loc = ui_storage2
+			SET_SCREEN_LOC(r_store, ui_storage2)
 			client.screen += r_store
 
 /mob/living/carbon/human/update_inv_wear_mask()
@@ -728,7 +728,7 @@ GLOBAL_LIST_EMPTY(damage_icon_parts)
 		return
 
 	if(client && hud_used?.hud_shown && hud_used.inventory_shown)
-		wear_mask.screen_loc = ui_mask
+		SET_SCREEN_LOC(wear_mask, ui_mask)
 		client.screen += wear_mask
 
 	overlays_standing[FACEMASK_LAYER] = wear_mask.make_worn_icon(species.name, slot_wear_mask_str, default_icon = 'icons/mob/clothing/mask.dmi', default_layer = FACEMASK_LAYER)
@@ -740,7 +740,7 @@ GLOBAL_LIST_EMPTY(damage_icon_parts)
 	if(!back)
 		return
 	if(client && hud_used?.hud_shown)
-		back.screen_loc = ui_back
+		SET_SCREEN_LOC(back, ui_back)
 		client.screen += back
 
 	overlays_standing[BACK_LAYER] = back.make_worn_icon(species.name, slot_back_str, default_icon = 'icons/mob/clothing/back.dmi', default_layer = BACK_LAYER)
@@ -760,8 +760,7 @@ GLOBAL_LIST_EMPTY(damage_icon_parts)
 		return
 	if(client && hud_used?.hud_version != HUD_STYLE_NOHUD)
 		client.screen += r_hand
-		r_hand.screen_loc = ui_rhand
-
+		SET_SCREEN_LOC(r_hand, ui_rhand)
 	overlays_standing[R_HAND_LAYER] = r_hand.make_worn_icon(species.name, slot_r_hand_str, TRUE, 'icons/mob/inhands/items_righthand_1.dmi', R_HAND_LAYER)
 
 	apply_overlay(R_HAND_LAYER)
@@ -773,8 +772,7 @@ GLOBAL_LIST_EMPTY(damage_icon_parts)
 
 	if(client && hud_used?.hud_version != HUD_STYLE_NOHUD)
 		client.screen += l_hand
-		l_hand.screen_loc = ui_lhand
-
+		SET_SCREEN_LOC(l_hand, ui_lhand)
 	overlays_standing[L_HAND_LAYER] = l_hand.make_worn_icon(species.name, slot_l_hand_str, TRUE, 'icons/mob/inhands/items_lefthand_1.dmi', L_HAND_LAYER)
 	apply_overlay(L_HAND_LAYER)
 

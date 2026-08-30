@@ -329,7 +329,7 @@
 		return
 
 	if(stat == DEAD)
-		set_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		set_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS|E3D_SEE_ZOOM)
 		set_invis_see(SEE_INVISIBLE_OBSERVER)
 		return
 

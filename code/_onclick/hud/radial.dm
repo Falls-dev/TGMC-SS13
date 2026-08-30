@@ -67,6 +67,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	var/client/current_user
 	var/atom/anchor
 	var/image/menu_holder
+	var/atom/movable/web_menu_holder
 	var/finished = FALSE
 	var/datum/callback/custom_check_callback
 	var/next_check = 0
@@ -259,15 +260,34 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		return
 	current_user = M.client
 	//Blank
-	menu_holder = image(icon='icons/effects/effects.dmi',loc=anchor,icon_state="nothing", layer = RADIAL_BACKGROUND_LAYER)
-	menu_holder.appearance_flags |= KEEP_APART|RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM
-	SET_PLANE_EXPLICIT(menu_holder, ABOVE_HUD_PLANE, M)
-	menu_holder.vis_contents += elements + close_button
-	current_user.images += menu_holder
+	if(current_user.connection == "web")
+		// BYOND doesn't network vis_contents on screen objects/images to the webclient.
+		web_menu_holder = new /atom/movable
+		web_menu_holder.icon = 'icons/effects/effects.dmi'
+		web_menu_holder.screen_loc = "e3d_follow:margin=2;ref=\ref[anchor]"
+		web_menu_holder.layer = RADIAL_BACKGROUND_LAYER
+		web_menu_holder.appearance_flags |= KEEP_APART|RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM
+		SET_PLANE_EXPLICIT(web_menu_holder, ABOVE_HUD_PLANE, M)
+		web_menu_holder.vis_contents += elements + close_button
+		var/list/ref_list = list()
+		for(var/thing in web_menu_holder.vis_contents)
+			ref_list += "\ref[thing]"
+		web_menu_holder.icon_state = "e3d_vis_contents:[ref_list.Join(",")]"
+		current_user.screen += web_menu_holder
+	else
+		menu_holder = image(icon='icons/effects/effects.dmi',loc=anchor,icon_state="nothing", layer = RADIAL_BACKGROUND_LAYER)
+		menu_holder.appearance_flags |= KEEP_APART|RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM
+		SET_PLANE_EXPLICIT(menu_holder, ABOVE_HUD_PLANE, M)
+		menu_holder.vis_contents += elements + close_button
+		current_user.images += menu_holder
 
 /datum/radial_menu/proc/hide()
 	if(current_user)
-		current_user.images -= menu_holder
+		if(web_menu_holder)
+			current_user.screen -= web_menu_holder
+			QDEL_NULL(web_menu_holder)
+		if(menu_holder)
+			current_user.images -= menu_holder
 
 /datum/radial_menu/proc/wait(atom/user, atom/anchor, require_near = FALSE)
 	while (current_user && !finished && !selected_choice)

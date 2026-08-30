@@ -7,6 +7,7 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
 	anchored = TRUE
+	screen_loc = E3D_TYPE_WALLMOUNT
 	var/on = 1
 	var/area/area = null
 	var/otherarea = null
