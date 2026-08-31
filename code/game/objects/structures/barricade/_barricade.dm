@@ -31,6 +31,8 @@
 	var/is_wired = FALSE
 	/// Can this barricade be upgraded?
 	var/can_upgrade = FALSE
+	/// Cooldown to avoid balloon_alert spam when xenos repeatedly bump/hit wired cades (MeasureText is costly).
+	COOLDOWN_DECLARE(wire_balloon_cooldown)
 
 /obj/structure/barricade/Initialize(mapload, mob/user)
 	. = ..()
@@ -84,7 +86,9 @@
 		return FALSE
 
 	if(is_wired)
-		balloon_alert(xeno_attacker, "Wire slices into us")
+		if(COOLDOWN_FINISHED(src, wire_balloon_cooldown))
+			balloon_alert(xeno_attacker, "Wire slices into us")
+			COOLDOWN_START(src, wire_balloon_cooldown, 1 SECONDS)
 		xeno_attacker.apply_damage(10, blocked = MELEE , sharp = TRUE, updating_health = TRUE)
 	return ..()
 
@@ -225,7 +229,9 @@
 	if(!isliving(atom_movable))
 		return FALSE
 	var/mob/living/living = atom_movable
-	balloon_alert(living, "Wire slices into us")
+	if(COOLDOWN_FINISHED(src, wire_balloon_cooldown))
+		balloon_alert(living, "Wire slices into us")
+		COOLDOWN_START(src, wire_balloon_cooldown, 1 SECONDS)
 	living.apply_damage(10, BRUTE, blocked = MELEE , sharp = TRUE, updating_health = TRUE)
 	if(living.mob_size < MOB_SIZE_BIG)
 		living.Knockdown(2 SECONDS) //Leaping into barbed wire is VERY bad

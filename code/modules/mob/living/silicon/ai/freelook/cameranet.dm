@@ -2,10 +2,6 @@
 //
 // The datum containing all the chunks.
 
-#define CHUNK_SIZE 16 // Only chunk sizes that are to the power of 2. E.g: 2, 4, 8, 16, etc..
-/// Takes a position, transforms it into a chunk bounded position. Indexes at 1 so it'll land on actual turfs always
-#define GET_CHUNK_COORD(v) (max((FLOOR(v, CHUNK_SIZE)), 1))
-
 GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 GLOBAL_DATUM_INIT(som_cameranet, /datum/cameranet, new)
 
@@ -83,7 +79,7 @@ GLOBAL_DATUM_INIT(som_cameranet, /datum/cameranet, new)
 		var/list/add = visibleChunks - eye.visibleCameraChunks
 
 		for(var/datum/camerachunk/chunk as anything in remove)
-			chunk.remove(eye, FALSE)
+			chunk.remove(eye)
 
 		for(var/datum/camerachunk/chunk as anything in add)
 			chunk.add(eye)
@@ -109,10 +105,66 @@ GLOBAL_DATUM_INIT(som_cameranet, /datum/cameranet, new)
 	if(c.can_use())
 		majorChunkChange(c, 1)
 
-/// Used for Cyborg cameras. Since portable cameras can be in ANY chunk.
-/datum/cameranet/proc/updatePortableCamera(obj/machinery/camera/c)
-	if(c.can_use())
-		majorChunkChange(c, 1)
+/**
+ * Used for portable cameras (headsets, silicons, laser cams).
+ * Passes old/new turfs so we leave old chunks and join new ones — without this, moving cameras harddel.
+ * Ported conceptually from tgstation#94530 (adapted to GLOB.cameranet; TG uses SScameras).
+ */
+/datum/cameranet/proc/updatePortableCamera(obj/machinery/camera/updating_camera, turf/old_turf, turf/new_turf, update_delay_buffer = UPDATE_BUFFER_TIME)
+	cameraMoved(updating_camera, old_turf, new_turf, update_delay_buffer)
+
+/**
+ * Leave/join pattern for moving cameras (tgstation#94530).
+ * Removes the camera from chunks it left and adds it to chunks it entered, then queues updates.
+ */
+/datum/cameranet/proc/cameraMoved(obj/machinery/camera/updating_camera, turf/old_turf, turf/new_turf, update_delay_buffer = UPDATE_BUFFER_TIME)
+	if(old_turf == new_turf)
+		return
+
+	var/list/old_chunks = list()
+	var/range_difference = MAX_CAMERA_RANGE + 1
+	if(!isnull(old_turf))
+		var/x1 = max(1, old_turf.x - range_difference)
+		var/y1 = max(1, old_turf.y - range_difference)
+		var/x2 = min(world.maxx, old_turf.x + range_difference)
+		var/y2 = min(world.maxy, old_turf.y + range_difference)
+		for(var/x = x1; x <= x2; x += CHUNK_SIZE)
+			for(var/y = y1; y <= y2; y += CHUNK_SIZE)
+				// IMPORTANT: use chunkGenerated, not getCameraChunk — do not create chunks just to leave them.
+				var/datum/camerachunk/chunk = chunkGenerated(x, y, old_turf.z)
+				if(isnull(chunk))
+					continue
+				old_chunks += chunk
+
+	var/list/new_chunks = list()
+	if(!isnull(new_turf) && updating_camera.can_use())
+		if(QDELETED(updating_camera))
+			stack_trace("Tried to add a qdeleting camera to the net")
+		else
+			var/x1 = max(1, new_turf.x - range_difference)
+			var/y1 = max(1, new_turf.y - range_difference)
+			var/x2 = min(world.maxx, new_turf.x + range_difference)
+			var/y2 = min(world.maxy, new_turf.y + range_difference)
+			for(var/x = x1; x <= x2; x += CHUNK_SIZE)
+				for(var/y = y1; y <= y2; y += CHUNK_SIZE)
+					var/datum/camerachunk/chunk = getCameraChunk(x, y, new_turf.z)
+					if(isnull(chunk))
+						continue
+					new_chunks += chunk
+
+	for(var/datum/camerachunk/lost as anything in old_chunks - new_chunks)
+		lost.cameras["[old_turf.z]"] -= updating_camera
+		lost.hasChanged(FALSE, update_delay_buffer)
+
+	for(var/datum/camerachunk/found as anything in new_chunks - old_chunks)
+		found.cameras["[new_turf.z]"] |= updating_camera
+		found.hasChanged(FALSE, update_delay_buffer)
+
+	// Shared chunks (in both old and new): visibility changed because the camera moved within range.
+	for(var/datum/camerachunk/kept as anything in old_chunks & new_chunks)
+		kept.hasChanged(FALSE, update_delay_buffer)
+
+	updating_camera.cameranet_turf = new_turf
 
 /**
  * Never access this proc directly!!!!
@@ -121,16 +173,18 @@ GLOBAL_DATUM_INIT(som_cameranet, /datum/cameranet, new)
  * Setting the choice to 0 will remove the camera from the chunks.
  * If you want to update the chunks around an object, without adding/removing a camera, use choice 2.
  */
-/datum/cameranet/proc/majorChunkChange(atom/c, choice)
+/datum/cameranet/proc/majorChunkChange(atom/c, choice, update_delay_buffer = UPDATE_BUFFER_TIME)
 	if(!c)
 		return
 
 	var/turf/T = get_turf(c)
 	if(T)
-		var/x1 = max(0, T.x - (CHUNK_SIZE * 0.5)) & ~(CHUNK_SIZE - 1)
-		var/y1 = max(0, T.y - (CHUNK_SIZE * 0.5)) & ~(CHUNK_SIZE - 1)
-		var/x2 = min(world.maxx, T.x + (CHUNK_SIZE * 0.5)) & ~(CHUNK_SIZE - 1)
-		var/y2 = min(world.maxy, T.y + (CHUNK_SIZE * 0.5)) & ~(CHUNK_SIZE - 1)
+		// Use camera view range, not chunk size (tgstation#94530) — correct for CHUNK_SIZE 8.
+		var/range_difference = MAX_CAMERA_RANGE + 1
+		var/x1 = max(1, T.x - range_difference)
+		var/y1 = max(1, T.y - range_difference)
+		var/x2 = min(world.maxx, T.x + range_difference)
+		var/y2 = min(world.maxy, T.y + range_difference)
 		for(var/x = x1; x <= x2; x += CHUNK_SIZE)
 			for(var/y = y1; y <= y2; y += CHUNK_SIZE)
 				var/datum/camerachunk/chunk = chunkGenerated(x, y, T.z)
@@ -141,7 +195,7 @@ GLOBAL_DATUM_INIT(som_cameranet, /datum/cameranet, new)
 					else if(choice == 1)
 						// You can't have the same camera in the list twice.
 						chunk.cameras["[T.z]"] |= c
-					chunk.hasChanged()
+					chunk.hasChanged(FALSE, update_delay_buffer)
 
 /// Will check if a mob is on a viewable turf. Returns 1 if it is, otherwise returns 0.
 /datum/cameranet/proc/checkCameraVis(mob/living/target)
@@ -159,4 +213,3 @@ GLOBAL_DATUM_INIT(som_cameranet, /datum/cameranet, new)
 		chunk.hasChanged(TRUE) // Update now, no matter if it's visible or not.
 	if(chunk.visibleTurfs[position])
 		return TRUE
-

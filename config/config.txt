@@ -106,6 +106,9 @@ LOG_MANIFEST
 
 ## Gameplay options
 
+## Slow lighting/tgui/statpanel waits at roundstart for better mid/late-round performance (recommended for ~20 player servers).
+LAZY_SUBSYSTEM_TIMINGS
+
 ALLOW_AI
 ALLOW_AI_MULTICAM
 

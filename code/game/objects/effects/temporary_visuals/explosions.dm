@@ -261,7 +261,9 @@
 
 /obj/effect/temp_visual/explosion/Initialize(mapload, radius, color, power)
 	. = ..()
-	set_light(radius, radius, color)
+	// Full-radius STATIC_LIGHT updates are very expensive; only light bigger blasts, and cap range.
+	if(power >= EXPLODE_MEDIUM && radius > 0)
+		set_light(min(radius, 6), min(radius, 6), color)
 	set_generated_particles(power)
 	generate_particles(radius)
 	if(iswater(get_turf(src)))

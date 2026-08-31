@@ -76,6 +76,8 @@
 #define AI_ESCORT_RATING_ENSALVED_STRONG 25
 
 GLOBAL_LIST_EMPTY(all_nodes)
+/// AI nodes indexed by z level for cheaper local searches (list/list)
+GLOBAL_LIST_EMPTY_TYPED(nodes_by_zlevel, /list/obj/effect/ai_node)
 
 ///A GLOB of all /datum/component/ai_controller that currently exist
 GLOBAL_LIST_EMPTY(ai_instances_active)

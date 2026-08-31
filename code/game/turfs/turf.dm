@@ -197,10 +197,10 @@
 
 		if(!isspaceturf(src))
 			M.inertia_dir = 0
-	for(var/datum/automata_cell/explosion/our_explosion as anything in autocells) //Let explosions know that the atom entered
-		if(!istype(arrived))
-			break
-		our_explosion.on_turf_entered(arrived)
+	// Skip same-turf Entered spam (e.g. pixel shifts / non-moves) — RU CM pattern.
+	if(old_loc != src && istype(arrived))
+		for(var/datum/automata_cell/explosion/our_explosion as anything in autocells)
+			our_explosion.on_turf_entered(arrived)
 	return ..()
 
 /turf/proc/get_cell(type)

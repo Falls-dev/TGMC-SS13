@@ -49,9 +49,8 @@
 	var/direction = null
 	/// Whether or not the explosion should merge with other explosions
 	var/should_merge = TRUE
-	/// Workaround to account for the fact that this is subsystemized
-	/// See on_turf_entered
-	var/list/atom/exploded_atoms = list()
+	/// Atoms already hit by this wave. Assoc list (atom -> TRUE) for O(1) lookups.
+	var/list/exploded_atoms = list()
 	/// The visual effect of our explosion
 	var/obj/effect/particle_effect/shockwave/shockwave = null
 
@@ -65,10 +64,14 @@
 		QDEL_NULL(shockwave)
 
 // Compare directions. If the other explosion is traveling in the same direction,
-// the explosion is amplified. If not, it's weakened
+// the explosion is amplified. If not, it's weakened.
+// Returns TRUE if this cell survives the merge (and qdels the loser).
 /datum/automata_cell/explosion/merge(datum/automata_cell/explosion/our_explosion)
+	if(QDELETED(our_explosion))
+		return TRUE
+
 	// Non-merging explosions take priority
-	if(!should_merge)
+	if(!should_merge || !our_explosion.should_merge)
 		return TRUE
 
 	// The strongest of the two explosions should survive the merge
@@ -79,8 +82,7 @@
 	var/datum/automata_cell/explosion/dying = is_stronger ? our_explosion : src
 
 	// Two epicenters merging, or a new epicenter merging with a traveling wave
-	//if((!survivor.direction && !dying.direction) || (survivor.direction && !dying.direction))
-	if(!dying.direction && (!survivor.direction || survivor.direction))
+	if((!survivor.direction && !dying.direction) || (survivor.direction && !dying.direction))
 		survivor.power += dying.power
 
 	// A traveling wave hitting the epicenter weakens it
@@ -94,11 +96,13 @@
 	// Two waves traveling the same direction amplifies the explosion
 	if(survivor.direction == dying.direction)
 		survivor.power += dying.power
+		survivor.exploded_atoms |= dying.exploded_atoms
 
 	// Two waves travling towards each other weakens the explosion
 	if(survivor.direction == REVERSE_DIR(dying.direction))
 		survivor.power -= dying.power
 
+	qdel(dying)
 	return is_stronger
 
 /// Get a list of all directions the explosion should propagate to before dying
@@ -133,12 +137,14 @@
 	// Blow stuff up
 	INVOKE_ASYNC(in_turf, TYPE_PROC_REF(/atom, ex_act), power, direction)
 	for(var/atom/our_atom as anything in in_turf)
-		if(our_atom in exploded_atoms)
+		if(iseffect(our_atom)) // shockwaves / temp visuals: empty ex_act, still paid list/async cost
+			continue
+		if(exploded_atoms[our_atom])
 			continue
 		if(our_atom.gc_destroyed)
 			continue
 		resistance += max(0, our_atom.get_explosion_resistance())
-		exploded_atoms += our_atom
+		exploded_atoms[our_atom] = TRUE
 		INVOKE_ASYNC(our_atom, TYPE_PROC_REF(/atom, ex_act), power, direction)
 
 	var/reflected = FALSE
@@ -212,7 +218,10 @@
 	if(QDELETED(our_turf))
 		return
 
-	return new /datum/automata_cell/explosion(our_turf)
+	var/datum/automata_cell/explosion/new_cell = new /datum/automata_cell/explosion(our_turf)
+	if(!QDELETED(new_cell) && length(exploded_atoms))
+		new_cell.exploded_atoms |= exploded_atoms
+	return new_cell
 
 /*
 The issue is that between the cell being birthed and the cell processing,
@@ -225,16 +234,15 @@ When the cell processes, we simply don't blow up atoms that were tracked
 as having entered the turf.
 */
 /datum/automata_cell/explosion/proc/on_turf_entered(atom/movable/our_atom)
-	if(our_atom in exploded_atoms)// Once is enough
+	if(iseffect(our_atom) || our_atom.gc_destroyed)
+		return
+	if(exploded_atoms[our_atom]) // Once is enough
 		return
 
-	exploded_atoms += our_atom
+	exploded_atoms[our_atom] = TRUE
 
 	// Note that we don't want to make it a directed ex_act because
 	// it could toss them back and make them get hit by the explosion again
-	if(our_atom.gc_destroyed)
-		return
-
 	INVOKE_ASYNC(our_atom, TYPE_PROC_REF(/atom, ex_act), power, null)
 
 /// Spawns a cellular automaton of an explosion

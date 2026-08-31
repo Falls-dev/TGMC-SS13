@@ -161,6 +161,9 @@ SUBSYSTEM_DEF(ticker)
 	if(CONFIG_GET(flag/autooocmute))
 		GLOB.ooc_allowed = TRUE
 
+	if(CONFIG_GET(flag/lazy_subsystem_timings))
+		apply_lazy_timings()
+
 	CHECK_TICK
 	for(var/I in round_start_events)
 		var/datum/callback/cb = I
@@ -391,3 +394,13 @@ SUBSYSTEM_DEF(ticker)
 		possible_themes += themes
 	if(length(possible_themes))
 		return "[global.config.directory]/reboot_themes/[pick(possible_themes)]"
+
+/// Slows select background subsystems. Ported conceptually from RU CMSS13 lazy SS timings.
+/datum/controller/subsystem/ticker/proc/apply_lazy_timings()
+	// SSlighting wait is in ds (default 2). Slightly rarer updates trade a bit of lighting smoothness for CPU.
+	SSlighting?.wait = 4
+	// SSstatpanels wait is in ds (default 4).
+	SSstatpanels?.wait = 10
+	// SStgui wait is in ds (default 9). User said UI is not the main lag source, so this is safe to ease.
+	SStgui?.wait = 12
+	log_world("Applied lazy subsystem timings for performance (lighting/statpanels/tgui).")

@@ -32,14 +32,16 @@
 	var/turf/source_turf = get_turf(source)
 	if(!source_turf)
 		return
-	for(var/mob/living/carbon/xenomorph/nearby_xeno AS in GLOB.alive_xeno_list)
-		if(isnull(nearby_xeno))
-			continue
-		if(source_turf.z != nearby_xeno.z)
-			continue
-		if(get_dist(source_turf, nearby_xeno) > distance)
-			continue
-		. += nearby_xeno
+	// Prefer per-z hive lists so NPC/AI target scans do not walk every xeno on the server.
+	var/z_key = "[source_turf.z]"
+	for(var/hive_key AS in GLOB.hive_datums)
+		var/datum/hive_status/hive = GLOB.hive_datums[hive_key]
+		for(var/mob/living/carbon/xenomorph/nearby_xeno AS in hive.xenos_by_zlevel[z_key])
+			if(isnull(nearby_xeno))
+				continue
+			if(get_dist(source_turf, nearby_xeno) > distance)
+				continue
+			. += nearby_xeno
 
 ///Returns a list of mechs via get_dist and same z level method, very cheap compared to range()
 /proc/cheap_get_mechs_near(atom/source, distance)
@@ -119,6 +121,8 @@
 				continue
 			nearest_target = nearby_human
 			shorter_distance = get_dist(source, nearby_human) //better to recalculate than to save the var
+			if(shorter_distance <= 1)
+				return nearest_target
 	if(target_flags & TARGET_XENO)
 		nearby_xeno_list = cheap_get_xenos_near(source, shorter_distance - 1)
 		for(var/mob/nearby_xeno AS in nearby_xeno_list)
@@ -136,6 +140,8 @@
 				continue
 			nearest_target = nearby_xeno
 			shorter_distance = get_dist(source, nearby_xeno)
+			if(shorter_distance <= 1)
+				return nearest_target
 	if(target_flags & TARGET_HUMAN_TURRETS)
 		for(var/obj/machinery/deployable/mounted/sentry/nearby_turret AS in GLOB.marine_turrets)
 			if(source.z != nearby_turret.z)

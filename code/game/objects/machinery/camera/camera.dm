@@ -20,6 +20,8 @@
 	var/in_use_lights = FALSE
 	///Whether it can light up when an AI views it
 	var/internal_light = TRUE
+	/// Last turf we registered with the cameranet (portable cams). Used to leave/join chunks correctly when updates are debounced.
+	var/turf/cameranet_turf
 
 /obj/machinery/camera/Initialize(mapload, newDir)
 	. = ..()
@@ -38,6 +40,7 @@
 
 	parent_cameranet.cameras += src
 	parent_cameranet.addCamera(src)
+	cameranet_turf = get_turf(src)
 
 	myarea = get_area(src)
 	if(myarea)
@@ -86,6 +89,9 @@
 			. += span_info("It can reactivated with a <b>screwdriver</b>.")
 
 /obj/machinery/camera/proc/setViewRange(num = 7)
+	if(num > MAX_CAMERA_RANGE)
+		CRASH("Attempted to set camera view range to something ([num]) greater then we support ([MAX_CAMERA_RANGE]).\
+ This would break chunk updating. If you really need to do this, update MAX_CAMERA_RANGE")
 	view_range = num
 	parent_cameranet.updateVisibility(src, 0)
 
