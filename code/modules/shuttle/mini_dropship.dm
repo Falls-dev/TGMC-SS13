@@ -6,6 +6,8 @@
 /obj/docking_port/mobile/marine_dropship/minidropship
 	name = "Tadpole"
 	shuttle_id = SHUTTLE_TADPOLE
+	max_personnel = 6
+	max_vehicles = 0
 	dwidth = 0
 	dheight = 0
 	width = 7
@@ -129,6 +131,19 @@
 	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_TADPOLE_LAUNCHING))
 		to_chat(ui_user, span_warning("The dropship's engines are not ready yet"))
 		return
+	var/current_personnel = 0
+	var/current_vehicles = 0
+	var/obj/docking_port/mobile/marine_dropship/minidropship/tadpole_port = shuttle_port
+	if(istype(tadpole_port))
+		for(var/turf/T in tadpole_port.return_turfs())
+			for(var/obj/vehicle/V in T)
+				current_vehicles++
+			for(var/mob/living/carbon/human/H in T.GetAllContents())
+				current_personnel++
+
+		if(current_personnel > tadpole_port.max_personnel || current_vehicles > tadpole_port.max_vehicles)
+			to_chat(ui_user, span_warning("ТАД перегружен! Взлёт невозможен! (Люди: [current_personnel]/[tadpole_port.max_personnel], Техника: [current_vehicles]/[tadpole_port.max_vehicles])"))
+			return
 	TIMER_COOLDOWN_START(src, COOLDOWN_TADPOLE_LAUNCHING, launching_delay) // To stop spamming
 	shuttle_port.shuttle_computer = src
 	//SEND_GLOBAL_SIGNAL(COMSIG_GLOB_TADPOLE_LAUNCHED)
@@ -291,3 +306,30 @@
 	origin.shuttle_port.set_mode(SHUTTLE_CALL)
 	origin.last_valid_ground_port = origin.my_port
 	SSshuttle.moveShuttleToDock(origin.shuttle_id, origin.my_port, TRUE)
+
+/obj/docking_port/mobile/marine_dropship/minidropship/canMove()
+	. = ..()
+	if(!.)
+		return FALSE
+
+	var/current_personnel = 0
+	var/current_vehicles = 0
+
+	for(var/turf/T in return_turfs())
+		for(var/obj/vehicle/V in T)
+			current_vehicles++
+		for(var/mob/living/carbon/human/H in T.GetAllContents())
+			current_personnel++
+
+	var/limit_p = isnull(max_personnel) ? INFINITY : max_personnel
+	var/limit_v = isnull(max_vehicles) ? INFINITY : max_vehicles
+
+	if(current_personnel > limit_p || current_vehicles > limit_v)
+		if(shuttle_computer)
+			shuttle_computer.visible_message(span_warning("Внимание! Обнаружен перегруз (Людей: [current_personnel]/[limit_p], Техники: [current_vehicles]/[limit_v]). Взлёт отменён!"))
+			playsound(shuttle_computer, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+
+		mode = SHUTTLE_IDLE
+		return FALSE
+
+	return TRUE

@@ -26,7 +26,7 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 
 	if(!ui)
-		ui = new(user, src, "DropshipPicker", name)
+		ui = new(user, src, "DropshipPicker", name, 760, 600)
 		ui.open()
 
 /obj/machinery/computer/dropship_picker/ui_static_data(mob/user)
@@ -37,8 +37,10 @@
 			continue
 		shuttles += list(list(
 			"name" = shuttle_template.display_name,
-			"description" = shuttle_template.description,
+			"description" = "[shuttle_template.description]\n\nВместимость: [shuttle_template.max_personnel] морпехов, [shuttle_template.max_vehicles] ед. техники.",
 			"ref" = REF(shuttle_template),
+			"max_personnel" = shuttle_template.max_personnel,
+			"max_vehicles" = shuttle_template.max_vehicles,
 		))
 	.["shuttles"] = shuttles
 
@@ -48,7 +50,7 @@
 	.["current_ref"] = current_template_ref
 	var/datum/map_template/shuttle/minidropship/temp = locate(current_template_ref) in SSmapping.minidropship_templates
 	if(temp)
-		.["desc"] = temp.description
+		.["desc"] = "[temp.description]\n\nВместимость: [temp.max_personnel] морпехов, [temp.max_vehicles] ед. техники."
 		.["name"] = temp.display_name
 		.["assetpath"] = temp.suffix
 
@@ -86,8 +88,11 @@
 			if(!current_template_ref)
 				return FALSE
 			dropship_selected = TRUE
-			var/datum/map_template/shuttle/template = locate(current_template_ref) in SSmapping.minidropship_templates
-			var/obj/docking_port/mobile/shuttle = SSshuttle.action_load(template)
+			var/datum/map_template/shuttle/minidropship/template = locate(current_template_ref) in SSmapping.minidropship_templates
+			var/obj/docking_port/mobile/marine_dropship/minidropship/shuttle = SSshuttle.action_load(template)
+			if(istype(shuttle))
+				shuttle.max_personnel = template.max_personnel
+				shuttle.max_vehicles = template.max_vehicles
 			SSshuttle.moveShuttleQuickToDock(template.shuttle_id, dock_id)
 			shuttle.setTimer(0)
 			balloon_alert(usr, "shuttle selected, locking")
