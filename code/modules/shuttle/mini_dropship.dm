@@ -133,14 +133,21 @@
 		return
 	var/current_personnel = 0
 	var/current_vehicles = 0
+	var/list/counted_humans = list()
 	var/obj/docking_port/mobile/marine_dropship/minidropship/tadpole_port = shuttle_port
 	if(istype(tadpole_port))
 		for(var/turf/T in tadpole_port.return_turfs())
+			if(!istype(T.loc, /area/shuttle/minidropship))
+				continue
 			for(var/obj/vehicle/V in T)
 				current_vehicles++
+				for(var/mob/living/carbon/human/H in V.occupants)
+					if(!(H in counted_humans))
+						counted_humans += H
 			for(var/mob/living/carbon/human/H in T.GetAllContents())
-				current_personnel++
-
+				if(!(H in counted_humans))
+					counted_humans += H
+		current_personnel = counted_humans.len
 		if(current_personnel > tadpole_port.max_personnel || current_vehicles > tadpole_port.max_vehicles)
 			to_chat(ui_user, span_warning("ТАД перегружен! Взлёт невозможен! (Люди: [current_personnel]/[tadpole_port.max_personnel], Техника: [current_vehicles]/[tadpole_port.max_vehicles])"))
 			return
@@ -314,12 +321,19 @@
 
 	var/current_personnel = 0
 	var/current_vehicles = 0
-
+	var/list/counted_humans = list()
 	for(var/turf/T in return_turfs())
+		if(!istype(T.loc, /area/shuttle/minidropship))
+			continue
 		for(var/obj/vehicle/V in T)
 			current_vehicles++
+			for(var/mob/living/carbon/human/H in V.occupants)
+				if(!(H in counted_humans))
+					counted_humans += H
 		for(var/mob/living/carbon/human/H in T.GetAllContents())
-			current_personnel++
+			if(!(H in counted_humans))
+				counted_humans += H
+	current_personnel = counted_humans.len
 
 	var/limit_p = isnull(max_personnel) ? INFINITY : max_personnel
 	var/limit_v = isnull(max_vehicles) ? INFINITY : max_vehicles

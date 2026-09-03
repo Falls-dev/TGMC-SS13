@@ -151,7 +151,7 @@
 	suffix = "_big"
 	description = "'Головастик-01' - старая модель, едва успевшая поступить на вооружение ТГМЦ, заменена более новым 'Головастиком-03'. Как и БТР, имеет довольно крепкую броню, но очень ограниченный угол обстрела."
 	display_name = "Tadpole Carrier Model"
-	max_personnel = 14
+	max_personnel = 12
 	max_vehicles = 0
 
 /datum/map_template/shuttle/minidropship/food

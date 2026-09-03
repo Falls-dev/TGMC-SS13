@@ -26,7 +26,7 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 
 	if(!ui)
-		ui = new(user, src, "DropshipPicker", name, 760, 600)
+		ui = new(user, src, "DropshipPicker", name)
 		ui.open()
 
 /obj/machinery/computer/dropship_picker/ui_static_data(mob/user)
