@@ -998,7 +998,7 @@ GLOBAL_LIST_INIT(acid_spray_hit, typecacheof(list(/obj/structure/barricade, /obj
 	held_item.throw_at(A, max(2, 11 - (held_item.w_class * 2)), 5)
 	held_item = null
 	owner.overlays -= held_appearance
-	playsound(xeno_owner, 'sound/effects/throw.ogg', 30, 1)
+	playsound(xeno_owner, SFX_THROW, 30, 1)
 	succeed_activate()
 	ability_cost = initial(ability_cost)
 	add_cooldown()

@@ -80,7 +80,7 @@ GLOBAL_LIST_INIT(hugger_images_list,  list(
 
 	if(!cooldown_timer)
 		xeno_owner.dropItemToGround(F)
-		playsound(xeno_owner, 'sound/effects/throw.ogg', 30, TRUE)
+		playsound(xeno_owner, SFX_THROW, 30, TRUE)
 		F.stat = CONSCIOUS //Hugger is conscious
 		F.leaping = FALSE //Hugger is not leaping
 		F.facehugger_register_source(xeno_owner) //Set us as the source

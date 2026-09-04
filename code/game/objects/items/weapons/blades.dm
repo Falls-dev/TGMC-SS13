@@ -197,8 +197,11 @@
 		return
 	if(living_user?.Adjacent(current_target))
 		return AUTOFIRE_CONTINUE
-	var/thrown_thing = src
-	if(amount == 1)
+
+	var/obj/item/stack/throwing_knife/thrown_thing = src
+	var/is_last_knife = (amount == 1)
+
+	if(is_last_knife)
 		living_user.temporarilyRemoveItemFromInventory(src)
 		forceMove(get_turf(src))
 		throw_at(current_target, throw_range, throw_speed, living_user, TRUE)
@@ -210,9 +213,13 @@
 		knife_to_throw.throw_at(current_target, throw_range, throw_speed, living_user, TRUE)
 		amount--
 		thrown_thing = knife_to_throw
-	playsound(src, 'sound/effects/throw.ogg', 30, 1)
+	playsound(src, SFX_THROW, min(10*min(get_dist(loc,current_target),thrown_thing.throw_range), 30), 1)
 	visible_message(span_warning("[living_user] expertly throws [thrown_thing]."), null, null, 5)
 	update_icon()
+
+	if(is_last_knife)
+		return
+
 	return AUTOFIRE_CONTINUE
 
 ///Fills any stacks currently in the tile that this object is thrown to.

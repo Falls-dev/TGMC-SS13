@@ -5,7 +5,6 @@
 /datum/xenomorph_skin/runner/rouny
 	name = "Rouny"
 	icon = 'icons/Xeno/castes/runner/basic_rouny.dmi'
-	access_needed = BOOSTY_TIER_3
 
 /datum/xenomorph_skin/runner/gold
 	name = "Gold"
@@ -16,7 +15,7 @@
 	name = "Gold Rouny"
 	icon = 'icons/Xeno/castes/runner/gold_rouny.dmi'
 	effects_icon = 'icons/Xeno/castes/runner/gold_effects.dmi'
-	access_needed = BOOSTY_TIER_3
+	access_needed = BOOSTY_TIER_2
 
 /datum/xenomorph_skin/runner/tacticool
 	name = "Tacticool"

@@ -107,8 +107,10 @@
 	var/attack_effect = islist(X.attack_effect) ? pick(X.attack_effect) : X.attack_effect
 	X.do_attack_animation(src, attack_effect)
 
+	var/datum/xenomorph_skin/skin_datum = X.current_skin
+	var/chosen_sound = (skin_datum?.attack_sound && prob(skin_datum.attack_sound_chance)) ? skin_datum.attack_sound : X.attack_sound
 	//The normal attack proceeds
-	playsound(loc, X.attack_sound, 25, 1)
+	playsound(loc, chosen_sound, 25, 1)
 	X.visible_message("[attack_message1]", \
 	"[attack_message2]")
 

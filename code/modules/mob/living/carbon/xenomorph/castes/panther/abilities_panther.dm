@@ -380,7 +380,7 @@
 	xeno_owner.do_jitter_animation(4000)
 
 	var/turf/our_turf = get_turf(xeno_owner) //location of after image SFX
-	playsound(our_turf, pick('sound/effects/throw.ogg','sound/effects/alien/tail_swipe1.ogg', 'sound/effects/alien/tail_swipe2.ogg'), 25, 1) //sound effects
+	playsound(our_turf, pick(SFX_THROW,'sound/effects/alien/tail_swipe1.ogg', 'sound/effects/alien/tail_swipe2.ogg'), 25, 1) //sound effects
 	var/obj/effect/temp_visual/after_image/our_afterimage
 	for(var/i = 0 to 2) //number of after images
 		our_afterimage = new /obj/effect/temp_visual/after_image(our_turf, owner) //Create the after image.
