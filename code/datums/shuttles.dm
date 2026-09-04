@@ -17,6 +17,9 @@
 	var/port_x_offset
 	var/port_y_offset
 
+	var/max_personnel
+	var/max_vehicles
+
 /datum/map_template/shuttle/proc/prerequisites_met()
 	return TRUE
 
@@ -107,6 +110,8 @@
 /datum/map_template/shuttle/post_load(obj/docking_port/mobile/M)
 	if(movement_force)
 		M.movement_force = movement_force.Copy()
+	M.max_personnel = max_personnel
+	M.max_vehicles = max_vehicles
 	M.linkup()
 
 // Shuttles start here:
@@ -128,62 +133,80 @@
 	shuttle_id = SHUTTLE_TADPOLE
 	name = "Tadpole Drop Shuttle"
 	suffix = "_standard" // remember to also add an image to icons/ui_icons/dropshippicker and /datum/asset/simple/dropshippicker
-	description = "The plain and simple old Tadpole-03 model."
+	description = "Простая и незамысловатая старая модель 'Головастик-03'"
 	///shuttle switch console name
 	var/display_name = "Tadpole Standard Model"
 	var/admin_enable = TRUE
+	max_personnel = 7
+	max_vehicles = 0
 
 /datum/map_template/shuttle/minidropship/urbantower
 	suffix = "_urbantower"
-	description = "With the same great charm as the Standard, here it is! Now this Tadpole is designed for tactical insertions into environments with limiting space. Please Fly and Transport Responsibly"
+	description = "С тем же несравненным шармом, что и Стандартный, - встречайте! Этот 'Головастик' создан для тактической высадки в условиях ограниченного пространства. Пожалуйста, летайте и перевозите ответственно."
 	display_name = "Tadpole Urban Tower Model"
+	max_personnel = 7
+	max_vehicles = 0
 
 /datum/map_template/shuttle/minidropship/old
 	suffix = "_big"
-	description = "Tadpole-01, the old model barely in service for TGMC, replaced by the newer Tadpole-03. Much like an APC, is pretty armored. Very lacking in firing angle."
+	description = "'Головастик-01' - старая модель, едва успевшая поступить на вооружение ТГМЦ, заменена более новым 'Головастиком-03'. Как и БТР, имеет довольно крепкую броню, но очень ограниченный угол обстрела."
 	display_name = "Tadpole Carrier Model"
+	max_personnel = 12
+	max_vehicles = 0
 
 /datum/map_template/shuttle/minidropship/food
 	suffix = "_food"
-	description = "A Tadpole modified to provide foods and services. Who the hell let this on the military catalogue? Bounty on that guy."
+	description = "'Головастик', модифицированный для предоставления еды и услуг. Кто, чёрт возьми, допустил это в военный каталог? Назначьте награду за голову этого придурка."
 	display_name = "Tadpole Food-truck Model"
 	admin_enable = FALSE
 
 /datum/map_template/shuttle/minidropship/factorio
 	suffix = "_factorio"
-	description = "A Tadpole model for hauling, engineering and general maintenance. Patented by Nakamura Engineering, and is a rather reliable way to transport goods."
+	description = "Модель 'Головастика' для перевозки грузов, инженерных работ и общего технического обслуживания. Запатентована Nakamura Engineering и является довольно надёжным способом транспортировки грузов."
 	display_name = "Tadpole NK-Haul Model"
+	max_personnel = 12
+	max_vehicles = 0
 
 /datum/map_template/shuttle/minidropship/mobile_bar
 	suffix =	"_mobile_bar"
-	description =	"A Tadpole modified to provide drinks and disservices. God dammit it's him again, I thought we got rid of him."
+	description =	"'Головастик', модифицированный для предоставления напитков и услуг. Чёрт возьми, это опять его рук дело, я думал, вы от него избавились."
 	display_name =	"Tadpole Mobile-Bar Model"
 	admin_enable = FALSE
 
 /datum/map_template/shuttle/minidropship/combat_tad
 	suffix = "_combat_tad"
-	description = "A Tadpole model modified to have three weapon hardpoints instead of just one, the majority of the other standard features had to be scrapped to fit all three of them on."
+	description = "Модель 'Головастика', модифицированная под три точки крепления оружия вместо одной, - ради размещения всех трёх пришлось пожертвовать большинством прочих стандартных функций."
 	display_name = "Tadpole Combat Model"
+	max_personnel = 6
+	max_vehicles = 0
 
 /datum/map_template/shuttle/minidropship/umbilical
 	suffix =	"_umbilical"
-	description = "A high-point orbital shuttle with a tactical umbilical airlock for insertion of ground troops."
+	description = "Высотный орбитальный шаттл с тактическим шлюзом для высадки наземных войск."
 	display_name = "Tadpole Umbilical Model"
+	max_personnel = 16
+	max_vehicles = 0
 
 /datum/map_template/shuttle/minidropship/cargo
 	suffix = "_cargo"
-	description = "A Tadpole model was modified to expedite the delivery of supplies to combat zones. The weapon system attach point had to be removed to enlarge the cargo area."
+	description = "Модель 'Головастика', модифицированная для ускоренной доставки припасов в зоны боевых действий. Точку крепления оружейной системы пришлось убрать, чтобы увеличить грузовой отсек."
 	display_name = "Tadpole Cargo Model"
+	max_personnel = 6
+	max_vehicles = 0
 
 /datum/map_template/shuttle/minidropship/barge
 	suffix = "_barge"
-	description = "A cargo barge used for transporting significant forces. The combat modules were sacrificed for the sake of the internal volume."
+	description = "Грузовая баржа, используемая для переброски значительных сил. Боевые модули были принесены в жертву ради внутреннего объёма."
 	display_name = "Tadpole Barge Model"
+	max_personnel = 24
+	max_vehicles = 0
 
 /datum/map_template/shuttle/minidropship/_voidraider
 	suffix = "_voidraider"
-	description = "An asymmetric tadpole designed with vehicle transport in mind. Built with a wide umbilical to allow fluid heavy-vehicle movement."
+	description = "Асимметричный 'Головастик', спроектированный с расчётом на транспортировку техники. Оснащён широким шлюзом для беспрепятственного перемещения тяжёлой техники."
 	display_name = "Tadpole Void Raider Model"
+	max_personnel = 4
+	max_vehicles = 1
 
 /datum/map_template/shuttle/escape_pod
 	shuttle_id = SHUTTLE_ESCAPE_POD
