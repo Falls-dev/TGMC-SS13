@@ -11,6 +11,7 @@
 	required_entry_skill = SKILL_LARGE_VEHICLE_DEFAULT
 	minimap_icon_state = "apc"
 	turret_icon = null
+	crushes_weeds = FALSE
 	pixel_w = -48
 	pixel_z = -40
 	max_integrity = 600
