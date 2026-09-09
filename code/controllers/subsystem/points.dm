@@ -71,6 +71,8 @@ SUBSYSTEM_DEF(points)
 
 /// Prepare the global supply pack list at the gamemode start
 /datum/controller/subsystem/points/proc/prepare_supply_packs_list(is_mode_crash = FALSE)
+	if(SSrequisitions_ai)
+		SSrequisitions_ai.reset_round_state()
 	for(var/pack in subtypesof(/datum/supply_packs))
 		var/datum/supply_packs/P = pack
 		if(!initial(P.cost))
@@ -137,44 +139,49 @@ SUBSYSTEM_DEF(points)
 	if(!istype(supply_beacon))
 		to_chat(user, span_warning("Beacon was not selected"))
 		return
+	if(!fast_delivery_to_beacon(our_order, supply_beacon))
+		to_chat(user, span_warning("Fast delivery failed: check cargo points, beacon status, and delivery cooldown."))
+	return TRUE
+
+/// Sends an existing cargo order to a specific beacon. Unlike fast_delivery(), this is
+/// suitable for non-UI callers, but it deliberately retains every cargo/budget/safety check.
+/datum/controller/subsystem/points/proc/fast_delivery_to_beacon(datum/supply_order/our_order, datum/supply_beacon/supply_beacon)
+	if(!our_order || !supply_beacon)
+		return FALSE
 
 	if(!fast_delivery_is_active)
-		to_chat(user, span_warning("Fast delivery is not ready"))
 		return FALSE
 	if(!iscrashgamemode(SSticker.mode) && !isdistrocrashgamemode(SSticker.mode) && !iswarfaregamemode(SSticker.mode)) // no RO on crash
 		if(FAST_DELIVERY_COST > supply_points[our_order.faction])
-			to_chat(user, span_warning("Cargo does not have enough points for fast delivery."))
-			return
-
-		supply_points[user.faction] -= FAST_DELIVERY_COST
+			return FALSE
 
 	//Same checks as for supply console
-	if(!supply_beacon)
-		to_chat(user, span_warning("There was an issue with that beacon. Check it's still active."))
-		return
-	if(!istype(supply_beacon.drop_location))
-		to_chat(user, span_warning("The [supply_beacon.name] was not detected on the ground."))
-		return
+	if(!istype(supply_beacon.drop_location) || !is_ground_level(supply_beacon.drop_location.z))
+		return FALSE
 	if(isspaceturf(supply_beacon.drop_location) || supply_beacon.drop_location.density)
-		to_chat(user, span_warning("The [supply_beacon.name]'s landing zone appears to be obstructed or out of bounds."))
-		return
+		return FALSE
 
 	//Just in case
 	if(!length_char(SSpoints.shoppinglist[our_order.faction]))
-		return
+		return FALSE
 	if(!("[our_order.id]" in SSpoints.shoppinglist[our_order.faction]))
-		return
+		return FALSE
+
+	if(!iscrashgamemode(SSticker.mode) && !isdistrocrashgamemode(SSticker.mode) && !iswarfaregamemode(SSticker.mode))
+		supply_points[our_order.faction] -= FAST_DELIVERY_COST
 
 	//Finally create the supply box
 
 	var/turf/TC = locate(supply_beacon.drop_location.x, supply_beacon.drop_location.y, supply_beacon.drop_location.z)
 
 	//spawn crate and clear shoping list
+	fast_delivery_is_active = FALSE
 	delivery_to_turf(our_order, TC)
 
 	//effects
 	supply_beacon.drop_location.visible_message(span_boldnotice("A supply drop appears suddendly!"))
 	playsound(supply_beacon.drop_location,'sound/effects/tadpolehovering.ogg', 30, TRUE)
+	return TRUE
 
 /datum/controller/subsystem/points/proc/delivery_to_turf(datum/supply_order/our_order, turf/TC)
 	var/datum/supply_packs/firstpack = our_order.pack[1]

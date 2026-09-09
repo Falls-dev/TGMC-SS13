@@ -143,6 +143,8 @@
 	var/message = copytext_char(data["message"], 1, MAX_BROADCAST_LEN)
 	if(!message)
 		return
+	if(frequency == FREQ_REQUISITIONS && virt?.source != SSrequisitions_ai.output_radio)
+		SSrequisitions_ai.receive_radio(message, virt.source)
 	var/compression = data["compression"]
 	if(compression > 0)
 		message = Gibberish(message, TRUE, compression)
