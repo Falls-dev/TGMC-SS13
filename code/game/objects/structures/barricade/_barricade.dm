@@ -44,6 +44,11 @@
 		faction = user.faction
 
 /obj/structure/barricade/handle_barrier_chance(mob/living/M)
+	if(istype(M, /mob/living/carbon/xenomorph))
+		var/mob/living/carbon/xenomorph/X = M
+		if(istype(X.xeno_caste, /datum/xeno_caste/warrior/bulwark))
+			return prob(25)
+
 	return prob(max(30, (100 * obj_integrity) / max_integrity))
 
 /obj/structure/barricade/examine(mob/user)
@@ -85,7 +90,10 @@
 
 	if(is_wired)
 		balloon_alert(xeno_attacker, "Wire slices into us")
-		xeno_attacker.apply_damage(10, blocked = MELEE , sharp = TRUE, updating_health = TRUE)
+		var/damage_to_deal = 10
+		if(istype(xeno_attacker.xeno_caste, /datum/xeno_caste/warrior/bulwark))
+			damage_to_deal = 5
+		xeno_attacker.apply_damage(damage_to_deal, blocked = MELEE , sharp = TRUE, updating_health = TRUE)
 	return ..()
 
 /obj/structure/barricade/attackby(obj/item/I, mob/user, params)
