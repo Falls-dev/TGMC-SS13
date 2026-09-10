@@ -8,8 +8,9 @@ SUBSYSTEM_DEF(requisitions_ai)
 	var/list/pending_requests = list()
 	var/last_request_time = 0
 	var/list/conversations = list()
+	var/conversation_history_length = 12
 	var/static_catalog_json
-	var/obj/item/radio/requisitions_ai/output_radio
+	var/obj/item/radio/headset/mainship/mcom/silicon/requisitions_ai/output_radio
 
 /datum/controller/subsystem/requisitions_ai/Initialize()
 	return SS_INIT_SUCCESS
@@ -109,7 +110,7 @@ Return only one JSON object with keys reply and action. Do not put JSON, escaped
 
 /datum/controller/subsystem/requisitions_ai/proc/add_history(role, content)
 	conversations += list(list("role" = role, "content" = copytext_char(content, 1, MAX_BROADCAST_LEN)))
-	while(length(conversations) > 12)
+	while(length(conversations) > conversation_history_length)
 		conversations.Cut(1, 2)
 
 /datum/controller/subsystem/requisitions_ai/proc/remove_history_entry(role, content)
@@ -152,9 +153,12 @@ Return only one JSON object with keys reply and action. Do not put JSON, escaped
 	catch
 		send_reply("Штабная нейросеть прислала битый пакет. Повтори запрос.")
 		return
-	try
-		response = json_decode(content)
-	catch
+	// Some compatible endpoints ignore response_format and return ordinary text.
+	// Do not call json_decode on it: BYOND reports malformed JSON as a runtime.
+	var/trimmed_content = trim(content)
+	if(copytext_char(trimmed_content, 1, 2) == "{")
+		response = safe_json_decode(trimmed_content)
+	if(!islist(response))
 		response = list("reply" = content, "action" = list("type" = "none"))
 	if(!islist(response))
 		response = list("reply" = "Text response received; no delivery command.", "action" = list("type" = "none"))
@@ -303,19 +307,27 @@ Return only one JSON object with keys reply and action. Do not put JSON, escaped
 	if(!message)
 		return
 	if(!output_radio)
-		// A fixed transmitter is required by the radio pipeline, but its turf has
-		// no bearing on Requisitions subspace transmission or on who receives it.
-		output_radio = new(locate(1, 1, 1))
+		// This is a fixed infrastructure transmitter, not an origin or a reply target.
+		// talk_into() needs its source to be on a Z-level accepted by telecomms;
+		// (1,1,1) may be on a different map level and causes the signal to vanish.
+		output_radio = new(get_output_radio_turf())
 	output_radio.talk_into(output_radio, copytext_char(strip_html(message, 350), 1, 350), RADIO_CHANNEL_REQUISITIONS)
 
-/// Invisible transmitter used solely to preserve the normal radio pipeline and log format.
-/obj/item/radio/requisitions_ai
+/datum/controller/subsystem/requisitions_ai/proc/get_output_radio_turf()
+	for(var/obj/machinery/telecomms/receiver/receiver as anything in GLOB.telecomms_list)
+		if(receiver.on && islist(receiver.freq_listening) && (FREQ_REQUISITIONS in receiver.freq_listening))
+			return get_turf(receiver)
+	for(var/obj/machinery/telecomms/allinone/all_in_one as anything in GLOB.telecomms_list)
+		if(all_in_one.on && islist(all_in_one.freq_listening) && (FREQ_REQUISITIONS in all_in_one.freq_listening))
+			return get_turf(all_in_one)
+	return locate(1, 1, 1)
+
+/// Invisible AI headset used solely to preserve the normal radio pipeline and log format.
+/obj/item/radio/headset/mainship/mcom/silicon/requisitions_ai
 	name = "Requisitions AI"
 	invisibility = INVISIBILITY_ABSTRACT
 	anchored = TRUE
-	subspace_transmission = TRUE
 	frequency = FREQ_REQUISITIONS
-	channels = list(RADIO_CHANNEL_REQUISITIONS = TRUE)
 
-/obj/item/radio/requisitions_ai/GetVoice()
+/obj/item/radio/headset/mainship/mcom/silicon/requisitions_ai/GetVoice()
 	return "Requisitions AI"
