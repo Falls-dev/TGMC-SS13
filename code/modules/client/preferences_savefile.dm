@@ -600,7 +600,7 @@
 	religion = sanitize_inlist(religion, RELIGION_CHOICES, initial(religion))
 
 	tts_voice = sanitize_inlist_tts(tts_voice)
-	tts_pitch = sanitize_integer(tts_pitch, -12, 12, initial(tts_pitch))
+	tts_pitch = sanitize_integer(tts_pitch, -2, 2, initial(tts_pitch))
 
 	med_record = sanitize_text(med_record, initial(med_record))
 	sec_record = sanitize_text(sec_record, initial(sec_record))

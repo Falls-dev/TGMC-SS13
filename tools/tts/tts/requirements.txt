@@ -1,0 +1,7 @@
+Flask>=3.0.0
+waitress>=3.0.0
+pydub>=0.25.1
+omegaconf>=2.3.0
+soundfile>=0.12.1
+torch
+torchaudio

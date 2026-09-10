@@ -65,7 +65,7 @@
 	/// The filter to apply to the voice when processing the TTS audio message.
 	var/voice_filter = ""
 	/// Set to anything other than "" to activate the silicon voice effect for TTS messages.
-	var/tts_silicon_voice_effect = ""
+	var/tts_silicon_voice_effect = TTS_FILTER_SILICON
 
 	/// String representing the spatial grid groups we want to be held in.
 	/// acts as a key to the list of spatial grid contents types we exist in via SSspatial_grid.spatial_grid_categories.
