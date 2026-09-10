@@ -18,6 +18,8 @@
 	var/list/list/xenos_by_zlevel = list()
 	///list of evo towers
 	var/list/obj/structure/xeno/evotower/evotowers = list()
+	///list of mutation towers
+	var/list/obj/structure/xeno/mutationtower/mutationtowers = list()
 	///list of upgrade towers
 	var/list/obj/structure/xeno/psychictower/psychictowers = list()
 	///list of phero towers
@@ -138,6 +140,9 @@
 		.["hive_structures"] += list(get_structure_packet(tower))
 	// Evolution towers (if they're ever built)
 	for(var/obj/structure/xeno/evotower/tower AS in GLOB.hive_datums[hivenumber].evotowers)
+		.["hive_structures"] += list(get_structure_packet(tower))
+	// Mutation towers (if they're ever built)
+	for(var/obj/structure/xeno/mutationtower/tower AS in GLOB.hive_datums[hivenumber].mutationtowers)
 		.["hive_structures"] += list(get_structure_packet(tower))
 	// Pheromone towers
 	for(var/obj/structure/xeno/pherotower/tower AS in GLOB.hive_datums[hivenumber].pherotowers)
@@ -431,6 +436,12 @@
 /datum/hive_status/proc/get_evolution_boost()
 	. = 0
 	for(var/obj/structure/xeno/evotower/tower AS in evotowers)
+		. += tower.boost_amount
+
+///Fetches the total passive biomass gain bonus from mutation towers, per minute.
+/datum/hive_status/proc/get_mutation_boost()
+	. = 0
+	for(var/obj/structure/xeno/mutationtower/tower AS in mutationtowers)
 		. += tower.boost_amount
 
 // ***************************************
@@ -1508,7 +1519,7 @@ to_chat will check for valid clients itself already so no need to double check f
 /datum/hive_status/proc/update_corrupted_generators_cache()
 	var/corrupted_count = 0
 	if(GLOB.generators_on_ground > 0)
-		for(var/obj/machinery/power/geothermal/generator in GLOB.machines)
+		for(var/obj/machinery/power/geothermal/generator in GLOB.geothermal_generators)
 			if(generator.corrupted == hivenumber && generator.corruption_on)
 				corrupted_count++
 
