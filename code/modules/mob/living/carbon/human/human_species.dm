@@ -24,8 +24,11 @@
 /mob/living/carbon/human/species/synthetic
 	race = "Synthetic"
 
-/mob/living/carbon/human/species/synthetic/early
-	race = "Early Synthetic"
+/mob/living/carbon/human/species/synthetic/engineer
+	race = "Engineer Synthetic"
+
+/mob/living/carbon/human/species/synthetic/medical
+	race = "Medical Synthetic"
 
 /mob/living/carbon/human/species/moth
 	race = "Moth"
@@ -71,6 +74,9 @@
 
 /mob/living/carbon/human/species/robot/bravada
 	race = "Sterling Combat Robot"
+
+/mob/living/carbon/human/species/prototype_supersoldier
+	race = "Prototype Supersoldier"
 
 /mob/living/carbon/human/species/necoarc
 	race = "Neco Arc"
