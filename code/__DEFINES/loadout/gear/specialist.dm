@@ -14,7 +14,6 @@ GLOBAL_LIST_INIT(specialist_gear_listed_products, list(
 	/obj/item/implanter/blade = list(CAT_SPECSUP, "Mantis Blade Implant", 25, "spec_breacher"),
 	/obj/item/implanter/sandevistan = list(CAT_SPECSUP, "Sandevistan Implant", 20, "spec_breacher"),
 	/obj/item/storage/pill_bottle/russian_red = list(CAT_SPECSUP, "Russian Red Pills", 15, "spec_breacher"),
-	/obj/item/storage/pill_bottle/doctor_delight = list(CAT_SPECSUP, "Doctor Delight Pills", 15, "spec_breacher"),
 
 // Снайпер сет
 	/obj/item/ammo_magazine/rifle/tx8 = list(CAT_SPECSUP, "BR-8 scout rifle magazine", 5, "spec_sniper"),
