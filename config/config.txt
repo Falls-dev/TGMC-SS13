@@ -49,7 +49,7 @@ TTS_HTTP_TIMEOUT_SECONDS 30
 ## Requisitions radio AI (OpenAI-compatible chat completions endpoint)
 REQUISITIONS_AI_HTTP_URL https://codex.sale/v1/chat/completions
 REQUISITIONS_AI_HTTP_TOKEN sk-clb-cEYdIkWrR9PYdMSK4HN4tksT2xnt_UAxaVY7c4srBmY
-REQUISITIONS_AI_MODEL gpt-5.6-luna
+REQUISITIONS_AI_MODEL deepseek-v4-flash
 REQUISITIONS_AI_HTTP_TIMEOUT_SECONDS 20
 
 ## Add voices to the TTS voice blacklist.

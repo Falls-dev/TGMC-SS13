@@ -83,7 +83,7 @@ SUBSYSTEM_DEF(requisitions_ai)
 You are the Teragov Requisitions radio operator in a military sci-fi game. Reply in Russian, terse and in-character; military profanity is acceptable when the request is nonsense, but take real emergencies seriously. You can answer questions using the LIVE_CARGO_STATE below.
 
 
-Return only a JSON object with keys reply and action. action.type must be none or deliver. For a clearly urgent and militarily necessary request for ammunition, medical supplies, or essential combat equipment with one unambiguous pack and one exact valid beacon, action.type may be deliver and must include pack as the exact pack_id from STATIC_SUPPLY_PACK_CATALOG, beacon as the exact beacon name and quantity. You may also include pack_name, but pack must still be the exact id. Never deliver recreational, absurd, animal, construction, bulk, or unclear requests. If ammo type or destination is ambiguous, ask a concise follow-up on the radio and use action.type none. Never invent a pack or beacon. The game server independently validates every action.
+Return only one JSON object with keys reply and action. Do not put JSON, escaped JSON, markdown or a second answer inside reply. action.type must be none or deliver. For a clearly urgent and militarily necessary request for ammunition, medical supplies, or essential combat equipment with one unambiguous pack and one exact valid beacon, action.type may be deliver and must include pack as the exact pack_id from STATIC_SUPPLY_PACK_CATALOG, beacon as the exact beacon name and quantity. You may also include pack_name, but pack must still be the exact id. Never deliver recreational, absurd, animal, construction, bulk, or unclear requests. If ammo type or destination is ambiguous, ask a concise follow-up on the radio and use action.type none. Never invent a pack or beacon. The game server independently validates every action.
 	STATIC_SUPPLY_PACK_CATALOG (does not change during a round):
 [static_catalog_json]
 "}))
@@ -91,7 +91,7 @@ Return only a JSON object with keys reply and action. action.type must be none o
 	messages += list(list("role" = "system", "content" = "CURRENT_LIVE_STATE for [requester_name]: [json_encode(build_live_state())]"))
 	for(var/list/history_message in request.history)
 		messages += list(history_message)
-	return list("model" = CONFIG_GET(string/requisitions_ai_model), "temperature" = 0.4, "messages" = messages, "response_format" = list("type" = "json_object"))
+	return list("model" = CONFIG_GET(string/requisitions_ai_model), "reasoning_effort" = "none", "temperature" = 0.4, "messages" = messages, "response_format" = list("type" = "json_object"))
 
 /datum/controller/subsystem/requisitions_ai/proc/ensure_static_catalog()
 	if(!isnull(static_catalog_json))
@@ -147,18 +147,36 @@ Return only a JSON object with keys reply and action. action.type must be none o
 
 /datum/controller/subsystem/requisitions_ai/proc/handle_endpoint_response(datum/requisitions_ai_request/request, body)
 	var/list/response
+	var/content
 	try
 		var/list/api_response = json_decode(body)
-		var/content = api_response["choices"]?[1]?["message"]?["content"]
+		content = api_response["choices"]?[1]?["message"]?["content"]
 		if(!istext(content))
 			throw EXCEPTION("OpenAI-compatible response has no choices[1].message.content")
-		response = json_decode(content)
 	catch
 		send_reply("Штабная нейросеть прислала битый пакет. Повтори запрос.", request.origin_turf)
 		return
+	try
+		response = json_decode(content)
+	catch
+		response = list("reply" = content, "action" = list("type" = "none"))
 	if(!islist(response))
-		send_reply("Invalid JSON response from requisitions AI.", request.origin_turf)
-		return
+		response = list("reply" = "Text response received; no delivery command.", "action" = list("type" = "none"))
+	// Some providers wrap a correct object inside the human-readable reply field
+	// (for example: "Done\\n{\\\"reply\\\": ...}"). Prefer that inner object so
+	// protocol data never leaks onto the radio.
+	var/raw_reply = response["reply"]
+	if(istext(raw_reply))
+		var/json_start = findtext(raw_reply, "{\\\"reply\\\"")
+		if(json_start)
+			var/inner = copytext(raw_reply, json_start)
+			inner = replacetext(inner, "\\\\\"", "\"")
+			try
+				var/list/inner_response = json_decode(inner)
+				if(islist(inner_response))
+					response = inner_response
+			catch
+				// Keep the outer response if the provider's wrapper is malformed.
 	var/reply = strip_html(response["reply"], 350)
 	if(!reply)
 		reply = "Принято. Уточни запрос по форме: что нужно и на какой маяк."
