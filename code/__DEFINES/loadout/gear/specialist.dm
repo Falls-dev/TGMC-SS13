@@ -12,7 +12,7 @@ GLOBAL_LIST_INIT(specialist_gear_listed_products, list(
 	/obj/item/ammo_magazine/shotgun/tracker = list(CAT_SPECSUP, "12 gauge tracker shells", 5, "spec_breacher"),
 	/obj/item/ammo_magazine/shotgun/incendiary = list(CAT_SPECSUP, "Box of incendiary shells", 10, "spec_breacher"),
 	/obj/item/implanter/blade = list(CAT_SPECSUP, "Mantis Blade Implant", 25, "spec_breacher"),
-	/obj/item/implanter/sandevistan = list(CAT_SPECSUP, "Sandevistan Implant", 20, "spec_breacher"),
+	//obj/item/implanter/sandevistan = list(CAT_SPECSUP, "Sandevistan Implant", 20, "spec_breacher"),
 	/obj/item/storage/pill_bottle/russian_red = list(CAT_SPECSUP, "Russian Red Pills", 15, "spec_breacher"),
 
 // Снайпер сет
