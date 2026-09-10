@@ -3,11 +3,6 @@
 	jobtype = /datum/job/terragov/squad/standard
 	id = /obj/item/card/id/dogtag
 
-/datum/outfit/job/marine/robot
-	name = SQUAD_ROBOT
-	jobtype = /datum/job/terragov/squad/robot
-	id = /obj/item/card/id/dogtag/robot
-
 /datum/outfit/job/marine/engineer
 	name = SQUAD_ENGINEER
 	jobtype = /datum/job/terragov/squad/engineer
