@@ -238,6 +238,14 @@
 	) // Кто-то скажет, что это имба, а я вам скажу, что этот набор уже есть в игре буквально самой первой строчкой в медкарго, я просто перепаковал его выставив на общее обозрение.
 	cost = 300
 
+/datum/supply_packs/medical/cryomix
+	name = "Cryo beaker"
+	notes = "contains cryomix beaker"
+	contains = list (
+		/obj/item/reagent_containers/glass/beaker/cryomix,
+	)
+	cost = 250
+
 /datum/supply_packs/medical/combat_robot_medicine
 	name = "Combat repairing for robots"
 	notes = "contains 5 nanopaste for robots or technic."
