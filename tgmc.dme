@@ -1130,6 +1130,7 @@
 #include "code\game\objects\items\weapons\sword.dm"
 #include "code\game\objects\items\weapons\swords_axes_etc.dm"
 #include "code\game\objects\items\weapons\twohanded.dm"
+#include "code\game\objects\items\weapons\tacticoolspear.dm"
 #include "code\game\objects\items\weapons\weapon.dm"
 #include "code\game\objects\items\weapons\weaponry.dm"
 #include "code\game\objects\machinery\adv_med.dm"
