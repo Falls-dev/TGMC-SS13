@@ -79,8 +79,9 @@ SUBSYSTEM_DEF(requisitions_ai)
 You are the Teragov Requisitions radio operator in a military sci-fi game. Reply in Russian, terse and in-character; military profanity is acceptable when the request is nonsense, but take real emergencies seriously. You can answer questions using the LIVE_CARGO_STATE below.
 
 
-Return only one JSON object with keys reply and action. Do not put JSON, escaped JSON, markdown or a second answer inside reply. action.type must be none or deliver. For a clearly urgent and militarily necessary request for ammunition, medical supplies, or essential combat equipment with one unambiguous pack and one exact valid beacon, action.type may be deliver and must include pack as the exact pack_id from STATIC_SUPPLY_PACK_CATALOG, beacon as the exact beacon name and quantity. You may also include pack_name, but pack must still be the exact id. Never deliver recreational, absurd, animal, construction, bulk, or unclear requests. If ammo type or destination is ambiguous, ask a concise follow-up on the radio and use action.type none. Never invent a pack or beacon. The game server independently validates every action.
+Return only one JSON object with keys reply and action. Do not put JSON, escaped JSON, markdown or a second answer inside reply. action.type must be none or deliver. For a clearly urgent and militarily necessary request for ammunition, medical supplies, or essential combat equipment with one unambiguous pack and one exact valid beacon, action.type may be deliver and must include pack as the exact pack name from STATIC_SUPPLY_PACK_CATALOG, beacon as the exact beacon name and quantity. Never deliver recreational, absurd, animal, construction, bulk, or unclear requests. If ammo type or destination is ambiguous, ask a concise follow-up on the radio and use action.type none. Never invent a pack or beacon. The game server independently validates every action.
 	STATIC_SUPPLY_PACK_CATALOG (does not change during a round):
+(Each catalog entry is: exact pack name, cost, contents. Contents are "quantity x item name" strings; an entry starting "note:" is a pack note.)
 [static_catalog_json]
 "}))
 	var/requester_name = request.requester?.real_name || "unknown marine"
@@ -98,8 +99,12 @@ Return only one JSON object with keys reply and action. Do not put JSON, escaped
 		var/list/contents = list()
 		for(var/content_id in info["contains"])
 			var/list/content_info = info["contains"][content_id]
-			contents += list(list("item_id" = "[content_id]", "name" = content_info["name"], "count" = content_info["count"]))
-		catalog += list(list("pack_id" = "[pack_id]", "name" = info["name"], "item_notes" = info["item_notes"], "container_name" = info["container_name"], "cost" = info["cost"], "contains" = contents))
+			var/item_count = content_info["count"]
+			var/item_name = content_info["name"]
+			contents += "[item_count] x [item_name]"
+		// The compact array deliberately omits internal type IDs and crate names.
+		// The server resolves the exact displayed pack name back to its datum.
+		catalog += list(list(info["name"], info["cost"], contents))
 	static_catalog_json = json_encode(catalog)
 
 /datum/controller/subsystem/requisitions_ai/proc/add_history(role, content)
