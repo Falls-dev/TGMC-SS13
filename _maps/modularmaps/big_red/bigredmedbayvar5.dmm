@@ -554,13 +554,6 @@
 /obj/item/storage/firstaid/adv,
 /turf/open/floor/tile/green/whitegreencorner,
 /area/bigredv2/outside/medical)
-"op" = (
-/obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/tile/white,
-/area/bigredv2/outside/medical)
 "ou" = (
 /obj/structure/morgue{
 	dir = 2
@@ -1610,7 +1603,6 @@
 /area/bigredv2/outside/medical)
 "QZ" = (
 /obj/machinery/light,
-/obj/effect/landmark/excavation_site_spawner,
 /turf/open/floor/tile/green/whitegreen{
 	dir = 6
 	},
@@ -2614,7 +2606,7 @@ hM
 HT
 Cv
 TL
-op
+Uv
 ul
 Uv
 wd

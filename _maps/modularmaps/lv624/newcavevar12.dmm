@@ -139,10 +139,6 @@
 /obj/structure/flora/ausbushes/fullgrass,
 /turf/open/floor/plating/ground/dirt,
 /area/lv624/ground/caves/central2)
-"zA" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/caves/central2)
 "Al" = (
 /obj/structure/rack,
 /obj/item/stack/sheet/metal{
@@ -229,10 +225,6 @@
 "Rv" = (
 /turf/closed/mineral/smooth,
 /area/lv624/ground/caves/rock)
-"RR" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/caves/central1)
 "Se" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/engineering/pickaxe,
@@ -590,7 +582,7 @@ NP
 NP
 NP
 NP
-zA
+NP
 NP
 NP
 NP
@@ -1870,7 +1862,7 @@ Wy
 NP
 NP
 NP
-zA
+NP
 NP
 NP
 qE
@@ -2411,7 +2403,7 @@ Rv
 NP
 NP
 NP
-zA
+NP
 NP
 NP
 NP
@@ -2833,7 +2825,7 @@ fN
 Rv
 aP
 HI
-RR
+HI
 HI
 aP
 Rv

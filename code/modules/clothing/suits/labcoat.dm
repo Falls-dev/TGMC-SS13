@@ -111,4 +111,5 @@
 		/obj/item/tool/pickaxe/plasmacutter,
 		/obj/item/tool/shovel/etool,
 		/obj/item/weapon/energy/sword,
+		/obj/item/pinpointer/archaeology,
 	)

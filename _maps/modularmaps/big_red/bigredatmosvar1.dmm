@@ -366,10 +366,6 @@
 	},
 /turf/open/floor,
 /area/bigredv2/outside/filtration_plant)
-"Ez" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/outside/s)
 "Fz" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
@@ -431,11 +427,6 @@
 "JL" = (
 /turf/open/floor,
 /area/bigredv2/outside/filtration_plant)
-"Kw" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/s)
 "Lx" = (
 /obj/structure/cable,
 /turf/open/floor/asteroidfloor,
@@ -792,7 +783,7 @@ Xi
 zG
 Oq
 Bs
-Ez
+WO
 WO
 WO
 Mx
@@ -888,7 +879,7 @@ Dy
 nP
 nP
 zW
-Kw
+zW
 nP
 nP
 nP

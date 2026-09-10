@@ -292,11 +292,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating/warning,
 /area/lv624/lazarus/robotics)
-"Ix" = (
-/obj/effect/landmark/excavation_site_spawner,
-/obj/effect/landmark/weed_node,
-/turf/open/floor/plating/platebot,
-/area/lv624/lazarus/robotics)
 "IM" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/vault{
@@ -316,10 +311,6 @@
 "JD" = (
 /obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating/warning,
-/area/lv624/lazarus/robotics)
-"JN" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/platebot,
 /area/lv624/lazarus/robotics)
 "Ny" = (
 /obj/machinery/vending/tool,
@@ -502,7 +493,7 @@ Uv
 eY
 DP
 EM
-JN
+hh
 jz
 Dy
 la
@@ -613,7 +604,7 @@ la
 la
 Dy
 vO
-Ix
+NM
 hh
 CR
 jg
