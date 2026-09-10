@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(requisitions_ai)
 	priority = FIRE_PRIORITY_REQTORIO
 	wait = 1 SECONDS
 	var/list/pending_requests = list()
-	var/list/last_request_by_ckey = list()
+	var/last_request_time = 0
 	var/list/conversations = list()
 	var/static_catalog_json
 	var/obj/item/radio/requisitions_ai/output_radio
@@ -18,9 +18,7 @@ SUBSYSTEM_DEF(requisitions_ai)
 	var/datum/http_request/http_request
 	var/message
 	var/mob/living/requester
-	var/ckey
 	var/list/history
-	var/turf/origin_turf
 	var/created_at
 
 /datum/controller/subsystem/requisitions_ai/proc/receive_radio(message, atom/movable/speaker)
@@ -31,22 +29,20 @@ SUBSYSTEM_DEF(requisitions_ai)
 	var/mob/living/carbon/human/marine = speaker
 	if(marine.faction != FACTION_TERRAGOV || !marine.ckey)
 		return
-	if(last_request_by_ckey[marine.ckey] && world.time < last_request_by_ckey[marine.ckey] + 2 SECONDS)
+	if(last_request_time && world.time < last_request_time + 2 SECONDS)
 		return
-	last_request_by_ckey[marine.ckey] = world.time
+	last_request_time = world.time
 	if(length(pending_requests) >= 8)
-		send_reply("Эфир занят. Повтори запрос через пару секунд.", get_turf(marine))
+		send_reply("Эфир занят. Повтори запрос через пару секунд.")
 		return
 
 	var/datum/requisitions_ai_request/request = new
 	request.message = copytext_char(message, 1, MAX_BROADCAST_LEN)
 	request.requester = marine
-	request.ckey = marine.ckey
-	request.origin_turf = get_turf(marine)
 	request.created_at = world.time
 	ensure_static_catalog()
-	add_history(request.ckey, "user", request.message)
-	request.history = conversations[request.ckey].Copy()
+	add_history("user", "[marine.real_name]: [request.message]")
+	request.history = conversations.Copy()
 	request.http_request = new
 	var/list/headers = list("Content-Type" = "application/json")
 	if(CONFIG_GET(string/requisitions_ai_http_token))
@@ -57,23 +53,23 @@ SUBSYSTEM_DEF(requisitions_ai)
 
 /datum/controller/subsystem/requisitions_ai/proc/reset_round_state()
 	conversations.Cut()
-	last_request_by_ckey.Cut()
+	last_request_time = 0
 	static_catalog_json = null
 
 /datum/controller/subsystem/requisitions_ai/fire(resumed = FALSE)
 	for(var/datum/requisitions_ai_request/request as anything in pending_requests.Copy())
 		if(world.time > request.created_at + CONFIG_GET(number/requisitions_ai_http_timeout_seconds) SECONDS)
 			pending_requests -= request
-			remove_history_entry(request.ckey, "user", request.message)
-			send_reply("Запрос к штабной нейросети истёк. Повтори передачу.", request.origin_turf)
+			remove_history_entry("user", "[request.requester?.real_name]: [request.message]")
+			send_reply("Запрос к штабной нейросети истёк. Повтори передачу.")
 			continue
 		if(!request.http_request.is_complete())
 			continue
 		pending_requests -= request
 		var/datum/http_response/response = request.http_request.into_response()
 		if(response.errored || response.status_code < 200 || response.status_code >= 300)
-			remove_history_entry(request.ckey, "user", request.message)
-			send_reply("Штабная нейросеть не отвечает. Держите канал чистым и повторите запрос.", request.origin_turf)
+			remove_history_entry("user", "[request.requester?.real_name]: [request.message]")
+			send_reply("Штабная нейросеть не отвечает. Держите канал чистым и повторите запрос.")
 			continue
 		handle_endpoint_response(request, response.body)
 
@@ -106,21 +102,16 @@ Return only one JSON object with keys reply and action. Do not put JSON, escaped
 		catalog += list(list("pack_id" = "[pack_id]", "name" = info["name"], "item_notes" = info["item_notes"], "container_name" = info["container_name"], "cost" = info["cost"], "contains" = contents))
 	static_catalog_json = json_encode(catalog)
 
-/datum/controller/subsystem/requisitions_ai/proc/add_history(ckey, role, content)
-	if(!islist(conversations[ckey]))
-		conversations[ckey] = list()
-	conversations[ckey] += list(list("role" = role, "content" = copytext_char(content, 1, MAX_BROADCAST_LEN)))
-	while(length(conversations[ckey]) > 12)
-		conversations[ckey].Cut(1, 2)
+/datum/controller/subsystem/requisitions_ai/proc/add_history(role, content)
+	conversations += list(list("role" = role, "content" = copytext_char(content, 1, MAX_BROADCAST_LEN)))
+	while(length(conversations) > 12)
+		conversations.Cut(1, 2)
 
-/datum/controller/subsystem/requisitions_ai/proc/remove_history_entry(ckey, role, content)
-	var/list/history = conversations[ckey]
-	if(!islist(history))
-		return
-	for(var/i in length(history) to 1 step -1)
-		var/list/entry = history[i]
+/datum/controller/subsystem/requisitions_ai/proc/remove_history_entry(role, content)
+	for(var/i in length(conversations) to 1 step -1)
+		var/list/entry = conversations[i]
 		if(entry["role"] == role && entry["content"] == content)
-			history.Cut(i, i + 1)
+			conversations.Cut(i, i + 1)
 			return
 
 /datum/controller/subsystem/requisitions_ai/proc/build_live_state()
@@ -154,7 +145,7 @@ Return only one JSON object with keys reply and action. Do not put JSON, escaped
 		if(!istext(content))
 			throw EXCEPTION("OpenAI-compatible response has no choices[1].message.content")
 	catch
-		send_reply("Штабная нейросеть прислала битый пакет. Повтори запрос.", request.origin_turf)
+		send_reply("Штабная нейросеть прислала битый пакет. Повтори запрос.")
 		return
 	try
 		response = json_decode(content)
@@ -185,8 +176,8 @@ Return only one JSON object with keys reply and action. Do not put JSON, escaped
 		var/delivery_result = execute_delivery(action, request)
 		if(delivery_result)
 			reply = "[reply] [delivery_result]"
-	add_history(request.ckey, "assistant", reply)
-	send_reply(reply, request.origin_turf)
+	add_history("assistant", reply)
+	send_reply(reply)
 
 /// Creates an order only after the remote answer is checked against the live state.
 /datum/controller/subsystem/requisitions_ai/proc/execute_delivery(list/action, datum/requisitions_ai_request/request)
@@ -303,13 +294,13 @@ Return only one JSON object with keys reply and action. Do not put JSON, escaped
 			match = candidate
 	return match
 
-/datum/controller/subsystem/requisitions_ai/proc/send_reply(message, turf/origin)
-	if(!origin || !message)
+/datum/controller/subsystem/requisitions_ai/proc/send_reply(message)
+	if(!message)
 		return
 	if(!output_radio)
-		output_radio = new(origin)
-	else
-		output_radio.forceMove(origin)
+		// A fixed transmitter is required by the radio pipeline, but its turf has
+		// no bearing on Requisitions subspace transmission or on who receives it.
+		output_radio = new(locate(1, 1, 1))
 	output_radio.talk_into(output_radio, copytext_char(strip_html(message, 350), 1, 350), RADIO_CHANNEL_REQUISITIONS)
 
 /// Invisible transmitter used solely to preserve the normal radio pipeline and log format.
@@ -318,4 +309,8 @@ Return only one JSON object with keys reply and action. Do not put JSON, escaped
 	invisibility = INVISIBILITY_ABSTRACT
 	anchored = TRUE
 	subspace_transmission = TRUE
+	frequency = FREQ_REQUISITIONS
 	channels = list(RADIO_CHANNEL_REQUISITIONS = TRUE)
+
+/obj/item/radio/requisitions_ai/GetVoice()
+	return "Requisitions AI"
