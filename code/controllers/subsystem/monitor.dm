@@ -64,6 +64,11 @@ SUBSYSTEM_DEF(monitor)
 		GLOB.xeno_stat_multiplicator_buff = proposed_balance_buff
 		apply_balance_changes()
 
+		if(is_automatic_balance_on)
+			var/msg = "Auto-balance changed xeno stat buff: [proposed_balance_buff * 100]%."
+			message_admins(msg)
+			log_admin(msg)
+
 	if(SSticker.mode?.round_type_flags & MODE_SILOS_SPAWN_MINIONS)
 		//Balance spawners output
 		for(var/silo in GLOB.xeno_resin_silos_by_hive[XENO_HIVE_NORMAL])
