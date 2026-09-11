@@ -49,6 +49,7 @@ GLOBAL_DATUM_INIT(xeno_balance_panel, /datum/xeno_balance_panel, new)
 	switch(action)
 		if("toggle_auto")
 			SSmonitor.is_automatic_balance_on = !SSmonitor.is_automatic_balance_on
+			text2file(SSmonitor.is_automatic_balance_on ? "1" : "0", "data/xeno_auto_balance.txt")
 			var/msg = "[key_name_admin(usr)] [SSmonitor.is_automatic_balance_on ? "enabled" : "disabled"] xeno automatic balance system."
 			message_admins(msg)
 			log_admin(msg)
@@ -62,8 +63,8 @@ GLOBAL_DATUM_INIT(xeno_balance_panel, /datum/xeno_balance_panel, new)
 
 			GLOB.xeno_stat_multiplicator_buff = new_percent / 100
 			SSmonitor.is_automatic_balance_on = FALSE
+			text2file("0", "data/xeno_auto_balance.txt")
 			SSmonitor.apply_balance_changes()
-
 			var/msg = "[key_name_admin(usr)] set xeno stat buff to [new_percent]%."
 			message_admins(msg)
 			log_admin(msg)
@@ -72,8 +73,8 @@ GLOBAL_DATUM_INIT(xeno_balance_panel, /datum/xeno_balance_panel, new)
 		if("reset")
 			GLOB.xeno_stat_multiplicator_buff = 1
 			SSmonitor.is_automatic_balance_on = FALSE
+			text2file("0", "data/xeno_auto_balance.txt")
 			SSmonitor.apply_balance_changes()
-
 			var/msg = "[key_name_admin(usr)] reset xeno stat buff to 100%."
 			message_admins(msg)
 			log_admin(msg)
