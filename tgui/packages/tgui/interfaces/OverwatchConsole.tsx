@@ -45,6 +45,7 @@ type MonitorData = {
   medic_count: number;
   engi_count: number;
   smart_count: number;
+  spec_count: number;
   marine_count: number;
   living_count: number;
   total_deployed: number;
@@ -415,6 +416,9 @@ const MonitorPanel = () => {
             </LabeledList.Item>
             <LabeledList.Item label={monitor.smart_label}>
               {monitor.smart_count} Deployed
+            </LabeledList.Item>
+            <LabeledList.Item label="Specialist">
+              {monitor.spec_count} Deployed
             </LabeledList.Item>
             <LabeledList.Item label="Corpsmen / Engineers">
               {monitor.medic_count} / {monitor.engi_count} Deployed

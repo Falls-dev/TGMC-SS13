@@ -723,6 +723,18 @@
 /obj/effect/turf_decal/warning_stripes/medical,
 /turf/open/floor/mainship/red/full,
 /area/shuttle/canterbury)
+"fW" = (
+/obj/effect/landmark/start/job/crash/squadspecialist,
+/turf/open/floor/plating/plating_catwalk/dark,
+/area/shuttle/canterbury)
+"oi" = (
+/obj/machinery/marine_selector/gear/specialist{
+	icon_vend = "marine-vend";
+	icon_state = "marine";
+	icon_deny = "marine-deny"
+	},
+/turf/open/floor/plating/plating_catwalk/dark,
+/area/shuttle/canterbury)
 "oC" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -865,6 +877,10 @@
 /obj/machinery/power/terminal,
 /obj/structure/cable,
 /turf/open/floor/mainship/metal/full,
+/area/shuttle/canterbury)
+"VP" = (
+/obj/machinery/marine_selector/clothes/specialist,
+/turf/open/floor/plating/plating_catwalk/dark,
 /area/shuttle/canterbury)
 "Wd" = (
 /obj/effect/landmark/start/job/crash/squadrobot,
@@ -1170,8 +1186,8 @@ an
 HN
 DI
 aJ
-aJ
-aJ
+oi
+VP
 aJ
 cA
 an
@@ -1194,7 +1210,7 @@ bW
 an
 bu
 cy
-aJ
+fW
 cz
 Wd
 bE

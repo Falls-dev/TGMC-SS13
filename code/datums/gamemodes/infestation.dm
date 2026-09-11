@@ -2,6 +2,7 @@
 	round_end_states = list(MODE_INFESTATION_X_MAJOR, MODE_INFESTATION_M_MAJOR, MODE_INFESTATION_X_MINOR, MODE_INFESTATION_M_MINOR, MODE_INFESTATION_DRAW_DEATH)
 	job_points_needed_by_job_type = list(
 		/datum/job/terragov/squad/smartgunner = 20,
+		/datum/job/terragov/squad/specialist = 10, // 10 наборов
 		/datum/job/terragov/squad/corpsman = 10,
 		/datum/job/terragov/squad/engineer = 10,
 	)

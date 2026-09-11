@@ -17,7 +17,13 @@
 	if(!(human_spawn.species.species_flags & ROBOTIC_LIMBS))
 		human_spawn.set_nutrition(250)
 	if(!human_spawn.assigned_squad)
-		CRASH("after_spawn called for a marine without an assigned_squad")
+		var/list/fallback_squads = SSjob.active_squads[faction]
+		if(length(fallback_squads))
+			var/datum/squad/fallback_squad = pick(fallback_squads)
+			fallback_squad.insert_into_squad(human_spawn, FALSE, TRUE)
+	if(!human_spawn.assigned_squad)
+		stack_trace("after_spawn called for a marine without an assigned_squad")
+		return
 	to_chat(M, {"\nYou have been assigned to: <b><font size=3 color=[human_spawn.assigned_squad.color]>[lowertext(human_spawn.assigned_squad.name)] squad</font></b>.
 Make your way to the cafeteria for some post-cryosleep chow, and then get equipped in your squad's prep room."})
 
@@ -181,6 +187,7 @@ What you lack alone, you gain standing shoulder to shoulder with the men and wom
 	jobworth = list(
 		/datum/job/xenomorph = LARVA_POINTS_REGULAR,
 		/datum/job/terragov/squad/smartgunner = SMARTIE_POINTS_MEDIUM,
+		/datum/job/terragov/squad/specialist = SMARTIE_POINTS_MEDIUM,
 		/datum/job/terragov/squad/corpsman = SMARTIE_POINTS_REGULAR,
 		/datum/job/terragov/silicon/synthetic = SYNTH_POINTS_REGULAR,
 		/datum/job/terragov/command/mech_pilot = MECH_POINTS_REGULAR,
@@ -251,6 +258,7 @@ Your squaddies will look to you when it comes to construction in the field of ba
 		/datum/job/terragov/command/assault_crewman = ARMORED_VEHICLE_POINTS_REGULAR,
 		/datum/job/xenomorph = LARVA_POINTS_REGULAR,
 		/datum/job/terragov/squad/smartgunner = SMARTIE_POINTS_MEDIUM,
+		/datum/job/terragov/squad/specialist = SMARTIE_POINTS_MEDIUM,
 		/datum/job/terragov/squad/engineer = SMARTIE_POINTS_REGULAR,
 	)
 	job_points_needed = 5
@@ -300,7 +308,7 @@ You may not be a fully-fledged doctor, but you stand between life and death when
 /datum/job/terragov/squad/smartgunner
 	title = SQUAD_SMARTGUNNER
 	paygrade = "E3"
-	comm_title = "SGnr"
+	comm_title = "Smart"
 	total_positions = 4
 	access = list(ACCESS_MARINE_PREP, ACCESS_MARINE_SMARTPREP)
 	minimal_access = list(ACCESS_MARINE_PREP, ACCESS_MARINE_SMARTPREP, ACCESS_MARINE_DROPSHIP)
@@ -362,28 +370,65 @@ You may not be a fully-fledged doctor, but you stand between life and death when
 //Squad Specialist
 /datum/job/terragov/squad/specialist
 	title = SQUAD_SPECIALIST
-	req_admin_notify = TRUE
-	paygrade = "E4" // Dead
+	paygrade = "E3"
 	comm_title = "Spec"
-	total_positions = 0
-	max_positions = 0
-	access = list(ACCESS_MARINE_PREP)
-	minimal_access = list(ACCESS_MARINE_PREP, ACCESS_MARINE_DROPSHIP)
+	total_positions = 4
+	access = list(ACCESS_MARINE_PREP, ACCESS_MARINE_SPECPREP)
+	minimal_access = list(ACCESS_MARINE_PREP, ACCESS_MARINE_SPECPREP, ACCESS_MARINE_DROPSHIP)
 	skills_type = /datum/skills/specialist
 	outfit = /datum/outfit/job/marine/specialist
 	exp_requirements = XP_REQ_UNSEASONED
-	exp_type = EXP_TYPE_REGULAR_ALL
-	job_flags = JOB_FLAG_ALLOWS_PREFS_GEAR|JOB_FLAG_PROVIDES_BANK_ACCOUNT|JOB_FLAG_ADDTOMANIFEST|JOB_FLAG_PROVIDES_SQUAD_HUD|JOB_FLAG_CAN_SEE_ORDERS
+	exp_type = EXP_TYPE_MARINES
+	display_order = JOB_DISPLAY_ORDER_SQUAD_SPECIALIST
+	job_flags = JOB_FLAG_LATEJOINABLE|JOB_FLAG_ROUNDSTARTJOINABLE|JOB_FLAG_ALLOWS_PREFS_GEAR|JOB_FLAG_PROVIDES_BANK_ACCOUNT|JOB_FLAG_ADDTOMANIFEST|JOB_FLAG_PROVIDES_SQUAD_HUD|JOB_FLAG_CAN_SEE_ORDERS
 	jobworth = list(
-		/datum/job/xenomorph = LARVA_POINTS_STRONG,
+		/datum/job/xenomorph = LARVA_POINTS_REGULAR,
+		/datum/job/terragov/squad/smartgunner = SMARTIE_POINTS_REGULAR,
+		/datum/job/terragov/squad/corpsman = SMARTIE_POINTS_REGULAR,
+		/datum/job/terragov/squad/engineer = SMARTIE_POINTS_REGULAR,
 	)
-	job_points_needed = 10 //Redefined via config.
-
+	job_points_needed = 5
+	html_description = {"
+		<b>Difficulty</b>: Medium<br /><br />
+		<b>You answer to the</b> acting Squad Leader<br /><br />
+		<b>Unlock Requirement</b>: Starting Role<br /><br />
+		<b>Gamemode Availability</b>: Distress, Nuclear War, Crash, Extended<br /><br /><br />
+		You are the squad's weapons specialist: a rare, trained operator with exclusive access to a single specialist kit. Only one of each kit exists per round. Choose carefully, then employ that equipment to support your squad.
+		<br /><br />
+		<b>Duty</b>: Pick one specialist kit and use it to support your squad. Kit selections are shared across every Weapons Specialist.
+	"}
+	job_desc = "Выберите один уникальный комплект специалиста и поддерживайте отряд тяжёлым вооружением."
+	minimap_icon = "spec"
 
 /datum/job/terragov/squad/specialist/radio_help_message(mob/M)
 	. = ..()
 	to_chat(M, {"\nYou are the very rare and valuable weapon expert, trained to use special equipment.
-You can serve a variety of roles, so choose carefully."})
+You can serve a variety of roles, so choose carefully. Only one of each specialist kit may be taken this round."})
+
+/datum/job/terragov/squad/specialist/after_spawn(mob/living/carbon/new_mob, mob/user, latejoin = FALSE)
+	. = ..()
+	if(!ishuman(new_mob))
+		return
+	var/mob/living/carbon/human/new_human = new_mob
+	var/playtime_mins = user?.client?.get_exp(title)
+	if(!playtime_mins || playtime_mins < 1)
+		return
+	switch(playtime_mins)
+		if(0 to 1500) // starting
+			new_human.wear_id.paygrade = "E3"
+		if(1501 to 6000) // 25 hrs
+			new_human.wear_id.paygrade = "E4"
+		if(6001 to 60000) // 100 hrs
+			new_human.wear_id.paygrade = "E5"
+		if(60001 to INFINITY) // 1000 hrs
+			new_human.wear_id.paygrade = "E9"
+	new_human.wear_id.update_label()
+
+/datum/job/terragov/squad/specialist/npc
+	title = "Squad Specialist (NPC)"
+	total_positions = 0
+	job_flags = JOB_FLAG_ALLOWS_PREFS_GEAR|JOB_FLAG_PROVIDES_BANK_ACCOUNT|JOB_FLAG_PROVIDES_SQUAD_HUD|JOB_FLAG_CAN_SEE_ORDERS
+	outfit = /datum/outfit/job/marine/specialist
 
 //Squad Leader
 /datum/job/terragov/squad/leader
@@ -406,6 +451,7 @@ You can serve a variety of roles, so choose carefully."})
 	jobworth = list(
 		/datum/job/xenomorph = LARVA_POINTS_REGULAR,
 		/datum/job/terragov/squad/smartgunner = SMARTIE_POINTS_HIGH,
+		/datum/job/terragov/squad/specialist = SMARTIE_POINTS_HIGH,
 		/datum/job/terragov/squad/corpsman = SMARTIE_POINTS_REGULAR,
 		/datum/job/terragov/squad/engineer = SMARTIE_POINTS_REGULAR,
 		/datum/job/terragov/silicon/synthetic = SYNTH_POINTS_REGULAR,

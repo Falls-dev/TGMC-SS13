@@ -83,7 +83,7 @@
 	job = /datum/job/terragov/squad/corpsman
 
 /obj/effect/landmark/start/job/squadsmartgunner
-	icon_state = "SGnr"
+	icon_state = "Smart"
 	job = /datum/job/terragov/squad/smartgunner
 
 /obj/effect/landmark/start/job/squadspecialist
@@ -202,6 +202,26 @@
 /obj/effect/landmark/start/squad/squadsmartgunner/delta
 	squad = DELTA_SQUAD
 	icon_state = "smartgunner_spawn_delta"
+
+/obj/effect/landmark/start/squad/squadspecialist
+	icon_state = "spec_spawn"
+	title = SQUAD_SPECIALIST
+
+/obj/effect/landmark/start/squad/squadspecialist/alpha
+	squad = ALPHA_SQUAD
+	icon_state = "spec_spawn_alpha"
+
+/obj/effect/landmark/start/squad/squadspecialist/bravo
+	squad = BRAVO_SQUAD
+	icon_state = "spec_spawn_bravo"
+
+/obj/effect/landmark/start/squad/squadspecialist/charlie
+	squad = CHARLIE_SQUAD
+	icon_state = "spec_spawn_charlie"
+
+/obj/effect/landmark/start/squad/squadspecialist/delta
+	squad = DELTA_SQUAD
+	icon_state = "spec_spawn_delta"
 
 /obj/effect/landmark/start/squad/squadleader
 	icon_state = "leader_spawn"

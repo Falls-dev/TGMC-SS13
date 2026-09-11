@@ -26,7 +26,7 @@
 /datum/outfit/job/marine/specialist
 	name = SQUAD_SPECIALIST
 	jobtype = /datum/job/terragov/squad/specialist
-	id = /obj/item/card/id/dogtag
+	id = /obj/item/card/id/dogtag/specialist
 	head = /obj/item/clothing/head/helmet/specrag
 
 /datum/outfit/job/marine/leader

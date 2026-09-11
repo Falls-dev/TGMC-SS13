@@ -214,9 +214,49 @@ const ItemLine = (props) => {
               Implant
             </Box>
           )}
-          {color === 'red' && (
+          {color === 'spec_breacher' && (
+            <Box inline mr="6px" ml="6px" color="green">
+              Breacher Set
+            </Box>
+          )}
+          {color === 'spec_sniper' && (
+            <Box inline mr="6px" ml="6px" color="cyan">
+              Sniper Set
+            </Box>
+          )}
+          {color === 'spec_scout' && (
+            <Box inline mr="6px" ml="6px" color="orange">
+              Scout Set
+            </Box>
+          )}
+          {color === 'spec_demo' && (
+            <Box inline mr="6px" ml="6px" color="yellow">
+              Demolitionist Set
+            </Box>
+          )}
+          {color === 'spec_pyro' && (
             <Box inline mr="6px" ml="6px" color="red">
-              Weapon
+              Pyro Set
+            </Box>
+          )}
+          {color === 'spec_sharp' && (
+            <Box inline mr="6px" ml="6px" color="blue">
+              SHARP Set
+            </Box>
+          )}
+          {color === 'spec_rail' && (
+            <Box inline mr="6px" ml="6px" color="magenta">
+              Railgun Set
+            </Box>
+          )}
+          {color === 'spec_grenadier' && (
+            <Box inline mr="6px" ml="6px" color="pink">
+              Grenadier Set
+            </Box>
+          )}
+          {color === 'other' && (
+            <Box inline mr="6px" ml="6px" color="gray">
+              Other
             </Box>
           )}
           {color === 'synth-cosmetic' && (
@@ -255,11 +295,15 @@ const ItemLine = (props) => {
             </Box>
           )}
           <Button
-            disabled={cant_buy || cost > remaining_points}
+            disabled={
+              cant_buy ||
+              cost > remaining_points ||
+              data.taken_kits?.includes(index)
+            }
             onClick={() => act('vend', { vend: index })}
             selected={color === 'white'}
           >
-            Vend
+            {data.taken_kits?.includes(index) ? 'Taken' : 'Vend'}
           </Button>
         </>
       }

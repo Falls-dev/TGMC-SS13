@@ -204,7 +204,7 @@
 				possible_outfits = is_som ? subtypesof(/datum/outfit/quick/som/medic) : subtypesof(/datum/outfit/quick/tgmc/corpsman)
 				job_type = is_som ? SSjob.GetJobType(/datum/job/som/squad/medic) : SSjob.GetJobType(/datum/job/terragov/squad/corpsman)
 			if(70 to 85)
-				// Specialist
+				// Smartgunner
 				possible_outfits = is_som ? subtypesof(/datum/outfit/quick/som/veteran) : subtypesof(/datum/outfit/quick/tgmc/smartgunner)
 				job_type = is_som ? SSjob.GetJobType(/datum/job/som/squad/veteran) : SSjob.GetJobType(/datum/job/terragov/squad/smartgunner)
 			else
