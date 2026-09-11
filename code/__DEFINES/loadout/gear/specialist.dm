@@ -15,15 +15,15 @@ GLOBAL_LIST_INIT(specialist_gear_listed_products, list(
 	//obj/item/implanter/sandevistan = list(CAT_SPECSUP, "Sandevistan Implant", 20, "spec_breacher"),
 	/obj/item/storage/pill_bottle/russian_red = list(CAT_SPECSUP, "Russian Red Pills", 15, "spec_breacher"),
 
-// Снайпер сет
-	/obj/item/ammo_magazine/rifle/tx8 = list(CAT_SPECSUP, "BR-8 scout rifle magazine", 5, "spec_sniper"),
-	/obj/item/ammo_magazine/rifle/tx8/incendiary = list(CAT_SPECSUP, "BR-8 scout rifle incendiary magazine", 10, "spec_sniper"),
-	/obj/item/ammo_magazine/rifle/tx8/impact = list(CAT_SPECSUP, "BR-8 scout rifle impact magazine", 10, "spec_sniper"),
-
 // Скаут сет
-	//obj/item/ammo_magazine/sniper = list(CAT_SPECSUP, "SR-26 marksman magazine", 5, "spec_scout"),
-	//obj/item/ammo_magazine/sniper/incendiary = list(CAT_SPECSUP, "SR-26 incendiary magazine", 10, "spec_scout"),
-	//obj/item/ammo_magazine/sniper/flak = list(CAT_SPECSUP, "SR-26 flak magazine", 10, "spec_scout"),
+	//obj/item/ammo_magazine/rifle/tx8 = list(CAT_SPECSUP, "BR-8 scout rifle magazine", 5, "spec_scout"),
+	//obj/item/ammo_magazine/rifle/tx8/incendiary = list(CAT_SPECSUP, "BR-8 scout rifle incendiary magazine", 10, "spec_scout"),
+	//obj/item/ammo_magazine/rifle/tx8/impact = list(CAT_SPECSUP, "BR-8 scout rifle impact magazine", 10, "spec_scout"),
+
+// Снайпер сет
+	/obj/item/ammo_magazine/sniper = list(CAT_SPECSUP, "SR-26 marksman magazine", 5, "spec_sniper"),
+	/obj/item/ammo_magazine/sniper/incendiary = list(CAT_SPECSUP, "SR-26 incendiary magazine", 10, "spec_sniper"),
+	/obj/item/ammo_magazine/sniper/flak = list(CAT_SPECSUP, "SR-26 flak magazine", 10, "spec_sniper"),
 
 // Демо сет
 	//obj/item/ammo_magazine/rocket/sadar = list(CAT_SPECSUP, "RL-152 SADAR HE rocket", 10, "spec_demo"),
