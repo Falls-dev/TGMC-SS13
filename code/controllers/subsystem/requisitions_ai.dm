@@ -143,40 +143,58 @@ Return only one JSON object with keys reply and action. Do not put JSON, escaped
 	)
 
 /datum/controller/subsystem/requisitions_ai/proc/handle_endpoint_response(datum/requisitions_ai_request/request, body)
-	var/list/response
+	// Accept both normal OpenAI envelopes and providers which return plain text.
+	var/list/api_response = safe_json_decode(body)
 	var/content
-	try
-		var/list/api_response = json_decode(body)
-		content = api_response["choices"]?[1]?["message"]?["content"]
-		if(!istext(content))
-			throw EXCEPTION("OpenAI-compatible response has no choices[1].message.content")
-	catch
-		send_reply("Штабная нейросеть прислала битый пакет. Повтори запрос.")
-		return
-	// Some compatible endpoints ignore response_format and return ordinary text.
-	// Do not call json_decode on it: BYOND reports malformed JSON as a runtime.
-	var/trimmed_content = trim(content)
-	if(copytext_char(trimmed_content, 1, 2) == "{")
-		response = safe_json_decode(trimmed_content)
+	var/list/response
+	if(islist(api_response))
+		content = api_response?["choices"]?[1]?["message"]?["content"]
+		if(isnull(content))
+			content = api_response?["output_text"]
+		if(isnull(content) && islist(api_response?["output"]))
+			for(var/list/output_part in api_response["output"])
+				for(var/list/output_content in output_part?["content"])
+					if(istext(output_content?["text"]))
+						content = "[content][output_content["text"]]"
+		// A few gateways return our requested object directly, without choices.
+		if(isnull(content) && (("reply" in api_response) || ("action" in api_response)))
+			response = api_response
+	else
+		content = body
+
+	if(islist(content))
+		// Newer APIs may represent content as an array of text parts.
+		var/list/text_parts = list()
+		for(var/part in content)
+			if(istext(part))
+				text_parts += part
+			else if(islist(part) && istext(part["text"]))
+				text_parts += part["text"]
+		content = jointext(text_parts, "")
+	if(!istext(content) && !islist(response))
+		return send_reply("Штабная нейросеть прислала битый пакет. Повтори запрос.")
+
 	if(!islist(response))
-		response = list("reply" = content, "action" = list("type" = "none"))
-	if(!islist(response))
-		response = list("reply" = "Text response received; no delivery command.", "action" = list("type" = "none"))
-	// Some providers wrap a correct object inside the human-readable reply field
-	// (for example: "Done\\n{\\\"reply\\\": ...}"). Prefer that inner object so
-	// protocol data never leaks onto the radio.
+		var/trimmed_content = trim(content)
+		// Remove optional markdown fences around a JSON object.
+		trimmed_content = replacetext(trimmed_content, "```json", "")
+		trimmed_content = replacetext(trimmed_content, "```", "")
+		trimmed_content = trim(trimmed_content)
+		if(copytext_char(trimmed_content, 1, 2) == "{")
+			response = safe_json_decode(trimmed_content)
+		if(!islist(response))
+			response = list("reply" = content, "action" = list("type" = "none"))
+
+	// If prose surrounds a JSON object, prefer the decoded object and hide protocol data.
 	var/raw_reply = response["reply"]
 	if(istext(raw_reply))
-		var/json_start = findtext(raw_reply, "{\\\"reply\\\"")
-		if(json_start)
-			var/inner = copytext(raw_reply, json_start)
-			inner = replacetext(inner, "\\\\\"", "\"")
-			try
-				var/list/inner_response = json_decode(inner)
-				if(islist(inner_response))
-					response = inner_response
-			catch
-				// Keep the outer response if the provider's wrapper is malformed.
+		var/json_start = findtext(raw_reply, "{")
+		var/json_end = findlasttext(raw_reply, "}")
+		if(json_start && json_end >= json_start)
+			var/list/inner_response = safe_json_decode(copytext(raw_reply, json_start, json_end + 1))
+			if(islist(inner_response) && ("reply" in inner_response || "action" in inner_response))
+				response = inner_response
+
 	var/reply = strip_html(response["reply"], 350)
 	if(!reply)
 		reply = "Принято. Уточни запрос по форме: что нужно и на какой маяк."
