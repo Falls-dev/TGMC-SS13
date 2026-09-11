@@ -1435,6 +1435,7 @@
 #include "code\modules\admin\STUI.dm"
 #include "code\modules\admin\tag.dm"
 #include "code\modules\admin\topic.dm"
+#include "code\modules\admin\panels\xeno_balance_panel.dm"
 #include "code\modules\admin\panels\antag_panel.dm"
 #include "code\modules\admin\panels\ban_panel.dm"
 #include "code\modules\admin\panels\game_panel.dm"
