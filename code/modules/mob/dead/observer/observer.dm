@@ -15,7 +15,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	density = FALSE
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	invisibility = INVISIBILITY_OBSERVER
-	sight = SEE_TURFS|SEE_MOBS|SEE_OBJS|SEE_SELF
+	sight = SEE_TURFS|SEE_MOBS|SEE_OBJS|SEE_SELF|E3D_SEE_ZOOM
 	hud_type = /datum/hud/ghost
 	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	dextrous = TRUE

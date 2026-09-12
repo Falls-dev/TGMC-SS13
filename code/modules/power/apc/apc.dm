@@ -18,6 +18,7 @@
 	interaction_flags = INTERACT_MACHINE_TGUI
 	light_range = 1
 	light_power = 0.5
+	screen_loc = E3D_TYPE_WALLMOUNT
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
 	///The area we're affecting
