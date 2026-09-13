@@ -13,6 +13,7 @@
 	minimap_icon_state = "som_tank"
 	armored_flags = ARMORED_HAS_PRIMARY_WEAPON|ARMORED_HAS_SECONDARY_WEAPON|ARMORED_HAS_HEADLIGHTS|ARMORED_WRECKABLE
 	pass_flags = PASS_LOW_STRUCTURE|PASS_DEFENSIVE_STRUCTURE|PASS_FIRE
+	crushes_weeds = FALSE
 	pixel_w = -65
 	pixel_z = -80
 	max_integrity = 1200
