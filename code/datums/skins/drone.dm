@@ -35,3 +35,7 @@
 	attack_sound_chance = 50
 	pain_sound = 'sound/voice/alien/drone_gambler/play_on_damage.ogg'
 	kill_sound = 'sound/voice/alien/drone_gambler/play_on_kill.ogg'
+
+/datum/xenomorph_skin/drone/ralsei
+	name = "Ralsei"
+	icon = 'icons/Xeno/castes/drone/ralsei.dmi'
