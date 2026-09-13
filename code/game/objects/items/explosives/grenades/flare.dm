@@ -77,6 +77,29 @@
 	if(!fuel || !active)
 		turn_off()
 
+/obj/item/explosive/grenade/flare/throw_impact(atom/hit_atom, speed)
+	if(isopenturf(hit_atom))
+		var/obj/alien/weeds/node/N = locate() in loc
+		if(N)
+			qdel(N)
+			turn_off()
+	. = ..()
+	if(!.)
+		return
+	if(!active)
+		return
+
+	if(isliving(hit_atom))
+		var/mob/living/living_target = hit_atom
+		living_target.fire_stacks += FLARE_FIRE_STACKS
+		living_target.IgniteMob()
+
+		var/target_zone = check_zone(living_target.zone_selected)
+		if(!target_zone || rand(40))
+			target_zone = "chest"
+		if(launched && CHECK_BITFIELD(resistance_flags, ON_FIRE) && !living_target.on_fire)
+			living_target.apply_damage(randfloat(throwforce * 0.75, throwforce * 1.25), BURN, target_zone, FIRE, updating_health = TRUE) //Do more damage if launched from a proper launcher and active
+
 /obj/item/explosive/grenade/flare/attack_self(mob/user)
 	if(!fuel)
 		to_chat(user, span_notice("It's out of fuel."))
@@ -115,6 +138,19 @@
 	set_light_on(TRUE)
 	playsound(src,'sound/items/flare.ogg', 15, 1)
 	START_PROCESSING(SSobj, src)
+
+/obj/item/explosive/grenade/flare/animation_spin(speed = 5, loop_amount = -1, clockwise = TRUE, sections = 3, anim_flags = NONE, angular_offset = 0, pixel_fuzz = 0)
+	clockwise = pick(TRUE, FALSE)
+	angular_offset = rand(360)
+	pixel_fuzz = 16
+	return ..(speed, loop_amount, clockwise, sections, anim_flags, angular_offset, pixel_fuzz)
+
+/obj/item/explosive/grenade/flare/pickup()
+	if(transform)
+		apply_transform(matrix()) // reset rotation
+	pixel_x = 0
+	pixel_y = 0
+	return ..()
 
 //Starts on
 /obj/item/explosive/grenade/flare/on/Initialize(mapload)

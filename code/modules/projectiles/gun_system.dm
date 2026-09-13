@@ -1446,25 +1446,12 @@
 	user?.visible_message(span_notice("[user] unloads [mag] from [src]."),
 	span_notice("You unload [mag] from [src]."), null, 4)
 	if(drop && !(CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_MAGAZINES) && CHECK_BITFIELD(get_magazine_features_flags(mag), MAGAZINE_WORN)))
-		if(user && !after_fire)
+		if(user)
 			user.put_in_hands(mag)
 		else
 			mag.forceMove(get_turf(src))
 			if(gun_user) // sentries usually don't have a gun_user
 				SEND_SIGNAL(gun_user, COMSIG_MAGAZINE_DROP, mag)
-
-			var/rand_angle = rand(45, 315) * pick(-1, 1)
-			var/matrix/M = matrix()
-			M.Turn(rand_angle)
-			var/target_px = rand(-12, 12)
-			var/target_py = rand(-12, 12)
-			mag.pixel_x = target_px * 0.3
-			mag.pixel_y = initial(mag.pixel_y) + 8
-			var/matrix/M_half = matrix()
-			M_half.Turn(rand_angle * 0.5)
-			animate(mag, pixel_x = target_px * 0.7, pixel_y = target_py + 3, transform = M_half, time = 1, easing = EASE_OUT)
-			animate(pixel_x = target_px, pixel_y = target_py, transform = M, time = 1.5, easing = EASE_IN)
-
 	if(CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_ROTATES_CHAMBER))
 		chamber_items[chamber_items.Find(mag)] = null
 	else
