@@ -13,67 +13,68 @@ Turn() or Shift() as there is virtually no overhead. ~N
 	name = "spent casing"
 	desc = "Empty and useless now."
 	icon = 'icons/obj/items/casings.dmi'
-	icon_state = "casing_"
+	icon_state = "cartridge_1"
 	throwforce = 1
 	w_class = WEIGHT_CLASS_TINY
 	layer = LOW_ITEM_LAYER //Below other objects
 	dir = 1 //Always north when it spawns.
 	atom_flags = CONDUCT|DIRLOCK
-	///This is manipulated in the procs that use these.
-	var/current_casings = 1
-	///Maximum amount of casings 1 stack can have
-	var/max_casings = 16
-	///Current icon of the casings stack, increases by 1 with each casing in the stack
-	var/current_icon = 0
-	///How many variations of this item there are.
-	var/number_of_states = 10
-	///holder for icon_state so we can do random variations without effecting mapper visibility
-	var/initial_icon_state = "cartridge_"
+	var/casing_lifetime = 55 SECONDS
+	var/max_casings_on_tile = 40
 
-/obj/item/ammo_casing/Initialize(mapload)
+/obj/item/ammo_casing/Initialize(mapload, shot_dir)
 	. = ..()
-	pixel_x = rand(-2, 2) //Want to move them just a tad.
-	pixel_y = rand(-2, 2)
-	icon_state = initial_icon_state += "[rand(1, number_of_states)]" //Set the icon to it.
+	if(!shot_dir)
+		shot_dir = dir || pick(GLOB.cardinals)
+	INVOKE_ASYNC(src, PROC_REF(spawn_casing_animation), shot_dir)
+	limit_casings()
+	addtimer(CALLBACK(src, PROC_REF(fade_and_del)), casing_lifetime)
 
-//This does most of the heavy lifting. It updates the icon and name if needed
+/obj/item/ammo_casing/proc/spawn_casing_animation(shot_dir)
+	var/offset_x = rand(-16,16)
+	var/offset_y = rand(-16,16)
+	pixel_x += rand(-3,3)
+	pixel_y += rand(0,5)
+	animate(
+		src,
+		pixel_z = rand(12,20),
+		transform = turn(matrix(), rand(-180,180)),
+		time = 2,
+		easing = EASE_OUT
+	)
+	sleep(2)
+	animate(
+		src,
+		pixel_z = 0,
+		pixel_x = pixel_x + offset_x,
+		pixel_y = pixel_y + offset_y,
+		transform = turn(matrix(), rand(-360,360)),
+		time = 5,
+		easing = EASE_IN
+	)
 
-/obj/item/ammo_casing/update_name(updates)
-	. = ..()
-	if(max_casings >= current_casings && current_casings == 2)
-		name += "s" //In case there is more than one.
+/obj/item/ammo_casing/proc/limit_casings()
+	var/list/casings = list()
+	for(var/obj/item/ammo_casing/C in loc)
+		casings += C
+	if(casings.len > max_casings_on_tile)
+		var/obj/item/ammo_casing/oldest = casings[1]
+		if(oldest != src)
+			qdel(oldest)
 
-/obj/item/ammo_casing/update_icon_state()
-	. = ..()
-	if(max_casings < current_casings)
+/obj/item/ammo_casing/proc/fade_and_del()
+	if(QDELETED(src))
 		return
-	if(round((current_casings - 1) / 8) > current_icon)
-		current_icon++
-		icon_state += "_[current_icon]"
+	animate(
+		src,
+		alpha = 0,
+		time = 5
+	)
+	QDEL_IN(src, 5)
 
-	var/base_direction = current_casings - (current_icon * 8)
-	setDir(base_direction + round(base_direction) / 3)
-	switch(current_casings)
-		if(3 to 5)
-			w_class = WEIGHT_CLASS_SMALL //Slightly heavier.
-		if(9 to 10)
-			w_class = WEIGHT_CLASS_NORMAL //Can't put it in your pockets and stuff.
+/obj/item/ammo_casing/attack_hand(mob/user)
+	return
 
-///changes .dir to simulate new casings, also sets the new w_class
-/obj/item/ammo_casing/proc/update_dir()
-	var/base_direction = current_casings - (current_icon * 8)
-	setDir(base_direction + round(base_direction) / 3)
-	switch(current_casings)
-		if(3 to 5)
-			w_class = WEIGHT_CLASS_SMALL //Slightly heavier.
-		if(9 to 10)
-			w_class = WEIGHT_CLASS_NORMAL //Can't put it in your pockets and stuff.
-
-/obj/item/ammo_casing/update_icon()
-	update_dir()
-	return ..()
-
-//Making child objects so that locate() and istype() doesn't screw up.
 /obj/item/ammo_casing/bullet
 
 /obj/item/ammo_casing/cartridge
@@ -82,5 +83,4 @@ Turn() or Shift() as there is virtually no overhead. ~N
 
 /obj/item/ammo_casing/shell
 	name = "spent shell"
-	initial_icon_state = "shell_"
 	icon_state = "shell"

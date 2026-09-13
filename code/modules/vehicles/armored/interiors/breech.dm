@@ -115,12 +115,10 @@
 		return
 	//todo get an animation for bullets flying out
 	var/turf/eject_loc = get_step(src, WEST)
-	var/obj/item/ammo_casing/cartridge/pile = locate(/obj/item/ammo_casing/cartridge) in eject_loc
-	if(!pile)
-		pile = new(eject_loc)
+	if(!eject_loc)
 		return
-	pile.current_casings += 1
-	pile.update_appearance()
+	var/obj/item/ammo_casing/cartridge/C = new(eject_loc)
+	C.dir = WEST
 
 ///when we run out of ammo; how do we eject the magazine?
 /obj/structure/gun_breech/proc/do_eject_ammo(obj/item/ammo_magazine/old_ammo)
