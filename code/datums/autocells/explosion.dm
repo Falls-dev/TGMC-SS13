@@ -31,6 +31,10 @@
 		or weakened explosion
 */
 
+#define CHANNEL_EXPLOSION 114
+#define CHANNEL_EXPLOSION_CREAK 113
+#define CHANNEL_TINNITUS 115
+
 /datum/automata_cell/explosion
 	// Explosions only spread outwards and don't need to know their neighbors to propagate properly
 	neighbor_type = NEIGHBORS_NONE
@@ -284,16 +288,16 @@ as having entered the turf.
 				continue
 			var/dist = get_dist(mob_turf, epicenter)
 			if(dist <= max(round(power, 1)))
-				our_mob.playsound_local(epicenter, explosion_sound, 75, 1, frequency, falloff = 5)
+				our_mob.playsound_local(epicenter, explosion_sound, 75, 1, frequency, falloff = 5, channel = CHANNEL_EXPLOSION)
 				if(is_mainship_level(epicenter.z))
-					our_mob.playsound_local(epicenter, SFX_EXPLOSION_CREAK, 40, 1, frequency, falloff = 5)//ship groaning under explosion effect
+					our_mob.playsound_local(epicenter, SFX_EXPLOSION_CREAK, 40, 1, frequency, falloff = 5, channel = CHANNEL_EXPLOSION_CREAK)//ship groaning under explosion effect
 			// You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
 			else if(dist <= far_dist)
 				var/far_volume = clamp(far_dist, 30, 60) // Volume is based on explosion size and dist
 				far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
-				our_mob.playsound_local(epicenter, far_explosion_sound, far_volume, 1, frequency, falloff = 5)
+				our_mob.playsound_local(epicenter, far_explosion_sound, far_volume, 1, frequency, falloff = 5, channel = CHANNEL_EXPLOSION)
 				if(is_mainship_level(epicenter.z))
-					our_mob.playsound_local(epicenter, SFX_EXPLOSION_CREAK, far_volume * 3, 1, frequency, falloff = 5)//ship groaning under explosion effect
+					our_mob.playsound_local(epicenter, SFX_EXPLOSION_CREAK, far_volume * 3, 1, frequency, falloff = 5, channel = CHANNEL_EXPLOSION_CREAK)//ship groaning under explosion effect
 	if(!orig_range)
 		orig_range = round(power / falloff)
 	new /obj/effect/temp_visual/explosion(epicenter, orig_range, color, power)
@@ -395,3 +399,19 @@ as having entered the turf.
 
 	//time for the explosion to destroy windows, walls, etc which might be in the way
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, throw_at), target, range, speed, null, spin, targetted_throw = FALSE)
+
+/proc/apply_acoustic_trauma(mob/living/carbon/human/H)
+	if(!H || !H.client || H.stat == DEAD || isdeaf(H))
+		return
+	if(HAS_TRAIT(H, TRAIT_EARDAMAGE_IMMUNE))
+		return
+
+	H.stop_sound_channel(CHANNEL_EXPLOSION)
+	H.stop_sound_channel(CHANNEL_EXPLOSION_CREAK)
+	H << sound(
+		'sound/effects/tinnitus-fade-out.ogg',
+		repeat = 0,
+		wait = 0,
+		volume = 75,
+		channel = CHANNEL_TINNITUS
+	)
