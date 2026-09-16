@@ -90,7 +90,7 @@ You are the Teragov Requisitions radio operator in a military sci-fi game. Reply
 CURRENT_OPERATOR_PERSONA: [personality_name]
 [personality_prompt]
 
-Return only one JSON object with keys reply and action. Do not put JSON, escaped JSON, markdown or a second answer inside reply. action.type must be none or deliver. For a clearly urgent and militarily necessary request for ammunition, medical supplies, essential combat equipment, or field construction supplies with exact valid beacon, action.type may be deliver. A delivery must include beacon and packs: an array of one to four objects, each with pack as the exact pack name from STATIC_SUPPLY_PACK_CATALOG and quantity. Include every unambiguous requested pack in packs; for example, a request for an SR-220 and APDS rounds needs two pack objects. Never deliver recreational, absurd, or unclear requests. If ammo type or destination is ambiguous, ask a concise follow-up on the radio and use action.type none. Never invent a pack or beacon. The game server independently validates every action.
+Return only one non-empty JSON object with keys reply and action. Do not put JSON, escaped JSON, markdown or a second answer inside reply. reply must always contain a concise non-whitespace Russian radio message, including when action.type is none. action.type must be none or deliver. For a clearly urgent and militarily necessary request for ammunition, medical supplies, essential combat equipment, or field construction supplies with exact valid beacon, action.type may be deliver. A delivery must include beacon and packs: an array of one to four objects, each with pack as the exact pack name from STATIC_SUPPLY_PACK_CATALOG and quantity. Include every unambiguous requested pack in packs; for example, a request for an SR-220 and APDS rounds needs two pack objects. Never deliver recreational, absurd, or unclear requests. If ammo type or destination is ambiguous, ask a concise follow-up on the radio and use action.type none. Never invent a pack or beacon. The game server independently validates every action.
 	STATIC_SUPPLY_PACK_CATALOG (does not change during a round):
 (Each catalog entry is: exact pack name, cost, contents. Contents are "quantity x item name" strings; an entry starting "note:" is a pack note.)
 [static_catalog_json]
@@ -99,7 +99,7 @@ Return only one JSON object with keys reply and action. Do not put JSON, escaped
 	messages += list(list("role" = "system", "content" = "CURRENT_LIVE_STATE for [requester_name]: [json_encode(build_live_state())]"))
 	for(var/list/history_message in request.history)
 		messages += list(history_message)
-	return list("model" = CONFIG_GET(string/requisitions_ai_model), "reasoning_effort" = "none", "temperature" = 0.4, "messages" = messages, "response_format" = list("type" = "json_object"))
+	return list("model" = CONFIG_GET(string/requisitions_ai_model), "thinking" = list("type" = "disabled"), "reasoning_effort" = "none", "temperature" = 0.4, "messages" = messages, "response_format" = list("type" = "json_object"))
 
 /datum/controller/subsystem/requisitions_ai/proc/select_personality()
 	var/list/personalities = list(
@@ -177,7 +177,13 @@ Return only one JSON object with keys reply and action. Do not put JSON, escaped
 	var/content
 	var/list/response
 	if(islist(api_response))
-		content = api_response?["choices"]?[1]?["message"]?["content"]
+		var/list/message = api_response?["choices"]?[1]?["message"]
+		response_log_entry["message"] = message
+		if(istext(message?["refusal"]))
+			response_log_entry["refusal"] = message["refusal"]
+		if(istext(message?["reasoning_content"]))
+			response_log_entry["reasoning_content"] = copytext_char(message["reasoning_content"], 1, 1001)
+		content = message?["content"]
 		if(isnull(content))
 			content = api_response?["output_text"]
 		if(isnull(content) && islist(api_response?["output"]))
@@ -224,7 +230,7 @@ Return only one JSON object with keys reply and action. Do not put JSON, escaped
 			if(islist(inner_response) && ("reply" in inner_response || "action" in inner_response))
 				response = inner_response
 
-	var/reply = trim(strip_html(response["reply"], 350))
+	var/reply = trim(strip_html(response["reply"]))
 	if(isnull(reply))
 		reply = "Принято. Уточни запрос по форме: что нужно и на какой маяк."
 	var/had_reply = !!reply
@@ -365,14 +371,15 @@ Return only one JSON object with keys reply and action. Do not put JSON, escaped
 	return match
 
 /datum/controller/subsystem/requisitions_ai/proc/send_reply(message)
-	if(!message)
+	var/safe_message = trim(strip_html(message))
+	if(!safe_message)
 		return
 	if(!output_radio)
 		// This is a fixed infrastructure transmitter, not an origin or a reply target.
 		// talk_into() needs its source to be on a Z-level accepted by telecomms;
 		// (1,1,1) may be on a different map level and causes the signal to vanish.
 		output_radio = new(get_output_radio_turf())
-	output_radio.talk_into(output_radio, copytext_char(strip_html(message, 350), 1, 350), RADIO_CHANNEL_REQUISITIONS)
+	output_radio.talk_into(output_radio, safe_message, RADIO_CHANNEL_REQUISITIONS)
 
 /datum/controller/subsystem/requisitions_ai/proc/get_output_radio_turf()
 	for(var/obj/machinery/telecomms/receiver/receiver as anything in GLOB.telecomms_list)
