@@ -45,6 +45,8 @@ SUBSYSTEM_DEF(points)
 	var/psp_base_gain = 5 //per minute
 	///Used to delay fast delivery and for animation
 	var/fast_delivery_is_active = TRUE
+	///Fast deliveries waiting for the previous drop animation to finish.
+	var/list/fast_delivery_queue = list()
 	///Reference to the balloon vis obj effect
 	var/atom/movable/vis_obj/fulton_balloon/balloon
 	var/obj/effect/fulton_extraction_holder/holder_obj
@@ -73,6 +75,8 @@ SUBSYSTEM_DEF(points)
 /datum/controller/subsystem/points/proc/prepare_supply_packs_list(is_mode_crash = FALSE)
 	if(SSrequisitions_ai)
 		SSrequisitions_ai.reset_round_state()
+	fast_delivery_queue.Cut()
+	fast_delivery_is_active = TRUE
 	for(var/pack in subtypesof(/datum/supply_packs))
 		var/datum/supply_packs/P = pack
 		if(!initial(P.cost))
@@ -149,8 +153,6 @@ SUBSYSTEM_DEF(points)
 	if(!our_order || !supply_beacon)
 		return FALSE
 
-	if(!fast_delivery_is_active)
-		return FALSE
 	if(!iscrashgamemode(SSticker.mode) && !isdistrocrashgamemode(SSticker.mode) && !iswarfaregamemode(SSticker.mode)) // no RO on crash
 		if(FAST_DELIVERY_COST > supply_points[our_order.faction])
 			return FALSE
@@ -169,6 +171,19 @@ SUBSYSTEM_DEF(points)
 
 	if(!iscrashgamemode(SSticker.mode) && !isdistrocrashgamemode(SSticker.mode) && !iswarfaregamemode(SSticker.mode))
 		supply_points[our_order.faction] -= FAST_DELIVERY_COST
+
+	// A drop animation occupies the shared Fulton visual for three seconds. Queue
+	// additional valid orders instead of silently rejecting them during that window.
+	if(!fast_delivery_is_active)
+		fast_delivery_queue += list(list("order" = our_order, "beacon" = supply_beacon))
+		return TRUE
+
+	start_fast_delivery(our_order, supply_beacon)
+	return TRUE
+
+/datum/controller/subsystem/points/proc/start_fast_delivery(datum/supply_order/our_order, datum/supply_beacon/supply_beacon)
+	if(!our_order || !supply_beacon)
+		return FALSE
 
 	//Finally create the supply box
 
@@ -241,6 +256,13 @@ SUBSYSTEM_DEF(points)
 	holder_obj.vis_contents -= balloon
 	balloon.icon_state = initial(balloon.icon_state)
 	fast_delivery_is_active = TRUE
+	if(length(fast_delivery_queue))
+		var/list/queued_delivery = fast_delivery_queue[1]
+		fast_delivery_queue.Cut(1, 2)
+		var/datum/supply_order/queued_order = queued_delivery["order"]
+		var/datum/supply_beacon/queued_beacon = queued_delivery["beacon"]
+		if(queued_order && queued_beacon?.drop_location && ("[queued_order.id]" in shoppinglist[queued_order.faction]))
+			start_fast_delivery(queued_order, queued_beacon)
 
 ///Add amount of psy points to the selected hive only if the gamemode support psypoints
 /datum/controller/subsystem/points/proc/add_psy_points(hivenumber, amount)

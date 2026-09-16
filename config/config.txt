@@ -3,6 +3,8 @@
 
 $include dbconfig.txt
 $include resources.txt
+$include requisitions_ai.txt
+$include ../cfg/requisitions_ai.txt
 
 ## Server name: This appears at the top of the screen in-game.
 SERVER_NAME Something
@@ -45,12 +47,6 @@ TTS_MAX_CONCURRENT_REQUESTS 4
 
 ## The number of seconds before tts https requests timeout (0 for infinite not recommended)
 TTS_HTTP_TIMEOUT_SECONDS 30
-
-## Requisitions radio AI (OpenAI-compatible chat completions endpoint)
-REQUISITIONS_AI_HTTP_URL https://codex.sale/v1/chat/completions
-REQUISITIONS_AI_HTTP_TOKEN sk-clb-cEYdIkWrR9PYdMSK4HN4tksT2xnt_UAxaVY7c4srBmY
-REQUISITIONS_AI_MODEL deepseek-v4-flash
-REQUISITIONS_AI_HTTP_TIMEOUT_SECONDS 20
 
 ## Add voices to the TTS voice blacklist.
 #TTS_VOICE_BLACKLIST Sans Undertale

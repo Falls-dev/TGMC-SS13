@@ -8,6 +8,8 @@ SUBSYSTEM_DEF(requisitions_ai)
 	var/list/pending_requests = list()
 	var/last_request_time = 0
 	var/list/conversations = list()
+	/// Raw AI endpoint responses retained for round diagnostics.
+	var/list/real_respons = list()
 	var/conversation_history_length = 12
 	var/static_catalog_json
 	var/obj/item/radio/headset/mainship/mcom/silicon/requisitions_ai/output_radio
@@ -54,6 +56,7 @@ SUBSYSTEM_DEF(requisitions_ai)
 
 /datum/controller/subsystem/requisitions_ai/proc/reset_round_state()
 	conversations.Cut()
+	real_respons.Cut()
 	last_request_time = 0
 	static_catalog_json = null
 
@@ -80,7 +83,7 @@ SUBSYSTEM_DEF(requisitions_ai)
 You are the Teragov Requisitions radio operator in a military sci-fi game. Reply in Russian, terse and in-character; military profanity is acceptable when the request is nonsense, but take real emergencies seriously. You can answer questions using the LIVE_CARGO_STATE below.
 
 
-Return only one JSON object with keys reply and action. Do not put JSON, escaped JSON, markdown or a second answer inside reply. action.type must be none or deliver. For a clearly urgent and militarily necessary request for ammunition, medical supplies, or essential combat equipment with one unambiguous pack and one exact valid beacon, action.type may be deliver and must include pack as the exact pack name from STATIC_SUPPLY_PACK_CATALOG, beacon as the exact beacon name and quantity. Never deliver recreational, absurd, animal, construction, bulk, or unclear requests. If ammo type or destination is ambiguous, ask a concise follow-up on the radio and use action.type none. Never invent a pack or beacon. The game server independently validates every action.
+Return only one JSON object with keys reply and action. Do not put JSON, escaped JSON, markdown or a second answer inside reply. action.type must be none or deliver. For a clearly urgent and militarily necessary request for ammunition, medical supplies, or essential combat equipment with exact valid beacon, action.type may be deliver. A delivery must include beacon and packs: an array of one to four objects, each with pack as the exact pack name from STATIC_SUPPLY_PACK_CATALOG and quantity. Include every unambiguous requested pack in packs; for example, a request for an SR-220 and APDS rounds needs two pack objects. Never deliver recreational, absurd, animal, construction, bulk, or unclear requests. If ammo type or destination is ambiguous, ask a concise follow-up on the radio and use action.type none. Never invent a pack or beacon. The game server independently validates every action.
 	STATIC_SUPPLY_PACK_CATALOG (does not change during a round):
 (Each catalog entry is: exact pack name, cost, contents. Contents are "quantity x item name" strings; an entry starting "note:" is a pack note.)
 [static_catalog_json]
@@ -143,6 +146,15 @@ Return only one JSON object with keys reply and action. Do not put JSON, escaped
 	)
 
 /datum/controller/subsystem/requisitions_ai/proc/handle_endpoint_response(datum/requisitions_ai_request/request, body)
+	var/list/response_log_entry = list(
+		"request" = request?.message,
+		"body" = copytext_char("[body]", 1, 4000),
+		"time" = world.time
+	)
+	real_respons += list(response_log_entry)
+	while(length(real_respons) > 100)
+		real_respons.Cut(1, 2)
+
 	// Accept both normal OpenAI envelopes and providers which return plain text.
 	var/list/api_response = safe_json_decode(body)
 	var/content
@@ -195,14 +207,19 @@ Return only one JSON object with keys reply and action. Do not put JSON, escaped
 			if(islist(inner_response) && ("reply" in inner_response || "action" in inner_response))
 				response = inner_response
 
-	var/reply = strip_html(response["reply"], 350)
-	if(!reply)
+	var/reply = trim(strip_html(response["reply"], 350))
+	if(isnull(reply))
 		reply = "Принято. Уточни запрос по форме: что нужно и на какой маяк."
+	var/had_reply = !!reply
 	var/list/action = response["action"]
+	response_log_entry["action"] = action
 	if(islist(action) && action["type"] == "deliver")
 		var/delivery_result = execute_delivery(action, request)
 		if(delivery_result)
 			reply = "[reply] [delivery_result]"
+	response_log_entry["reply"] = reply
+	if(!had_reply)
+		return
 	add_history("assistant", reply)
 	send_reply(reply)
 
@@ -210,24 +227,31 @@ Return only one JSON object with keys reply and action. Do not put JSON, escaped
 /datum/controller/subsystem/requisitions_ai/proc/execute_delivery(list/action, datum/requisitions_ai_request/request)
 	if(!request.requester || request.requester.faction != FACTION_TERRAGOV)
 		return "Отмена: вызывающий абонент недоступен."
-	var/pack_id = action["pack"]
-	var/pack_name = action["pack_name"]
-	if(!istext(pack_id) && !istext(pack_name))
-		return "Отмена: набор не указан корректно."
-	var/datum/supply_packs/pack = resolve_supply_pack(pack_id, pack_name)
-	if(!pack)
-		return "Отмена: такого набора в карго нет."
+	var/list/requested_packs = action["packs"]
+	if(!islist(requested_packs))
+		// Legacy single-pack actions remain valid while models adopt packs.
+		requested_packs = list(list("pack" = action["pack"], "pack_name" = action["pack_name"], "quantity" = action["quantity"]))
+	if(!length(requested_packs) || length(requested_packs) > 4)
+		return "Отмена: число наборов указано некорректно."
+	var/list/packs_to_deliver = list()
+	var/purchase_cost = 0
+	for(var/list/requested_pack as anything in requested_packs)
+		var/pack_id = requested_pack["pack"]
+		var/pack_name = requested_pack["pack_name"]
+		if(!istext(pack_id) && !istext(pack_name))
+			return "Отмена: набор не указан корректно."
+		var/datum/supply_packs/pack = resolve_supply_pack(pack_id, pack_name)
+		if(!pack)
+			return "Отмена: такого набора в карго нет."
+		var/quantity = clamp(round(text2num(requested_pack["quantity"])), 1, 3)
+		packs_to_deliver += list(list("pack" = pack, "quantity" = quantity))
+		purchase_cost += pack.cost * quantity
 	var/datum/supply_beacon/beacon = find_terragov_beacon(action["beacon"])
 	if(!beacon)
 		return "Отмена: маяк не найден, не наш или непригоден для сброса."
-	var/quantity = clamp(round(text2num(action["quantity"])), 1, 3)
-	var/purchase_cost = pack.cost * quantity
 	var/fast_cost = (!iscrashgamemode(SSticker.mode) && !isdistrocrashgamemode(SSticker.mode) && !iswarfaregamemode(SSticker.mode)) ? FAST_DELIVERY_COST : 0
 	if(SSpoints.supply_points[FACTION_TERRAGOV] < purchase_cost + fast_cost)
 		return "Отмена: бюджет карго не тянет этот срочный сброс."
-	if(!SSpoints.fast_delivery_is_active)
-		return "Отмена: система fast delivery ещё перезаряжается."
-
 	var/datum/supply_order/order = new
 	var/mob/living/carbon/human/marine = request.requester
 	order.id = ++SSpoints.ordernum
@@ -238,8 +262,10 @@ Return only one JSON object with keys reply and action. Do not put JSON, escaped
 	order.reason = "Urgent radio request"
 	order.faction = FACTION_TERRAGOV
 	order.pack = list()
-	for(var/i in 1 to quantity)
-		order.pack += pack
+	for(var/list/pack_entry as anything in packs_to_deliver)
+		var/datum/supply_packs/delivery_pack = pack_entry["pack"]
+		for(var/i in 1 to pack_entry["quantity"])
+			order.pack += delivery_pack
 	SSpoints.supply_points[FACTION_TERRAGOV] -= purchase_cost
 	if(!islist(SSpoints.shoppinglist[FACTION_TERRAGOV]))
 		SSpoints.shoppinglist[FACTION_TERRAGOV] = list()
@@ -266,9 +292,9 @@ Return only one JSON object with keys reply and action. Do not put JSON, escaped
 		// fast_delivery() itself does not restrict faction; preserve that behaviour for
 		// AI requests while still requiring a real, surface-level landing zone.
 		if(!beacon.drop_location || !is_ground_level(beacon.drop_location.z))
-			return
+			continue
 		if(isspaceturf(beacon.drop_location) || beacon.drop_location.density)
-			return
+			continue
 		if(normalized_name == search_name)
 			return beacon
 		if(partial_match)
