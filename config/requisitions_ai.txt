@@ -3,5 +3,5 @@
 ## cfg/ is excluded from Git and is intended for secrets.
 REQUISITIONS_AI_HTTP_URL https://api.deepseek.com/chat/completions
 REQUISITIONS_AI_HTTP_TOKEN sk-your-deepseek-api-key
-REQUISITIONS_AI_MODEL deepseek-flash
+REQUISITIONS_AI_MODEL deepseek-chat
 REQUISITIONS_AI_HTTP_TIMEOUT_SECONDS 20
