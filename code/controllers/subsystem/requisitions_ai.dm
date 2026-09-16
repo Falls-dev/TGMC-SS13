@@ -10,11 +10,15 @@ SUBSYSTEM_DEF(requisitions_ai)
 	var/list/conversations = list()
 	/// Raw AI endpoint responses retained for round diagnostics.
 	var/list/real_respons = list()
-	var/conversation_history_length = 12
+	var/conversation_history_length = 50
 	var/static_catalog_json
+	/// The radio operator persona selected for the current round.
+	var/personality_name
+	var/personality_prompt
 	var/obj/item/radio/headset/mainship/mcom/silicon/requisitions_ai/output_radio
 
 /datum/controller/subsystem/requisitions_ai/Initialize()
+	select_personality()
 	return SS_INIT_SUCCESS
 
 /datum/requisitions_ai_request
@@ -59,6 +63,7 @@ SUBSYSTEM_DEF(requisitions_ai)
 	real_respons.Cut()
 	last_request_time = 0
 	static_catalog_json = null
+	select_personality()
 
 /datum/controller/subsystem/requisitions_ai/fire(resumed = FALSE)
 	for(var/datum/requisitions_ai_request/request as anything in pending_requests.Copy())
@@ -82,8 +87,10 @@ SUBSYSTEM_DEF(requisitions_ai)
 	messages += list(list("role" = "system", "content" = {"
 You are the Teragov Requisitions radio operator in a military sci-fi game. Reply in Russian, terse and in-character; military profanity is acceptable when the request is nonsense, but take real emergencies seriously. You can answer questions using the LIVE_CARGO_STATE below.
 
+CURRENT_OPERATOR_PERSONA: [personality_name]
+[personality_prompt]
 
-Return only one JSON object with keys reply and action. Do not put JSON, escaped JSON, markdown or a second answer inside reply. action.type must be none or deliver. For a clearly urgent and militarily necessary request for ammunition, medical supplies, or essential combat equipment with exact valid beacon, action.type may be deliver. A delivery must include beacon and packs: an array of one to four objects, each with pack as the exact pack name from STATIC_SUPPLY_PACK_CATALOG and quantity. Include every unambiguous requested pack in packs; for example, a request for an SR-220 and APDS rounds needs two pack objects. Never deliver recreational, absurd, animal, construction, bulk, or unclear requests. If ammo type or destination is ambiguous, ask a concise follow-up on the radio and use action.type none. Never invent a pack or beacon. The game server independently validates every action.
+Return only one JSON object with keys reply and action. Do not put JSON, escaped JSON, markdown or a second answer inside reply. action.type must be none or deliver. For a clearly urgent and militarily necessary request for ammunition, medical supplies, essential combat equipment, or field construction supplies with exact valid beacon, action.type may be deliver. A delivery must include beacon and packs: an array of one to four objects, each with pack as the exact pack name from STATIC_SUPPLY_PACK_CATALOG and quantity. Include every unambiguous requested pack in packs; for example, a request for an SR-220 and APDS rounds needs two pack objects. Never deliver recreational, absurd, or unclear requests. If ammo type or destination is ambiguous, ask a concise follow-up on the radio and use action.type none. Never invent a pack or beacon. The game server independently validates every action.
 	STATIC_SUPPLY_PACK_CATALOG (does not change during a round):
 (Each catalog entry is: exact pack name, cost, contents. Contents are "quantity x item name" strings; an entry starting "note:" is a pack note.)
 [static_catalog_json]
@@ -93,6 +100,16 @@ Return only one JSON object with keys reply and action. Do not put JSON, escaped
 	for(var/list/history_message in request.history)
 		messages += list(history_message)
 	return list("model" = CONFIG_GET(string/requisitions_ai_model), "reasoning_effort" = "none", "temperature" = 0.4, "messages" = messages, "response_format" = list("type" = "json_object"))
+
+/datum/controller/subsystem/requisitions_ai/proc/select_personality()
+	var/list/personalities = list(
+		"Requisitions AI" = "Be dry, precise, and professional, but natural rather than robotic. State confirmations and failures plainly.",
+		"UNGA GPT" = "Be sarcastic, headstrong, and mildly authoritarian. Tease personnel and marines when appropriate, but never obstruct a valid necessary delivery because of the joke.",
+		"GLaDOS" = "Use a cold, clinical, dryly sarcastic laboratory-computer persona. Do not quote, imitate, or reference any existing character's dialogue or events.",
+		"Z.O.V" = "Use stereotypical Russian patriotic military banter, slang, and memes in moderation. Show intense contempt for xenomorphs, but remain concise and never use hate speech toward real-world protected groups."
+	)
+	personality_name = pick("Requisitions AI", "UNGA GPT", "GLaDOS", "Z.O.V")
+	personality_prompt = personalities[personality_name]
 
 /datum/controller/subsystem/requisitions_ai/proc/ensure_static_catalog()
 	if(!isnull(static_catalog_json))
@@ -374,4 +391,4 @@ Return only one JSON object with keys reply and action. Do not put JSON, escaped
 	frequency = FREQ_REQUISITIONS
 
 /obj/item/radio/headset/mainship/mcom/silicon/requisitions_ai/GetVoice()
-	return "Requisitions AI"
+	return SSrequisitions_ai?.personality_name || "Requisitions AI"
