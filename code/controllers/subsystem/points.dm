@@ -2,9 +2,6 @@
 #define DROPSHIP_POINT_RATE 18 * ((6 - GLOB.current_orbit)/3)
 #define SUPPLY_POINT_RATE 20 * (GLOB.current_orbit/3)
 
-/// How much points we charge for fast delivery
-#define FAST_DELIVERY_COST 150
-
 SUBSYSTEM_DEF(points)
 	name = "Points"
 
@@ -153,10 +150,6 @@ SUBSYSTEM_DEF(points)
 	if(!our_order || !supply_beacon)
 		return FALSE
 
-	if(!iscrashgamemode(SSticker.mode) && !isdistrocrashgamemode(SSticker.mode) && !iswarfaregamemode(SSticker.mode)) // no RO on crash
-		if(FAST_DELIVERY_COST > supply_points[our_order.faction])
-			return FALSE
-
 	//Same checks as for supply console
 	if(!istype(supply_beacon.drop_location) || !is_ground_level(supply_beacon.drop_location.z))
 		return FALSE
@@ -168,9 +161,6 @@ SUBSYSTEM_DEF(points)
 		return FALSE
 	if(!("[our_order.id]" in SSpoints.shoppinglist[our_order.faction]))
 		return FALSE
-
-	if(!iscrashgamemode(SSticker.mode) && !isdistrocrashgamemode(SSticker.mode) && !iswarfaregamemode(SSticker.mode))
-		supply_points[our_order.faction] -= FAST_DELIVERY_COST
 
 	// A drop animation occupies the shared Fulton visual for three seconds. Queue
 	// additional valid orders instead of silently rejecting them during that window.

@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(requisitions_ai)
 	var/list/conversations = list()
 	/// Raw AI endpoint responses retained for round diagnostics.
 	var/list/real_respons = list()
-	var/conversation_history_length = 50
+	var/conversation_history_length = 10
 	var/static_catalog_json
 	/// The radio operator persona selected for the current round.
 	var/personality_name
@@ -157,7 +157,6 @@ Return only one non-empty JSON object with keys reply and action. Do not put JSO
 		))
 	return list(
 		"supply_points" = SSpoints.supply_points[FACTION_TERRAGOV],
-		"fast_delivery_cost" = FAST_DELIVERY_COST,
 		"fast_delivery_ready" = SSpoints.fast_delivery_is_active,
 		"beacons" = beacons
 	)
@@ -272,9 +271,6 @@ Return only one non-empty JSON object with keys reply and action. Do not put JSO
 	var/datum/supply_beacon/beacon = find_terragov_beacon(action["beacon"])
 	if(!beacon)
 		return "Отмена: маяк не найден, не наш или непригоден для сброса."
-	var/fast_cost = (!iscrashgamemode(SSticker.mode) && !isdistrocrashgamemode(SSticker.mode) && !iswarfaregamemode(SSticker.mode)) ? FAST_DELIVERY_COST : 0
-	if(SSpoints.supply_points[FACTION_TERRAGOV] < purchase_cost + fast_cost)
-		return "Отмена: бюджет карго не тянет этот срочный сброс."
 	var/datum/supply_order/order = new
 	var/mob/living/carbon/human/marine = request.requester
 	order.id = ++SSpoints.ordernum
