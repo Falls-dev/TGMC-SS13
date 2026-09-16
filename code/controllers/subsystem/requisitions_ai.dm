@@ -227,7 +227,7 @@ Return only one non-empty JSON object with keys reply and action. Do not put JSO
 		var/json_end = findlasttext(raw_reply, "}")
 		if(json_start && json_end >= json_start)
 			var/list/inner_response = safe_json_decode(copytext(raw_reply, json_start, json_end + 1))
-			if(islist(inner_response) && ("reply" in inner_response || "action" in inner_response))
+			if(islist(inner_response) && (("reply" in inner_response) || ("action" in inner_response)))
 				response = inner_response
 
 	var/reply = trim(strip_html(response["reply"]))

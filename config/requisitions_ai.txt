@@ -2,6 +2,6 @@
 ## Copy these settings to cfg/requisitions_ai.txt and remove the leading '#'.
 ## cfg/ is excluded from Git and is intended for secrets.
 # REQUISITIONS_AI_HTTP_URL https://api.deepseek.com/chat/completions
-# REQUISITIONS_AI_HTTP_TOKEN sk-f1fa7489d974455f972514d258a131f6
+# REQUISITIONS_AI_HTTP_TOKEN sk-
 # REQUISITIONS_AI_MODEL deepseek-flash
 # REQUISITIONS_AI_HTTP_TIMEOUT_SECONDS 20
