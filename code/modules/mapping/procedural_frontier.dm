@@ -53,6 +53,12 @@
 	var/map_max_x
 	var/map_min_y
 	var/map_max_y
+	// The original 199x199 core uses the LZ distance gradient. The outer map
+	// extension is generated at the fixed remote cave cutoff instead.
+	var/gradient_min_x
+	var/gradient_max_x
+	var/gradient_min_y
+	var/gradient_max_y
 	var/map_center_x
 	var/map_center_y
 	var/landing_min_x
@@ -75,6 +81,9 @@
 
 /datum/procedural_frontier_layout/proc/is_border(x, y)
 	return x == map_min_x || x == map_max_x || y == map_min_y || y == map_max_y
+
+/datum/procedural_frontier_layout/proc/is_in_gradient_area(x, y)
+	return x >= gradient_min_x && x <= gradient_max_x && y >= gradient_min_y && y <= gradient_max_y
 
 /datum/procedural_frontier_layout/proc/is_landing(x, y)
 	return x >= landing_min_x && x <= landing_max_x && y >= landing_min_y && y <= landing_max_y
@@ -140,8 +149,12 @@
 	icon_state = "x2"
 
 	// Map dimensions must match the authored .dmm shell.
-	var/map_width = 199
-	var/map_height = 199
+	var/map_width = 239
+	var/map_height = 239
+	// Keep the existing density gradient within the original map footprint.
+	// The remaining 20 tiles on every side use remote_cave_cutoff directly.
+	var/gradient_width = 199
+	var/gradient_height = 199
 
 	// Landing zone geometry and placement.
 	var/landing_width = 30
@@ -155,7 +168,7 @@
 	// Cave-density profile. The LZ surface is always open; farther away, the
 	// ridge cutoff rises according to the exponential gradient.
 	var/landing_surface_radius = 24
-	var/landing_edge_opening = 4.0
+	var/landing_edge_opening = 3.0
 	var/ceiling_distance_rate = 0.35
 	// The gradient is evaluated over an extended range and clamped to the
 	// actual CEILING constants afterwards. A negative lower bound deliberately
@@ -329,11 +342,15 @@
 	layout.map_min_y = layout.map_center_y - round((map_height - 1) / 2)
 	layout.map_max_x = layout.map_min_x + map_width - 1
 	layout.map_max_y = layout.map_min_y + map_height - 1
+	layout.gradient_min_x = layout.map_center_x - round((gradient_width - 1) / 2)
+	layout.gradient_min_y = layout.map_center_y - round((gradient_height - 1) / 2)
+	layout.gradient_max_x = layout.gradient_min_x + gradient_width - 1
+	layout.gradient_max_y = layout.gradient_min_y + gradient_height - 1
 
-	var/available_x = max(1, map_width - landing_width - landing_edge_margin * 2)
-	var/available_y = max(1, map_height - landing_height - landing_edge_margin * 2)
-	layout.landing_min_x = layout.map_min_x + landing_edge_margin + get_edge_biased_offset(available_x, procedural_frontier_hash(701, 17, seed))
-	layout.landing_min_y = layout.map_min_y + landing_edge_margin + get_edge_biased_offset(available_y, procedural_frontier_hash(719, 23, seed))
+	var/available_x = max(1, gradient_width - landing_width - landing_edge_margin * 2)
+	var/available_y = max(1, gradient_height - landing_height - landing_edge_margin * 2)
+	layout.landing_min_x = layout.gradient_min_x + landing_edge_margin + get_edge_biased_offset(available_x, procedural_frontier_hash(701, 17, seed))
+	layout.landing_min_y = layout.gradient_min_y + landing_edge_margin + get_edge_biased_offset(available_y, procedural_frontier_hash(719, 23, seed))
 	layout.landing_max_x = layout.landing_min_x + landing_width - 1
 	layout.landing_max_y = layout.landing_min_y + landing_height - 1
 	layout.landing_center_x = round((layout.landing_min_x + layout.landing_max_x) / 2)
@@ -367,10 +384,10 @@
 		return 1
 	var/farthest_distance = 1
 	for(var/list/corner in list(
-		list(layout.map_min_x, layout.map_min_y),
-		list(layout.map_max_x, layout.map_min_y),
-		list(layout.map_min_x, layout.map_max_y),
-		list(layout.map_max_x, layout.map_max_y),
+		list(layout.gradient_min_x, layout.gradient_min_y),
+		list(layout.gradient_max_x, layout.gradient_min_y),
+		list(layout.gradient_min_x, layout.gradient_max_y),
+		list(layout.gradient_max_x, layout.gradient_max_y),
 	))
 		var/turf/corner_turf = locate(corner[1], corner[2], layout.z_level)
 		if(corner_turf)
@@ -378,8 +395,8 @@
 	return farthest_distance
 
 /obj/effect/landmark/procedural_frontier_generator/proc/get_landing_edge_factor(datum/procedural_frontier_layout/layout)
-	var/relative_x = abs(layout.landing_center_x - layout.map_center_x) / max(1, map_width / 2)
-	var/relative_y = abs(layout.landing_center_y - layout.map_center_y) / max(1, map_height / 2)
+	var/relative_x = abs(layout.landing_center_x - layout.map_center_x) / max(1, gradient_width / 2)
+	var/relative_y = abs(layout.landing_center_y - layout.map_center_y) / max(1, gradient_height / 2)
 	return clamp(max(relative_x, relative_y), 0, 1)
 
 /obj/effect/landmark/procedural_frontier_generator/proc/get_ceiling_level(distance_from_landing, datum/procedural_frontier_layout/layout)
@@ -459,6 +476,12 @@
 				target_area.name = "Frontier Caves - [capitalize(sector)] - [depth_name] (ceiling [ceiling_level])"
 				area_cache[cache_key] = target_area
 			current_turf.change_area(current_turf.loc, target_area)
+	// Runtime areas are initialized before they receive turfs, so their normal
+	// Initialize() registration does nothing. Register them only after the
+	// assignment pass: space-transit uses this list to find valid airdrop turf.
+	for(var/cache_key in area_cache)
+		var/area/target_area = area_cache[cache_key]
+		target_area.reg_in_areas_in_z()
 
 /obj/effect/landmark/procedural_frontier_generator/proc/generate_terrain(datum/procedural_frontier_layout/layout, area/cave_area, area/landing_area, seed)
 	var/turf/landing_center = layout.get_landing_center()
@@ -480,17 +503,21 @@
 				set_turf_and_area(current_turf, deep_cave_wall_type, cave_area)
 				continue
 			var/distance_from_landing = landing_center ? get_dist(current_turf, landing_center) : 0
-			if(distance_from_landing <= landing_surface_radius)
+			if(layout.is_in_gradient_area(tile_x, tile_y) && distance_from_landing <= landing_surface_radius)
 				set_turf_and_area(current_turf, asteroid_floor_type, cave_area)
 				continue
-			var/ridge_cutoff = get_ridge_cutoff(distance_from_landing, layout, central_complexity_multiplier)
+			var/ridge_cutoff = get_ridge_cutoff(tile_x, tile_y, distance_from_landing, layout, central_complexity_multiplier)
 			var/ridge_value = procedural_frontier_ridge_noise(tile_x, tile_y, seed, noise_coarse_scale, noise_fine_scale, noise_coarse_weight)
 			if(ridge_value >= ridge_cutoff)
 				set_turf_and_area(current_turf, cave_floor_type, cave_area)
 			else
 				set_turf_and_area(current_turf, cave_wall_type, cave_area)
 
-/obj/effect/landmark/procedural_frontier_generator/proc/get_ridge_cutoff(distance_from_landing, datum/procedural_frontier_layout/layout, central_complexity_multiplier)
+	// The outer extension intentionally does not continue the gradient. It is a
+	// uniform remote-cave ring that uses the configured maximum cutoff.
+/obj/effect/landmark/procedural_frontier_generator/proc/get_ridge_cutoff(tile_x, tile_y, distance_from_landing, datum/procedural_frontier_layout/layout, central_complexity_multiplier)
+	if(!layout.is_in_gradient_area(tile_x, tile_y))
+		return remote_cave_cutoff
 	var/distance_threshold = procedural_frontier_landing_threshold(distance_from_landing, layout.max_landing_distance, landing_edge_opening)
 	return clamp(distance_threshold * remote_cave_cutoff * central_complexity_multiplier + cave_ridge_threshold, 0, 1)
 
