@@ -13,11 +13,11 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 GLOBAL_VAR_INIT(custom_info, "")
 GLOBAL_VAR_INIT(motd, "")
 
-///Regex for detecting non-ASCII symbols
-GLOBAL_VAR_INIT(non_ascii_regex, regex(@"[^\x00-\x7F\u0401\u0451]"))
+///Regex for detecting characters outside the supported Latin, Cyrillic and CJK ranges
+GLOBAL_VAR_INIT(non_ascii_regex, regex(@"[^\x00-\x7F\u0401\u0451\u4e00-\u9fff\u3400-\u4dbf\u3000-\u303f\uff00-\uffef]"))
 GLOBAL_PROTECT(non_ascii_regex)
 
-///Returns true if this contains text that is not ASCII
+///Returns true if this contains text outside the supported character ranges
 #define NON_ASCII_CHECK(text) (findtext(convert_ru_string_to_en_string(text), GLOB.non_ascii_regex))
 
 GLOBAL_LIST_EMPTY(custom_loadouts)

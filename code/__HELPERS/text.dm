@@ -70,16 +70,16 @@ GLOBAL_LIST_INIT(en_key_to_ru_key, list(
  *
  * Things considered improper:
  * * Larger than max_length.
- * * Presence of non-ASCII characters if asci_only is set to TRUE.
+ * * Presence of characters outside the configured Latin, Cyrillic and CJK ranges if asci_only is set to TRUE.
  * * Only whitespaces, tabs and/or line breaks in the text.
  * * Presence of the <, >, \ and / characters.
  * * Presence of ASCII special control characters (horizontal tab and new line not included).
  * */
 /proc/reject_bad_text(text, max_length = 512, ascii_only = TRUE)
 	if(ascii_only)
-		if(length(text) > max_length)
+		if(length_char(text) > max_length)
 			return null
-		var/static/regex/non_ascii = regex(@"[^\x20-\x7E\u0410-\u044F\u0401\u0451\t\n]")
+		var/static/regex/non_ascii = regex(@"[^\x20-\x7E\u0410-\u044F\u0401\u0451\u4E00-\u9FFF\u3400-\u4DBF\u3000-\u303F\uFF00-\uFFEF\t\n]")
 		if(non_ascii.Find(text))
 			return null
 	else if(length_char(text) > max_length)
@@ -108,7 +108,7 @@ GLOBAL_LIST_INIT(en_key_to_ru_key, list(
 	if(isnull(user_input)) // User pressed cancel
 		return
 	if(no_trim)
-		return copytext(html_encode(user_input), 1, max_length)
+		return copytext_char(html_encode(user_input), 1, max_length)
 	else
 		return trim(html_encode(user_input), max_length) //trim is "outside" because html_encode can expand single symbols into multiple symbols (such as turning < into &lt;)
 
@@ -127,7 +127,7 @@ GLOBAL_LIST_INIT(en_key_to_ru_key, list(
 	if(isnull(user_input)) // User pressed cancel
 		return
 	if(no_trim)
-		return copytext(html_encode(user_input), 1, max_length)
+		return copytext_char(html_encode(user_input), 1, max_length)
 	else
 		return trim(html_encode(user_input), max_length)
 
