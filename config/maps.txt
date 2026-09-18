@@ -26,6 +26,11 @@ map procedural_frontier
 	voteweight 0.5
 endmap
 
+map procedural_frontier_compact
+	minplayers 0
+	voteweight 0.5
+endmap
+
 map ice_colony_v2
 	minplayers 40
 endmap

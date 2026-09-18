@@ -238,6 +238,14 @@
 	var/generator_room_width = 12
 	var/generator_room_height = 9
 
+// Compact map variant. Its authored DMM shell is 199x199, with the same
+// 20-tile fixed-cutoff outer ring around a smaller 159x159 gradient core.
+/obj/effect/landmark/procedural_frontier_generator/compact
+	map_width = 199
+	map_height = 199
+	gradient_width = 194
+	gradient_height = 194
+
 /obj/effect/landmark/procedural_frontier_generator/Initialize(mapload)
 	. = ..()
 	if(!mapload)
@@ -265,7 +273,7 @@
 	place_weapon_room(layout, landing_area, seed)
 	if(prob(toilet_room_chance))
 		place_toilet_room(layout, landing_area, seed)
-	place_landing_equipment(layout, landing_area)
+	place_landing_equipment(layout, landing_area, cave_area)
 	place_landing_random_props(layout)
 	place_deep_walls(layout, cave_area, seed)
 	var/list/open_cave_tiles = retain_reachable_cave_tiles(layout, cave_area, landing_area)
@@ -459,9 +467,9 @@
 	var/list/area_cache = list()
 	for(var/tile_x in layout.map_min_x to layout.map_max_x)
 		for(var/tile_y in layout.map_min_y to layout.map_max_y)
-			// Keep the LZ and its external containment ring in their dedicated
-			// area so NEAR_FOB and shutter handling remain intact.
-			if(tile_x >= layout.landing_min_x - 1 && tile_x <= layout.landing_max_x + 1 && tile_y >= layout.landing_min_y - 1 && tile_y <= layout.landing_max_y + 1)
+			// Only the LZ itself belongs to the landing area. The external
+			// containment ring is part of the cave sector once its poddoors open.
+			if(layout.is_landing(tile_x, tile_y))
 				continue
 			if(layout.is_generator_room(tile_x, tile_y))
 				continue
@@ -586,7 +594,7 @@
 	if(button_turf)
 		new /obj/machinery/button/door/open_only/landing_zone(button_turf)
 
-/obj/effect/landmark/procedural_frontier_generator/proc/place_landing_equipment(datum/procedural_frontier_layout/layout, area/landing_area)
+/obj/effect/landmark/procedural_frontier_generator/proc/place_landing_equipment(datum/procedural_frontier_layout/layout, area/landing_area, area/cave_area)
 	// Mark the pad with a stencil. Every tile covered by the dropship remains
 	// clean plating; do not replace it with warning overlays.
 	for(var/tile_x in layout.pad_min_x to layout.pad_max_x)
@@ -597,8 +605,9 @@
 	var/turf/stencil_turf = locate(layout.landing_center_x, layout.landing_center_y, layout.z_level)
 	if(stencil_turf)
 		new /obj/structure/prop/mainship/hangar_stencil(stencil_turf)
-	// Timed containment poddoors form a complete, gapless outer ring. The
-	// reinforced wall is the inner ring; poddoors are one tile behind it.
+	// Keep the generated cave terrain around the LZ intact. Poddoors are added
+	// only where the natural cave is already open; closed rock remains a solid
+	// containment barrier without carving an artificial asteroid-floor ring.
 	var/containment_min_x = layout.landing_min_x - 1
 	var/containment_max_x = layout.landing_max_x + 1
 	var/containment_min_y = layout.landing_min_y - 1
@@ -609,8 +618,7 @@
 			if(!is_containment_ring)
 				continue
 			var/turf/containment_turf = locate(tile_x, tile_y, layout.z_level)
-			if(containment_turf)
-				containment_turf = set_turf_and_area(containment_turf, asteroid_floor_type, landing_area)
+			if(istype(containment_turf, open_turf_type))
 				var/obj/machinery/door/poddoor/timed_late/containment/landing_zone/containment_door = new(containment_turf)
 				// Poddoors follow the orientation of their ring side. In particular,
 				// the north and south rows are intentionally different directions.
