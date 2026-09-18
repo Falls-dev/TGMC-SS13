@@ -203,8 +203,11 @@
 
 	// Landmark placement settings.
 	var/weed_node_spacing = 5
-	var/tunnel_edge_offset = 10
-	var/tunnel_minimum_spacing = 24
+	// Xeno tunnels are spread around the remote cave perimeter, away from LZ.
+	var/xeno_tunnel_count = 8
+	var/tunnel_edge_offset = 14
+	var/tunnel_landing_minimum_distance = 60
+	var/tunnel_minimum_spacing = 30
 	var/miner_phoron_count = 8
 	var/miner_phoron_radius = 48
 	var/miner_platinum_count = 16
@@ -1044,22 +1047,31 @@
 
 /obj/effect/landmark/procedural_frontier_generator/proc/place_xeno_tunnels(list/open_cave_tiles, datum/procedural_frontier_layout/layout)
 	var/list/tunnel_tiles = list()
+	var/turf/landing_center = layout.get_landing_center()
 	var/list/tunnel_targets = list(
 		list(layout.map_min_x + tunnel_edge_offset, layout.map_min_y + tunnel_edge_offset),
+		list(layout.map_center_x, layout.map_min_y + tunnel_edge_offset),
 		list(layout.map_max_x - tunnel_edge_offset, layout.map_min_y + tunnel_edge_offset),
+		list(layout.map_max_x - tunnel_edge_offset, layout.map_center_y),
 		list(layout.map_min_x + tunnel_edge_offset, layout.map_max_y - tunnel_edge_offset),
+		list(layout.map_center_x, layout.map_max_y - tunnel_edge_offset),
 		list(layout.map_max_x - tunnel_edge_offset, layout.map_max_y - tunnel_edge_offset),
+		list(layout.map_min_x + tunnel_edge_offset, layout.map_center_y),
 	)
 	for(var/list/target in tunnel_targets)
-		var/turf/best_tunnel_turf = get_best_tunnel_tile(open_cave_tiles, tunnel_tiles, target)
+		if(length(tunnel_tiles) >= xeno_tunnel_count)
+			break
+		var/turf/best_tunnel_turf = get_best_tunnel_tile(open_cave_tiles, tunnel_tiles, target, landing_center)
 		if(best_tunnel_turf)
 			new /obj/effect/landmark/xeno_tunnel_spawn(best_tunnel_turf)
 			tunnel_tiles += best_tunnel_turf
 
-/obj/effect/landmark/procedural_frontier_generator/proc/get_best_tunnel_tile(list/open_cave_tiles, list/placed_tunnels, list/target)
+/obj/effect/landmark/procedural_frontier_generator/proc/get_best_tunnel_tile(list/open_cave_tiles, list/placed_tunnels, list/target, turf/landing_center)
 	var/turf/best_tunnel_turf
 	var/best_score = INFINITY
 	for(var/turf/cave_turf in open_cave_tiles)
+		if(landing_center && get_dist(cave_turf, landing_center) < tunnel_landing_minimum_distance)
+			continue
 		if(!is_tunnel_tile_far_enough(cave_turf, placed_tunnels))
 			continue
 		var/score = abs(cave_turf.x - target[1]) + abs(cave_turf.y - target[2])
