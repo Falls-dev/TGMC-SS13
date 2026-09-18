@@ -2,9 +2,6 @@
 #define DROPSHIP_POINT_RATE 18 * ((6 - GLOB.current_orbit)/3)
 #define SUPPLY_POINT_RATE 20 * (GLOB.current_orbit/3)
 
-/// How much points we charge for fast delivery
-#define FAST_DELIVERY_COST 150
-
 SUBSYSTEM_DEF(points)
 	name = "Points"
 
@@ -45,6 +42,8 @@ SUBSYSTEM_DEF(points)
 	var/psp_base_gain = 5 //per minute
 	///Used to delay fast delivery and for animation
 	var/fast_delivery_is_active = TRUE
+	///Fast deliveries waiting for the previous drop animation to finish.
+	var/list/fast_delivery_queue = list()
 	///Reference to the balloon vis obj effect
 	var/atom/movable/vis_obj/fulton_balloon/balloon
 	var/obj/effect/fulton_extraction_holder/holder_obj
@@ -71,6 +70,10 @@ SUBSYSTEM_DEF(points)
 
 /// Prepare the global supply pack list at the gamemode start
 /datum/controller/subsystem/points/proc/prepare_supply_packs_list(is_mode_crash = FALSE)
+	if(SSrequisitions_ai)
+		SSrequisitions_ai.reset_round_state()
+	fast_delivery_queue.Cut()
+	fast_delivery_is_active = TRUE
 	for(var/pack in subtypesof(/datum/supply_packs))
 		var/datum/supply_packs/P = pack
 		if(!initial(P.cost))
@@ -137,44 +140,53 @@ SUBSYSTEM_DEF(points)
 	if(!istype(supply_beacon))
 		to_chat(user, span_warning("Beacon was not selected"))
 		return
+	if(!fast_delivery_to_beacon(our_order, supply_beacon))
+		to_chat(user, span_warning("Fast delivery failed: check cargo points, beacon status, and delivery cooldown."))
+	return TRUE
 
-	if(!fast_delivery_is_active)
-		to_chat(user, span_warning("Fast delivery is not ready"))
+/// Sends an existing cargo order to a specific beacon. Unlike fast_delivery(), this is
+/// suitable for non-UI callers, but it deliberately retains every cargo/budget/safety check.
+/datum/controller/subsystem/points/proc/fast_delivery_to_beacon(datum/supply_order/our_order, datum/supply_beacon/supply_beacon)
+	if(!our_order || !supply_beacon)
 		return FALSE
-	if(!iscrashgamemode(SSticker.mode) && !isdistrocrashgamemode(SSticker.mode) && !iswarfaregamemode(SSticker.mode)) // no RO on crash
-		if(FAST_DELIVERY_COST > supply_points[our_order.faction])
-			to_chat(user, span_warning("Cargo does not have enough points for fast delivery."))
-			return
-
-		supply_points[user.faction] -= FAST_DELIVERY_COST
 
 	//Same checks as for supply console
-	if(!supply_beacon)
-		to_chat(user, span_warning("There was an issue with that beacon. Check it's still active."))
-		return
-	if(!istype(supply_beacon.drop_location))
-		to_chat(user, span_warning("The [supply_beacon.name] was not detected on the ground."))
-		return
+	if(!istype(supply_beacon.drop_location) || !is_ground_level(supply_beacon.drop_location.z))
+		return FALSE
 	if(isspaceturf(supply_beacon.drop_location) || supply_beacon.drop_location.density)
-		to_chat(user, span_warning("The [supply_beacon.name]'s landing zone appears to be obstructed or out of bounds."))
-		return
+		return FALSE
 
 	//Just in case
 	if(!length_char(SSpoints.shoppinglist[our_order.faction]))
-		return
+		return FALSE
 	if(!("[our_order.id]" in SSpoints.shoppinglist[our_order.faction]))
-		return
+		return FALSE
+
+	// A drop animation occupies the shared Fulton visual for three seconds. Queue
+	// additional valid orders instead of silently rejecting them during that window.
+	if(!fast_delivery_is_active)
+		fast_delivery_queue += list(list("order" = our_order, "beacon" = supply_beacon))
+		return TRUE
+
+	start_fast_delivery(our_order, supply_beacon)
+	return TRUE
+
+/datum/controller/subsystem/points/proc/start_fast_delivery(datum/supply_order/our_order, datum/supply_beacon/supply_beacon)
+	if(!our_order || !supply_beacon)
+		return FALSE
 
 	//Finally create the supply box
 
 	var/turf/TC = locate(supply_beacon.drop_location.x, supply_beacon.drop_location.y, supply_beacon.drop_location.z)
 
 	//spawn crate and clear shoping list
+	fast_delivery_is_active = FALSE
 	delivery_to_turf(our_order, TC)
 
 	//effects
 	supply_beacon.drop_location.visible_message(span_boldnotice("A supply drop appears suddendly!"))
 	playsound(supply_beacon.drop_location,'sound/effects/tadpolehovering.ogg', 30, TRUE)
+	return TRUE
 
 /datum/controller/subsystem/points/proc/delivery_to_turf(datum/supply_order/our_order, turf/TC)
 	var/datum/supply_packs/firstpack = our_order.pack[1]
@@ -234,6 +246,13 @@ SUBSYSTEM_DEF(points)
 	holder_obj.vis_contents -= balloon
 	balloon.icon_state = initial(balloon.icon_state)
 	fast_delivery_is_active = TRUE
+	if(length(fast_delivery_queue))
+		var/list/queued_delivery = fast_delivery_queue[1]
+		fast_delivery_queue.Cut(1, 2)
+		var/datum/supply_order/queued_order = queued_delivery["order"]
+		var/datum/supply_beacon/queued_beacon = queued_delivery["beacon"]
+		if(queued_order && queued_beacon?.drop_location && ("[queued_order.id]" in shoppinglist[queued_order.faction]))
+			start_fast_delivery(queued_order, queued_beacon)
 
 ///Add amount of psy points to the selected hive only if the gamemode support psypoints
 /datum/controller/subsystem/points/proc/add_psy_points(hivenumber, amount)

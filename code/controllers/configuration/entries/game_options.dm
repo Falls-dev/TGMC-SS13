@@ -120,3 +120,22 @@
 /datum/config_entry/number/tts_http_timeout_seconds
 	default = 30
 	min_val = 0
+
+/// OpenAI-compatible endpoint used by the Requisitions radio operator AI.
+/// Leave empty to keep the feature disabled.
+/datum/config_entry/string/requisitions_ai_http_url
+	protection = CONFIG_ENTRY_LOCKED
+
+/// Bearer token for requisitions_ai_http_url. Never expose this to clients.
+/datum/config_entry/string/requisitions_ai_http_token
+	protection = CONFIG_ENTRY_LOCKED|CONFIG_ENTRY_HIDDEN
+
+/// Model name sent to the OpenAI-compatible endpoint (for example gpt-4o-mini or deepseek-chat).
+/datum/config_entry/string/requisitions_ai_model
+	config_entry_value = "gpt-4o-mini"
+	protection = CONFIG_ENTRY_LOCKED
+
+/// Upper bound for an individual Requisitions AI HTTP request.
+/datum/config_entry/number/requisitions_ai_http_timeout_seconds
+	default = 20
+	min_val = 1
