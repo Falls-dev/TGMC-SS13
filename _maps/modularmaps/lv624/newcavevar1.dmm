@@ -54,10 +54,6 @@
 /obj/effect/landmark/weed_node,
 /turf/open/floor/plating/ground/dirt,
 /area/lv624/ground/caves/central3)
-"qE" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/caves/central2)
 "rO" = (
 /obj/structure/rack,
 /turf/open/floor/tile/vault{
@@ -541,7 +537,7 @@ MM
 aK
 hY
 hY
-qE
+hY
 hY
 hY
 hY
@@ -1248,7 +1244,7 @@ MM
 hY
 hY
 hY
-qE
+hY
 hY
 hY
 hY
@@ -1821,7 +1817,7 @@ hY
 MM
 MM
 hY
-qE
+hY
 hY
 hY
 hY
@@ -2362,7 +2358,7 @@ AO
 hY
 hY
 hY
-qE
+hY
 hY
 hY
 hY
@@ -2784,7 +2780,7 @@ Ka
 AO
 hY
 hY
-qE
+hY
 hY
 hY
 AO

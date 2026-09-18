@@ -52,21 +52,12 @@
 "s" = (
 /turf/closed/mineral/smooth/bigred,
 /area/bigredv2/caves/rock)
-"t" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast/garbledradio)
 "x" = (
 /turf/closed/wall/r_wall,
 /area/bigredv2/caves/rock)
 "F" = (
 /turf/closed/mineral/smooth/bigred/indestructible,
 /area/space)
-"H" = (
-/obj/effect/ai_node,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast)
 "I" = (
 /obj/machinery/chem_master,
 /turf/open/floor/tile/whiteyellow{
@@ -987,7 +978,7 @@ l
 P
 P
 P
-t
+P
 P
 P
 s
@@ -1836,7 +1827,7 @@ s
 s
 i
 i
-H
+c
 i
 i
 i

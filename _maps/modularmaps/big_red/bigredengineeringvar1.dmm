@@ -104,10 +104,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/freezer,
 /area/bigredv2/outside/engineering)
-"hG" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
 "ik" = (
 /obj/structure/sign/safety/hazard,
 /turf/open/floor,
@@ -406,15 +402,6 @@
 "wW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/sheet/metal,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
-"wZ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
-"xm" = (
-/obj/effect/landmark/excavation_site_spawner,
 /turf/open/floor,
 /area/bigredv2/outside/engineering)
 "xz" = (
@@ -1328,7 +1315,7 @@ At
 vr
 vr
 vr
-xm
+vr
 vr
 tW
 Mq
@@ -1377,7 +1364,7 @@ AJ
 xG
 "}
 (13,1,1) = {"
-wZ
+UO
 jR
 bJ
 Gu
@@ -1518,7 +1505,7 @@ Mq
 Mq
 Mq
 AJ
-hG
+AJ
 xG
 "}
 (18,1,1) = {"
@@ -1617,7 +1604,7 @@ ZV
 NN
 NN
 UO
-xm
+vr
 UO
 vr
 tW

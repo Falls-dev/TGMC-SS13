@@ -210,10 +210,6 @@
 	dir = 4
 	},
 /area/lv624/ground/caves/central2)
-"Dr" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/caves/central1)
 "Eg" = (
 /obj/structure/rack,
 /obj/item/stack/sheet/mineral/tritium{
@@ -262,10 +258,6 @@
 "Nw" = (
 /turf/open/floor/plating/ground/dirt,
 /area/lv624/ground/caves/central3)
-"Nz" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/caves/central2)
 "Ok" = (
 /turf/open/liquid/water/river,
 /area/lv624/ground/caves/central2)
@@ -653,7 +645,7 @@ hY
 hY
 hY
 hY
-Nz
+hY
 hY
 hY
 hY
@@ -1933,7 +1925,7 @@ hY
 hY
 hY
 hY
-Nz
+hY
 hY
 hY
 hY
@@ -2474,7 +2466,7 @@ Hh
 hY
 hY
 hY
-Nz
+hY
 hY
 hY
 hY
@@ -2896,7 +2888,7 @@ on
 Hh
 JQ
 JV
-Dr
+JV
 JV
 JQ
 Hh

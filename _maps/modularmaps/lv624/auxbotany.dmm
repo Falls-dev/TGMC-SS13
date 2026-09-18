@@ -35,7 +35,6 @@
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 4
 	},
-/obj/effect/landmark/excavation_site_spawner,
 /obj/machinery/atmospherics/components/unary/vent_pump/layer1,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/engine,
@@ -214,7 +213,6 @@
 	},
 /area/lv624/lazarus/hydroponics/aux)
 "qf" = (
-/obj/effect/landmark/excavation_site_spawner,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/green/whitegreencorner{
 	dir = 1

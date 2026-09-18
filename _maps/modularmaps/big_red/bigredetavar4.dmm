@@ -549,10 +549,6 @@
 	},
 /turf/open/floor/freezer,
 /area/bigredv2/outside/general_offices)
-"CI" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor,
-/area/bigredv2/outside/general_offices)
 "CJ" = (
 /obj/machinery/vending/engivend,
 /turf/open/floor,
@@ -990,11 +986,6 @@
 	},
 /turf/open/floor,
 /area/bigredv2/outside/general_offices)
-"Wm" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor,
-/area/bigredv2/outside/general_offices)
 "Wn" = (
 /obj/structure/table,
 /obj/item/flashlight/lamp/green,
@@ -1323,7 +1314,7 @@ BD
 FO
 BK
 Lp
-CI
+te
 Xd
 te
 Lp
@@ -1349,7 +1340,7 @@ jq
 jm
 gm
 Lp
-Wm
+jm
 tp
 te
 Hw

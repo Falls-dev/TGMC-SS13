@@ -1311,10 +1311,6 @@
 /obj/effect/turf_decal/tile/transparent/red/anticorner/contrasted,
 /turf/open/floor/iron/dark,
 /area/deltastation/security/execution/education)
-"aoC" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/deltastation/asteroidcaves/easterntunnel)
 "aoD" = (
 /obj/effect/spawner/random/misc/structure/directional_window/west,
 /obj/effect/landmark/weed_node,
@@ -2710,13 +2706,6 @@
 /obj/effect/turf_decal/sandedge,
 /turf/open/floor/iron/dark,
 /area/deltastation/ai_monitored/aisat/exterior)
-"aFh" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/iron,
-/area/deltastation/engineering/main)
 "aFi" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/transparent/red,
@@ -13026,10 +13015,6 @@
 	},
 /turf/open/floor/iron,
 /area/deltastation/cargo/sorting)
-"cOg" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/deltastation/asteroidcaves/westerncaves)
 "cOt" = (
 /obj/effect/mapping_helpers/simple_pipes/purple/visible,
 /obj/effect/decal/cleanable/dirt,
@@ -14025,10 +14010,6 @@
 /obj/effect/spawner/random/misc/structure/girder,
 /turf/open/floor/plating,
 /area/deltastation/maintenance/port/aft)
-"cYN" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/deltastation/asteroidcaves/northcaves)
 "cYQ" = (
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 4
@@ -17974,14 +17955,6 @@
 	},
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/deltastation/asteroidcaves/northcaves)
-"dLU" = (
-/obj/effect/turf_decal/tile/transparent/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/transparent/yellow,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/iron,
-/area/deltastation/engineering/supermatter/room)
 "dLV" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -33535,11 +33508,6 @@
 /obj/effect/landmark/weed_node,
 /turf/open/floor/iron,
 /area/deltastation/cargo/storage)
-"gOU" = (
-/obj/effect/landmark/start/job/xenomorph,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/deltastation/asteroidcaves/westerncaves)
 "gPd" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/transparent/red,
@@ -33868,10 +33836,6 @@
 	},
 /turf/open/floor/iron,
 /area/deltastation/command/teleporter)
-"gRV" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/deltastation/maintenance/department/science)
 "gRW" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -33944,10 +33908,6 @@
 /obj/effect/ai_node,
 /turf/open/floor/iron,
 /area/deltastation/hallway/secondary/exit/departure_lounge)
-"gSt" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/deltastation/engineering/storage/tech)
 "gSv" = (
 /obj/effect/turf_decal/tile/transparent/blue{
 	dir = 1
@@ -37230,10 +37190,6 @@
 	},
 /turf/open/floor/prison/blackfloor,
 /area/deltastation/asteroidcaves/ship)
-"hEe" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/iron,
-/area/deltastation/hallway/primary/fore)
 "hEg" = (
 /obj/effect/landmark/weed_node,
 /obj/effect/ai_node,
@@ -40751,10 +40707,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/deltastation/maintenance/department/eva/abandoned)
-"iuD" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/deltastation/asteroidcaves/southtunnel)
 "iuN" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/iron/dark,
@@ -54967,10 +54919,6 @@
 	},
 /turf/open/floor/iron,
 /area/deltastation/engineering/atmos)
-"lwt" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/deltastation/asteroidcaves/securitycaves)
 "lwu" = (
 /obj/structure/bed/chair/pew,
 /turf/open/floor/tile/chapel{
@@ -63710,11 +63658,6 @@
 /obj/effect/landmark/weed_node,
 /turf/open/floor/iron,
 /area/deltastation/maintenance/starboard/aft)
-"nnU" = (
-/obj/effect/landmark/excavation_site_spawner,
-/obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/deltastation/asteroidcaves/easterntunnel)
 "nnV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -66744,10 +66687,6 @@
 /obj/machinery/light,
 /turf/open/floor/iron,
 /area/deltastation/commons/storage/primary)
-"nWD" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/deltastation/medical/chemistry)
 "nWI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -67307,11 +67246,6 @@
 	},
 /turf/open/floor/iron,
 /area/deltastation/hallway/secondary/exit)
-"ocm" = (
-/obj/effect/landmark/excavation_site_spawner,
-/obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/deltastation/asteroidcaves/northcaves)
 "oco" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/engineering/computercircuit,
@@ -71934,11 +71868,6 @@
 	},
 /turf/open/floor/iron,
 /area/deltastation/hallway/primary/central/fore)
-"pat" = (
-/obj/effect/landmark/weed_node,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/deltastation/asteroidcaves/westerncaves)
 "pay" = (
 /obj/effect/spawner/random/misc/structure/directional_window,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -74871,10 +74800,6 @@
 	},
 /turf/open/floor/iron,
 /area/deltastation/science/xenobiology)
-"pDV" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/deltastation/maintenance/fore)
 "pEe" = (
 /obj/effect/spawner/random/misc/structure/securecloset/regular,
 /obj/effect/decal/cleanable/dirt,
@@ -76015,12 +75940,6 @@
 	},
 /turf/open/floor/iron,
 /area/deltastation/maintenance/port)
-"pPp" = (
-/obj/effect/turf_decal/tile/transparent/neutral/fourcorners,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/iron,
-/area/deltastation/engineering/atmos/project)
 "pPv" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate{
@@ -82220,11 +82139,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/deltastation/service/chapel/office)
-"rcq" = (
-/obj/effect/landmark/weed_node,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/deltastation/asteroidcaves/northcaves)
 "rcs" = (
 /obj/effect/spawner/random/misc/structure/broken_reinforced_window,
 /obj/effect/turf_decal/sandedge{
@@ -83522,11 +83436,6 @@
 	},
 /turf/open/floor/plating,
 /area/deltastation/service/theater/abandoned)
-"rpI" = (
-/obj/effect/landmark/weed_node,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/deltastation/maintenance/port/fore)
 "rpV" = (
 /obj/structure/sign/securearea{
 	dir = 1
@@ -87064,11 +86973,6 @@
 /obj/effect/spawner/random/machinery/status_display,
 /turf/closed/wall,
 /area/deltastation/medical/storage)
-"scw" = (
-/obj/effect/landmark/weed_node,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/deltastation/asteroidcaves/westerncaves/garbledradio)
 "scy" = (
 /obj/structure/cable,
 /obj/item/radio/intercom,
@@ -87629,10 +87533,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/deltastation/medical/medbay/lobby)
-"siS" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/deltastation/asteroidcaves/northcaves/garbledradio)
 "siV" = (
 /obj/effect/turf_decal/tile/transparent/purple,
 /obj/structure/prop/camera{
@@ -94792,10 +94692,6 @@
 	},
 /turf/open/floor/iron,
 /area/deltastation/hallway/primary/central/fore)
-"tFB" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/deltastation/maintenance/port/fore)
 "tFD" = (
 /obj/effect/mapping_helpers/simple_pipes/green/visible,
 /obj/effect/spawner/random/misc/structure/broken_reinforced_window,
@@ -102310,13 +102206,6 @@
 /obj/structure/sign/securearea,
 /turf/open/floor/plating,
 /area/deltastation/maintenance/department/security)
-"vfG" = (
-/obj/effect/landmark/excavation_site_spawner,
-/obj/effect/landmark/xeno_resin_door{
-	dir = 4
-	},
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/deltastation/asteroidcaves/northcaves)
 "vfH" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 8
@@ -122261,7 +122150,7 @@ bCp
 bCp
 bCp
 xXG
-scw
+fIn
 xXG
 xXG
 xXG
@@ -125595,7 +125484,7 @@ bCp
 bCp
 bCp
 bCp
-pat
+olu
 eUA
 bCp
 bCp
@@ -127653,7 +127542,7 @@ bCp
 hJh
 bCp
 hJh
-cOg
+bCp
 bCp
 bCp
 bCp
@@ -130994,7 +130883,7 @@ mhN
 bCp
 bCp
 rVf
-cOg
+bCp
 bCp
 olu
 bCp
@@ -132257,7 +132146,7 @@ bCp
 olu
 hJh
 qer
-gOU
+hJh
 bCp
 olu
 wxm
@@ -141063,7 +140952,7 @@ xJc
 fjM
 sIa
 vQG
-dLU
+oFP
 tml
 qLR
 oFP
@@ -143063,7 +142952,7 @@ rlo
 ppB
 pne
 moS
-pPp
+laN
 bsU
 sQl
 cSB
@@ -143883,7 +143772,7 @@ hVC
 uMe
 jBF
 mDQ
-aFh
+akC
 cQz
 akC
 hXa
@@ -143934,7 +143823,7 @@ wuP
 ccV
 nMO
 qsh
-iuD
+qsh
 nMO
 vhN
 vNR
@@ -145716,7 +145605,7 @@ xEN
 xEN
 xEN
 xEN
-gRV
+mNN
 hCY
 xBz
 ors
@@ -145906,7 +145795,7 @@ esS
 ujl
 hFe
 uNb
-rpI
+jFR
 esS
 hFe
 uNb
@@ -146140,7 +146029,7 @@ pjk
 lbm
 esS
 nQs
-tFB
+esS
 bxM
 jFR
 eua
@@ -147149,7 +147038,7 @@ kTy
 psq
 kTy
 psq
-rcq
+psq
 kyZ
 psq
 kyZ
@@ -147201,7 +147090,7 @@ gTw
 keZ
 uAk
 esS
-gSt
+wqY
 wqY
 fwT
 wqY
@@ -148742,7 +148631,7 @@ vQM
 bKY
 keZ
 gcC
-tFB
+esS
 wqY
 vni
 wqY
@@ -151798,7 +151687,7 @@ ddb
 mPu
 ecZ
 sDl
-hEe
+ecZ
 qUT
 ecZ
 ecZ
@@ -152010,7 +151899,7 @@ kTy
 bLW
 kTy
 iDb
-siS
+nLL
 nLL
 nLL
 wxm
@@ -152754,7 +152643,7 @@ wxm
 wxm
 wxm
 psq
-cYN
+kTy
 kTy
 kTy
 ayb
@@ -153841,7 +153730,7 @@ adb
 trS
 oqJ
 vfj
-cYN
+kTy
 kTy
 psq
 vfj
@@ -154469,7 +154358,7 @@ gZl
 gzQ
 bhJ
 mGw
-nWD
+iEc
 vXm
 hTr
 hTr
@@ -154574,7 +154463,7 @@ dPZ
 ayb
 kTy
 kyZ
-ocm
+bni
 kTy
 fcx
 kTy
@@ -156121,7 +156010,7 @@ wxm
 wxm
 kTy
 nLL
-siS
+nLL
 nLL
 nLL
 iDb
@@ -158161,7 +158050,7 @@ nam
 nam
 nam
 nam
-vfG
+nam
 nam
 nam
 xtF
@@ -159437,7 +159326,7 @@ kTy
 kTy
 kTy
 kTy
-cYN
+kTy
 kTy
 kTy
 kTy
@@ -161043,7 +160932,7 @@ bGQ
 dbQ
 iau
 rpk
-pDV
+hHJ
 bUt
 dra
 ubW
@@ -161749,7 +161638,7 @@ vNR
 vNR
 kTy
 kTy
-cYN
+kTy
 kTy
 kTy
 kTy
@@ -164166,7 +164055,7 @@ sdT
 sJy
 rHg
 jQJ
-lwt
+rHg
 rHg
 rHg
 qIv
@@ -165423,7 +165312,7 @@ rHg
 sJy
 rHg
 wxm
-lwt
+rHg
 rHg
 rHg
 rHg
@@ -175226,7 +175115,7 @@ wxm
 vlJ
 vlJ
 avd
-aoC
+vlJ
 kkp
 nRR
 vlJ
@@ -176017,7 +175906,7 @@ vlJ
 lSA
 vlJ
 vlJ
-nnU
+kkp
 vlJ
 bgS
 xsu

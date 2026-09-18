@@ -20,10 +20,6 @@
 /obj/effect/landmark/weed_node,
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/bigredv2/caves/east)
-"ag" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/east/garbledradio)
 "ah" = (
 /obj/effect/landmark/miner_platinum,
 /turf/open/floor/plating/ground/mars/random/cave,
@@ -107,10 +103,6 @@
 /obj/effect/landmark/xeno_silo_spawn,
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/bigredv2/caves/east/garbledradio)
-"aN" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/east)
 "aP" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/plating/ground/mars/random/sand,
@@ -1486,7 +1478,7 @@ ae
 ac
 ac
 ac
-ag
+ac
 ac
 ae
 ac
@@ -1823,7 +1815,7 @@ ac
 ac
 ab
 ac
-ag
+ac
 ac
 ac
 ae
@@ -1840,7 +1832,7 @@ ad
 ad
 ac
 ac
-ag
+ac
 ac
 ac
 ae
@@ -1937,7 +1929,7 @@ ac
 aj
 ac
 ac
-ag
+ac
 ac
 ae
 ac
@@ -2168,7 +2160,7 @@ ai
 ai
 ai
 ai
-aN
+ai
 ai
 ai
 ai
@@ -2236,7 +2228,7 @@ ai
 ai
 ai
 am
-aN
+ai
 ai
 ai
 ai
@@ -2442,7 +2434,7 @@ ad
 ad
 ai
 ai
-aN
+ai
 ai
 ai
 am
