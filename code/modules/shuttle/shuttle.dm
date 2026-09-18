@@ -392,6 +392,9 @@
 	/// All shuttle_control computers that share at least one control flag is able to link to this shuttle
 	var/control_flags = NONE
 
+	var/max_personnel = null
+	var/max_vehicles = null
+
 	///Reference of the shuttle docker holding the mobile docking port
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/shuttle_computer
 
