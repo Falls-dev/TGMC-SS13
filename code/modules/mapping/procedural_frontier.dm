@@ -167,7 +167,9 @@
 
 	// Cave-density profile. The LZ surface is always open; farther away, the
 	// ridge cutoff rises according to the exponential gradient.
-	var/landing_surface_radius = 24
+	// The ridge-density gradient starts after this distance from the LZ center.
+	// This preserves a broader naturally open area around the FOB.
+	var/ridge_gradient_start_distance = 24
 	var/landing_edge_opening = 3.0
 	var/ceiling_distance_rate = 0.35
 	// The gradient is evaluated over an extended range and clamped to the
@@ -506,9 +508,6 @@
 				set_turf_and_area(current_turf, deep_cave_wall_type, cave_area)
 				continue
 			var/distance_from_landing = landing_center ? get_dist(current_turf, landing_center) : 0
-			if(layout.is_in_gradient_area(tile_x, tile_y) && distance_from_landing <= landing_surface_radius)
-				set_turf_and_area(current_turf, asteroid_floor_type, cave_area)
-				continue
 			var/ridge_cutoff = get_ridge_cutoff(tile_x, tile_y, distance_from_landing, layout, central_complexity_multiplier)
 			var/ridge_value = procedural_frontier_ridge_noise(tile_x, tile_y, seed, noise_coarse_scale, noise_fine_scale, noise_coarse_weight)
 			if(ridge_value >= ridge_cutoff)
@@ -521,7 +520,9 @@
 /obj/effect/landmark/procedural_frontier_generator/proc/get_ridge_cutoff(tile_x, tile_y, distance_from_landing, datum/procedural_frontier_layout/layout, central_complexity_multiplier)
 	if(!layout.is_in_gradient_area(tile_x, tile_y))
 		return remote_cave_cutoff
-	var/distance_threshold = procedural_frontier_landing_threshold(distance_from_landing, layout.max_landing_distance, landing_edge_opening)
+	var/gradient_distance = max(0, distance_from_landing - ridge_gradient_start_distance)
+	var/gradient_length = max(1, layout.max_landing_distance - ridge_gradient_start_distance)
+	var/distance_threshold = procedural_frontier_landing_threshold(gradient_distance, gradient_length, landing_edge_opening)
 	return clamp(distance_threshold * remote_cave_cutoff * central_complexity_multiplier + cave_ridge_threshold, 0, 1)
 
 /obj/effect/landmark/procedural_frontier_generator/proc/set_turf_and_area(turf/target_turf, turf_type, area/target_area)
@@ -1090,7 +1091,7 @@
 	var/list/candidates = list()
 	var/turf/landing_center = layout.get_landing_center()
 	for(var/turf/candidate in open_cave_tiles)
-		if(landing_center && get_dist(candidate, landing_center) > landing_surface_radius)
+		if(landing_center && get_dist(candidate, landing_center) > ridge_gradient_start_distance)
 			candidates += candidate
 	if(!length(candidates))
 		candidates = open_cave_tiles.Copy()
@@ -1145,7 +1146,7 @@
 /obj/effect/landmark/procedural_frontier_generator/proc/place_excavation_sites(list/open_cave_tiles, datum/procedural_frontier_layout/layout)
 	var/list/site_candidates = list()
 	for(var/turf/candidate in open_cave_tiles)
-		if(get_dist(candidate, layout.get_landing_center()) > landing_surface_radius)
+		if(get_dist(candidate, layout.get_landing_center()) > ridge_gradient_start_distance)
 			site_candidates += candidate
 	for(var/i in 1 to min(excavation_site_count, length(site_candidates)))
 		var/turf/site_turf = pick_n_take(site_candidates)
