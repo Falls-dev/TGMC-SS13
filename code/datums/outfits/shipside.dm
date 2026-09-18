@@ -32,6 +32,24 @@
 	l_pocket = /obj/item/hud_tablet/fieldcommand
 	suit_store = /obj/item/storage/holster/belt/pistol/m4a3/fieldcommander
 
+/datum/outfit/job/command/fieldcommander_robot
+	name = FIELD_COMMANDER
+	jobtype = /datum/job/terragov/command/fieldcommander
+	species = SPECIES_COMBAT_ROBOT
+
+	id = /obj/item/card/id/dogtag/fc
+	belt = /obj/item/storage/holster/blade/officer/full
+	ears = /obj/item/radio/headset/mainship/mcom
+	w_uniform = /obj/item/clothing/under/marine/robotic
+	wear_suit = /obj/item/clothing/suit/modular/robot
+	shoes = null
+	gloves = null
+	head = /obj/item/clothing/head/modular/robot
+	r_pocket = /obj/item/storage/pouch/general/large/command
+	l_pocket = /obj/item/hud_tablet/fieldcommand
+	back = /obj/item/storage/backpack/marine/satchel
+	suit_store = /obj/item/storage/holster/belt/pistol/m4a3/fieldcommander
+
 /datum/outfit/job/command/staffofficer
 	name = STAFF_OFFICER
 	jobtype = /datum/job/terragov/command/staffofficer
