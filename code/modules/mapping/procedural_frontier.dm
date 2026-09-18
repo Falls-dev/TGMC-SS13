@@ -159,8 +159,6 @@
 	// Landing zone geometry and placement.
 	var/landing_width = 30
 	var/landing_height = 40
-	var/landing_edge_margin = 8
-	var/landing_edge_bias = 4
 	var/landing_exit_length = 18
 	var/pad_width = 11
 	var/pad_height = 21
@@ -169,7 +167,7 @@
 	// ridge cutoff rises according to the exponential gradient.
 	// The ridge-density gradient starts after this distance from the LZ center.
 	// This preserves a broader naturally open area around the FOB.
-	var/ridge_gradient_start_distance = 24
+	var/ridge_gradient_start_distance = 20
 	var/landing_edge_opening = 3.0
 	var/ceiling_distance_rate = 0.35
 	// The gradient is evaluated over an extended range and clamped to the
@@ -352,10 +350,21 @@
 	layout.gradient_max_x = layout.gradient_min_x + gradient_width - 1
 	layout.gradient_max_y = layout.gradient_min_y + gradient_height - 1
 
-	var/available_x = max(1, gradient_width - landing_width - landing_edge_margin * 2)
-	var/available_y = max(1, gradient_height - landing_height - landing_edge_margin * 2)
-	layout.landing_min_x = layout.gradient_min_x + landing_edge_margin + get_edge_biased_offset(available_x, procedural_frontier_hash(701, 17, seed))
-	layout.landing_min_y = layout.gradient_min_y + landing_edge_margin + get_edge_biased_offset(available_y, procedural_frontier_hash(719, 23, seed))
+	var/available_x = max(1, gradient_width - landing_width)
+	var/available_y = max(1, gradient_height - landing_height)
+	var/edge_side = floor(procedural_frontier_hash(701, 17, seed) * 4)
+	if(edge_side == 0) // west
+		layout.landing_min_x = layout.gradient_min_x
+		layout.landing_min_y = layout.gradient_min_y + round(procedural_frontier_hash(719, 23, seed) * available_y)
+	else if(edge_side == 1) // east
+		layout.landing_min_x = layout.gradient_max_x - landing_width + 1
+		layout.landing_min_y = layout.gradient_min_y + round(procedural_frontier_hash(719, 23, seed) * available_y)
+	else if(edge_side == 2) // south
+		layout.landing_min_x = layout.gradient_min_x + round(procedural_frontier_hash(719, 23, seed) * available_x)
+		layout.landing_min_y = layout.gradient_min_y
+	else // north
+		layout.landing_min_x = layout.gradient_min_x + round(procedural_frontier_hash(719, 23, seed) * available_x)
+		layout.landing_min_y = layout.gradient_max_y - landing_height + 1
 	layout.landing_max_x = layout.landing_min_x + landing_width - 1
 	layout.landing_max_y = layout.landing_min_y + landing_height - 1
 	layout.landing_center_x = round((layout.landing_min_x + layout.landing_max_x) / 2)
@@ -375,13 +384,6 @@
 	if(abs(offset_x) >= abs(offset_y))
 		return offset_x >= 0 ? WEST : EAST
 	return offset_y >= 0 ? SOUTH : NORTH
-
-/obj/effect/landmark/procedural_frontier_generator/proc/get_edge_biased_offset(range, random_value)
-	if(range <= 0)
-		return 0
-	var/edge_distance = (random_value < 0.5) ? (random_value * 2) : ((1 - random_value) * 2)
-	var/half_range = range / 2
-	return round(random_value < 0.5 ? (edge_distance ** landing_edge_bias) * half_range : range - (edge_distance ** landing_edge_bias) * half_range)
 
 /obj/effect/landmark/procedural_frontier_generator/proc/get_farthest_edge_distance(datum/procedural_frontier_layout/layout)
 	var/turf/landing_center = layout.get_landing_center()
