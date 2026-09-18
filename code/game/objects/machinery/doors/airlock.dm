@@ -7,6 +7,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 360
+	screen_loc = E3D_TYPE_DOOR
 	atom_flags = HTML_USE_INITAL_ICON_1
 	obj_flags = CAN_BE_HIT
 	autoclose = TRUE

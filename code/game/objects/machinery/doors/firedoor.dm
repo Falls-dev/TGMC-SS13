@@ -14,6 +14,7 @@
 	req_one_access = list(ACCESS_CIVILIAN_ENGINEERING)
 	opacity = FALSE
 	density = FALSE
+	screen_loc = E3D_TYPE_EDGEFIREDOOR
 	obj_flags = CAN_BE_HIT
 	allow_pass_flags = NONE
 	layer = BELOW_OPEN_DOOR_LAYER

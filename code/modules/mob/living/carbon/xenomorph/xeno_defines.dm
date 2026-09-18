@@ -282,7 +282,7 @@ GLOBAL_LIST_INIT(strain_list, init_glob_strain_list())
 	mob_size = MOB_SIZE_XENO
 	hand = 1 //Make right hand active by default. 0 is left hand, mob defines it as null normally
 	lighting_cutoff =  LIGHTING_CUTOFF_HIGH
-	sight = SEE_SELF|SEE_OBJS|SEE_TURFS|SEE_MOBS
+	sight = SEE_SELF|SEE_OBJS|SEE_TURFS|SEE_MOBS|E3D_SEE_ZOOM
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|KEEP_TOGETHER|LONG_GLIDE
 	see_infrared = TRUE
 	hud_type = /datum/hud/alien

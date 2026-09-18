@@ -3,6 +3,7 @@
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	screen_loc = E3D_TYPE_FLOOR
 
 /obj/effect/turf_decal
 	name = "turf decal"

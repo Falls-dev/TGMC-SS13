@@ -7,6 +7,7 @@
 	interaction_flags = INTERACT_CHECK_INCAPACITATED
 	layer = TABLE_LAYER
 	density = TRUE
+	screen_loc = E3D_TYPE_BASICWALL
 	resistance_flags = DROPSHIP_IMMUNE | XENO_DAMAGEABLE
 	allow_pass_flags = PASS_LOW_STRUCTURE|PASSABLE|PASS_WALKOVER
 	max_integrity = 150

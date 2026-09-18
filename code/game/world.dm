@@ -127,6 +127,8 @@ GLOBAL_VAR(restart_counter)
 		GLOB.restart_counter = text2num(trim(file2text(RESTART_COUNTER_PATH)))
 		fdel(RESTART_COUNTER_PATH)
 
+	init_webclient_patches()
+
 
 /// Initializes TGS and loads the returned revising info into GLOB.revdata
 /world/proc/InitTgs()
@@ -216,6 +218,21 @@ GLOBAL_VAR(restart_counter)
 
 	handler = new handler()
 	return handler.TryRun(input)
+
+/world/proc/init_webclient_patches()
+	if(!fexists(WEBCLIENT_PATCHES))
+		log_world("webclient_patches: [WEBCLIENT_PATCHES] not found next to the .dmb")
+		return
+	var/result = call_ext(WEBCLIENT_PATCHES, "set_webclient_auth")("-", "Guest;gender=neuter")
+	if(result)
+		log_world("webclient_patches error: [result]")
+	else
+		log_world("webclient_patches: loaded")
+
+/world/Del()
+	if(fexists(WEBCLIENT_PATCHES))
+		call_ext(WEBCLIENT_PATCHES, "remove_webclient_patches")()
+	..()
 
 /world/proc/FinishTestRun()
 	set waitfor = FALSE

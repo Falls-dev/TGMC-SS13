@@ -203,28 +203,28 @@
 		return //species without inv slots don't show items.
 	if(screenmob.hud_used.inventory_shown && screenmob.hud_used.hud_shown)
 		if(H.shoes)
-			H.shoes.screen_loc = ui_shoes
+			SET_SCREEN_LOC(H.shoes, ui_shoes)
 			screenmob.client.screen += H.shoes
 		if(H.gloves)
-			H.gloves.screen_loc = ui_gloves
+			SET_SCREEN_LOC(H.gloves, ui_gloves)
 			screenmob.client.screen += H.gloves
 		if(H.wear_ear)
-			H.wear_ear.screen_loc = ui_wear_ear
+			SET_SCREEN_LOC(H.wear_ear, ui_wear_ear)
 			screenmob.client.screen += H.wear_ear
 		if(H.glasses)
-			H.glasses.screen_loc = ui_glasses
+			SET_SCREEN_LOC(H.glasses, ui_glasses)
 			screenmob.client.screen += H.glasses
 		if(H.w_uniform)
-			H.w_uniform.screen_loc = ui_iclothing
+			SET_SCREEN_LOC(H.w_uniform, ui_iclothing)
 			screenmob.client.screen += H.w_uniform
 		if(H.wear_suit)
-			H.wear_suit.screen_loc = ui_oclothing
+			SET_SCREEN_LOC(H.wear_suit, ui_oclothing)
 			screenmob.client.screen += H.wear_suit
 		if(H.wear_mask)
-			H.wear_mask.screen_loc = ui_mask
+			SET_SCREEN_LOC(H.wear_mask, ui_mask)
 			screenmob.client.screen += H.wear_mask
 		if(H.head)
-			H.head.screen_loc = ui_head
+			SET_SCREEN_LOC(H.head, ui_head)
 			screenmob.client.screen += H.head
 	else
 		if(H.shoes)
@@ -257,22 +257,22 @@
 	if(screenmob.hud_used)
 		if(screenmob.hud_used.hud_shown)
 			if(H.s_store)
-				H.s_store.screen_loc = ui_sstore1
+				SET_SCREEN_LOC(H.s_store, ui_sstore1)
 				screenmob.client.screen += H.s_store
 			if(H.wear_id)
-				H.wear_id.screen_loc = ui_id
+				SET_SCREEN_LOC(H.wear_id, ui_id)
 				screenmob.client.screen += H.wear_id
 			if(H.belt)
-				H.belt.screen_loc = ui_belt
+				SET_SCREEN_LOC(H.belt, ui_belt)
 				screenmob.client.screen += H.belt
 			if(H.back)
-				H.back.screen_loc = ui_back
+				SET_SCREEN_LOC(H.back, ui_back)
 				screenmob.client.screen += H.back
 			if(H.l_store)
-				H.l_store.screen_loc = ui_storage1
+				SET_SCREEN_LOC(H.l_store, ui_storage1)
 				screenmob.client.screen += H.l_store
 			if(H.r_store)
-				H.r_store.screen_loc = ui_storage2
+				SET_SCREEN_LOC(H.r_store, ui_storage2)
 				screenmob.client.screen += H.r_store
 		else
 			if(H.s_store)
@@ -290,10 +290,10 @@
 
 	if(hud_version != HUD_STYLE_NOHUD)
 		if(H.r_hand)
-			H.r_hand.screen_loc = ui_rhand
+			SET_SCREEN_LOC(H.r_hand, ui_rhand)
 			screenmob.client.screen += H.r_hand
 		if(H.l_hand)
-			H.l_hand.screen_loc = ui_lhand
+			SET_SCREEN_LOC(H.l_hand, ui_lhand)
 			screenmob.client.screen += H.l_hand
 	else
 		if(H.r_hand)
