@@ -778,7 +778,7 @@
 			INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), ui.user.client, "Так звучит мой голос.", speaker = choice, local = TRUE, special_filters = isrobot(GLOB.all_species[species]) ? TTS_FILTER_SILICON : "", pitch = tts_pitch)
 
 		if("tts_pitch")
-			tts_pitch = clamp(text2num(params["newValue"]), -12, 12)
+			tts_pitch = clamp(text2num(params["newValue"]), -2, 2)
 			if(TIMER_COOLDOWN_RUNNING(user, COOLDOWN_TRY_TTS))
 				return
 			TIMER_COOLDOWN_START(ui.user, COOLDOWN_TRY_TTS, 0.5 SECONDS)
