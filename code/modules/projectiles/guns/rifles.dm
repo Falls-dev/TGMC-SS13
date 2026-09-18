@@ -16,7 +16,6 @@
 	aim_slowdown = 0.35
 	wield_delay = 0.8 SECONDS
 	gun_skill_category = SKILL_RIFLES
-	type_of_casings = "bullet"
 
 	burst_amount = 3
 	burst_delay = 0.2 SECONDS

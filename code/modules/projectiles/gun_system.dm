@@ -1524,11 +1524,14 @@
 		num_of_casings = 1
 	var/sound_to_play = type_of_casings == "shell" ? 'sound/bullets/bulletcasing_shotgun_fall1.ogg' : pick('sound/bullets/bulletcasing_fall2.ogg','sound/bullets/bulletcasing_fall1.ogg')
 	var/turf/current_turf = get_turf(src)
-	var/new_casing_type = text2path("/obj/item/ammo_casing/[type_of_casings]")
-	var/eject_dir = (gun_user ? gun_user.dir : dir)
-	for(var/i in 1 to num_of_casings)
-		new new_casing_type(current_turf, eject_dir)
-
+	var/new_casing = text2path("/obj/item/ammo_casing/[type_of_casings]")
+	var/obj/item/ammo_casing/casing = locate(new_casing) in current_turf
+	if(!casing)
+		casing = new new_casing(current_turf)
+		num_of_casings--
+	if(num_of_casings)
+		casing.current_casings += num_of_casings
+		casing.update_appearance()
 	playsound(current_turf, sound_to_play, 25, 1, 5)
 
 ///Gets a projectile to fire from the magazines ammo type.
