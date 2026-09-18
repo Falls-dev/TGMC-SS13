@@ -293,6 +293,10 @@ Important note: colors can end up significantly different from the basic html pi
 #define COLOR_AMMO_TANGLEFOOT "#AA1FDC"
 #define COLOR_AMMO_RAZORBURN "#FBF236"
 #define COLOR_AMMO_HIGH_EXPLOSIVE "#b02323"
+#define COLOR_AMMO_G_FUEL "#00C853"
+#define COLOR_AMMO_X_FUEL "#2272eb"
+#define COLOR_AMMO_HEALING_FOAM "#00CED1"
+#define COLOR_AMMO_ANTIGAS "#D9D9D9"
 
 //Campaign map lighting
 #define LIGHT_COLOR_PALE_GREEN "#ebffc6"

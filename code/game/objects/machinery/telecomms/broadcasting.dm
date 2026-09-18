@@ -206,7 +206,8 @@
 		SQUAD_MARINE,
 		SQUAD_ENGINEER,
 		SQUAD_CORPSMAN,
-		SQUAD_SMARTGUNNER
+		SQUAD_SMARTGUNNER,
+		SQUAD_SPECIALIST
 	)
 	if(ishuman(speaker))
 		var/mob/living/carbon/human/human_speaker = speaker

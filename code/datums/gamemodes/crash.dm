@@ -11,6 +11,7 @@
 		/datum/job/terragov/squad/engineer = 1,
 		/datum/job/terragov/squad/corpsman = 1,
 		/datum/job/terragov/squad/smartgunner = 1,
+		/datum/job/terragov/squad/specialist = 1,
 		/datum/job/terragov/squad/leader = 1,
 		/datum/job/terragov/medical/professor = 1,
 		/datum/job/terragov/medical/medicalofficer = 1,
@@ -20,6 +21,7 @@
 	)
 	job_points_needed_by_job_type = list(
 		/datum/job/terragov/squad/smartgunner = 20,
+		/datum/job/terragov/squad/specialist = 20,
 		/datum/job/terragov/squad/corpsman = 5,
 		/datum/job/terragov/squad/engineer = 5,
 		/datum/job/xenomorph = CRASH_LARVA_POINTS_NEEDED,
@@ -197,6 +199,7 @@
 		SQUAD_CORPSMAN,
 		SQUAD_ENGINEER,
 		SQUAD_SMARTGUNNER,
+		SQUAD_SPECIALIST,
 		SQUAD_LEADER,
 		FIELD_COMMANDER
 	)
@@ -302,7 +305,7 @@
 		if(!S.squad_leader || S.squad_leader.stat == DEAD || !S.squad_leader.client)
 			var/datum/squad/target_squad
 			var/highest_sl_exp = -1
-			var/list/roles_to_check = list(SQUAD_MARINE, SQUAD_CORPSMAN, SQUAD_ENGINEER, SQUAD_SMARTGUNNER, SQUAD_LEADER, FIELD_COMMANDER)
+			var/list/roles_to_check = list(SQUAD_MARINE, SQUAD_CORPSMAN, SQUAD_ENGINEER, SQUAD_SMARTGUNNER, SQUAD_SPECIALIST, SQUAD_LEADER, FIELD_COMMANDER)
 
 			for(var/datum/squad/other_squad in SSjob.active_squads[FACTION_TERRAGOV])
 				if(other_squad.squad_leader && other_squad.squad_leader.stat != DEAD && other_squad.squad_leader.client)

@@ -707,6 +707,10 @@
 	},
 /turf/open/floor/mainship/mono,
 /area/shuttle/canterbury)
+"so" = (
+/obj/effect/landmark/start/job/crash/cmo,
+/turf/open/floor/mainship/sterile,
+/area/shuttle/canterbury/medical)
 "su" = (
 /obj/structure/bed/chair/dropship/passenger{
 	dir = 1
@@ -899,6 +903,10 @@
 /obj/machinery/loadout_vendor/crash,
 /turf/open/floor/mainship,
 /area/shuttle/canterbury)
+"Id" = (
+/obj/effect/landmark/start/job/crash/squadspecialist,
+/turf/open/floor/mainship/mono,
+/area/shuttle/canterbury)
 "JM" = (
 /obj/machinery/marine_selector/gear/smartgun,
 /turf/open/floor/mainship/mono,
@@ -909,8 +917,11 @@
 /turf/open/floor/mainship/sterile/dark,
 /area/shuttle/canterbury/medical)
 "JX" = (
-/obj/structure/bed/chair/dropship/passenger,
-/obj/effect/landmark/start/job/crash/cmo,
+/obj/machinery/marine_selector/gear/specialist{
+	icon_vend = "marine-vend";
+	icon_state = "marine";
+	icon_deny = "marine-deny"
+	},
 /turf/open/floor/mainship/mono,
 /area/shuttle/canterbury)
 "Kh" = (
@@ -1148,17 +1159,12 @@
 /area/shuttle/canterbury)
 "Zn" = (
 /obj/effect/turf_decal/warning_stripes,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/door_control{
 	id = "Interior_Emergency_umbilical";
 	name = "Emergency door-control";
 	pixel_y = 32
 	},
+/obj/machinery/marine_selector/clothes/specialist,
 /turf/open/floor/mainship/mono,
 /area/shuttle/canterbury)
 
@@ -1282,7 +1288,7 @@ mM
 oj
 ap
 av
-aq
+so
 aC
 aq
 aH
@@ -1534,7 +1540,7 @@ MY
 bQ
 al
 Zn
-ac
+Id
 ab
 Wl
 an
