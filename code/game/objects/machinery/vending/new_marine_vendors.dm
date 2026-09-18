@@ -56,6 +56,13 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
+
+		if(istype(src, /obj/machinery/marine_selector/clothes/robo) || istype(src, /obj/machinery/marine_selector/gear/robo))
+			if(!istype(H.species, /datum/species/robot))
+				to_chat(user, span_warning("Access denied."))
+				return FALSE
+			return TRUE
+
 		if(!allowed(H))
 			to_chat(user, span_warning("Access denied. Your assigned role doesn't have access to this machinery."))
 			return FALSE
@@ -243,8 +250,6 @@
 
 /obj/machinery/marine_selector/clothes/robo
 	name = "GHMME Automated Combat Robot Closet"
-	req_access = list(ACCESS_MARINE_ROBOT)
-	vendor_role = /datum/job/terragov/squad/robot
 	gives_webbing = FALSE
 
 /obj/machinery/marine_selector/clothes/robo/Initialize(mapload)
@@ -252,7 +257,6 @@
 	listed_products = GLOB.robot_clothes_listed_products
 
 /obj/machinery/marine_selector/clothes/robo/valhalla
-	vendor_role = /datum/job/fallen/marine/combat_robot
 	resistance_flags = INDESTRUCTIBLE
 
 /obj/machinery/marine_selector/clothes/medic
@@ -381,15 +385,12 @@
 	icon_state = "robo"
 	icon_vend = "robo-vend"
 	icon_deny = "robo-deny"
-	vendor_role = /datum/job/terragov/squad/robot
-	req_access = list(ACCESS_MARINE_ROBOT)
 
 /obj/machinery/marine_selector/gear/robo/Initialize(mapload)
 	. = ..()
 	listed_products = GLOB.robot_gear_listed_products
 
 /obj/machinery/marine_selector/gear/robo/valhalla
-	vendor_role = /datum/job/fallen/marine/combat_robot
 	resistance_flags = INDESTRUCTIBLE
 
 /obj/machinery/marine_selector/gear/engi
