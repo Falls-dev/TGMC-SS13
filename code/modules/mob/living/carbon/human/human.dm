@@ -139,6 +139,9 @@
 	var/modified_severity = modify_by_armor(severity, BOMB)
 	var/powerfactor_value = modified_severity * 0.02
 
+	if(severity >= EXPLODE_WEAK)
+		apply_acoustic_trauma(src)
+
 	if(!istype(wear_ear, /obj/item/clothing/ears/earmuffs))
 		adjust_ear_damage(powerfactor_value, powerfactor_value * 4)
 
