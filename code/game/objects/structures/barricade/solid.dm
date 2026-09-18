@@ -46,11 +46,11 @@
 			damage_state = 0
 	switch(barricade_upgrade_type)
 		if(CADE_TYPE_BOMB)
-			. += image('icons/obj/structures/barricades/upgrades.dmi', icon_state = "+explosive_upgrade_[damage_state]")
+			. += image('icons/obj/structures/barricades/upgrades.dmi', icon_state = "[barricade_type]+explosive_upgrade_[damage_state]")
 		if(CADE_TYPE_MELEE)
-			. += image('icons/obj/structures/barricades/upgrades.dmi', icon_state = "+brute_upgrade_[damage_state]")
+			. += image('icons/obj/structures/barricades/upgrades.dmi', icon_state = "[barricade_type]+brute_upgrade_[damage_state]")
 		if(CADE_TYPE_ACID)
-			. += image('icons/obj/structures/barricades/upgrades.dmi', icon_state = "+burn_upgrade_[damage_state]")
+			. += image('icons/obj/structures/barricades/upgrades.dmi', icon_state = "[barricade_type]+burn_upgrade_[damage_state]")
 
 /obj/structure/barricade/solid/attackby(obj/item/I, mob/user, params)
 	. = ..()
@@ -376,7 +376,7 @@
 	hit_sound = 'sound/effects/metalhit.ogg'
 	barricade_type = "new_plasteel"
 	can_wire = TRUE
-	can_upgrade = FALSE
+	can_upgrade = TRUE
 	resistance_flags = UNACIDABLE|XENO_DAMAGEABLE
 
 /obj/structure/barricade/solid/handrail
