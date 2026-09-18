@@ -101,6 +101,11 @@
 	results = list(/datum/reagent/medicine/tramadol = 3)
 	required_reagents = list(/datum/reagent/medicine/inaprovaline = 1, /datum/reagent/consumable/ethanol = 1, /datum/reagent/oxygen = 1)
 
+/datum/chemical_reaction/oxycodone
+	name = "Oxycodone"
+	results = list(/datum/reagent/medicine/oxycodone = 3)
+	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/medicine/tramadol = 1, /datum/reagent/toxin/phoron = 1)
+
 /datum/chemical_reaction/paracetamol
 	name = "Paracetamol"
 	results = list(/datum/reagent/medicine/paracetamol = 3)
