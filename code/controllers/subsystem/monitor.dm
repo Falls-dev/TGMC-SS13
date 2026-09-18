@@ -44,7 +44,10 @@ SUBSYSTEM_DEF(monitor)
 /datum/controller/subsystem/monitor/Initialize()
 	RegisterSignals(SSdcs, list(COMSIG_GLOB_OPEN_TIMED_SHUTTERS_LATE, COMSIG_GLOB_OPEN_SHUTTERS_EARLY), PROC_REF(set_groundside_calculation))
 	RegisterSignal(SSdcs, COMSIG_GLOB_DROPSHIP_HIJACKED, PROC_REF(set_shipside_calculation))
-	is_automatic_balance_on = CONFIG_GET(flag/is_automatic_balance_on)
+	if(fexists("data/xeno_auto_balance.txt"))
+		is_automatic_balance_on = (file2text("data/xeno_auto_balance.txt") == "1")
+	else
+		is_automatic_balance_on = CONFIG_GET(flag/is_automatic_balance_on)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/monitor/fire(resumed = 0)
@@ -63,6 +66,11 @@ SUBSYSTEM_DEF(monitor)
 	if(abs(proposed_balance_buff - GLOB.xeno_stat_multiplicator_buff) >= 0.05 || (proposed_balance_buff == 1 && GLOB.xeno_stat_multiplicator_buff != 1))
 		GLOB.xeno_stat_multiplicator_buff = proposed_balance_buff
 		apply_balance_changes()
+
+		if(is_automatic_balance_on)
+			var/msg = "Auto-balance changed xeno stat buff: [proposed_balance_buff * 100]%."
+			message_admins(msg)
+			log_admin(msg)
 
 	if(SSticker.mode?.round_type_flags & MODE_SILOS_SPAWN_MINIONS)
 		//Balance spawners output
