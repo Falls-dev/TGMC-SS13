@@ -50,12 +50,17 @@ SUBSYSTEM_DEF(persistence)
 	var/list/custom_loadouts = list()
 	///When were the last rounds of specific game mode played, in ticks
 	var/list/last_modes_round_date
+	///Global xenomorph infestation progress shared between all maps.
+	var/list/infestation_progress = list("progress" = 50, "season" = 1)
+	///Whether infestation progress has been read from disk during this server runtime.
+	var/infestation_progress_loaded = FALSE
 
 ///Loads data at the start of the round
 /datum/controller/subsystem/persistence/Initialize()
 	LoadSeasonalItems()
 	load_custom_loadouts_list()
 	load_last_game_mode_round_time()
+	load_infestation_progress()
 	return SS_INIT_SUCCESS
 
 ///Stores data at the end of the round
@@ -63,7 +68,83 @@ SUBSYSTEM_DEF(persistence)
 	save_custom_loadouts_list()
 	save_last_game_mode_round_time()
 	save_player_number()
+	save_infestation_progress()
 	return
+
+///Loads the global xenomorph infestation progress.
+/datum/controller/subsystem/persistence/proc/load_infestation_progress()
+	var/json_file = file("data/infestation_progress.json")
+	if(!fexists(json_file))
+		infestation_progress = list("progress" = 50, "season" = 1)
+		infestation_progress_loaded = TRUE
+		return
+	var/list/loaded_progress = safe_json_decode(file2text(json_file))
+	infestation_progress = islist(loaded_progress) ? loaded_progress : list("progress" = 50, "season" = 1)
+	infestation_progress_loaded = TRUE
+
+///Saves the global xenomorph infestation progress.
+/datum/controller/subsystem/persistence/proc/save_infestation_progress()
+	var/json_file = file("data/infestation_progress.json")
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(infestation_progress))
+
+///Returns the persistent global infestation entry, creating a fresh season if needed.
+/datum/controller/subsystem/persistence/proc/get_infestation_entry()
+	// Also supports live code updates: an already-created persistence subsystem
+	// has not executed Initialize() with the new loading proc yet.
+	if(!infestation_progress_loaded)
+		load_infestation_progress()
+	if(!islist(infestation_progress))
+		infestation_progress = list("progress" = 50, "season" = 1)
+	if(!isnum(infestation_progress["progress"]))
+		infestation_progress["progress"] = 50
+	if(!isnum(infestation_progress["season"]))
+		infestation_progress["season"] = 1
+	infestation_progress["progress"] = min(100, max(0, infestation_progress["progress"]))
+	return infestation_progress
+
+///Returns the global xenomorph control percentage.
+/datum/controller/subsystem/persistence/proc/get_infestation_progress()
+	var/list/infestation_entry = get_infestation_entry()
+	return infestation_entry["progress"]
+
+///Applies one completed Infestation round to the global progress.
+/datum/controller/subsystem/persistence/proc/apply_infestation_round_result(datum/game_mode/infestation/mode)
+	var/progress_change
+	switch(mode.round_finished)
+		if(MODE_INFESTATION_X_MAJOR)
+			progress_change = 10
+		if(MODE_INFESTATION_X_MINOR)
+			progress_change = 5
+		if(MODE_INFESTATION_M_MAJOR)
+			progress_change = -10
+		if(MODE_INFESTATION_M_MINOR)
+			progress_change = -5
+	if(isnull(progress_change))
+		return
+	if(iscrashgamemode(mode) || isdistrocrashgamemode(mode))
+		progress_change /= 5
+
+	var/list/infestation_entry = get_infestation_entry()
+	var/old_progress = infestation_entry["progress"]
+	var/new_progress = min(100, max(0, old_progress + progress_change))
+	var/new_season = FALSE
+	if(new_progress == 0 || new_progress == 100)
+		new_progress = 50
+		infestation_entry["season"]++
+		new_season = TRUE
+	infestation_entry["progress"] = new_progress
+	var/season = infestation_entry["season"]
+
+	log_game("Global infestation progress: [old_progress]% -> [new_progress]% ([mode.round_finished])[new_season ? "; season [season] started" : ""]")
+	if(new_season)
+		send_ooc_announcement(
+			sender_override = "Global Infestation",
+			title = "Новый сезон",
+			text = "Показатель ксеноморфов достиг [old_progress + progress_change >= 100 ? "100" : "0"]%. Прогресс сброшен до 50%.",
+			play_sound = FALSE,
+			style = OOC_ALERT_GAME,
+		)
 
 ///Loads the last gamemode's round date
 /datum/controller/subsystem/persistence/proc/load_last_game_mode_round_time()

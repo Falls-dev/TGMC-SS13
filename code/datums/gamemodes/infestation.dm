@@ -224,6 +224,8 @@
 	return FALSE
 
 /datum/game_mode/infestation/declare_completion()
+	if(allow_persistence_save)
+		SSpersistence.apply_infestation_round_result(src)
 	. = ..()
 	log_game("[round_finished]\nGame mode: [name]\nRound time: [duration2text()]\nEnd round player population: [length(GLOB.clients)]\nTotal xenos spawned: [GLOB.round_statistics.total_xenos_created]\nTotal humans spawned: [GLOB.round_statistics.total_humans_created]")
 

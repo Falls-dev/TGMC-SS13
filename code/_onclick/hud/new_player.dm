@@ -11,5 +11,6 @@
 	for(var/atom/movable/screen/text/lobby/lobbyscreen as anything in buttons)
 		lobbyscreen = new lobbyscreen(owner, src)
 		static_inventory += lobbyscreen
+		if(istype(lobbyscreen, /atom/movable/screen/text/lobby/infestation_progress))
+			continue
 		lobbyscreen.set_position(2, ycoord--)
-
