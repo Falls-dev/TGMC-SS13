@@ -33,7 +33,8 @@
 			"reason" = our_order.reason,
 			"cost" = cost,
 			"packs" = packs,
-			"authed_by" = our_order.authorised_by
+			"authed_by" = our_order.authorised_by,
+			"personal_purchase" = our_order.personal_purchase
 		))
 	.["deniedrequests"] = list()
 	for(var/i in length(SSpoints.deniedrequests) to 1 step -1)
@@ -56,7 +57,8 @@
 			"reason" = our_order.reason,
 			"cost" = cost,
 			"packs" = packs,
-			"authed_by" = our_order.authorised_by
+			"authed_by" = our_order.authorised_by,
+			"personal_purchase" = our_order.personal_purchase
 		))
 	.["approvedrequests"] = list()
 	for(var/i in length(SSpoints.approvedrequests) to 1 step -1)
@@ -79,7 +81,8 @@
 			"reason" = our_order.reason,
 			"cost" = cost,
 			"packs" = packs,
-			"authed_by" = our_order.authorised_by
+			"authed_by" = our_order.authorised_by,
+			"personal_purchase" = our_order.personal_purchase
 		))
 	.["awaiting_delivery"] = list()
 	.["awaiting_delivery_orders"] = 0
@@ -105,7 +108,8 @@
 			"reason" = our_order.reason,
 			"cost" = cost,
 			"packs" = packs,
-			"authed_by" = our_order.authorised_by
+			"authed_by" = our_order.authorised_by,
+			"personal_purchase" = our_order.personal_purchase
 		))
 	if(!SSpoints.request_shopping_cart[user.ckey])
 		SSpoints.request_shopping_cart[user.ckey] = list()

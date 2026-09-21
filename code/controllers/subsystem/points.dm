@@ -122,6 +122,7 @@ SUBSYSTEM_DEF(points)
 	var/list/datum/supply_order/orders = process_cart(user, ckey_shopping_cart)
 	for(var/i in 1 to length_char(orders))
 		orders[i].authorised_by = user.real_name
+		orders[i].personal_purchase = TRUE
 		LAZYADDASSOCSIMPLE(shoppinglist[user.faction], "[orders[i].id]", orders[i])
 	personal_supply_points[user.ckey] -= cost
 	ckey_shopping_cart.Cut()
@@ -141,7 +142,7 @@ SUBSYSTEM_DEF(points)
 	if(!fast_delivery_is_active)
 		to_chat(user, span_warning("Fast delivery is not ready"))
 		return FALSE
-	if(!iscrashgamemode(SSticker.mode) && !isdistrocrashgamemode(SSticker.mode) && !iswarfaregamemode(SSticker.mode)) // no RO on crash
+	if(!our_order.personal_purchase && !iscrashgamemode(SSticker.mode) && !isdistrocrashgamemode(SSticker.mode) && !iswarfaregamemode(SSticker.mode)) // no RO on crash
 		if(FAST_DELIVERY_COST > supply_points[our_order.faction])
 			to_chat(user, span_warning("Cargo does not have enough points for fast delivery."))
 			return
@@ -277,6 +278,7 @@ SUBSYSTEM_DEF(points)
 	NO.orderer = O.orderer
 	NO.orderer_rank = O.orderer_rank
 	NO.faction = O.faction
+	NO.personal_purchase = O.personal_purchase
 	return NO
 
 /datum/controller/subsystem/points/proc/process_cart(mob/living/user, list/cart)

@@ -18,14 +18,17 @@ export const SupplyDropConsole = (_props) => {
 
   const beacon = data.current_beacon;
 
-  const canFire = beacon.name && data.supplies_count && timeLeft === 0;
+  const canFire =
+    (beacon.name || data.map_target_selected) &&
+    data.supplies_count &&
+    timeLeft === 0;
 
   return (
     <Window width={350} height={350}>
       <Window.Content>
         <Section title="Supply drop">
           <LabeledList>
-            <LabeledList.Item label={'Current beacon'}>
+            <LabeledList.Item label={'Target beacon'}>
               <Button onClick={() => act('select_beacon')}>
                 {data.current_beacon.name
                   ? data.current_beacon.name
@@ -51,6 +54,13 @@ export const SupplyDropConsole = (_props) => {
                 onChange={(value) => act('set_y', { set_y: `${value}` })}
               />
             </LabeledList.Item>
+            <LabeledList.Item label="Наводка по карте">
+              <Button
+                icon="map"
+                tooltip="Выберите цель на миникарте"
+                onClick={() => act('open_map')}
+              />
+            </LabeledList.Item>
           </LabeledList>
           <Divider />
           <Section
@@ -65,10 +75,12 @@ export const SupplyDropConsole = (_props) => {
           >
             {data.supplies_count} item(s) found on the supply pad.
             <Divider />
-            {data.current_beacon.name
-              ? `Active beacon found at
-                (${beacon.x_coords}, ${beacon.y_coords})`
-              : 'No beacon detected'}
+            {data.map_target_selected
+              ? `Map target selected at (${data.map_target_x}, ${data.map_target_y})`
+              : beacon.name
+                ? `Active beacon found at
+                  (${beacon.x_coords}, ${beacon.y_coords})`
+                : 'No beacon or map target selected'}
             <Divider />
             <ProgressBar
               width="100%"

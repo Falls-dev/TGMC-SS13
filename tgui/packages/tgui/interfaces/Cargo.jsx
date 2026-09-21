@@ -39,6 +39,7 @@ export const Cargo = () => {
   const { data } = useBackend();
 
   const [selectedMenu, setSelectedMenu] = useState(null);
+  const [filter, setFilter] = useState('');
 
   const {
     supplypacks,
@@ -60,6 +61,16 @@ export const Cargo = () => {
         </Flex.Item>
         <Flex.Item position="relative" grow={1} height="100%">
           <Window.Content scrollable>
+            {!!supplypacks[selectedMenu] && (
+              <Input
+                autoFocus
+                placeholder="Поиск..."
+                fluid
+                expensive
+                value={filter}
+                onChange={setFilter}
+              />
+            )}
             {selectedMenu === 'Previous Purchases' && (
               <OrderList
                 type={shopping_history}
@@ -98,10 +109,16 @@ export const Cargo = () => {
                 setSelectedMenu={setSelectedMenu}
               />
             )}
-            {!!selectedPackCat && (
+            {!!filter && (
+              <SearchResults
+                supplypacks={supplypacks}
+                filter={filter}
+                setSelectedMenu={setSelectedMenu}
+              />
+            )}
+            {!!selectedPackCat && !filter && (
               <Category
                 selectedPackCat={selectedPackCat}
-                should_filter
                 selectedMenu={selectedMenu}
                 setSelectedMenu={setSelectedMenu}
               />
@@ -301,8 +318,16 @@ const OrderList = (props) => {
   return (
     <Section title={selectedMenu} buttons={buttons}>
       {type.map((request) => {
-        const { id, orderer_rank, orderer, authed_by, reason, cost, packs } =
-          request;
+        const {
+          id,
+          orderer_rank,
+          orderer,
+          authed_by,
+          reason,
+          cost,
+          packs,
+          personal_purchase,
+        } = request;
         const rank = orderer_rank || '';
 
         return (
@@ -332,7 +357,11 @@ const OrderList = (props) => {
                     onClick={() => act('delivery', { id: id })}
                     icon="luggage-cart"
                     content="Delivery"
-                    tooltip="It will cost 150 points to use!"
+                    tooltip={
+                      personal_purchase
+                        ? 'Сброс бесплатен при оплате персональными очками.'
+                        : 'Для быстрого сброса будет списано 150 очков!'
+                    }
                     disabled={!data.beacon}
                   />
                 )}
@@ -525,22 +554,7 @@ const Category = (props) => {
 
   const spare_points = currentpoints - shopping_list_cost;
 
-  const {
-    selectedPackCat,
-    should_filter,
-    level,
-    selectedMenu,
-    setSelectedMenu,
-  } = props;
-
-  const [filter, setFilter] = useState(null);
-
-  const filterSearch = (entry) =>
-    should_filter && filter
-      ? supplypackscontents[entry].name
-          ?.toLowerCase()
-          .includes(filter.toLowerCase())
-      : true;
+  const { selectedPackCat, level, selectedMenu, setSelectedMenu } = props;
 
   return (
     <Section
@@ -553,20 +567,9 @@ const Category = (props) => {
       }
     >
       <Stack vertical>
-        {should_filter && (
-          <Stack.Item>
-            <Input
-              autoFocus
-              placeholder="Search..."
-              fluid
-              expensive
-              onChange={setFilter}
-            />
-          </Stack.Item>
-        )}
         <Stack.Item>
           <Table>
-            {selectedPackCat.filter(filterSearch).map((entry) => {
+            {selectedPackCat.map((entry) => {
               const shop_list = shopping_list[entry] || 0;
               const count = shop_list ? shop_list.count : 0;
               const { cost } = supplypackscontents[entry];
@@ -609,6 +612,31 @@ const Category = (props) => {
   );
 };
 
+const SearchResults = (props) => {
+  const { data } = useBackend();
+  const { supplypackscontents } = data;
+  const { supplypacks, filter } = props;
+  const normalizedFilter = filter.toLowerCase();
+
+  return Object.entries(supplypacks).map(([category, packs]) => {
+    const matchingPacks = packs.filter((entry) =>
+      supplypackscontents[entry]?.name
+        ?.toLowerCase()
+        .includes(normalizedFilter),
+    );
+    if (!matchingPacks.length) {
+      return null;
+    }
+    return (
+      <Category
+        key={category}
+        selectedPackCat={matchingPacks}
+        selectedMenu={category}
+      />
+    );
+  });
+};
+
 const PackContents = (props) => {
   const { contains } = props;
 
@@ -632,6 +660,7 @@ export const CargoRequest = (props) => {
   const { data } = useBackend();
 
   const [selectedMenu, setSelectedMenu] = useState(null);
+  const [filter, setFilter] = useState('');
 
   const { supplypacks, approvedrequests, deniedrequests, awaiting_delivery } =
     data;
@@ -652,6 +681,16 @@ export const CargoRequest = (props) => {
         </Flex.Item>
         <Flex.Item position="relative" grow={1} height="100%">
           <Window.Content scrollable>
+            {!!supplypacks[selectedMenu] && (
+              <Input
+                autoFocus
+                placeholder="Поиск..."
+                fluid
+                expensive
+                value={filter}
+                onChange={setFilter}
+              />
+            )}
             {selectedMenu === 'Awaiting Delivery' && (
               <OrderList
                 type={awaiting_delivery}
@@ -689,10 +728,16 @@ export const CargoRequest = (props) => {
                 setSelectedMenu={setSelectedMenu}
               />
             )}
-            {!!selectedPackCat && (
+            {!!filter && (
+              <SearchResults
+                supplypacks={supplypacks}
+                filter={filter}
+                setSelectedMenu={setSelectedMenu}
+              />
+            )}
+            {!!selectedPackCat && !filter && (
               <Category
                 selectedPackCat={selectedPackCat}
-                should_filter
                 selectedMenu={selectedMenu}
                 setSelectedMenu={setSelectedMenu}
               />

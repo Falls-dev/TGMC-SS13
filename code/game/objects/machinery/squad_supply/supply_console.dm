@@ -20,6 +20,13 @@
 	var/x_offset = 0
 	///Y offset of the drop, relative to the supply beacon loc
 	var/y_offset = 0
+	///Координаты для сброса по карте
+	var/map_target_x
+	var/map_target_y
+	var/map_target_z
+	var/map_target_selected = FALSE
+	///Чтобы не открывали несколько окон миникарты на одной консоли
+	var/choosing_target = FALSE
 	COOLDOWN_DECLARE(next_fire)
 	///Reference to the balloon vis obj effect
 	var/atom/movable/vis_obj/fulton_balloon/balloon
@@ -69,6 +76,9 @@
 	.["next_fire"] = COOLDOWN_TIMELEFT(src, next_fire)
 	.["x_offset"] = x_offset
 	.["y_offset"] = y_offset
+	.["map_target_selected"] = map_target_selected
+	.["map_target_x"] = map_target_x
+	.["map_target_y"] = map_target_y
 
 
 /obj/machinery/computer/supplydrop_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -88,6 +98,7 @@
 			if(!istype(supply_beacon_choice))
 				return
 			supply_beacon = supply_beacon_choice
+			map_target_selected = FALSE
 			RegisterSignal(supply_beacon, COMSIG_QDELETING, PROC_REF(clean_supply_beacon), override = TRUE)
 			refresh_pad()
 		if("set_x")
@@ -102,6 +113,9 @@
 				return
 			y_offset = new_y
 
+		if("open_map")
+			open_map(ui.user)
+
 		if("refresh_pad")
 			refresh_pad()
 
@@ -109,23 +123,64 @@
 			if(!COOLDOWN_FINISHED(src, next_fire))
 				return
 
-			if(!supply_beacon)
-				to_chat(usr, "[icon2html(src, usr)] [span_warning("There was an issue with that beacon. Check it's still active.")]")
+			var/turf/target
+			if(map_target_selected)
+				if(world.time < SSticker.round_start_time + SSticker.mode.deploy_time_lock)
+					to_chat(usr, span_notice("Unable to launch a map-targeted supply drop before the combat area is available."))
+					return
+				target = locate(map_target_x, map_target_y, map_target_z)
+			else if(supply_beacon)
+				target = locate(
+					supply_beacon.drop_location.x + clamp(round(x_offset), -5, 5),
+					supply_beacon.drop_location.y + clamp(round(y_offset), -5, 5),
+					supply_beacon.drop_location.z
+				)
+			else
+				to_chat(usr, "[icon2html(src, usr)] [span_warning("Select a beacon or choose a target on the map.")]")
 				return
 
 			if(!length(supplies))
 				to_chat(usr, "[icon2html(src, usr)] [span_warning("There wasn't any supplies found on the squads supply pad. Double check the pad.")]")
 				return
 
-			if(!istype(supply_beacon.drop_location) || !is_ground_level(supply_beacon.drop_location.z))
-				to_chat(usr, "[icon2html(src, usr)] [span_warning("The [supply_beacon.name] was not detected on the ground.")]")
+			if(!istype(target) || !is_ground_level(target.z))
+				to_chat(usr, "[icon2html(src, usr)] [span_warning("The selected target was not detected on the ground.")]")
 				return
-			if(isspaceturf(supply_beacon.drop_location) || supply_beacon.drop_location.density)
-				to_chat(usr, "[icon2html(src, usr)] [span_warning("The [supply_beacon.name]'s landing zone appears to be obstructed or out of bounds.")]")
+			if(isspaceturf(target) || target.density)
+				to_chat(usr, "[icon2html(src, usr)] [span_warning("The selected target appears to be obstructed or out of bounds.")]")
 				return
 
 			COOLDOWN_START(src, next_fire, launch_cooldown)
-			send_supplydrop(supplies, x_offset, y_offset)
+			send_supplydrop(supplies, target)
+
+/obj/machinery/computer/supplydrop_console/proc/open_map(mob/user)
+	if(choosing_target)
+		return
+	if(world.time < SSticker.round_start_time + SSticker.mode.deploy_time_lock)
+		to_chat(user, span_notice("Unable to select a target before the combat area is available."))
+		return
+	var/map_z = supply_beacon?.drop_location?.z
+	if(!map_z)
+		var/list/ground_levels = SSmapping.levels_by_trait(ZTRAIT_GROUND)
+		map_z = ground_levels[1]
+	if(!map_z)
+		to_chat(user, span_warning("No ground map is available."))
+		return
+
+	var/atom/movable/screen/minimap/map = SSminimaps.fetch_minimap_object(map_z, MINIMAP_FLAG_MARINE)
+	user.client.screen += map
+	choosing_target = TRUE
+	var/list/polled_coords = map.get_coords_from_click(user)
+	if(user.client)
+		user.client.screen -= map
+	choosing_target = FALSE
+
+	if(!polled_coords)
+		return
+	map_target_x = polled_coords[1]
+	map_target_y = polled_coords[2]
+	map_target_z = map_z
+	map_target_selected = TRUE
 
 ///Clean up the supply beacon var
 /obj/machinery/computer/supplydrop_console/proc/clean_supply_beacon()
@@ -136,8 +191,6 @@
 ///Look for the content on the supply pad
 /obj/machinery/computer/supplydrop_console/proc/refresh_pad()
 	supplies = list()
-	if(!supply_beacon)
-		return
 	for(var/obj/C in supply_pad.loc)
 		if(is_type_in_typecache(C, GLOB.supply_drops) && !C.anchored) //Can only send vendors, crates, unmanned vehicles and large crates
 			supplies.Add(C)
@@ -145,21 +198,15 @@
 			break
 
 ///Start the supply drop process
-/obj/machinery/computer/supplydrop_console/proc/send_supplydrop(list/supplies, x_offset = 0, y_offset = 0)
-	if(!supply_beacon)
-		stack_trace("Trying to send a supply drop without a supply beacon")
-		return
+/obj/machinery/computer/supplydrop_console/proc/send_supplydrop(list/supplies, turf/target)
 
 	if(!length(supplies) || length(supplies) > MAX_SUPPLY_DROPS)
 		stack_trace("Trying to send a supply drop with an invalid amount of items [length(supplies)]")
 		return
 
-	if(!istype(supply_beacon.drop_location) || isspaceturf(supply_beacon.drop_location) || supply_beacon.drop_location.density)
-		stack_trace("Trying to send a supply drop to a beacon on an invalid turf")
+	if(!istype(target) || isspaceturf(target) || target.density)
+		stack_trace("Trying to send a supply drop to an invalid turf")
 		return
-
-	x_offset = clamp(round(x_offset), -5, 5)
-	y_offset = clamp(round(y_offset), -5, 5)
 
 	supply_pad.visible_message(span_boldnotice("The supply drop is now loading into the launch tube! Stand by!"))
 	supply_pad.visible_message(span_warning("\The [supply_pad] whirrs as it beings to load the supply drop into a bluespace launch tube. Stand clear!"))
@@ -167,10 +214,10 @@
 		C.anchored = TRUE //to avoid accidental pushes
 	playsound(supply_pad.loc, 'sound/effects/bamf.ogg', 50, TRUE)
 	visible_message("[icon2html(supply_beacon, viewers(supply_beacon))] [span_boldnotice("The [supply_pad.name] begins to beep!")]")
-	addtimer(CALLBACK(src, PROC_REF(fire_supplydrop), supplies, x_offset, y_offset), 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(fire_supplydrop), supplies, target), 10 SECONDS)
 
 ///Make the supplies teleport
-/obj/machinery/computer/supplydrop_console/proc/fire_supplydrop(list/supplies, x_offset, y_offset)
+/obj/machinery/computer/supplydrop_console/proc/fire_supplydrop(list/supplies, turf/target)
 	for(var/obj/C in supplies)
 		if(QDELETED(C))
 			supplies.Remove(C)
@@ -179,27 +226,22 @@
 			supplies.Remove(C)
 		C.anchored = FALSE //We need to un-anchor the crate after we're finished, even if it fails to send
 
-	if(QDELETED(supply_beacon))
-		visible_message("[icon2html(supply_pad, usr)] [span_warning("Launch aborted! Supply beacon signal lost.")]")
-		return
-
-	if(!is_ground_level(supply_beacon.drop_location.z))
-		visible_message("[icon2html(supply_pad, usr)] [span_warning("Launch aborted! Supply beacon is not groundside.")]")
+	if(!istype(target) || !is_ground_level(target.z) || isspaceturf(target) || target.density)
+		visible_message("[icon2html(supply_pad, usr)] [span_warning("Launch aborted! The target is no longer valid.")]")
 		return
 
 	if(!length(supplies))
 		visible_message("[icon2html(supply_pad, usr)] [span_warning("Launch aborted! No deployable object detected on the drop pad.")]")
 		return
 
-	supply_beacon.drop_location.visible_message(span_boldnotice("A supply drop appears suddenly!"))
-	playsound(supply_beacon.drop_location,'sound/effects/tadpolehovering.ogg', 30, TRUE)
+	target.visible_message(span_boldnotice("A supply drop appears suddenly!"))
+	playsound(target, 'sound/effects/tadpolehovering.ogg', 30, TRUE)
 	playsound(supply_pad.loc,'sound/effects/phasein.ogg', 50, TRUE)
 	for(var/obj/C in supplies)
-		var/turf/TC = locate(supply_beacon.drop_location.x + x_offset, supply_beacon.drop_location.y + y_offset, supply_beacon.drop_location.z)
 		C.moveToNullspace()
 		holder_obj.appearance = C.appearance
-		holder_obj.forceMove(TC)
-		addtimer(CALLBACK(src, PROC_REF(cleanup_delivery), C, TC), 3 SECONDS)
+		holder_obj.forceMove(target)
+		addtimer(CALLBACK(src, PROC_REF(cleanup_delivery), C, target), 3 SECONDS)
 
 	supply_pad.visible_message("[icon2html(supply_pad, viewers(src))] [span_boldnotice("Supply drop teleported! Another launch will be available in [launch_cooldown * 0.1] seconds.")]")
 
