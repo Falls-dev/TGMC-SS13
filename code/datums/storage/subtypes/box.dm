@@ -87,6 +87,7 @@
 			/obj/item/ammo_magazine/hmg08,
 			/obj/item/ammo_magazine/sg29,
 			/obj/item/ammo_magazine/som_mg,
+			/obj/item/matter_ammo_container/box,
 			/obj/item/cell/lasgun,
 		),
 		cant_hold_list = list(

@@ -41,7 +41,7 @@
 /obj/item/storage/pouch/general/Initialize(mapload, ...)
 	. = ..()
 	storage_datum.draw_mode = TRUE
-	storage_datum.storage_type_limits = list(/obj/item/ammo_magazine/packet, /obj/item/ammo_magazine/shotgun)
+	storage_datum.storage_type_limits = list(/obj/item/ammo_magazine/packet, /obj/item/matter_ammo_container/box, /obj/item/ammo_magazine/shotgun)
 
 /obj/item/storage/pouch/general/medium
 	name = "medium general pouch"
