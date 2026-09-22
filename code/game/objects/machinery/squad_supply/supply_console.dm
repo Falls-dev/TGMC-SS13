@@ -16,10 +16,9 @@
 	var/obj/structure/supply_drop/supply_pad
 	///The content sent
 	var/list/supplies = list()
-	///X offset of the drop, relative to the supply beacon loc
-	var/x_offset = 0
-	///Y offset of the drop, relative to the supply beacon loc
-	var/y_offset = 0
+	///Координаты для сброса по ним
+	var/target_x = 1
+	var/target_y = 1
 	///Координаты для сброса по карте
 	var/map_target_x
 	var/map_target_y
@@ -74,8 +73,8 @@
 	)
 	.["supplies_count"] = length(supplies)
 	.["next_fire"] = COOLDOWN_TIMELEFT(src, next_fire)
-	.["x_offset"] = x_offset
-	.["y_offset"] = y_offset
+	.["target_x"] = target_x
+	.["target_y"] = target_y
 	.["map_target_selected"] = map_target_selected
 	.["map_target_x"] = map_target_x
 	.["map_target_y"] = map_target_y
@@ -105,13 +104,30 @@
 			var/new_x = text2num(params["set_x"])
 			if(!isnum(new_x))
 				return
-			x_offset = new_x
+			target_x = new_x
 
 		if("set_y")
 			var/new_y = text2num(params["set_y"])
 			if(!isnum(new_y))
 				return
-			y_offset = new_y
+			target_y = new_y
+
+		if("target_coordinates")
+			if(!isnum(target_x) || !isnum(target_y))
+				to_chat(ui.user, "[icon2html(src, ui.user)] [span_warning("Enter valid X and Y coordinates first.")]")
+				return
+			var/map_z = supply_beacon?.drop_location?.z
+			if(!map_z)
+				var/list/ground_levels = SSmapping.levels_by_trait(ZTRAIT_GROUND)
+				map_z = ground_levels[1]
+			var/turf/target = locate(target_x, target_y, map_z)
+			if(!istype(target) || !is_ground_level(target.z) || isspaceturf(target) || target.density)
+				to_chat(ui.user, "[icon2html(src, ui.user)] [span_warning("The entered coordinates are not a valid ground target.")]")
+				return
+			map_target_x = target_x
+			map_target_y = target_y
+			map_target_z = map_z
+			map_target_selected = TRUE
 
 		if("open_map")
 			open_map(ui.user)
@@ -130,11 +146,7 @@
 					return
 				target = locate(map_target_x, map_target_y, map_target_z)
 			else if(supply_beacon)
-				target = locate(
-					supply_beacon.drop_location.x + clamp(round(x_offset), -5, 5),
-					supply_beacon.drop_location.y + clamp(round(y_offset), -5, 5),
-					supply_beacon.drop_location.z
-				)
+				target = supply_beacon.drop_location
 			else
 				to_chat(usr, "[icon2html(src, usr)] [span_warning("Select a beacon or choose a target on the map.")]")
 				return
@@ -151,7 +163,7 @@
 				return
 
 			COOLDOWN_START(src, next_fire, launch_cooldown)
-			send_supplydrop(supplies, target)
+			send_supplydrop(supplies, target, map_target_selected)
 
 /obj/machinery/computer/supplydrop_console/proc/open_map(mob/user)
 	if(choosing_target)
@@ -198,13 +210,17 @@
 			break
 
 ///Start the supply drop process
-/obj/machinery/computer/supplydrop_console/proc/send_supplydrop(list/supplies, turf/target)
+/obj/machinery/computer/supplydrop_console/proc/send_supplydrop(list/supplies, turf/target, map_targeted = FALSE)
 
 	if(!length(supplies) || length(supplies) > MAX_SUPPLY_DROPS)
 		stack_trace("Trying to send a supply drop with an invalid amount of items [length(supplies)]")
 		return
 
-	if(!istype(target) || isspaceturf(target) || target.density)
+	if(!map_targeted && QDELETED(supply_beacon))
+		stack_trace("Trying to send a supply drop without a supply beacon")
+		return
+
+	if(!istype(target) || !is_ground_level(target.z) || isspaceturf(target) || target.density)
 		stack_trace("Trying to send a supply drop to an invalid turf")
 		return
 
@@ -213,11 +229,14 @@
 	for(var/obj/C in supplies)
 		C.anchored = TRUE //to avoid accidental pushes
 	playsound(supply_pad.loc, 'sound/effects/bamf.ogg', 50, TRUE)
-	visible_message("[icon2html(supply_beacon, viewers(supply_beacon))] [span_boldnotice("The [supply_pad.name] begins to beep!")]")
-	addtimer(CALLBACK(src, PROC_REF(fire_supplydrop), supplies, target), 10 SECONDS)
+	if(map_targeted)
+		visible_message("[icon2html(supply_pad, viewers(supply_pad))] [span_boldnotice("The [supply_pad.name] begins to beep toward the selected map target!")]")
+	else
+		visible_message("[icon2html(supply_beacon, viewers(supply_beacon))] [span_boldnotice("The [supply_pad.name] begins to beep!")]")
+	addtimer(CALLBACK(src, PROC_REF(fire_supplydrop), supplies, target, map_targeted), 10 SECONDS)
 
 ///Make the supplies teleport
-/obj/machinery/computer/supplydrop_console/proc/fire_supplydrop(list/supplies, turf/target)
+/obj/machinery/computer/supplydrop_console/proc/fire_supplydrop(list/supplies, turf/target, map_targeted = FALSE)
 	for(var/obj/C in supplies)
 		if(QDELETED(C))
 			supplies.Remove(C)
@@ -225,6 +244,10 @@
 		if(C.loc != supply_pad.loc) //Crate no longer on pad somehow, abort.
 			supplies.Remove(C)
 		C.anchored = FALSE //We need to un-anchor the crate after we're finished, even if it fails to send
+
+	if(!map_targeted && QDELETED(supply_beacon))
+		visible_message("[icon2html(supply_pad, usr)] [span_warning("Launch aborted! Supply beacon signal lost.")]")
+		return
 
 	if(!istype(target) || !is_ground_level(target.z) || isspaceturf(target) || target.density)
 		visible_message("[icon2html(supply_pad, usr)] [span_warning("Launch aborted! The target is no longer valid.")]")
