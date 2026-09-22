@@ -1831,6 +1831,8 @@
 	wield_delay = 1.5 SECONDS
 	cock_delay = 0.7 SECONDS
 	movement_acc_penalty_mult = 6
+	shell_speed_mod = 2
+	aim_time = 0.7
 
 
 /obj/item/weapon/gun/rifle/sr127/unscoped
@@ -1887,6 +1889,8 @@
 	aim_slowdown = 1
 	wield_delay = 1.5 SECONDS
 	movement_acc_penalty_mult = 6
+	shell_speed_mod = 2
+	aim_time = 0.7
 
 //-------------------------------------------------------
 //AR-11 Rifle, based on the gamer-11
