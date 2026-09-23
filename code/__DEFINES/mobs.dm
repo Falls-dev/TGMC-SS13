@@ -586,7 +586,9 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define XENO_HEALTH_ALERT_POINTER_DURATION 6 SECONDS //How long the alert directional pointer lasts.
 #define XENO_RALLYING_POINTER_DURATION 15 SECONDS //How long the rally hive pointer lasts
 #define XENO_HIVEMIND_DETECTION_RANGE 10 //How far out (in tiles) can the hivemind detect hostiles
-#define XENO_HIVEMIND_DETECTION_COOLDOWN 1 MINUTES
+#define XENO_HIVEMIND_DETECTION_COOLDOWN 1 MINUTESэ
+
+#define XENO_BIOMASS_GAIN_BONUS_MAX 1.5 //Maximum passive biomass gain bonus from psydrain and cocoons
 
 #define XENO_RESTING_COOLDOWN 2 SECONDS
 #define XENO_UNRESTING_COOLDOWN 1 SECONDS

@@ -190,7 +190,7 @@
 			corrupted_generators_bonus = (corrupted_count / GLOB.generators_on_ground) / 60.0
 
 	// Calculate biomass gain rate
-	biomass_gain_rate = (hive?.biomass_gain_bonus || 0) / 60.0 // Psydrain bonus (always works)
+	biomass_gain_rate = min(XENO_BIOMASS_GAIN_BONUS_MAX, hive?.biomass_gain_bonus || 0) / 60.0 // Psydrain bonus (always works)
 
 	// Add corrupted generators biomass gain if conditions are met
 	biomass_gain_rate += corrupted_generators_bonus
