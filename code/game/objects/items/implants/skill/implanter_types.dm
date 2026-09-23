@@ -12,27 +12,15 @@
 
 /obj/item/implanter/skill/medical
 	name = "medical skill implanter"
-	desc = "A sterile implant injector, that is usually used to implant skill increasing implants. This one will increase your medical skills."
+	desc = "A sterile implant injector, that is usually used to implant skill increasing implants. This one will increase your medical and surgery skills."
 	icon_state = "medical"
 	internal_implant = /obj/item/implant/skill/codex/medical
 
-/obj/item/implanter/skill/surgery
-	name = "surgery skill implanter"
-	desc = "A sterile implant injector, that is usually used to implant skill increasing implants. This one will increase your surgery skills."
-	icon_state = "surgery"
-	internal_implant = /obj/item/implant/skill/codex/surgery
-
 /obj/item/implanter/skill/engineer
 	name = "engineering skill implanter"
-	desc = "A sterile implant injector, that is usually used to implant skill increasing implants. This one will increase your engineering skills."
+	desc = "A sterile implant injector, that is usually used to implant skill increasing implants. This one will increase your engineering and construction skills."
 	icon_state = "enginering"
 	internal_implant = /obj/item/implant/skill/codex/engineer
-
-/obj/item/implanter/skill/construct
-	name = "construction skill implanter"
-	desc = "A sterile implant injector, that is usually used to implant skill increasing implants. This one will increase your construction skills."
-	icon_state = "enginering"
-	internal_implant = /obj/item/implant/skill/codex/construct
 
 /obj/item/implanter/skill/leadership
 	name = "command leadership skill implanter"

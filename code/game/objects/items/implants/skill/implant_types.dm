@@ -36,27 +36,23 @@
 
 /obj/item/implant/skill/codex/medical
 	name = "medtech implant system"
-	desc = "A compact device that electro-shakes you every time you apply bandages counterclockwise, right next to your heart! Update medical skills!"
+	desc = "A compact device that electro-shakes you every time you apply bandages counterclockwise, right next to your heart! Update medical and surgery skills!"
 	medical = 1
-	max_skills = list(SKILL_MEDICAL = SKILL_MEDICAL_COMPETENT)
-
-/obj/item/implant/skill/codex/surgery
-	name = "surgery assisting system"
-	desc = "Compensates for hand trembling from Parkinson's syndrome, thanks to the reliable suspension of the shoulder joints! Update surgery skills!"
 	surgery = 1
-	max_skills = list(SKILL_SURGERY = SKILL_SURGERY_PROFESSIONAL)
+	max_skills = list(
+		SKILL_MEDICAL = SKILL_MEDICAL_COMPETENT,
+		SKILL_SURGERY = SKILL_SURGERY_PROFESSIONAL
+	)
 
 /obj/item/implant/skill/codex/engineer
 	name = "engineering implants system"
-	desc = "Working with welding has become much easier! Update engineering skills!"
+	desc = "Working with welding has become much easier! Update engineering and construction skills!"
 	engineer = 1
-	max_skills = list(SKILL_ENGINEER = SKILL_ENGINEER_EXPERT)
-
-/obj/item/implant/skill/codex/construct
-	name = "construct implants system"
-	desc = "Working with welding has become much easier! Update construct skills!"
 	construction = 1
-	max_skills = list(SKILL_CONSTRUCTION = SKILL_CONSTRUCTION_EXPERT)
+	max_skills = list(
+		SKILL_ENGINEER = SKILL_ENGINEER_EXPERT,
+		SKILL_CONSTRUCTION = SKILL_CONSTRUCTION_EXPERT
+	)
 
 /obj/item/implant/skill/tactical
 	name = "Tactics implant"
