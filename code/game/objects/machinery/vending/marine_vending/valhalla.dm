@@ -134,6 +134,8 @@
 			/obj/item/implanter/skill/firearms = -1,
 			/obj/item/implanter/skill/melee = -1,
 			/obj/item/implanter/skill/medical = -1,
+			/obj/item/implanter/skill/surgery = -1,
+			/obj/item/implanter/skill/medical/advanced = -1,
 			/obj/item/implanter/skill/engineer = -1,
 			/obj/item/implanter/skill/leadership = -1,
 		),

@@ -36,7 +36,19 @@
 
 /obj/item/implant/skill/codex/medical
 	name = "medtech implant system"
-	desc = "A compact device that electro-shakes you every time you apply bandages counterclockwise, right next to your heart! Update medical and surgery skills!"
+	desc = "A compact device that electro-shakes you every time you apply bandages counterclockwise, right next to your heart! Update medical skills!"
+	medical = 1
+	max_skills = list(SKILL_MEDICAL = SKILL_MEDICAL_COMPETENT)
+
+/obj/item/implant/skill/codex/surgery
+	name = "surgery assisting system"
+	desc = "Compensates for hand trembling from Parkinson's syndrome, thanks to the reliable suspension of the shoulder joints! Update surgery skills!"
+	surgery = 1
+	max_skills = list(SKILL_SURGERY = SKILL_SURGERY_PROFESSIONAL)
+
+/obj/item/implant/skill/codex/medical/advanced
+	name = "advanced medtech implant system"
+	desc = "An enhanced medical support system that updates medical and surgery skills!"
 	medical = 1
 	surgery = 1
 	max_skills = list(
