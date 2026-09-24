@@ -46,16 +46,6 @@
 	surgery = 1
 	max_skills = list(SKILL_SURGERY = SKILL_SURGERY_PROFESSIONAL)
 
-/obj/item/implant/skill/codex/medical/advanced
-	name = "advanced medtech implant system"
-	desc = "An enhanced medical support system that updates medical and surgery skills!"
-	medical = 1
-	surgery = 1
-	max_skills = list(
-		SKILL_MEDICAL = SKILL_MEDICAL_COMPETENT,
-		SKILL_SURGERY = SKILL_SURGERY_PROFESSIONAL
-	)
-
 /obj/item/implant/skill/codex/engineer
 	name = "engineering implants system"
 	desc = "Working with welding has become much easier! Update engineering and construction skills!"

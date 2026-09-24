@@ -22,12 +22,6 @@
 	icon_state = "surgery"
 	internal_implant = /obj/item/implant/skill/codex/surgery
 
-/obj/item/implanter/skill/medical/advanced
-	name = "advanced medical skill implanter"
-	desc = "A sterile implant injector, that is usually used to implant skill increasing implants. This one will increase your medical and surgery skills."
-	icon_state = "medical"
-	internal_implant = /obj/item/implant/skill/codex/medical/advanced
-
 /obj/item/implanter/skill/engineer
 	name = "engineering skill implanter"
 	desc = "A sterile implant injector, that is usually used to implant skill increasing implants. This one will increase your engineering and construction skills."
