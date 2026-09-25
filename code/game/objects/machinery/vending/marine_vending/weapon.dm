@@ -132,7 +132,7 @@
 			/obj/item/ammo_magazine/pistol/derringer = -1,
 		),
 		"Гранаты" = list(
-			/obj/item/weapon/gun/grenade_launcher/single_shot = 10,
+			/obj/item/weapon/gun/grenade_launcher/single_shot = 6,
 			/obj/item/weapon/gun/grenade_launcher/multinade_launcher/unloaded = 2,
 			/obj/item/weapon/gun/rifle/tx54 = 2,
 			/obj/item/ammo_magazine/rifle/tx54 = 10,
@@ -159,7 +159,7 @@
 			/obj/item/storage/box/crate/sentry = 4,
 			/obj/item/weapon/gun/rifle/pepperball = 4,
 			/obj/item/ammo_magazine/rifle/pepperball = -1,
-			/obj/item/weapon/gun/flamer/big_flamer/marinestandard = 5,
+			/obj/item/weapon/gun/flamer/big_flamer/marinestandard = 4,
 			/obj/item/ammo_magazine/flamer_tank/large = 30,
 			/obj/item/ammo_magazine/flamer_tank/large/G = 15,
 			/obj/item/ammo_magazine/flamer_tank/backtank = 4,
@@ -390,7 +390,7 @@
 			/obj/item/ammo_magazine/pistol/derringer = -1,
 		),
 		"Гранаты" = list(
-			/obj/item/weapon/gun/grenade_launcher/single_shot = 10,
+			/obj/item/weapon/gun/grenade_launcher/single_shot = 6,
 			/obj/item/weapon/gun/grenade_launcher/multinade_launcher/unloaded = 2,
 			/obj/item/explosive/grenade = 50,
 			/obj/item/explosive/grenade/m15 = 10,
@@ -409,7 +409,7 @@
 		"Специализированное" = list(
 			/obj/item/weapon/gun/rifle/pepperball = 4,
 			/obj/item/ammo_magazine/rifle/pepperball = -1,
-			/obj/item/weapon/gun/flamer/big_flamer/marinestandard = 5,
+			/obj/item/weapon/gun/flamer/big_flamer/marinestandard = 4,
 			/obj/item/ammo_magazine/flamer_tank/large = 30,
 			/obj/item/ammo_magazine/flamer_tank/large/G = 15,
 			/obj/item/ammo_magazine/flamer_tank/backtank = 4,
