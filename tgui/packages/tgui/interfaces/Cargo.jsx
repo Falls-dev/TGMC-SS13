@@ -413,9 +413,10 @@ const OrderList = (props) => {
             cost = 0,
             packs = {},
             personal_purchase,
+            is_delivering,
           } = request;
 
-          const actionStatus = actedOrders[id];
+          const actionStatus = is_delivering ? 'delivery' : actedOrders[id];
           const isApproved = actionStatus === 'approve';
           const isDenied = actionStatus === 'deny';
           const isDelivery = actionStatus === 'delivery';
@@ -476,7 +477,7 @@ const OrderList = (props) => {
                               : 'Быстрая доставка спишет 150 очков карго.'
                           }
                           disabled={!data.beacon || (!personal_purchase && effectivePoints < 150)}
-                          onClick={() => handleOrderAction(id, 'delivery')}
+                          onClick={() => act('delivery', { id })}
                         />
                       )}
                     </Box>

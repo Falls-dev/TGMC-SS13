@@ -142,7 +142,8 @@
 			"cost" = cost,
 			"packs" = packs,
 			"authed_by" = our_order.authorised_by,
-			"personal_purchase" = our_order.personal_purchase
+			"personal_purchase" = our_order.personal_purchase,
+			"is_delivering" = our_order.is_delivering
 		))
 	.["export_history"] = list()
 	var/id = 0

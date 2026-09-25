@@ -168,6 +168,10 @@ SUBSYSTEM_DEF(points)
 
 	//Finally create the supply box
 
+	our_order.is_delivering = TRUE
+	SStgui.update_uis(src)
+	sleep(22)
+
 	var/turf/TC = locate(supply_beacon.drop_location.x, supply_beacon.drop_location.y, supply_beacon.drop_location.z)
 
 	//spawn crate and clear shoping list

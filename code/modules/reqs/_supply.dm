@@ -11,6 +11,8 @@
 	///Был ли оплачен заказ за персональные очки
 	var/personal_purchase = FALSE
 
+	var/is_delivering = FALSE
+
 /datum/export_report
 	/// How many points from that export
 	var/points
