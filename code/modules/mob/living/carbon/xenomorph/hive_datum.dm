@@ -9,6 +9,8 @@
 	var/color = null
 	var/prefix = ""
 	var/hive_flags = NONE
+	/// Bonus to passive biomass gain rate from psydrain and cocoons.
+	var/biomass_gain_bonus = 0
 	var/list/xeno_leader_list = list()
 	/// /datum/xeno_caste = list(xeno mobs)
 	var/list/list/xenos_by_typepath = list()
