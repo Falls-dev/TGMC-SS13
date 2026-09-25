@@ -48,15 +48,13 @@
 
 /obj/item/implant/skill/codex/engineer
 	name = "engineering implants system"
-	desc = "Working with welding has become much easier! Update engineering skills!"
+	desc = "Working with welding has become much easier! Update engineering and construction skills!"
 	engineer = 1
-	max_skills = list(SKILL_ENGINEER = SKILL_ENGINEER_EXPERT)
-
-/obj/item/implant/skill/codex/construct
-	name = "construct implants system"
-	desc = "Working with welding has become much easier! Update construct skills!"
 	construction = 1
-	max_skills = list(SKILL_CONSTRUCTION = SKILL_CONSTRUCTION_EXPERT)
+	max_skills = list(
+		SKILL_ENGINEER = SKILL_ENGINEER_EXPERT,
+		SKILL_CONSTRUCTION = SKILL_CONSTRUCTION_EXPERT
+	)
 
 /obj/item/implant/skill/tactical
 	name = "Tactics implant"
