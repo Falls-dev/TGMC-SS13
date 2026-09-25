@@ -1,6 +1,6 @@
 /obj/item/matter_ammo_box
-	name = "medium matter ammo box"
-	desc = "A large matter storage box that can convert stored matter into various types of ammunition. It comes with a leather strap for easy carrying."
+	name = "medium universal ammunition box"
+	desc = "A large ammunition box that can produce various types of universal ammunition. It comes with a leather strap for easy carrying."
 	w_class = WEIGHT_CLASS_HUGE
 	icon = 'icons/obj/items/ammo/box.dmi'
 	icon_state = "matter_ammo_box"
@@ -27,7 +27,7 @@
 /obj/item/matter_ammo_box/examine(mob/user)
 	. = ..()
 	if(matter_amount)
-		. += "It contains [matter_amount] unit\s of matter."
+		. += "It is [round(100 * matter_amount / max_matter_amount)]% full."
 	else
 		. += "It's empty."
 
@@ -41,6 +41,25 @@
 		to_chat(user, span_warning("[src] must be on the ground to be used."))
 		return
 
+	// Matter containers use the same matter transfer rules as this box.
+	if(istype(I, /obj/item/matter_ammo_container/box))
+		var/obj/item/matter_ammo_container/box/matter_box = I
+		if(!matter_amount)
+			to_chat(user, span_warning("[src] is empty."))
+			return
+		if(matter_box.matter_amount >= matter_box.max_matter_amount)
+			to_chat(user, span_warning("[matter_box] is full."))
+			return
+
+		var/transfer_amount = min(matter_amount, matter_box.max_matter_amount - matter_box.matter_amount)
+		matter_box.matter_amount += transfer_amount
+		matter_amount -= transfer_amount
+		playsound(loc, 'sound/weapons/guns/interact/revolver_load.ogg', 25, 1)
+		to_chat(user, span_notice("You transfer universal ammunition from [src] to [matter_box]."))
+		matter_box.update_icon()
+		update_icon()
+		return
+
 	if(!matter_amount)
 		to_chat(user, span_warning("[src] is empty."))
 		return
@@ -49,7 +68,7 @@
 		var/obj/item/ammo_magazine/ammo_magazine = I
 
 		if(!ammo_magazine.default_ammo || ammo_magazine.default_ammo.matter_cost <= 0)
-			to_chat(user, span_warning("This ammunition type cannot be converted to matter."))
+			to_chat(user, span_warning("This ammunition type cannot be produced by [src]."))
 			return
 
 		if(ammo_magazine.magazine_flags & MAGAZINE_REFILLABLE)
@@ -62,7 +81,7 @@
 				return
 
 			playsound(loc, 'sound/weapons/guns/interact/revolver_load.ogg', 25, 1)
-			var/rounds_to_add = min(matter_amount / ammo_magazine.default_ammo.matter_cost, ammo_magazine.max_rounds - ammo_magazine.current_rounds)
+			var/rounds_to_add = min(trunc(matter_amount / ammo_magazine.default_ammo.matter_cost), ammo_magazine.max_rounds - ammo_magazine.current_rounds)
 			var/matter_used = rounds_to_add * ammo_magazine.default_ammo.matter_cost
 
 			ammo_magazine.current_rounds += rounds_to_add
@@ -71,9 +90,9 @@
 			update_icon()
 
 			if(ammo_magazine.current_rounds == ammo_magazine.max_rounds)
-				to_chat(user, span_notice("You refill [ammo_magazine] using [matter_used] matter units."))
+				to_chat(user, span_notice("You refill [ammo_magazine] using [src]."))
 			else
-				to_chat(user, span_notice("You add [rounds_to_add] rounds to [ammo_magazine] using [matter_used] matter units."))
+				to_chat(user, span_notice("You add [rounds_to_add] rounds to [ammo_magazine] using [src]."))
 
 		else if(ammo_magazine.magazine_flags & MAGAZINE_HANDFUL)
 			if(matter_amount == max_matter_amount)
@@ -89,7 +108,7 @@
 			ammo_magazine.update_icon()
 			update_icon()
 
-			to_chat(user, span_notice("You convert [ammo_magazine] into [matter_gained] matter units."))
+			to_chat(user, span_notice("You recover universal ammunition from [ammo_magazine]."))
 
 			if(ammo_magazine.current_rounds <= 0)
 				user.temporarilyRemoveItemFromInventory(ammo_magazine)
@@ -109,13 +128,13 @@
 		other_box.matter_amount += transfer_amount
 		matter_amount -= transfer_amount
 		playsound(loc, 'sound/weapons/guns/interact/revolver_load.ogg', 25, 1)
-		to_chat(user, span_notice("You transfer [transfer_amount] matter units from [src] to [other_box]."))
+		to_chat(user, span_notice("You transfer universal ammunition from [src] to [other_box]."))
 		other_box.update_icon()
 		update_icon()
 
 /obj/item/matter_ammo_box/examine(mob/user, distance, infix, suffix)
 	. = ..()
-	. += span_notice("Left click [src] [requires_ground ? "on the ground" : ""] with ammo box or packet, magazine, matter box to restore ammo.")
+	. += span_notice("Left click [src] [requires_ground ? "on the ground" : ""] with a magazine, ammunition box, or universal ammunition container to restore ammo.")
 
 //explosion when using flamer procs.
 /obj/item/matter_ammo_box/fire_act(burn_level, flame_color)
@@ -136,8 +155,8 @@
 	user.dropItemToGround(src)
 
 /obj/item/matter_ammo_box/light
-	name = "lightweight matter ammo box"
-	desc = "A compact matter storage box that can convert stored matter into various types of ammunition. It's designed for quick field use. It comes with a leather strap for easy carrying."
+	name = "lightweight universal ammunition box"
+	desc = "A compact universal ammunition box designed for quick field use. It comes with a leather strap for easy carrying."
 	icon_state = "light_matter_ammo_box"
 	base_icon_state = "light_matter_ammo_box"
 	matter_amount = 3000
@@ -146,8 +165,8 @@
 	use_delay = 0
 
 /obj/item/matter_ammo_box/big
-	name = "big matter ammo box"
-	desc = "A massive matter storage box that can convert stored matter into various types of ammunition."
+	name = "big universal ammunition box"
+	desc = "A massive universal ammunition box that can produce various types of ammunition."
 	icon_state = "big_matter_ammo_box"
 	base_icon_state = "big_matter_ammo_box"
 	equip_slot_flags = NONE // Cannot be carried on the back
@@ -156,8 +175,8 @@
 	use_delay = 0.5 SECONDS
 
 /obj/item/matter_ammo_box/giant
-	name = "giant matter ammo box"
-	desc = "A massive matter storage box that can convert stored matter into various types of ammunition. It's too large to be carried on one's back and must be deployed in place."
+	name = "giant universal ammunition box"
+	desc = "A massive universal ammunition box that can produce various types of ammunition. It's too large to be carried on one's back and must be deployed in place."
 	icon_state = "giant_matter_ammo_box"
 	base_icon_state = "giant_matter_ammo_box"
 	equip_slot_flags = NONE // Cannot be carried on the back
