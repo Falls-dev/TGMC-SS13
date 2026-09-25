@@ -50,6 +50,8 @@
 	var/obj/effect/abstract/particle_holder/smoke_holder
 	///Holder for smoke del timer
 	var/smoke_del_timer
+	///Хотим ли мы давить траву (не подходит под мелкую технику)
+	var/crushes_weeds = TRUE
 
 /obj/vehicle/sealed/armored/multitile/Destroy()
 	QDEL_NULL(smoke_holder)
@@ -224,3 +226,32 @@
 	. = ..()
 	var/obj/item/tank_module/module = new /obj/item/tank_module/ability/smoke_launcher()
 	module.on_equip(src)
+
+/obj/vehicle/sealed/armored/multitile/Moved(atom/old_loc, movement_dir, forced, list/old_locs)
+	. = ..()
+	if(armored_flags & ARMORED_IS_WRECK)
+		return
+	if(crushes_weeds)
+		crush_weeds()
+
+/obj/vehicle/sealed/armored/multitile/proc/crush_weeds()
+	var/turf/center = get_turf(src)
+	if(!center)
+		return
+
+	var/cx = center.x
+	var/cy = center.y
+	var/cz = center.z
+	var/list/track_turfs = list()
+
+	switch(dir)
+		if(NORTH, SOUTH)
+			track_turfs += block(locate(cx - 1, cy - 1, cz), locate(cx - 1, cy + 1, cz))
+			track_turfs += block(locate(cx + 1, cy - 1, cz), locate(cx + 1, cy + 1, cz))
+		if(EAST, WEST)
+			track_turfs += block(locate(cx - 1, cy + 1, cz), locate(cx + 1, cy + 1, cz))
+			track_turfs += block(locate(cx - 1, cy - 1, cz), locate(cx + 1, cy - 1, cz))
+
+	for(var/turf/T in track_turfs)
+		for(var/obj/alien/weeds/W in T)
+			qdel(W)

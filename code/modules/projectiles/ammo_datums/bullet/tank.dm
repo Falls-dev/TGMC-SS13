@@ -73,7 +73,7 @@
 
 /datum/ammo/rocket/homing/microrocket /// this is basically a tgmc version of the above
 	name = "homing HE microrocket"
-	shell_speed = 0.3
+	shell_speed = 0.5
 	damage = 75
 	penetration = 40
 	sundering = 10
@@ -86,7 +86,7 @@
 	name = "TOW-III missile"
 	icon_state = "rocket_he"
 	ammo_behavior_flags = AMMO_TARGET_TURF|AMMO_SNIPER|AMMO_SPECIAL_PROCESS|AMMO_IFF
-	shell_speed = 0.3
+	shell_speed = 0.8
 	turn_rate = 10
 	damage = 60
 	penetration = 30
@@ -149,7 +149,7 @@
 	name = "spraying flames"
 	icon_state = "spray_flamer"
 	max_range = 7
-	shell_speed = 0.3
+	shell_speed = 0.8
 	damage = 6
 	burn_time = 0.3 SECONDS
 
