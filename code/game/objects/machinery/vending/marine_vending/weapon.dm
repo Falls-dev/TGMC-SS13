@@ -36,7 +36,7 @@
 			/obj/item/weapon/gun/shotgun/pump/bolt = -1,
 			/obj/item/ammo_magazine/rifle/bolt = -1,
 			/obj/item/ammo_magazine/rifle/boltclip = -1,
-			
+
 		),
 		"Пистолеты-пулемёты" = list(
 			/obj/item/weapon/gun/smg/vector = -1,
@@ -105,6 +105,7 @@
 			/obj/item/storage/pouch/machete/full = -1,
 			/obj/item/storage/holster/blade/harvester/full = -1,
 			/obj/item/weapon/twohanded/spear/tactical = -1,
+			/obj/item/weapon/gun/tacticoolspear = -1,
 			/obj/item/weapon/twohanded/spear/tactical/harvester = -1,
 			/obj/item/weapon/powerfist = -1,
 			/obj/item/weapon/twohanded/glaive/harvester = -1,
@@ -360,6 +361,7 @@
 			/obj/item/storage/pouch/machete/full = -1,
 			/obj/item/storage/holster/blade/harvester/full = -1,
 			/obj/item/weapon/twohanded/spear/tactical = -1,
+			/obj/item/weapon/gun/tacticoolspear = -1,
 			/obj/item/weapon/twohanded/spear/tactical/harvester = -1,
 			/obj/item/weapon/twohanded/glaive/harvester = -1,
 			/obj/item/weapon/powerfist = -1,
@@ -617,6 +619,7 @@
 			/obj/item/storage/pouch/machete/full = -1,
 			/obj/item/storage/holster/blade/harvester/full = -1,
 			/obj/item/weapon/twohanded/spear/tactical = -1,
+			/obj/item/weapon/gun/tacticoolspear = -1,
 			/obj/item/weapon/twohanded/spear/tactical/harvester = -1,
 			/obj/item/weapon/twohanded/glaive/harvester = -1,
 			/obj/item/weapon/powerfist = -1,
