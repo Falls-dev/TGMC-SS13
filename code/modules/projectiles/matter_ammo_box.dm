@@ -44,7 +44,20 @@
 	// Matter containers use the same matter transfer rules as this box.
 	if(istype(I, /obj/item/matter_ammo_container/box))
 		var/obj/item/matter_ammo_container/box/matter_box = I
-		matter_box.transfer_matter_to_box(src, user)
+		if(!matter_amount)
+			to_chat(user, span_warning("[src] is empty."))
+			return
+		if(matter_box.matter_amount >= matter_box.max_matter_amount)
+			to_chat(user, span_warning("[matter_box] is full."))
+			return
+
+		var/transfer_amount = min(matter_amount, matter_box.max_matter_amount - matter_box.matter_amount)
+		matter_box.matter_amount += transfer_amount
+		matter_amount -= transfer_amount
+		playsound(loc, 'sound/weapons/guns/interact/revolver_load.ogg', 25, 1)
+		to_chat(user, span_notice("You transfer universal ammunition from [src] to [matter_box]."))
+		matter_box.update_icon()
+		update_icon()
 		return
 
 	if(!matter_amount)
