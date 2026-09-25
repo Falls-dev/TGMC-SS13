@@ -123,7 +123,6 @@
 "cw" = (
 /obj/machinery/optable,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/organ/heart/prosthetic,
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/medical)
 "cz" = (
@@ -254,10 +253,6 @@
 /area/bigredv2/outside/medical)
 "fb" = (
 /turf/open/floor/tile/white,
-/area/bigredv2/outside/medical)
-"ff" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/tile/dark,
 /area/bigredv2/outside/medical)
 "ft" = (
 /obj/effect/landmark/corpsespawner/security,
@@ -1173,7 +1168,6 @@
 /area/bigredv2/outside/medical)
 "zi" = (
 /obj/machinery/light,
-/obj/effect/landmark/excavation_site_spawner,
 /obj/effect/landmark/xeno_resin_wall,
 /turf/open/floor/tile/green/whitegreen{
 	dir = 6
@@ -1809,7 +1803,6 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/effect/landmark/excavation_site_spawner,
 /obj/effect/landmark/weed_node,
 /obj/effect/landmark/xeno_resin_door,
 /turf/open/floor/tile/white,
@@ -3376,7 +3369,7 @@ Uc
 (31,1,1) = {"
 Oa
 pT
-ff
+un
 un
 un
 pT

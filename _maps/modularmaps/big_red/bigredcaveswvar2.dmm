@@ -14,18 +14,9 @@
 /obj/effect/landmark/weed_node,
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/bigredv2/caves/southwest)
-"h" = (
-/obj/effect/landmark/excavation_site_spawner,
-/obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southwest)
 "j" = (
 /turf/closed/mineral/smooth/bigred,
 /area/bigredv2/caves/rock)
-"k" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southwest)
 "l" = (
 /turf/closed/mineral/smooth/bigred/indestructible,
 /area/space)
@@ -832,7 +823,7 @@ N
 N
 N
 N
-k
+N
 N
 N
 N
@@ -1730,7 +1721,7 @@ j
 j
 j
 N
-h
+M
 N
 M
 N
@@ -1742,7 +1733,7 @@ j
 j
 j
 N
-k
+N
 N
 j
 j

@@ -777,7 +777,6 @@
 "uL" = (
 /obj/machinery/optable,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/organ/heart/prosthetic,
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/medical)
 "uT" = (
@@ -891,7 +890,6 @@
 /area/bigredv2/outside/medical)
 "yD" = (
 /obj/machinery/light,
-/obj/effect/landmark/excavation_site_spawner,
 /turf/open/floor/tile/green/whitegreen{
 	dir = 6
 	},
@@ -927,13 +925,6 @@
 	id = "Medical";
 	name = "Storm Shutters"
 	},
-/turf/open/floor/tile/white,
-/area/bigredv2/outside/medical)
-"zD" = (
-/obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/effect/landmark/excavation_site_spawner,
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/medical)
 "zE" = (
@@ -2603,7 +2594,7 @@ KG
 dL
 hR
 Pn
-zD
+Tj
 Vd
 Tj
 vI

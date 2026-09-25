@@ -215,11 +215,6 @@
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/yellow/full,
 /area/bigredv2/outside/general_store)
-"nu" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/misc/handcuffs/cable/cyan,
-/turf/open/floor,
-/area/bigredv2/outside/general_store)
 "nv" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor,
@@ -423,7 +418,6 @@
 /obj/structure/table,
 /obj/item/reagent_containers/food/drinks/flask/vacuumflask,
 /obj/item/reagent_containers/food/drinks/flask,
-/obj/effect/landmark/excavation_site_spawner,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/bigredv2/outside/general_store)
 "yk" = (
@@ -963,7 +957,7 @@ wH
 jQ
 Qg
 Ff
-nu
+nv
 Vu
 to
 "}

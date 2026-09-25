@@ -44,10 +44,6 @@
 /obj/effect/landmark/fog_blocker,
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/bigredv2/caves/south)
-"E" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/south)
 "G" = (
 /turf/closed/mineral/smooth/bigred,
 /area/bigredv2/caves/rock)
@@ -696,7 +692,7 @@ I
 I
 q
 I
-E
+I
 G
 G
 G
@@ -1084,7 +1080,7 @@ I
 I
 I
 I
-E
+I
 I
 I
 "}

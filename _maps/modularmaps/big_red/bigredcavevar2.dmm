@@ -34,10 +34,6 @@
 /obj/effect/landmark/weed_node,
 /turf/open/floor/plating/ground/mars/random/cave/rock,
 /area/bigredv2/caves/east/garbledradio)
-"aj" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/east/garbledradio)
 "ak" = (
 /obj/effect/landmark/xeno_silo_spawn,
 /turf/open/floor/plating/ground/mars/random/cave,
@@ -83,10 +79,6 @@
 /obj/effect/landmark/xeno_resin_wall,
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/bigredv2/caves/east/garbledradio)
-"aD" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/east)
 "aE" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
 /turf/open/floor/plating/ground/mars/random/cave/rock,
@@ -1352,7 +1344,7 @@ ar
 aa
 aa
 ab
-aj
+ab
 ab
 "}
 (28,1,1) = {"
@@ -1423,7 +1415,7 @@ aa
 ab
 ab
 ab
-aj
+ab
 ab
 ab
 ab
@@ -1801,7 +1793,7 @@ ar
 ar
 ab
 ab
-aj
+ab
 ab
 ab
 ab
@@ -2448,7 +2440,7 @@ aN
 aN
 aN
 aN
-aD
+aN
 aN
 aV
 aU
@@ -2519,7 +2511,7 @@ aN
 aN
 aN
 aN
-aD
+aN
 aV
 aN
 aN
