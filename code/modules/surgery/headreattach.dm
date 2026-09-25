@@ -3,7 +3,7 @@
 /datum/surgery_step/head
 	priority = 1
 	can_infect = 0
-	allowed_species = list("Synthetic", "Early Synthetic", "Combat Robot")
+	allowed_species = list("Synthetic", "Engineer Synthetic", "Medical Synthetic", "Combat Robot")
 	var/reattach_step
 
 	preop_sound = 'sound/misc/surgery/organ2.ogg'

@@ -13,7 +13,6 @@
 	xeno_abilities_flags = ABILITY_DISTRESS
 	valid_job_types = list(
 		/datum/job/terragov/squad/standard = -1,
-		/datum/job/terragov/squad/robot = -1,
 		/datum/job/terragov/squad/engineer = 1,
 		/datum/job/terragov/squad/corpsman = 1,
 		/datum/job/terragov/squad/smartgunner = 1,
