@@ -68,7 +68,7 @@
 				return
 
 			playsound(loc, 'sound/weapons/guns/interact/revolver_load.ogg', 25, 1)
-			var/rounds_to_add = min(matter_amount / ammo_magazine.default_ammo.matter_cost, ammo_magazine.max_rounds - ammo_magazine.current_rounds)
+			var/rounds_to_add = min(trunc(matter_amount / ammo_magazine.default_ammo.matter_cost), ammo_magazine.max_rounds - ammo_magazine.current_rounds)
 			var/matter_used = rounds_to_add * ammo_magazine.default_ammo.matter_cost
 
 			ammo_magazine.current_rounds += rounds_to_add

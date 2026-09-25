@@ -64,7 +64,7 @@
 	if(!can_transfer_ammo(target, user))
 		return FALSE
 
-	var/rounds_to_add = min(matter_amount / target.default_ammo.matter_cost, target.max_rounds - target.current_rounds)
+	var/rounds_to_add = min(trunc(matter_amount / target.default_ammo.matter_cost), target.max_rounds - target.current_rounds)
 	var/matter_used = rounds_to_add * target.default_ammo.matter_cost
 	target.current_rounds += rounds_to_add
 	matter_amount -= matter_used
