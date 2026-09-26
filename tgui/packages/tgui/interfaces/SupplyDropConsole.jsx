@@ -80,7 +80,7 @@ export const SupplyDropConsole = (_props) => {
 
                 <Divider />
 
-                <LabeledList.Item label="Координата X">
+                <LabeledList.Item label="Значение широты">
                   <NumberInput
                     expensive
                     minValue={1}
@@ -91,7 +91,7 @@ export const SupplyDropConsole = (_props) => {
                   />
                 </LabeledList.Item>
 
-                <LabeledList.Item label="Координата Y">
+                <LabeledList.Item label="Значение долготы">
                   <NumberInput
                     expensive
                     minValue={1}
