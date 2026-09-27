@@ -70,8 +70,10 @@
 	if(xeno_caste.caste_flags & CASTE_STAGGER_RESISTANT)
 		ADD_TRAIT(src, TRAIT_STAGGER_RESISTANT, XENO_TRAIT)
 	hive.update_tier_limits()
+	hive?.apply_minion_buffs(src)
 	if(CONFIG_GET(flag/xenos_on_strike))
 		replace_by_ai()
+
 	if(z) //Larva are initiated in null space
 		SSminimaps.add_marker(src, MINIMAP_FLAG_XENO, image('icons/UI_icons/map_blips.dmi', null, xeno_caste.minimap_icon, MINIMAP_BLIPS_LAYER))
 	handle_weeds_on_movement()

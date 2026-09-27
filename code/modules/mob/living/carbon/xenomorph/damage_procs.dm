@@ -16,7 +16,12 @@
 
 	var/sunder_ratio = clamp(1 - ((sunder - hard_armor_remaining) * 0.01), 0, 1) //sunder is reduced by whatever remaining hardarmour there is
 
-	return clamp(damage_amount * (1 - ((get_soft_armor(armor_type, def_zone) * sunder_ratio - effective_penetration) * 0.01)), 0, damage_amount)
+	var/soft_armor_val = get_soft_armor(armor_type, def_zone)
+	if(hive && !ckey && !key && (!mind || !mind.active) && hive.minion_upgrade_carapace)
+		soft_armor_val += hive.minion_upgrade_carapace * 8 \\все норм старая формула ниже миньонская тут
+
+	return clamp(damage_amount * (1 - ((soft_armor_val * sunder_ratio - effective_penetration) * 0.01)), 0, damage_amount)
+
 
 /mob/living/carbon/xenomorph/ex_act(severity, direction)
 	if(severity <= 0)

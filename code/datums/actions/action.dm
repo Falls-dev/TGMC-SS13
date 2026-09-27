@@ -143,10 +143,19 @@ KEYBINDINGS
 	else
 		button.color = rgb(128, 0, 0, 128)
 
+/datum/action/proc/flash_button(flash_color = "#44ff88", flash_duration = 2)
+	if(!button)
+		return
+	var/old_color = button.color
+	animate(button, color = flash_color, time = 1)
+	animate(color = old_color, time = flash_duration)
+
 /datum/action/proc/action_activate()
 	if(SEND_SIGNAL(src, COMSIG_ACTION_TRIGGER) & COMPONENT_ACTION_BLOCK_TRIGGER)
 		return FALSE
+	flash_button()
 	return TRUE
+
 
 ///Signal Handler for main action
 /datum/action/proc/keybind_activation()

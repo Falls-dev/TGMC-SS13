@@ -626,6 +626,42 @@
 	keybind_signal = COMISG_XENOMORPH_HIVEMIND_TELEPORT
 	hotkey_keys = list("C")
 
+/datum/keybinding/xeno/rts_minion_control
+	name = "rts_minion_control"
+	full_name = "Hivemind: Minion RTS Control"
+	description = "Toggle RTS Minion Direct Selection & Control mode."
+	keybind_signal = COMSIG_XENOABILITY_RTS_MINION_CONTROL
+	hotkey_keys = list("G")
+
+/datum/keybinding/xeno/select_all_minions
+	name = "select_all_minions"
+	full_name = "Hivemind: Select All Minions"
+	description = "Selects all nearby minions in view."
+	keybind_signal = COMSIG_XENOABILITY_SELECT_ALL_MINIONS
+	hotkey_keys = list("ShiftQ")
+
+/datum/keybinding/xeno/stop_minions
+	name = "stop_minions"
+	full_name = "Hivemind: Stop Minions"
+	description = "Orders selected minions to halt and clear commands."
+	keybind_signal = COMSIG_XENOABILITY_STOP_MINIONS
+	hotkey_keys = list("S")
+
+/datum/keybinding/xeno/return_to_core
+	name = "return_to_core"
+	full_name = "Hivemind: Return to Core"
+	description = "Immediately snaps camera and location back to Hivemind Core."
+	keybind_signal = COMSIG_XENOABILITY_RETURN_TO_CORE
+	hotkey_keys = list("H")
+
+/datum/keybinding/xeno/psy_gain
+	name = "psy_gain"
+	full_name = "Hivemind: Psychic Focus"
+	description = "Generates psychic energy passively or bursts focus."
+	keybind_signal = COMSIG_XENOABILITY_PSY_GAIN
+	hotkey_keys = list("R")
+
+
 /datum/keybinding/xeno/hunter_pounce
 	name = "hunter_pounce"
 	full_name = "Hunter: Pounce"

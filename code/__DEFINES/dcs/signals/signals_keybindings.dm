@@ -271,6 +271,12 @@
 #define COMSIG_XENOABILITY_UNRELENTING_FORCE "xenoability_unrelenting_force"
 #define COMSIG_XENOABILITY_UNRELENTING_FORCE_SELECT "xenoability_unrelenting_force_select"
 #define COMSIG_XENOABILITY_PSYCHIC_VORTEX "xenoability_psychic_vortex"
+#define COMSIG_XENOABILITY_RTS_MINION_CONTROL "xenoability_rts_minion_control"
+#define COMSIG_XENOABILITY_SELECT_ALL_MINIONS "xenoability_select_all_minions"
+#define COMSIG_XENOABILITY_STOP_MINIONS "xenoability_stop_minions"
+#define COMSIG_XENOABILITY_RETURN_TO_CORE "xenoability_return_to_core"
+#define COMSIG_XENOABILITY_PSY_GAIN "xenoability_psy_gain"
+
 
 #define COMSIG_XENOABILITY_RAVAGER_CHARGE "xenoability_ravager_charge"
 #define COMSIG_XENOABILITY_RAVAGE "xenoability_ravage"
