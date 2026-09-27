@@ -6,6 +6,7 @@
 	resistance_flags = NONE
 	layer = BELOW_OBJ_LAYER
 	max_integrity = 100
+	screen_loc = E3D_TYPE_DOOR
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_XENO_STRUCTURES)
 	canSmoothWith = list(

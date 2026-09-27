@@ -11,7 +11,7 @@ import https from 'https';
 import { env } from 'process';
 import Juke from './juke/index.js';
 import { DreamDaemon, DreamMaker, NamedVersionFile } from './lib/byond.js';
-import { yarn } from './lib/yarn.js';
+import { yarn, yarnWebclient } from './lib/yarn.js';
 
 const TGS_MODE = process.env.CBT_BUILD_MODE === 'TGS';
 
@@ -284,6 +284,39 @@ export const TguiBenchTarget = new Juke.Target({
   executes: () => yarn('tgui:bench'),
 });
 
+export const WebclientYarnTarget = new Juke.Target({
+  parameters: [CiParameter],
+  inputs: [
+    'webclient/.yarn/+(cache|releases|plugins|sdks)/**/*',
+    'webclient/**/package.json',
+    'webclient/yarn.lock',
+  ],
+  outputs: [
+    'webclient/.yarn/install-target',
+  ],
+  executes: ({ get }) => yarnWebclient('install', get(CiParameter) && '--immutable'),
+});
+
+export const WebclientTarget = new Juke.Target({
+  dependsOn: [WebclientYarnTarget],
+  inputs: [
+    'webclient/.yarn/install-target',
+    'webclient/rollup.config.js',
+    'webclient/**/package.json',
+    'webclient/src/**/*',
+    'webclient/lib/**/*',
+  ],
+  outputs: [
+    'webclient/dist',
+  ],
+  executes: () => yarnWebclient('webclient:build'),
+});
+
+export const RunWebclientProxyTarget = new Juke.Target({
+  dependsOn: [WebclientTarget],
+  executes: () => yarnWebclient('webclient:run-proxy'),
+});
+
 export const TestTarget = new Juke.Target({
   dependsOn: [DmTestTarget, TguiTestTarget],
 });
@@ -293,7 +326,7 @@ export const LintTarget = new Juke.Target({
 });
 
 export const BuildTarget = new Juke.Target({
-  dependsOn: [TguiTarget, DmTarget],
+  dependsOn: [TguiTarget, DmTarget, WebclientTarget],
 });
 
 export const ServerTarget = new Juke.Target({
@@ -305,7 +338,7 @@ export const ServerTarget = new Juke.Target({
       dmbFile: `${DME_NAME}.dmb`,
       namedDmVersion: get(DmVersionParameter),
     }
-    await DreamDaemon(options, port, '-trusted');
+    await DreamDaemon(options, port, '-trusted', '-webclient');
   },
 });
 
@@ -327,8 +360,19 @@ export const TguiCleanTarget = new Juke.Target({
   },
 });
 
+export const WebclientCleanTarget = new Juke.Target({
+  executes: async () => {
+    Juke.rm('webclient/.yarn/{cache,unplugged,webpack}', { recursive: true });
+    Juke.rm('webclient/.yarn/build-state.yml');
+    Juke.rm('webclient/.yarn/install-state.gz');
+    Juke.rm('webclient/.yarn/install-target');
+    Juke.rm('webclient/.pnp.*');
+    Juke.rm('webclient/dist', { recursive: true });
+  },
+});
+
 export const CleanTarget = new Juke.Target({
-  dependsOn: [TguiCleanTarget],
+  dependsOn: [TguiCleanTarget, WebclientCleanTarget],
   executes: async () => {
     Juke.rm('*.{dmb,rsc}');
     Juke.rm('_maps/templates.dm');

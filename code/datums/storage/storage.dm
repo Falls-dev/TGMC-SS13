@@ -625,7 +625,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/cy = ty
 	boxes.screen_loc = "[tx]:,[ty] to [mx],[my]"
 	for(var/obj/object in parent.contents)
-		object.screen_loc = "[cx],[cy]"
+		SET_SCREEN_LOC(object, "[cx],[cy]")
 		SET_PLANE_IMPLICIT(object, ABOVE_HUD_PLANE)
 		cx++
 		if(cx > mx)
@@ -644,7 +644,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(display_contents_with_number)
 		for(var/datum/numbered_display/ND in display_contents)
 			ND.sample_object.mouse_opacity = 2
-			ND.sample_object.screen_loc = "[cx]:16,[cy]:16"
+			SET_SCREEN_LOC(ND.sample_object, "[cx]:16,[cy]:16")
 			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
 			SET_PLANE_IMPLICIT(ND.sample_object, ABOVE_HUD_PLANE)
 			cx++
@@ -654,7 +654,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	else
 		for(var/obj/object in parent.contents)
 			object.mouse_opacity = 2 //So storage items that start with contents get the opacity trick.
-			object.screen_loc = "[cx]:16,[cy]:16"
+			SET_SCREEN_LOC(object, "[cx]:16,[cy]:16")
 			object.maptext = ""
 			SET_PLANE_IMPLICIT(object, ABOVE_HUD_PLANE)
 			cx++
@@ -712,7 +712,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		storage_start.overlays += src.stored_continue
 		storage_start.overlays += src.stored_end
 
-		object.screen_loc = "4:[round((startpoint+endpoint)/2)+2],2:16"
+		SET_SCREEN_LOC(object, "4:[round((startpoint+endpoint)/2)+2],2:16")
 		object.maptext = ""
 		SET_PLANE_IMPLICIT(object, ABOVE_HUD_PLANE)
 

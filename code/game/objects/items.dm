@@ -7,6 +7,7 @@
 	allow_pass_flags = PASS_LOW_STRUCTURE
 	atom_flags = PREVENT_CONTENTS_EXPLOSION
 	resistance_flags = PROJECTILE_IMMUNE
+	screen_loc = E3D_TYPE_ITEM
 	/// This saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
 	var/image/blood_overlay = null
 	/// The iconstate that the items use for blood on blood.dmi when drawn on the mob.

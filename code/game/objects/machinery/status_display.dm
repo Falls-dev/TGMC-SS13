@@ -18,6 +18,7 @@
 	icon_state = "frame"
 	density = FALSE
 	use_power = IDLE_POWER_USE
+	screen_loc = E3D_TYPE_WALLMOUNT
 	idle_power_usage = 10
 
 	maptext_height = 26

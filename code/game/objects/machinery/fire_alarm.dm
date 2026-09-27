@@ -14,6 +14,7 @@
 	light_power = 0.5
 	light_color = LIGHT_COLOR_BLUE
 	anchored = TRUE
+	screen_loc = E3D_TYPE_WALLMOUNT
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6

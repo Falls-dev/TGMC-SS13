@@ -303,7 +303,7 @@
 	for(var/datum/action/A AS in item_to_equip.actions)
 		A.remove_action(src)
 
-	item_to_equip.screen_loc = null
+	CLEAR_SCREEN_LOC(item_to_equip)
 	SET_PLANE_EXPLICIT(item_to_equip, ABOVE_HUD_PLANE, src)
 	item_to_equip.forceMove(src)
 

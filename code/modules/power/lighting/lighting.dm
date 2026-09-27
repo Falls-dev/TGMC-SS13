@@ -9,6 +9,7 @@
 	base_icon_state = "tube"
 	anchored = TRUE
 	layer = FLY_LAYER
+	screen_loc = E3D_TYPE_LIGHTFIXTURE
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 20

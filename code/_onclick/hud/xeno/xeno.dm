@@ -175,16 +175,16 @@
 	var/mob/living/carbon/xenomorph/H = mymob
 	if(hud_version != HUD_STYLE_NOHUD)
 		if(H.r_hand)
-			H.r_hand.screen_loc = ui_rhand
+			SET_SCREEN_LOC(H.r_hand, ui_rhand)
 			H.client.screen += H.r_hand
 		if(H.l_hand)
-			H.l_hand.screen_loc = ui_lhand
+			SET_SCREEN_LOC(H.l_hand, ui_lhand)
 			H.client.screen += H.l_hand
 	else
 		if(H.r_hand)
-			H.r_hand.screen_loc = null
+			CLEAR_SCREEN_LOC(H.r_hand)
 		if(H.l_hand)
-			H.l_hand.screen_loc = null
+			CLEAR_SCREEN_LOC(H.l_hand)
 
 /mob/living/carbon/xenomorph/create_mob_hud()
 	. = ..()

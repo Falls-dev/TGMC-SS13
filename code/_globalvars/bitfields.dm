@@ -584,6 +584,7 @@ GLOBAL_LIST_INIT(bitfields, list(
 		"SEE_PIXELS" = SEE_PIXELS,
 		"SEE_THRU" = SEE_THRU,
 		"SEE_BLACKNESS" = SEE_BLACKNESS,
+		"E3D_SEE_ZOOM" = E3D_SEE_ZOOM,
 		"BLIND" = BLIND
 	),
 	"sight" = list(
@@ -595,6 +596,7 @@ GLOBAL_LIST_INIT(bitfields, list(
 		"SEE_PIXELS" = SEE_PIXELS,
 		"SEE_THRU" = SEE_THRU,
 		"SEE_BLACKNESS" = SEE_BLACKNESS,
+		"E3D_SEE_ZOOM" = E3D_SEE_ZOOM,
 		"BLIND" = BLIND
 	),
 	"use_state_flags" = list(
