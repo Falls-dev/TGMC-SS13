@@ -279,6 +279,7 @@
 	var/list/open_cave_tiles = retain_reachable_cave_tiles(layout, cave_area, landing_area)
 	place_generator_room(layout, generator_area, cave_area, open_cave_tiles, seed)
 	assign_cave_areas(layout)
+	configure_landing_zone_door_areas(layout)
 	// Place after cave sectors are assigned so their area pass cannot overwrite
 	// the sealed relay chamber.
 	place_ground_telecomms_relay(layout, relay_area, seed)
@@ -539,6 +540,27 @@
 	var/turf/new_turf = target_turf.ChangeTurf(turf_type, null, CHANGETURF_SKIP)
 	new_turf.change_area(new_turf.loc, target_area)
 	return new_turf
+
+//немого перемудрено, но работает
+/obj/effect/landmark/procedural_frontier_generator/proc/configure_landing_zone_door_areas(datum/procedural_frontier_layout/layout)
+	var/containment_min_x = layout.landing_min_x - 1
+	var/containment_max_x = layout.landing_max_x + 1
+	var/containment_min_y = layout.landing_min_y - 1
+	var/containment_max_y = layout.landing_max_y + 1
+	for(var/tile_x in containment_min_x to containment_max_x)
+		for(var/tile_y in containment_min_y to containment_max_y)
+			var/is_containment_ring = tile_x == containment_min_x || tile_x == containment_max_x || tile_y == containment_min_y || tile_y == containment_max_y
+			if(!is_containment_ring)
+				continue
+			var/turf/containment_turf = locate(tile_x, tile_y, layout.z_level)
+			if(!containment_turf)
+				continue
+			for(var/obj/machinery/door/poddoor/timed_late/containment/landing_zone/containment_door in containment_turf)
+				var/area/door_area = get_area(containment_door)
+				if(!door_area)
+					continue
+				ENABLE_BITFIELD(door_area.area_flags, DISALLOW_WEEDING)
+				ENABLE_BITFIELD(door_area.area_flags, NEAR_FOB)
 
 /obj/effect/landmark/procedural_frontier_generator/proc/carve_landing_exit(datum/procedural_frontier_layout/layout, area/cave_area, area/landing_area)
 	var/list/exit_centers = (layout.landing_exit_direction == NORTH || layout.landing_exit_direction == SOUTH) ? list(layout.landing_min_x + 6, layout.landing_max_x - 6) : list(layout.landing_min_y + 6, layout.landing_max_y - 6)
