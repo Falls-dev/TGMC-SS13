@@ -1394,8 +1394,6 @@
 		personal_statistics.cocooned++
 
 /////////////////////////////////
-// blessing Menu
-/////////////////////////////////
 // pattern building
 /////////////////////////////////
 
@@ -1565,6 +1563,8 @@ GLOBAL_LIST_INIT(pattern_images_list, list(
 		starty = starty + 1
 	return turfs
 
+/////////////////////////////////
+// blessing Menu
 /////////////////////////////////
 /datum/action/ability/xeno_action/blessing_menu
 	name = "Mothers Blessings"
