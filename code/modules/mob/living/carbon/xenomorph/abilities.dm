@@ -1489,7 +1489,7 @@ GLOBAL_LIST_INIT(pattern_images_list, list(
 	if(!secrete_resin)
 		return
 	hologram.remove_filter("invalid_turf_filter")
-	if(is_valid_for_resin_structure(target_turf, FALSE, xeno_owner.selected_resin) != TRUE)
+	if(is_valid_for_resin_structure(target_turf, FALSE, xeno_owner.selected_resin) != NO_ERROR)
 		hologram.add_filter("invalid_turf_filter", 1, color_matrix_filter(rgb(233, 23, 23)))
 
 /// creates the hologram and quickly fades it in, step_size is increased to make movement smoother
