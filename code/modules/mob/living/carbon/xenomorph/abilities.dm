@@ -1541,12 +1541,8 @@ GLOBAL_LIST_INIT(pattern_images_list, list(
 	if(!length(target_turfs))
 		xeno_owner.balloon_alert(xeno_owner, "no valid ground found")
 		return FALSE
-	// check if one is successful, if none, we output a visible error
-	var/success = FALSE
 	for(var/turf/target_turf as anything in target_turfs)
-		// if last tile without the rest having any successes, we inform the user of a error
-		if(secrete_resin.preshutter_build_resin(target_turf))
-			success = TRUE
+		secrete_resin.preshutter_build_resin(target_turf)
 
 /// gets turfs based on the current active pattern with the pattern offsets around the target atom
 /datum/action/ability/activable/xeno/place_pattern/proc/get_target_turfs(atom/A)
