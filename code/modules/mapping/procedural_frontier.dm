@@ -169,10 +169,14 @@
 	// This preserves a broader naturally open area around the FOB.
 	var/ridge_gradient_start_distance = 20
 	var/landing_edge_opening = 3.0
-	var/ceiling_distance_rate = 0.35
-	// The gradient is evaluated over an extended range and clamped to the
-	// actual CEILING constants afterwards. A negative lower bound deliberately
-	// makes the central CEILING_NONE band wider than the other levels.
+	// Ceiling levels have their own, slower gradient so CEILING_NONE..OBSTRUCTED
+	// (the outdoor/landing-safe levels) cover a larger area around the FOB.
+	var/ceiling_gradient_start_distance = 45
+	// Split the large CEILING_NONE region into two distinct area bands.
+	var/ceiling_zero_split_distance = 24
+	var/ceiling_distance_rate = 0.22
+	// The negative lower bound keeps the inner open area at CEILING_NONE;
+	// area identity is split separately by get_ceiling_zone_name().
 	var/ceiling_gradient_min = -1
 	var/ceiling_gradient_max = CEILING_DEEP_UNDERGROUND_METAL
 	var/remote_cave_cutoff = 0.82
@@ -418,10 +422,19 @@
 /obj/effect/landmark/procedural_frontier_generator/proc/get_ceiling_level(distance_from_landing, datum/procedural_frontier_layout/layout)
 	// Map the exponential distance profile onto an extended -1..7 range, then
 	// clamp it to the valid CEILING constants (0..7).
-	var/normalized_distance = procedural_frontier_landing_threshold(distance_from_landing, layout.max_landing_distance, ceiling_distance_rate)
+	var/gradient_distance = max(0, distance_from_landing - ceiling_gradient_start_distance)
+	var/gradient_length = max(1, layout.max_landing_distance - ceiling_gradient_start_distance)
+	var/normalized_distance = procedural_frontier_landing_threshold(gradient_distance, gradient_length, ceiling_distance_rate)
 	var/gradient_span = max(1, ceiling_gradient_max - ceiling_gradient_min)
 	var/raw_ceiling = round(ceiling_gradient_min + normalized_distance * gradient_span)
 	return clamp(raw_ceiling, CEILING_NONE, CEILING_DEEP_UNDERGROUND_METAL)
+
+/obj/effect/landmark/procedural_frontier_generator/proc/get_ceiling_zone_name(distance_from_landing, ceiling_level)
+	if(ceiling_level != CEILING_NONE)
+		return "ceiling-[ceiling_level]"
+	if(distance_from_landing <= ceiling_zero_split_distance)
+		return "open-inner"
+	return "open-outer"
 
 /obj/effect/landmark/procedural_frontier_generator/proc/get_cave_area_color(ceiling_level)
 	// Keep shallow/outside areas light and progressively darken underground
@@ -482,14 +495,15 @@
 			var/depth_sector = get_cave_depth_sector(distance_from_landing, layout)
 			var/depth_name = get_cave_depth_sector_name(depth_sector)
 			var/ceiling_level = get_ceiling_level(distance_from_landing, layout)
-			var/cache_key = "[sector]:[depth_sector]:[ceiling_level]"
+			var/ceiling_zone = get_ceiling_zone_name(distance_from_landing, ceiling_level)
+			var/cache_key = "[sector]:[depth_sector]:[ceiling_level]:[ceiling_zone]"
 			var/area/target_area = area_cache[cache_key]
 			if(!target_area)
 				target_area = new /area/procedural_frontier/sector
 				target_area.ceiling = ceiling_level
 				target_area.outside = is_cave_area_outside(ceiling_level)
 				target_area.minimap_color = get_cave_area_color(ceiling_level)
-				target_area.name = "Frontier Caves - [capitalize(sector)] - [depth_name] (ceiling [ceiling_level])"
+				target_area.name = "Frontier Caves - [capitalize(sector)] - [depth_name] - [ceiling_zone] (ceiling [ceiling_level])"
 				area_cache[cache_key] = target_area
 			current_turf.change_area(current_turf.loc, target_area)
 	// Runtime areas are initialized before they receive turfs, so their normal
