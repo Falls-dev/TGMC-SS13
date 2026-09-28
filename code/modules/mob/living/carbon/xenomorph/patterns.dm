@@ -4,6 +4,8 @@
 /datum/buildingpattern
 	///A list of strings, where each one defines a layer. All patterns start from the top left corner, where X is a wall and O is empty space.
 	var/list/pattern
+	var/offset_x = 0
+	var/offset_y = 0
 	///A human readable name for the pattern, such as "2 by 2 square". Displayed as a overhead message when this pattern is selected
 	var/overheadmsg
 

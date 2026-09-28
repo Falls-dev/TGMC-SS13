@@ -1419,7 +1419,7 @@ GLOBAL_LIST_INIT(pattern_images_list, list(
 	action_icon_state = "square2x2"
 	action_icon = 'icons/Xeno/patterns.dmi'
 	target_flags = ABILITY_TURF_TARGET
-	gamemode_flags = ABILITY_NUCLEARWAR
+	gamemode_flags = ABILITY_ALL_GAMEMODE
 	keybinding_signals = list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_PLACE_PATTERN,
 		KEYBINDING_ALTERNATE = COMSIG_XENOABILITY_SELECT_PATTERN,
@@ -1441,7 +1441,7 @@ GLOBAL_LIST_INIT(pattern_images_list, list(
 	//if its not prep, remove the ability instantly
 	if(!(SSmonitor.gamestate == SHUTTERS_CLOSED && CHECK_BITFIELD(SSticker.mode?.round_type_flags, MODE_ALLOW_XENO_QUICKBUILD) && SSresinshaping.active))
 		remove_action(owner)
-	RegisterSignals(SSdcs, list(COMSIG_GLOB_OPEN_SHUTTERS_EARLY, COMSIG_GLOB_OPEN_TIMED_SHUTTERS_LATE,COMSIG_GLOB_OPEN_TIMED_SHUTTERS_XENO_HIVEMIND,COMSIG_GLOB_TADPOLE_LANDED_OUT_LZ,COMSIG_GLOB_TADPOLE_RAPPEL_DEPLOYED_OUT_LZ,COMSIG_GLOB_DROPPOD_LANDED), PROC_REF(toggle_off))
+	RegisterSignals(SSdcs, list(COMSIG_GLOB_OPEN_SHUTTERS_EARLY, COMSIG_GLOB_OPEN_TIMED_SHUTTERS_LATE, COMSIG_GLOB_TADPOLE_LANDED_OUT_LZ, COMSIG_GLOB_DROPPOD_LANDED), PROC_REF(toggle_off))
 
 ///Seperate proc that calls remove_action, to block any signal shenanigans.
 /datum/action/ability/activable/xeno/place_pattern/proc/toggle_off()
@@ -1450,7 +1450,7 @@ GLOBAL_LIST_INIT(pattern_images_list, list(
 
 /datum/action/ability/activable/xeno/place_pattern/remove_action(mob/living/L)
 	. = ..()
-	UnregisterSignal(SSdcs, list(COMSIG_GLOB_OPEN_SHUTTERS_EARLY, COMSIG_GLOB_OPEN_TIMED_SHUTTERS_LATE,COMSIG_GLOB_OPEN_TIMED_SHUTTERS_XENO_HIVEMIND,COMSIG_GLOB_TADPOLE_LANDED_OUT_LZ,COMSIG_GLOB_TADPOLE_RAPPEL_DEPLOYED_OUT_LZ,COMSIG_GLOB_DROPPOD_LANDED))
+	UnregisterSignal(SSdcs, list(COMSIG_GLOB_OPEN_SHUTTERS_EARLY, COMSIG_GLOB_OPEN_TIMED_SHUTTERS_LATE, COMSIG_GLOB_TADPOLE_LANDED_OUT_LZ, COMSIG_GLOB_DROPPOD_LANDED))
 
 /datum/action/ability/activable/xeno/place_pattern/on_selection()
 	RegisterSignal(owner, COMSIG_ATOM_MOUSE_ENTERED, PROC_REF(show_hologram_call))
@@ -1491,7 +1491,7 @@ GLOBAL_LIST_INIT(pattern_images_list, list(
 	if(!secrete_resin)
 		return
 	hologram.remove_filter("invalid_turf_filter")
-	if(!secrete_resin.can_build_here(target_turf, TRUE))
+	if(is_valid_for_resin_structure(target_turf, FALSE, xeno_owner.selected_resin) != TRUE)
 		hologram.add_filter("invalid_turf_filter", 1, color_matrix_filter(rgb(233, 23, 23)))
 
 /// creates the hologram and quickly fades it in, step_size is increased to make movement smoother
@@ -1545,8 +1545,7 @@ GLOBAL_LIST_INIT(pattern_images_list, list(
 	var/success = FALSE
 	for(var/turf/target_turf as anything in target_turfs)
 		// if last tile without the rest having any successes, we inform the user of a error
-		var/loud = !success && target_turfs.Find(target_turf) == length(target_turfs)
-		if(secrete_resin.qb_build_resin(target_turf, silent = !loud))
+		if(secrete_resin.preshutter_build_resin(target_turf))
 			success = TRUE
 
 /// gets turfs based on the current active pattern with the pattern offsets around the target atom
