@@ -1154,6 +1154,47 @@
 	keybind_signal = COMSIG_XENOABILITY_FLURRY
 	hotkey_keys = list("Q")
 
+/datum/keybinding/xeno/ancient_behemoth_roll
+	name = "Ancient Behemoth Roll"
+	full_name = "Ancient Behemoth: Roll"
+	description = "Toggle the legacy Behemoth rolling charge."
+	keybind_signal = COMSIG_XENOABILITY_ANCIENT_BEHEMOTH_ROLL
+	hotkey_keys = list("Z")
+
+/datum/keybinding/xeno/ancient_landslide
+	name = "Ancient Landslide"
+	full_name = "Ancient Behemoth: Landslide"
+	description = "Rush forward in a wide damaging path."
+	keybind_signal = COMSIG_XENOABILITY_ANCIENT_LANDSLIDE
+	hotkey_keys = list("C")
+
+/datum/keybinding/xeno/ancient_cancel_landslide
+	name = "Cancel Ancient Landslide"
+	full_name = "Ancient Behemoth: Cancel Landslide"
+	description = "Cancel the legacy Landslide ability."
+	keybind_signal = COMSIG_XENOABILITY_ANCIENT_CANCEL_LANDSLIDE
+
+/datum/keybinding/xeno/ancient_earth_riser
+	name = "Ancient Earth Riser"
+	full_name = "Ancient Behemoth: Earth Riser"
+	description = "Raise or throw a legacy Earth Pillar."
+	keybind_signal = COMSIG_XENOABILITY_ANCIENT_EARTH_RISER
+	hotkey_keys = list("R")
+
+/datum/keybinding/xeno/ancient_earth_riser_alternate
+	name = "Destroy Ancient Earth Pillar"
+	full_name = "Ancient Behemoth: Destroy Earth Pillar"
+	description = "Destroy the oldest legacy Earth Pillar."
+	keybind_signal = COMSIG_XENOABILITY_ANCIENT_EARTH_RISER_ALTERNATE
+	hotkey_keys = list("ShiftR")
+
+/datum/keybinding/xeno/ancient_seismic_fracture
+	name = "Ancient Seismic Fracture"
+	full_name = "Ancient Behemoth: Seismic Fracture"
+	description = "Blast the earth around the selected location."
+	keybind_signal = COMSIG_XENOABILITY_ANCIENT_SEISMIC_FRACTURE
+	hotkey_keys = list("V")
+
 /datum/keybinding/xeno/earth_riser
 	name = "Earth Riser"
 	full_name = "Behemoth: Earth Riser"

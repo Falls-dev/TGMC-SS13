@@ -120,6 +120,8 @@ GLOBAL_LIST_INIT(all_xeno_types, list(
 	/mob/living/carbon/xenomorph/warlock/primordial,
 	/mob/living/carbon/xenomorph/behemoth,
 	/mob/living/carbon/xenomorph/behemoth/primordial,
+	/mob/living/carbon/xenomorph/behemoth/ancient,
+	/mob/living/carbon/xenomorph/behemoth/ancient/primordial,
 	/mob/living/carbon/xenomorph/chimera,
 	/mob/living/carbon/xenomorph/chimera/primordial,
 	/mob/living/carbon/xenomorph/widow,

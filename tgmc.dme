@@ -1981,6 +1981,7 @@
 #include "code\modules\mob\living\carbon\xenomorph\castes\beetle\beetle.dm"
 #include "code\modules\mob\living\carbon\xenomorph\castes\beetle\castedatum_beetle.dm"
 #include "code\modules\mob\living\carbon\xenomorph\castes\behemoth\abilities_behemoth.dm"
+#include "code\modules\mob\living\carbon\xenomorph\castes\behemoth\abilities_ancient_behemoth.dm"
 #include "code\modules\mob\living\carbon\xenomorph\castes\behemoth\behemoth.dm"
 #include "code\modules\mob\living\carbon\xenomorph\castes\behemoth\castedatum_behemoth.dm"
 #include "code\modules\mob\living\carbon\xenomorph\castes\behemoth\mutations_behemoth.dm"

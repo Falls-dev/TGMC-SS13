@@ -419,6 +419,11 @@ GLOBAL_LIST_INIT(strain_list, init_glob_strain_list())
 	/// References our currently held Earth Pillar.
 	var/obj/structure/xeno/earth_pillar/held_pillar
 
+	/// Legacy Behemoth charge state, retained for the Ancient strain.
+	var/behemoth_charging = FALSE
+	/// Legacy Behemoth primordial wrath pool, retained for the Ancient strain.
+	var/wrath_stored = 0
+
 	// *** Bull vars *** //
 	var/bull_charging = FALSE
 

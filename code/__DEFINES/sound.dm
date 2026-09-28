@@ -133,6 +133,8 @@
 #define SFX_QUEEN "queen"
 #define SFX_ALIEN_VENTPASS "alien_ventpass"
 #define SFX_BEHEMOTH_EARTH_PILLAR_HIT "behemoth_earth_pillar_hit"
+#define SFX_BEHEMOTH_STEP_SOUNDS "behemoth_step_sounds"
+#define SFX_BEHEMOTH_ROLLING "behemoth_rolling"
 #define SFX_MALE_SCREAM "male_scream"
 #define SFX_MALE_PAIN "male_pain"
 #define SFX_MALE_GORED "male_gored"
