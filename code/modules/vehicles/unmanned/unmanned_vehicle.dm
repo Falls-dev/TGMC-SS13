@@ -185,6 +185,13 @@
 	if(weed_slowdown > 0)
 		weed_slowdown = max(0, weed_slowdown - 1)
 
+/obj/vehicle/unmanned/stop_pulling()
+	if(ismob(pulling))
+		var/mob/M = pulling
+		if(M.client)
+			M.client.move_delay = world.time
+	return ..()
+
 ///Try to desequip the turret
 /obj/vehicle/unmanned/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
