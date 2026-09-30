@@ -23,6 +23,7 @@ GLOBAL_LIST_INIT(engineer_gear_listed_products, list(
 	/obj/structure/closet/crate/uav_crate = list(CAT_ENGSUP, "Iguana Unmanned Vehicle", 25, "blue"),
 	/obj/structure/closet/crate/uav_crate/medium = list(CAT_ENGSUP, "Gecko Unmanned Vehicle", 28, "blue"),
 	/obj/structure/closet/crate/uav_crate/heavy = list(CAT_ENGSUP, "Komodo Unmanned Vehicle", 35, "blue"),
+	/obj/item/uav_turret/claw = list(CAT_ENGSUP, "UV Claw", 4, "blue"),
 	/obj/item/cell/unmanned_vehicle = list(CAT_ENGSUP, "Unmanned vehicle battery", 8, "blue"),
 	/obj/structure/closet/crate/uav_weapons_crate/light = list(CAT_ENGSUP, "Light UV Machinegun", 6, "blue"),
 	/obj/structure/closet/crate/uav_weapons_crate/heavy = list(CAT_ENGSUP, "Heavy UV Machinegun", 10, "blue"),
