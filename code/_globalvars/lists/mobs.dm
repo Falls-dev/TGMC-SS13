@@ -99,6 +99,8 @@ GLOBAL_LIST_INIT(all_xeno_types, list(
 	/mob/living/carbon/xenomorph/queen/primordial,
 	/mob/living/carbon/xenomorph/king,
 	/mob/living/carbon/xenomorph/king/primordial,
+	/mob/living/carbon/xenomorph/wraith,
+	/mob/living/carbon/xenomorph/wraith/primordial,
 	/mob/living/carbon/xenomorph/ravager,
 	/mob/living/carbon/xenomorph/ravager/primordial,
 	/mob/living/carbon/xenomorph/praetorian,
@@ -160,6 +162,7 @@ GLOBAL_LIST_INIT(xeno_types_tier_two, list(
 	/datum/xeno_caste/puppeteer,
 	/datum/xeno_caste/spitter,
 	/datum/xeno_caste/warrior,
+	/datum/xeno_caste/wraith,
 ))
 
 GLOBAL_LIST_INIT(xeno_types_tier_three, list(

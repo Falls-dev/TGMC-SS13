@@ -472,7 +472,8 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", mo
 		<a href='byond://?src=[ref];transform=warrior;mob=[REF(M)]'>Warrior</a> |
 		<a href='byond://?src=[ref];transform=spitter;mob=[REF(M)]'>Spitter</a> |
 		<a href='byond://?src=[ref];transform=hivelord;mob=[REF(M)]'>Hivelord</a> |
-		<a href='byond://?src=[ref];transform=carrier;mob=[REF(M)]'>Carrier</a>
+		<a href='byond://?src=[ref];transform=carrier;mob=[REF(M)]'>Carrier</a> |
+		<a href='byond://?src=[ref];transform=wraith;mob=[REF(M)]'>Wraith</a>
 		<br> Alien Tier 3:
 		<a href='byond://?src=[ref];transform=ravager;mob=[REF(M)]'>Ravager</a> |
 		<a href='byond://?src=[ref];transform=praetorian;mob=[REF(M)]'>Praetorian</a> |
