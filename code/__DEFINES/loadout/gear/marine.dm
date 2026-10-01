@@ -3,7 +3,6 @@ GLOBAL_LIST_INIT(marine_gear_listed_products, list(
 	/obj/item/implanter/skill/melee = list(CAT_MARINE, "CQC skills implanter", 25, "cyan2"),
 	/obj/item/implanter/skill/medical = list(CAT_MARINE, "Medical skills implanter", 20, "cyan2"),
 	/obj/item/implanter/skill/engineer = list(CAT_MARINE, "Engineering skills implanter", 20, "cyan2"),
-	/obj/item/implanter/skill/construct = list(CAT_MARINE, "Construction skills implanter", 20, "cyan2"),
 	/obj/item/storage/backpack/marine/radiopack = list(CAT_MARINE, "Radio Pack", 15, "orange"),
 	/obj/item/stack/sandbags_empty/half = list(CAT_MARINE, "Sandbags x25", 5, "orange"),
 	/obj/item/fulton_extraction_pack = list(CAT_MARINE, "Fulton Extraction Pack", 15, "orange"),

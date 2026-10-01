@@ -4,7 +4,6 @@ GLOBAL_LIST_INIT(leader_gear_listed_products, list(
 	/obj/item/implanter/skill/melee = list(CAT_LEDSUP, "CQC skills implanter", 15, "cyan2"),
 	/obj/item/implanter/skill/medical = list(CAT_LEDSUP, "Medical skills implanter", 15, "cyan2"),
 	/obj/item/implanter/skill/engineer = list(CAT_LEDSUP, "Engineering skills implanter", 15, "cyan2"),
-	/obj/item/implanter/skill/construct = list(CAT_LEDSUP, "Construction skills implanter", 15, "cyan2"),
 	/obj/item/implanter/skill/leadership = list(CAT_LEDSUP, "Command leadership skills implanter", 20, "cyan2"),
 	/obj/item/implanter/hud/medical = list(CAT_LEDSUP, "Medical HUD implanter", 5, "cyan2"),
 	/obj/item/armor_module/module/valkyrie_autodoc = list(CAT_LEDSUP, "Valkyrie Automedical Armor System", 25,"white"),

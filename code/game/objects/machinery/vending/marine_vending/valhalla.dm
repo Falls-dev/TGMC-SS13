@@ -136,7 +136,6 @@
 			/obj/item/implanter/skill/medical = -1,
 			/obj/item/implanter/skill/surgery = -1,
 			/obj/item/implanter/skill/engineer = -1,
-			/obj/item/implanter/skill/construct = -1,
 			/obj/item/implanter/skill/leadership = -1,
 		),
 	)
