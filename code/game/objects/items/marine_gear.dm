@@ -335,15 +335,15 @@
 		to_chat(user, span_danger("!!REMEMBER TO ATTACH YOUR WEAPON TO YOUR HARNESS OR IT WON'T WORK!!"))
 
 /obj/item/compass
-	name = "compass"
-	desc = "A small compass that can tell you your coordinates on use."
+	name = "Компас"
+	desc = "Маленький компас, который при использовании сообщает ваши координаты."
 	icon_state = "compass"
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/compass/attack_self(mob/living/user)
 	. = ..()
 	var/turf/location = get_turf(src)
-	to_chat(user, span_notice("After looking at the [src] you can tell your general coordinates.") + span_bold(" LONGITUDE [location.x]. LATITUDE [location.y]."))
+	to_chat(user, span_notice("Посмотрев на [src], вы можете определить свои примерные координаты.") + span_bold(" ДОЛГОТА [location.x]. ШИРОТА [location.y]."))
 
 /obj/item/compass/afterattack(atom/target, mob/user, has_proximity, click_parameters)
 	. = ..()
@@ -352,4 +352,4 @@
 	var/turf/target_turf = isturf(target)? target : get_turf(target)
 	if(!do_after(user, 1 SECONDS))
 		return
-	to_chat(user, span_notice("Given your current position, target coordinates are:") + span_bold(" LONGITUDE [target_turf.x]. LATITUDE [target_turf.y]."))
+	to_chat(user, span_notice("Исходя из вашего текущего местоположения, целевые координаты:") + span_bold(" ДОЛГОТА [target_turf.x]. ШИРОТА [target_turf.y]."))
