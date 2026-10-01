@@ -201,6 +201,9 @@
 	if(has_living_hivemind)
 		biomass_gain_rate += 0.5 / 60.0 // Hivemind bonus: +0.5 per minute
 
+	// Mutation tower bonus: passive biomass gain per minute
+	biomass_gain_rate += (hive?.get_mutation_boost() || 0) / 60.0
+
 	// Valhalla boost: +99.9 biomass per minute
 	if(is_valhalla)
 		biomass_gain_rate += 99.9 / 60.0
