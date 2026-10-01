@@ -22,6 +22,7 @@
 	slot = ATTACHMENT_SLOT_RAIL
 	add_aim_mode = TRUE
 	aim_mode_movement_mult = -0.8
+	aim_time_mod = -1 SECONDS
 
 /obj/item/attachable/b15_scope
 	name = "B15 smart scope"

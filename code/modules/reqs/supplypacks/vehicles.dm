@@ -60,12 +60,12 @@
 /datum/supply_packs/vehicles/tow_rocket
 	name = "TOW missile"
 	contains = list(/obj/item/ammo_magazine/tank/tow_missile)
-	cost = 25 // marginally cheaper due to being a single loader
+	cost = 15
 
 /datum/supply_packs/vehicles/microrocket_pod
 	name = "Microrocket pod"
 	contains = list(/obj/item/ammo_magazine/tank/microrocket_rack)
-	cost = 50
+	cost = 40
 
 /datum/supply_packs/vehicles/motorbike
 	name = "All-terrain motorbike"

@@ -92,6 +92,8 @@ inaccurate. Don't worry if force is ever negative, it won't runtime.
 	var/aim_speed_mod = 0
 	///How long ADS takes (time before firing)
 	var/wield_delay_mod = 0
+	///Сколько нужно чтобы войти в аим мод. (по умолчанию 1 секунду занимает)
+	var/aim_time_mod = 0
 	///Changes the speed of projectiles fired
 	var/attach_shell_speed_mod = 0
 	///Modifies accuracy/scatter penalty when firing onehanded while moving.
@@ -236,6 +238,7 @@ inaccurate. Don't worry if force is ever negative, it won't runtime.
 		master_gun.sharp						+= sharp
 		master_gun.aim_slowdown					+= aim_speed_mod
 		master_gun.wield_delay					+= wield_delay_mod
+		master_gun.aim_time						+= aim_time_mod
 		master_gun.burst_scatter_mult			+= burst_scatter_mod
 		master_gun.burst_accuracy_bonus			+= burst_accuracy_mod
 		master_gun.movement_acc_penalty_mult	+= movement_acc_penalty_mod
@@ -292,6 +295,7 @@ inaccurate. Don't worry if force is ever negative, it won't runtime.
 		master_gun.sharp						-= sharp
 		master_gun.aim_slowdown					-= aim_speed_mod
 		master_gun.wield_delay					-= wield_delay_mod
+		master_gun.aim_time						-= aim_time_mod
 		master_gun.burst_scatter_mult			-= burst_scatter_mod
 		master_gun.burst_accuracy_bonus			-= burst_accuracy_mod
 		master_gun.movement_acc_penalty_mult	-= movement_acc_penalty_mod

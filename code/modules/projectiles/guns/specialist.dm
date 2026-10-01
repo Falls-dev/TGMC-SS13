@@ -20,6 +20,7 @@ Note that this means that snipers will have a slowdown of 3, due to the scope
 	aim_slowdown = 1
 	gun_skill_category = SKILL_RIFLES
 	wield_delay = 1.2 SECONDS
+	aim_time = 0.7
 
 //Pow! Headshot
 
@@ -66,6 +67,7 @@ Note that this means that snipers will have a slowdown of 3, due to the scope
 	recoil = 2
 	scatter = 0
 	movement_acc_penalty_mult = 8
+	shell_speed_mod = 2
 
 	placed_overlay_iconstate = "antimat"
 	var/targetmarker_on = FALSE

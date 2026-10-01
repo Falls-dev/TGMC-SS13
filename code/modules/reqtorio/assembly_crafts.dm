@@ -211,6 +211,11 @@ EXPLOSIVES
 	input = list(/obj/item/stack/sheet/composite = 4, /obj/item/stack/gun_powder = 6) // 16 + 48 points
 	output = list(/obj/item/explosive/plastique/genghis_charge = 1) //60 points
 
+/datum/assembly_craft/explosives/tow_missile
+	name = "TOW missile"
+	input = list(/obj/item/stack/sheet/composite = 5, /obj/item/stack/gun_powder = 3) // 20 + 16 points
+	output = list(/obj/item/ammo_magazine/tank/tow_missile = 1) // 20 points from old factory
+
 /*******************************************************************************
 WEAPONS
 *******************************************************************************/
