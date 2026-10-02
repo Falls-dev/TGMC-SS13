@@ -2379,6 +2379,7 @@
 #include "code\modules\reqtorio\howtopaper.dm"
 #include "code\modules\reqtorio\machines.dm"
 #include "code\modules\reqtorio\crafts\armor.dm"
+#include "code\modules\reqtorio\crafts\operations_craft.dm"
 #include "code\modules\reqtorio\crafts\assembly_crafts.dm"
 #include "code\modules\reqtorio\crafts\clothing_craft.dm"
 #include "code\modules\reqtorio\crafts\engineering_craft.dm"

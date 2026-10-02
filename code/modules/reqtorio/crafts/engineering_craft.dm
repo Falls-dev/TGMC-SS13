@@ -45,7 +45,7 @@
 
 /datum/assembly_craft/engineering/junk_silver_convert
 	name = "Clearing junk in various resources like plasteel and silver"
-	craft_time = 15 SECONDS
+	craft_time = 8 SECONDS
 	input = list(/obj/item/stack/sheet/mineral/junk = 4) // 20 points
 	output = list(/obj/item/stack/sheet/plasteel = 1, /obj/item/stack/sheet/mineral/silver = 1) //~ 8 + 8
 
