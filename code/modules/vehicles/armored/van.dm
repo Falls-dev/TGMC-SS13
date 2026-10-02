@@ -12,6 +12,7 @@
 	required_entry_skill = SKILL_LARGE_VEHICLE_DEFAULT
 	minimap_icon_state = "van"
 	turret_icon = null
+	crushes_weeds = FALSE
 	pixel_x = -24
 	pixel_y = -32
 	pixel_w = 0

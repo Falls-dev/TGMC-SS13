@@ -214,7 +214,7 @@
 	penetration = 15
 	damage = 30
 	additional_xeno_penetration = 10
-	matter_cost = 0
+	matter_cost = 5
 
 /datum/ammo/bullet/rifle/icc_confrontationrifle
 	name = "armor-piercing heavy rifle bullet"

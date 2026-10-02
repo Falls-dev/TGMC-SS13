@@ -123,12 +123,12 @@
 	contains = list(/obj/item/explosive/plastique/detpack)
 	cost = 50
 
-/datum/supply_packs/explosive/plastique_trench
+/datum/supply_packs/explosives/plastique_trench
 	name = "Trench charge"
 	contains = list(/obj/item/explosive/plastique/trench)
 	cost = 30
 
-/datum/supply_packs/explosive/detpack_trench
+/datum/supply_packs/explosives/detpack_trench
 	name = "Better trench charge"
 	contains = list(/obj/item/explosive/plastique/detpack/trench)
 	cost = 50

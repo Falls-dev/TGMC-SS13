@@ -22,6 +22,8 @@
 	skins = list(
 		/datum/xenomorph_skin/queen,
 		/datum/xenomorph_skin/queen/rouny,
+		/datum/xenomorph_skin/queen/chrysalis,
+		/datum/xenomorph_skin/queen/hny,
 	)
 
 // ***************************************

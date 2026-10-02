@@ -13,6 +13,7 @@
 		/datum/xenomorph_skin/drone/cyborg,
 		/datum/xenomorph_skin/drone/hornet,
 		/datum/xenomorph_skin/drone/gambler,
+		/datum/xenomorph_skin/drone/ralsei,
 	)
 	health = 120
 	maxHealth = 120

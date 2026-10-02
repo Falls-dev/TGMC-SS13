@@ -4,6 +4,7 @@
 #define GEOTHERMAL_HEAVY_DAMAGE 3
 
 GLOBAL_VAR_INIT(generators_on_ground, 0)
+GLOBAL_LIST_EMPTY(geothermal_generators)
 /// Number of ground-level generators currently corrupted by the hive.
 GLOBAL_VAR_INIT(corrupted_generators, 0)
 
@@ -37,6 +38,7 @@ GLOBAL_VAR_INIT(corrupted_generators, 0)
 	update_minimap_icon()
 
 	if(is_ground_level(z))
+		GLOB.geothermal_generators += src
 		GLOB.generators_on_ground += 1
 
 	if(corrupted)
@@ -46,6 +48,7 @@ GLOBAL_VAR_INIT(corrupted_generators, 0)
 
 /obj/machinery/power/geothermal/Destroy() //just in case
 	if(is_ground_level(z))
+		GLOB.geothermal_generators -= src
 		GLOB.generators_on_ground -= 1
 	decorrupt()
 	return ..()

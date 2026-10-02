@@ -73,7 +73,7 @@
 			else
 				packs[our_pack.type] = 1
 			cost += our_pack.cost
-		.["requests"] += list(list("id" = our_order.id, "orderer" = our_order.orderer, "orderer_rank" = our_order.orderer_rank, "reason" = our_order.reason, "cost" = cost, "packs" = packs, "authed_by" = our_order.authorised_by))
+		.["requests"] += list(list("id" = our_order.id, "orderer" = our_order.orderer, "orderer_rank" = our_order.orderer_rank, "reason" = our_order.reason, "cost" = cost, "packs" = packs, "authed_by" = our_order.authorised_by, "personal_purchase" = our_order.personal_purchase))
 	.["deniedrequests"] = list()
 	for(var/i in length(SSpoints.deniedrequests) to 1 step -1)
 		var/datum/supply_order/our_order = SSpoints.deniedrequests[SSpoints.deniedrequests[i]]
@@ -94,7 +94,8 @@
 			"orderer_rank" = our_order.orderer_rank,
 			"reason" = our_order.reason,
 			"cost" = cost, "packs" = packs,
-			"authed_by" = our_order.authorised_by
+			"authed_by" = our_order.authorised_by,
+			"personal_purchase" = our_order.personal_purchase
 		))
 	.["approvedrequests"] = list()
 	for(var/i in length(SSpoints.approvedrequests) to 1 step -1)
@@ -116,7 +117,8 @@
 			"orderer_rank" = our_order.orderer_rank,
 			"reason" = our_order.reason,
 			"cost" = cost, "packs" = packs,
-			"authed_by" = our_order.authorised_by
+			"authed_by" = our_order.authorised_by,
+			"personal_purchase" = our_order.personal_purchase
 		))
 	.["awaiting_delivery"] = list()
 	.["awaiting_delivery_orders"] = 0
@@ -139,7 +141,9 @@
 			"reason" = our_order.reason,
 			"cost" = cost,
 			"packs" = packs,
-			"authed_by" = our_order.authorised_by
+			"authed_by" = our_order.authorised_by,
+			"personal_purchase" = our_order.personal_purchase,
+			"is_delivering" = our_order.is_delivering
 		))
 	.["export_history"] = list()
 	var/id = 0
@@ -182,7 +186,8 @@
 			"reason" = our_order.reason,
 			"cost" = cost,
 			"packs" = packs,
-			"authed_by" = our_order.authorised_by
+			"authed_by" = our_order.authorised_by,
+			"personal_purchase" = our_order.personal_purchase
 		))
 	.["shopping_list_cost"] = 0
 	.["shopping_list_items"] = 0
