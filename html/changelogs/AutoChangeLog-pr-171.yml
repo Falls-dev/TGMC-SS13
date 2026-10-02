@@ -1,4 +1,0 @@
-author: "homexp13"
-delete-after: True
-changes:
-  - balance: "biomass_gain_bonus теперь распространяется на хайв, а не только на ксенов, которые были в момент получения бонуса"
