@@ -4,8 +4,8 @@
 
 /datum/assembly_craft/armor/swat_mask
 	name = "SWAT mask"
-	input = list(/obj/item/stack/sheet/plasteel = 3, /obj/item/stack/sheet/glass/glass = 1) // 24 + 6 points
-	output = list(/obj/item/clothing/mask/gas/swat = 1) // 25 points from old factory
+	input = list(/obj/item/stack/sheet/plasteel = 2, /obj/item/stack/sheet/glass/glass = 2, /obj/item/stack/sheet/cloth = 2)
+	output = list(/obj/item/clothing/mask/gas/swat = 1)
 
 /datum/assembly_craft/armor/b18
 	name = "B18 armor set"

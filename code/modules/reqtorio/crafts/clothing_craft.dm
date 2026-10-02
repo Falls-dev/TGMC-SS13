@@ -7,7 +7,7 @@ CLOTHING
 
 /datum/assembly_craft/clothing/jetpack_marine
 	name = "Jetpack"
-	input = list(/obj/item/stack/sheet/plasteel = 5)
+	input = list(/obj/item/stack/sheet/plasteel = 5, /obj/item/stack/sheet/cloth = 10)
 	output = list(/obj/item/jetpack_marine = 1)
 
 /datum/assembly_craft/clothing/lightpack
