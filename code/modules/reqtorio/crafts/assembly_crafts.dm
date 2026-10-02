@@ -1,4 +1,19 @@
-GLOBAL_LIST_INIT(all_assembly_craft_groups, list("Operations", "Weapons", "Explosives", "Armor", "Clothing", "Medical", "Engineering", "Supplies", "Imports", "Vehicles", "Factory"))
+GLOBAL_LIST_INIT(all_assembly_craft_groups, list(
+	"Operations",
+	"Weapons",
+	"Smartguns",
+	"Stationary",
+	"Launchers",
+	"Explosives",
+	"Armor",
+	"Clothing",
+	"Medical",
+	"Engineering",
+	"Supplies",
+	"Imports",
+	"Vehicles",
+	"Factory",
+))
 
 /datum/assembly_craft
 	var/name
