@@ -55,6 +55,18 @@
 	burn_level = 18
 	bullet_color = LIGHT_COLOR_ELECTRIC_GREEN
 
+/datum/ammo/flamethrower/green/on_hit_mob(mob/target_mob, atom/movable/projectile/proj)
+	. = ..()
+	if(!isliving(target_mob))
+		return
+	if(isxeno(target_mob))
+		var/mob/living/carbon/xenomorph/xeno_target = target_mob
+		if(CHECK_BITFIELD(xeno_target.xeno_caste.caste_flags, CASTE_FIRE_IMMUNE))
+			return
+
+	var/mob/living/living_target = target_mob
+	living_target.apply_melting_stacks(3)
+
 /datum/ammo/water
 	name = "water"
 	icon_state = "pulse1"

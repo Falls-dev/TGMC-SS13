@@ -1009,7 +1009,7 @@
 	var/target_turf = get_turf(target) // We save this in case the target gets deleted after taking damage.
 	// geocrush_act can return FALSE to prevent the rest of the effects from happening.
 	// This usually happens when our target shouldn't be affected by Geocrush.
-	if(!target.geocrush_act(xeno_owner, ability_damage, xeno_owner.xeno_caste.melee_damage_type, xeno_owner.xeno_caste.melee_damage_armor, xeno_owner.xeno_caste.melee_ap))
+	if(!target.geocrush_act(xeno_owner, ability_damage, xeno_owner.xeno_caste.melee_damage_type, xeno_owner.xeno_caste.melee_damage_armor, xeno_owner.xeno_caste.melee_ap, xeno_owner.zone_selected))
 		return
 	xeno_owner.do_attack_animation(target_turf)
 	new /obj/effect/temp_visual/behemoth/geocrush(target_turf)
@@ -1021,7 +1021,7 @@
 
 /// Handles anything that should happen when this ability hits a given atom.
 /// Outside of specific cases, this calls the Warrior's punch_act proc since it's already doing what we need.
-/atom/proc/geocrush_act(mob/living/carbon/xenomorph/xeno_owner, damage, damage_type, armor_type, armor_penetration)
+/atom/proc/geocrush_act(mob/living/carbon/xenomorph/xeno_owner, damage, damage_type, armor_type, armor_penetration, target_zone = null)
 	return punch_act(xeno_owner, damage, FALSE)
 
 // Movable targets will be pushed back if possible.
@@ -1030,11 +1030,12 @@
 	return ..()
 
 // For living targets, we just damage them and apply effects.
-/mob/living/geocrush_act(mob/living/carbon/xenomorph/xeno_owner, damage, damage_type, armor_type, armor_penetration)
+/mob/living/geocrush_act(mob/living/carbon/xenomorph/xeno_owner, damage, damage_type, armor_type, armor_penetration, target_zone = null)
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, emote), "scream")
 	var/final_brute_damage = damage * GEOCRUSH_LIVING_DAMAGE_MULTIPLIER
-	apply_damage(final_brute_damage, damage_type, ran_zone(), armor_type, FALSE, FALSE, TRUE, armor_penetration, xeno_owner)
-	apply_damage(damage * GEOCRUSH_STAMINA_DAMAGE_MODIFIER, STAMINA, ran_zone(), armor_type, FALSE, FALSE, TRUE, armor_penetration, xeno_owner)
+	var/hit_zone = target_zone || ran_zone()
+	apply_damage(final_brute_damage, damage_type, hit_zone, armor_type, FALSE, FALSE, TRUE, armor_penetration, xeno_owner)
+	apply_damage(damage * GEOCRUSH_STAMINA_DAMAGE_MODIFIER, STAMINA, hit_zone, armor_type, FALSE, FALSE, TRUE, armor_penetration, xeno_owner)
 	var/datum/personal_statistics/xeno_stats = GLOB.personal_statistics_list[xeno_owner.ckey]
 	xeno_stats.melee_damage += final_brute_damage
 	xeno_stats.geocrush_damage += final_brute_damage

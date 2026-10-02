@@ -284,6 +284,9 @@
 				else
 					log_combat(user, human_caught, "flamed", src)
 
+		if(fire_color == FLAME_COLOR_LIME)
+			mob_caught.apply_melting_stacks(3)
+
 		mob_caught.take_overall_damage(rand(burn_level, (burn_level * mob_flame_damage_mod)), BURN, FIRE, updating_health = TRUE, max_limbs = 4) // Make it so its the amount of heat or twice it for the initial blast.
 		mob_caught.adjust_fire_stacks(rand(5, (burn_level * mob_flame_damage_mod)))
 		mob_caught.IgniteMob()
