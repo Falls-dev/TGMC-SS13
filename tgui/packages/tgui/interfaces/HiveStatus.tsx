@@ -324,7 +324,7 @@ const GeneralInfo = (_props: any) => {
           <XenoCountdownBar
             time={hive_silo_collapse}
             max={hive_silo_max}
-            tooltip="Hive must construct a silo!"
+            tooltip="Hive must build a silo or recorrupt generators!"
             left_side="Silo Collapse:"
           />
         </Flex.Item>
