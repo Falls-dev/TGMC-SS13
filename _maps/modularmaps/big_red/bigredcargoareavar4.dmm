@@ -362,10 +362,6 @@
 /obj/structure/xenoautopsy/tank/broken,
 /turf/open/floor/plating,
 /area/bigredv2/outside/nw)
-"zl" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating,
-/area/bigredv2/outside/nw)
 "zy" = (
 /obj/structure/largecrate/random/case/double,
 /turf/open/floor/plating,
@@ -1424,7 +1420,7 @@ er
 er
 OU
 PY
-zl
+er
 er
 lM
 er

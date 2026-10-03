@@ -559,10 +559,6 @@
 /obj/structure/prop/brokenvendor/brokenspecialistvendor/engineer,
 /turf/open/floor/mainship/mono,
 /area/bigredv2/caves/rustedpreparea)
-"qG" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
 "qH" = (
 /obj/structure/table/mainship,
 /obj/machinery/door/window/right{
@@ -1681,10 +1677,6 @@
 /obj/effect/spawner/random/engineering/cable,
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/bigredv2/caves/rustedpreparea)
-"Yz" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
 "YD" = (
 /obj/structure/prop/brokenvendor/brokenuniformvendor/specialist,
 /turf/open/floor/mainship/mono,
@@ -2343,7 +2335,7 @@ qf
 md
 FP
 UR
-qG
+UR
 SM
 FP
 uz
@@ -2795,7 +2787,7 @@ oh
 oh
 oh
 RA
-Yz
+oh
 oh
 AT
 AT
@@ -3003,7 +2995,7 @@ AT
 oh
 oh
 Fq
-Yz
+oh
 oh
 oh
 oh
@@ -4432,7 +4424,7 @@ oh
 oh
 oh
 oh
-Yz
+oh
 oh
 oh
 oh
@@ -4653,7 +4645,7 @@ El
 OG
 oh
 Ym
-Yz
+oh
 oh
 oh
 yO

@@ -163,11 +163,6 @@
 "lJ" = (
 /turf/open/floor/tile/blue/whitebluefull,
 /area/lv624/lazarus/internal_affairs)
-"mT" = (
-/obj/effect/landmark/excavation_site_spawner,
-/obj/effect/landmark/weed_node,
-/turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
 "no" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/machinery/random_broken_computer/crewmonitor,
@@ -298,7 +293,6 @@
 	name = "Vault Access";
 	pixel_x = -25
 	},
-/obj/effect/landmark/excavation_site_spawner,
 /turf/open/floor/wood,
 /area/lv624/lazarus/internal_affairs)
 "EF" = (
@@ -465,7 +459,6 @@
 	dir = 10
 	},
 /obj/structure/cable,
-/obj/effect/landmark/excavation_site_spawner,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 8
 	},
@@ -697,7 +690,7 @@ Hq
 Hq
 Vu
 Hx
-mT
+Vi
 sS
 it
 EF
@@ -705,7 +698,7 @@ ky
 YP
 it
 CI
-mT
+Vi
 no
 Vu
 Hq
@@ -833,7 +826,7 @@ Hq
 Hq
 Vu
 rO
-mT
+Vi
 CI
 it
 EF

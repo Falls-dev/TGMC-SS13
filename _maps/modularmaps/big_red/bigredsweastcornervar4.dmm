@@ -52,10 +52,6 @@
 "v" = (
 /turf/open/floor/plating/ground/mars/random/cave/rock,
 /area/bigredv2/caves/south/garbledradio)
-"A" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/south/garbledradio)
 "E" = (
 /obj/effect/ai_node,
 /turf/open/floor/plating/ground/mars/random/cave/rock,
@@ -703,7 +699,7 @@ M
 M
 v
 M
-A
+M
 j
 j
 j
@@ -1091,7 +1087,7 @@ M
 M
 M
 M
-A
+M
 M
 Z
 "}

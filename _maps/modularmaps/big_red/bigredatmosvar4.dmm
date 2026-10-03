@@ -145,10 +145,6 @@
 "mw" = (
 /turf/open/floor/asteroidfloor,
 /area/bigredv2/outside/s)
-"mF" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/outside/s)
 "mL" = (
 /obj/effect/ai_node,
 /turf/open/floor/plating/ground/mars/random/cave,
@@ -339,11 +335,6 @@
 	dir = 1
 	},
 /area/bigredv2/outside/se)
-"FS" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/s)
 "Gp" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /obj/structure/cable,
@@ -792,7 +783,7 @@ GG
 Kn
 RV
 ed
-mF
+Qq
 Qq
 Qq
 ko
@@ -888,7 +879,7 @@ po
 mw
 mw
 Ts
-FS
+Ts
 mw
 mw
 mw
