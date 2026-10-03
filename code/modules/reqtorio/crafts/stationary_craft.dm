@@ -1,5 +1,5 @@
 /datum/assembly_craft/stationary
-	group = "Operations"
+	group = "Stationary"
 	craft_time = 5 SECONDS
 
 /datum/assembly_craft/stationary/basic_sentry

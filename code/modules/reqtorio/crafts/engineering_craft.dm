@@ -51,9 +51,9 @@
 
 /datum/assembly_craft/engineering/junk_phoron_convert
 	name = "Clearing junk in phoron and glass? Explosion transformation power!"
-	craft_time = 15 SECONDS
-	input = list(/obj/item/stack/sheet/mineral/junk = 4) // 20 points
-	output = list(/obj/item/stack/sheet/glass/glass = 3, /obj/item/stack/sheet/mineral/phoron = 1) //that expensive! but automized!
+	craft_time = 5 SECONDS
+	input = list(/obj/item/stack/sheet/mineral/junk = 5) // 20 points
+	output = list(/obj/item/stack/sheet/glass/glass = 3, /obj/item/stack/sheet/mineral/phoron = 2) //that expensive! but automized!
 
 //one in one craft cuz junk is multi use resource
 /datum/assembly_craft/engineering/junk_phoron_metal
@@ -61,12 +61,6 @@
 	craft_time = 15 SECONDS
 	input = list(/obj/item/stack/sheet/mineral/junk = 50) // 300 from cargo
 	output = list(/obj/item/stack/sheet/metal/large_stack = 1) //200 points so what?
-
-/datum/assembly_craft/engineering/drop_pod
-	name = "Zeus orbital drop pod"
-	craft_time = 20 SECONDS
-	input = list(/obj/item/stack/sheet/plasteel = 5, /obj/item/stack/sheet/glass/glass = 3) // 40 + 6
-	output = list(/obj/structure/droppod = 1) //40 points
 
 /datum/assembly_craft/engineering/deployable_floodlight
 	name = "Deployable floodlight"
