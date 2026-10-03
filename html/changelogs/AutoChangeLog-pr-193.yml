@@ -1,0 +1,4 @@
+author: "Misterionno"
+delete-after: True
+changes:
+  - bugfix: "Тад учитывает только БТР, танк и меха как технику, а не всё подряд."
