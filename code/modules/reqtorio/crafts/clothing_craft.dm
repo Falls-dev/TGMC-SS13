@@ -16,6 +16,11 @@ CLOTHING
 	input = list(/obj/item/stack/sheet/cloth = 25)
 	output = list(/obj/item/storage/backpack/lightpack = 1)
 
+/obj/item/storage/holster/backholster/rpg
+	name = "\improper TGMC rocket bag"
+/obj/item/storage/holster/backholster/rlquad
+	name = "TGMC RL-57 bag"
+
 /datum/assembly_craft/clothing/dispenser
 	name = "Dispenser"
 	craft_time = 30 SECONDS

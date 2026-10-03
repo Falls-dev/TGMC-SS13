@@ -2382,6 +2382,7 @@
 #include "code\modules\reqtorio\crafts\operations_craft.dm"
 #include "code\modules\reqtorio\crafts\smartguns_craft.dm"
 #include "code\modules\reqtorio\crafts\stationary_craft.dm"
+#include "code\modules\reqtorio\crafts\launchers_craft.dm"
 #include "code\modules\reqtorio\crafts\assembly_crafts.dm"
 #include "code\modules\reqtorio\crafts\clothing_craft.dm"
 #include "code\modules\reqtorio\crafts\engineering_craft.dm"
