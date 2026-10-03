@@ -1036,7 +1036,6 @@
 	icon = 'icons/mob/modular/modular_armor_modules.dmi'
 	icon_state = "mod_pluto"
 	worn_icon_state = "mod_pluto_a"
-	slowdown = 0.1
 	slot = ATTACHMENT_SLOT_MODULE
 
 /obj/item/armor_module/module/pluto/on_attach(obj/item/attaching_to, mob/user)
