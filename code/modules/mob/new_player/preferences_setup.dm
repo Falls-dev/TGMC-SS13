@@ -2,6 +2,7 @@
 	gender = pick(MALE, FEMALE)
 	species = pick(get_playable_species())
 	synthetic_type = pick(SYNTH_TYPES)
+	squad_robot_type = pick(ROBOT_TYPES)
 	ethnicity = random_ethnicity()
 
 	h_style = random_hair_style(gender, species)
@@ -136,6 +137,18 @@
 
 	if(!previewJob)
 		var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
+
+		// Damn, I'll have to do this a bit better in the future.
+		var/actual_species = species
+		if(species == "Combat Robot")
+			switch(squad_robot_type)
+				if("Hammerhead") actual_species = "Hammerhead Combat Robot"
+				if("Chilvaris") actual_species = "Chilvaris Combat Robot"
+				if("Ratcher") actual_species = "Ratcher Combat Robot"
+				if("Sterling") actual_species = "Sterling Combat Robot"
+				else actual_species = "Combat Robot"
+		mannequin.set_species(actual_species)
+
 		copy_to(mannequin)
 		parent.show_character_previews(new /mutable_appearance(mannequin))
 		unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
@@ -146,6 +159,18 @@
 
 	// Set up the dummy for its photoshoot
 	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
+
+	// Damn, I'll have to do this a bit better in the future x2
+	var/actual_species = species
+	if(species == "Combat Robot")
+		switch(squad_robot_type)
+			if("Hammerhead") actual_species = "Hammerhead Combat Robot"
+			if("Chilvaris") actual_species = "Chilvaris Combat Robot"
+			if("Ratcher") actual_species = "Ratcher Combat Robot"
+			if("Sterling") actual_species = "Sterling Combat Robot"
+			else actual_species = "Combat Robot"
+	mannequin.set_species(actual_species)
+
 	copy_to(mannequin)
 
 	if(previewJob)
