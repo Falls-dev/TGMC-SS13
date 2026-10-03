@@ -16,10 +16,23 @@ CLOTHING
 	input = list(/obj/item/stack/sheet/cloth = 25)
 	output = list(/obj/item/storage/backpack/lightpack = 1)
 
-/obj/item/storage/holster/backholster/rpg
-	name = "\improper TGMC rocket bag"
-/obj/item/storage/holster/backholster/rlquad
+/datum/assembly_craft/clothing/rpg_bag
+	name = "TGMC rocket bag"
+	craft_time = 20 SECONDS
+	input = list(/obj/item/stack/sheet/cloth = 25)
+	output = list(/obj/item/storage/holster/backholster/rpg = 1)
+
+/datum/assembly_craft/clothing/rlquad_bag
 	name = "TGMC RL-57 bag"
+	craft_time = 20 SECONDS
+	input = list(/obj/item/stack/sheet/cloth = 25)
+	output = list(/obj/item/storage/holster/backholster/rlquad = 1)
+
+/datum/assembly_craft/clothing/b17_grenade_rig
+	name = "M276 pattern M40 HEDP rig Mk II"
+	craft_time = 20 SECONDS
+	input = list(/obj/item/stack/sheet/cloth = 25)
+	output = list(/obj/item/storage/belt/grenade/b17 = 1)
 
 /datum/assembly_craft/clothing/dispenser
 	name = "Dispenser"
