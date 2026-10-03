@@ -126,6 +126,7 @@
 
 /datum/skills/ro
 	name = REQUISITIONS_OFFICER
+	engineer = SKILL_ENGINEER_EXPERT
 	construction = SKILL_CONSTRUCTION_PLASTEEL
 	leadership = SKILL_LEAD_TRAINED
 	powerloader = SKILL_POWERLOADER_MASTER
