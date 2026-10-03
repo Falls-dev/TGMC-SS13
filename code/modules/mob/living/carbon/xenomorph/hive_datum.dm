@@ -56,6 +56,13 @@
 	/// Hivemind cache update frequency in ticks (10 seconds = ~100 ticks)
 	var/hivemind_cache_ttl = 100
 
+	/// Minion Upgrade Levels
+	var/minion_upgrade_claws = 0     // Max 3: +8 damage per level
+	var/minion_upgrade_carapace = 0  // Max 3: +60 max health, +8 armor per level
+	var/minion_upgrade_adrenal = 0   // Max 3: +15% speed per level
+	var/minion_upgrade_regen = 0     // Max 3: +4 health regen per tick on weeds
+	var/minion_upgrade_acid = 0      // Max 1: attacks apply corrosive acid burn and toxin
+
 // ***************************************
 // *********** Init
 // ***************************************
@@ -1538,7 +1545,36 @@ to_chat will check for valid clients itself already so no need to double check f
 		update_hivemind_cache()
 	return cached_has_living_hivemind
 
+/// Applies active hive minion upgrades to a specific minion
+/datum/hive_status/proc/apply_minion_buffs(mob/living/carbon/xenomorph/minion)
+	if(!istype(minion) || minion.stat == DEAD)
+		return
+	if(minion.hivenumber != hivenumber)
+		return
+	if(minion.ckey || minion.key || (minion.mind && minion.mind.active))
+		return
+
+	// Carapace upgrade: bonus max health
+	var/base_max_health = minion.xeno_caste ? minion.xeno_caste.max_health : (initial(minion.maxHealth) || 150)
+	var/new_max_health = base_max_health + (minion_upgrade_carapace * 60)
+	if(minion.maxHealth != new_max_health)
+		var/diff = new_max_health - minion.maxHealth
+		minion.maxHealth = new_max_health
+		minion.health += max(0, diff)
+
+	// Adrenal upgrade: movespeed modifier
+	if(minion_upgrade_adrenal > 0)
+		minion.add_movespeed_modifier(MOVESPEED_ID_MINION_ADRENAL_BUFF, multiplicative_slowdown = -0.15 * minion_upgrade_adrenal, override = TRUE)
+	else
+		minion.remove_movespeed_modifier(MOVESPEED_ID_MINION_ADRENAL_BUFF)
+
+/// Refreshes all active minion buffs for all living minions of this hive
+/datum/hive_status/proc/update_all_minion_buffs()
+	for(var/mob/living/carbon/xenomorph/minion in GLOB.alive_xeno_list_hive[hivenumber])
+		apply_minion_buffs(minion)
+
 /mob/living/carbon/human/get_xeno_hivenumber()
 	if(faction == FACTION_ZOMBIE)
 		return FACTION_ZOMBIE
 	return FALSE
+

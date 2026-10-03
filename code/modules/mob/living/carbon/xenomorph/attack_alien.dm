@@ -80,6 +80,10 @@
 	for(var/i in damage_mod)
 		damage += i
 
+	if(X.hive && !X.ckey && !X.key && (!X.mind || !X.mind.active))
+		if(X.hive.minion_upgrade_claws)
+			damage += X.hive.minion_upgrade_claws * 8
+
 	var/armor_pen = X.xeno_caste.melee_ap
 	for(var/i in armor_mod)
 		armor_pen += i
@@ -121,9 +125,14 @@
 
 	record_melee_damage(X, damage)
 	var/damage_done = apply_damage(damage, X.xeno_caste.melee_damage_type, affecting, armor_block, TRUE, TRUE, TRUE, armor_pen, X) //This should slicey dicey
+
+	if(X.hive && !X.ckey && !X.key && (!X.mind || !X.mind.active) && X.hive.minion_upgrade_acid)
+		apply_damage(8, BURN, ACID, affecting, null, null, null, null, X)
+
 	SEND_SIGNAL(X, COMSIG_XENOMORPH_POSTATTACK_LIVING, src, damage_done, damage_mod)
 
 	return TRUE
+
 
 /mob/living/silicon/attack_alien_disarm(mob/living/carbon/xenomorph/X, dam_bonus, set_location = FALSE, random_location = FALSE, no_head = FALSE, no_crit = FALSE, force_intent = null)
 
