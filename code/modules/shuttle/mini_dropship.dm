@@ -139,7 +139,7 @@
 		for(var/turf/T in tadpole_port.return_turfs())
 			if(!istype(T.loc, /area/shuttle/minidropship))
 				continue
-			for(var/obj/vehicle/V in T)
+			for(var/obj/vehicle/sealed/V in T)
 				current_vehicles++
 				for(var/mob/living/carbon/human/H in V.occupants)
 					if(!(H in counted_humans))
@@ -325,7 +325,7 @@
 	for(var/turf/T in return_turfs())
 		if(!istype(T.loc, /area/shuttle/minidropship))
 			continue
-		for(var/obj/vehicle/V in T)
+		for(var/obj/vehicle/sealed/V in T)
 			current_vehicles++
 			for(var/mob/living/carbon/human/H in V.occupants)
 				if(!(H in counted_humans))
