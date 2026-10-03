@@ -117,6 +117,7 @@
 	icon_state = "autoinjector-1"
 	list_reagents = list(/datum/reagent/medicine/dylovene = 45)
 	description_overlay = "Dy"
+	amount_per_transfer_from_this = 3
 
 /obj/item/reagent_containers/hypospray/autoinjector/tramadol
 	name = "tramadol autoinjector"
