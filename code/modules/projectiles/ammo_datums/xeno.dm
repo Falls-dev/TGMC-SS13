@@ -324,7 +324,7 @@ GLOBAL_LIST_INIT(no_sticky_resin, typecacheof(list(
 	new /obj/effect/xenomorph/spray/strong(target_turf, puddle_duration, puddle_acid_damage)
 
 /datum/ammo/xeno/acid/heavy/passthrough //Praetorian
-	ammo_behavior_flags = AMMO_XENO|AMMO_TARGET_TURF|AMMO_SKIPS_ALIENS
+	ammo_behavior_flags = AMMO_XENO|AMMO_SKIPS_ALIENS
 
 /datum/ammo/xeno/acid/heavy/turret
 	damage = 20
