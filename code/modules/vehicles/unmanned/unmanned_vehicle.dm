@@ -185,6 +185,13 @@
 	if(weed_slowdown > 0)
 		weed_slowdown = max(0, weed_slowdown - 1)
 
+/obj/vehicle/unmanned/stop_pulling()
+	if(ismob(pulling))
+		var/mob/M = pulling
+		if(M.client)
+			M.client.move_delay = world.time
+	return ..()
+
 ///Try to desequip the turret
 /obj/vehicle/unmanned/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -378,28 +385,58 @@
 		return FALSE
 
 	if(ismob(target))
-		var/mob/M = target
-		if(M.pulledby)
-			M.pulledby.stop_pulling()
-		start_pulling(M)
-		to_chat(user, span_notice("Claw grabs [M] and starts pulling \him."))
-		log_attack("[key_name(user)] used claw to pull [key_name(M)] at [AREACOORD(src)]")
+		var/mob/mob_target = target
+		if(mob_target.pulledby)
+			mob_target.pulledby.stop_pulling()
+		start_pulling(mob_target)
+		to_chat(user, span_notice("[src] grabs [mob_target] and starts pulling."))
+		log_attack("[key_name(user)] used [src] to pull [key_name(mob_target)] at [AREACOORD(src)]")
 	else if(isobj(target))
-		var/obj/O = target
-		if(O.anchored)
-			to_chat(user, span_warning("[O] is anchored and cannot be moved!"))
+		var/obj/object_target = target
+		if(object_target.anchored)
+			to_chat(user, span_warning("[object_target] is anchored and cannot be moved!"))
 			return FALSE
-		if(O.pulledby)
-			O.pulledby.stop_pulling()
-		start_pulling(O)
-		to_chat(user, span_notice("Claw grabs [O] and starts pulling it."))
-		log_attack("[key_name(user)] used claw to pull [O] at [AREACOORD(src)]")
+		if(object_target.pulledby)
+			object_target.pulledby.stop_pulling()
+		start_pulling(object_target)
+		to_chat(user, span_notice("[src] grabs [object_target] and starts pulling it."))
+		log_attack("[key_name(user)] used [src] to pull [object_target] at [AREACOORD(src)]")
 	else
-		to_chat(user, span_warning("Claw cannot grab that target!"))
+		to_chat(user, span_warning("[src] cannot grab that target!"))
 		return FALSE
 
 	COOLDOWN_START(src, fire_cooldown, fire_delay)
-	playsound(loc, 'sound/machines/click.ogg', 50, 1)
+	playsound(loc, 'sound/machines/click.ogg', 25, TRUE, 7)
+	return TRUE
+
+///Shoves target away from the vehicle.
+/obj/vehicle/unmanned/proc/claw_shove(atom/target, mob/user)
+	if(!COOLDOWN_FINISHED(src, fire_cooldown))
+		return FALSE
+	if(!Adjacent(target))
+		return FALSE
+	if(ismob(target))
+		var/mob/mob_target = target
+		var/shove_dir = get_dir(loc, target.loc)
+		var/turf/target_shove_turf = get_step(target.loc, shove_dir)
+		mob_target.Move(target_shove_turf, shove_dir)
+		to_chat(user, span_notice("[src] shoves [mob_target]."))
+		log_attack("[key_name(user)] used [src] to shove [key_name(mob_target)] at [AREACOORD(src)]")
+	else if(isobj(target))
+		var/obj/object_target = target
+		if(object_target.anchored)
+			to_chat(user, span_warning("[object_target] is anchored and cannot be moved!"))
+			return FALSE
+		var/shove_dir = get_dir(loc, object_target.loc)
+		var/turf/target_shove_turf = get_step(object_target.loc, shove_dir)
+		object_target.Move(target_shove_turf, shove_dir)
+		to_chat(user, span_notice("[src] shoves [object_target]."))
+		log_attack("[key_name(user)] used [src] to shove [object_target] at [AREACOORD(src)]")
+	else
+		to_chat(user, span_warning("[src] cannot shove that target!"))
+		return FALSE
+	COOLDOWN_START(src, fire_cooldown, fire_delay * 2)
+	playsound(loc, 'sound/weapons/thudswoosh.ogg', 25, TRUE, 7)
 	return TRUE
 
 /obj/vehicle/unmanned/fire_act(burn_level, flame_color)
@@ -433,7 +470,7 @@
 
 /obj/structure/closet/crate/uav_crate
 	name = "\improper UV-L Iguana Crate"
-	desc = "A crate containing an unmanned vehicle with a controller."
+	desc = "A crate containing an unmanned vehicle with a controller. Weapon not included."
 	icon = 'icons/obj/structures/crates.dmi'
 	icon_state = "closed_weapons"
 	icon_opened = "open_weapons"

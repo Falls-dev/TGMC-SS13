@@ -3,6 +3,7 @@
 	desc = "The turret part of an unmanned vehicle."
 	icon = 'icons/obj/unmanned_vehicles.dmi'
 	icon_state = "light_cannon_obj"
+	w_class = WEIGHT_CLASS_SMALL
 	///Turret type, used for assigning what we do on clicks
 	var/turret_type = TURRET_TYPE_LIGHT
 	///Ammo typepath we use when attached
@@ -41,7 +42,7 @@
 
 /obj/item/uav_turret/claw
 	name = "unmanned vehicle claw"
-	desc = "Small but sturdy, this claw module snaps onto an unmanned vehicle. Perfect for grabbing the corpses of those who disobeyed orders, carrying a single use explosive payload, or supplies."
+	desc = "A claw module to attach on the weapon slot of an unmanned vehicle, allowing it to grab and pull objects or mobs. Right-click to shove."
 	icon_state = "claw_obj"
 	turret_type = TURRET_TYPE_CLAW
 	turret_pattern = PATTERN_TRACKED
