@@ -44,6 +44,7 @@ SUBSYSTEM_DEF(persistence)
 		/datum/season_datum/weapons/guns/heavy_autorail,
 		/datum/season_datum/weapons/guns/heavy_shock,
 		/datum/season_datum/weapons/guns/heavy_unpopular,
+		/datum/season_datum/weapons/guns/heavy_remote,
 		),
 	)
 	///The saved list of custom outfits names
@@ -387,4 +388,22 @@ SUBSYSTEM_DEF(persistence)
 		/obj/item/ammo_magazine/rifle/tx54/smoke/tangle = 4,
 		/obj/item/weapon/gun/rifle/famas = 2,
 		/obj/item/ammo_magazine/rifle/famas = -1,
+	)
+
+/datum/season_datum/weapons/guns/heavy_remote
+	name = "Remote Weapons"
+	description = "Unmanned vehicles and MLRS for roundstart vendors."
+	item_list = list(
+		/obj/item/unmanned_vehicle_remote = 6,
+		/obj/vehicle/unmanned = 1,
+		/obj/vehicle/unmanned/medium = 1,
+		/obj/vehicle/unmanned/heavy = 1,
+		/obj/item/deployable_vehicle/tiny = 3,
+		/obj/item/uav_turret = 1,
+		/obj/item/ammo_magazine/box11x35mm = 3,
+		/obj/item/uav_turret/heavy = 1,
+		/obj/item/ammo_magazine/box12x40mm = 3,
+		/obj/item/uav_turret/claw = 1,
+		/obj/structure/closet/crate/mortar_ammo/mlrs_kit = 2,
+		/obj/item/storage/box/mlrs_rockets_gas = 4,
 	)
