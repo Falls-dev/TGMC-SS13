@@ -31,8 +31,6 @@
 #define RESIN_WALL_FIRE "fireproof resin wall"
 #define RESIN_WALL_HARDY "hardy resin wall"
 
-
-
 //Xeno reagents defines
 #define REAGENT_NEUROTOXIN "Neurotoxin"
 #define REAGENT_HEMODILE "Hemodile"

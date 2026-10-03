@@ -18,7 +18,7 @@
 
 	var/soft_armor_val = get_soft_armor(armor_type, def_zone)
 	if(hive && !ckey && !key && (!mind || !mind.active) && hive.minion_upgrade_carapace)
-		soft_armor_val += hive.minion_upgrade_carapace * 8
+		soft_armor_val += hive.minion_upgrade_carapace * 4
 
 	return clamp(damage_amount * (1 - ((soft_armor_val * sunder_ratio - effective_penetration) * 0.01)), 0, damage_amount)
 

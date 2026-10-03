@@ -1565,10 +1565,10 @@ GLOBAL_VAR(rts_1px_icon)
 	var/regen_cost = 300
 	var/acid_cost = 300
 
-	var/claws_label = hive.minion_upgrade_claws >= 3 ? "Когти: МАКС (+24 Урона)" : "Когти ур.[hive.minion_upgrade_claws + 1]/3 (+8 Урона) ([claws_cost] Пси)"
-	var/carapace_label = hive.minion_upgrade_carapace >= 3 ? "Панцирь: МАКС (+180 ХП / +24 Брони)" : "Панцирь ур.[hive.minion_upgrade_carapace + 1]/3 (+60 ХП, +8 Брони) ([carapace_cost] Пси)"
+	var/claws_label = hive.minion_upgrade_claws >= 3 ? "Когти: МАКС (+9 Урона)" : "Когти ур.[hive.minion_upgrade_claws + 1]/3 (+3 Урона) ([claws_cost] Пси)"
+	var/carapace_label = hive.minion_upgrade_carapace >= 3 ? "Панцирь: МАКС (+90 ХП / +12 Брони)" : "Панцирь ур.[hive.minion_upgrade_carapace + 1]/3 (+30 ХП, +4 Брони) ([carapace_cost] Пси)"
 	var/adrenal_label = hive.minion_upgrade_adrenal >= 3 ? "Адреналин: МАКС (+45% Скорости)" : "Адреналин ур.[hive.minion_upgrade_adrenal + 1]/3 (+15% Скорости) ([adrenal_cost] Пси)"
-	var/regen_label = hive.minion_upgrade_regen >= 3 ? "Регенерация: МАКС (+12 ХП/сек)" : "Регенерация ур.[hive.minion_upgrade_regen + 1]/3 (+4 ХП/сек) ([regen_cost] Пси)"
+	var/regen_label = hive.minion_upgrade_regen >= 3 ? "Регенерация: МАКС (+9 ХП/сек)" : "Регенерация ур.[hive.minion_upgrade_regen + 1]/3 (+3 ХП/сек) ([regen_cost] Пси)"
 	var/acid_label = hive.minion_upgrade_acid >= 1 ? "Кислотные когти: ИЗУЧЕНО" : "Кислотные когти ур.1/1 ([acid_cost] Пси)"
 
 	var/list/choices = list()
@@ -1592,7 +1592,7 @@ GLOBAL_VAR(rts_1px_icon)
 		SSpoints.xeno_points_by_hive[hivenumber] -= claws_cost
 		hive.minion_upgrade_claws++
 		hive.update_all_minion_buffs()
-		xeno_message("<b>[user] усилил Острые когти миньонов до ур. [hive.minion_upgrade_claws]! (+[hive.minion_upgrade_claws * 8] урона)</b>", "xenoannounce", 5, hivenumber)
+		xeno_message("<b>[user] усилил Острые когти миньонов до ур. [hive.minion_upgrade_claws]! (+[hive.minion_upgrade_claws * 3] урона)</b>", "xenoannounce", 5, hivenumber)
 		user.playsound_local(user, 'sound/effects/spray3.ogg', 40, TRUE)
 		user.balloon_alert(user, "Когти улучшены до ур. [hive.minion_upgrade_claws]!")
 
@@ -1606,7 +1606,7 @@ GLOBAL_VAR(rts_1px_icon)
 		SSpoints.xeno_points_by_hive[hivenumber] -= carapace_cost
 		hive.minion_upgrade_carapace++
 		hive.update_all_minion_buffs()
-		xeno_message("<b>[user] усилил Закалённый панцирь миньонов до ур. [hive.minion_upgrade_carapace]! (+[hive.minion_upgrade_carapace * 60] ХП, +[hive.minion_upgrade_carapace * 8] брони)</b>", "xenoannounce", 5, hivenumber)
+		xeno_message("<b>[user] усилил Закалённый панцирь миньонов до ур. [hive.minion_upgrade_carapace]! (+[hive.minion_upgrade_carapace * 30] ХП, +[hive.minion_upgrade_carapace * 4] брони)</b>", "xenoannounce", 5, hivenumber)
 		user.playsound_local(user, 'sound/effects/spray3.ogg', 40, TRUE)
 		user.balloon_alert(user, "Панцирь улучшен до ур. [hive.minion_upgrade_carapace]!")
 
@@ -1634,7 +1634,7 @@ GLOBAL_VAR(rts_1px_icon)
 		SSpoints.xeno_points_by_hive[hivenumber] -= regen_cost
 		hive.minion_upgrade_regen++
 		hive.update_all_minion_buffs()
-		xeno_message("<b>[user] усилил Био-регенерацию миньонов до ур. [hive.minion_upgrade_regen]! (+[hive.minion_upgrade_regen * 4] ХП/сек на смоле)</b>", "xenoannounce", 5, hivenumber)
+		xeno_message("<b>[user] усилил Био-регенерацию миньонов до ур. [hive.minion_upgrade_regen]! (+[hive.minion_upgrade_regen * 3] ХП/сек на смоле)</b>", "xenoannounce", 5, hivenumber)
 		user.playsound_local(user, 'sound/effects/spray3.ogg', 40, TRUE)
 		user.balloon_alert(user, "Регенерация улучшена до ур. [hive.minion_upgrade_regen]!")
 

@@ -110,7 +110,7 @@
 	amount *= multiplier * GLOB.xeno_stat_multiplicator_buff * seconds_per_tick * XENO_PER_SECOND_LIFE_MOD
 
 	if(hive && !ckey && !key && (!mind || !mind.active) && hive.minion_upgrade_regen)
-		amount += hive.minion_upgrade_regen * 4 * seconds_per_tick
+		amount += hive.minion_upgrade_regen * 3 * seconds_per_tick
 
 	var/list/heal_data = list(amount)
 	SEND_SIGNAL(src, COMSIG_XENOMORPH_HEALTH_REGEN, heal_data, seconds_per_tick)

@@ -57,10 +57,10 @@
 	var/hivemind_cache_ttl = 100
 
 	/// Minion Upgrade Levels
-	var/minion_upgrade_claws = 0     // Max 3: +8 damage per level
-	var/minion_upgrade_carapace = 0  // Max 3: +60 max health, +8 armor per level
+	var/minion_upgrade_claws = 0     // Max 3: +3 damage per level
+	var/minion_upgrade_carapace = 0  // Max 3: +30 max health, +4 armor per level
 	var/minion_upgrade_adrenal = 0   // Max 3: +15% speed per level
-	var/minion_upgrade_regen = 0     // Max 3: +4 health regen per tick on weeds
+	var/minion_upgrade_regen = 0     // Max 3: +3 health regen per tick on weeds
 	var/minion_upgrade_acid = 0      // Max 1: attacks apply corrosive acid burn and toxin
 
 // ***************************************
@@ -1556,7 +1556,7 @@ to_chat will check for valid clients itself already so no need to double check f
 
 	// Carapace upgrade: bonus max health
 	var/base_max_health = minion.xeno_caste ? minion.xeno_caste.max_health : (initial(minion.maxHealth) || 150)
-	var/new_max_health = base_max_health + (minion_upgrade_carapace * 60)
+	var/new_max_health = base_max_health + (minion_upgrade_carapace * 30)
 	if(minion.maxHealth != new_max_health)
 		var/diff = new_max_health - minion.maxHealth
 		minion.maxHealth = new_max_health

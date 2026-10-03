@@ -82,7 +82,7 @@
 
 	if(X.hive && !X.ckey && !X.key && (!X.mind || !X.mind.active))
 		if(X.hive.minion_upgrade_claws)
-			damage += X.hive.minion_upgrade_claws * 8
+			damage += X.hive.minion_upgrade_claws * 3
 
 	var/armor_pen = X.xeno_caste.melee_ap
 	for(var/i in armor_mod)
