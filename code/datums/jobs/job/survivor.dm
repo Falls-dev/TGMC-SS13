@@ -144,6 +144,7 @@ Good luck, but do not expect to survive."})
 	title = SURVIVOR
 	skills_type = /datum/skills/civilian/survivor/master
 	outfit = /datum/outfit/job/survivor/rambo
+	job_points_needed = 6
 	job_flags = JOB_FLAG_ROUNDSTARTJOINABLE
 	html_description = {"
 		<b>Difficulty</b>: Astonishing<br /><br />
