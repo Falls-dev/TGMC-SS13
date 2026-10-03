@@ -33,6 +33,8 @@
 /area/misc/cordon/Entered(atom/movable/arrived, area/old_area)
 	. = ..()
 	for(var/mob/living/enterer as anything in arrived.get_all_contents_type(/mob/living))
+		if(istype(enterer.loc, /obj/structure/droppod))
+			continue
 		to_chat(enterer, span_userdanger("This was a bad idea..."))
 		enterer.dust(TRUE, FALSE, TRUE)
 

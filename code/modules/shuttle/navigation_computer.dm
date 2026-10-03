@@ -264,9 +264,10 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/checkLandingSpot()
 	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
 	var/turf/eyeturf = get_turf(the_eye)
-	if(!eyeturf)
-		return SHUTTLE_DOCKER_BLOCKED
-	if(!eyeturf.z || SSmapping.level_has_any_trait(eyeturf.z, locked_traits))
+	if(!eyeturf || !eyeturf.z || SSmapping.level_has_any_trait(eyeturf.z, locked_traits))
+		if(the_eye?.placement_images)
+			for(var/image/placement_image as anything in the_eye.placement_images)
+				placement_image.icon_state = "red"
 		return SHUTTLE_DOCKER_BLOCKED
 
 	. = SHUTTLE_DOCKER_LANDING_CLEAR

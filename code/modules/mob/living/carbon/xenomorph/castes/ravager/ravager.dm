@@ -58,7 +58,7 @@
 	add_filter("ravager_rage_outline", 5, outline_filter(rage_power, COLOR_RED))
 
 	if(!rage)
-		RegisterSignal(src, COMSIG_XENOMORPH_ATTACK_LIVING, PROC_REF(drain_slash))
+		RegisterSignal(src, COMSIG_XENOMORPH_ATTACK_LIVING, PROC_REF(drain_slash), override = TRUE)
 		rage = TRUE
 
 	if(!staggerstun_immune && (health <= maxHealth * RAVAGER_RAGE_STAGGERSTUN_IMMUNE_THRESHOLD))
