@@ -11,6 +11,8 @@ GLOBAL_LIST_INIT(hivemind_resin_images_list, list(
 	GROWTH_DOOR = image('icons/Xeno/actions/construction.dmi', icon_state = GROWTH_DOOR)
 ))
 
+
+
 /datum/action/ability/xeno_action/sow/hivemind
 	cooldown_duration = 70 SECONDS
 
@@ -19,6 +21,9 @@ GLOBAL_LIST_INIT(hivemind_resin_images_list, list(
 	desc = "Teleport back to your core."
 	action_icon_state = "lay_hivemind"
 	action_icon = 'icons/Xeno/actions/hivemind.dmi'
+	keybinding_signals = list(
+		KEYBINDING_NORMAL = COMSIG_XENOABILITY_RETURN_TO_CORE,
+	)
 	use_state_flags = ABILITY_USE_CLOSEDTURF
 
 /datum/action/ability/xeno_action/return_to_core/action_activate()
@@ -26,8 +31,6 @@ GLOBAL_LIST_INIT(hivemind_resin_images_list, list(
 	return ..()
 
 /datum/action/ability/activable/xeno/secrete_resin/hivemind/can_use_action(silent = FALSE, override_flags, selecting = FALSE)
-	if(owner.status_flags & INCORPOREAL)
-		return FALSE
 	return ..()
 
 /datum/action/ability/xeno_action/sow/hivemind/can_use_action(silent = FALSE, override_flags, selecting = FALSE)
@@ -90,6 +93,117 @@ GLOBAL_LIST_INIT(hivemind_resin_images_list, list(
 	minions_agressive = !minions_agressive
 	SEND_SIGNAL(owner, COMSIG_ESCORTING_ATOM_BEHAVIOUR_CHANGED, minions_agressive)
 	update_button_icon()
+
+/datum/action/ability/activable/xeno/rts_minion_control
+	name = "RTS Minion Control"
+	desc = "Select and command AI minions like in Warcraft 3. Left-click a minion to select (Shift+Click to multi-select), Right-click to issue Move, Attack or Escort orders. Xenomorphs controlled by players cannot be commanded."
+	action_icon_state = "minion_agressive"
+	action_icon = 'icons/Xeno/actions/general.dmi'
+	action_type = ACTION_SELECT
+	keybinding_signals = list(
+		KEYBINDING_NORMAL = COMSIG_XENOABILITY_RTS_MINION_CONTROL,
+	)
+	use_state_flags = ABILITY_USE_CLOSEDTURF|ABILITY_USE_LYING|ABILITY_USE_BUCKLED
+
+/datum/action/ability/activable/xeno/rts_minion_control/action_activate()
+	if(xeno_owner.selected_ability == src)
+		deselect()
+		xeno_owner.balloon_alert(xeno_owner, "RTS-режим выключен")
+		return
+	..()
+	xeno_owner.balloon_alert(xeno_owner, "RTS-режим включен")
+
+/datum/action/ability/activable/xeno/rts_minion_control/on_deselection()
+	. = ..()
+	if(isxenohivemind(owner))
+		var/mob/living/carbon/xenomorph/hivemind/H = owner
+		H.clear_rts_drag_box()
+		H.clear_selection()
+
+/datum/action/ability/activable/xeno/rts_minion_control/use_ability(atom/target)
+	if(!isxenohivemind(xeno_owner))
+		return
+	var/mob/living/carbon/xenomorph/hivemind/H = xeno_owner
+
+	if(isxeno(target))
+		var/mob/living/carbon/xenomorph/X = target
+		if(X != H)
+			H.select_minion(X, clear_previous = TRUE)
+			return
+
+	if(isturf(target))
+		var/mob/living/carbon/xenomorph/found_xeno
+		for(var/mob/living/carbon/xenomorph/X in target)
+			if(X != H && X.stat != DEAD && X.hivenumber == H.hivenumber)
+				found_xeno = X
+				break
+		if(found_xeno)
+			H.select_minion(found_xeno, clear_previous = TRUE)
+			return
+
+	if(length(H.selected_minions))
+		H.clear_selection()
+
+/datum/action/ability/xeno_action/select_all_minions
+	name = "Select All Minions"
+	desc = "Select all controllable AI minions in your field of view."
+	action_icon_state = "rally_minions"
+	action_icon = 'icons/Xeno/actions/general.dmi'
+	keybinding_signals = list(
+		KEYBINDING_NORMAL = COMSIG_XENOABILITY_SELECT_ALL_MINIONS,
+	)
+	use_state_flags = ABILITY_USE_CLOSEDTURF|ABILITY_USE_LYING|ABILITY_USE_BUCKLED
+
+/datum/action/ability/xeno_action/select_all_minions/action_activate()
+	if(!isxenohivemind(owner))
+		return
+	var/mob/living/carbon/xenomorph/hivemind/H = owner
+	var/datum/action/ability/activable/xeno/rts_minion_control/RTS = locate(/datum/action/ability/activable/xeno/rts_minion_control) in H.actions
+	if(RTS && H.selected_ability != RTS)
+		RTS.action_activate()
+	H.clear_selection()
+	var/count = 0
+	for(var/mob/living/carbon/xenomorph/X in view(world.view, H))
+		if(H.can_control_minion(X))
+			H.select_minion(X, clear_previous = FALSE)
+			count++
+	if(count)
+		H.balloon_alert(H, "Выбрано миньонов: [count]")
+		H.playsound_local(H, 'sound/effects/UI/click.ogg', 30, TRUE)
+	else
+		H.balloon_alert(H, "Поблизости нет доступных миньонов!")
+
+/datum/action/ability/xeno_action/stop_minions
+	name = "Halt Minions"
+	desc = "Orders all currently selected minions (or all nearby minions if none selected) to stop and hold position."
+	action_icon_state = "minion_passive"
+	action_icon = 'icons/Xeno/actions/general.dmi'
+	keybinding_signals = list(
+		KEYBINDING_NORMAL = COMSIG_XENOABILITY_STOP_MINIONS,
+	)
+	use_state_flags = ABILITY_USE_CLOSEDTURF|ABILITY_USE_LYING|ABILITY_USE_BUCKLED
+
+/datum/action/ability/xeno_action/stop_minions/action_activate()
+	if(!isxenohivemind(owner))
+		return
+	var/mob/living/carbon/xenomorph/hivemind/H = owner
+	var/list/target_list = length(H.selected_minions) ? H.selected_minions.Copy() : list()
+	if(!length(target_list))
+		for(var/mob/living/carbon/xenomorph/X in view(world.view, H))
+			if(H.can_control_minion(X))
+				target_list += X
+	for(var/mob/living/carbon/xenomorph/minion in target_list)
+		var/datum/component/ai_controller/controller = minion.GetComponent(/datum/component/ai_controller)
+		var/datum/ai_behavior/xeno/behavior = controller?.ai_behavior
+		if(behavior)
+			behavior.combat_target = null
+			behavior.clean_escorted_atom()
+			behavior.change_action(IDLE)
+	H.balloon_alert(H, "Миньоны остановлены")
+	H.playsound_local(H, 'sound/effects/UI/click.ogg', 30, TRUE)
+
+
+
 
 /datum/action/ability/activable/xeno/psychic_cure/queen_give_heal/hivemind/can_use_action(silent = FALSE, override_flags, selecting = FALSE)
 	if (owner.status_flags & INCORPOREAL)
@@ -178,6 +292,8 @@ GLOBAL_LIST_INIT(hivemind_resin_images_list, list(
 		/obj/alien/resin/resin_growth/door,
 	)
 
+
+
 /datum/action/ability/activable/xeno/secrete_resin/hivemind/action_activate()
 	if(xeno_owner.selected_ability != src)
 		return ..()
@@ -189,6 +305,18 @@ GLOBAL_LIST_INIT(hivemind_resin_images_list, list(
 	var/atom/A = xeno_owner.selected_resin
 	xeno_owner.balloon_alert(xeno_owner, initial(A.name))
 	update_button_icon()
+
+/datum/action/ability/activable/xeno/secrete_resin/hivemind/use_ability(atom/A)
+	if(owner.status_flags & INCORPOREAL)
+		var/turf/T = get_turf(A)
+		if(!T)
+			return
+		if(!isxenohivemind(owner))
+			return
+		var/mob/living/carbon/xenomorph/hivemind/H = owner
+		H.place_construction_hologram(T, H.selected_resin)
+		return
+	return ..()
 
 /datum/action/ability/activable/xeno/secrete_resin/hivemind/get_wait()
 	. = ..()
@@ -206,7 +334,11 @@ GLOBAL_LIST_INIT(hivemind_resin_images_list, list(
 	desc = "Gives your hive 100 psy points, if marines are on the ground."
 	action_icon_state = "psy_gain"
 	action_icon = 'icons/Xeno/actions/hivemind.dmi'
+	keybinding_signals = list(
+		KEYBINDING_NORMAL = COMSIG_XENOABILITY_PSY_GAIN,
+	)
 	cooldown_duration = 200 SECONDS
+
 
 /datum/action/ability/xeno_action/psy_gain/hivemind/action_activate()
 	if(length_char(GLOB.humans_by_zlevel["2"]) > 0.2 * length_char(GLOB.alive_human_list))

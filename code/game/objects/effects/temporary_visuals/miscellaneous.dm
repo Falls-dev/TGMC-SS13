@@ -214,6 +214,27 @@ GLOBAL_LIST_EMPTY(blood_particles)
 	holder.icon_state = icon_state_on
 	hud_list[hud_type] = holder
 
+/obj/effect/temp_visual/rts_order
+	name = "order marker"
+	icon = 'icons/effects/blips.dmi'
+	icon_state = "attack"
+	duration = 0.8 SECONDS
+	layer = ABOVE_NORMAL_TURF_LAYER
+	plane = GAME_PLANE
+
+/obj/effect/temp_visual/rts_order/move
+	icon_state = "defend"
+	color = "#00FF00"
+
+/obj/effect/temp_visual/rts_order/attack
+	icon_state = "attack"
+	color = "#FF0000"
+
+/obj/effect/temp_visual/rts_order/escort
+	icon_state = "rally"
+	color = "#00FFFF"
+
+
 /obj/effect/temp_visual/healing
 	name = "healing"
 	icon = 'icons/effects/progressicons.dmi'

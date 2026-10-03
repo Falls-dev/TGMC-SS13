@@ -759,7 +759,7 @@
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_XENO_SPIT,
 	)
 	use_state_flags = ABILITY_USE_LYING|ABILITY_USE_BUCKLED|ABILITY_DO_AFTER_ATTACK|ABILITY_USE_STAGGERED
-	target_flags = ABILITY_MOB_TARGET
+	target_flags = NONE
 	///Current target that the xeno is targeting. This is for aiming.
 	var/current_target
 
@@ -894,15 +894,23 @@
 	return TRUE
 
 /datum/action/ability/activable/xeno/xeno_spit/ai_should_use(atom/target)
-	if(!iscarbon(target))
+	if(!target || QDELETED(target))
 		return FALSE
-	if(get_dist(target, xeno_owner) > 6)
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.stat == DEAD || L.get_xeno_hivenumber() == xeno_owner.get_xeno_hivenumber())
+			return FALSE
+	else if(istype(target, /obj/machinery) || istype(target, /obj/structure) || istype(target, /obj/vehicle))
+		var/obj/O = target
+		if(O.get_xeno_hivenumber() == xeno_owner.get_xeno_hivenumber())
+			return FALSE
+	else
+		return FALSE
+	if(get_dist(target, xeno_owner) > 7)
 		return FALSE
 	if(!can_use_ability(target, override_flags = ABILITY_IGNORE_SELECTED_ABILITY))
 		return FALSE
 	if(!line_of_sight(xeno_owner, target))
-		return FALSE
-	if(target.get_xeno_hivenumber() == xeno_owner.get_xeno_hivenumber())
 		return FALSE
 	return TRUE
 

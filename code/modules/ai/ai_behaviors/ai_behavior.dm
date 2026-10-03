@@ -501,7 +501,10 @@ These are parameter based so the ai behavior can choose to (un)register the sign
 
 	var/max_range = upper_maintain_dist
 	var/min_range = lower_maintain_dist
-	if(current_action == MOVING_TO_ATOM && (atom_to_walk_to == combat_target))
+	if(isturf(atom_to_walk_to))
+		max_range = 0
+		min_range = 0
+	else if(current_action == MOVING_TO_ATOM && (atom_to_walk_to == combat_target))
 		max_range = upper_engage_dist
 		min_range = lower_engage_dist
 	//An actual accurate angle, unlike get_dir
@@ -560,9 +563,16 @@ These are parameter based so the ai behavior can choose to (un)register the sign
 	if(ismob(escorted_mob) && !QDELETED(escorted_mob) && (escorted_mob.stat != DEAD) && (escorted_mob.z == mob_parent.z) && (get_dist(mob_parent, escorted_mob) <= (AI_ESCORTING_BREAK_DISTANCE)))
 		goal_list[escorted_atom] = AI_ESCORT_RATING_BUDDY
 	else
-		var/atom/mob_to_follow = get_nearest_target(mob_parent, AI_ESCORTING_MAX_DISTANCE, TARGET_FRIENDLY_MOB, mob_parent.faction, need_los = !(mob_parent.sight & SEE_MOBS))
-		if(mob_to_follow)
-			goal_list[mob_to_follow] = AI_ESCORT_RATING_CLOSE_FRIENDLY
+		var/should_auto_follow = TRUE
+		if(isxeno(mob_parent))
+			var/datum/hive_status/HS = GLOB.hive_datums[mob_parent.get_xeno_hivenumber()]
+			if(HS && (HS.get_cached_hivemind_status() || length(HS.hivemindcores)))
+				should_auto_follow = FALSE
+
+		if(should_auto_follow)
+			var/atom/mob_to_follow = get_nearest_target(mob_parent, AI_ESCORTING_MAX_DISTANCE, TARGET_FRIENDLY_MOB, mob_parent.faction, need_los = !(mob_parent.sight & SEE_MOBS))
+			if(mob_to_follow)
+				goal_list[mob_to_follow] = AI_ESCORT_RATING_CLOSE_FRIENDLY
 
 	SEND_SIGNAL(mob_parent, COMSIG_NPC_FIND_NEW_ESCORT, goal_list)
 	goal_list = sortTim(goal_list, /proc/cmp_numeric_dsc, TRUE)
