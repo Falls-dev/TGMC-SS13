@@ -82,7 +82,7 @@
 /mob/living/carbon/xenomorph/update_fire()
 	if(!fire_overlay)
 		return
-	var/fire_light = min(fire_stacks * 0.2 , 3)
+	var/fire_light = clamp(3 + max(fire_stacks - 5, 0) / 10, 3, 4.5)
 	if(!on_fire)
 		fire_light = 0
 	if(fire_light == fire_luminosity)
