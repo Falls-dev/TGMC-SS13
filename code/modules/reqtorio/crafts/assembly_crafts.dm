@@ -29,8 +29,10 @@ GLOBAL_LIST_INIT(all_assembly_craft_groups, list(
 //osmium = 6 points //only craftable
 //plasteel = 8 points
 //phoron = 6.6 points //craft using junk
-//gun powder ~ 8 or 0 points, only fabricated so no exact prices
+//gun powder ~ 1 point
 //cloth = 4 points
 //platinum = 12 points
 //copper = 4 points
-//junk ~ 6.6 points so expensive.. for junk
+//junk = 6 points so expensive.. for junk
+//composite = 8 points
+//jeweler steel = 6.6 points
