@@ -55,11 +55,11 @@
 	var/rage_max_hp = -90
 	rage_power = clamp((rage_start_hp - health) / (rage_start_hp - rage_max_hp), 0, 1)
 
-	add_filter("ravager_rage_outline", 5, outline_filter(1, COLOR_RED))
 
 	if(!rage)
 		RegisterSignal(src, COMSIG_XENOMORPH_ATTACK_LIVING, PROC_REF(drain_slash))
 		rage = TRUE
+		add_filter("ravager_rage_outline", 5, outline_filter(1, COLOR_RED))
 
 	if(!staggerstun_immune && (health <= maxHealth * RAVAGER_RAGE_STAGGERSTUN_IMMUNE_THRESHOLD))
 		ADD_TRAIT(src, TRAIT_STUNIMMUNE, RAGE_TRAIT)
