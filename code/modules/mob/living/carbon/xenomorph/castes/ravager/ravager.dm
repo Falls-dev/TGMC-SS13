@@ -55,7 +55,7 @@
 	var/rage_max_hp = -90
 	rage_power = clamp((rage_start_hp - health) / (rage_start_hp - rage_max_hp), 0, 1)
 
-	add_filter("ravager_rage_outline", 5, outline_filter(rage_power, COLOR_RED))
+	add_filter("ravager_rage_outline", 5, outline_filter(1, COLOR_RED))
 
 	if(!rage)
 		RegisterSignal(src, COMSIG_XENOMORPH_ATTACK_LIVING, PROC_REF(drain_slash))
