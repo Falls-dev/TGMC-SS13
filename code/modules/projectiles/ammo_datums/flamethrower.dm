@@ -51,8 +51,8 @@
 	hud_state = "flame_green"
 	max_range = 8
 	fire_color = FLAME_COLOR_LIME
-	burn_time = 12
-	burn_level = 18
+	burn_time = 14
+	burn_level = 22
 	bullet_color = LIGHT_COLOR_ELECTRIC_GREEN
 
 /datum/ammo/flamethrower/green/on_hit_mob(mob/target_mob, atom/movable/projectile/proj)
