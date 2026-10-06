@@ -320,7 +320,7 @@ GLOBAL_LIST_INIT(tier_to_primo_upgrade, list(
 /datum/hive_upgrade/primordial/tier_four
 	name = PRIMORDIAL_TIER_FOUR
 	desc = "Unlocks the primordial upgrade for the last tier xenomorphs."
-	psypoint_cost = 800
+	psypoint_cost = 1000
 	icon = "primo_t4"
 
 /datum/hive_upgrade/primordial/tier_three
