@@ -1,0 +1,5 @@
+{
+  "/obj/item/storage/belt/medical": "/obj/item/storage/belt/lifesaver",
+  "/obj/item/device/flash": "/obj/item/flash",
+  "/turf/open/floor/bluegrid": "/turf/open/floor/lv522/turf_open_floor_bluegrid"
+}

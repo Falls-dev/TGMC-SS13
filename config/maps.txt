@@ -96,3 +96,12 @@ endmap
 map kutjevo
 	minplayers 35
 endmap
+
+map lv759
+endmap
+
+map lv522_chances_claim
+endmap
+
+map boxstation
+endmap
