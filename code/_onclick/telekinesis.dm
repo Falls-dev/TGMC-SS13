@@ -19,6 +19,11 @@ To add TK to a living mob, just make it register this proc on ranged attacks and
 Redefine as needed.
 */
 /mob/living/proc/on_ranged_attack_tk(mob/user, atom/target)
+	//A click that gets here while a grab is already held was already handled by
+	//tk_grab/afterattack, which throws or uses whatever is held. Grabbing as well
+	//would swap the held grab out from under the wearer and drop what it carried.
+	if(istype(user.get_active_held_item(), /obj/item/tk_grab))
+		return
 	target.attack_tk(user)
 
 

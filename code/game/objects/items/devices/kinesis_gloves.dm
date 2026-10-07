@@ -33,7 +33,7 @@
 /obj/item/clothing/gloves/kinesis/examine(mob/user)
 	. = ..()
 	if(active)
-		. += span_notice("It is switched on. Alt-click a distant object to grab it, click again to let go or throw.")
+		. += span_notice("It is switched on. Click a distant object to grab it, click again to throw or use it.")
 	else
 		. += span_notice("It is switched off. Use the action button or alt-click yourself to switch it on.")
 
