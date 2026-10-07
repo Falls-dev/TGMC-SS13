@@ -32,8 +32,11 @@
 
 /obj/item/clothing/gloves/kinesis/examine(mob/user)
 	. = ..()
-	if(active)
-		. += span_notice("It is switched on. Click a distant object to grab it, click again to throw or use it.")
+	var/mob/living/carbon/human/wearer = loc
+	if(istype(wearer) && CHECK_BITFIELD(wearer.status_flags, TK_USER))
+		. += span_notice("Its field is live. Click a distant object to grab it, click again to throw or use it.")
+	else if(active)
+		. += span_notice("It is switched on but its field is not running. Take it off and put it back on.")
 	else
 		. += span_notice("It is switched off. Use the action button or alt-click yourself to switch it on.")
 
@@ -76,9 +79,15 @@
 	else
 		playsound(get_turf(src), deactivation_sound, 15)
 	update_icon()
-	if(ismob(loc))
-		var/mob/wearer = loc
-		wearer?.update_inv_gloves()
+	//Switching on has to reach the wearer here, not just from equipped(), otherwise
+	//wearing them first and switching on second leaves the field down forever.
+	var/mob/living/carbon/human/wearer = loc
+	if(istype(wearer) && wearer.gloves == src && active)
+		enable_field(wearer)
+	else
+		//Safe to call unconditionally - it only ever tears an existing field down.
+		disable_field(wearer)
+	wearer?.update_inv_gloves()
 
 /obj/item/clothing/gloves/kinesis/update_icon_state()
 	. = ..()
