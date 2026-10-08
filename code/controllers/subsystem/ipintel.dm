@@ -9,4 +9,4 @@ SUBSYSTEM_DEF(ipintel)
 
 /datum/controller/subsystem/ipintel/Initialize(timeofday, zlevel)
 	enabled = 1
-	return ..()
+	return SS_INIT_SUCCESS
