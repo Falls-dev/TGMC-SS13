@@ -9,7 +9,7 @@
 	var/larva_check_interval = 30 SECONDS
 	var/last_larva_check = 0
 	round_type_flags = MODE_INFESTATION|MODE_XENO_SPAWN_PROTECT|MODE_LATE_OPENING_SHUTTER_TIMER|MODE_PSY_POINTS|MODE_PSY_POINTS_ADVANCED|MODE_DEAD_GRAB_FORBIDDEN|MODE_HIJACK_POSSIBLE|MODE_SILO_RESPAWN|MODE_SILO_NO_LARVA|MODE_ALLOW_XENO_QUICKBUILD|MODE_HAS_EXCAVATION|MODE_HAS_MINERS
-	xeno_abilities_flags = ABILITY_DISTRESS
+	xeno_abilities_flags = ABILITY_CRASH //no larva from psydrains, no silo.
 	valid_job_types = list(
 		/datum/job/terragov/command/captain = 1,
 		/datum/job/terragov/command/fieldcommander = 1,
