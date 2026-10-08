@@ -368,6 +368,9 @@
 	// Если у ксеноморфа есть ckey, key или активный разум игрока — он не может управляться Hivemind как миньон
 	if(target.ckey || target.key || (target.mind && target.mind.current == target && target.mind.active))
 		return FALSE
+	// Куклы пупиттера и паучата вдовы подчиняются только своим создателям и имеют собственный ИИ
+	if(istype(target, /mob/living/carbon/xenomorph/spiderling) || istype(target, /mob/living/carbon/xenomorph/puppet))
+		return FALSE
 	// Должен иметь соответствующий ИИ контроллер
 	var/datum/component/ai_controller/controller = target.GetComponent(/datum/component/ai_controller)
 	var/desired_ai_type = /datum/ai_behavior/xeno
@@ -395,6 +398,8 @@
 	if(!can_control_minion(minion))
 		if(minion.ckey || minion.key || (minion.mind && minion.mind.active))
 			balloon_alert(src, "У этого ксеноморфа есть собственный разум!")
+		else if(istype(minion, /mob/living/carbon/xenomorph/spiderling) || istype(minion, /mob/living/carbon/xenomorph/puppet))
+			balloon_alert(src, "Эти существа подчиняются только создателю!")
 		else
 			balloon_alert(src, "Невозможно подчинить!")
 		return FALSE
