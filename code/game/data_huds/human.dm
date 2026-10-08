@@ -62,12 +62,12 @@
 			if(!client && !get_ghost(TRUE)) // Nobody home, no ghost, must have disconnected while in their body
 				status_hud.overlays += "dead_noclient"
 			var/stage
-			switch(dead_ticks)
-				if(0 to 0.4 * TIME_BEFORE_DNR)
+			switch(dead_ticks / get_dnr_limit())
+				if(0 to 0.4)
 					stage = 1
-				if(0.4 * TIME_BEFORE_DNR to 0.8 * TIME_BEFORE_DNR)
+				if(0.4 to 0.8)
 					stage = 2
-				if(0.8 * TIME_BEFORE_DNR to INFINITY)
+				if(0.8 to INFINITY)
 					stage = 3
 			if(initial_stage != stage)
 				initial_stage = stage

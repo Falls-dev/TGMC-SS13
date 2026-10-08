@@ -51,7 +51,7 @@
 	if(!.)
 		return
 	var/datum/job/scaled_job = SSjob.GetJobType(/datum/job/xenomorph) //Xenos
-	scaled_job.job_points_needed = NUCLEAR_WAR_LARVA_POINTS_NEEDED //actaully DISTRESS_LARVA_POINTS_NEEDED
+	scaled_job.job_points_needed = DISTRESS_LARVA_POINTS_NEEDED //actaully DISTRESS_LARVA_POINTS_NEEDED
 
 
 /datum/game_mode/infestation/distress/orphan_hivemind_collapse()
