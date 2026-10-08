@@ -835,6 +835,7 @@
 #include "code\game\area\deltastation.dm"
 #include "code\game\area\boxstation.dm"
 #include "code\game\boxstation_map_port.dm"
+#include "code\game\boxstation_shared_map_content.dm"
 #include "code\game\area\gelida_iv.dm"
 #include "code\game\area\general.dm"
 #include "code\game\area\icecolony.dm"
@@ -845,9 +846,6 @@
 #include "code\game\area\LV759_Hybrisa_Prospera.dm"
 
 #include "code\game\lv759_map_port.dm"
-#include "code\game\area\LV522_Chances_Claim.dm"
-#include "code\game\lv522_map_props.dm"
-#include "code\game\lv522_map_compat.dm"
 
 
 #include "code\game\area\magmoor_digsite.dm"
@@ -2577,7 +2575,6 @@
 // Compile imported maps for map validation; load the selected map from its JSON in normal rounds.
 #ifdef ALL_MAPS
 #include "_maps\map_files\LV759\LV759.dmm"
-#include "_maps\map_files\LV522_Chances_Claim\LV522_Chances_Claim.dmm"
 #include "_maps\map_files\BoxStation\BoxStation.dmm"
 #endif
 // END_INCLUDE
