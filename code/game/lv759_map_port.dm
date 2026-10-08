@@ -2619,7 +2619,6 @@
 	resistance_flags = XENO_DAMAGEABLE
 	density = TRUE
 	///used to determine the probability that a car will detonate upon being destroyed
-	var/explosion_probability = 1
 
 /obj/structure/prop/urban/vehicles/meridian
 	name = "\improper Mono-Spectra"
@@ -3838,3 +3837,162 @@
 /obj/item/storage/belt/marine/t12
 	name = "T-12 ammunition belt"
 
+// BEGIN MAP VISUAL REPAIRS
+/turf/open/floor/urban_plating
+	icon = 'temp/LV759/icons/turf/floors.dmi'
+	icon_state = "urban_plating"
+
+/turf/open/floor/iron/bluespace
+	icon = 'temp/LV759/tgstation/icons/turf/floors.dmi'
+	icon_state = "bluespace"
+
+/turf/open/floor/iron/recharge_floor
+	icon = 'temp/LV759/tgstation/icons/turf/floors.dmi'
+	icon_state = "recharge_floor"
+
+/turf/open/floor/iron/showroomfloor
+	icon = 'temp/LV759/tgstation/icons/turf/floors.dmi'
+	icon_state = "showroomfloor"
+
+/turf/open/floor/iron/stairs
+	icon = 'temp/LV759/tgstation/icons/turf/floors.dmi'
+	icon_state = "stairs"
+
+/turf/open/floor/iron/terracotta
+	icon = 'temp/LV759/tgstation/icons/turf/floors.dmi'
+	icon_state = "terracotta"
+
+/turf/open/floor/iron/vaporwave
+	icon = 'temp/LV759/tgstation/icons/turf/floors.dmi'
+	icon_state = "pinkblack"
+
+/turf/open/floor/marked
+	icon = 'temp/LV759/icons/turf/floors.dmi'
+	icon_state = "marked"
+
+/turf/open/floor/multi_tiles
+	icon = 'temp/LV759/icons/turf/floors.dmi'
+	icon_state = "multi_tiles"
+
+/turf/open/floor/officesquares
+	icon = 'temp/LV759/icons/turf/floors.dmi'
+	icon_state = "officesquares"
+
+/turf/open/floor/officetiles
+	icon = 'temp/LV759/icons/turf/floors.dmi'
+	icon_state = "officetiles"
+
+/turf/open/floor/orange_cover
+	icon = 'temp/LV759/icons/turf/floors.dmi'
+	icon_state = "orange_cover"
+
+/turf/open/floor/orange_edge
+	icon = 'temp/LV759/icons/turf/floors.dmi'
+	icon_state = "orange_edge"
+
+/turf/open/floor/orange_icorner
+	icon = 'temp/LV759/icons/turf/floors.dmi'
+	icon_state = "orange_icorner"
+
+/turf/open/floor/plate
+	icon = 'temp/LV759/icons/turf/floors.dmi'
+	icon_state = "plate"
+
+/turf/open/floor/redfour
+	icon = 'temp/LV759/icons/turf/floors.dmi'
+	icon_state = "red4"
+
+/turf/open/floor/redone
+	icon = 'temp/LV759/icons/turf/floors.dmi'
+	icon_state = "red1"
+
+/turf/open/floor/redthree
+	icon = 'temp/LV759/icons/turf/floors.dmi'
+	icon_state = "red3"
+
+/turf/open/floor/spiralblueoffice
+	icon = 'temp/LV759/icons/turf/floors.dmi'
+	icon_state = "spiralblueoffice"
+
+/turf/open/floor/spiralplate
+	icon = 'temp/LV759/icons/turf/floors.dmi'
+	icon_state = "spiralplate"
+
+/turf/open/floor/squares
+	icon = 'temp/LV759/icons/turf/floors.dmi'
+	icon_state = "squares"
+
+/turf/open/floor/yellowthree
+	icon = 'temp/LV759/icons/turf/floors.dmi'
+	icon_state = "yellow3"
+
+/obj/item/trash/crushed_bottle
+	icon = 'temp/LV759/icons/obj/items/trash.dmi'
+	icon_state = "blank_can_crushed"
+
+/obj/item/trash/crushed_cup
+	icon = 'temp/LV759/icons/obj/items/trash.dmi'
+	icon_state = "crushed_solocup"
+
+/obj/item/trash/crushed_wbottle
+	icon = 'temp/LV759/icons/obj/items/trash.dmi'
+	icon_state = "waterbottle_crushed"
+
+/obj/item/trash/cuppa_joes
+	icon = 'temp/LV759/icons/obj/items/trash.dmi'
+	icon_state = "coffeecuppajoenolid"
+
+/obj/item/trash/cuppa_joes_static
+	icon = 'temp/LV759/icons/obj/items/trash.dmi'
+	icon_state = "coffeecuppajoenolid"
+
+/turf/closed/wall/urban/colony
+	icon = 'temp/LV759/icons/turf/walls/hybrisa_colony_walls.dmi'
+	icon_state = "hybrisa_colony_walls-0"
+	base_icon_state = "hybrisa_colony_walls"
+	smoothing_flags = SMOOTH_BITMASK
+
+/turf/closed/wall/urban/colony/engineering
+	icon = 'temp/LV759/icons/turf/walls/hybrisa_colony_walls.dmi'
+	icon_state = "hybrisa_colony_walls-0"
+	base_icon_state = "hybrisa_colony_walls"
+	smoothing_flags = SMOOTH_BITMASK
+
+/obj/machinery/space_heater/radiator
+	icon = 'temp/LV759/icons/obj/machines/atmos.dmi'
+	icon_state = "radiator"
+
+/obj/machinery/space_heater/radiator/red
+	icon = 'temp/LV759/icons/obj/machines/atmos.dmi'
+	icon_state = "radiator-r"
+
+/obj/structure/barricade/handrail/urban/handrail
+	icon = 'temp/LV759/icons/obj/structures/handrail.dmi'
+	icon_state = "handrail_hybrisa"
+	barricade_type = "handrail_hybrisa"
+
+/obj/structure/barricade/handrail/urban/road
+	icon = 'temp/LV759/icons/obj/structures/handrail.dmi'
+	icon_state = "plasticroadbarrierred"
+	barricade_type = "plasticroadbarrierred"
+
+/obj/structure/fence/dark
+	icon = 'temp/LV759/icons/obj/smooth_objects/dark_fence.dmi'
+	icon_state = "fence-icon"
+
+/obj/item/trash/trashbag
+	icon = 'temp/LV759/icons/obj/items/trash.dmi'
+	icon_state = "ztrashbag"
+
+/obj/structure/bed/roller/hospital_empty
+	icon = 'temp/LV759/icons/obj/rollerbed.dmi'
+	icon_state = "bigrollerempty2_down"
+	base_bed_icon = "bigrollerempty2"
+
+/obj/item/autopsy_scanner
+	icon = 'temp/LV759/icons/obj/items/surgery_tools.dmi'
+	icon_state = "autopsy_scanner"
+
+/obj/machinery/space_heater/radiator/update_icon_state()
+	. = ..()
+	icon_state = initial(icon_state)

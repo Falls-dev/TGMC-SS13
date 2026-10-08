@@ -268,3 +268,8 @@
 /obj/structure/prop/ice_colony/hula_girl
 
 /obj/structure/prop/structure_lattice
+
+// BEGIN MAP VISUAL REPAIRS
+/obj/structure/prop/invuln/overhead/flammable_pipe/fly
+	icon = 'temp/LV522/icons/obj/structures/props/industrial/overhead_ducting.dmi'
+	icon_state = "flammable_pipe_1"

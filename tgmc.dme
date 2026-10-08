@@ -2568,6 +2568,12 @@
 #include "interface\fonts\spess_font.dm"
 #include "interface\fonts\tiny_unicode.dm"
 #include "interface\fonts\vcr_osd_mono.dm"
+// LV759 behavior overrides follow the stock type definitions.
+#include "code\game\lv759_support\hybrisa_props.dm"
+#include "code\game\lv759_support\vehicle_props.dm"
+#include "code\game\lv759_support\large_vehicle_props.dm"
+#include "code\game\lv759_support\resource_fixes.dm"
+#include "code\game\lv759_support\legacy_map_objects.dm"
 // Compile imported maps for map validation; load the selected map from its JSON in normal rounds.
 #ifdef ALL_MAPS
 #include "_maps\map_files\LV759\LV759.dmm"

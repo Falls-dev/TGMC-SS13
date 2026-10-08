@@ -9217,7 +9217,7 @@
 /obj/structure/closet/cabinet,
 /obj/item/clothing/shoes/brown,
 /obj/item/clothing/tie,
-/obj/item/clothing/under/marine/veteran,
+/obj/item/clothing/under/marine/veteran/marine,
 /turf/open/floor/urban_wood,
 /area/lv759/indoors/apartment/northapartments)
 "bJn" = (
@@ -17487,7 +17487,7 @@
 /area/lv759/indoors/nt_research_complex/cargo)
 "dhc" = (
 /obj/structure/cable,
-/obj/structure/prop/mainship/brokengen,
+/obj/structure/prop/mainship/brokengen/lv759,
 /turf/open/floor/urban_plating,
 /area/lv759/indoors/power_plant/fusion_generators)
 "dhe" = (
@@ -17544,7 +17544,7 @@
 "dhC" = (
 /obj/structure/table,
 /obj/effect/spawner/random/misc/folder,
-/obj/item/facepaint,
+/obj/item/facepaint/green,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/urban/carpet/carpetbluedeco,
 /area/lv759/indoors/apartment/westbedrooms)
@@ -22751,7 +22751,7 @@
 /area/lv759/indoors/caves/east_caves)
 "egc" = (
 /obj/structure/closet/secure_closet/detective,
-/obj/item/storage/holster,
+/obj/item/storage/holster/belt/revolver/m44,
 /obj/item/ammo_magazine/revolver,
 /obj/item/ammo_magazine/revolver,
 /obj/item/ammo_magazine/revolver,
@@ -33021,7 +33021,7 @@
 	pixel_x = -6;
 	pixel_y = 18
 	},
-/obj/structure/closet/walllocker{
+/obj/structure/closet/walllocker/lv759{
 	pixel_y = 30
 	},
 /obj/structure/bed/urban/chairs/red,
@@ -70616,7 +70616,7 @@
 /area/lv759/indoors/caves/north_east_caves)
 "mGQ" = (
 /obj/structure/table/reinforced,
-/obj/structure/closet/walllocker,
+/obj/structure/closet/walllocker/lv759,
 /obj/item/storage/backpack/marine/satchel{
 	pixel_x = 7;
 	pixel_y = 19
@@ -127722,7 +127722,7 @@
 /obj/structure/table/reinforced/prison{
 	color = "#6b675e"
 	},
-/obj/item/storage/holster,
+/obj/item/storage/holster/belt/pistol/m4a3,
 /obj/item/clothing/suit/armor/swat/officer,
 /obj/structure/window/reinforced{
 	dir = 4
@@ -128955,7 +128955,7 @@
 	},
 /area/lv759/outdoors/landing_zone_2)
 "wSw" = (
-/obj/structure/closet/secure_closet/warden,
+/obj/structure/closet/secure_closet/warden/lv759,
 /turf/open/floor/prison{
 	dir = 10
 	},

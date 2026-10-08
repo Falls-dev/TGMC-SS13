@@ -777,814 +777,821 @@
 	pixel_x = -16
 	pixel_y = -2
 
-/turf/open/floor/lv522/turf_open_asphalt_cement
+/turf/open/floor/lv522/asphalt_cement
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/asphalt.dmi'
 	icon_state = "cement5"
 	name = "concrete"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_asphalt_cement_cement1
+/turf/open/floor/lv522/asphalt_cement_cement1
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/asphalt.dmi'
 	icon_state = "cement1"
 	name = "concrete"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_asphalt_cement_cement12
+/turf/open/floor/lv522/asphalt_cement_cement12
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/asphalt.dmi'
 	icon_state = "cement12"
 	name = "concrete"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_asphalt_cement_cement14
+/turf/open/floor/lv522/asphalt_cement_cement14
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/asphalt.dmi'
 	icon_state = "cement14"
 	name = "concrete"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_asphalt_cement_cement15
+/turf/open/floor/lv522/asphalt_cement_cement15
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/asphalt.dmi'
 	icon_state = "cement15"
 	name = "concrete"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_asphalt_cement_cement2
+/turf/open/floor/lv522/asphalt_cement_cement2
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/asphalt.dmi'
 	icon_state = "cement2"
 	name = "concrete"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_asphalt_cement_cement3
+/turf/open/floor/lv522/asphalt_cement_cement3
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/asphalt.dmi'
 	icon_state = "cement3"
 	name = "concrete"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_asphalt_cement_cement4
+/turf/open/floor/lv522/asphalt_cement_cement4
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/asphalt.dmi'
 	icon_state = "cement4"
 	name = "concrete"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_asphalt_cement_cement9
+/turf/open/floor/lv522/asphalt_cement_cement9
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/asphalt.dmi'
 	icon_state = "cement9"
 	name = "concrete"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_auto_turf_sand_layer1
+/turf/open/floor/lv522/sand/layer1
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/auto_sand.dmi'
 	icon_state = "sand_1"
 	name = "auto-sand"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_auto_turf_sand_white_layer0
+/turf/open/floor/lv522/sand_white/layer0
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/auto_sand.dmi'
 	icon_state = "varadero_0"
 	name = "auto-sand"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_auto_turf_shale_layer1
+/turf/open/floor/lv522/shale/layer1
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/auto_shale.dmi'
 	icon_state = "shale_1"
 	name = "auto-sand"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_auto_turf_shale_layer2
+/turf/open/floor/lv522/shale/layer2
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/auto_shale.dmi'
 	icon_state = "shale_2"
 	name = "auto-sand"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_almayer_w_y0
+/turf/open/floor/lv522/almayer_w_y0
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/almayer.dmi'
 	icon_state = "w-y0"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_almayer_w_y1
+/turf/open/floor/lv522/almayer_w_y1
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/almayer.dmi'
 	icon_state = "w-y1"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_almayer_w_y2
+/turf/open/floor/lv522/almayer_w_y2
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/almayer.dmi'
 	icon_state = "w-y2"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_bluegrid
+/turf/open/floor/lv522/bluegrid
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/floors.dmi'
 	icon_state = "bcircuit"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_corsat_brown
+/turf/open/floor/lv522/corsat_brown
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/corsat.dmi'
 	icon_state = "brown"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_corsat_brown_east
+/turf/open/floor/lv522/corsat_brown_east
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/corsat.dmi'
 	icon_state = "brown"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_corsat_brown_north
+/turf/open/floor/lv522/corsat_brown_north
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/corsat.dmi'
 	icon_state = "brown"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_corsat_brown_northeast
+/turf/open/floor/lv522/corsat_brown_northeast
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/corsat.dmi'
 	icon_state = "brown"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_corsat_brown_northwest
+/turf/open/floor/lv522/corsat_brown_northwest
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/corsat.dmi'
 	icon_state = "brown"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_corsat_brown_southeast
+/turf/open/floor/lv522/corsat_brown_southeast
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/corsat.dmi'
 	icon_state = "brown"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_corsat_brown_southwest
+/turf/open/floor/lv522/corsat_brown_southwest
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/corsat.dmi'
 	icon_state = "brown"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_corsat_brown_west
+/turf/open/floor/lv522/corsat_brown_west
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/corsat.dmi'
 	icon_state = "brown"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_corsat_browncorner
+/turf/open/floor/lv522/corsat_browncorner
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/corsat.dmi'
 	icon_state = "browncorner"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_corsat_browncorner_east
+/turf/open/floor/lv522/corsat_browncorner_east
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/corsat.dmi'
 	icon_state = "browncorner"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_corsat_browncorner_north
+/turf/open/floor/lv522/corsat_browncorner_north
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/corsat.dmi'
 	icon_state = "browncorner"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_corsat_browncorner_west
+/turf/open/floor/lv522/corsat_browncorner_west
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/corsat.dmi'
 	icon_state = "browncorner"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_corsat_marked
+/turf/open/floor/lv522/corsat_marked
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/corsat.dmi'
 	icon_state = "marked"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_corsat_plate
+/turf/open/floor/lv522/corsat_plate
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/corsat.dmi'
 	icon_state = "plate"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_corsat_squares
+/turf/open/floor/lv522/corsat_squares
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/corsat.dmi'
 	icon_state = "squares"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_plating_platingdmg1
+/turf/open/floor/lv522/plating_platingdmg1
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/floors.dmi'
 	icon_state = "platingdmg1"
 	name = "plating"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_plating_platingdmg3
+/turf/open/floor/lv522/plating_platingdmg3
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/floors.dmi'
 	icon_state = "platingdmg3"
 	name = "plating"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_plating_platingdmg3_west
+/turf/open/floor/lv522/plating_platingdmg3_west
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/floors.dmi'
 	icon_state = "platingdmg3"
 	name = "plating"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_platingdmg1
+/turf/open/floor/lv522/platingdmg1
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/floors.dmi'
 	icon_state = "platingdmg1"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_platingdmg3
+/turf/open/floor/lv522/platingdmg3
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/floors.dmi'
 	icon_state = "platingdmg3"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_blue_east
+/turf/open/floor/lv522/prison_blue_east
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "blue"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_blue_north
+/turf/open/floor/lv522/prison_blue_north
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "blue"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_blue_northeast
+/turf/open/floor/lv522/prison_blue_northeast
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "blue"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_blue_northwest
+/turf/open/floor/lv522/prison_blue_northwest
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "blue"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_blue_southeast
+/turf/open/floor/lv522/prison_blue_southeast
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "blue"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_blue_southwest
+/turf/open/floor/lv522/prison_blue_southwest
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "blue"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_blue_west
+/turf/open/floor/lv522/prison_blue_west
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "blue"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_blue_plate
+/turf/open/floor/lv522/prison_blue_plate
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "blue_plate"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_blue_plate_north
+/turf/open/floor/lv522/prison_blue_plate_north
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "blue_plate"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_bluefull
+/turf/open/floor/lv522/prison_bluefull
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "bluefull"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_cell_stripe
+/turf/open/floor/lv522/prison_cell_stripe
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "cell_stripe"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_cell_stripe_east
+/turf/open/floor/lv522/prison_cell_stripe_east
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "cell_stripe"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_cell_stripe_north
+/turf/open/floor/lv522/prison_cell_stripe_north
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "cell_stripe"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_cell_stripe_west
+/turf/open/floor/lv522/prison_cell_stripe_west
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "cell_stripe"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_darkbrownfull2
+/turf/open/floor/lv522/prison_darkbrownfull2
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "darkbrownfull2"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_darkpurple2
+/turf/open/floor/lv522/prison_darkpurple2
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "darkpurple2"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_darkpurple2_east
+/turf/open/floor/lv522/prison_darkpurple2_east
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "darkpurple2"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_darkpurple2_north
+/turf/open/floor/lv522/prison_darkpurple2_north
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "darkpurple2"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_darkpurple2_northeast
+/turf/open/floor/lv522/prison_darkpurple2_northeast
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "darkpurple2"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_darkpurple2_northwest
+/turf/open/floor/lv522/prison_darkpurple2_northwest
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "darkpurple2"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_darkpurple2_southeast
+/turf/open/floor/lv522/prison_darkpurple2_southeast
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "darkpurple2"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_darkpurple2_southwest
+/turf/open/floor/lv522/prison_darkpurple2_southwest
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "darkpurple2"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_darkpurple2_west
+/turf/open/floor/lv522/prison_darkpurple2_west
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "darkpurple2"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_darkpurplefull2
+/turf/open/floor/lv522/prison_darkpurplefull2
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "darkpurplefull2"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_darkredfull2
+/turf/open/floor/lv522/prison_darkredfull2
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "darkredfull2"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_darkyellowfull2_east
+/turf/open/floor/lv522/prison_darkyellowfull2_east
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "darkyellowfull2"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_floor_marked
+/turf/open/floor/lv522/prison_floor_marked
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "floor_marked"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_floor_marked_southwest
+/turf/open/floor/lv522/prison_floor_marked_southwest
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "floor_marked"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_floor_plate
+/turf/open/floor/lv522/prison_floor_plate
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "floor_plate"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_greenfull
+/turf/open/floor/lv522/prison_greenfull
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "greenfull"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_greenfull_east
+/turf/open/floor/lv522/prison_greenfull_east
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "greenfull"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_greenfull_northwest
+/turf/open/floor/lv522/prison_greenfull_northwest
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "greenfull"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_prison_whitegreenfull
+/turf/open/floor/lv522/prison_whitegreenfull
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/prison.dmi'
 	icon_state = "whitegreenfull"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_shiva_radiator_tile2
+/turf/open/floor/lv522/shiva_radiator_tile2
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/ice_colony/shiva_floor.dmi'
 	icon_state = "radiator_tile2"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_strata_blue1
+/turf/open/floor/lv522/strata_blue1
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/strata_floor.dmi'
 	icon_state = "blue1"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_strata_cyan2_east
+/turf/open/floor/lv522/strata_cyan2_east
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/strata_floor.dmi'
 	icon_state = "cyan2"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_strata_floor3
+/turf/open/floor/lv522/strata_floor3
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/strata_floor.dmi'
 	icon_state = "floor3"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_strata_white_cyan1
+/turf/open/floor/lv522/strata_white_cyan1
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/strata_floor.dmi'
 	icon_state = "white_cyan1"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_strata_white_cyan1_east
+/turf/open/floor/lv522/strata_white_cyan1_east
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/strata_floor.dmi'
 	icon_state = "white_cyan1"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_strata_white_cyan2
+/turf/open/floor/lv522/strata_white_cyan2
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/strata_floor.dmi'
 	icon_state = "white_cyan2"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_strata_white_cyan2_west
+/turf/open/floor/lv522/strata_white_cyan2_west
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/strata_floor.dmi'
 	icon_state = "white_cyan2"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_strata_white_cyan3
+/turf/open/floor/lv522/strata_white_cyan3
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/strata_floor.dmi'
 	icon_state = "white_cyan3"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_strata_white_cyan3_east
+/turf/open/floor/lv522/strata_white_cyan3_east
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/strata_floor.dmi'
 	icon_state = "white_cyan3"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_strata_white_cyan3_north
+/turf/open/floor/lv522/strata_white_cyan3_north
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/strata_floor.dmi'
 	icon_state = "white_cyan3"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_strata_white_cyan3_northeast
+/turf/open/floor/lv522/strata_white_cyan3_northeast
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/strata_floor.dmi'
 	icon_state = "white_cyan3"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_strata_white_cyan3_northwest
+/turf/open/floor/lv522/strata_white_cyan3_northwest
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/strata_floor.dmi'
 	icon_state = "white_cyan3"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_strata_white_cyan3_southeast
+/turf/open/floor/lv522/strata_white_cyan3_southeast
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/strata_floor.dmi'
 	icon_state = "white_cyan3"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_strata_white_cyan3_southwest
+/turf/open/floor/lv522/strata_white_cyan3_southwest
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/strata_floor.dmi'
 	icon_state = "white_cyan3"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_strata_white_cyan3_west
+/turf/open/floor/lv522/strata_white_cyan3_west
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/strata_floor.dmi'
 	icon_state = "white_cyan3"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_strata_white_cyan4
+/turf/open/floor/lv522/strata_white_cyan4
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/strata_floor.dmi'
 	icon_state = "white_cyan4"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_strata_white_cyan4_east
+/turf/open/floor/lv522/strata_white_cyan4_east
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/strata_floor.dmi'
 	icon_state = "white_cyan4"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_strata_white_cyan4_north
+/turf/open/floor/lv522/strata_white_cyan4_north
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/strata_floor.dmi'
 	icon_state = "white_cyan4"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_strata_white_cyan4_west
+/turf/open/floor/lv522/strata_white_cyan4_west
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/strata_floor.dmi'
 	icon_state = "white_cyan4"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_wood_wood_broken
+/turf/open/floor/lv522/wood_wood_broken
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/floors.dmi'
 	icon_state = "wood-broken"
 	name = "wooden floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_wood_wood_broken2
+/turf/open/floor/lv522/wood_wood_broken2
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/floors.dmi'
 	icon_state = "wood-broken2"
 	name = "wooden floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_wood_wood_broken3
+/turf/open/floor/lv522/wood_wood_broken3
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/floors.dmi'
 	icon_state = "wood-broken3"
 	name = "wooden floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_wood_wood_broken4
+/turf/open/floor/lv522/wood_wood_broken4
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/floors.dmi'
 	icon_state = "wood-broken4"
 	name = "wooden floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_wood_wood_broken5
+/turf/open/floor/lv522/wood_wood_broken5
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/floors.dmi'
 	icon_state = "wood-broken5"
 	name = "wooden floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_wood_wood_broken6
+/turf/open/floor/lv522/wood_wood_broken6
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/floors.dmi'
 	icon_state = "wood-broken6"
 	name = "wooden floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_floor_wood_wood_broken7
+/turf/open/floor/lv522/wood_wood_broken7
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/floors.dmi'
 	icon_state = "wood-broken7"
 	name = "wooden floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_gm_river
+/turf/open/floor/lv522/gm_river
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/ground_map.dmi'
 	icon_state = "seashallow"
 	name = "river"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_organic_grass
+/turf/open/floor/lv522/organic_grass
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/floors/floors.dmi'
 	icon_state = "grass1"
 	name = "grass"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_shuttle_dropship_can_surgery_light_grey_bottom_left
+/turf/open/floor/lv522/shuttle_dropship_can_surgery_light_grey_bottom_left
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/shuttle.dmi'
 	icon_state = "rasputin4"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_shuttle_dropship_can_surgery_light_grey_bottom_right
+/turf/open/floor/lv522/shuttle_dropship_can_surgery_light_grey_bottom_right
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/shuttle.dmi'
 	icon_state = "rasputin8"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_shuttle_dropship_can_surgery_light_grey_single_wide_left_to_right
+/turf/open/floor/lv522/shuttle_dropship_can_surgery_light_grey_single_wide_left_to_right
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/shuttle.dmi'
 	icon_state = "floor8"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_shuttle_dropship_can_surgery_light_grey_single_wide_up_to_down
+/turf/open/floor/lv522/shuttle_dropship_can_surgery_light_grey_single_wide_up_to_down
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/shuttle.dmi'
 	icon_state = "rasputin3"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_shuttle_dropship_can_surgery_light_grey_top_left
+/turf/open/floor/lv522/shuttle_dropship_can_surgery_light_grey_top_left
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/shuttle.dmi'
 	icon_state = "rasputin6"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_shuttle_dropship_can_surgery_light_grey_top_right
+/turf/open/floor/lv522/shuttle_dropship_can_surgery_light_grey_top_right
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/shuttle.dmi'
 	icon_state = "rasputin7"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_shuttle_dropship_can_surgery_medium_grey_single_wide_up_to_down
+/turf/open/floor/lv522/shuttle_dropship_can_surgery_medium_grey_single_wide_up_to_down
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/shuttle.dmi'
 	icon_state = "rasputin15"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_shuttle_dropship_medium_grey_single_wide_up_to_down
+/turf/open/floor/lv522/shuttle_dropship_medium_grey_single_wide_up_to_down
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/shuttle.dmi'
 	icon_state = "rasputin15"
 	name = "floor"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_slippery_hull
+/turf/open/floor/lv522/slippery_hull
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/almayer.dmi'
 	icon_state = "outerhull"
 	name = "sloped roof"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_slippery_hull_dir
+/turf/open/floor/lv522/slippery_hull_dir
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/almayer.dmi'
 	icon_state = "outerhull_dir"
 	name = "sloped roof"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_slippery_hull_dir_east
+/turf/open/floor/lv522/slippery_hull_dir_east
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/almayer.dmi'
 	icon_state = "outerhull_dir"
 	name = "sloped roof"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_slippery_hull_dir_north
+/turf/open/floor/lv522/slippery_hull_dir_north
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/almayer.dmi'
 	icon_state = "outerhull_dir"
 	name = "sloped roof"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_slippery_hull_dir_northeast
+/turf/open/floor/lv522/slippery_hull_dir_northeast
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/almayer.dmi'
 	icon_state = "outerhull_dir"
 	name = "sloped roof"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_slippery_hull_dir_northwest
+/turf/open/floor/lv522/slippery_hull_dir_northwest
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/almayer.dmi'
 	icon_state = "outerhull_dir"
 	name = "sloped roof"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_slippery_hull_dir_southeast
+/turf/open/floor/lv522/slippery_hull_dir_southeast
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/almayer.dmi'
 	icon_state = "outerhull_dir"
 	name = "sloped roof"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_slippery_hull_dir_southwest
+/turf/open/floor/lv522/slippery_hull_dir_southwest
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/almayer.dmi'
 	icon_state = "outerhull_dir"
 	name = "sloped roof"
 	smoothing_flags = NONE
 
-/turf/open/floor/lv522/turf_open_slippery_hull_dir_west
+/turf/open/floor/lv522/slippery_hull_dir_west
 	parent_type = /turf/open/floor
 	icon = 'temp/LV522/icons/turf/almayer.dmi'
 	icon_state = "outerhull_dir"
 	name = "sloped roof"
 	smoothing_flags = NONE
+
+// BEGIN MAP VISUAL REPAIRS
+/turf/closed/cordon
+	icon = 'temp/LV522/icons/turf/shuttle.dmi'
+	icon_state = "pwall"
+
+/turf/closed/cordon/lv522
