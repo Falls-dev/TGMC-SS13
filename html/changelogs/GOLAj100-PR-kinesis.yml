@@ -1,0 +1,7 @@
+author: GOLAj100
+changes:
+  - rscadd: "Added TK-5 telekinetic gauntlets to Special Forces loadouts. The TK-7 admin variant is unchanged."
+  - rscadd: "The held object now follows your mouse, in the DS13 style: a beam runs from the gauntlet to it, and a coloured preview marks what it will grab."
+  - rscadd: "You can now carry people, corpses, and loose crates or closets. Walls, doors and bolted lockers stay put, and a crate is unbolted when taken and bolted again when put down."
+  - rscadd: "The gauntlets now hold a charge, shown on examine. Taking and throwing costs it, and the price depends on what you are carrying: small objects are cheapest, crates cost more, and people most of all. A person cannot be thrown. Switching the gauntlets off refills the reserve."
+  - rscadd: "You can no longer carry something through a wall, a window or a fixed structure."

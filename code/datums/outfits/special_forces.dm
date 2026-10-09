@@ -7,7 +7,7 @@
 	w_uniform = /obj/item/clothing/under/marine/specops
 	shoes = /obj/item/clothing/shoes/marine/srf/full
 	wear_suit = /obj/item/clothing/suit/storage/marine/specops
-	gloves = /obj/item/clothing/gloves/marine/veteran/pmc
+	gloves = /obj/item/clothing/gloves/kinesis/ds13
 	head = /obj/item/clothing/head/modular/m10x
 	back = /obj/item/storage/backpack/lightpack
 
