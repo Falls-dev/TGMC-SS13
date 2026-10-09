@@ -138,6 +138,20 @@
 	handful_greyscale_colors = COLOR_AMMO_INCENDIARY
 	projectile_greyscale_colors = COLOR_AMMO_INCENDIARY
 
+/datum/ammo/tx54/incendiary/G
+	name = "20mm G-fuel incendiary grenade"
+	bonus_projectiles_type = /datum/ammo/bullet/tx54_spread/incendiary/green
+	bullet_color = LIGHT_COLOR_ELECTRIC_GREEN
+	handful_greyscale_colors = COLOR_AMMO_G_FUEL
+	projectile_greyscale_colors = COLOR_AMMO_G_FUEL
+
+/datum/ammo/tx54/incendiary/X
+	name = "20mm X-fuel incendiary grenade"
+	bonus_projectiles_type = /datum/ammo/bullet/tx54_spread/incendiary/blue
+	bullet_color = COLOR_NAVY
+	handful_greyscale_colors = COLOR_AMMO_X_FUEL
+	projectile_greyscale_colors = COLOR_AMMO_X_FUEL
+
 /datum/ammo/tx54/smoke
 	name = "20mm tactical smoke grenade"
 	hud_state = "grenade_hide"
@@ -161,6 +175,15 @@
 	handful_greyscale_colors = COLOR_AMMO_TANGLEFOOT
 	projectile_greyscale_colors = COLOR_AMMO_TANGLEFOOT
 
+/datum/ammo/tx54/smoke/antigas
+	name = "20mm antigas grenade"
+	hud_state = "grenade_antigas"
+	bonus_projectiles_type = /datum/ammo/bullet/tx54_spread/smoke/antigas
+	bonus_projectiles_scatter = 24
+	bonus_projectile_quantity = 5
+	handful_greyscale_colors = COLOR_AMMO_ANTIGAS
+	projectile_greyscale_colors = COLOR_AMMO_ANTIGAS
+
 /datum/ammo/tx54/razor
 	name = "20mm razorburn grenade"
 	hud_state = "grenade_razor"
@@ -169,6 +192,15 @@
 	bonus_projectile_quantity = 3
 	handful_greyscale_colors = COLOR_AMMO_RAZORBURN
 	projectile_greyscale_colors = COLOR_AMMO_RAZORBURN
+
+/datum/ammo/tx54/healing_foam
+	name = "20mm healing foam grenade"
+	hud_state = "grenade_healfoam"
+	bonus_projectiles_type = /datum/ammo/bullet/tx54_spread/healing_foam
+	bonus_projectiles_scatter = 50
+	bonus_projectile_quantity = 3
+	handful_greyscale_colors = COLOR_AMMO_HEALING_FOAM
+	projectile_greyscale_colors = COLOR_AMMO_HEALING_FOAM
 
 /datum/ammo/tx54/he
 	name = "20mm HE grenade"
@@ -214,6 +246,9 @@
 	ammo_behavior_flags = AMMO_BALLISTIC|AMMO_PASS_THROUGH_MOB|AMMO_INCENDIARY|AMMO_LEAVE_TURF
 	damage = 15
 	penetration = 10
+	var/burn_time = 5
+	var/burn_level = 10
+	var/fire_color
 
 /datum/ammo/bullet/tx54_spread/incendiary/on_hit_mob(mob/target_mob, atom/movable/projectile/proj)
 	return
@@ -221,10 +256,33 @@
 /datum/ammo/bullet/tx54_spread/incendiary/drop_flame(turf/target_turf)
 	if(!istype(target_turf))
 		return
-	target_turf.ignite(5, 10)
+	if(fire_color)
+		target_turf.ignite(burn_time, burn_level, fire_color)
+	else
+		target_turf.ignite(burn_time, burn_level)
 
 /datum/ammo/bullet/tx54_spread/incendiary/on_leave_turf(turf/target_turf, atom/movable/projectile/proj)
 	drop_flame(target_turf)
+
+/datum/ammo/bullet/tx54_spread/incendiary/green
+	name = "G-fuel incendiary flechette"
+	bullet_color = LIGHT_COLOR_ELECTRIC_GREEN
+
+/datum/ammo/bullet/tx54_spread/incendiary/green/New()
+	. = ..()
+	burn_time = 12
+	burn_level = 18
+	fire_color = FLAME_COLOR_LIME
+
+/datum/ammo/bullet/tx54_spread/incendiary/blue
+	name = "X-fuel incendiary flechette"
+	bullet_color = COLOR_NAVY
+
+/datum/ammo/bullet/tx54_spread/incendiary/blue/New()
+	. = ..()
+	burn_time = 40
+	burn_level = 46
+	fire_color = FLAME_COLOR_BLUE
 
 /datum/ammo/bullet/tx54_spread/smoke
 	name = "chemical bomblet"
@@ -259,6 +317,9 @@
 /datum/ammo/bullet/tx54_spread/smoke/tangle
 	trail_spread_system = /datum/effect_system/smoke_spread/plasmaloss
 
+/datum/ammo/bullet/tx54_spread/smoke/antigas
+	trail_spread_system = /datum/effect_system/smoke_spread/antigas
+
 /datum/ammo/bullet/tx54_spread/razor
 	name = "chemical bomblet"
 	ammo_behavior_flags = AMMO_BALLISTIC|AMMO_PASS_THROUGH_MOB|AMMO_LEAVE_TURF
@@ -289,6 +350,36 @@
 
 /datum/ammo/bullet/tx54_spread/razor/on_leave_turf(turf/target_turf, atom/movable/projectile/proj)
 	chemical_payload.set_up(0, target_turf, reagent_list, RAZOR_FOAM)
+	chemical_payload.start()
+
+/datum/ammo/bullet/tx54_spread/healing_foam
+	name = "healing foam bomblet"
+	ammo_behavior_flags = AMMO_BALLISTIC|AMMO_PASS_THROUGH_MOB|AMMO_LEAVE_TURF
+	max_range = 4
+	damage = 0
+	penetration = 0
+	sundering = 0
+	var/datum/effect_system/foam_spread/chemical_payload
+	var/datum/reagents/reagent_list
+
+/datum/ammo/bullet/tx54_spread/healing_foam/New()
+	. = ..()
+	chemical_payload = new
+	reagent_list = new
+	reagent_list.add_reagent(/datum/reagent/fluorosurfactant, 4)
+	reagent_list.add_reagent(/datum/reagent/medicine/experimental_medical_salve, 2)
+	reagent_list.add_reagent(/datum/reagent/water, 4)
+
+/datum/ammo/bullet/tx54_spread/healing_foam/Destroy()
+	if(chemical_payload)
+		QDEL_NULL(chemical_payload)
+	return ..()
+
+/datum/ammo/bullet/tx54_spread/healing_foam/on_hit_mob(mob/target_mob, atom/movable/projectile/proj)
+	return
+
+/datum/ammo/bullet/tx54_spread/healing_foam/on_leave_turf(turf/target_turf, atom/movable/projectile/proj)
+	chemical_payload.set_up(0, target_turf, reagent_list)
 	chemical_payload.start()
 
 //10-gauge Micro rail shells - aka micronades

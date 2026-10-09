@@ -14,6 +14,7 @@
 		SQUAD_ENGINEER = 0,
 		SQUAD_CORPSMAN = 0,
 		SQUAD_SMARTGUNNER = 0,
+		SQUAD_SPECIALIST = 0,
 		SQUAD_LEADER = 0,
 		SQUAD_ROBOT = 0,
 	)
@@ -105,20 +106,29 @@
 
 
 /datum/squad/proc/insert_into_squad(mob/living/carbon/human/new_squaddie, give_radio = FALSE, forced = FALSE, datum/squad/radio_from = null)
+	if(!new_squaddie.job)
+		return FALSE
+	if(!(new_squaddie.job.title in current_positions))
+		return FALSE
 	if(!forced && !(new_squaddie.job in SSjob.active_occupations))
-		CRASH("attempted to insert marine [new_squaddie] from squad [name] while having job [isnull(new_squaddie.job) ? "null" : new_squaddie.job.title]")
+		stack_trace("insert_into_squad for [new_squaddie] with inactive job [new_squaddie.job.title]")
 
 	var/obj/item/card/id/idcard = new_squaddie.get_idcard()
 	if(!istype(idcard))
 		return FALSE
 
-	if(new_squaddie.assigned_squad)
-		CRASH("attempted to insert marine [new_squaddie] into squad while already having one")
-
-	if(!(new_squaddie.job.title in current_positions))
+	if(new_squaddie.assigned_squad == src)
+		return TRUE
+	if(new_squaddie.assigned_squad && !new_squaddie.assigned_squad.remove_from_squad(new_squaddie))
 		return FALSE
 
-	current_positions[new_squaddie.job.title]++
+	// Roundstart assignment already reserved a slot via assign_initial(). Don't count it twice.
+	var/actual_in_squad = 0
+	for(var/mob/living/carbon/human/member AS in marines_list)
+		if(member.job?.title == new_squaddie.job.title)
+			actual_in_squad++
+	if(current_positions[new_squaddie.job.title] <= actual_in_squad)
+		current_positions[new_squaddie.job.title]++
 
 	if(ismarineleaderjob(new_squaddie.job) && !squad_leader)
 		squad_leader = new_squaddie
@@ -159,8 +169,8 @@
 
 
 /datum/squad/proc/remove_from_squad(mob/living/carbon/human/leaving_squaddie)
-	if(!(leaving_squaddie.job in SSjob.active_occupations))
-		CRASH("attempted to remove marine [leaving_squaddie] from squad [name] while having job [isnull(leaving_squaddie.job) ? "null" : leaving_squaddie.job.title]")
+	if(leaving_squaddie.job && !(leaving_squaddie.job in SSjob.active_occupations) && !(leaving_squaddie.job.title in current_positions))
+		stack_trace("attempted to remove marine [leaving_squaddie] from squad [name] while having job [isnull(leaving_squaddie.job) ? "null" : leaving_squaddie.job.title]")
 
 	if(!leaving_squaddie.assigned_squad)
 		return FALSE
@@ -313,7 +323,7 @@
 		if(current_positions[job.title] >= max_positions[job.title])
 			return FALSE
 		return TRUE
-	if(current_positions[job.title] >= SQUAD_MAX_POSITIONS(job.total_positions))
+	if(current_positions[job.title] >= CEILING(job.total_positions / max(length(SSjob.active_squads[faction]), 1), 1))
 		return FALSE
 	return TRUE
 
@@ -335,7 +345,7 @@
 	//List of all the faction accessible squads
 	var/list/available_squads = SSjob.active_squads[faction]
 	var/datum/squad/preferred_squad = LAZYACCESSASSOC(SSjob.squads_by_name, faction, player.client.prefs.preferred_squad) //TGMC and rebels use the same squads
-	if(available_squads.Find(preferred_squad) && preferred_squad?.assign_initial(player, job, latejoin))
+	if(available_squads.Find(preferred_squad) && preferred_squad.check_entry(job) && preferred_squad.assign_initial(player, job, latejoin))
 		return TRUE
 	if(strict)
 		to_chat(player, span_warning("That squad is full!"))

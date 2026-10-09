@@ -181,7 +181,7 @@ You may not be a fully-fledged doctor, but you stand between life and death when
 
 /datum/job/som/squad/veteran
 	paygrade = "SOM_S1"
-	comm_title = "Vet"
+	comm_title = "Smart"
 	total_positions = 8
 	skills_type = /datum/skills/crafty //smarter than the average bear
 	display_order = JOB_DISPLAY_ORDER_SQUAD_SMARTGUNNER

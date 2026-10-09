@@ -94,6 +94,7 @@ Godspeed, captain! And remember, you are not above the law."})
 	jobworth = list(
 		/datum/job/xenomorph = LARVA_POINTS_STRONG,
 		/datum/job/terragov/squad/smartgunner = SMARTIE_POINTS_REGULAR,
+		/datum/job/terragov/squad/specialist = SMARTIE_POINTS_REGULAR,
 		/datum/job/terragov/silicon/synthetic = SYNTH_POINTS_REGULAR,
 		/datum/job/terragov/command/mech_pilot = MECH_POINTS_REGULAR,
 		/datum/job/terragov/command/assault_crewman = ARMORED_VEHICLE_POINTS_REGULAR,
@@ -442,6 +443,7 @@ You can serve your Division in a variety of roles, so choose carefully."})
 	jobworth = list(
 		/datum/job/xenomorph = LARVA_POINTS_REGULAR,
 		/datum/job/terragov/squad/smartgunner = SMARTIE_POINTS_REGULAR,
+		/datum/job/terragov/squad/specialist = SMARTIE_POINTS_REGULAR,
 	)
 	html_description = {"
 		<b>Difficulty</b>:Very Hard<br /><br />
@@ -556,6 +558,7 @@ You can serve your Division in a variety of roles, so choose carefully."})
 	jobworth = list(
 		/datum/job/xenomorph = LARVA_POINTS_SHIPSIDE,
 		/datum/job/terragov/squad/smartgunner = SMARTIE_POINTS_REGULAR,
+		/datum/job/terragov/squad/specialist = SMARTIE_POINTS_REGULAR,
 		/datum/job/terragov/silicon/synthetic = SYNTH_POINTS_REGULAR,
 		/datum/job/terragov/command/mech_pilot = MECH_POINTS_REGULAR,
 		/datum/job/terragov/command/assault_crewman = ARMORED_VEHICLE_POINTS_REGULAR,
@@ -1101,6 +1104,7 @@ If you require any help, use <b>mentorhelp</b> to ask mentors about what you're 
 		ACCESS_MARINE_ROBOT,
 		ACCESS_MARINE_ENGPREP,
 		ACCESS_MARINE_SMARTPREP,
+		ACCESS_MARINE_SPECPREP,
 		ACCESS_MARINE_MEDPREP,
 		ACCESS_MARINE_MEDBAY,
 		ACCESS_MARINE_CHEMISTRY,
@@ -1120,6 +1124,7 @@ If you require any help, use <b>mentorhelp</b> to ask mentors about what you're 
 		ACCESS_MARINE_ROBOT,
 		ACCESS_MARINE_ENGPREP,
 		ACCESS_MARINE_SMARTPREP,
+		ACCESS_MARINE_SPECPREP,
 		ACCESS_MARINE_MEDPREP,
 		ACCESS_MARINE_MEDBAY,
 		ACCESS_MARINE_CHEMISTRY,
@@ -1137,6 +1142,7 @@ If you require any help, use <b>mentorhelp</b> to ask mentors about what you're 
 	jobworth = list(
 		/datum/job/xenomorph = LARVA_POINTS_SHIPSIDE,
 		/datum/job/terragov/squad/smartgunner = SMARTIE_POINTS_REGULAR,
+		/datum/job/terragov/squad/specialist = SMARTIE_POINTS_REGULAR,
 		/datum/job/terragov/silicon/synthetic = SYNTH_POINTS_REGULAR,
 		/datum/job/terragov/command/mech_pilot = MECH_POINTS_REGULAR,
 	)

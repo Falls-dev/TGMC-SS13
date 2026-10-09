@@ -105,6 +105,12 @@
 /obj/item/ammo_magazine/rifle/tx54/incendiary/get_additional_codex_info()
 	. += "20mm incendiary grenades release a number of piercing sub munitions when they detonate. Submunitions burn any mob they hit, and leave fire in turfs crossed.<br>"
 
+/obj/item/ammo_magazine/rifle/tx54/incendiary/G/get_additional_codex_info()
+	. += "20mm G-fuel incendiary grenades release submunitions that leave green plasma fire in turfs crossed.<br>"
+
+/obj/item/ammo_magazine/rifle/tx54/incendiary/X/get_additional_codex_info()
+	. += "20mm X-fuel incendiary grenades release submunitions that leave extremely hot blue fire in turfs crossed.<br>"
+
 /obj/item/ammo_magazine/rifle/tx54/smoke/get_additional_codex_info()
 	. += "20mm tactical smoke grenades release a number of piercing sub munitions when they detonate. Submunitions release smoke on turfs crossed, creating a smokescreen.<br>"
 
@@ -114,8 +120,14 @@
 /obj/item/ammo_magazine/rifle/tx54/smoke/tangle/get_additional_codex_info()
 	. += "20mm tanglefoot smoke grenades release a number of piercing sub munitions when they detonate. Submunitions release smoke on turfs crossed, creating a smokescreen of plasma draining Tanglefoot gas.<br>"
 
+/obj/item/ammo_magazine/rifle/tx54/smoke/antigas/get_additional_codex_info()
+	. += "20mm antigas grenades release submunitions that spread M40-AG antigas smoke on turfs crossed, clearing hostile gases.<br>"
+
 /obj/item/ammo_magazine/rifle/tx54/razor/get_additional_codex_info()
 	. += "20mm razorburn grenades release a number of piercing sub munitions when they detonate. Submunitions release razorburn foam on turfs crossed, creating areas of razorwire after a short delay.<br>"
+
+/obj/item/ammo_magazine/rifle/tx54/healing_foam/get_additional_codex_info()
+	. += "20mm healing foam grenades release submunitions that spread EMS-02 healing foam on turfs crossed.<br>"
 
 /obj/item/ammo_magazine/smg/som/rad/get_additional_codex_info()
 	. += "Contains radioactive ammunition. Has a chance to irradiate mobs on hit, scaling with bio armour.<br>"

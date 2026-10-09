@@ -5690,6 +5690,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/machinery/marine_selector/clothes/specialist,
 /turf/open/floor/mainship/orange,
 /area/mainship/squads/bravo)
 "dmi" = (
@@ -14505,6 +14506,16 @@
 	},
 /turf/open/floor/mainship/tcomms,
 /area/mainship/command/cic)
+"iNs" = (
+/obj/machinery/marine_selector/gear/specialist{
+	icon_vend = "marine-vend";
+	icon_state = "marine";
+	icon_deny = "marine-deny"
+	},
+/turf/open/floor/mainship/red{
+	dir = 1
+	},
+/area/mainship/squads/alpha)
 "iNG" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 8
@@ -22309,6 +22320,11 @@
 /obj/machinery/vending/nanomed{
 	dir = 1
 	},
+/obj/machinery/marine_selector/gear/specialist{
+	icon_vend = "marine-vend";
+	icon_state = "marine";
+	icon_deny = "marine-deny"
+	},
 /turf/open/floor/mainship/orange,
 /area/mainship/squads/bravo)
 "njM" = (
@@ -26723,6 +26739,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden/layer1,
+/obj/machinery/marine_selector/clothes/engi,
 /turf/open/floor/mainship/emerald{
 	dir = 1
 	},
@@ -31811,6 +31828,19 @@
 /obj/effect/ai_node,
 /turf/open/floor/plating/plating_catwalk/dark,
 /area/mainship/squads/alpha)
+"sKG" = (
+/obj/machinery/light/mainship{
+	dir = 1
+	},
+/obj/machinery/marine_selector/clothes/specialist,
+/turf/open/floor/mainship/emerald{
+	dir = 1
+	},
+/area/mainship/squads/charlie)
+"sKL" = (
+/obj/machinery/marine_selector/clothes/specialist,
+/turf/open/floor/mainship/blue,
+/area/mainship/squads/delta)
 "sKQ" = (
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/woodsiding{
@@ -37880,6 +37910,12 @@
 /obj/structure/table/wood/fancy,
 /turf/open/floor/wood,
 /area/mainship/hallways/aft_hallway)
+"wCF" = (
+/obj/machinery/marine_selector/clothes/specialist,
+/turf/open/floor/mainship/red{
+	dir = 1
+	},
+/area/mainship/squads/alpha)
 "wCV" = (
 /obj/effect/turf_decal/woodsiding{
 	dir = 5
@@ -40143,6 +40179,11 @@
 /turf/open/floor/mainship/metal,
 /area/mainship/squads/alpha)
 "xYu" = (
+/obj/machinery/marine_selector/gear/specialist{
+	icon_vend = "marine-vend";
+	icon_state = "marine";
+	icon_deny = "marine-deny"
+	},
 /turf/open/floor/mainship/blue{
 	dir = 6
 	},
@@ -40591,6 +40632,11 @@
 /turf/open/floor/mainship/orange/full,
 /area/mainship/hallways/hangar)
 "yjl" = (
+/obj/machinery/marine_selector/gear/specialist{
+	icon_vend = "marine-vend";
+	icon_state = "marine";
+	icon_deny = "marine-deny"
+	},
 /turf/open/floor/mainship/emerald{
 	dir = 5
 	},
@@ -81751,7 +81797,7 @@ aqT
 fsD
 nWW
 eiT
-cxe
+wCF
 oiX
 qcr
 xhq
@@ -82008,7 +82054,7 @@ mUY
 loU
 bXX
 eiT
-cxe
+iNs
 lAO
 vgH
 tfg
@@ -82575,7 +82621,7 @@ eWU
 bny
 aDy
 knz
-igP
+sKL
 tkN
 eDY
 bli
@@ -82838,7 +82884,7 @@ gCf
 oRJ
 esy
 tkN
-ryM
+sKG
 sQc
 aLD
 dGz

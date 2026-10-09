@@ -536,6 +536,20 @@
 	icon_state_mini = "mag_sniper_orange"
 	greyscale_colors = COLOR_AMMO_INCENDIARY
 
+/obj/item/ammo_magazine/rifle/tx54/incendiary/G
+	name = "\improper 20mm G-fuel incendiary grenade magazine"
+	desc = "A 20mm magazine loaded with G-fuel incendiary grenades. For use with the GL-54 or AR-55."
+	default_ammo = /datum/ammo/tx54/incendiary/G
+	icon_state_mini = "mag_sniper_green"
+	greyscale_colors = COLOR_AMMO_G_FUEL
+
+/obj/item/ammo_magazine/rifle/tx54/incendiary/X
+	name = "\improper 20mm X-fuel incendiary grenade magazine"
+	desc = "A 20mm magazine loaded with X-fuel incendiary grenades. For use with the GL-54 or AR-55."
+	default_ammo = /datum/ammo/tx54/incendiary/X
+	icon_state_mini = "mag_sniper_blue"
+	greyscale_colors = COLOR_AMMO_X_FUEL
+
 /obj/item/ammo_magazine/rifle/tx54/smoke
 	name = "\improper 20mm tactical smoke grenade magazine"
 	desc = "A 20mm magazine loaded with tactical smoke grenades. For use with the GL-54 or AR-55."
@@ -557,12 +571,26 @@
 	icon_state_mini = "mag_sniper_purple"
 	greyscale_colors = COLOR_AMMO_TANGLEFOOT
 
+/obj/item/ammo_magazine/rifle/tx54/smoke/antigas
+	name = "\improper 20mm antigas grenade magazine"
+	desc = "A 20mm magazine loaded with antigas grenades. For use with the GL-54 or AR-55."
+	default_ammo = /datum/ammo/tx54/smoke/antigas
+	icon_state_mini = "mag_sniper_yellow"
+	greyscale_colors = COLOR_AMMO_ANTIGAS
+
 /obj/item/ammo_magazine/rifle/tx54/razor
 	name = "\improper 20mm razorburn grenade magazine"
 	desc = "A 20mm magazine loaded with razorburn grenades. For use with the GL-54 or AR-55."
 	default_ammo = /datum/ammo/tx54/razor
 	icon_state_mini = "mag_sniper_yellow"
 	greyscale_colors = COLOR_AMMO_RAZORBURN
+
+/obj/item/ammo_magazine/rifle/tx54/healing_foam
+	name = "\improper 20mm healing foam grenade magazine"
+	desc = "A 20mm magazine loaded with healing foam grenades. For use with the GL-54 or AR-55."
+	default_ammo = /datum/ammo/tx54/healing_foam
+	icon_state_mini = "mag_sniper_cyan"
+	greyscale_colors = COLOR_AMMO_HEALING_FOAM
 
 //-------------------------------------------------------
 //Garand

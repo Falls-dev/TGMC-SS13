@@ -113,6 +113,7 @@
 		/datum/job/terragov/squad/engineer/npc = 30,
 		/datum/job/terragov/squad/corpsman/npc = 30,
 		/datum/job/terragov/squad/smartgunner/npc = 20,
+		/datum/job/terragov/squad/specialist/npc = 10,
 		/datum/job/terragov/squad/leader/npc = 10,
 	))
 
@@ -123,6 +124,7 @@
 		/datum/job/terragov/squad/standard/npc,
 		/datum/job/terragov/squad/standard/npc,
 		/datum/job/terragov/squad/smartgunner/npc,
+		/datum/job/terragov/squad/specialist/npc,
 		/datum/job/terragov/squad/corpsman/npc,
 	)
 
@@ -131,6 +133,7 @@
 		/datum/job/terragov/squad/standard/npc = 15,
 		/datum/job/terragov/squad/engineer/npc = 25,
 		/datum/job/terragov/squad/smartgunner/npc = 20,
+		/datum/job/terragov/squad/specialist/npc = 20,
 		/datum/job/terragov/squad/leader/npc = 60,
 	))
 
