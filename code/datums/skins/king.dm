@@ -6,3 +6,7 @@
 	name = "Red"
 	icon = 'icons/Xeno/castes/king/red.dmi'
 	effects_icon = 'icons/Xeno/castes/king/red_effects.dmi'
+
+/datum/xenomorph_skin/king/pumpkin
+	name = "Pumpkin"
+	icon = 'icons/Xeno/castes/king/halloween.dmi'
