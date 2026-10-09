@@ -1648,6 +1648,10 @@
 	},
 /turf/open/floor/wood,
 /area/magmoor/civilian/mosque/theme_magmoor_digsite_iv)
+"ben" = (
+/obj/structure/flora/tree/dead,
+/turf/open/floor/plating/ground/snow/layer1,
+/area/magmoor/compound/theme_magmoor_digsite_iv)
 "beu" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
@@ -2028,6 +2032,10 @@
 /obj/effect/ai_node,
 /turf/open/floor/mainship/mono,
 /area/magmoor/cargo/processing/south/theme_magmoor_digsite_iv)
+"brT" = (
+/obj/structure/flora/tree/dead,
+/turf/open/floor/plating/ground/snow/layer1,
+/area/magmoor/compound/southeast/theme_magmoor_digsite_iv)
 "brU" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -6800,6 +6808,13 @@
 /obj/machinery/vending/snack,
 /turf/open/floor/wood,
 /area/magmoor/command/conference/theme_magmoor_digsite_iv)
+"eKq" = (
+/obj/effect/landmark/weed_node,
+/obj/structure/flora/tree/dead,
+/turf/open/floor/plating/ground/snow/layer1{
+	dir = 4
+	},
+/area/magmoor/compound/west/theme_magmoor_digsite_iv)
 "eKs" = (
 /obj/machinery/atmospherics/components/trinary/filter/atmos/plasma{
 	dir = 1
@@ -8432,6 +8447,10 @@
 	dir = 1
 	},
 /area/magmoor/security/storage/theme_magmoor_digsite_iv)
+"fTQ" = (
+/obj/structure/flora/tree/dead,
+/turf/open/floor/plating/ground/snow/layer1,
+/area/magmoor/compound/southwest/theme_magmoor_digsite_iv)
 "fTU" = (
 /obj/structure/cable,
 /turf/open/floor/mainship/orange/corner{
@@ -9312,6 +9331,10 @@
 	},
 /turf/open/floor/plating,
 /area/magmoor/compound/north/theme_magmoor_digsite_iv)
+"gBd" = (
+/obj/structure/flora/tree/dead,
+/turf/open/floor/plating/ground/snow/layer2,
+/area/magmoor/compound/south/theme_magmoor_digsite_iv)
 "gBM" = (
 /obj/structure/rack,
 /obj/machinery/light{
@@ -13690,6 +13713,10 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/magmoor/command/office/theme_magmoor_digsite_iv)
+"jRO" = (
+/obj/structure/flora/tree/dead,
+/turf/open/floor/plating/ground/snow/layer1,
+/area/magmoor/compound/east/theme_magmoor_digsite_iv)
 "jRU" = (
 /turf/open/floor/tile/arrival/corner{
 	dir = 1
@@ -16817,6 +16844,10 @@
 /obj/effect/landmark/weed_node,
 /turf/open/floor/freezer,
 /area/magmoor/civilian/clean/toilet/theme_magmoor_digsite_iv)
+"mfI" = (
+/obj/structure/flora/tree/dead,
+/turf/open/floor/plating/ground/snow/layer1,
+/area/magmoor/compound/west/theme_magmoor_digsite_iv)
 "mfM" = (
 /obj/structure/barricade/wood{
 	dir = 8
@@ -17076,6 +17107,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating/ground/concrete,
 /area/magmoor/compound/southwest/theme_magmoor_digsite_iv)
+"mqz" = (
+/obj/structure/flora/tree/dead,
+/turf/open/floor/plating/ground/snow/layer2,
+/area/magmoor/compound/east/theme_magmoor_digsite_iv)
 "mqF" = (
 /obj/effect/turf_decal/siding{
 	dir = 8
@@ -19482,6 +19517,10 @@
 	dir = 1
 	},
 /area/magmoor/engi/storage/theme_magmoor_digsite_iv)
+"olg" = (
+/obj/structure/flora/tree/dead,
+/turf/open/floor/plating/ground/snow/layer1,
+/area/magmoor/compound/northwest/theme_magmoor_digsite_iv)
 "olm" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 8
@@ -23258,6 +23297,10 @@
 	dir = 1
 	},
 /area/magmoor/medical/storage/theme_magmoor_digsite_iv)
+"qOB" = (
+/obj/structure/flora/tree/dead,
+/turf/open/floor/plating/ground/snow/layer1,
+/area/magmoor/compound/north/theme_magmoor_digsite_iv)
 "qPC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
@@ -32948,6 +32991,10 @@
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
 /turf/open/floor/wood,
 /area/magmoor/civilian/gambling/theme_magmoor_digsite_iv)
+"xDA" = (
+/obj/structure/flora/tree/dead,
+/turf/open/floor/plating/ground/snow/layer1,
+/area/magmoor/compound/south/theme_magmoor_digsite_iv)
 "xDI" = (
 /obj/machinery/power/apc/drained{
 	dir = 8
@@ -39213,7 +39260,7 @@ tVo
 yge
 yge
 yge
-yge
+mfI
 yge
 yge
 yge
@@ -39240,7 +39287,7 @@ ybU
 ygU
 ybU
 bGe
-yge
+mfI
 yge
 yge
 yge
@@ -39927,7 +39974,7 @@ tVo
 tVo
 tVo
 tWr
-wRr
+eKq
 tWr
 tWr
 tWr
@@ -40418,7 +40465,7 @@ rgm
 rgm
 rgm
 rgm
-rgm
+fTQ
 rgm
 rgm
 rgm
@@ -43382,7 +43429,7 @@ iUi
 dPK
 dPK
 dPK
-dPK
+olg
 dPK
 dPK
 yge
@@ -43626,13 +43673,13 @@ tVo
 tVo
 tVo
 yge
-yge
+mfI
 yge
 yge
 waE
 yge
 yge
-yge
+mfI
 ibO
 yge
 tWr
@@ -46946,7 +46993,7 @@ eCB
 rgm
 rgm
 rgm
-rgm
+fTQ
 rgm
 rgm
 rgm
@@ -47354,7 +47401,7 @@ hIT
 xuy
 xmr
 kkl
-vFy
+ben
 vFy
 kKp
 vFy
@@ -47780,7 +47827,7 @@ vIz
 tVo
 dXE
 dXE
-dXE
+qOB
 dXE
 dXE
 vEp
@@ -49527,7 +49574,7 @@ rgm
 rgm
 rgm
 rgm
-rgm
+fTQ
 rgm
 rgm
 rgm
@@ -49969,7 +50016,7 @@ mbs
 qxc
 rgm
 rgm
-rgm
+fTQ
 rgm
 xmU
 rgm
@@ -50112,7 +50159,7 @@ vIz
 dXE
 dXE
 dXE
-dXE
+qOB
 dXE
 dXE
 dXE
@@ -50586,7 +50633,7 @@ xrM
 dXE
 dXE
 oPq
-dXE
+qOB
 iyf
 dXE
 dXE
@@ -52248,7 +52295,7 @@ hIT
 pKb
 vFy
 vFy
-vFy
+ben
 vFy
 vFy
 vFy
@@ -55345,7 +55392,7 @@ eTo
 eTo
 eTo
 eTo
-eTo
+xDA
 eTo
 eTo
 eTo
@@ -58084,7 +58131,7 @@ kxk
 vFy
 vFy
 vFy
-vFy
+ben
 vFy
 beu
 lGN
@@ -58602,7 +58649,7 @@ eTo
 vyi
 tvj
 dum
-dum
+gBd
 aKa
 kUH
 eTo
@@ -62274,7 +62321,7 @@ xSa
 vqD
 ays
 vqD
-vqD
+mqz
 vqD
 bRC
 fZl
@@ -66527,7 +66574,7 @@ jRL
 jRL
 jRL
 jRL
-jRL
+brT
 jRL
 jRL
 jRL
@@ -66972,7 +67019,7 @@ cOx
 cOx
 cOx
 cOx
-cOx
+jRO
 cOx
 cOx
 cOx
@@ -67646,7 +67693,7 @@ cOx
 cOx
 cOx
 cOx
-cOx
+jRO
 cOx
 cOx
 cOx
@@ -67879,7 +67926,7 @@ cOx
 cOx
 cOx
 cOx
-cOx
+jRO
 cOx
 cOx
 cOx
@@ -69091,7 +69138,7 @@ uwv
 eFL
 kOZ
 jRL
-jRL
+brT
 jRL
 jRL
 jRL

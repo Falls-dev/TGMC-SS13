@@ -1,51 +1,34 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ac" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/gibs/robot,
-/turf/open/floor/plating/ground/ice,
-/area/deathmatch/theme_de_inferno)
-"af" = (
-/obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/obj/structure/platform_decoration{
-	dir = 5
-	},
 /turf/open/floor/plating/ground/ice,
 /area/deathmatch/theme_de_inferno)
 "ao" = (
 /obj/structure/platform{
 	dir = 1
 	},
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "ar" = (
 /obj/effect/turf_decal/siding{
 	dir = 8
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/floor/plating/ground/snow/layer2,
 /area/deathmatch/theme_de_inferno)
 "as" = (
 /obj/effect/decal/cleanable/vomit,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "aD" = (
 /obj/structure/inflatable/wall,
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
-"aH" = (
-/obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/ice,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "bb" = (
 /obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	dir = 1;
 	name = "\improper Civilian Housing"
 	},
-/turf/open/floor/tile/dark/blue2,
-/area/deathmatch/theme_de_inferno)
-"bk" = (
-/obj/structure/inflatable/wall,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "bl" = (
 /obj/structure/largecrate/random/barrel/blue,
@@ -59,30 +42,25 @@
 "bw" = (
 /obj/structure/flora/bush,
 /obj/effect/decal/remains/human,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer2,
 /area/deathmatch/theme_de_inferno)
 "bx" = (
 /obj/structure/flora/bush,
 /obj/structure/flora/bush,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer2,
 /area/deathmatch/theme_de_inferno)
 "by" = (
 /obj/structure/inflatable/wall,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "bB" = (
 /obj/structure/inflatable/popped,
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "bG" = (
 /obj/effect/landmark/weapon_spawn/tier5_weapon_spawn,
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/ground/ice,
-/area/deathmatch/theme_de_inferno)
-"bH" = (
-/obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/plating/ground/snow/layer1,
 /area/deathmatch/theme_de_inferno)
 "bN" = (
 /obj/structure/stairs/edge{
@@ -95,21 +73,13 @@
 	dir = 8;
 	name = "\improper Civilian Housing"
 	},
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "bX" = (
 /obj/structure/platform{
 	dir = 8
 	},
 /turf/open/floor/plating/ground/ice,
-/area/deathmatch/theme_de_inferno)
-"ca" = (
-/obj/effect/spawner/random/engineering/ore_box,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
-"ce" = (
-/turf/closed/wall/mainship/gray,
 /area/deathmatch/theme_de_inferno)
 "ck" = (
 /obj/structure/cargo_container/green{
@@ -123,49 +93,32 @@
 	},
 /turf/open/floor/plating/ground/ice,
 /area/deathmatch/theme_de_inferno)
-"cm" = (
-/obj/effect/decal/remains/human,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
 "cx" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/ground/ice,
 /area/deathmatch/theme_de_inferno)
 "cA" = (
 /obj/structure/largecrate/random/barrel/yellow,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "cQ" = (
 /obj/structure/cargo_container/hd{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "cW" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "db" = (
 /turf/open/floor/industrial,
 /area/deathmatch/theme_de_inferno)
-"dl" = (
-/obj/structure/flora/bush,
-/obj/structure/flora/bush,
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
 "ds" = (
 /obj/structure/largecrate/guns/merc,
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
-"dt" = (
-/obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "dx" = (
 /obj/structure/platform,
@@ -186,71 +139,61 @@
 /obj/structure/platform_decoration{
 	dir = 10
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "dB" = (
 /obj/structure/inflatable/wall,
 /turf/open/floor/plating/ground/ice,
 /area/deathmatch/theme_de_inferno)
 "dG" = (
-/turf/closed/wall/mainship/gray,
+/turf/closed/wall/variable/siding,
 /area/deathmatch/theme_de_inferno)
 "dL" = (
 /obj/effect/ai_node,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "dM" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "dN" = (
 /obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	name = "\improper Civilian Housing"
 	},
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "dQ" = (
 /obj/structure/cargo_container/gorg,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "dR" = (
 /obj/structure/cargo_container/gorg{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "dS" = (
 /obj/effect/turf_decal/warning_stripes/thin,
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 4
 	},
-/obj/effect/turf_decal/sandytile,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "dT" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/stairs/edge{
 	dir = 8
 	},
 /turf/open/floor/tile/dark,
 /area/deathmatch/theme_de_inferno)
-"dV" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/tile/dark/blue2,
-/area/deathmatch/theme_de_inferno)
 "dW" = (
 /obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "dY" = (
 /obj/structure/largecrate/random/barrel/white,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "dZ" = (
 /obj/structure/fence,
@@ -263,11 +206,11 @@
 /area/deathmatch/theme_de_inferno)
 "ee" = (
 /obj/structure/largecrate/random/case/double,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "eh" = (
 /obj/structure/closet/coffin,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "ei" = (
 /obj/machinery/floodlight/landing/hq,
@@ -282,20 +225,20 @@
 "el" = (
 /obj/effect/decal/cleanable/rune,
 /obj/item/explosive/plastique,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "em" = (
 /obj/structure/cargo_container/horizontal{
 	dir = 1
 	},
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "eo" = (
 /obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	dir = 2;
 	name = "\improper Civilian Housing"
 	},
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "ep" = (
 /obj/structure/cargo_container/ch_red{
@@ -309,13 +252,16 @@
 /area/deathmatch/theme_de_inferno)
 "et" = (
 /obj/effect/landmark/deathmatch,
-/turf/open/floor/plating/ground/snow/layer1,
+/obj/structure/platform_decoration{
+	dir = 2
+	},
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "eu" = (
 /obj/structure/cargo_container/horizontal{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "ex" = (
 /obj/effect/landmark/deathmatch,
@@ -328,32 +274,22 @@
 /area/deathmatch/theme_de_inferno)
 "eA" = (
 /obj/machinery/floodlight/landing/hq,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "eB" = (
-/turf/open/floor/plating/ground/snow/layer1,
+/obj/structure/platform_decoration{
+	dir = 8
+	},
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "eC" = (
 /obj/structure/cargo_container/horizontal,
 /obj/effect/turf_decal/warning_stripes/thin,
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
-"eG" = (
-/obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
-"eI" = (
-/obj/structure/largecrate/random/barrel/yellow,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/ice,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "eK" = (
 /obj/structure/largecrate/random/barrel/yellow,
 /turf/open/floor/plating/ground/ice,
-/area/deathmatch/theme_de_inferno)
-"eM" = (
-/obj/structure/window/framed/wood,
-/turf/open/floor/tile/dark/blue2,
 /area/deathmatch/theme_de_inferno)
 "eO" = (
 /obj/structure/stairs/edge{
@@ -387,7 +323,7 @@
 /area/deathmatch/theme_de_inferno)
 "fb" = (
 /obj/structure/fence,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "fc" = (
 /obj/vehicle/train/cargo/engine{
@@ -401,149 +337,87 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "fe" = (
 /obj/effect/landmark/weapon_spawn/tier4_weapon_spawn,
 /turf/open/floor/plating/ground/ice,
 /area/deathmatch/theme_de_inferno)
-"ff" = (
-/obj/structure/flora/bush,
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
 "fg" = (
 /obj/effect/spawner/random/engineering/ore_box,
 /turf/open/floor/plating/ground/ice,
-/area/deathmatch/theme_de_inferno)
-"fs" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/stairs/edge{
-	dir = 1
-	},
-/turf/open/floor/tile/dark,
 /area/deathmatch/theme_de_inferno)
 "fx" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "fy" = (
 /obj/effect/decal/cleanable/cobweb2,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "fI" = (
-/turf/open/floor/plating/ground/ice,
-/area/deathmatch/theme_de_inferno)
-"fL" = (
-/obj/effect/landmark/deathmatch,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer2,
 /area/deathmatch/theme_de_inferno)
 "gl" = (
 /obj/structure/cargo_container/red{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/ground/ice,
 /area/deathmatch/theme_de_inferno)
 "gv" = (
 /obj/structure/largecrate/random/case,
 /obj/machinery/light,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "gz" = (
 /obj/structure/table/wood/gambling,
 /obj/item/toy/plush/moth,
 /turf/open/floor/industrial,
 /area/deathmatch/theme_de_inferno)
-"gI" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/platform{
-	dir = 8
-	},
-/turf/open/floor/plating/ground/ice,
-/area/deathmatch/theme_de_inferno)
-"gN" = (
-/obj/structure/largecrate/guns/merc,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
-"gO" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/platform,
-/turf/open/floor/plating/ground/ice,
-/area/deathmatch/theme_de_inferno)
-"gR" = (
-/obj/structure/flora/bush,
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
 "hp" = (
 /obj/structure/table/wood/gambling,
 /obj/effect/landmark/weapon_spawn/tier4_weapon_spawn,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "ht" = (
-/obj/effect/turf_decal/sandytile,
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
-"hG" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/platform{
-	dir = 4
+/obj/structure/platform_decoration{
+	dir = 6
 	},
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/liquid/lava/plasma,
 /area/deathmatch/theme_de_inferno)
 "hH" = (
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "hN" = (
 /obj/item/storage/bible,
 /obj/structure/table/wood,
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/tile/dark/blue2,
-/area/deathmatch/theme_de_inferno)
-"hX" = (
-/obj/machinery/door/airlock/mainship/medical/glass/free_access{
-	name = "\improper Civilian Housing"
-	},
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "ii" = (
 /obj/structure/table/wood/gambling,
 /obj/effect/landmark/weapon_spawn/tier4_weapon_spawn,
 /obj/effect/spawner/random/misc/plushie/nospawnninetyfive,
-/turf/open/floor/tile/dark/blue2,
-/area/deathmatch/theme_de_inferno)
-"iq" = (
-/obj/effect/turf_decal/sandedge{
-	dir = 8
-	},
-/obj/effect/turf_decal/sandytile,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "iB" = (
 /obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
 /obj/structure/platform{
 	dir = 9
 	},
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "iS" = (
 /obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "iW" = (
 /obj/structure/window/framed/mainship/hull,
-/obj/structure/window/framed/wood,
-/turf/open/floor/tile/dark/blue2,
-/area/deathmatch/theme_de_inferno)
-"je" = (
-/obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/plating/ground/snow/layer1,
+/obj/structure/window_frame/colony/reinforced,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "jj" = (
 /obj/effect/landmark/deathmatch,
@@ -558,43 +432,38 @@
 /area/deathmatch/theme_de_inferno)
 "jG" = (
 /obj/effect/spawner/random/misc/plushie/nospawnninetyfive,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "kb" = (
 /obj/structure/cargo_container/hd,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "kB" = (
 /obj/structure/platform_decoration{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "kI" = (
 /obj/structure/largecrate/guns/merc,
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/warning_stripes/thin,
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
-"kJ" = (
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "kL" = (
 /obj/machinery/door/window{
 	dir = 8
 	},
 /obj/effect/ai_node,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "lc" = (
 /obj/effect/decal/cleanable/blood/gibs/xeno,
 /obj/structure/platform,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "lW" = (
 /obj/structure/window/framed/mainship/hull,
-/obj/structure/window/framed/wood,
+/obj/structure/window_frame/colony/reinforced,
 /turf/open/floor/mainship/mono,
 /area/deathmatch/theme_de_inferno)
 "mm" = (
@@ -607,122 +476,95 @@
 /obj/structure/platform{
 	dir = 10
 	},
-/turf/open/floor/tile/dark/blue2,
-/area/deathmatch/theme_de_inferno)
-"mG" = (
-/obj/effect/landmark/deathmatch,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/ice,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "mL" = (
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
 /obj/structure/platform{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "mR" = (
 /obj/structure/table/wood/gambling,
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "mT" = (
 /obj/effect/landmark/deathmatch,
 /obj/structure/platform{
 	dir = 8
 	},
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "mX" = (
 /obj/effect/turf_decal/warning_stripes/thin,
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
-"ng" = (
-/obj/effect/landmark/deathmatch,
-/obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "ni" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/platform{
 	dir = 1
 	},
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "nq" = (
 /obj/effect/decal/remains/human,
 /obj/structure/platform,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "nu" = (
 /obj/structure/platform{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "nB" = (
 /obj/structure/table/wood,
 /obj/structure/largecrate/random/case/small,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "nL" = (
 /obj/structure/prop/mainship/toolboxforacause2020,
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma/catwalk,
 /area/deathmatch/theme_de_inferno)
 "ob" = (
 /obj/effect/landmark/deathmatch,
 /obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "oc" = (
 /obj/effect/turf_decal/sandedge/corner2{
 	dir = 1
 	},
-/obj/effect/turf_decal/sandytile,
 /obj/structure/platform{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
-"oi" = (
-/obj/structure/flora/bush,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "ow" = (
 /obj/structure/platform{
 	dir = 8
 	},
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "oN" = (
 /obj/structure/cargo_container/hd{
 	dir = 1
 	},
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "oP" = (
-/obj/structure/platform_decoration{
-	dir = 10
-	},
-/turf/open/floor/plating/ground/ice,
-/area/deathmatch/theme_de_inferno)
-"oW" = (
-/obj/structure/largecrate/random/barrel/yellow,
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
-"pj" = (
-/turf/closed/wall/indestructible/bulkhead,
+/turf/open/liquid/lava/plasma,
 /area/deathmatch/theme_de_inferno)
 "pn" = (
 /obj/structure/inflatable/popped,
 /obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "pv" = (
 /obj/structure/cargo_container/red{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/ground/ice,
 /area/deathmatch/theme_de_inferno)
 "pD" = (
@@ -731,23 +573,14 @@
 /area/deathmatch/theme_de_inferno)
 "pG" = (
 /obj/structure/barricade/wood,
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/ai_node,
 /turf/open/floor/plating/ground/ice,
 /area/deathmatch/theme_de_inferno)
 "pN" = (
 /obj/structure/barricade/wood,
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/ground/ice,
 /area/deathmatch/theme_de_inferno)
-"pU" = (
-/obj/structure/platform{
-	dir = 9
-	},
-/turf/open/floor/tile/dark/blue2,
-/area/deathmatch/theme_de_inferno)
 "qc" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/platform{
 	dir = 1
 	},
@@ -760,10 +593,9 @@
 /obj/structure/platform_decoration{
 	dir = 9
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/deathmatch/theme_de_inferno)
 "qu" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/platform{
 	dir = 4
 	},
@@ -771,28 +603,26 @@
 /area/deathmatch/theme_de_inferno)
 "qV" = (
 /obj/effect/landmark/deathmatch,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "rA" = (
 /obj/effect/decal/cleanable/blood/gibs/xeno,
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 4
 	},
-/obj/effect/turf_decal/sandytile,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "rK" = (
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/grime,
 /area/deathmatch/theme_de_inferno)
 "rM" = (
 /obj/structure/flora/bush,
 /obj/effect/decal/remains/human,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "rP" = (
 /obj/structure/flora/bush,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer2,
 /area/deathmatch/theme_de_inferno)
 "sa" = (
 /obj/structure/bed/chair/wood/wings{
@@ -801,11 +631,10 @@
 /turf/open/floor/industrial,
 /area/deathmatch/theme_de_inferno)
 "si" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/stairs/edge{
 	dir = 4
 	},
-/turf/open/floor/tile/dark,
+/turf/open/floor/plating/ground/snow/layer2,
 /area/deathmatch/theme_de_inferno)
 "sN" = (
 /obj/structure/table/wood,
@@ -814,17 +643,15 @@
 	dir = 8
 	},
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/ground/ice,
 /area/deathmatch/theme_de_inferno)
 "sO" = (
 /obj/structure/platform{
 	dir = 6
 	},
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "sQ" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/stairs/seamless/edge{
 	dir = 8
 	},
@@ -837,36 +664,27 @@
 	},
 /turf/open/floor/plating/ground/ice,
 /area/deathmatch/theme_de_inferno)
-"th" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/stairs/edge{
-	dir = 4
-	},
-/turf/open/floor/tile/dark,
-/area/deathmatch/theme_de_inferno)
-"tq" = (
-/obj/structure/inflatable/wall,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
 "tr" = (
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "tw" = (
 /obj/structure/platform,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "tJ" = (
-/obj/effect/landmark/deathmatch,
-/obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/ice,
+/obj/effect/forcefield{
+	desc = "You can't get in. Heh.";
+	name = "Blocker"
+	},
+/turf/closed/mineral/smooth/snowrock{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
 /area/deathmatch/theme_de_inferno)
 "tS" = (
 /obj/structure/largecrate/random/secure,
 /obj/effect/decal/cleanable/cobweb2,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "ux" = (
 /obj/structure/bed/chair/wood/wings{
@@ -876,13 +694,8 @@
 /area/deathmatch/theme_de_inferno)
 "uy" = (
 /obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/warning_stripes/thin,
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
-"uC" = (
-/obj/structure/flora/bush,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "uE" = (
 /obj/structure/largecrate/random/case/double,
@@ -890,7 +703,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/cobweb2,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "uR" = (
 /obj/structure/platform{
@@ -903,22 +716,11 @@
 /area/deathmatch/theme_de_inferno)
 "uX" = (
 /obj/structure/flora/bush,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "va" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/stairs/edge,
 /turf/open/floor/tile/dark,
-/area/deathmatch/theme_de_inferno)
-"vg" = (
-/obj/effect/landmark/weapon_spawn/tier4_weapon_spawn,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/ice,
-/area/deathmatch/theme_de_inferno)
-"vJ" = (
-/obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/ice,
 /area/deathmatch/theme_de_inferno)
 "vM" = (
 /obj/structure/table/wood/gambling,
@@ -934,34 +736,28 @@
 /obj/structure/platform{
 	dir = 4
 	},
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "wN" = (
 /obj/effect/spawner/random/engineering/ore_box,
 /obj/effect/decal/cleanable/cobweb2,
-/turf/open/floor/tile/dark/blue2,
-/area/deathmatch/theme_de_inferno)
-"wS" = (
-/obj/effect/landmark/deathmatch,
-/obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "xf" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "xj" = (
 /obj/effect/ai_node,
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/platform,
 /turf/open/floor/plating/ground/ice,
 /area/deathmatch/theme_de_inferno)
 "xl" = (
 /obj/structure/largecrate/guns/merc,
 /obj/item/tool/crowbar,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "xH" = (
 /obj/structure/table/wood/gambling,
@@ -972,20 +768,19 @@
 /obj/structure/table/wood,
 /obj/item/storage/bible,
 /obj/effect/landmark/weapon_spawn/tier4_weapon_spawn,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "xL" = (
 /obj/structure/largecrate/random/case/double,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "xM" = (
 /obj/effect/landmark/deathmatch,
 /obj/effect/landmark/weapon_spawn/tier4_weapon_spawn,
 /obj/effect/decal/cleanable/vomit,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "yb" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/stairs/seamless{
 	dir = 8
 	},
@@ -996,64 +791,39 @@
 /turf/open/floor/plating/ground/ice,
 /area/deathmatch/theme_de_inferno)
 "yE" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/stairs/seamless/edge{
 	dir = 4
 	},
 /turf/open/floor/tile/dark,
 /area/deathmatch/theme_de_inferno)
-"yG" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/gibs/xeno,
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
 "yV" = (
 /obj/structure/largecrate/guns/merc,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "zq" = (
 /obj/effect/decal/cleanable/blood/gibs/xeno,
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
-"zx" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "zB" = (
 /obj/structure/platform,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "zD" = (
 /obj/effect/landmark/deathmatch,
 /obj/effect/decal/cleanable/blood/gibs/robot,
-/turf/open/floor/tile/dark/blue2,
-/area/deathmatch/theme_de_inferno)
-"zE" = (
-/obj/effect/ai_node,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "zK" = (
-/obj/structure/window/framed/mainship/requisitions,
-/obj/structure/window/framed/wood,
-/turf/open/floor/tile/dark/blue2,
+/obj/structure/window_frame/colony/reinforced,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "zO" = (
 /obj/effect/landmark/deathmatch,
 /obj/effect/landmark/weapon_spawn/tier4_weapon_spawn,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "Ax" = (
 /obj/structure/reagent_dispensers/fueltank/barrel,
-/turf/open/floor/plating/ground/ice,
-/area/deathmatch/theme_de_inferno)
-"AJ" = (
-/obj/structure/flora/bush,
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
-"Bs" = (
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/ground/ice,
 /area/deathmatch/theme_de_inferno)
 "BF" = (
@@ -1063,100 +833,70 @@
 	},
 /turf/open/floor/plating/ground/ice,
 /area/deathmatch/theme_de_inferno)
-"BO" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/ai_node,
-/turf/open/floor/plating/ground/ice,
-/area/deathmatch/theme_de_inferno)
-"BP" = (
-/obj/structure/platform{
-	dir = 1
-	},
-/turf/open/floor/tile/dark/blue2,
-/area/deathmatch/theme_de_inferno)
 "CI" = (
 /obj/structure/closet/cabinet,
 /obj/machinery/light{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/tile/dark/blue2,
-/area/deathmatch/theme_de_inferno)
-"CV" = (
-/obj/structure/platform_decoration{
-	dir = 6
-	},
-/turf/open/floor/plating/ground/ice,
-/area/deathmatch/theme_de_inferno)
-"Da" = (
-/obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/ice,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "Dx" = (
 /obj/structure/largecrate/random/barrel/yellow,
 /obj/effect/decal/cleanable/cobweb2,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "DM" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/stairs/edge{
 	dir = 1
 	},
 /turf/open/floor/tile/dark,
 /area/deathmatch/theme_de_inferno)
-"DT" = (
-/obj/structure/platform_decoration,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/ice,
-/area/deathmatch/theme_de_inferno)
 "Ee" = (
 /obj/structure/table/wood,
 /obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "EH" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/stairs/seamless/edge,
 /turf/open/floor/tile/dark,
 /area/deathmatch/theme_de_inferno)
 "EZ" = (
 /obj/structure/prop/mainship/valmoric,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "Fa" = (
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "Fi" = (
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
 /obj/structure/table/wood,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "Fv" = (
 /obj/structure/table/wood/gambling,
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "Fy" = (
 /obj/effect/landmark/weapon_spawn/tier4_weapon_spawn,
 /obj/structure/platform{
 	dir = 8
 	},
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "FN" = (
 /obj/effect/spawner/random/engineering/ore_box,
 /obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "FU" = (
 /obj/effect/landmark/deathmatch,
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/platform{
 	dir = 8
 	},
@@ -1165,28 +905,18 @@
 "FX" = (
 /obj/structure/flora/bush,
 /obj/structure/platform,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "Ga" = (
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
 /obj/structure/platform{
 	dir = 5
 	},
-/turf/open/floor/tile/dark/blue2,
-/area/deathmatch/theme_de_inferno)
-"Gb" = (
-/obj/structure/flora/bush,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "Gr" = (
 /obj/structure/largecrate/random/secure,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
-"GT" = (
-/obj/structure/inflatable/wall,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/ice,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "Hx" = (
 /obj/structure/toilet{
@@ -1196,11 +926,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/tile/dark/blue2,
-/area/deathmatch/theme_de_inferno)
-"HE" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/mainship/gray,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "Is" = (
 /obj/structure/platform_decoration{
@@ -1215,23 +941,22 @@
 /obj/effect/turf_decal/sandedge/corner2{
 	dir = 8
 	},
-/obj/effect/turf_decal/sandytile,
 /obj/structure/platform{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "IG" = (
 /obj/effect/landmark/deathmatch,
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "IV" = (
 /obj/item/toy/plush/rouny{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "IW" = (
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
@@ -1245,50 +970,37 @@
 	desc = "You can't get in. Heh.";
 	name = "Blocker"
 	},
-/turf/closed/wall/mainship/gray,
+/turf/closed/wall/variable/siding,
 /area/deathmatch/theme_de_inferno)
 "Jg" = (
 /obj/structure/cargo_container/red{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/ground/ice,
-/area/deathmatch/theme_de_inferno)
-"Jl" = (
-/obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/tile/dark/blue2,
-/area/deathmatch/theme_de_inferno)
-"Jm" = (
-/obj/effect/landmark/deathmatch,
-/turf/open/floor/tile/dark/blue2,
 /area/deathmatch/theme_de_inferno)
 "Jo" = (
 /obj/structure/platform{
 	dir = 9
 	},
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "Ke" = (
 /obj/structure/platform_decoration{
 	dir = 5
 	},
-/turf/open/floor/plating/ground/ice,
-/area/deathmatch/theme_de_inferno)
-"Kr" = (
-/obj/effect/ai_node,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/liquid/lava/plasma,
 /area/deathmatch/theme_de_inferno)
 "KD" = (
 /obj/effect/ai_node,
 /obj/structure/platform{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "KO" = (
 /obj/structure/flora/bush,
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "KS" = (
 /obj/structure/platform_decoration,
@@ -1299,42 +1011,27 @@
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "KZ" = (
 /obj/effect/turf_decal/siding{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/floor/plating/ground/snow/layer2,
 /area/deathmatch/theme_de_inferno)
 "Lg" = (
 /obj/effect/decal/remains/human,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/sandedge{
-	dir = 4
-	},
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
-"Li" = (
-/obj/structure/flora/bush,
-/obj/structure/platform,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "Lp" = (
 /obj/effect/spawner/random/engineering/ore_box,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
-"LG" = (
-/obj/structure/table/wood,
-/obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "LH" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "LS" = (
 /obj/structure/largecrate/random/case,
@@ -1342,27 +1039,20 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/tile/dark/blue2,
-/area/deathmatch/theme_de_inferno)
-"LY" = (
-/obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/obj/effect/turf_decal/sandytile,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "LZ" = (
 /obj/structure/inflatable/popped,
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/platform{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "Mm" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/stairs/edge{
 	dir = 8
 	},
@@ -1370,20 +1060,12 @@
 /area/deathmatch/theme_de_inferno)
 "Ms" = (
 /obj/effect/landmark/deathmatch,
-/obj/effect/turf_decal/sandytile,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "MF" = (
 /obj/effect/landmark/deathmatch,
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
-/turf/open/floor/tile/dark/blue2,
-/area/deathmatch/theme_de_inferno)
-"Nc" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/sandedge{
-	dir = 4
-	},
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "Nd" = (
 /obj/structure/cargo_container/green{
@@ -1398,19 +1080,15 @@
 	},
 /obj/effect/landmark/weapon_spawn/tier5_weapon_spawn,
 /obj/structure/platform,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "NF" = (
 /obj/effect/spawner/random/engineering/ore_box,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "NG" = (
 /obj/machinery/door/airlock/multi_tile/mainship/generic{
 	name = "\improper Recreation Area"
-	},
-/obj/effect/forcefield{
-	desc = "You can't get in. Heh.";
-	name = "Blocker"
 	},
 /turf/open/floor/plating/ground/ice,
 /area/deathmatch/theme_de_inferno)
@@ -1420,7 +1098,7 @@
 /obj/effect/decal/cleanable/cobweb{
 	dir = 4
 	},
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "NX" = (
 /obj/structure/largecrate/guns/merc,
@@ -1432,13 +1110,7 @@
 /obj/structure/largecrate/guns/merc,
 /obj/item/tool/crowbar,
 /obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/tile/dark/blue2,
-/area/deathmatch/theme_de_inferno)
-"Od" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "Om" = (
 /obj/structure/largecrate/guns/merc,
@@ -1446,19 +1118,14 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "Ow" = (
 /obj/effect/landmark/deathmatch,
 /obj/structure/platform{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
-"OA" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/plating/ground/ice,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "OS" = (
 /obj/structure/prop/mainship/ship_memorial{
@@ -1468,10 +1135,9 @@
 /area/deathmatch/theme_de_inferno)
 "OV" = (
 /obj/structure/largecrate/random/barrel/yellow,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "PK" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 8
 	},
@@ -1481,32 +1147,24 @@
 /turf/open/floor/tile/dark,
 /area/deathmatch/theme_de_inferno)
 "PP" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/sandytile,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "PT" = (
 /obj/effect/decal/cleanable/blood/gibs/xeno,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "Qr" = (
 /obj/effect/ai_node,
 /obj/structure/platform{
 	dir = 1
 	},
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "QE" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/stairs/seamless/edge{
 	dir = 1
 	},
 /turf/open/floor/tile/dark,
-/area/deathmatch/theme_de_inferno)
-"QQ" = (
-/obj/structure/flora/bush,
-/obj/effect/decal/remains/human,
-/turf/open/floor/plating/ground/snow/layer1,
 /area/deathmatch/theme_de_inferno)
 "Ry" = (
 /obj/structure/prop/mainship/ship_memorial,
@@ -1515,20 +1173,19 @@
 "RO" = (
 /obj/effect/landmark/deathmatch,
 /obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "RP" = (
 /obj/structure/table/wood,
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "RT" = (
 /obj/effect/landmark/deathmatch,
 /obj/structure/platform{
 	dir = 8
 	},
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "RZ" = (
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
@@ -1542,7 +1199,7 @@
 /area/deathmatch/theme_de_inferno)
 "Sq" = (
 /obj/structure/closet/coffin,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "SW" = (
 /obj/structure/largecrate/guns/merc,
@@ -1550,35 +1207,28 @@
 /obj/structure/platform{
 	dir = 4
 	},
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "Te" = (
 /obj/structure/sink{
 	dir = 8
 	},
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "Tw" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/stairs/edge{
 	dir = 1
 	},
 /turf/open/floor/tile/dark,
 /area/deathmatch/theme_de_inferno)
-"Tx" = (
-/obj/structure/reagent_dispensers/fueltank/barrel,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/ice,
-/area/deathmatch/theme_de_inferno)
 "TM" = (
-/obj/effect/turf_decal/sandytile,
-/obj/structure/platform{
-	dir = 4
+/obj/structure/platform_decoration{
+	dir = 10
 	},
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/liquid/lava/plasma,
 /area/deathmatch/theme_de_inferno)
 "TP" = (
 /turf/closed/mineral/smooth/snowrock{
@@ -1586,23 +1236,17 @@
 	baseturfs = /turf/open/floor/plating/ground/ice
 	},
 /area/deathmatch/theme_de_inferno)
-"TX" = (
-/obj/structure/platform{
-	dir = 4
-	},
-/turf/open/floor/tile/dark/blue2,
-/area/deathmatch/theme_de_inferno)
 "Us" = (
 /obj/structure/flora/bush,
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "Ut" = (
 /obj/effect/landmark/deathmatch,
 /obj/structure/platform{
 	dir = 1
 	},
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "Uz" = (
 /turf/open/floor/plating/mainship,
@@ -1612,22 +1256,17 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/vomit,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "UN" = (
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
 /turf/open/floor/plating/ground/ice,
 /area/deathmatch/theme_de_inferno)
-"UU" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
 "UV" = (
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "Vf" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 8
 	},
@@ -1640,8 +1279,7 @@
 /obj/vehicle/train/cargo/engine{
 	dir = 2
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "Vw" = (
 /turf/open/floor/plating/ground/ice,
@@ -1655,51 +1293,36 @@
 "VL" = (
 /obj/structure/flora/bush,
 /obj/effect/landmark/deathmatch,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "VT" = (
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "Wf" = (
 /obj/item/toy/beach_ball,
 /obj/structure/platform_decoration{
 	dir = 9
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/deathmatch/theme_de_inferno)
 "WV" = (
-/obj/structure/largecrate/random/barrel/yellow,
-/turf/open/floor/tile/dark/blue2,
+/obj/structure/platform{
+	dir = 4
+	},
+/obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "Xj" = (
 /obj/effect/landmark/deathmatch,
 /obj/structure/platform,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "Xl" = (
 /obj/vehicle/train/cargo/trolley,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
-"Xn" = (
-/obj/effect/spawner/random/engineering/ore_box,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/ice,
-/area/deathmatch/theme_de_inferno)
-"Xz" = (
-/obj/effect/ai_node,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/ice,
-/area/deathmatch/theme_de_inferno)
-"YO" = (
-/obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/snow/layer1,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "YP" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/stairs/seamless{
 	dir = 4
 	},
@@ -1719,15 +1342,14 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "Zn" = (
 /obj/effect/ai_node,
 /obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "Zp" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/stairs/seamless/edge{
 	dir = 1
 	},
@@ -1738,7 +1360,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "Zy" = (
 /obj/structure/table/wood/gambling,
@@ -1752,70 +1374,67 @@
 /obj/structure/platform{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/snow/layer1,
-/area/deathmatch/theme_de_inferno)
-"ZL" = (
-/obj/structure/platform,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/plating/ground/snow/layer0,
 /area/deathmatch/theme_de_inferno)
 "ZO" = (
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 "ZV" = (
 /obj/item/storage/belt/champion,
-/turf/open/floor/tile/dark/blue2,
+/turf/open/floor/prison/bright_clean,
 /area/deathmatch/theme_de_inferno)
 
 (1,1,1) = {"
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-pj
-pj
-pj
-pj
-pj
-pj
-pj
-TP
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+IZ
+IZ
+IZ
+IZ
+IZ
+IZ
+IZ
+tJ
 "}
 (2,1,1) = {"
+tJ
 TP
 TP
 TP
@@ -1846,24 +1465,24 @@ TP
 TP
 TP
 TP
-TP
-pj
-pj
-pj
-pj
-pj
-pj
-pj
-pj
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
 BF
 eY
-fI
-Bs
+Vw
+Vw
 sN
-pj
-TP
+dG
+tJ
 "}
 (3,1,1) = {"
+tJ
 TP
 TP
 TP
@@ -1891,27 +1510,27 @@ TP
 TP
 TP
 TP
-TP
-pj
-pj
-pj
-pj
+dG
+dG
+dG
+dG
 ei
 ex
-fI
-fI
+Vw
+Vw
 es
 Ax
-pj
-fI
-fI
-vJ
-Bs
-mG
-pj
-TP
+dG
+Vw
+Vw
+fa
+Vw
+es
+dG
+tJ
 "}
 (4,1,1) = {"
+tJ
 TP
 TP
 TP
@@ -1939,27 +1558,27 @@ TP
 TP
 TP
 TP
-TP
-pj
-vJ
-Bs
-Bs
-fI
-fI
-Bs
-Xz
-fI
+dG
+fa
+Vw
+Vw
+Vw
+Vw
+Vw
+eZ
+Vw
 ey
-pj
-fI
-pj
-Bs
-pj
-Bs
-pj
-pj
+dG
+Vw
+dG
+Vw
+dG
+Vw
+dG
+IZ
 "}
 (5,1,1) = {"
+tJ
 TP
 TP
 TP
@@ -1987,27 +1606,27 @@ TP
 TP
 TP
 TP
-TP
-pj
-mG
-Bs
-fI
-fI
-Bs
-Bs
-Bs
-fI
-fI
-fI
-fI
-fI
+dG
+es
+Vw
+Vw
+Vw
+Vw
+Vw
+Vw
+Vw
+Vw
+Vw
+Vw
+Vw
 eZ
-fI
-fI
+Vw
+Vw
 NG
 sU
 "}
 (6,1,1) = {"
+tJ
 TP
 TP
 TP
@@ -2033,29 +1652,29 @@ TP
 TP
 TP
 TP
-TP
-pj
-pj
-pj
-fI
-fI
-fI
-Bs
+dG
+dG
+dG
+Vw
+Vw
+Vw
+Vw
 dT
 dG
 dG
-fI
-fI
-fI
-Bs
-Bs
+Vw
+Vw
+Vw
+Vw
+Vw
 fa
 fa
-fI
-sU
+Vw
+Vw
 sU
 "}
 (7,1,1) = {"
+tJ
 TP
 TP
 TP
@@ -2081,29 +1700,29 @@ TP
 TP
 TP
 TP
-TP
-pj
-OA
-Bs
-Bs
-fI
+dG
+fa
+Vw
+Vw
+Vw
 iB
 RT
 tr
-kJ
+tr
 dG
 yk
 ey
-Bs
-Bs
-HE
-eM
+Vw
+Vw
 dG
-eM
+zK
+dG
+zK
 dG
 IZ
 "}
 (8,1,1) = {"
+tJ
 TP
 TP
 TP
@@ -2129,106 +1748,105 @@ TP
 TP
 TP
 TP
-TP
-pj
-eI
-Bs
-Xz
-Bs
-BP
+dG
+eK
+Vw
+eZ
+Vw
+ao
 dG
 dG
-hX
+dN
 dG
 dG
 dG
-Bs
-Bs
+Vw
+Vw
 dG
 MF
 OV
-Jm
-LG
+qV
+RP
 IZ
 "}
 (9,1,1) = {"
+tJ
 TP
 TP
 TP
 TP
-TP
-pj
-pj
-pj
-pj
-pj
-pj
-pj
-pj
-pj
-TP
-TP
-TP
-TP
-TP
-TP
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
 TP
 TP
 TP
 TP
 TP
 TP
-pj
-fI
-Bs
-Bs
-fs
-kJ
+TP
+TP
+TP
+TP
+TP
+TP
+dG
+Vw
+Vw
+Vw
+eO
+tr
 dG
 as
-Kr
+dL
 fx
 Te
 dG
 fe
-Bs
+Vw
 dG
 tr
 tr
-kJ
+tr
 nB
 IZ
 "}
 (10,1,1) = {"
+tJ
 TP
 TP
 TP
 TP
-TP
-pj
-gN
-fL
-eB
-UU
-YO
-YO
-fL
-pj
-TP
-TP
-TP
-TP
-TP
-TP
+dG
+ds
+Ms
+PP
+PP
+hH
+hH
+Ms
+dG
 TP
 TP
 TP
 TP
 TP
 TP
-pj
-fI
-fI
+TP
+TP
+TP
+TP
+TP
+TP
+dG
+Vw
+Vw
 dG
 dG
 dG
@@ -2237,7 +1855,7 @@ tr
 mR
 tr
 qV
-eM
+zK
 ar
 ar
 eo
@@ -2248,20 +1866,20 @@ gv
 IZ
 "}
 (11,1,1) = {"
+tJ
 TP
 TP
 TP
 TP
-TP
-pj
+dG
 cA
 iS
-UU
+PP
 zq
-ce
-ce
-UU
-pj
+dG
+dG
+PP
+dG
 TP
 TP
 TP
@@ -2271,71 +1889,71 @@ TP
 TP
 TP
 TP
-pj
-pj
-pj
-pj
-fI
+dG
+dG
+dG
+dG
+Vw
 eK
 dG
 Zd
 tr
 bb
-kJ
+tr
 ii
 tr
 tr
-eM
+zK
 KZ
 KZ
 eo
-kJ
+tr
 tr
 tr
 tr
 IZ
 "}
 (12,1,1) = {"
+tJ
+TP
+TP
+TP
+TP
+dG
+dG
+dG
+dG
+PP
+VT
+PP
+PP
+dG
 TP
 TP
 TP
 TP
 TP
-pj
-ce
-ce
-ce
-eB
-eG
-UU
-UU
-pj
 TP
 TP
 TP
 TP
-TP
-TP
-TP
-TP
-TP
-pj
+dG
 ds
-ng
-ce
+RO
+dG
 ey
-fI
+Vw
 dG
 tr
 ob
 dG
 fy
 tr
-Od
+LH
 Fa
 dG
-fI
-fI
+Vw
+Vw
 dG
 wN
 jG
@@ -2344,37 +1962,37 @@ MF
 IZ
 "}
 (13,1,1) = {"
+tJ
 TP
 TP
 TP
 TP
-TP
-pj
-ce
-ce
-ce
+dG
+dG
+dG
+dG
 eA
 el
-eB
-eB
-pj
-TP
-TP
-TP
-TP
-TP
-pj
-pj
-pj
-pj
-pj
-oW
-bH
-ce
-yk
-Bs
+PP
+PP
 dG
-eM
+TP
+TP
+TP
+TP
+TP
+dG
+dG
+dG
+dG
+dG
+cA
+hH
+dG
+yk
+Vw
+dG
+zK
 dG
 dG
 dG
@@ -2382,56 +2000,56 @@ dN
 dG
 dG
 dG
-fI
-fI
+Vw
+Vw
 dG
 dG
 dG
-kJ
+tr
 dG
 IZ
 "}
 (14,1,1) = {"
+tJ
 TP
 TP
 TP
 TP
-TP
-pj
-ce
+dG
+dG
 et
-nu
+WV
 nu
 KD
 eB
-je
-pj
-pj
-pj
-pj
-pj
-pj
-pj
+iS
+dG
+dG
+dG
+dG
+dG
+dG
+dG
 RZ
-fI
-Bs
+Vw
+Vw
 va
 eZ
-fI
-fI
+Vw
+Vw
 eZ
-Bs
-Bs
-aH
+Vw
+Vw
+UN
 dG
-Jm
+qV
 va
 tr
 Fi
 dG
 ei
 eZ
-fI
+Vw
 ac
 dG
 CI
@@ -2440,37 +2058,37 @@ dG
 IZ
 "}
 (15,1,1) = {"
-pj
-pj
-pj
-pj
+IZ
+dG
+dG
+dG
 TP
-pj
+dG
 dY
 tw
-af
-Vw
+oP
+oP
 oP
 ni
-ce
-ce
-vJ
+dG
+dG
+fa
 pG
-Bs
-fI
-Bs
+Vw
+Vw
+Vw
 va
 eZ
-Bs
-Bs
+Vw
+Vw
 va
-fI
-Bs
-Bs
-fI
-fI
-Bs
-Bs
+Vw
+Vw
+Vw
+Vw
+Vw
+Vw
+Vw
 dG
 Mm
 dG
@@ -2478,56 +2096,56 @@ dG
 dG
 dG
 YY
-Bs
-Bs
+Vw
+Vw
 pv
 dG
-Jm
+qV
 tr
 dG
 IZ
 "}
 (16,1,1) = {"
-pj
-tq
-YO
-pj
-pj
-pj
+IZ
+aD
+hH
+dG
+dG
+dG
 iS
 tw
-Vw
+oP
 nL
-Vw
+oP
 ni
 zO
-ce
-vg
-pN
-fI
-Bs
-Bs
-va
-fI
 dG
-eM
-eM
+fe
+pN
+Vw
+Vw
+Vw
+va
+Vw
+dG
+zK
+zK
 kL
 lW
 lW
 dG
-fI
-fI
-Bs
+Vw
+Vw
+Vw
 dG
-kJ
-fs
+tr
+eO
 tr
 UV
 zB
-fI
-Bs
-Bs
+Vw
+Vw
+Vw
 Jg
 dG
 dW
@@ -2536,74 +2154,74 @@ yV
 IZ
 "}
 (17,1,1) = {"
-pj
-tq
-fL
-UU
-YO
-eB
-eB
+IZ
+aD
+Ms
+PP
+hH
+PP
+PP
 lc
-Vw
-Vw
-Vw
+oP
+oP
+oP
 ni
-ca
-ce
+Lp
+dG
 es
-fI
-fI
-Bs
-aH
-pj
-pj
+Vw
+Vw
+Vw
+UN
+dG
+dG
 zK
-Jm
+qV
 tr
 tr
 tr
-Jm
+qV
 iW
 dz
-fI
-fI
+Vw
+Vw
 dG
 dG
 dG
 ee
 tr
 zB
-fI
-fI
-Bs
+Vw
+Vw
+Vw
 gl
 dG
 fd
 dL
-Jl
+dW
 IZ
 "}
 (18,1,1) = {"
-pj
+IZ
 LZ
-UU
-zE
-eB
+PP
+cW
+PP
 Sq
-eB
-eB
+PP
+PP
 yE
 yb
 EH
-yG
-ce
-ce
+zq
+dG
+dG
 fg
-fI
-fI
-pj
-pj
-pj
+Vw
+Vw
+dG
+dG
+dG
 TP
 zK
 tr
@@ -2613,43 +2231,43 @@ tr
 tr
 iW
 dB
-fI
+Vw
 eZ
 dG
 dG
 Oa
 xM
 tr
-ZL
-fI
-fI
-Bs
-Tx
+zB
+Vw
+Vw
+Vw
+Ax
 dG
 dG
 tr
-kJ
+tr
 IZ
 "}
 (19,1,1) = {"
-pj
-Gb
+IZ
+rP
 si
 dG
 dG
 dG
 dG
 Ow
-eB
-eB
-eB
-ce
-ce
-ce
+fI
+fI
+fI
+dG
+dG
+dG
 fa
-Bs
-Bs
-pj
+Vw
+Vw
+dG
 TP
 TP
 TP
@@ -2661,18 +2279,18 @@ tr
 tr
 iW
 fa
-fI
-fI
+Vw
+Vw
 dG
 dG
 dG
 OV
 tr
 sO
-fI
-fI
-fI
-Da
+Vw
+Vw
+Vw
+ey
 dG
 dG
 tr
@@ -2680,7 +2298,7 @@ IG
 IZ
 "}
 (20,1,1) = {"
-pj
+IZ
 bw
 fI
 dG
@@ -2693,11 +2311,11 @@ Vf
 Zp
 FU
 jp
-fI
-fI
-Xz
-GT
-pj
+Vw
+Vw
+eZ
+dB
+dG
 TP
 TP
 TP
@@ -2708,27 +2326,27 @@ tr
 tr
 tr
 iW
-fI
-fI
-Bs
+Vw
+Vw
+Vw
 dG
 TP
 dG
 dG
 dG
 ey
-fI
-fI
-fI
-fI
+Vw
+Vw
+Vw
+Vw
 eo
-kJ
+tr
 tr
 Zs
 IZ
 "}
 (21,1,1) = {"
-pj
+IZ
 bx
 fI
 dG
@@ -2737,41 +2355,41 @@ dW
 dG
 ec
 ey
-Bs
-Bs
-vJ
-fI
-fI
-Bs
-Bs
-tJ
-pj
+Vw
+Vw
+fa
+Vw
+Vw
+Vw
+Vw
+ex
+dG
 TP
 TP
 TP
 zK
-Jm
+qV
 tr
 tr
 tr
-Jm
+qV
 iW
-fI
-Bs
-Bs
+Vw
+Vw
+Vw
 dG
 TP
 TP
 TP
 dG
-fI
-fI
+Vw
+Vw
 eZ
-fI
-fI
+Vw
+Vw
 dG
 dG
-hX
+dN
 dG
 IZ
 "}
@@ -2785,15 +2403,15 @@ bN
 dG
 dG
 dG
-Bs
-Xz
-th
-pj
-pj
-pj
-pj
-pj
-pj
+Vw
+eZ
+bN
+dG
+dG
+dG
+dG
+dG
+dG
 TP
 TP
 TP
@@ -2804,39 +2422,39 @@ dG
 iW
 iW
 dG
-fI
-Bs
-vJ
+Vw
+Vw
+fa
 dG
 TP
 TP
 TP
 dG
-fI
-fI
-fI
-fI
+Vw
+Vw
+Vw
+Vw
 eK
 dG
 by
 PT
-wS
+IG
 IZ
 "}
 (23,1,1) = {"
 IZ
-bk
+by
 tr
-dt
+UV
 tr
 tr
 tr
 eh
 dG
-fI
+Vw
 dx
-QQ
-pj
+bw
+dG
 TP
 TP
 TP
@@ -2848,11 +2466,11 @@ TP
 TP
 TP
 TP
-pj
-pj
-pj
-pj
-Bs
+dG
+dG
+dG
+dG
+Vw
 fa
 ey
 dG
@@ -2860,10 +2478,10 @@ TP
 dG
 dG
 dG
-fI
-fI
-Bs
-Bs
+Vw
+Vw
+Vw
+Vw
 fa
 dG
 uE
@@ -2874,17 +2492,17 @@ IZ
 (24,1,1) = {"
 IZ
 bB
-Jm
+qV
 tr
 dL
 tr
 qV
 eh
 dG
-fI
+Vw
 dx
-dl
-pj
+bx
+dG
 TP
 TP
 TP
@@ -2896,43 +2514,43 @@ sa
 db
 db
 TP
-pj
+dG
 OS
-Li
+FX
 rK
-Bs
-Bs
-fI
+Vw
+Vw
+Vw
 dG
 dG
 dG
 ei
 es
-fI
-Bs
-Bs
-Bs
-fI
+Vw
+Vw
+Vw
+Vw
+Vw
 dG
 dG
 dG
-hX
+dN
 IZ
 "}
 (25,1,1) = {"
 IZ
-IZ
-IZ
-IZ
+dG
+dG
+dG
 dM
 tr
 dG
 dG
 dG
-fI
+Vw
 dx
-oi
-pj
+rP
+dG
 TP
 TP
 TP
@@ -2944,43 +2562,43 @@ Si
 db
 db
 TP
-pj
+dG
 Uz
 FX
 rK
-Bs
-Bs
-fI
-fI
-fI
-fI
-fI
-fI
-Bs
-Bs
-Bs
-Bs
-fI
-gR
+Vw
+Vw
+Vw
+Vw
+Vw
+Vw
+Vw
+Vw
+Vw
+Vw
+Vw
+Vw
+Vw
+uX
 rM
-ff
+uX
 uX
 IZ
 "}
 (26,1,1) = {"
+tJ
 TP
 TP
-TP
-IZ
+dG
 tr
 tr
 dG
 bl
 fa
-fI
-gO
+Vw
+dx
 rP
-pj
+dG
 TP
 TP
 TP
@@ -2992,43 +2610,43 @@ vW
 db
 db
 TP
-pj
+dG
 EZ
 NA
 rK
-vJ
-Bs
-Xz
-fI
+fa
+Vw
+eZ
+Vw
 KS
-fI
-fI
-CV
-pU
+Vw
+Vw
+mm
+Jo
 Fy
 mv
-Bs
-fI
+Vw
+Vw
 fb
 VL
 KO
-gR
+uX
 IZ
 "}
 (27,1,1) = {"
+tJ
 TP
 TP
-TP
-IZ
+dG
 tr
-kJ
+tr
 bb
-fI
-fI
-Da
-Bs
-pj
-pj
+Vw
+Vw
+ey
+Vw
+dG
+dG
 TP
 TP
 TP
@@ -3040,13 +2658,13 @@ ux
 db
 db
 TP
-pj
+dG
 Ry
 FX
 rK
-Bs
-BO
-Bs
+Vw
+eZ
+Vw
 UN
 eO
 mT
@@ -3055,27 +2673,27 @@ ow
 tr
 dL
 Xj
-Bs
-fI
+Vw
+Vw
 fb
 Us
-AJ
-uC
+uX
+uX
 IZ
 "}
 (28,1,1) = {"
+tJ
 TP
 TP
-TP
-IZ
-Jm
+dG
+qV
 tr
 dG
 fa
-Bs
-Bs
-Bs
-pj
+Vw
+Vw
+Vw
+dG
 TP
 TP
 TP
@@ -3088,42 +2706,42 @@ TP
 TP
 TP
 TP
-pj
+dG
 Uz
 nq
 rK
-Bs
-Bs
+Vw
+Vw
 ey
 dG
 dG
 dG
 dG
 dG
-eM
-hX
-eM
+zK
+dN
+zK
 dG
 dG
 dG
 dG
 dG
-hX
+dN
 IZ
 "}
 (29,1,1) = {"
+tJ
 TP
 TP
-TP
-IZ
+dG
 by
 pn
 dG
 ek
-Bs
-Bs
-fI
-pj
+Vw
+Vw
+Vw
+dG
 TP
 TP
 TP
@@ -3136,21 +2754,21 @@ TP
 TP
 TP
 TP
-pj
-pj
-pj
-pj
-Bs
-fI
-fI
+dG
+dG
+dG
+dG
+Vw
+Vw
+Vw
 dG
 IV
 dG
 FN
 tr
 tr
-kJ
-dt
+tr
+UV
 nB
 dG
 TP
@@ -3160,18 +2778,18 @@ Zn
 IZ
 "}
 (30,1,1) = {"
+tJ
 TP
 TP
-TP
-IZ
+dG
 NJ
 by
 dG
 VE
-fI
+Vw
 eZ
 es
-pj
+dG
 TP
 TP
 TP
@@ -3187,16 +2805,16 @@ TP
 TP
 TP
 TP
-ce
+dG
 es
-fI
-fI
+Vw
+Vw
 dG
 Hx
 dG
-kJ
+tr
 LH
-Jm
+qV
 tr
 UK
 xJ
@@ -3204,22 +2822,22 @@ dG
 dG
 dG
 tr
-kJ
+tr
 IZ
 "}
 (31,1,1) = {"
-TP
-pj
-pj
-IZ
+tJ
+dG
+dG
+dG
 dG
 dG
 dG
 ep
-fI
-fI
+Vw
+Vw
 eK
-pj
+dG
 TP
 TP
 TP
@@ -3235,14 +2853,14 @@ TP
 TP
 TP
 TP
-ce
+dG
 fa
-fI
-fI
+Vw
+Vw
 dG
 dG
 dG
-hX
+dN
 dG
 dG
 dG
@@ -3250,139 +2868,139 @@ dG
 dG
 dG
 LS
-Jm
+qV
 tr
 tr
 IZ
 "}
 (32,1,1) = {"
-pj
-pj
+IZ
+dG
 cx
 qu
 qu
-fI
+Vw
 dZ
-fI
-fI
-Bs
+Vw
+Vw
+Vw
 ei
-pj
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-ce
-fI
-fI
-fI
 dG
-WV
-dt
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+dG
+Vw
+Vw
+Vw
+dG
+OV
+UV
 tr
-fs
-kJ
+eO
+tr
 DM
-dt
-fs
-kJ
+UV
+eO
 tr
-kJ
+tr
+tr
 ZO
 NF
 IZ
 "}
 (33,1,1) = {"
-pj
+IZ
 bG
 xj
 Ke
-oP
+TM
 eP
 dZ
-Bs
-Da
-Bs
-ce
-pj
-pj
-pj
-pj
-pj
-pj
-pj
-pj
-pj
-pj
-pj
+Vw
+ey
+Vw
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
 TP
 TP
-pj
-pj
-pj
-pj
-fI
+dG
+dG
+dG
+dG
+Vw
 eZ
 fa
 dG
-Jm
-kJ
+qV
 tr
-fs
+tr
+eO
 dL
 Tw
 qV
-fs
+eO
 tr
 tr
 tr
-IZ
-IZ
+dG
+dG
 IZ
 "}
 (34,1,1) = {"
-pj
-Xn
-gO
+IZ
+fg
+dx
 ql
-mm
+ht
 eP
 dZ
-fI
-Bs
-Bs
-fs
-UU
-fL
-UU
+Vw
+Vw
+Vw
+eO
+PP
+Ms
+PP
 cW
-eB
-eB
-eB
-et
-eB
-je
-pj
+PP
+PP
+PP
+Ms
+PP
+iS
+dG
 TP
 TP
-pj
+dG
 ei
 UN
-pj
-fI
-fI
-Bs
+dG
+Vw
+Vw
+Vw
 dG
 tr
 dG
@@ -3395,134 +3013,134 @@ dG
 dG
 dL
 tr
-IZ
+dG
 TP
-TP
+tJ
 "}
 (35,1,1) = {"
-pj
-pj
+IZ
+dG
 cx
-gI
 bX
-fI
+bX
+Vw
 dZ
-fI
-Bs
-fI
-fs
-hG
-hG
+Vw
+Vw
+Vw
+eO
+nu
+nu
 nu
 mL
 xL
 aD
-bH
-eB
-eB
-eB
-pj
-TP
-TP
-pj
-fI
-fI
-es
-fI
-Bs
-Bs
-Bs
-Bs
-fI
-eZ
-fI
-fI
-eK
-Bs
-Bs
+hH
+PP
+PP
+PP
 dG
-Jm
+TP
+TP
+dG
+Vw
+Vw
+es
+Vw
+Vw
+Vw
+Vw
+Vw
+Vw
+eZ
+Vw
+Vw
+eK
+Vw
+Vw
+dG
+qV
 tr
-IZ
+dG
 TP
-TP
+tJ
 "}
 (36,1,1) = {"
-TP
-pj
-pj
-pj
-pj
-pj
-pj
-fI
-fI
+tJ
+dG
+dG
+dG
+dG
+dG
+dG
+Vw
+Vw
 eZ
 Is
 IW
-fI
-fI
+Vw
+Vw
 Nd
-pj
-pj
-pj
-eB
+dG
+dG
+dG
+PP
 kb
 cW
-pj
-pj
-pj
-pj
-fI
-Bs
-fI
-fI
-vJ
-Bs
-Bs
-fI
+dG
+dG
+dG
+dG
+Vw
+Vw
+Vw
+Vw
+fa
+Vw
+Vw
+Vw
 es
 dB
-fI
-fI
+Vw
+Vw
 fa
-DT
+KS
 dT
-eM
+zK
 Fv
-kJ
-IZ
+tr
+dG
 TP
-TP
+tJ
 "}
 (37,1,1) = {"
+tJ
 TP
 TP
 TP
 TP
 TP
-TP
-pj
-fI
-fI
+dG
+Vw
+Vw
 dx
 Ke
-oP
+TM
 eP
-fI
+Vw
 ck
-pj
+dG
 TP
-pj
-eB
+dG
+PP
 oN
-UU
-eB
-YO
-UU
+PP
+PP
+hH
+PP
 va
-Bs
-Bs
+Vw
+Vw
 dG
 dG
 dG
@@ -3533,161 +3151,162 @@ dG
 dG
 dG
 dG
-UU
-fI
+PP
+Vw
 Qr
-eM
+zK
 hp
 tr
-IZ
+dG
 TP
-TP
+tJ
 "}
 (38,1,1) = {"
+tJ
 TP
 TP
 TP
 TP
 TP
-TP
-pj
+dG
 es
-fI
+Vw
 dx
 Wf
-mm
+ht
 eP
-fI
+Vw
 cl
-pj
+dG
 TP
-pj
-UU
+dG
+PP
 cQ
-UU
-eB
-eB
-UU
+PP
+PP
+PP
+PP
 va
-Bs
+Vw
 UN
 dG
 dG
 Gr
 VT
-UU
-yG
-eG
-eB
+PP
+zq
+VT
+PP
 xl
 kI
-yG
-UU
+zq
+PP
 qc
 dG
 tr
 tr
-IZ
+dG
 TP
-TP
+tJ
 "}
 (39,1,1) = {"
+tJ
 TP
 TP
 TP
 TP
 TP
-TP
-pj
+dG
 bp
-fI
-fI
+Vw
+Vw
 bX
 bX
-Bs
+Vw
 fa
-fI
-pj
+Vw
+dG
 TP
-pj
-UU
-YO
-fL
+dG
+PP
+hH
+Ms
 dG
 dG
 dG
 dG
-fI
+Vw
 es
 dG
 dG
 dG
-fL
-UU
+Ms
+PP
 dQ
-eB
+PP
 el
-ng
+RO
 uy
 PP
-eB
+PP
 ao
 dG
-kJ
 tr
-IZ
+tr
+dG
 TP
-TP
+tJ
 "}
 (40,1,1) = {"
+tJ
 TP
 TP
 TP
 TP
 TP
-TP
-pj
-pj
-pj
-fI
-Bs
-Bs
-Bs
-Bs
-fI
-pj
-pj
-pj
+dG
+dG
+dG
+Vw
+Vw
+Vw
+Vw
+Vw
+Vw
+dG
+dG
+dG
 sQ
 YP
 QE
 dG
-LG
+RP
 Ee
 dG
-fI
-fI
+Vw
+Vw
 dG
 dG
 dG
-zE
-UU
+cW
+PP
 dR
-eB
+PP
 em
 eu
 eC
-LY
-ht
+hH
+PP
 Qr
 eo
 tr
 tr
-IZ
+dG
 TP
-TP
+tJ
 "}
 (41,1,1) = {"
+tJ
 TP
 TP
 TP
@@ -3695,28 +3314,27 @@ TP
 TP
 TP
 TP
-TP
-pj
+dG
 ei
 es
-Bs
-Bs
-mG
-fI
-Bs
-Xz
-mG
-Bs
-fI
-fI
+Vw
+Vw
+es
+Vw
+Vw
+eZ
+es
+Vw
+Vw
+Vw
 dG
-Jm
+qV
 tr
 dG
-fI
-fI
-Bs
-UU
+Vw
+Vw
+Vw
+PP
 mX
 xf
 xf
@@ -3725,17 +3343,18 @@ xf
 xf
 rA
 dS
-ht
+PP
 Ms
 ao
 dG
 Dx
-Jm
-IZ
-IZ
+qV
+dG
+dG
 IZ
 "}
 (42,1,1) = {"
+tJ
 TP
 TP
 TP
@@ -3743,37 +3362,36 @@ TP
 TP
 TP
 TP
-TP
-pj
-pj
-pj
-fI
-Bs
-fI
+dG
+dG
+dG
+Vw
+Vw
+Vw
 fa
-Bs
-Bs
-Bs
-fI
-fI
+Vw
+Vw
+Vw
+Vw
+Vw
 NX
 dG
-dV
-Kr
+dM
+dL
 dG
-fI
-Bs
-UU
-UU
+Vw
+Vw
+PP
+PP
 nu
 ZF
-eB
-eB
-eB
-ht
-TM
+PP
+PP
+PP
+PP
+nu
 IF
-iq
+PP
 oc
 Ut
 dG
@@ -3781,9 +3399,10 @@ dG
 dG
 dG
 Lp
-pj
+IZ
 "}
 (43,1,1) = {"
+tJ
 TP
 TP
 TP
@@ -3793,45 +3412,45 @@ TP
 TP
 TP
 TP
-TP
-pj
-fI
-fI
-fI
-fI
-fI
-mG
+dG
+Vw
+Vw
+Vw
+Vw
+Vw
+es
 fa
-fI
-fI
+Vw
+Vw
 Jo
 eo
 tr
 tr
 dG
-hX
+dN
 dG
 dG
 dG
 Lg
-Nc
-pj
-pj
-pj
-pj
-Nc
-Nc
-si
-Nc
+PP
+dG
+dG
+dG
+dG
+PP
+PP
+bN
+PP
 Ga
-TX
-TX
+wb
+wb
 wb
 va
 RO
-pj
+IZ
 "}
 (44,1,1) = {"
+tJ
 TP
 TP
 TP
@@ -3841,45 +3460,45 @@ TP
 TP
 TP
 TP
-TP
-pj
+dG
 eW
 eW
 fc
 jj
-pj
-pj
-pj
-fI
-fs
-kJ
+dG
+dG
+dG
+Vw
+eO
+tr
 dG
 UV
 tr
-Jm
+qV
 tr
 tr
 RP
 dG
 Xl
 Vv
-pj
+dG
 TP
 TP
-pj
-zx
-cm
-zx
-zx
-zx
-cm
-zx
-zx
+dG
+PP
+Lg
+PP
+PP
+PP
+Lg
+PP
+PP
 kB
-zx
-pj
+PP
+IZ
 "}
 (45,1,1) = {"
+tJ
 TP
 TP
 TP
@@ -3889,66 +3508,65 @@ TP
 TP
 TP
 TP
+dG
+dG
+dG
+dG
+dG
+dG
 TP
-pj
-pj
-pj
-pj
-pj
-pj
-TP
-pj
-pj
-pj
-pj
-IZ
+dG
+dG
+dG
+dG
+dG
 tS
 tr
 as
-Od
+LH
 tr
 nB
-IZ
-pj
-pj
-pj
+dG
+dG
+dG
+dG
 TP
 TP
-pj
+dG
 Lp
-zx
+PP
 RO
-zx
-zx
+PP
+PP
 hH
-zx
-zx
-cm
-zx
-pj
+PP
+PP
+Lg
+PP
+IZ
 "}
 (46,1,1) = {"
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
-TP
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
+tJ
 IZ
 IZ
 IZ
@@ -3957,21 +3575,21 @@ IZ
 IZ
 IZ
 IZ
-TP
-TP
-TP
-TP
-TP
-pj
-pj
-pj
-pj
-pj
-pj
-pj
-pj
-pj
-pj
-pj
-pj
+tJ
+tJ
+tJ
+tJ
+tJ
+IZ
+IZ
+IZ
+IZ
+IZ
+IZ
+IZ
+IZ
+IZ
+IZ
+IZ
+IZ
 "}

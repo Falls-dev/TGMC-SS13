@@ -179,6 +179,10 @@
 /obj/structure/cable,
 /turf/open/floor/tile/dark/blue2,
 /area/outpost/medbay/storage/theme_research_outpost)
+"aR" = (
+/obj/structure/flora/grass/tallgrass/autosmooth,
+/turf/open/ground/grass/weedable,
+/area/outpost/caves/west/theme_research_outpost)
 "aS" = (
 /obj/structure/filingcabinet/security,
 /turf/open/floor/tile/dark/red2{
@@ -1385,6 +1389,7 @@
 /area/outpost/medbay/surgery/theme_research_outpost)
 "ga" = (
 /obj/effect/landmark/weed_node,
+/obj/structure/flora/grass/tallgrass/autosmooth,
 /turf/open/ground/grass/weedable,
 /area/outpost/caves/east/theme_research_outpost)
 "gb" = (
@@ -1712,6 +1717,10 @@
 /area/outpost/caves/south_east/theme_research_outpost{
 	ceiling = 4
 	})
+"hr" = (
+/obj/structure/flora/grass/tallgrass/autosmooth,
+/turf/open/floor/plating/ground/dirtgrassborder/autosmooth,
+/area/outpost/caves/north_west/theme_research_outpost)
 "hs" = (
 /turf/open/floor/plating/dmg1,
 /area/outpost/arrivals/theme_research_outpost)
@@ -3435,6 +3444,11 @@
 	dir = 5
 	},
 /area/outpost/caves/south/theme_research_outpost)
+"oB" = (
+/obj/effect/landmark/weed_node,
+/obj/structure/flora/grass/tallgrass/autosmooth,
+/turf/open/ground/grass/weedable,
+/area/outpost/caves/north_west/theme_research_outpost)
 "oC" = (
 /obj/structure/cable,
 /obj/effect/landmark/start/job/survivor,
@@ -3557,6 +3571,7 @@
 /turf/open/floor/tile/dark,
 /area/outpost/cargo/theme_research_outpost)
 "pb" = (
+/obj/structure/flora/grass/tallgrass/autosmooth,
 /turf/open/floor/plating/ground/dirtgrassborder/autosmooth{
 	dir = 10
 	},
@@ -3841,6 +3856,10 @@
 	dir = 8
 	},
 /area/outpost/hallway/central/theme_research_outpost)
+"qm" = (
+/obj/structure/flora/grass/tallgrass/autosmooth,
+/turf/open/ground/grass/weedable,
+/area/outpost/yard/west/theme_research_outpost)
 "qp" = (
 /obj/structure/table/reinforced,
 /obj/machinery/computer/shuttle/shuttle_control/dropship,
@@ -4736,6 +4755,11 @@
 /obj/structure/urinal,
 /turf/open/floor/freezer,
 /area/outpost/dormitories/theme_research_outpost)
+"ug" = (
+/obj/effect/landmark/weed_node,
+/obj/structure/flora/grass/tallgrass/autosmooth,
+/turf/open/ground/grass/weedable,
+/area/outpost/yard/west/theme_research_outpost)
 "uh" = (
 /obj/machinery/atmospherics/pipe/manifold/green/hidden{
 	dir = 1
@@ -7399,6 +7423,11 @@
 	},
 /turf/open/floor/tile/dark,
 /area/outpost/science/research/theme_research_outpost)
+"Gi" = (
+/obj/structure/flora/grass/tallgrass/autosmooth,
+/obj/structure/flora/grass/tallgrass/autosmooth,
+/turf/open/ground/grass/weedable,
+/area/outpost/yard/west/theme_research_outpost)
 "Gj" = (
 /turf/open/floor/plating/ground/dirt{
 	dir = 4
@@ -7509,6 +7538,7 @@
 	corpseuniform = /obj/item/clothing/under/colonist;
 	name = "Colonist Chang Lin"
 	},
+/obj/structure/flora/grass/tallgrass/autosmooth,
 /turf/open/ground/grass/weedable,
 /area/outpost/yard/east/theme_research_outpost)
 "GI" = (
@@ -7715,6 +7745,7 @@
 /turf/open/floor/plating/ground/dirt,
 /area/outpost/lz1/theme_research_outpost)
 "HH" = (
+/obj/structure/flora/grass/tallgrass/autosmooth,
 /turf/open/floor/plating/ground/dirtgrassborder/autosmooth{
 	dir = 10
 	},
@@ -7796,6 +7827,10 @@
 	dir = 6
 	},
 /area/outpost/hallway/south_west/theme_research_outpost)
+"HZ" = (
+/obj/structure/flora/grass/tallgrass/autosmooth,
+/turf/open/ground/grass/weedable,
+/area/outpost/caves/south/theme_research_outpost)
 "Ia" = (
 /obj/machinery/light,
 /turf/open/floor/tile/dark/brown2,
@@ -7845,6 +7880,10 @@
 	dir = 6
 	},
 /area/outpost/engineering/hallway/theme_research_outpost)
+"Il" = (
+/obj/structure/flora/grass/tallgrass/autosmooth,
+/turf/open/ground/grass/weedable,
+/area/outpost/yard/east/theme_research_outpost)
 "Im" = (
 /obj/structure/barricade/folding{
 	dir = 1
@@ -8573,6 +8612,7 @@
 	},
 /area/outpost/science/xenobiology/theme_research_outpost)
 "LF" = (
+/obj/structure/flora/grass/tallgrass/autosmooth,
 /turf/open/ground/grass/weedable,
 /area/outpost/caves/east/theme_research_outpost)
 "LH" = (
@@ -9790,6 +9830,7 @@
 /area/outpost/hallway/south_west/theme_research_outpost)
 "QO" = (
 /obj/effect/landmark/weed_node,
+/obj/structure/flora/grass/tallgrass/autosmooth,
 /turf/open/ground/grass/weedable,
 /area/outpost/caves/north/theme_research_outpost)
 "QP" = (
@@ -10117,6 +10158,11 @@
 	},
 /turf/open/floor/tile/dark,
 /area/outpost/arrivals/theme_research_outpost)
+"Sh" = (
+/obj/effect/landmark/weed_node,
+/obj/structure/flora/grass/tallgrass/autosmooth,
+/turf/open/ground/grass/weedable,
+/area/outpost/yard/east/theme_research_outpost)
 "Si" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
@@ -10229,6 +10275,10 @@
 	dir = 4
 	},
 /area/outpost/caves/south/theme_research_outpost)
+"SG" = (
+/obj/structure/flora/grass/tallgrass/autosmooth,
+/turf/open/ground/grass/weedable,
+/area/outpost/lz1/theme_research_outpost)
 "SH" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/dark/red2{
@@ -10244,6 +10294,10 @@
 	dir = 1
 	},
 /area/outpost/hallway/northern/theme_research_outpost)
+"SL" = (
+/obj/structure/flora/grass/tallgrass/autosmooth,
+/turf/open/ground/grass/weedable,
+/area/outpost/caves/north_west/theme_research_outpost)
 "SO" = (
 /obj/machinery/computer/intel_computer,
 /obj/structure/cable,
@@ -10417,6 +10471,10 @@
 	dir = 8
 	},
 /area/outpost/engineering/engine/theme_research_outpost)
+"TC" = (
+/obj/structure/flora/grass/tallgrass/autosmooth,
+/turf/open/ground/grass/weedable,
+/area/outpost/caves/north/theme_research_outpost)
 "TD" = (
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone/lz2{
 	dir = 2
@@ -11482,6 +11540,12 @@
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/tile/dark/red2,
 /area/outpost/brig/theme_research_outpost)
+"Ym" = (
+/obj/structure/flora/grass/tallgrass/autosmooth,
+/turf/open/floor/plating/ground/dirtgrassborder/autosmooth{
+	dir = 5
+	},
+/area/outpost/yard/east/theme_research_outpost)
 "Yn" = (
 /obj/structure/cable,
 /turf/open/floor/tile/dark/brown2,
@@ -11789,6 +11853,10 @@
 /obj/effect/decal/cleanable/blood/xeno,
 /turf/open/floor/tile/dark,
 /area/outpost/science/theme_research_outpost)
+"ZH" = (
+/obj/structure/flora/grass/tallgrass/autosmooth,
+/turf/open/floor/plating/ground/dirtgrassborder/autosmooth,
+/area/outpost/caves/north/theme_research_outpost)
 "ZI" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
@@ -13997,9 +14065,9 @@ ln
 Ii
 wA
 Pt
-zh
-zh
-zh
+aR
+aR
+aR
 yW
 yW
 yW
@@ -14007,7 +14075,7 @@ yW
 Ry
 yW
 yW
-sV
+SG
 sv
 dr
 dr
@@ -14118,9 +14186,9 @@ Sc
 Em
 Qm
 Pt
-zh
-zh
-zh
+aR
+aR
+aR
 zh
 yW
 yW
@@ -14128,7 +14196,7 @@ yW
 Ry
 yW
 yW
-sV
+SG
 sv
 dr
 dr
@@ -15324,10 +15392,10 @@ oI
 HC
 rX
 oI
-cc
-cc
-cc
-cc
+qm
+qm
+qm
+qm
 Qq
 RV
 Jb
@@ -15445,10 +15513,10 @@ fz
 LI
 yM
 lf
-cc
-cc
-cc
-cc
+qm
+qm
+qm
+qm
 na
 Gb
 Cz
@@ -15566,10 +15634,10 @@ mG
 LI
 gc
 lf
-cc
-cc
-kp
-cc
+qm
+qm
+ug
+qm
 cc
 cc
 kp
@@ -15687,10 +15755,10 @@ oI
 tO
 lC
 oI
-cc
-cc
-cc
-cc
+qm
+qm
+Gi
+qm
 cc
 cc
 cc
@@ -15809,8 +15877,8 @@ LI
 SB
 oI
 yW
-cc
-cc
+qm
+qm
 yW
 yW
 cc
@@ -15842,8 +15910,8 @@ xs
 PG
 ms
 mX
-sV
-sV
+SG
+SG
 sV
 sV
 sV
@@ -15947,8 +16015,8 @@ yW
 yW
 yW
 yW
-sV
-sV
+SG
+SG
 yW
 Or
 Iq
@@ -15963,8 +16031,8 @@ dr
 yW
 yW
 yW
-sV
-sV
+SG
+SG
 sV
 sV
 yW
@@ -16870,7 +16938,7 @@ AL
 AL
 AL
 AL
-FZ
+SL
 pb
 AL
 bY
@@ -16991,8 +17059,8 @@ yW
 yW
 yW
 yW
-qU
-rn
+oB
+hr
 AL
 bY
 KF
@@ -17112,8 +17180,8 @@ yW
 yW
 yW
 yW
-OR
-QZ
+TC
+ZH
 uU
 bY
 bq
@@ -18446,8 +18514,8 @@ uU
 uU
 uU
 eA
-OR
-OR
+TC
+TC
 yW
 yW
 yW
@@ -18503,8 +18571,8 @@ NX
 yW
 yW
 Mr
-Mr
-Mr
+HZ
+HZ
 Mr
 Mr
 yW
@@ -18566,10 +18634,10 @@ uU
 nH
 uU
 pZ
-OR
-OR
-OR
-QZ
+TC
+TC
+TC
+ZH
 uU
 yW
 yW
@@ -18624,8 +18692,8 @@ NX
 yW
 hK
 Wg
-Mr
-Mr
+HZ
+HZ
 Mr
 yW
 yW
@@ -18687,10 +18755,10 @@ fV
 uU
 uU
 uU
-OR
-OR
-OR
-QZ
+TC
+TC
+TC
+ZH
 uU
 fV
 Mv
@@ -18808,10 +18876,10 @@ uU
 uU
 uU
 yW
-OR
-OR
+TC
+TC
 QO
-QZ
+ZH
 uU
 nH
 Mv
@@ -18929,10 +18997,10 @@ nH
 uU
 yW
 yW
-OR
-OR
-OR
-QZ
+TC
+TC
+TC
+ZH
 hL
 uU
 yW
@@ -19051,9 +19119,9 @@ uU
 yW
 yW
 yW
-OR
-OR
-QZ
+TC
+TC
+ZH
 yW
 yW
 yW
@@ -19227,7 +19295,7 @@ yW
 yW
 yW
 yW
-Mr
+HZ
 wM
 hK
 yW
@@ -19348,7 +19416,7 @@ Ip
 yW
 yW
 yW
-Mr
+HZ
 mC
 hK
 hK
@@ -19469,7 +19537,7 @@ Ip
 Ip
 yW
 yW
-Mr
+HZ
 wM
 ff
 bm
@@ -21171,8 +21239,8 @@ AI
 he
 Mr
 Mr
-Mr
-Mr
+HZ
+HZ
 Mr
 yW
 yW
@@ -21292,8 +21360,8 @@ UI
 cm
 Mr
 mg
-Mr
-Mr
+HZ
+HZ
 Mr
 wM
 hK
@@ -21413,8 +21481,8 @@ iT
 vy
 yW
 nZ
-Mr
-Mr
+HZ
+HZ
 ao
 hK
 hK
@@ -23215,7 +23283,7 @@ BJ
 BJ
 bv
 Zp
-Mr
+HZ
 wM
 hK
 hK
@@ -23718,7 +23786,7 @@ Ov
 UM
 Sw
 UT
-Mr
+HZ
 Uv
 hK
 hK
@@ -23816,13 +23884,13 @@ XV
 yQ
 yW
 yW
-py
+Il
 yW
 yW
 sN
 Lo
 HD
-LU
+Sh
 GG
 py
 wM
@@ -23921,8 +23989,8 @@ Hl
 rj
 sN
 sN
-Vb
-py
+Ym
+Il
 Hl
 zY
 CC
@@ -23943,8 +24011,8 @@ yW
 sN
 sN
 dz
-py
-py
+Il
+Il
 py
 wM
 hK
@@ -23955,8 +24023,8 @@ yW
 yW
 yW
 Wg
-Mr
-Mr
+HZ
+HZ
 ao
 hK
 iF
@@ -24642,8 +24710,8 @@ pW
 ye
 OT
 OT
-py
-py
+Il
+Il
 dV
 dV
 yW

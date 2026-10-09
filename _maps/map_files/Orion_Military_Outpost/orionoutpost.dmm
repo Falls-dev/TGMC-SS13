@@ -33,7 +33,7 @@
 /turf/open/floor/plating/ground/desertdam/asphalt,
 /area/orion_outpost/ground/outposts/theme_orionoutpost)
 "ao" = (
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/drought,
 /turf/open/floor/plating/ground/lavaland/basalt,
 /area/orion_outpost/ground/outpostcent/theme_orionoutpost)
 "ap" = (
@@ -153,7 +153,7 @@
 	},
 /area/orion_outpost/ground/outpostcent/theme_orionoutpost)
 "aP" = (
-/turf/open/floor/plating/ground/lavaland/basalt,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/orion_outpost/ground/river/riverside_north/theme_orionoutpost)
 "aR" = (
 /obj/effect/ai_node,
@@ -165,7 +165,7 @@
 /area/orion_outpost/surface/building/breakroom/theme_orionoutpost)
 "aU" = (
 /obj/structure/flora/drought/grass,
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/drought,
 /turf/open/floor/plating/ground/lavaland/basalt,
 /area/orion_outpost/ground/outposte/theme_orionoutpost)
 "aV" = (
@@ -570,7 +570,7 @@
 	},
 /area/orion_outpost/ground/outpostcent/theme_orionoutpost)
 "cF" = (
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/drought,
 /turf/open/floor/plating/ground/lavaland/basalt,
 /area/orion_outpost/ground/underground/caveE/theme_orionoutpost)
 "cG" = (
@@ -2712,7 +2712,7 @@
 /area/orion_outpost/surface/building/administration/theme_orionoutpost)
 "mu" = (
 /obj/structure/cable,
-/turf/open/floor/plating/ground/desertdam/grate/alternate,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/orion_outpost/surface/building/engineering/theme_orionoutpost)
 "mw" = (
 /obj/machinery/light{
@@ -3315,7 +3315,7 @@
 /turf/open/floor/plating/ground/concrete/lines,
 /area/orion_outpost/surface/building/vehicledepot/theme_orionoutpost)
 "pc" = (
-/turf/open/floor/plating/ground/desertdam/grate/alternate,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/orion_outpost/surface/building/engineering/theme_orionoutpost)
 "pe" = (
 /obj/structure/cable,
@@ -3826,7 +3826,7 @@
 /turf/open/floor/plating/ground/lavaland/basalt,
 /area/orion_outpost/ground/outpostcent/theme_orionoutpost)
 "ro" = (
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/drought,
 /turf/open/floor/plating/ground/lavaland/basalt,
 /area/orion_outpost/ground/outpostn/theme_orionoutpost)
 "rp" = (
@@ -4008,7 +4008,7 @@
 /area/orion_outpost/surface/building/barracks/theme_orionoutpost)
 "sa" = (
 /obj/structure/cryofeed,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/orion_outpost/ground/river/riverside_south/theme_orionoutpost)
 "sb" = (
 /obj/structure/reagent_dispensers/beerkeg,
@@ -4637,7 +4637,7 @@
 /turf/open/floor/mainship/red,
 /area/orion_outpost/surface/building/brig/theme_orionoutpost)
 "uX" = (
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/drought,
 /turf/open/floor/plating/ground/lavaland/basalt,
 /area/orion_outpost/ground/outpostw/theme_orionoutpost)
 "uZ" = (
@@ -4654,7 +4654,7 @@
 	},
 /area/orion_outpost/ground/outpostnw/theme_orionoutpost)
 "vc" = (
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/drought,
 /turf/open/floor/plating/ground/lavaland/basalt,
 /area/orion_outpost/ground/outposte/theme_orionoutpost)
 "vf" = (
@@ -5147,7 +5147,7 @@
 /turf/open/floor/plating/ground/desertdam/asphalt,
 /area/orion_outpost/ground/outpostsw/theme_orionoutpost)
 "xD" = (
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/drought,
 /turf/open/floor/plating/ground/lavaland/basalt,
 /area/orion_outpost/ground/outpostse/theme_orionoutpost)
 "xE" = (
@@ -5556,7 +5556,7 @@
 /turf/open/floor/plating/ground/lavaland/basalt,
 /area/orion_outpost/ground/outpostse/theme_orionoutpost)
 "zq" = (
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/drought,
 /turf/open/floor/plating/ground/lavaland/basalt,
 /area/orion_outpost/ground/outpostsw/theme_orionoutpost)
 "zu" = (
@@ -6291,7 +6291,7 @@
 /area/orion_outpost/ground/outpostnw/theme_orionoutpost)
 "CJ" = (
 /obj/effect/spawner/random/weaponry/gun/rifles,
-/turf/open/floor/plating/ground/desertdam/grate/alternate,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/orion_outpost/surface/building/engineering/theme_orionoutpost)
 "CK" = (
 /obj/effect/decal/cleanable/blood,
@@ -6753,7 +6753,7 @@
 /area/orion_outpost/surface/building/medbay/theme_orionoutpost)
 "ES" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/desertdam/grate/alternate,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/orion_outpost/surface/building/engineering/theme_orionoutpost)
 "ET" = (
 /obj/machinery/camera/autoname/lz_camera,
@@ -8439,7 +8439,7 @@
 /turf/open/floor/mainship/sterile/dark,
 /area/orion_outpost/surface/building/canteen/theme_orionoutpost)
 "MH" = (
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/drought,
 /turf/open/floor/plating/ground/lavaland/basalt,
 /area/orion_outpost/ground/outpostnw/theme_orionoutpost)
 "MI" = (
@@ -9542,7 +9542,7 @@
 /obj/structure/cryofeed/right{
 	name = "\improper coolant feed"
 	},
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/orion_outpost/ground/river/riverside_south/theme_orionoutpost)
 "Rx" = (
 /obj/structure/reagent_dispensers/water_cooler,
@@ -10951,7 +10951,7 @@
 /area/orion_outpost/surface/building/prep/theme_orionoutpost)
 "Yd" = (
 /obj/structure/flora/drought/shroom,
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/drought,
 /turf/open/floor/plating/ground/lavaland/basalt,
 /area/orion_outpost/ground/outpostsw/theme_orionoutpost)
 "Yf" = (
@@ -11029,7 +11029,7 @@
 /turf/open/floor/mainship/sterile/white,
 /area/orion_outpost/surface/building/dorms/theme_orionoutpost)
 "Yt" = (
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/drought,
 /turf/open/floor/plating/ground/lavaland/basalt,
 /area/orion_outpost/ground/outposts/theme_orionoutpost)
 "Yu" = (
@@ -20394,10 +20394,10 @@ fW
 VE
 NZ
 fa
-EB
+dc
 Su
-Fl
-Fl
+Ss
+Ss
 Fl
 Fl
 lO
@@ -20528,8 +20528,8 @@ MI
 fa
 Su
 Su
-Fl
-Fl
+Ss
+Ss
 Fl
 lO
 lO
@@ -20658,10 +20658,10 @@ kq
 mp
 fa
 fa
-Fl
+Ss
 Su
 Su
-Fl
+Ss
 Fl
 lO
 lO
@@ -22537,7 +22537,7 @@ Lz
 ug
 Fl
 Fl
-Fl
+vc
 Fl
 Fl
 Fl

@@ -22,15 +22,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/ground/mars/random/dirt,
 /area/lv624/lazarus/spaceport/theme_lv624)
-"acj" = (
-/obj/structure/fence,
-/obj/effect/turf_decal/riverdecal/edge{
-	dir = 4
-	},
-/turf/open/floor/plating/warning{
-	dir = 2
-	},
-/area/lv624/ground/sand8/theme_lv624)
 "acs" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 4
@@ -237,7 +228,7 @@
 /area/lv624/ground/sand8/theme_lv624)
 "ajR" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/sand8/theme_lv624)
 "ajY" = (
 /obj/machinery/conveyor{
@@ -609,7 +600,7 @@
 /area/lv624/ground/jungle3/theme_lv624)
 "auc" = (
 /obj/docking_port/stationary/crashmode,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/river2/theme_lv624)
 "aud" = (
 /obj/docking_port/stationary/crashmode,
@@ -1224,7 +1215,7 @@
 	dir = 4
 	},
 /obj/structure/catwalk,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/river2/theme_lv624)
 "aHI" = (
 /obj/effect/landmark/miner_phoron,
@@ -1234,7 +1225,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/mars/random/dirt,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/lv624/lazarus/main_hall/theme_lv624)
 "aIj" = (
 /mob/living/simple_animal/mouse,
@@ -1289,7 +1280,7 @@
 /area/lv624/ground/sand8/theme_lv624)
 "aKk" = (
 /obj/structure/flora/drought/grass,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/lv624/ground/river3/theme_lv624)
 "aKr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
@@ -1416,7 +1407,7 @@
 	dir = 4
 	},
 /obj/structure/catwalk,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/river2/theme_lv624)
 "aNr" = (
 /obj/effect/ai_node,
@@ -1438,14 +1429,14 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/river2/theme_lv624)
 "aND" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/structure/catwalk,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/river2/theme_lv624)
 "aNE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
@@ -1528,7 +1519,7 @@
 /turf/open/floor,
 /area/lv624/ground/sand8/theme_lv624)
 "aQo" = (
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/sand2/theme_lv624)
 "aQq" = (
 /obj/structure/sign/science{
@@ -1587,7 +1578,7 @@
 /area/lv624/lazarus/bar/theme_lv624)
 "aRF" = (
 /obj/structure/flora/drought/grass,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/jungle4/theme_lv624)
 "aRP" = (
 /obj/structure/window_frame/colony,
@@ -1789,7 +1780,7 @@
 /area/lv624/lazarus/fitness/theme_lv624)
 "aXc" = (
 /obj/structure/flora/drought/grass,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/sand8/theme_lv624)
 "aXf" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1967,7 +1958,7 @@
 /area/lv624/ground/jungle3/theme_lv624)
 "bcl" = (
 /obj/structure/girder/displaced,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/sand8/theme_lv624)
 "bcz" = (
 /obj/structure/sign/botany{
@@ -2048,7 +2039,7 @@
 /area/lv624/lazarus/spaceport2/theme_lv624)
 "bdQ" = (
 /obj/structure/catwalk,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/sand8/theme_lv624)
 "bea" = (
 /turf/open/floor/plating,
@@ -2078,7 +2069,7 @@
 "beS" = (
 /obj/machinery/floodlight/colony,
 /obj/structure/catwalk,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/sand8/theme_lv624)
 "beU" = (
 /obj/structure/catwalk,
@@ -2220,12 +2211,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall,
 /area/lv624/ground/filtration/theme_lv624)
-"biz" = (
-/obj/structure/flora/drought/grass,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/mars/random/dirt,
-/area/lv624/lazarus/main_hall/theme_lv624)
 "biC" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 1
@@ -3008,10 +2993,6 @@
 /obj/effect/turf_decal/sandytile,
 /turf/open/floor/tile/whiteyellow/full,
 /area/lv624/lazarus/sandtemple/theme_lv624)
-"bOu" = (
-/obj/effect/turf_decal/riverdecal/edge,
-/turf/open/floor/plating,
-/area/lv624/ground/river2/theme_lv624)
 "bOC" = (
 /obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	dir = 4;
@@ -3040,7 +3021,7 @@
 /area/lv624/ground/jungle9/theme_lv624)
 "bPe" = (
 /obj/structure/flora/drought/grass,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/jungle6/theme_lv624)
 "bPI" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer1,
@@ -3805,7 +3786,7 @@
 	},
 /obj/effect/decal/cleanable/blood/splatter/animated,
 /obj/item/weapon/harpoon,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/jungle6/theme_lv624)
 "cLI" = (
 /obj/structure/bed/stool,
@@ -3948,7 +3929,7 @@
 /obj/structure/disposalpipe/segment{
 	name = "water pipe"
 	},
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/lv624/ground/river2/theme_lv624)
 "cUf" = (
 /obj/effect/turf_decal/warning_stripes/thin{
@@ -4222,7 +4203,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/lv624/ground/river2/theme_lv624)
 "dki" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
@@ -4405,7 +4386,7 @@
 /area/lv624/lazarus/toilet/theme_lv624)
 "dtn" = (
 /obj/docking_port/stationary/crashmode,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/river3/theme_lv624)
 "dtx" = (
 /obj/machinery/light/small{
@@ -4422,6 +4403,7 @@
 	},
 /obj/item/ammo_casing,
 /obj/item/weapon/gun/smg/uzi,
+/obj/effect/ai_node,
 /turf/open/floor/tile/green/whitegreencorner{
 	dir = 8
 	},
@@ -4817,7 +4799,7 @@
 /area/lv624/lazarus/spaceport/theme_lv624)
 "dSi" = (
 /obj/structure/flora/drought/grass,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/river2/theme_lv624)
 "dSp" = (
 /obj/item/bedsheet/rd,
@@ -4919,9 +4901,9 @@
 /turf/open/floor/tile/white,
 /area/lv624/lazarus/main_hall/theme_lv624)
 "dYm" = (
-/obj/structure/catwalk,
-/turf/open/liquid/lava/autosmoothing,
-/area/lv624/ground/river2/theme_lv624)
+/obj/structure/flora/drought/grass,
+/turf/open/liquid/lava,
+/area/lv624/ground/river1/theme_lv624)
 "dYR" = (
 /obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	dir = 1;
@@ -5039,7 +5021,7 @@
 /obj/structure/platform_decoration{
 	dir = 4
 	},
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "efw" = (
 /obj/structure/cable,
@@ -5317,18 +5299,8 @@
 /obj/structure/disposalpipe/broken{
 	dir = 1
 	},
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/lv624/ground/river2/theme_lv624)
-"ezh" = (
-/obj/effect/turf_decal/warning_stripes/thin{
-	dir = 1
-	},
-/obj/effect/turf_decal/riverdecal/edge{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor,
-/area/lv624/ground/sand8/theme_lv624)
 "ezx" = (
 /turf/closed/wall,
 /area/lv624/lazarus/comms/theme_lv624)
@@ -5826,7 +5798,7 @@
 /obj/structure/grille/smoothing,
 /obj/structure/disposalpipe/segment,
 /obj/structure/catwalk,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/river2/theme_lv624)
 "fhy" = (
 /obj/effect/spawner/random/weaponry/gun/shotgun,
@@ -5896,15 +5868,6 @@
 	dir = 5
 	},
 /area/lv624/lazarus/fitness/theme_lv624)
-"fkX" = (
-/obj/effect/turf_decal/warning_stripes/thin{
-	dir = 2
-	},
-/obj/effect/turf_decal/riverdecal/edge{
-	dir = 8
-	},
-/turf/open/floor,
-/area/lv624/ground/sand8/theme_lv624)
 "flG" = (
 /obj/effect/landmark/corpsespawner/colonist,
 /turf/open/floor/plating,
@@ -6118,7 +6081,7 @@
 /turf/open/floor/freezer,
 /area/lv624/lazarus/toilet/theme_lv624)
 "fxU" = (
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/jungle1/theme_lv624)
 "fye" = (
 /obj/effect/landmark/weed_node,
@@ -6308,14 +6271,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/wood,
 /area/lv624/lazarus/chapel/theme_lv624)
-"fNu" = (
-/obj/structure/catwalk,
-/obj/effect/turf_decal/riverdecal/edge,
-/turf/open/liquid/lava/autosmoothing,
-/area/lv624/ground/river2/theme_lv624)
 "fOi" = (
 /obj/docking_port/stationary/crashmode,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/lv624/ground/river1/theme_lv624)
 "fOy" = (
 /obj/machinery/light/small{
@@ -6383,7 +6341,7 @@
 /area/lv624/lazarus/bar/theme_lv624)
 "fUp" = (
 /obj/structure/flora/drought/grass,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/lv624/ground/river1/theme_lv624)
 "fUP" = (
 /obj/item/tool/shovel,
@@ -6480,9 +6438,8 @@
 "fZv" = (
 /obj/structure/flora/drought/grass,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
-/obj/effect/ai_node,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/mars/random/dirt,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/lv624/lazarus/main_hall/theme_lv624)
 "fZx" = (
 /obj/effect/ai_node,
@@ -6612,7 +6569,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/river2/theme_lv624)
 "gdN" = (
 /turf/open/floor/tile/green/whitegreencorner{
@@ -6722,7 +6679,7 @@
 	dir = 2
 	},
 /obj/structure/catwalk,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/river2/theme_lv624)
 "ghS" = (
 /turf/open/floor/tile/blue/whiteblue{
@@ -6972,7 +6929,7 @@
 /area/lv624/lazarus/bar/theme_lv624)
 "gEp" = (
 /obj/effect/ai_node,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/jungle6/theme_lv624)
 "gEy" = (
 /obj/structure/reagent_dispensers/watertank,
@@ -7103,7 +7060,7 @@
 /area/lv624/lazarus/main_hall/theme_lv624)
 "gNL" = (
 /obj/item/toy/inflatable_duck,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/jungle1/theme_lv624)
 "gNS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
@@ -7207,7 +7164,7 @@
 /area/lv624/ground/compound/c/theme_lv624)
 "gTo" = (
 /obj/effect/spawner/random/misc/structure/girder/regularweighted,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/river2/theme_lv624)
 "gTu" = (
 /obj/effect/spawner/random/misc/structure/flavorvending/coffeeweighted,
@@ -7258,7 +7215,7 @@
 /area/lv624/lazarus/captain/theme_lv624)
 "gVY" = (
 /obj/effect/spawner/random/engineering/ore_box,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/lv624/ground/river1/theme_lv624)
 "gWA" = (
 /obj/machinery/door/airlock/mainship/generic/corporate{
@@ -7561,7 +7518,7 @@
 /area/lv624/ground/jungle8/theme_lv624)
 "hpQ" = (
 /obj/effect/landmark/xeno_resin_wall,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/caves/central3/garbledradio/theme_lv624)
 "hpU" = (
 /obj/structure/bed/chair/wood/wings,
@@ -7750,14 +7707,9 @@
 	},
 /area/lv624/lazarus/hydroponics/aux/theme_lv624)
 "hDn" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
-	dir = 4
-	},
-/obj/effect/turf_decal/riverdecal/edge{
-	dir = 4
-	},
-/turf/open/floor,
-/area/lv624/ground/sand8/theme_lv624)
+/obj/structure/flora/drought/grass,
+/turf/open/liquid/lava,
+/area/lv624/ground/river3/theme_lv624)
 "hDq" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1,
 /obj/effect/decal/cleanable/blood,
@@ -7923,15 +7875,6 @@
 /obj/effect/landmark/weed_node,
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/lv624/ground/caves/west1/theme_lv624)
-"hOR" = (
-/obj/effect/turf_decal/warning_stripes/thin{
-	dir = 2
-	},
-/obj/effect/turf_decal/riverdecal/edge{
-	dir = 4
-	},
-/turf/open/floor,
-/area/lv624/ground/sand8/theme_lv624)
 "hOT" = (
 /obj/effect/spawner/random/misc/structure/supplycrate,
 /obj/effect/decal/cleanable/dirt,
@@ -8915,10 +8858,7 @@
 /area/lv624/lazarus/internal_affairs/theme_lv624)
 "iTI" = (
 /obj/structure/catwalk,
-/obj/effect/turf_decal/riverdecal/edge{
-	dir = 1
-	},
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/river2/theme_lv624)
 "iTU" = (
 /obj/structure/largecrate/random,
@@ -9098,14 +9038,9 @@
 /turf/open/floor/plating,
 /area/lv624/lazarus/tablefort/theme_lv624)
 "jgP" = (
-/obj/structure/fence,
-/obj/effect/turf_decal/riverdecal/edge{
-	dir = 1
-	},
-/turf/open/floor/plating/warning{
-	dir = 2
-	},
-/area/lv624/ground/sand8/theme_lv624)
+/obj/structure/flora/drought/grass,
+/turf/open/liquid/lava/autosmoothing/catwalk,
+/area/lv624/ground/river2/theme_lv624)
 "jhZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 5
@@ -9154,7 +9089,7 @@
 /turf/open/floor/plating/ground/mars/random/dirt,
 /area/lv624/lazarus/spaceport2/theme_lv624)
 "jlq" = (
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/river2/theme_lv624)
 "jlt" = (
 /obj/effect/spawner/random/misc/structure/supplycrate,
@@ -9466,7 +9401,7 @@
 /area/shuttle/drop1/lz1)
 "jFe" = (
 /obj/effect/ai_node,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/river3/theme_lv624)
 "jFL" = (
 /obj/machinery/door_control{
@@ -9526,8 +9461,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1{
 	dir = 8
 	},
-/obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/dirt,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/lv624/lazarus/main_hall/theme_lv624)
 "jHT" = (
 /turf/closed/wall/r_wall,
@@ -9731,7 +9665,7 @@
 /turf/open/floor/tile/whiteyellow/full,
 /area/lv624/lazarus/sandtemple/theme_lv624)
 "jQr" = (
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/sand8/theme_lv624)
 "jRu" = (
 /obj/item/trash/popcorn,
@@ -9801,7 +9735,7 @@
 "jWo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/mars/random/dirt,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/lv624/lazarus/main_hall/theme_lv624)
 "jWw" = (
 /obj/item/clothing/shoes/jackboots,
@@ -10088,7 +10022,7 @@
 /turf/open/floor/plating/ground/mars/random/dirt,
 /area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "knr" = (
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/river3/theme_lv624)
 "knA" = (
 /obj/effect/turf_decal/warning_stripes/thick{
@@ -10141,15 +10075,6 @@
 "koS" = (
 /turf/open/floor,
 /area/lv624/ground/jungle7/theme_lv624)
-"kpi" = (
-/obj/structure/fence,
-/obj/effect/turf_decal/riverdecal/edge{
-	dir = 8
-	},
-/turf/open/floor/plating/warning{
-	dir = 2
-	},
-/area/lv624/ground/sand8/theme_lv624)
 "kqh" = (
 /turf/open/floor/plating/warning{
 	dir = 8
@@ -10937,7 +10862,7 @@
 /turf/open/floor/marking/bot,
 /area/lv624/lazarus/spaceport2/theme_lv624)
 "lne" = (
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/sand6/theme_lv624)
 "lno" = (
 /obj/effect/landmark/weed_node,
@@ -11210,22 +11135,6 @@
 /obj/prop/hydroponics,
 /turf/open/floor/engine,
 /area/lv624/lazarus/hydroponics/aux/theme_lv624)
-"lHm" = (
-/obj/effect/turf_decal/riverdecal/edge{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/lv624/ground/river2/theme_lv624)
-"lHt" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
-	dir = 4
-	},
-/obj/effect/landmark/weed_node,
-/obj/effect/turf_decal/riverdecal/edge{
-	dir = 8
-	},
-/turf/open/floor,
-/area/lv624/ground/sand8/theme_lv624)
 "lHJ" = (
 /obj/machinery/door/poddoor/mainship/open{
 	dir = 4;
@@ -11666,7 +11575,7 @@
 "mib" = (
 /obj/docking_port/stationary/crashmode,
 /obj/structure/catwalk,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/river1/theme_lv624)
 "min" = (
 /turf/open/floor/tile/whiteyellow{
@@ -11925,7 +11834,7 @@
 "mxb" = (
 /obj/structure/catwalk,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/sand8/theme_lv624)
 "mxe" = (
 /obj/structure/table,
@@ -12042,7 +11951,7 @@
 /area/lv624/ground/jungle9/theme_lv624)
 "mEB" = (
 /obj/effect/ai_node,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/jungle1/theme_lv624)
 "mFi" = (
 /turf/open/floor/plating/dmg3,
@@ -12243,6 +12152,7 @@
 /obj/structure/table/reinforced/flipped{
 	dir = 1
 	},
+/obj/effect/ai_node,
 /turf/open/floor/tile/green/whitegreencorner{
 	dir = 8
 	},
@@ -13239,11 +13149,6 @@
 	},
 /turf/open/floor,
 /area/lv624/lazarus/spaceport/theme_lv624)
-"ofP" = (
-/obj/effect/landmark/weed_node,
-/obj/effect/turf_decal/riverdecal/edge,
-/turf/open/floor/plating,
-/area/lv624/ground/river2/theme_lv624)
 "ofY" = (
 /obj/structure/rack,
 /obj/item/shard,
@@ -13589,13 +13494,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/tile/dark,
 /area/lv624/lazarus/hydroponics/aux/theme_lv624)
-"oEf" = (
-/obj/structure/fence,
-/obj/effect/turf_decal/riverdecal/edge{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/lv624/ground/sand8/theme_lv624)
 "oEJ" = (
 /obj/machinery/door/airlock/mainship/secure/free_access{
 	name = "\improper Nexus Dome Armory"
@@ -13605,9 +13503,6 @@
 /turf/open/floor/plating,
 /area/lv624/lazarus/armory/theme_lv624)
 "oFV" = (
-/obj/effect/turf_decal/riverdecal/edge{
-	dir = 4
-	},
 /turf/open/floor/plating/warning{
 	dir = 2
 	},
@@ -13904,9 +13799,6 @@
 /obj/structure/fence,
 /obj/structure/disposalpipe/segment{
 	dir = 4
-	},
-/obj/effect/turf_decal/riverdecal/edge{
-	dir = 8
 	},
 /turf/open/floor/plating/warning{
 	dir = 2
@@ -15369,13 +15261,6 @@
 /obj/effect/ai_node,
 /turf/open/floor/plating,
 /area/lv624/lazarus/engineering/theme_lv624)
-"qUB" = (
-/obj/structure/fence,
-/obj/effect/turf_decal/riverdecal/edge{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/lv624/ground/sand8/theme_lv624)
 "qUY" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/medical/firstaid,
@@ -15492,8 +15377,7 @@
 	},
 /area/lv624/ground/sand7/theme_lv624)
 "qYB" = (
-/obj/effect/turf_decal/sandytile,
-/turf/open/floor/tile/whiteyellow/full,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/lv624/ground/river3/theme_lv624)
 "qYQ" = (
 /obj/effect/spawner/random/engineering/tool,
@@ -16064,7 +15948,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/mars/random/dirt,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/lv624/lazarus/main_hall/theme_lv624)
 "rBn" = (
 /turf/open/floor/plating/warning{
@@ -16361,7 +16245,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/mars/random/dirt,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/lv624/lazarus/main_hall/theme_lv624)
 "rOf" = (
 /turf/open/floor/marking/warning{
@@ -17100,7 +16984,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/mars/random/dirt,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/lv624/lazarus/main_hall/theme_lv624)
 "sHI" = (
 /turf/open/floor/engine/cult,
@@ -17415,7 +17299,7 @@
 "tbw" = (
 /obj/item/ammo_casing,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
-/turf/open/floor/plating/ground/mars/random/dirt,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/lv624/lazarus/main_hall/theme_lv624)
 "tce" = (
 /obj/effect/turf_decal/warning_stripes/thin{
@@ -17550,7 +17434,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/river2/theme_lv624)
 "tjj" = (
 /obj/structure/bed/chair/wood/wings{
@@ -18264,7 +18148,7 @@
 /turf/open/floor/plating/ground/mars/random/dirt,
 /area/lv624/ground/jungle2/theme_lv624)
 "tXS" = (
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "tXY" = (
 /obj/structure/inflatable/wall,
@@ -18277,7 +18161,7 @@
 	},
 /area/lv624/lazarus/spaceport/theme_lv624)
 "tYg" = (
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/jungle6/theme_lv624)
 "tZr" = (
 /obj/effect/decal/cleanable/dirt,
@@ -18294,7 +18178,7 @@
 /turf/open/floor/plating,
 /area/lv624/lazarus/research/theme_lv624)
 "tZS" = (
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/river1/theme_lv624)
 "uac" = (
 /obj/effect/ai_node,
@@ -18668,6 +18552,7 @@
 /obj/structure/table/reinforced/flipped{
 	dir = 1
 	},
+/obj/effect/ai_node,
 /turf/open/floor/tile/green/whitegreencorner{
 	dir = 2
 	},
@@ -18779,7 +18664,7 @@
 	dir = 1
 	},
 /obj/structure/catwalk,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/river2/theme_lv624)
 "uCk" = (
 /obj/item/spacecash/bundle/c200{
@@ -19333,7 +19218,7 @@
 /area/lv624/lazarus/internal_affairs/theme_lv624)
 "vpl" = (
 /obj/effect/ai_node,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/jungle4/theme_lv624)
 "vpo" = (
 /obj/structure/flora/tree/dead/drought,
@@ -19732,7 +19617,7 @@
 /area/lv624/lazarus/spaceport/theme_lv624)
 "vKm" = (
 /obj/structure/girder/displaced,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/river2/theme_lv624)
 "vKS" = (
 /obj/structure/table/reinforced/flipped{
@@ -19988,7 +19873,7 @@
 /turf/open/floor/grimy,
 /area/lv624/lazarus/captain/theme_lv624)
 "vYj" = (
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/sand3/theme_lv624)
 "vYI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/layer1{
@@ -20150,15 +20035,6 @@
 	dir = 10
 	},
 /area/lv624/lazarus/main_hall/theme_lv624)
-"wir" = (
-/obj/structure/fence,
-/obj/effect/turf_decal/riverdecal/edge{
-	dir = 4
-	},
-/obj/effect/turf_decal/riverdecal/edge,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/lv624/ground/sand8/theme_lv624)
 "wit" = (
 /turf/closed/wall,
 /area/lv624/ground/jungle3/theme_lv624)
@@ -20257,7 +20133,7 @@
 /obj/item/ammo_magazine/smg/uzi/extended,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/dirt,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/lv624/lazarus/main_hall/theme_lv624)
 "wpF" = (
 /obj/effect/ai_node,
@@ -20444,7 +20320,7 @@
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/lv624/ground/caves/central3/garbledradio/theme_lv624)
 "wzw" = (
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/caves/central3/theme_lv624)
 "wzD" = (
 /obj/effect/ai_node,
@@ -20454,7 +20330,7 @@
 /area/lv624/ground/jungle5/theme_lv624)
 "wAq" = (
 /obj/effect/landmark/xeno_resin_wall,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/caves/central3/theme_lv624)
 "wBh" = (
 /obj/structure/extinguisher_cabinet{
@@ -20982,7 +20858,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
-/turf/open/floor/plating/ground/mars/random/dirt,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/lv624/lazarus/main_hall/theme_lv624)
 "xaI" = (
 /obj/machinery/door/airlock/multi_tile/mainship/generic{
@@ -21007,7 +20883,7 @@
 "xbD" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/catwalk,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/river2/theme_lv624)
 "xbX" = (
 /turf/open/floor/tile/dark/brown2{
@@ -21162,7 +21038,7 @@
 /area/lv624/lazarus/captain/theme_lv624)
 "xkb" = (
 /obj/effect/spawner/random/misc/structure/girder/regularweighted,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/river1/theme_lv624)
 "xkr" = (
 /obj/effect/decal/remains/xeno,
@@ -21301,7 +21177,7 @@
 /turf/open/floor/engine,
 /area/lv624/lazarus/atmos/theme_lv624)
 "xqY" = (
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/caves/central3/garbledradio/theme_lv624)
 "xrX" = (
 /obj/effect/ai_node,
@@ -21341,7 +21217,7 @@
 /area/lv624/ground/jungle1/theme_lv624)
 "xuF" = (
 /obj/effect/spawner/random/weaponry/melee,
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/jungle6/theme_lv624)
 "xuL" = (
 /obj/item/spacecash/bundle/c500{
@@ -21391,16 +21267,6 @@
 	dir = 5
 	},
 /area/lv624/lazarus/research/theme_lv624)
-"xwu" = (
-/obj/effect/turf_decal/warning_stripes/thin{
-	dir = 1
-	},
-/obj/effect/turf_decal/riverdecal/edge{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor,
-/area/lv624/ground/sand8/theme_lv624)
 "xyJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/effect/landmark/weed_node,
@@ -21531,7 +21397,7 @@
 /area/lv624/ground/sand6/theme_lv624)
 "xHa" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
-/turf/open/floor/plating/ground/mars/random/dirt,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/lv624/lazarus/main_hall/theme_lv624)
 "xHg" = (
 /obj/effect/ai_node,
@@ -21739,7 +21605,7 @@
 /turf/open/floor/freezer,
 /area/lv624/lazarus/toilet/theme_lv624)
 "xSn" = (
-/turf/open/liquid/lava/autosmoothing,
+/turf/open/liquid/lava,
 /area/lv624/ground/jungle4/theme_lv624)
 "xTa" = (
 /obj/structure/cable,
@@ -22042,9 +21908,6 @@
 	dir = 8
 	},
 /obj/machinery/floodlight/colony,
-/obj/effect/turf_decal/riverdecal/edge{
-	dir = 4
-	},
 /turf/open/floor,
 /area/lv624/ground/river2/theme_lv624)
 "ykz" = (
@@ -24226,7 +24089,7 @@ tZS
 tZS
 tZS
 tZS
-fUp
+dYm
 tZS
 xoT
 xoT
@@ -29141,7 +29004,7 @@ tZS
 tZS
 tZS
 tZS
-fUp
+dYm
 tZS
 nny
 sYh
@@ -32781,7 +32644,7 @@ tZS
 tZS
 tZS
 tZS
-fUp
+dYm
 tZS
 nny
 evp
@@ -32959,7 +32822,7 @@ cAu
 tZS
 tZS
 tZS
-fUp
+dYm
 tZS
 tZS
 tZS
@@ -43486,7 +43349,7 @@ bfV
 bdQ
 aJY
 beU
-kpi
+hDA
 aHv
 jlq
 jlq
@@ -44036,7 +43899,7 @@ jQr
 aNA
 jlq
 jlq
-dYm
+iTI
 jlq
 jlq
 jlq
@@ -44396,7 +44259,7 @@ jQr
 bdQ
 aJY
 beU
-acj
+hDA
 aND
 jlq
 jlq
@@ -47308,7 +47171,7 @@ ajG
 jiJ
 aKr
 alm
-jgP
+hDA
 txV
 txV
 txV
@@ -47854,7 +47717,7 @@ ajG
 aiv
 aJY
 akq
-qUB
+aGH
 aND
 jlq
 jlq
@@ -48942,10 +48805,10 @@ jQr
 jQr
 jQr
 beS
-oEf
-ezh
-lHt
-fkX
+aGH
+jiJ
+pYM
+qfn
 oYf
 aHv
 jlq
@@ -49131,7 +48994,7 @@ jQr
 akq
 aNA
 auc
-dYm
+jlq
 jlq
 jlq
 jlq
@@ -49314,7 +49177,7 @@ jQr
 aNA
 jlq
 jlq
-jlq
+iTI
 jlq
 jlq
 jlq
@@ -50034,10 +49897,10 @@ jQr
 jQr
 jQr
 jQr
-wir
-xwu
-hDn
-hOR
+nBh
+jiJ
+aKr
+qfn
 oFV
 yku
 aPe
@@ -50223,14 +50086,14 @@ lsH
 ruL
 cJx
 bea
-dYm
-dYm
 iTI
-dYm
+iTI
+iTI
+iTI
 bea
-bOu
-dYm
-dYm
+bea
+iTI
+iTI
 bea
 cAg
 hel
@@ -50407,10 +50270,10 @@ cJx
 bea
 bea
 uqf
-lHm
 bea
 bea
-ofP
+bea
+wFi
 bea
 bea
 aJG
@@ -50587,14 +50450,14 @@ qfn
 bvp
 cJx
 bea
-dYm
-dYm
 iTI
-dYm
-dYm
-fNu
-dYm
-dYm
+iTI
+iTI
+iTI
+iTI
+iTI
+iTI
+iTI
 bea
 wSm
 tvO
@@ -50771,9 +50634,9 @@ bTV
 aPe
 aPe
 aPe
-lHm
 bea
-dYm
+bea
+iTI
 aPe
 aPe
 aPe
@@ -51681,7 +51544,7 @@ cTG
 eyD
 jlq
 jlq
-dSi
+jgP
 jlq
 jlq
 jlq
@@ -51933,7 +51796,7 @@ tbw
 wpw
 fZv
 xHa
-biz
+fZv
 xHa
 jWo
 xHa
@@ -52043,7 +51906,7 @@ bqy
 eAz
 jlq
 jlq
-dSi
+jgP
 jlq
 jlq
 jlq
@@ -53683,7 +53546,7 @@ jlq
 jlq
 jlq
 jlq
-dSi
+jgP
 jlq
 jlq
 kdf
@@ -54411,7 +54274,7 @@ knr
 knr
 knr
 knr
-aKk
+hDn
 knr
 knr
 knr
@@ -56777,7 +56640,7 @@ txV
 txV
 knr
 qYB
-aFF
+qYB
 knr
 knr
 kdf
@@ -56958,7 +56821,7 @@ txV
 txV
 txV
 knr
-aFF
+qYB
 knr
 knr
 knr

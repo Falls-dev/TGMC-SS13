@@ -6134,6 +6134,7 @@
 	dir = 6
 	},
 /obj/structure/cable,
+/obj/structure/flora/tree/dead,
 /turf/open/floor/plating/ground/mars/random/dirt,
 /area/ice_colony/exterior/surface/clearing/pass/theme_ice_colony_v2)
 "aLg" = (
