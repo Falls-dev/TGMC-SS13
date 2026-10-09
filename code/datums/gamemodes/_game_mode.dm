@@ -1039,11 +1039,11 @@ GLOBAL_LIST_INIT(bioscan_locations, list(
 /datum/game_mode/proc/get_adjusted_jobworth_list(list/jobworth_list)
 	return jobworth_list
 
-/// called to check for updates that might require starting/stopping the siloless collapse timer
+/// This is overridden on child gamemodes to start or stop the siloless collapse timer.
 /datum/game_mode/proc/update_silo_death_timer(datum/hive_status/silo_owner)
 	return
 
-///starts the timer to end the round when no silo is left
+/// This is overridden on child gamemodes to report the time left before siloless collapse.
 /datum/game_mode/proc/get_siloless_collapse_countdown()
 	return
 
