@@ -279,6 +279,7 @@
 	damage = 60
 	penetration = 30
 	additional_xeno_penetration = 5
+	matter_cost = 10
 
 /datum/ammo/bullet/shotgun/sh15_slug/on_hit_mob(mob/target_mob, atom/movable/projectile/proj)
 	staggerstun(target_mob, proj, slowdown = 2, knockback = 1)
