@@ -3,7 +3,7 @@
 /obj/machinery/firealarm,
 /obj/machinery/vending/cigarette/colony,
 /turf/open/floor/tile/blue/whiteblue,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "aK" = (
 /obj/structure/window/framed/colony/reinforced,
 /obj/machinery/door/poddoor/mainship{
@@ -11,25 +11,25 @@
 	name = "\improper Corporate Dome Blast Door"
 	},
 /turf/open/floor/plating,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "bF" = (
 /obj/effect/spawner/random/engineering/toolbox,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 8
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "bV" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "cf" = (
 /obj/structure/computerframe{
 	anchored = 1
 	},
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "dG" = (
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/drought/shroom,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -41,13 +41,13 @@
 	dir = 8
 	},
 /obj/effect/ai_node,
-/turf/open/floor/grass,
-/area/lv624/lazarus/internal_affairs)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "eq" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "eE" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1{
 	dir = 8
@@ -56,7 +56,7 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 8
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "fb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/layer1{
 	dir = 1;
@@ -65,7 +65,7 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "fA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/machinery/door/airlock/mainship/generic/corporate{
@@ -79,7 +79,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "gU" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -87,7 +87,7 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 8
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "hb" = (
 /obj/item/storage/toolbox/mechanical,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
@@ -96,12 +96,12 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 4
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "hU" = (
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 8
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "if" = (
 /obj/item/flashlight,
 /obj/item/ammo_magazine/smg/mp7,
@@ -112,14 +112,14 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 8
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "it" = (
 /obj/machinery/door/airlock/mainship/generic/corporate{
 	dir = 1;
 	name = "Corporate Dome"
 	},
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "jc" = (
 /obj/machinery/door/airlock/mainship/generic/corporate{
 	name = "Corporate Dome"
@@ -129,18 +129,18 @@
 	name = "\improper Corporate Dome Blast Door"
 	},
 /turf/open/floor/plating,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "jv" = (
 /obj/machinery/newscaster,
 /turf/closed/wall,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "ky" = (
 /obj/item/folder/blue,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
 	},
 /turf/open/floor/tile/blue/whitebluefull,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "kz" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1{
 	dir = 8
@@ -151,7 +151,7 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "lf" = (
 /obj/machinery/light{
 	dir = 8
@@ -159,46 +159,46 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 4
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "lJ" = (
 /turf/open/floor/tile/blue/whitebluefull,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "mT" = (
 /obj/effect/landmark/excavation_site_spawner,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "no" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/machinery/random_broken_computer/crewmonitor,
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "ns" = (
 /obj/structure/safe{
 	spawnkey = 0
 	},
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "nP" = (
 /obj/machinery/vending/cola,
 /turf/open/floor/tile/blue/whiteblue,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "os" = (
 /obj/structure/table/wood,
 /obj/item/pinpointer,
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "qp" = (
 /obj/effect/landmark/start/job/survivor,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "rO" = (
 /obj/structure/table/wood,
 /obj/item/megaphone,
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "rX" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/layer1{
 	dir = 4;
@@ -207,11 +207,11 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 4
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "sS" = (
 /obj/effect/landmark/start/job/survivor,
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "tF" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1{
 	dir = 4
@@ -222,30 +222,30 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "vo" = (
 /obj/item/bedsheet/rd,
 /obj/item/toy/bikehorn/rubberducky,
 /obj/structure/bed/fancy,
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "xc" = (
 /turf/closed/wall/r_wall,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "xH" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
 	},
 /turf/open/floor/tile/blue/whitebluefull,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "yr" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1,
 /obj/structure/cable,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "yL" = (
 /obj/item/spacecash/bundle/c500{
 	pixel_x = 5;
@@ -254,19 +254,19 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 4
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "zM" = (
 /obj/structure/extinguisher_cabinet{
 	dir = 1
 	},
 /turf/open/floor/tile/blue/whiteblue,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Au" = (
 /obj/machinery/vending/snack,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 4
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "BP" = (
 /obj/machinery/door_control{
 	id = "corporate_blast";
@@ -276,10 +276,10 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "CI" = (
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Dg" = (
 /obj/item/spacecash/bundle/c100{
 	pixel_x = -12
@@ -291,7 +291,7 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 8
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Dj" = (
 /obj/machinery/door_control{
 	id = "secure_blast";
@@ -300,10 +300,10 @@
 	},
 /obj/effect/landmark/excavation_site_spawner,
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "EF" = (
 /turf/open/floor/tile/blue/whiteblue,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "EI" = (
 /obj/structure/table/wood,
 /obj/item/storage/box/donkpockets,
@@ -311,23 +311,23 @@
 	pixel_y = 5
 	},
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Fn" = (
 /obj/structure/closet/gmcloset,
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "FP" = (
 /obj/item/shard,
 /obj/structure/displaycase/destroyed,
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Ge" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/structure/cable,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Hq" = (
 /turf/template_noop,
 /area/template_noop)
@@ -338,11 +338,11 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 4
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Hx" = (
 /obj/structure/bookcase,
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "HP" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1{
 	dir = 4
@@ -350,24 +350,24 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 4
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "If" = (
 /obj/machinery/light/small,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Jf" = (
 /obj/structure/table/wood,
 /obj/item/ashtray/glass,
 /obj/item/toy/deck,
 /obj/item/mecha_parts/part/gygax_head,
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Jh" = (
 /obj/item/clothing/glasses/regular,
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Jr" = (
 /obj/effect/landmark/corpsespawner/bridgeofficer{
 	corpseidjob = "Bridge Officer";
@@ -383,7 +383,7 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "JX" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/layer1{
 	dir = 8;
@@ -392,7 +392,7 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 8
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Ks" = (
 /obj/item/spacecash/bundle/c200{
 	pixel_y = 4
@@ -400,7 +400,7 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 8
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "KD" = (
 /obj/item/ammo_casing{
 	pixel_x = 2;
@@ -415,7 +415,7 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Lj" = (
 /obj/machinery/door/poddoor/mainship{
 	id = "corporate_blast";
@@ -429,37 +429,37 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "MR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
 	},
 /turf/open/floor/tile/blue/whitebluefull,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Nr" = (
 /obj/item/weapon/gun/smg/mp7,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 4
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Ny" = (
 /obj/machinery/door/airlock/mainship/generic/corporate{
 	name = "Corporate Dome"
 	},
 /turf/open/floor/podhatch/floor,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "NN" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Of" = (
 /obj/structure/bookcase,
 /obj/item/book/manual/chef_recipes,
 /obj/item/book/manual/nuclear,
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Oy" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 10
@@ -469,12 +469,12 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 8
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Pg" = (
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 4
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "PF" = (
 /obj/item/spacecash/bundle/c100,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
@@ -482,7 +482,7 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "PW" = (
 /obj/machinery/door_control{
 	id = "science_blast";
@@ -490,16 +490,16 @@
 	pixel_x = -25
 	},
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Qi" = (
 /obj/machinery/power/apc,
 /obj/structure/cable,
 /turf/open/floor/tile/blue/whiteblue,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Ql" = (
 /obj/structure/closet/cabinet,
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "QA" = (
 /obj/item/spacecash/bundle/c100,
 /obj/item/spacecash/bundle/c200{
@@ -511,7 +511,7 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Rb" = (
 /obj/machinery/status_display{
 	pixel_y = 30
@@ -521,13 +521,13 @@
 	dir = 1
 	},
 /turf/open/floor/tile/blue/whiteblue,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Tk" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Ux" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/structure/cable,
@@ -535,13 +535,13 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "UW" = (
 /obj/item/clothing/glasses/regular/hipster,
 /obj/item/bedsheet/captain,
 /obj/structure/bed/fancy,
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Ve" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1{
@@ -550,15 +550,15 @@
 /obj/effect/ai_node,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/blue/whitebluefull,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Vi" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Vq" = (
 /obj/machinery/light/small,
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Vu" = (
 /obj/structure/window/framed/colony/reinforced,
 /obj/machinery/door/poddoor/mainship{
@@ -567,7 +567,7 @@
 	name = "\improper Corporate Dome Blast Door"
 	},
 /turf/open/floor/plating,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Wd" = (
 /obj/machinery/door/poddoor/mainship{
 	dir = 1;
@@ -581,22 +581,22 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Wx" = (
 /obj/structure/cable,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "WH" = (
 /obj/machinery/door/airlock/mainship/generic/corporate{
 	name = "Corporate Dome"
 	},
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Xd" = (
 /turf/closed/wall,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Xo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 6
@@ -604,13 +604,13 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 4
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "XD" = (
 /obj/structure/largecrate/random,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 4
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "XK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/layer1{
 	dir = 4;
@@ -619,28 +619,28 @@
 /obj/effect/ai_node,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/blue/whitebluefull,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "XP" = (
 /obj/item/book/manual/security_space_law,
 /obj/item/book/manual/ripley_build_and_repair,
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "Ya" = (
 /obj/item/contraband/poster,
 /obj/machinery/light/small{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "YP" = (
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 "YZ" = (
-/obj/structure/flora/jungle/vines,
+/obj/structure/flora/drought/shroom,
 /turf/closed/wall/r_wall,
-/area/lv624/lazarus/internal_affairs)
+/area/lv624/lazarus/internal_affairs/theme_lv624)
 
 (1,1,1) = {"
 Hq

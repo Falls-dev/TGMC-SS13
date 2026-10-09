@@ -4,104 +4,108 @@
 /area/space)
 "b" = (
 /obj/effect/landmark/xeno_silo_spawn,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "d" = (
 /obj/effect/landmark/xeno_resin_wall,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "e" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/garbledradio/theme_bigred_v2)
 "f" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "h" = (
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "i" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "j" = (
 /obj/docking_port/stationary/crashmode,
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "k" = (
 /obj/effect/landmark/start/job/xenomorph,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "p" = (
 /obj/effect/landmark/miner_platinum,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "s" = (
 /obj/effect/landmark/miner_platinum,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/garbledradio/theme_bigred_v2)
 "t" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "u" = (
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "v" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/garbledradio/theme_bigred_v2)
 "x" = (
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/southeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/garbledradio/theme_bigred_v2)
 "A" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
-"C" = (
-/obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/southeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "F" = (
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/east)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/east/theme_bigred_v2)
 "H" = (
-/turf/closed/mineral/smooth/bigred/indestructible,
-/area/bigredv2/caves/rock)
+/turf/closed/mineral/smooth/bluefrostwall/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "L" = (
 /obj/effect/landmark/xeno_resin_door,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast/garbledradio)
-"N" = (
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast/garbledradio)
-"O" = (
-/obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/southeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/garbledradio/theme_bigred_v2)
 "Q" = (
 /obj/effect/landmark/weed_node,
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/garbledradio/theme_bigred_v2)
 "R" = (
 /obj/effect/landmark/start/job/xenomorph,
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/garbledradio/theme_bigred_v2)
 "S" = (
 /obj/effect/landmark/xeno_resin_door,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "X" = (
-/turf/closed/mineral/smooth/bigred/indestructible,
+/turf/closed/mineral/smooth/bluefrostwall/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
 /area/space)
 "Z" = (
 /obj/effect/landmark/weed_node,
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 
 (1,1,1) = {"
 u
@@ -120,11 +124,11 @@ u
 u
 u
 u
-N
-N
-N
-N
-N
+x
+x
+x
+x
+x
 v
 x
 u
@@ -189,12 +193,12 @@ u
 u
 x
 x
-N
-N
-N
+x
+x
+x
 u
-N
-N
+x
+x
 x
 u
 u
@@ -256,14 +260,14 @@ u
 u
 u
 u
-N
-N
-N
-N
-N
+x
+x
+x
+x
+x
 u
 x
-N
+x
 x
 u
 u
@@ -324,15 +328,15 @@ u
 u
 u
 u
-C
-N
-N
+e
+x
+x
 Q
-N
+x
 u
 u
 u
-N
+x
 x
 u
 u
@@ -393,16 +397,16 @@ u
 u
 u
 u
-N
+x
 v
 x
-N
-N
+x
+x
 u
 u
 u
-N
-O
+x
+v
 u
 u
 u
@@ -462,17 +466,17 @@ u
 u
 x
 x
-N
-N
 x
-N
-N
-u
-u
-u
-N
 x
-N
+x
+x
+x
+u
+u
+u
+x
+x
+x
 u
 u
 u
@@ -529,19 +533,19 @@ u
 u
 u
 u
-N
-N
-N
 x
-N
-N
-u
-u
-u
-u
-N
 x
-N
+x
+x
+x
+x
+u
+u
+u
+u
+x
+x
+x
 L
 h
 h
@@ -598,21 +602,21 @@ u
 u
 u
 u
-N
-N
-Q
-N
-u
-u
-u
-u
-u
-u
-N
 x
-N
+x
+Q
+x
+u
+u
+u
+u
+u
+u
+x
+x
+x
 L
-N
+x
 h
 h
 h
@@ -667,19 +671,19 @@ u
 u
 u
 u
-N
-C
-N
-N
-u
-u
-u
-u
-u
-u
-N
 x
-N
+e
+x
+x
+u
+u
+u
+u
+u
+u
+x
+x
+x
 L
 h
 h
@@ -736,19 +740,19 @@ u
 u
 u
 x
-N
 x
-N
-N
+x
+x
+x
 u
 u
 u
 u
-N
-N
+x
+x
 e
-O
-N
+v
+x
 L
 h
 h
@@ -804,18 +808,18 @@ u
 u
 u
 u
-N
-N
-x
-N
 x
 x
 x
 x
 x
-N
-N
-N
+x
+x
+x
+x
+x
+x
+x
 x
 u
 u
@@ -873,18 +877,18 @@ u
 u
 u
 u
-N
+x
 R
-N
 x
-N
-N
-N
-N
 x
-N
+x
+x
+x
+x
+x
+x
 v
-N
+x
 u
 u
 u
@@ -943,17 +947,17 @@ u
 u
 u
 v
-N
-N
-N
-N
+x
+x
+x
+x
 v
 e
-N
+x
 v
-N
-N
-N
+x
+x
+x
 u
 u
 u
@@ -1002,7 +1006,7 @@ a
 "}
 (14,1,1) = {"
 x
-N
+x
 u
 u
 u
@@ -1011,17 +1015,17 @@ u
 u
 u
 x
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
+x
+x
+x
+x
+x
+x
+x
+x
+x
+x
+x
 u
 u
 u
@@ -1079,16 +1083,16 @@ u
 u
 u
 u
-N
+x
 e
-N
+x
 e
 v
-N
-N
+x
+x
 e
-N
-N
+x
+x
 x
 u
 u
@@ -1148,17 +1152,17 @@ u
 u
 x
 x
-N
 x
-N
-N
-N
-N
-N
-N
-N
-N
-N
+x
+x
+x
+x
+x
+x
+x
+x
+x
+x
 u
 u
 u
@@ -1208,20 +1212,20 @@ X
 a
 "}
 (17,1,1) = {"
-N
+x
 u
 u
 u
 u
 u
 u
-N
-N
-N
+x
+x
+x
 x
 v
-N
-N
+x
+x
 u
 u
 u
@@ -1277,7 +1281,7 @@ X
 a
 "}
 (18,1,1) = {"
-N
+x
 u
 u
 u
@@ -1285,11 +1289,11 @@ u
 u
 u
 x
-N
 x
-N
-N
-N
+x
+x
+x
+x
 u
 u
 u
@@ -1346,17 +1350,17 @@ X
 a
 "}
 (19,1,1) = {"
-N
+x
 u
 u
 u
 u
 u
-N
-N
+x
+x
 v
 x
-N
+x
 u
 u
 u
@@ -1415,16 +1419,16 @@ H
 a
 "}
 (20,1,1) = {"
-N
+x
 u
 u
-N
-N
-N
+x
+x
+x
 e
-N
-N
-N
+x
+x
+x
 e
 u
 u
@@ -1484,16 +1488,16 @@ H
 a
 "}
 (21,1,1) = {"
-N
-N
-N
-N
-N
-N
-N
-N
 x
-N
+x
+x
+x
+x
+x
+x
+x
+x
+x
 u
 u
 u
@@ -1553,16 +1557,16 @@ H
 a
 "}
 (22,1,1) = {"
-N
-N
-N
-N
 x
 x
-N
-N
-N
-N
+x
+x
+x
+x
+x
+x
+x
+x
 u
 u
 u
@@ -1624,13 +1628,13 @@ a
 (23,1,1) = {"
 s
 e
-N
 x
-N
-N
+x
+x
+x
 e
-N
-N
+x
+x
 u
 u
 u
@@ -1691,13 +1695,13 @@ H
 a
 "}
 (24,1,1) = {"
-N
 x
-O
-N
-N
-N
-N
+x
+v
+x
+x
+x
+x
 x
 u
 u
@@ -1761,8 +1765,8 @@ a
 "}
 (25,1,1) = {"
 x
-N
-N
+x
+x
 x
 u
 u
@@ -1829,9 +1833,9 @@ H
 a
 "}
 (26,1,1) = {"
-N
-N
-N
+x
+x
+x
 x
 u
 u

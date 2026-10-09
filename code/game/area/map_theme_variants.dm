@@ -3795,3 +3795,51 @@
 /area/space/theme_original
 	temperature = T20C
 	ambience = list('sound/effects/wind/wind_2_1.ogg')
+
+/area/bigredv2/outside/admin_building/theme_bigred_v2
+	temperature = T20C
+	ambience = list('sound/ambience/ambicave.ogg')
+
+/area/bigredv2/outside/medical/theme_bigred_v2
+	temperature = T20C
+	ambience = list('sound/ambience/ambicave.ogg')
+
+/area/bigredv2/outside/chapel/theme_bigred_v2
+	temperature = T20C
+	ambience = list('sound/ambience/ambicave.ogg')
+
+/area/bigredv2/outside/southcheckpoint/theme_bigred_v2
+	temperature = T20C
+	ambience = list('sound/ambience/ambicave.ogg')
+
+/area/bigredv2/outside/general_store/theme_bigred_v2
+	temperature = T20C
+	ambience = list('sound/ambience/ambicave.ogg')
+
+/area/bigredv2/outside/library/theme_bigred_v2
+	temperature = T20C
+	ambience = list('sound/ambience/ambicave.ogg')
+
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2
+	temperature = T20C
+	ambience = list('sound/ambience/ambicave.ogg')
+
+/area/bigredv2/caves/undergroundrobotics/theme_bigred_v2
+	temperature = T20C
+	ambience = list('sound/ambience/ambicave.ogg')
+
+/area/bigredv2/caves/secomplex/theme_bigred_v2
+	temperature = T20C
+	ambience = list('sound/ambience/ambicave.ogg')
+
+/area/bigredv2/outside/storage/theme_bigred_v2
+	temperature = T20C
+	ambience = list('sound/ambience/ambicave.ogg')
+
+/area/lv624/lazarus/quartstorage/two/theme_lv624
+	temperature = T20C
+	ambience = list('sound/ambience/ambicave.ogg', 'sound/ambience/ambilava1.ogg', 'sound/ambience/ambilava2.ogg')
+
+/area/lv624/lazarus/medbay/theme_lv624
+	temperature = T20C
+	ambience = list('sound/ambience/ambicave.ogg', 'sound/ambience/ambilava1.ogg', 'sound/ambience/ambilava2.ogg')

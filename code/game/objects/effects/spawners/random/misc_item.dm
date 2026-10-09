@@ -218,6 +218,10 @@
 		/obj/item/restraints/handcuffs/cable = 1,
 	)
 
+// Used by the legacy Big Red modular general stores.
+/obj/effect/spawner/random/misc/handcuffs/cable/cyan
+	loot = list(/obj/item/restraints/handcuffs/cable/cyan)
+
 /obj/effect/spawner/random/misc/hand_labeler
 	name = "hand labeler spawner"
 	icon_state = "random_labeler"

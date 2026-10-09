@@ -3,113 +3,113 @@
 /turf/open/floor/tile/brown{
 	dir = 10
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "as" = (
 /turf/open/floor/tile/brown{
 	dir = 5
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "au" = (
 /turf/open/floor/tile/brown/corner{
 	dir = 8
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "cE" = (
 /obj/structure/reagent_dispensers/fueltank/barrel,
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "dZ" = (
 /turf/open/floor/tile/brown/corner{
 	dir = 1
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "eh" = (
 /obj/structure/largecrate/random/case/double,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "eI" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "gi" = (
-/obj/structure/flora/jungle/vines,
+/obj/structure/flora/drought/shroom,
 /turf/closed/wall,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "gJ" = (
 /obj/structure/window/framed/colony,
 /turf/open/floor/plating,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "hX" = (
 /obj/structure/largecrate/chick,
 /turf/open/floor/tile/brown{
 	dir = 8
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "iE" = (
 /obj/structure/window_frame/colony,
 /turf/open/floor/plating,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "iZ" = (
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "jb" = (
 /obj/structure/cable,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "ji" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/structure/largecrate/random/case/double,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "ju" = (
 /obj/structure/rack,
 /obj/item/tool/multitool,
 /obj/item/tool/multitool,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "jV" = (
 /turf/open/floor/tile/brown{
 	dir = 8
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "kx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/closed/wall,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "kz" = (
 /turf/open/floor/tile/brown{
 	dir = 4
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "mj" = (
 /obj/structure/closet/crate/freezer,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "mN" = (
 /obj/machinery/light/small,
 /turf/open/floor/tile/brown{
 	dir = 0
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "mS" = (
 /obj/effect/landmark/excavation_site_spawner,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/brown{
 	dir = 5
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "mX" = (
 /obj/structure/reagent_dispensers/fueltank/barrel,
 /turf/open/floor/tile/brown{
 	dir = 4
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "ov" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -117,47 +117,47 @@
 /turf/open/floor/tile/brown{
 	dir = 1
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "oA" = (
 /obj/effect/spawner/random/misc/trash,
 /turf/open/floor/tile/brown{
 	dir = 0
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "pl" = (
 /obj/effect/ai_node,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "pF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/structure/cable,
 /turf/open/floor/tile/brown{
 	dir = 1
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "rz" = (
 /obj/structure/window/framed/colony,
 /turf/open/floor/plating/platebotc,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "rF" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1{
 	dir = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "th" = (
 /obj/structure/table/reinforced,
 /obj/effect/spawner/random/food_or_drink/drink_alcohol_bottle,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "tH" = (
 /obj/effect/spawner/random/misc/trash,
 /turf/open/floor/tile/brown{
 	dir = 4
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "vk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 6
@@ -165,10 +165,10 @@
 /obj/structure/cable,
 /obj/structure/sign/poster,
 /turf/closed/wall,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "vP" = (
 /turf/open/floor/tile/brown/corner,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "wF" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -176,17 +176,17 @@
 /turf/open/floor/tile/brown{
 	dir = 8
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "yx" = (
 /obj/structure/largecrate/supply/medicine/blood,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "yL" = (
 /obj/structure/rack,
 /obj/item/stack/cable_coil,
 /obj/item/weapon/combat_knife,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "ze" = (
 /obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 1;
@@ -195,55 +195,55 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/structure/cable,
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "zv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "Ad" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/structure/cable,
 /obj/structure/reagent_dispensers/fueltank/barrel,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "Bv" = (
 /obj/structure/rack,
 /obj/item/reagent_containers/food/snacks/upp/fish,
 /obj/item/reagent_containers/food/snacks/upp/fish,
 /obj/item/reagent_containers/food/snacks/upp/fish,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "Cp" = (
 /obj/structure/reagent_dispensers/fueltank/barrel,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "Ct" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "Cx" = (
 /obj/effect/landmark/excavation_site_spawner,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "CF" = (
 /obj/effect/spawner/random/weaponry/ammo,
 /turf/open/floor/tile/brown{
 	dir = 1
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "CG" = (
 /obj/effect/spawner/random/misc/trash,
 /turf/open/floor/tile/brown{
 	dir = 8
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "CX" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "Dp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
@@ -251,18 +251,18 @@
 /obj/structure/cable,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "Dx" = (
 /turf/open/floor/tile/brown{
 	dir = 6
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "ER" = (
 /obj/machinery/door/airlock/mainship/engineering/free_access{
 	name = "\improper Storage Dome"
 	},
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "Gt" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -270,7 +270,7 @@
 /turf/open/floor/tile/brown{
 	dir = 4
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "GS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 9
@@ -279,7 +279,7 @@
 /obj/effect/ai_node,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "HO" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 6
@@ -287,18 +287,18 @@
 /turf/open/floor/tile/brown/corner{
 	dir = 1
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "Ic" = (
 /obj/structure/reagent_dispensers/fueltank/barrel,
 /turf/open/floor/tile/brown{
 	dir = 0
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "Ih" = (
 /turf/open/floor/tile/brown{
 	dir = 0
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "Iu" = (
 /turf/template_noop,
 /area/template_noop)
@@ -307,19 +307,19 @@
 /obj/structure/cable,
 /obj/effect/ai_node,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "IN" = (
 /obj/structure/largecrate/random/case,
 /turf/open/floor/tile/brown{
 	dir = 0
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "Jl" = (
 /obj/effect/spawner/random/weaponry/ammo,
 /turf/open/floor/tile/brown{
 	dir = 6
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "JF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/structure/reagent_dispensers/fueltank/barrel,
@@ -327,55 +327,55 @@
 	dir = 1
 	},
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "Kr" = (
 /obj/effect/landmark/excavation_site_spawner,
 /turf/open/floor/tile/brown{
 	dir = 10
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "Lv" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "LK" = (
 /obj/structure/closet/crate/freezer/rations,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "Ml" = (
 /obj/structure/cable,
 /turf/closed/wall,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "Nb" = (
 /obj/structure/largecrate,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "Ne" = (
 /turf/open/floor/tile/brown/corner{
 	dir = 4
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "Nw" = (
 /turf/open/floor/tile/brown{
 	dir = 1
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "NH" = (
 /obj/effect/spawner/random/misc/trash,
 /turf/open/floor/tile/brown{
 	dir = 1
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "NR" = (
 /obj/structure/largecrate/random/case/small,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "OD" = (
 /obj/structure/cable,
 /turf/open/floor/tile/brown/corner{
 	dir = 8
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "OT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
@@ -384,7 +384,7 @@
 /turf/open/floor/tile/brown{
 	dir = 4
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "Ph" = (
 /obj/structure/rack,
 /obj/item/stack/medical/heal_pack/advanced/bruise_pack{
@@ -392,23 +392,23 @@
 	},
 /obj/effect/spawner/random/food_or_drink/sugary_snack,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "PP" = (
 /obj/item/gift/marine,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/lazarus/quartstorage/two)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "PY" = (
 /obj/structure/rack,
 /obj/item/reagent_containers/food/snacks/lollipop/combat,
 /obj/item/reagent_containers/food/snacks/lollipop/tramadol/combat,
 /obj/effect/spawner/random/engineering/tool,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "Qj" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/structure/sign/poster,
 /turf/closed/wall,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "Rx" = (
 /obj/machinery/power/apc/drained{
 	dir = 1
@@ -417,22 +417,22 @@
 /turf/open/floor/tile/brown{
 	dir = 0
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "RN" = (
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "Ss" = (
 /obj/item/storage/firstaid/o2,
 /obj/structure/rack,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "SB" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 5
 	},
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "Vs" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
@@ -440,28 +440,28 @@
 /obj/structure/cable,
 /obj/effect/ai_node,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "VF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 9
 	},
 /obj/structure/cable,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "VI" = (
 /obj/structure/largecrate/random/barrel,
 /turf/open/floor/tile/brown{
 	dir = 1
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "WN" = (
 /turf/closed/wall,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "XK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/structure/cable,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "XR" = (
 /obj/machinery/door/airlock/mainship/engineering/free_access{
 	name = "\improper Storage Dome"
@@ -471,25 +471,25 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "Yo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/structure/cable,
 /turf/open/floor/tile/brown{
 	dir = 0
 	},
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "YA" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/engineering/powercell,
 /obj/effect/spawner/random/food_or_drink/outdoors_snacks,
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 "YT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/structure/cable,
 /turf/closed/wall,
-/area/lv624/lazarus/quartstorage/two)
+/area/lv624/lazarus/quartstorage/two/theme_lv624)
 
 (1,1,1) = {"
 Iu

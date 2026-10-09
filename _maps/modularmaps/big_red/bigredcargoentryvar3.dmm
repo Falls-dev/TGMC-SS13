@@ -1,22 +1,35 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/wall,
-/area/bigredv2/outside/cargo)
+/area/bigredv2/outside/cargo/theme_bigred_v2)
+"h" = (
+/obj/structure/barricade/wood{
+	dir = 4
+	},
+/obj/item/stack/sheet/wood,
+/turf/open/floor/marking/warning{
+	dir = 4
+	},
+/area/bigredv2/outside/c/theme_bigred_v2)
 "l" = (
 /obj/structure/barricade/wood{
 	dir = 4
 	},
 /turf/open/floor,
-/area/bigredv2/outside/cargo)
+/area/bigredv2/outside/cargo/theme_bigred_v2)
 "m" = (
 /obj/effect/landmark/weed_node,
 /obj/machinery/door/poddoor/shutters/mainship,
 /turf/open/floor,
-/area/bigredv2/outside/cargo)
+/area/bigredv2/outside/cargo/theme_bigred_v2)
+"p" = (
+/obj/item/stack/sheet/wood,
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
 "F" = (
 /obj/machinery/door/poddoor/shutters/mainship,
 /turf/open/floor,
-/area/bigredv2/outside/cargo)
+/area/bigredv2/outside/cargo/theme_bigred_v2)
 "G" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
@@ -24,7 +37,7 @@
 	},
 /obj/item/stack/sheet/wood,
 /turf/open/floor,
-/area/bigredv2/outside/cargo)
+/area/bigredv2/outside/cargo/theme_bigred_v2)
 "I" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
@@ -32,35 +45,22 @@
 	},
 /obj/machinery/door/poddoor/shutters/mainship,
 /turf/open/floor,
-/area/bigredv2/outside/cargo)
-"J" = (
+/area/bigredv2/outside/cargo/theme_bigred_v2)
+"L" = (
 /obj/structure/barricade/wood{
 	dir = 4
 	},
-/turf/open/floor/marking/asteroidwarning{
+/turf/open/floor/marking/warning{
 	dir = 4
 	},
-/area/bigredv2/outside/c)
-"R" = (
-/obj/item/stack/sheet/wood,
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"S" = (
-/obj/structure/barricade/wood{
-	dir = 4
-	},
-/obj/item/stack/sheet/wood,
-/turf/open/floor/marking/asteroidwarning{
-	dir = 4
-	},
-/area/bigredv2/outside/c)
-"U" = (
+/area/bigredv2/outside/c/theme_bigred_v2)
+"M" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
 
 (1,1,1) = {"
 a
@@ -77,9 +77,9 @@ I
 a
 "}
 (3,1,1) = {"
-J
-S
-J
-U
-R
+L
+h
+L
+M
+p
 "}

@@ -1,45 +1,45 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /obj/structure/catwalk,
-/turf/open/liquid/water/river,
-/area/lv624/ground/river2)
+/turf/open/liquid/lava/autosmoothing,
+/area/lv624/ground/river2/theme_lv624)
 "c" = (
 /obj/structure/grille/broken,
 /turf/open/floor/plating,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 "d" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/structure/cable,
 /turf/open/floor,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 "e" = (
 /turf/open/floor/plating,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 "g" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 8
 	},
 /obj/effect/landmark/weed_node,
 /turf/open/floor,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 "k" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 4
 	},
 /obj/effect/landmark/corpsespawner/colonist,
 /turf/open/floor,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 "n" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 4
 	},
 /turf/open/floor,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 "p" = (
 /obj/effect/landmark/corpsespawner/colonist,
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/plating,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 "q" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -47,43 +47,43 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/structure/cable,
 /turf/open/floor,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 "r" = (
 /obj/effect/decal/cleanable/blood/gibs/xeno,
 /turf/open/floor,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 "s" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/plating/dmg1,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 "t" = (
 /obj/structure/fence,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 "u" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/effect/ai_node,
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/structure/cable,
 /turf/open/floor,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 "w" = (
 /obj/structure/grille/smoothing,
 /turf/open/floor/plating,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 "y" = (
 /obj/effect/spawner/random/weaponry/ammo/sidearm,
 /turf/open/floor,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 "A" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 8
 	},
 /turf/open/floor,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 "C" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 8
@@ -93,58 +93,58 @@
 	},
 /obj/effect/decal/cleanable/blood/gibs/xeno,
 /turf/open/floor,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 "D" = (
 /obj/structure/fence,
 /turf/open/floor/plating,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 "F" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/effect/landmark/corpsespawner/colonist,
 /obj/structure/cable,
 /turf/open/floor,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 "H" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 "J" = (
 /turf/open/floor/plating/dmg1,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 "K" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 "M" = (
-/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/flora/drought/shroom,
 /obj/structure/catwalk,
-/turf/open/liquid/water/river,
-/area/lv624/ground/river2)
+/turf/open/liquid/lava/autosmoothing,
+/area/lv624/ground/river2/theme_lv624)
 "N" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 "P" = (
-/turf/open/liquid/water/river/deep,
-/area/lv624/ground/river2)
+/turf/open/liquid/lava/autosmoothing,
+/area/lv624/ground/river2/theme_lv624)
 "R" = (
 /turf/open/floor,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 "T" = (
 /turf/open/floor/plating/dmg3,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 "V" = (
 /obj/structure/grille/broken,
-/turf/open/liquid/water/river/deep,
-/area/lv624/ground/river2)
+/turf/open/liquid/lava/autosmoothing,
+/area/lv624/ground/river2/theme_lv624)
 "W" = (
 /turf/closed/wall,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 "X" = (
 /obj/machinery/floodlight/colony{
 	dir = 1
@@ -153,12 +153,8 @@
 	dir = 4
 	},
 /obj/structure/catwalk,
-/turf/open/liquid/water/river,
-/area/lv624/ground/river2)
-"Y" = (
-/obj/structure/catwalk,
-/turf/open/liquid/water/river/deep,
-/area/lv624/ground/river2)
+/turf/open/liquid/lava/autosmoothing,
+/area/lv624/ground/river2/theme_lv624)
 "Z" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 4
@@ -167,16 +163,16 @@
 	dir = 4
 	},
 /turf/open/floor,
-/area/lv624/ground/river2)
+/area/lv624/ground/river2/theme_lv624)
 
 (1,1,1) = {"
 X
 a
 a
-Y
-Y
-Y
-Y
+a
+a
+a
+a
 a
 a
 a
@@ -260,7 +256,7 @@ a
 P
 P
 V
-Y
+a
 a
 M
 a

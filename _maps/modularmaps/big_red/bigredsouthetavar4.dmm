@@ -3,30 +3,29 @@
 /turf/open/floor/tile/dark/red2/corner{
 	dir = 8
 	},
-/area/bigredv2/caves/south)
+/area/bigredv2/caves/south/theme_bigred_v2)
 "ac" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/south)
-"ad" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/tile/dark/red2/corner,
-/area/bigredv2/caves/south)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/south/theme_bigred_v2)
 "ae" = (
 /obj/structure/closet/secure_closet/security,
 /turf/open/floor/tile/dark/red2/corner{
 	dir = 8
 	},
-/area/bigredv2/caves/south)
+/area/bigredv2/caves/south/theme_bigred_v2)
 "ag" = (
 /obj/effect/landmark/weed_node,
 /obj/effect/ai_node,
 /turf/open/floor/tile/dark/red2/corner{
 	dir = 8
 	},
-/area/bigredv2/caves/south)
+/area/bigredv2/caves/south/theme_bigred_v2)
 "ah" = (
-/turf/closed/mineral/smooth/bigred/indestructible,
+/turf/closed/mineral/smooth/bluefrostwall/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
 /area/space)
 "ai" = (
 /obj/structure/rack,
@@ -35,15 +34,11 @@
 /turf/open/floor/tile/dark/red2/corner{
 	dir = 8
 	},
-/area/bigredv2/caves/south)
-"aj" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/r_wall,
-/area/bigredv2/caves/south)
+/area/bigredv2/caves/south/theme_bigred_v2)
 "ak" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/dark/yellow2/corner,
-/area/bigredv2/caves/south)
+/area/bigredv2/caves/south/theme_bigred_v2)
 "al" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 8
@@ -51,17 +46,17 @@
 /turf/open/floor/tile/dark/red2/corner{
 	dir = 8
 	},
-/area/bigredv2/caves/south)
+/area/bigredv2/caves/south/theme_bigred_v2)
 "am" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/dark/red2/corner{
 	dir = 8
 	},
-/area/bigredv2/caves/south)
+/area/bigredv2/caves/south/theme_bigred_v2)
 "an" = (
 /obj/effect/landmark/fog_blocker,
 /turf/open/floor/tile/dark/yellow2/corner,
-/area/bigredv2/caves/south)
+/area/bigredv2/caves/south/theme_bigred_v2)
 "ao" = (
 /obj/machinery/door/airlock/multi_tile/mainship/generic{
 	dir = 2
@@ -72,82 +67,65 @@
 /turf/open/floor/tile/dark/red2/corner{
 	dir = 8
 	},
-/area/bigredv2/caves/south)
+/area/bigredv2/caves/south/theme_bigred_v2)
 "as" = (
 /obj/effect/landmark/fog_blocker,
 /turf/closed/wall/r_wall,
-/area/bigredv2/caves/south)
+/area/bigredv2/caves/south/theme_bigred_v2)
 "at" = (
 /obj/machinery/door/airlock/multi_tile/mainship/generic,
 /obj/effect/ai_node,
 /turf/open/floor/tile/dark/yellow2/corner,
-/area/bigredv2/outside/nanotrasen_lab/inside)
+/area/bigredv2/outside/nanotrasen_lab/inside/theme_bigred_v2)
 "au" = (
 /obj/machinery/light,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/dark/red2/corner,
-/area/bigredv2/caves/south)
-"av" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/r_wall/unmeltable,
-/area/bigredv2/caves/south)
+/area/bigredv2/caves/south/theme_bigred_v2)
 "aw" = (
 /obj/effect/landmark/corpsespawner/colonist,
 /obj/effect/decal/cleanable/blood/oil,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/south)
-"ax" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/rack,
-/obj/item/storage/holster/belt/pistol/m4a3/full,
-/obj/item/storage/holster/belt/pistol/m4a3/officer,
-/turf/open/floor/tile/dark/red2/corner,
-/area/bigredv2/caves/south)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/south/theme_bigred_v2)
 "ay" = (
 /turf/closed/wall/r_wall,
-/area/bigredv2/caves/south)
+/area/bigredv2/caves/south/theme_bigred_v2)
 "az" = (
 /turf/closed/wall/r_wall/unmeltable,
-/area/bigredv2/caves/south)
+/area/bigredv2/caves/south/theme_bigred_v2)
 "aA" = (
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/south)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/south/theme_bigred_v2)
 "aB" = (
 /obj/effect/landmark/corpsespawner/colonist,
 /obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/tile/dark/red2/corner,
-/area/bigredv2/caves/south)
-"aD" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/sandedge{
-	dir = 4
-	},
-/turf/open/floor/tile/dark/red2/corner{
-	dir = 8
-	},
-/area/bigredv2/caves/south)
+/area/bigredv2/caves/south/theme_bigred_v2)
 "aE" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/south)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/south/theme_bigred_v2)
 "aF" = (
 /turf/open/floor/tile/dark/red2/corner,
-/area/bigredv2/caves/south)
+/area/bigredv2/caves/south/theme_bigred_v2)
 "aI" = (
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "aJ" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/south)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/south/theme_bigred_v2)
 "aK" = (
 /turf/open/floor/tile/dark/yellow2/corner,
-/area/bigredv2/caves/south)
+/area/bigredv2/caves/south/theme_bigred_v2)
 "aL" = (
 /turf/open/floor/tile/dark/yellow2/corner,
-/area/bigredv2/outside/nanotrasen_lab/inside)
+/area/bigredv2/outside/nanotrasen_lab/inside/theme_bigred_v2)
 "aM" = (
 /obj/structure/bed/chair/office/light{
 	dir = 1
@@ -155,25 +133,31 @@
 /turf/open/floor/tile/dark/red2/corner{
 	dir = 8
 	},
-/area/bigredv2/caves/south)
+/area/bigredv2/caves/south/theme_bigred_v2)
 "aO" = (
 /obj/effect/landmark/fog_blocker,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/south)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/south/theme_bigred_v2)
 "aP" = (
 /obj/effect/landmark/fog_blocker,
 /turf/closed/wall/r_wall,
-/area/bigredv2/outside/nanotrasen_lab/inside)
+/area/bigredv2/outside/nanotrasen_lab/inside/theme_bigred_v2)
 "aQ" = (
 /obj/structure/table,
 /obj/item/storage/holster/belt/pistol,
 /turf/open/floor/tile/dark/red2/corner,
-/area/bigredv2/caves/south)
+/area/bigredv2/caves/south/theme_bigred_v2)
 "aR" = (
 /turf/closed/wall/r_wall,
-/area/bigredv2/outside/nanotrasen_lab/inside)
-"aW" = (
-/obj/effect/decal/cleanable/dirt,
+/area/bigredv2/outside/nanotrasen_lab/inside/theme_bigred_v2)
+"aZ" = (
+/obj/structure/table,
+/obj/machinery/computer/security,
+/turf/open/floor/tile/dark/red2/corner{
+	dir = 8
+	},
+/area/bigredv2/caves/south/theme_bigred_v2)
+"hY" = (
 /obj/machinery/door/airlock/multi_tile/mainship/generic{
 	dir = 2
 	},
@@ -183,28 +167,38 @@
 /turf/open/floor/tile/dark/red2/corner{
 	dir = 8
 	},
-/area/bigredv2/caves/south)
-"aZ" = (
-/obj/structure/table,
-/obj/machinery/computer/security,
+/area/bigredv2/caves/south/theme_bigred_v2)
+"EJ" = (
+/obj/structure/rack,
+/obj/item/storage/holster/belt/pistol/m4a3/full,
+/obj/item/storage/holster/belt/pistol/m4a3/officer,
+/turf/open/floor/tile/dark/red2/corner,
+/area/bigredv2/caves/south/theme_bigred_v2)
+"JO" = (
+/obj/effect/landmark/fog_blocker,
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
+"QG" = (
+/obj/effect/turf_decal/sandedge{
+	dir = 4
+	},
 /turf/open/floor/tile/dark/red2/corner{
 	dir = 8
 	},
-/area/bigredv2/caves/south)
-"JO" = (
-/obj/effect/landmark/fog_blocker,
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
+/area/bigredv2/caves/south/theme_bigred_v2)
 
 (1,1,1) = {"
 aR
 JO
 ay
-aj
-aD
-aW
-aj
-av
+ay
+QG
+hY
+ay
+az
 aI
 ah
 "}
@@ -216,7 +210,7 @@ aZ
 aM
 ab
 ab
-av
+az
 aI
 ah
 "}
@@ -228,7 +222,7 @@ aQ
 aF
 aB
 au
-av
+az
 aI
 ah
 "}
@@ -240,7 +234,7 @@ ab
 ag
 ab
 ay
-av
+az
 aI
 ah
 "}
@@ -248,11 +242,11 @@ ah
 aL
 an
 ak
-ad
-ad
-ad
-ax
-av
+aF
+aF
+aF
+EJ
+az
 aI
 ah
 "}

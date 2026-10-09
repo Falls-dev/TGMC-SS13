@@ -1,33 +1,27 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"aN" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/green/hidden,
+"aI" = (
 /obj/structure/cable,
+/obj/effect/ai_node,
+/obj/effect/landmark/weed_node,
+/turf/open/floor/plating,
+/area/bigredv2/outside/engineering/theme_bigred_v2)
+"bb" = (
+/obj/item/clothing/head/welding,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "bg" = (
 /obj/effect/spawner/random/machinery/machine_frame,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
-"bp" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/head/welding,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "bJ" = (
 /obj/effect/spawner/random/misc/structure/broken_window/colonyspawn,
 /turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "bR" = (
 /obj/structure/sign/safety/high_radiation,
 /obj/effect/landmark/weed_node,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
-"ci" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/green/hidden,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "cG" = (
 /obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 1;
@@ -36,50 +30,40 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "cO" = (
 /turf/closed/wall/r_wall,
-/area/bigredv2/outside/s)
+/area/bigredv2/outside/s/theme_bigred_v2)
 "cT" = (
 /obj/machinery/vending/snack,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "da" = (
 /obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "db" = (
 /obj/structure/bed/chair{
 	dir = 8
 	},
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "dB" = (
 /obj/effect/ai_node,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
-"dW" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/weed_node,
-/obj/effect/ai_node,
-/turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
-"dZ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	on = 1
-	},
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "ek" = (
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/outside/s)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/outside/s/theme_bigred_v2)
+"ex" = (
+/obj/effect/spawner/random/engineering/structure/tank/waterweighted,
+/turf/open/floor,
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "fl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "fI" = (
 /obj/machinery/light{
 	dir = 8
@@ -87,7 +71,7 @@
 /obj/effect/landmark/weed_node,
 /obj/structure/cable,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "gs" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /obj/machinery/door/airlock/mainship/engineering/free_access{
@@ -96,31 +80,24 @@
 	},
 /obj/structure/cable,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
-"hx" = (
-/obj/machinery/shower{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/freezer,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "hG" = (
 /obj/effect/landmark/excavation_site_spawner,
 /turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "ik" = (
 /obj/structure/sign/safety/hazard,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "iS" = (
 /obj/machinery/computer/station_alert,
 /obj/structure/table,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "iV" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "jb" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 5
@@ -128,10 +105,10 @@
 /obj/structure/cable,
 /obj/effect/ai_node,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "jc" = (
-/turf/open/floor/plating/ground/mars/random/dirt,
-/area/bigredv2/outside/s)
+/turf/open/floor/plating/ground/snow/layer1,
+/area/bigredv2/outside/s/theme_bigred_v2)
 "ji" = (
 /obj/machinery/door/airlock/mainship/secure/free_access{
 	dir = 1;
@@ -139,14 +116,14 @@
 	},
 /obj/structure/cable,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "jn" = (
 /obj/effect/landmark/weed_node,
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/cavetodirt{
+/turf/open/floor/plating/ground/ice{
 	dir = 1
 	},
-/area/bigredv2/caves/southwest)
+/area/bigredv2/caves/southwest/theme_bigred_v2)
 "jq" = (
 /obj/effect/spawner/random/misc/structure/broken_reinforced_window/colonyspawn,
 /obj/machinery/door/poddoor/shutters/mainship{
@@ -155,137 +132,109 @@
 	name = "\improper Engineering Shutters"
 	},
 /turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "jy" = (
 /obj/item/shard,
 /obj/effect/decal/cleanable/blood/xeno,
 /obj/structure/window_frame/colony,
 /turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "jF" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /obj/structure/cable,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
+"jJ" = (
+/obj/effect/ai_node,
+/obj/structure/cable,
+/turf/open/floor,
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "jR" = (
 /obj/structure/table,
 /obj/item/tool/lighter/random,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "jT" = (
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/southwest)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southwest/theme_bigred_v2)
 "kf" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/bigredv2/outside/c)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/bigredv2/outside/c/theme_bigred_v2)
 "ks" = (
 /obj/structure/table,
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/engineering/technology_scanner,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "kx" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /obj/structure/cable,
 /obj/effect/landmark/weed_node,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
-"kZ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/ai_node,
-/obj/structure/cable,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
-"lc" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/multi_tile/mainship/generic{
-	name = "\improper Engineering Complex"
-	},
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "lr" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "lE" = (
 /obj/effect/landmark/start/job/survivor,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "mo" = (
 /obj/structure/table,
 /obj/machinery/light,
 /obj/effect/spawner/random/engineering/tool,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
-"mW" = (
-/obj/structure/table,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/tool/pen,
+/area/bigredv2/outside/engineering/theme_bigred_v2)
+"ne" = (
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "nf" = (
 /obj/machinery/computer/area_atmos,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
-"nl" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/mask/breath,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "nP" = (
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
-"os" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/mainship/secure/free_access{
-	name = "\improper Engineering Secure Storage"
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
 	},
-/obj/structure/cable,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
-"oI" = (
-/obj/effect/spawner/random/engineering/structure/tank/waterweighted,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "pC" = (
 /obj/structure/cable,
 /obj/effect/landmark/weed_node,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "pZ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "qe" = (
 /obj/structure/table,
 /obj/item/tool/lighter/random,
 /obj/item/lightreplacer,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "qg" = (
 /obj/structure/closet/radiation,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "qq" = (
 /obj/machinery/atmospherics/pipe/manifold/green/hidden,
 /obj/structure/cable,
 /obj/effect/ai_node,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "qu" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/dirttosand/autosmooth{
+/turf/open/floor/plating/ground/snow/layer1{
 	dir = 1
 	},
-/area/bigredv2/outside/s)
-"qy" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/ai_node,
-/turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/s/theme_bigred_v2)
 "qD" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /obj/machinery/door/airlock/mainship/engineering/free_access{
@@ -293,21 +242,7 @@
 	name = "\improper Engineering Lockers"
 	},
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
-"qF" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/lightreplacer,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
-"re" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/oil,
-/obj/effect/landmark/weed_node,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
-"rq" = (
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southwest)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "ru" = (
 /obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 1;
@@ -315,30 +250,41 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
+"rP" = (
+/obj/machinery/shower{
+	dir = 8
+	},
+/turf/open/floor/freezer,
+/area/bigredv2/outside/engineering/theme_bigred_v2)
+"sd" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "sk" = (
 /obj/machinery/computer/arcade,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "sH" = (
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/bigredv2/outside/sw)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/bigredv2/outside/sw/theme_bigred_v2)
 "sS" = (
 /obj/structure/table,
 /obj/effect/spawner/random/engineering/toolbox,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
-"ty" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/safety/electronics{
-	dir = 1
+/area/bigredv2/outside/engineering/theme_bigred_v2)
+"tK" = (
+/obj/machinery/door/airlock/multi_tile/mainship/generic{
+	name = "\improper Engineering Complex"
 	},
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "tQ" = (
 /obj/item/tool/multitool,
 /turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "tW" = (
 /obj/effect/spawner/random/misc/structure/broken_reinforced_window/colonyspawn,
 /obj/machinery/door/poddoor/mainship{
@@ -347,29 +293,22 @@
 	name = "\improper Radiation Shielding"
 	},
 /turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
-"up" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/safety/high_radiation,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
-"uJ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/effect/landmark/weed_node,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
-"uN" = (
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/outside/s)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "vr" = (
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "wg" = (
 /obj/item/stack/sheet/glass/glass,
 /obj/structure/cable,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
+"wp" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	on = 1
+	},
+/turf/open/floor,
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "wt" = (
 /obj/machinery/atmospherics/pipe/manifold/green/hidden{
 	dir = 8
@@ -377,87 +316,50 @@
 /obj/structure/cable,
 /obj/effect/ai_node,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "wB" = (
 /obj/structure/table,
 /obj/effect/spawner/random/engineering/powercell,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
-"wF" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	on = 1
-	},
-/obj/structure/cable,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
-"wL" = (
-/obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/effect/landmark/weed_node,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "wT" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
-"wW" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/stack/sheet/metal,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
-"wZ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "xm" = (
 /obj/effect/landmark/excavation_site_spawner,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "xz" = (
 /obj/effect/landmark/corpsespawner/engineer,
 /obj/effect/landmark/weed_node,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "xG" = (
 /turf/closed/wall/r_wall,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "xW" = (
 /obj/structure/rack,
 /obj/item/tool/analyzer,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "yb" = (
 /obj/structure/cable,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
-"yi" = (
-/obj/structure/table,
-/obj/effect/spawner/random/engineering/toolbox,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "yn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	on = 1
 	},
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
-"yT" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "zl" = (
 /obj/structure/table,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "zn" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
@@ -466,26 +368,17 @@
 	name = "\improper Engineering Workshop"
 	},
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
-"zF" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/green/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/effect/ai_node,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "zR" = (
 /obj/machinery/light,
 /turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Aa" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "At" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 9
@@ -493,41 +386,30 @@
 /obj/structure/cable,
 /obj/effect/ai_node,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "AJ" = (
 /turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
-"BG" = (
-/obj/structure/table,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/glasses/welding,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "BH" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/dirt,
-/area/bigredv2/outside/sw)
+/turf/open/floor/plating/ground/snow/layer1,
+/area/bigredv2/outside/sw/theme_bigred_v2)
 "BP" = (
-/turf/open/floor/plating/ground/mars/dirttosand/autosmooth{
+/turf/open/floor/plating/ground/snow/layer1{
 	dir = 8
 	},
-/area/bigredv2/outside/sw)
-"Ca" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/sw/theme_bigred_v2)
 "Cn" = (
 /obj/machinery/vending/cigarette/colony,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "CA" = (
 /obj/machinery/atmospherics/pipe/manifold/green/hidden{
 	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "CU" = (
 /obj/machinery/light{
 	dir = 1
@@ -536,12 +418,12 @@
 	dir = 4
 	},
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Ev" = (
-/turf/open/floor/plating/ground/mars/cavetodirt{
+/turf/open/floor/plating/ground/ice{
 	dir = 9
 	},
-/area/bigredv2/outside/sw)
+/area/bigredv2/outside/sw/theme_bigred_v2)
 "Fz" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/mainship/secure/free_access{
@@ -549,13 +431,13 @@
 	name = "\improper Engine Reactor"
 	},
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "FG" = (
 /obj/machinery/atmospherics/pipe/manifold/green/hidden{
 	dir = 4
 	},
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "FH" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
@@ -566,20 +448,26 @@
 	name = "\improper Engineering Complex"
 	},
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "FJ" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /obj/effect/spawner/random/misc/structure/supplycrate,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
+"FU" = (
+/obj/item/stack/sheet/metal{
+	amount = 30
+	},
+/turf/open/floor,
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Gj" = (
 /obj/structure/bed/chair/office/light{
 	dir = 4
 	},
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Gr" = (
 /obj/machinery/atmospherics/pipe/manifold/green/hidden{
 	dir = 1
@@ -587,22 +475,14 @@
 /obj/structure/cable,
 /obj/effect/ai_node,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
-"Gu" = (
-/obj/machinery/atmospherics/pipe/simple/green/hidden{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Gv" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/drained{
 	dir = 4
 	},
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Gy" = (
 /obj/structure/table,
 /obj/machinery/light{
@@ -610,53 +490,48 @@
 	},
 /obj/effect/spawner/random/engineering/technology_scanner,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "GD" = (
 /obj/structure/table,
 /obj/item/tool/analyzer,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "GE" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
 /obj/effect/landmark/weed_node,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
-"Ht" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/weed_node,
+/area/bigredv2/outside/engineering/theme_bigred_v2)
+"GI" = (
+/obj/machinery/door/airlock/mainship/secure/free_access{
+	name = "\improper Engineering Secure Storage"
+	},
+/obj/structure/cable,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "HL" = (
-/turf/open/floor/plating/ground/mars/dirttosand/autosmooth{
+/turf/open/floor/plating/ground/snow/layer1{
 	dir = 9
 	},
-/area/bigredv2/outside/s)
-"Ib" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/air_alarm{
-	dir = 1
-	},
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
-"IK" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/s/theme_bigred_v2)
 "IS" = (
 /obj/structure/table,
 /obj/effect/spawner/random/misc/earmuffs,
 /obj/effect/landmark/weed_node,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
+"IU" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 5
+	},
+/obj/structure/cable,
+/turf/open/floor,
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Jb" = (
 /obj/machinery/vending/cola,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "JM" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
@@ -664,18 +539,18 @@
 /obj/structure/cable,
 /obj/effect/landmark/weed_node,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "JO" = (
 /obj/machinery/power/monitor{
 	name = "Main Power Grid Monitoring"
 	},
 /obj/structure/cable,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "JS" = (
 /obj/effect/spawner/random/engineering/structure/tank/fuelweighted,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Km" = (
 /obj/machinery/light{
 	dir = 4
@@ -683,37 +558,25 @@
 /obj/structure/cable,
 /obj/effect/landmark/weed_node,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Kn" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
-"Ko" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/weed_node,
-/turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "KI" = (
 /obj/effect/landmark/weed_node,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
-"Lf" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/stack/sheet/metal{
-	amount = 30
-	},
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Lg" = (
 /obj/machinery/atmospherics/pipe/manifold/green/hidden{
 	dir = 8
 	},
 /obj/effect/ai_node,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Ll" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /obj/machinery/door/airlock/mainship/engineering/free_access{
@@ -722,20 +585,20 @@
 	},
 /obj/structure/cable,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Ln" = (
-/turf/open/floor/plating/ground/mars/random/dirt,
-/area/bigredv2/outside/sw)
+/turf/open/floor/plating/ground/snow/layer1,
+/area/bigredv2/outside/sw/theme_bigred_v2)
 "Lw" = (
 /obj/structure/rack,
 /obj/item/camera_film,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Lz" = (
 /obj/machinery/computer/atmos_alert,
 /obj/structure/table,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "LO" = (
 /obj/effect/landmark/corpsespawner/engineer{
 	corpseback = /obj/item/storage/backpack;
@@ -745,37 +608,36 @@
 	name = "Colonist Ted Jarka"
 	},
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Md" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /obj/structure/cable,
 /obj/effect/ai_node,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Ml" = (
 /obj/machinery/door/airlock/mainship/engineering/free_access{
 	name = "\improper Engine Reactor Control"
 	},
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Mq" = (
-/turf/open/liquid/water/river,
-/area/bigredv2/outside/engineering)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/outside/engineering/theme_bigred_v2)
+"MR" = (
+/obj/item/tool/weldpack,
+/turf/open/floor,
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Nb" = (
 /obj/item/stack/sheet/metal,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Nn" = (
 /obj/structure/table,
 /obj/effect/spawner/random/engineering/toolbox,
 /obj/effect/landmark/weed_node,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
-"Nr" = (
-/turf/open/floor/marking/asteroidwarning{
-	dir = 4
-	},
-/area/bigredv2/outside/c)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "NB" = (
 /obj/effect/spawner/random/misc/structure/broken_reinforced_window/colonyspawn,
 /obj/machinery/door/poddoor/shutters/mainship{
@@ -785,111 +647,138 @@
 	},
 /obj/docking_port/stationary/crashmode,
 /turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
+"ND" = (
+/obj/item/clothing/mask/breath,
+/turf/open/floor,
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "NN" = (
 /obj/structure/bed/chair{
 	dir = 4
 	},
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
-"Ol" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/machinery/machine_frame,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
-"Op" = (
-/obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "OB" = (
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/bigredv2/outside/c)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/bigredv2/outside/c/theme_bigred_v2)
 "OJ" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/dirt,
-/area/bigredv2/outside/s)
+/turf/open/floor/plating/ground/snow/layer1,
+/area/bigredv2/outside/s/theme_bigred_v2)
 "OW" = (
 /obj/structure/cable,
 /obj/effect/ai_node,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
+"Pe" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	on = 1
+	},
+/obj/structure/cable,
+/turf/open/floor,
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Pz" = (
 /obj/structure/table,
 /obj/effect/spawner/random/engineering/tool,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "PK" = (
 /obj/structure/bed/chair/office/light{
 	dir = 8
 	},
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Ql" = (
 /obj/machinery/bot/mulebot,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
-"Qo" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
+"Qn" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/ai_node,
+/turf/open/floor,
+/area/bigredv2/outside/engineering/theme_bigred_v2)
+"QR" = (
+/obj/structure/table,
+/obj/item/clothing/glasses/welding,
+/turf/open/floor,
+/area/bigredv2/outside/engineering/theme_bigred_v2)
+"QX" = (
+/obj/structure/sign/safety/high_radiation,
+/turf/open/floor,
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "QY" = (
 /turf/closed/wall/mineral/gold,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
+"Rm" = (
+/obj/item/lightreplacer,
+/turf/open/floor,
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Ro" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 10
 	},
 /obj/structure/cable,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
+"Rz" = (
+/obj/structure/sign/safety/electronics{
+	dir = 1
+	},
+/turf/open/floor,
+/area/bigredv2/outside/engineering/theme_bigred_v2)
+"RG" = (
+/obj/effect/landmark/weed_node,
+/obj/effect/ai_node,
+/turf/open/floor/plating,
+/area/bigredv2/outside/engineering/theme_bigred_v2)
+"RQ" = (
+/obj/machinery/air_alarm{
+	dir = 1
+	},
+/turf/open/floor,
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Sl" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /obj/structure/cable,
 /obj/effect/ai_node,
 /obj/effect/landmark/weed_node,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
-"SC" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/effect/ai_node,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
-"Tb" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/ai_node,
-/obj/effect/landmark/weed_node,
-/turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "TD" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/dirt,
-/area/bigredv2/outside/s)
+/turf/open/floor/plating/ground/snow/layer1,
+/area/bigredv2/outside/s/theme_bigred_v2)
 "TH" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southwest)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southwest/theme_bigred_v2)
 "TK" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/bigredv2/outside/s)
-"TO" = (
-/obj/machinery/light{
-	dir = 4
+/turf/open/floor/plating/ground/snow/layer2,
+/area/bigredv2/outside/s/theme_bigred_v2)
+"Ua" = (
+/obj/structure/sign/safety/electronics{
+	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
+"Uc" = (
+/obj/effect/decal/cleanable/blood/oil,
+/obj/effect/landmark/weed_node,
+/turf/open/floor,
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Ud" = (
 /obj/structure/bed/chair/office/light,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Uf" = (
 /turf/closed/wall,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Um" = (
 /obj/machinery/door_control{
 	desc = "A remote control-switch for opening the engines blast doors.";
@@ -898,62 +787,33 @@
 	name = "Reactor Radiation Shielding control"
 	},
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "UJ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
-"UO" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
-"UV" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/green/hidden{
-	dir = 5
-	},
-/obj/structure/cable,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Va" = (
 /obj/effect/ai_node,
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southwest)
-"Vq" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/green/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/effect/landmark/weed_node,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southwest/theme_bigred_v2)
 "VC" = (
-/turf/open/floor/plating/ground/mars/cavetodirt{
+/turf/open/floor/plating/ground/ice{
 	dir = 9
 	},
-/area/bigredv2/outside/s)
-"VE" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/safety/electronics{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/s/theme_bigred_v2)
 "Wd" = (
 /obj/structure/cable,
 /obj/effect/ai_node,
 /turf/open/floor/plating,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Wq" = (
 /obj/structure/cable,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "WA" = (
 /obj/machinery/door_control{
 	dir = 1;
@@ -961,26 +821,26 @@
 	name = "Storm Shutters"
 	},
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
-"Xa" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/tool/weldpack,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Xp" = (
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/bigredv2/outside/s)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/bigredv2/outside/s/theme_bigred_v2)
 "XB" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/dirt,
-/area/bigredv2/outside/sw)
+/turf/open/floor/plating/ground/snow/layer1,
+/area/bigredv2/outside/sw/theme_bigred_v2)
+"XU" = (
+/turf/open/floor/marking/warning{
+	dir = 4
+	},
+/area/bigredv2/outside/c/theme_bigred_v2)
 "YK" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Zc" = (
 /obj/machinery/atmospherics/pipe/manifold/green/hidden{
 	dir = 4
@@ -988,20 +848,12 @@
 /obj/structure/cable,
 /obj/effect/ai_node,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
-"Zn" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/safety/hazard,
+/area/bigredv2/outside/engineering/theme_bigred_v2)
+"Zk" = (
+/obj/structure/table,
+/obj/item/tool/pen,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
-"Zp" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/green/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "Zr" = (
 /obj/structure/table,
 /obj/effect/spawner/random/engineering/tool,
@@ -1009,36 +861,33 @@
 	amount = 30
 	},
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "ZJ" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
+"ZK" = (
+/obj/effect/ai_node,
+/turf/open/floor/plating,
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 "ZL" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
-"ZV" = (
-/obj/structure/bed/chair{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
+/area/bigredv2/outside/engineering/theme_bigred_v2)
 
 (1,1,1) = {"
-hx
+rP
 fl
 FG
 qD
 lr
 Lg
-ci
 lr
-ci
-dZ
+lr
+lr
+wp
 bg
 NB
 sH
@@ -1046,16 +895,16 @@ sH
 sH
 nP
 nP
-rq
-rq
-rq
-rq
-rq
-rq
 jT
-rq
-rq
-rq
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
 "}
 (2,1,1) = {"
 xG
@@ -1064,31 +913,31 @@ xG
 xG
 Uf
 ZJ
-wW
+Nb
 vr
-Lf
+FU
 vr
-Ol
+bg
 jq
 BP
 BP
 BP
 Ln
 nP
-rq
-rq
-rq
-rq
-rq
-rq
-rq
 jT
-rq
-rq
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
 "}
 (3,1,1) = {"
 Uf
-ty
+Rz
 FJ
 Gv
 Uf
@@ -1105,27 +954,27 @@ XB
 Ln
 Ln
 jn
-rq
-rq
+jT
+jT
 TH
-rq
-rq
-rq
+jT
+jT
+jT
 Va
 jT
-rq
+jT
 "}
 (4,1,1) = {"
 ru
 OW
 pC
-yT
+Wq
 Uf
 ZJ
-yi
+sS
 wB
-mW
-UO
+Zk
+vr
 Zr
 xG
 XB
@@ -1134,19 +983,19 @@ Ln
 Ln
 Ev
 jT
-rq
-rq
-rq
-rq
-rq
-rq
-rq
-rq
-rq
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
 "}
 (5,1,1) = {"
 Uf
-VE
+Ua
 vr
 vr
 Uf
@@ -1176,27 +1025,27 @@ nP
 (6,1,1) = {"
 Uf
 pC
-oI
+ex
 JS
 Uf
 ZJ
 vr
-UO
+vr
 ik
 xG
 qg
 xG
 AJ
-Qo
-IK
+AJ
+sd
 AJ
 AJ
 AJ
 AJ
-Qo
-IK
-Qo
-Qo
+AJ
+sd
+AJ
+AJ
 AJ
 xG
 nP
@@ -1204,36 +1053,36 @@ nP
 "}
 (7,1,1) = {"
 Uf
-os
+GI
 Uf
 Uf
 Uf
-zF
+Qn
 wg
 Wq
-SC
+OW
 Fz
 Km
 Fz
 yb
-Ca
-Ca
-Ca
-Tb
+iV
+iV
+iV
+aI
 AJ
-Qo
-Qo
-dW
-Qo
-Qo
-Ko
+AJ
+AJ
+RG
+AJ
+AJ
+wT
 xG
 xG
 nP
 "}
 (8,1,1) = {"
 vr
-yT
+Wq
 Uf
 xW
 Lw
@@ -1244,17 +1093,17 @@ bR
 xG
 xG
 xG
-Qo
-Qo
-Qo
+AJ
+AJ
+AJ
 AJ
 iV
-Qo
-Qo
-Qo
-Qo
-Qo
-Qo
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
 AJ
 AJ
 xG
@@ -1262,11 +1111,11 @@ nP
 "}
 (9,1,1) = {"
 vr
-uJ
+pC
 bJ
 vr
 vr
-Zp
+YK
 Ql
 vr
 vr
@@ -1291,12 +1140,12 @@ xG
 "}
 (10,1,1) = {"
 vr
-yT
+Wq
 bJ
 ZL
-nl
-Zp
-Xa
+ND
+YK
+MR
 Nb
 vr
 vr
@@ -1348,15 +1197,15 @@ AJ
 xG
 "}
 (12,1,1) = {"
-UO
-Ht
+vr
+ZL
 bJ
-Gu
-UO
-Ht
-wW
-TO
-Ht
+YK
+vr
+ZL
+Nb
+ne
+ZL
 vr
 vr
 tW
@@ -1377,11 +1226,11 @@ AJ
 xG
 "}
 (13,1,1) = {"
-wZ
+xm
 jR
 bJ
-Gu
-UO
+YK
+vr
 Uf
 Uf
 Uf
@@ -1438,13 +1287,13 @@ xG
 vr
 Nn
 bJ
-Gu
-qF
+YK
+Rm
 Uf
 vr
 PK
 vr
-UO
+vr
 Ud
 Pz
 tW
@@ -1468,12 +1317,12 @@ Pz
 ks
 bJ
 Gr
-aN
+jF
 cG
 pZ
 pZ
 Sl
-wF
+Pe
 Wq
 JO
 tW
@@ -1497,12 +1346,12 @@ Uf
 Uf
 Uf
 CU
-Ib
+RQ
 Uf
-UO
-UO
 vr
-UO
+vr
+vr
+vr
 Ud
 GD
 tW
@@ -1526,7 +1375,7 @@ zl
 bJ
 Kn
 GE
-UO
+vr
 Uf
 vr
 Um
@@ -1584,12 +1433,12 @@ pC
 bJ
 vr
 ZJ
-UO
+vr
 vr
 vr
 Kn
 ZL
-UO
+vr
 vr
 tW
 Mq
@@ -1613,12 +1462,12 @@ jF
 Ll
 jF
 qq
-ZV
 NN
 NN
-UO
+NN
+vr
 xm
-UO
+vr
 vr
 tW
 Mq
@@ -1642,10 +1491,10 @@ vr
 bJ
 vr
 JM
-BG
+QR
 ks
 qe
-Ht
+ZL
 vr
 vr
 ZL
@@ -1696,15 +1545,15 @@ xG
 xG
 "}
 (24,1,1) = {"
-UO
-lc
+vr
+tK
 vr
 YK
 db
 db
 db
-UO
-up
+vr
+QX
 xG
 xG
 xG
@@ -1715,25 +1564,25 @@ AJ
 iV
 da
 AJ
-Qo
-Qo
+AJ
+AJ
 AJ
 AJ
 AJ
 AJ
 xG
-uN
+ek
 "}
 (25,1,1) = {"
-wL
-Op
+kx
+jF
 kx
 Zc
 jF
 jF
 CA
-UV
-kZ
+IU
+jJ
 ji
 fI
 ji
@@ -1742,10 +1591,10 @@ iV
 iV
 iV
 dB
-Qo
-Qo
 AJ
-qy
+AJ
+AJ
+ZK
 AJ
 AJ
 wT
@@ -1761,13 +1610,13 @@ xG
 xG
 sk
 yn
-Vq
-Zn
+JM
+ik
 xG
 qg
 xG
 AJ
-Ko
+wT
 Aa
 AJ
 AJ
@@ -1780,18 +1629,18 @@ AJ
 AJ
 xG
 ek
-uN
+ek
 "}
 (27,1,1) = {"
-Nr
-Nr
-Nr
-Nr
+XU
+XU
+XU
+XU
 xG
 xG
 Cn
-Zp
-bp
+YK
+bb
 xG
 xG
 xG
@@ -1808,8 +1657,8 @@ xG
 xG
 xG
 xG
-uN
-uN
+ek
+ek
 "}
 (28,1,1) = {"
 OB
@@ -1837,8 +1686,8 @@ jc
 jc
 OJ
 VC
-uN
-uN
+ek
+ek
 "}
 (29,1,1) = {"
 OB
@@ -1849,9 +1698,9 @@ OB
 xG
 Jb
 vr
-re
-TO
-UO
+Uc
+ne
+vr
 vr
 ZL
 UJ
@@ -1865,9 +1714,9 @@ TD
 jc
 jc
 VC
-uN
-uN
-uN
+ek
+ek
+ek
 "}
 (30,1,1) = {"
 OB

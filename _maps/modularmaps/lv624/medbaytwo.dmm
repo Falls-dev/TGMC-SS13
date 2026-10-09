@@ -1,87 +1,87 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/floor/tile/white,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "aQ" = (
 /obj/structure/flora/pottedplant/ten,
 /turf/open/floor/tile/blue/whitebluefull,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "ba" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/layer1{
 	dir = 4
 	},
 /turf/open/floor/tile/white,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "bq" = (
 /obj/item/stack/medical/heal_pack/advanced/bruise_pack,
 /obj/structure/cable,
 /turf/open/floor/tile/white,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "cb" = (
 /obj/structure/bed,
 /obj/item/bedsheet/medical,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 9
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "cd" = (
 /turf/open/floor/tile/blue/whitebluecorner{
 	dir = 2
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "dk" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/tile/blue/whitebluefull,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "dA" = (
 /obj/effect/spawner/random/food_or_drink/kitchen,
 /turf/open/floor/tile/white,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "dK" = (
 /obj/structure/table,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 4
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "em" = (
 /obj/item/reagent_containers/food/drinks/cans/waterbottle,
 /turf/open/floor/tile/white,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "eq" = (
 /obj/machinery/atmospherics/components/unary/cryo_cell,
 /turf/open/floor/tile/blue/whitebluefull,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "fr" = (
 /obj/effect/ai_node,
 /turf/open/floor/tile/white,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "fv" = (
 /obj/structure/table,
 /obj/item/clothing/glasses/eyepatch,
 /turf/open/floor/tile/blue/whiteblue,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "gg" = (
 /obj/machinery/power/apc/drained,
 /obj/structure/cable,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "gO" = (
 /obj/machinery/atmospherics/pipe/simple,
 /turf/open/floor/tile/white,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "hI" = (
 /turf/closed/wall/r_wall,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "ih" = (
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "in" = (
 /obj/structure/closet/wardrobe/mixed,
 /obj/machinery/light{
@@ -90,12 +90,12 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 8
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "iw" = (
 /obj/item/shard,
 /obj/structure/window_frame/colony/reinforced,
 /turf/open/floor/plating,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "iY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
@@ -103,17 +103,17 @@
 /obj/effect/ai_node,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/bar,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "jh" = (
 /obj/structure/bed/chair/office/dark{
 	dir = 4
 	},
 /turf/open/floor/tile/white,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "jT" = (
 /obj/machinery/vending/MarineMed/Blood,
 /turf/open/floor/tile/blue/whiteblue,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "kj" = (
 /obj/machinery/light{
 	dir = 1
@@ -121,47 +121,47 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "kv" = (
 /obj/machinery/bioprinter/stocked,
 /turf/open/floor/tile/blue/whitebluefull,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "lC" = (
 /obj/structure/table,
 /obj/effect/spawner/random/food_or_drink/sugary_snack,
 /turf/open/floor/tile/blue/whitebluefull,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "lD" = (
 /obj/effect/ai_node,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/white,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "lR" = (
 /turf/open/floor/tile/blue/whitebluecorner{
 	dir = 8
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "lT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/tile/blue/whitebluecorner{
 	dir = 2
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "ni" = (
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 4
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "nD" = (
 /obj/machinery/vending/medical,
 /turf/open/floor/tile/blue/whiteblue,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "oK" = (
 /obj/structure/cable,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "oV" = (
 /obj/machinery/light{
 	dir = 4
@@ -169,7 +169,7 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 4
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "pd" = (
 /obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	dir = 1;
@@ -179,7 +179,7 @@
 /turf/open/floor/tile/blue/whitebluecorner{
 	dir = 2
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "pl" = (
 /obj/structure/table,
 /obj/item/clothing/glasses/sunglasses/blindfold,
@@ -187,26 +187,26 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 4
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "pr" = (
 /obj/structure/table,
 /obj/item/stack/medical/heal_pack/gauze,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 9
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "qn" = (
 /obj/structure/cable,
 /obj/item/reagent_containers/hypospray,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/white,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "qz" = (
 /obj/structure/table,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 6
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "rN" = (
 /obj/structure/table,
 /obj/item/reagent_containers/glass/beaker/large,
@@ -221,31 +221,31 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "sJ" = (
 /obj/structure/table,
 /obj/effect/spawner/random/weaponry/ammo/shotgun,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 8
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "sT" = (
 /obj/structure/bed/roller,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 10
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "ux" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/layer1,
 /turf/open/floor/tile/blue/whitebluecorner{
 	dir = 2
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "uJ" = (
 /obj/structure/filingcabinet/medical,
 /obj/machinery/light,
 /turf/open/floor/tile/blue/whiteblue,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "uL" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/drinks/cans/waterbottle{
@@ -253,23 +253,23 @@
 	pixel_y = 5
 	},
 /turf/open/floor/tile/blue/whitebluefull,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "vw" = (
 /obj/structure/bed/roller,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 6
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "vC" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/white,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "wm" = (
 /obj/structure/bed,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 8
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "wn" = (
 /obj/structure/table,
 /obj/item/storage/box/syringes,
@@ -278,7 +278,7 @@
 	pixel_y = 8
 	},
 /turf/open/floor/tile/blue/whitebluefull,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "xV" = (
 /obj/structure/extinguisher_cabinet{
 	dir = 1
@@ -286,18 +286,18 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 5
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "yl" = (
 /obj/item/storage/firstaid/adv,
 /turf/open/floor/tile/white,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "yq" = (
 /obj/structure/cable,
 /obj/machinery/vending/snack,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "yH" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
@@ -305,26 +305,26 @@
 /turf/open/floor/tile/blue/whitebluecorner{
 	dir = 1
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "yL" = (
 /obj/machinery/light,
 /turf/open/floor/tile/blue/whiteblue,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "zi" = (
 /obj/machinery/vending/medical,
 /turf/open/floor/tile/blue/whitebluefull,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "zj" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
 /turf/open/floor/tile/white,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "zF" = (
 /obj/structure/table,
 /obj/effect/spawner/random/weaponry/ammo/shotgun,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 10
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "AF" = (
 /obj/machinery/light{
 	dir = 1
@@ -333,20 +333,20 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "Bf" = (
 /obj/structure/cable,
 /turf/open/floor/tile/blue/whitebluecorner{
 	dir = 2
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "BK" = (
 /obj/effect/spawner/random/clothing/general,
 /turf/open/floor/tile/white,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "BW" = (
 /turf/closed/wall,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "DH" = (
 /obj/structure/table,
 /obj/item/clothing/glasses/hud/health,
@@ -359,13 +359,13 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "FM" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/surgical_tray,
 /obj/item/reagent_containers/spray/surgery,
 /turf/open/floor/tile/blue/whitebluefull,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "Go" = (
 /obj/structure/table,
 /obj/effect/spawner/random/weaponry/ammo/shotgun,
@@ -376,18 +376,18 @@
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 8
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "Hb" = (
 /obj/item/radio/intercom/general/colony,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "If" = (
 /obj/machinery/optable,
 /obj/item/tank/anesthetic,
 /turf/open/floor/tile/blue/whitebluefull,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "Jy" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
@@ -395,15 +395,15 @@
 /turf/open/floor/tile/blue/whitebluecorner{
 	dir = 4
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "Mv" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /turf/open/floor/tile/blue/whitebluefull,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "MA" = (
 /obj/machinery/door/airlock/multi_tile/mainship/medidoor,
 /turf/open/floor/tile/white,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "Nv" = (
 /obj/structure/table,
 /obj/effect/spawner/random/food_or_drink/sugary_snack{
@@ -411,45 +411,45 @@
 	pixel_y = 2
 	},
 /turf/open/floor/tile/blue/whitebluefull,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "OI" = (
 /obj/item/ammo_casing/bullet,
 /turf/open/floor/tile/white,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "OL" = (
 /obj/structure/cable,
 /obj/machinery/computer/intel_computer,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "Pg" = (
 /obj/structure/cable,
 /turf/open/floor/tile/white,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "PB" = (
 /obj/structure/cable,
 /obj/machinery/vending/coffee,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 1
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "Qn" = (
 /obj/structure/table,
 /obj/item/folder/blue,
 /turf/open/floor/tile/blue/whiteblue,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "RY" = (
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 10
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "Sg" = (
 /obj/machinery/iv_drip,
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 6
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "Tv" = (
 /obj/machinery/door/airlock/multi_tile/mainship/medidoor{
 	dir = 1;
@@ -461,20 +461,20 @@
 /turf/open/floor/tile/blue/whitebluecorner{
 	dir = 2
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "TS" = (
 /obj/item/bedsheet/medical,
 /turf/open/floor/tile/white,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "VJ" = (
 /turf/open/floor/tile/blue/whiteblue{
 	dir = 8
 	},
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "Xw" = (
 /obj/structure/window/framed/colony/reinforced,
 /turf/open/floor/plating,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "YA" = (
 /turf/template_noop,
 /area/template_noop)
@@ -483,12 +483,12 @@
 /obj/item/reagent_containers/spray/surgery,
 /obj/item/clothing/glasses/hud/health,
 /turf/open/floor/tile/blue/whitebluefull,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 "ZF" = (
 /obj/item/ammo_casing/bullet,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/white,
-/area/lv624/lazarus/medbay)
+/area/lv624/lazarus/medbay/theme_lv624)
 
 (1,1,1) = {"
 YA
