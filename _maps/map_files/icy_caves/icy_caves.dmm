@@ -415,7 +415,10 @@
 /turf/open/floor/tile/dark,
 /area/icy_caves/outpost/security/theme_icy_caves)
 "bS" = (
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/caves/northern/theme_icy_caves)
 "bU" = (
 /obj/structure/cable,
@@ -2357,7 +2360,10 @@
 /turf/open/floor/prison/bright_clean/two,
 /area/icy_caves/caves/northwestmonorail/theme_icy_caves)
 "mv" = (
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/space/theme_icy_caves)
 "mw" = (
 /obj/structure/bookcase/manuals/research_and_development,
@@ -2397,7 +2403,10 @@
 	},
 /area/icy_caves/outpost/LZ2/theme_icy_caves)
 "mH" = (
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/outpost/LZ2/theme_icy_caves)
 "mK" = (
 /obj/effect/turf_decal/warning_stripes/thin{
@@ -2423,7 +2432,10 @@
 /area/icy_caves/caves/alienstuff/theme_icy_caves)
 "mO" = (
 /obj/docking_port/stationary/crashmode,
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/caves/rock/theme_icy_caves)
 "mP" = (
 /obj/machinery/light{
@@ -2455,7 +2467,10 @@
 /turf/open/floor/tile/dark,
 /area/icy_caves/caves/northwestmonorail/theme_icy_caves)
 "ne" = (
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/caves/northern/theme_icy_caves)
 "nf" = (
 /turf/open/floor/tile/dark/brown2{
@@ -2466,7 +2481,10 @@
 /obj/machinery/door/poddoor/mainship/indestructible{
 	dir = 2
 	},
-/turf/closed/mineral/smooth/basalt/indestructible{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/space/theme_icy_caves)
 "nj" = (
 /obj/effect/turf_decal/warning_stripes/thin{
@@ -3080,7 +3098,10 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone{
 	dir = 2
 	},
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/outpost/outside/theme_icy_caves)
 "qg" = (
 /obj/structure/closet/secure_closet/miner,
@@ -4659,7 +4680,10 @@
 /turf/open/floor/wood,
 /area/icy_caves/outpost/dorms/theme_icy_caves)
 "xa" = (
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/caves/west/theme_icy_caves)
 "xb" = (
 /obj/effect/turf_decal/warning_stripes/thin{
@@ -4751,7 +4775,10 @@
 "xs" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
 /obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/caves/rock/theme_icy_caves)
 "xu" = (
 /obj/structure/cargo_container/green,
@@ -6029,7 +6056,10 @@
 /area/icy_caves/outpost/dorms/theme_icy_caves)
 "DH" = (
 /obj/structure/cable,
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/caves/rock/theme_icy_caves)
 "DJ" = (
 /turf/open/floor/tile/dark/brown2{
@@ -6273,7 +6303,10 @@
 /turf/open/floor/prison/red/full,
 /area/icy_caves/caves/cavesbrig/theme_icy_caves)
 "EM" = (
-/turf/closed/mineral/smooth/basalt/indestructible{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/space/theme_icy_caves)
 "EO" = (
 /obj/effect/landmark/weed_node,
@@ -7274,7 +7307,10 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone/lz2{
 	dir = 1
 	},
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/caves/rock/theme_icy_caves)
 "Jn" = (
 /obj/effect/decal/cleanable/blood/xtracks,
@@ -7736,7 +7772,10 @@
 	},
 /area/icy_caves/outpost/garage/theme_icy_caves)
 "Lv" = (
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/outpost/outside/theme_icy_caves)
 "Lw" = (
 /obj/structure/closet/l3closet/virology,
@@ -7933,7 +7972,10 @@
 /turf/open/floor/plating,
 /area/icy_caves/outpost/mining/east/theme_icy_caves)
 "Ml" = (
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/outpost/LZ1/theme_icy_caves)
 "Mm" = (
 /obj/effect/turf_decal/warning_stripes/thin{
@@ -7949,7 +7991,10 @@
 /area/icy_caves/outpost/medbay/theme_icy_caves)
 "Mr" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/caves/rock/theme_icy_caves)
 "Ms" = (
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone/lz2,
@@ -8026,7 +8071,10 @@
 /turf/open/floor/plating/ground/lavaland/basalt,
 /area/icy_caves/caves/south/theme_icy_caves)
 "MN" = (
-/turf/closed/mineral/smooth/basalt/indestructible{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/lv624/lazarus/console/theme_icy_caves)
 "MO" = (
 /obj/machinery/landinglight/lz1{
@@ -8675,7 +8723,10 @@
 /area/icy_caves/outpost/garage/theme_icy_caves)
 "Qb" = (
 /obj/machinery/telecomms/relay/preset/telecomms/ground,
-/turf/closed/mineral/smooth/basalt/indestructible{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/lv624/lazarus/console/theme_icy_caves)
 "Qc" = (
 /obj/structure/table,
@@ -8705,7 +8756,10 @@
 /area/icy_caves/caves/northwestmonorail/theme_icy_caves)
 "Qi" = (
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone,
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/outpost/LZ1/theme_icy_caves)
 "Qj" = (
 /obj/effect/spawner/random/engineering/structure/tank/fuelweighted,
@@ -9093,7 +9147,10 @@
 /area/icy_caves/outpost/dorms/theme_icy_caves)
 "Sb" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/caves/rock/theme_icy_caves)
 "Sc" = (
 /obj/effect/spawner/random/misc/structure/broken_reinforced_window/colonyspawn,
@@ -9267,7 +9324,10 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone{
 	dir = 2
 	},
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/outpost/LZ1/theme_icy_caves)
 "Tg" = (
 /obj/machinery/light/small{
@@ -9433,7 +9493,10 @@
 /turf/open/floor/tile/dark,
 /area/icy_caves/outpost/garage/theme_icy_caves)
 "TV" = (
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/caves/east/theme_icy_caves)
 "TX" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -9489,7 +9552,10 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone/lz2{
 	dir = 2
 	},
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/outpost/LZ2/theme_icy_caves)
 "Uk" = (
 /obj/effect/landmark/weed_node,
@@ -9509,7 +9575,10 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone/lz2{
 	dir = 1
 	},
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/outpost/LZ2/theme_icy_caves)
 "Uq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -9658,7 +9727,10 @@
 /area/icy_caves/caves/northwestmonorail/theme_icy_caves)
 "Vd" = (
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone/lz2,
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/caves/theme_icy_caves)
 "Ve" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
@@ -9989,7 +10061,10 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone{
 	dir = 2
 	},
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/caves/theme_icy_caves)
 "Wx" = (
 /turf/open/floor/plating/ground/lavaland/basalt,
@@ -10142,7 +10217,10 @@
 	},
 /area/icy_caves/outpost/garage/theme_icy_caves)
 "Xj" = (
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/caves/south/theme_icy_caves)
 "Xk" = (
 /obj/structure/table,
@@ -10170,7 +10248,10 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone/lz2{
 	dir = 1
 	},
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/caves/theme_icy_caves)
 "Xp" = (
 /obj/structure/cable,
@@ -10303,7 +10384,10 @@
 /area/icy_caves/outpost/dorms/theme_icy_caves)
 "XT" = (
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone,
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/outpost/outside/theme_icy_caves)
 "XU" = (
 /turf/open/floor/tile/dark/brown2/corner{
@@ -10368,7 +10452,10 @@
 /turf/open/floor/plating,
 /area/icy_caves/outpost/security/theme_icy_caves)
 "Yf" = (
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/caves/theme_icy_caves)
 "Yi" = (
 /obj/machinery/computer/intel_computer,
@@ -10414,7 +10501,10 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone{
 	dir = 2
 	},
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/outpost/outside/theme_icy_caves)
 "Yr" = (
 /obj/effect/landmark/weed_node,
@@ -10442,7 +10532,10 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone/lz2{
 	dir = 2
 	},
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/caves/theme_icy_caves)
 "Yy" = (
 /obj/structure/bed/roller,
@@ -10496,7 +10589,10 @@
 /turf/open/floor/plating/ground/lavaland/basalt,
 /area/icy_caves/outpost/outside/theme_icy_caves)
 "YI" = (
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/caves/west/theme_icy_caves)
 "YJ" = (
 /obj/effect/landmark/weed_node,
@@ -10685,7 +10781,10 @@
 /turf/open/floor/freezer,
 /area/icy_caves/outpost/kitchen/theme_icy_caves)
 "ZI" = (
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/caves/rock/theme_icy_caves)
 "ZJ" = (
 /obj/effect/spawner/random/engineering/pickaxe,
@@ -10718,7 +10817,10 @@
 /turf/open/floor/wood,
 /area/icy_caves/outpost/dorms/theme_icy_caves)
 "ZP" = (
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/caves/rock/theme_icy_caves)
 "ZR" = (
 /turf/closed/wall/r_wall,
@@ -10750,7 +10852,10 @@
 /area/icy_caves/outpost/refinery/theme_icy_caves)
 "ZY" = (
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone,
-/turf/closed/mineral/smooth/basalt{open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt; baseturfs = /turf/open/floor/plating/ground/lavaland/basalt},
+/turf/closed/mineral/smooth/basalt{
+	open_turf_type = /turf/open/floor/plating/ground/lavaland/basalt;
+	baseturfs = /turf/open/floor/plating/ground/lavaland/basalt
+	},
 /area/icy_caves/caves/theme_icy_caves)
 "ZZ" = (
 /obj/structure/morgue{

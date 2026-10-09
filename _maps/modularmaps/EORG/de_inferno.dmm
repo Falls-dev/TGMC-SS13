@@ -1581,7 +1581,10 @@
 /turf/open/floor/plating/ground/snow/layer1,
 /area/deathmatch/theme_de_inferno)
 "TP" = (
-/turf/closed/mineral/smooth/snowrock{open_turf_type = /turf/open/floor/plating/ground/ice; baseturfs = /turf/open/floor/plating/ground/ice},
+/turf/closed/mineral/smooth/snowrock{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
 /area/deathmatch/theme_de_inferno)
 "TX" = (
 /obj/structure/platform{

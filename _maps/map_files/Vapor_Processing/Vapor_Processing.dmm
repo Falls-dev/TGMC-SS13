@@ -137,7 +137,10 @@
 /turf/open/floor/plating/ground/mars/random/dirt,
 /area/lv624/ground/compound/n/theme_vapor_processing)
 "bm" = (
-/turf/closed/mineral/smooth/bigred/indestructible{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/lv624/ground/compound/n/theme_vapor_processing)
 "bn" = (
 /obj/effect/landmark/weed_node,
@@ -557,7 +560,10 @@
 /area/lv624/ground/caves/east1/theme_vapor_processing)
 "dT" = (
 /obj/structure/cable,
-/turf/closed/mineral/smooth/bigred/indestructible{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/lv624/ground/compound/n/theme_vapor_processing)
 "dU" = (
 /obj/machinery/light,
@@ -577,7 +583,10 @@
 /turf/open/floor/plating/ground/mars/random/dirt,
 /area/lv624/ground/caves/central1/theme_vapor_processing)
 "ea" = (
-/turf/closed/mineral/smooth/bigred/indestructible{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/lv624/ground/caves/central1/theme_vapor_processing)
 "ec" = (
 /obj/structure/table/mainship,
@@ -634,7 +643,10 @@
 /turf/open/floor/plating/ground/mars/random/dirt,
 /area/vapor_processing/west_compound/theme_vapor_processing)
 "em" = (
-/turf/closed/mineral/smooth/bigred/indestructible{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/vapor_processing/west_compound/theme_vapor_processing)
 "en" = (
 /obj/structure/cable,
@@ -647,7 +659,10 @@
 /turf/open/floor/plating/ground/mars/random/dirt,
 /area/lv624/ground/compound/c/theme_vapor_processing)
 "eq" = (
-/turf/closed/mineral/smooth/bigred/indestructible{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/lv624/ground/compound/c/theme_vapor_processing)
 "es" = (
 /obj/structure/cable,
@@ -767,7 +782,10 @@
 	},
 /area/lv624/lazarus/quartstorage/theme_vapor_processing)
 "eU" = (
-/turf/closed/mineral/smooth/bigred/indestructible{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/vapor_processing/east_compound/theme_vapor_processing)
 "eV" = (
 /obj/structure/morgue{
@@ -928,7 +946,10 @@
 /area/lv624/lazarus/medbay/theme_vapor_processing)
 "fI" = (
 /obj/structure/cable,
-/turf/closed/mineral/smooth/bigred/indestructible{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/vapor_processing/west_compound/theme_vapor_processing)
 "fJ" = (
 /obj/effect/ai_node,
@@ -1879,7 +1900,10 @@
 /turf/open/floor/plating/ground/mars/random/dirt,
 /area/lv624/ground/compound/sw/theme_vapor_processing)
 "kY" = (
-/turf/closed/mineral/smooth/bigred/indestructible{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/lv624/ground/compound/sw/theme_vapor_processing)
 "kZ" = (
 /obj/structure/largecrate,
@@ -1910,7 +1934,10 @@
 /turf/open/floor/plating/ground/mars/random/dirt,
 /area/vapor_processing/south_compound/theme_vapor_processing)
 "lf" = (
-/turf/closed/mineral/smooth/bigred/indestructible{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/vapor_processing/south_compound/theme_vapor_processing)
 "lg" = (
 /turf/open/floor/plating/ground/mars/random/dirt,
@@ -1928,7 +1955,10 @@
 /turf/open/floor/plating/ground/mars/random/dirt,
 /area/lv624/ground/compound/se/theme_vapor_processing)
 "lm" = (
-/turf/closed/mineral/smooth/bigred/indestructible{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/lv624/ground/compound/se/theme_vapor_processing)
 "ln" = (
 /obj/structure/bed/chair{
@@ -3659,7 +3689,10 @@
 /area/crew_quarters/sleep_male/theme_vapor_processing)
 "uM" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/closed/mineral/smooth/bigred/indestructible{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/lv624/ground/caves/central1/theme_vapor_processing)
 "uU" = (
 /obj/effect/landmark/start/job/survivor,
@@ -3917,7 +3950,10 @@
 /area/lv624/lazarus/quartstorage/theme_vapor_processing)
 "yF" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/lv624/ground/caves/west1/theme_vapor_processing)
 "yH" = (
 /obj/effect/landmark/start/job/survivor,
@@ -3945,7 +3981,10 @@
 /area/lv624/lazarus/research/theme_vapor_processing)
 "yT" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/closed/mineral/smooth/bigred/indestructible{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/lv624/ground/caves/east1/theme_vapor_processing)
 "yZ" = (
 /obj/structure/bed/chair{
@@ -4153,14 +4192,20 @@
 /turf/open/floor/wood/broken,
 /area/crew_quarters/sleep/bedrooms/theme_vapor_processing)
 "BJ" = (
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/lv624/ground/caves/east1/theme_vapor_processing)
 "BN" = (
 /obj/effect/ai_node,
 /turf/open/floor/plating/ground/mars/random/dirt,
 /area/lv624/ground/compound/n/theme_vapor_processing)
 "BP" = (
-/turf/closed/mineral/smooth/bigred/indestructible{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/lv624/ground/caves/central1/theme_vapor_processing)
 "BQ" = (
 /obj/effect/decal/cleanable/blood,
@@ -4359,14 +4404,20 @@
 /area/lv624/lazarus/internal_affairs/theme_vapor_processing)
 "EQ" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/vapor_processing/caves/se/theme_vapor_processing)
 "ER" = (
 /obj/effect/ai_node,
 /turf/open/floor/scorched/two,
 /area/storage/tools/theme_vapor_processing)
 "Fa" = (
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/lv624/ground/caves/west1/theme_vapor_processing)
 "Fd" = (
 /obj/structure/bed/chair/wood/wings{
@@ -4399,7 +4450,10 @@
 /area/lv624/lazarus/engineering/theme_vapor_processing)
 "Fq" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/lv624/ground/caves/central2/theme_vapor_processing)
 "Fu" = (
 /obj/effect/landmark/corpsespawner/security{
@@ -4491,7 +4545,10 @@
 /turf/open/floor/plating/ground/mars/random/dirt,
 /area/lv624/ground/compound/n/theme_vapor_processing)
 "GO" = (
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/vapor_processing/caves/se/theme_vapor_processing)
 "GR" = (
 /obj/effect/landmark/corpsespawner/chef{
@@ -4573,7 +4630,10 @@
 	},
 /area/lv624/lazarus/quartstorage/theme_vapor_processing)
 "Ii" = (
-/turf/closed/mineral/smooth/bigred/indestructible{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/lv624/ground/caves/west1/theme_vapor_processing)
 "Iu" = (
 /obj/structure/nuke_disk_candidate,
@@ -4599,7 +4659,10 @@
 /turf/open/floor/tile/red/redtaupe,
 /area/lv624/lazarus/security/theme_vapor_processing)
 "IT" = (
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/lv624/ground/caves/central2/theme_vapor_processing)
 "IU" = (
 /obj/effect/landmark/corpsespawner/doctor{
@@ -4693,7 +4756,10 @@
 /turf/open/floor,
 /area/lv624/lazarus/research/theme_vapor_processing)
 "KE" = (
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/vapor_processing/east_compound/theme_vapor_processing)
 "KF" = (
 /obj/structure/table,
@@ -4770,7 +4836,10 @@
 /area/lv624/ground/caves/west1/theme_vapor_processing)
 "Lu" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/lv624/ground/caves/east1/theme_vapor_processing)
 "Lv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
@@ -4795,7 +4864,10 @@
 /area/lv624/lazarus/medbay/theme_vapor_processing)
 "LJ" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/lv624/ground/caves/central1/theme_vapor_processing)
 "LO" = (
 /obj/effect/spawner/random/engineering/toolbox,
@@ -5053,7 +5125,10 @@
 /turf/open/floor/plating/dmg2,
 /area/lv624/lazarus/research/theme_vapor_processing)
 "Pr" = (
-/turf/closed/mineral/smooth/bigred/indestructible{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/lv624/ground/caves/central2/theme_vapor_processing)
 "Ps" = (
 /obj/machinery/sleeper,
@@ -5091,10 +5166,16 @@
 /turf/open/floor/plating/ground/mars/random/dirt,
 /area/vapor_processing/south_compound/theme_vapor_processing)
 "PD" = (
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/lv624/ground/caves/central1/theme_vapor_processing)
 "PG" = (
-/turf/closed/mineral/smooth/bigred/indestructible{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/space/theme_vapor_processing)
 "PI" = (
 /obj/effect/landmark/miner_phoron,
@@ -5266,7 +5347,10 @@
 /turf/open/floor/plating/ground/mars/random/dirt,
 /area/lv624/ground/caves/west1/theme_vapor_processing)
 "Sx" = (
-/turf/closed/mineral/smooth/bigred/indestructible{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/vapor_processing/caves/se/theme_vapor_processing)
 "SB" = (
 /obj/structure/cable,
@@ -5559,7 +5643,10 @@
 /turf/open/floor,
 /area/lv624/lazarus/research/theme_vapor_processing)
 "Ww" = (
-/turf/closed/mineral/smooth/bigred/indestructible{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/lv624/ground/caves/east1/theme_vapor_processing)
 "Wz" = (
 /obj/machinery/light{
@@ -5795,7 +5882,10 @@
 /turf/open/floor/plating/ground/mars/random/dirt,
 /area/vapor_processing/south_compound/theme_vapor_processing)
 "ZA" = (
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/lv624/ground/compound/se/theme_vapor_processing)
 "ZC" = (
 /obj/structure/rack,

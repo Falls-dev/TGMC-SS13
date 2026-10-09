@@ -21855,9 +21855,6 @@
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/bar,
 /area/lv624/lazarus/canteen/theme_lv624)
-"xZG" = (
-/turf/open/space/basic,
-/area/lv624/ground/river1/theme_lv624)
 "xZK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
@@ -29501,7 +29498,7 @@ cAu
 cAu
 mZo
 qbR
-xZG
+qbR
 qbR
 qbR
 xkb

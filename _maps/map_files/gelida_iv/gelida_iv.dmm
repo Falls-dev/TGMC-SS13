@@ -766,7 +766,10 @@
 /obj/structure/platform/nondense{
 	dir = 1
 	},
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/outdoors/rock/theme_gelida_iv)
 "azo" = (
 /obj/machinery/light{
@@ -3196,7 +3199,10 @@
 /turf/open/floor/plating,
 /area/gelida/indoors/a_block/security/theme_gelida_iv)
 "cgS" = (
-/turf/closed/mineral/smooth/bigred/indestructible{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/outdoors/rock/theme_gelida_iv)
 "cgV" = (
 /obj/item/stack/medical/heal_pack/gauze,
@@ -4692,7 +4698,10 @@
 /area/gelida/indoors/c_block/casino/theme_gelida_iv)
 "dhi" = (
 /obj/machinery/telecomms/relay/preset/telecomms/ground,
-/turf/closed/mineral/smooth/bigred/indestructible{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/storage/testroom/theme_gelida_iv)
 "dhr" = (
 /obj/effect/landmark/weed_node,
@@ -5294,7 +5303,10 @@
 /area/gelida/indoors/b_block/bar/theme_gelida_iv)
 "dEu" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/caves/central_caves/theme_gelida_iv)
 "dEF" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
@@ -7319,7 +7331,10 @@
 	},
 /area/gelida/indoors/a_block/dorms/theme_gelida_iv)
 "eQn" = (
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/outdoors/rock/theme_gelida_iv)
 "eQB" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
@@ -9800,7 +9815,10 @@
 /area/gelida/indoors/a_block/hallway/theme_gelida_iv)
 "gEI" = (
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone/lz2,
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/outdoors/rock/theme_gelida_iv)
 "gFi" = (
 /obj/effect/landmark/excavation_site_spawner,
@@ -11245,7 +11263,10 @@
 /area/gelida/indoors/c_block/mining/theme_gelida_iv)
 "hCY" = (
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone,
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/outdoors/rock/theme_gelida_iv)
 "hDd" = (
 /obj/effect/landmark/xeno_silo_spawn,
@@ -11986,7 +12007,10 @@
 /area/gelida/indoors/a_block/admin/theme_gelida_iv)
 "ieX" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/outdoors/rock/theme_gelida_iv)
 "ieY" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
@@ -17099,7 +17123,10 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone{
 	dir = 1
 	},
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/outdoors/rock/theme_gelida_iv)
 "lGp" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
@@ -18673,7 +18700,10 @@
 /turf/open/floor/prison,
 /area/gelida/indoors/a_block/security/theme_gelida_iv)
 "mGy" = (
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/caves/west_caves/garbledradio/theme_gelida_iv)
 "mGH" = (
 /obj/effect/decal/cleanable/vomit,
@@ -19165,7 +19195,10 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone{
 	dir = 1
 	},
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/indoors/lone_buildings/storage_blocks/theme_gelida_iv)
 "mXU" = (
 /obj/effect/ai_node,
@@ -19274,7 +19307,10 @@
 	},
 /area/gelida/indoors/a_block/hallway/theme_gelida_iv)
 "ndb" = (
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/outdoors/rock/theme_gelida_iv)
 "ndh" = (
 /turf/open/floor/plating/ground/desertdam/asphalt/edge/regular{
@@ -19658,7 +19694,10 @@
 /turf/open/floor/plating/ground/mars/random/dirt,
 /area/gelida/caves/west_caves/theme_gelida_iv)
 "nqU" = (
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/powergen/theme_gelida_iv)
 "nqZ" = (
 /obj/effect/spawner/random/engineering/wood,
@@ -19735,7 +19774,10 @@
 /turf/open/floor/prison,
 /area/gelida/indoors/b_block/bar/theme_gelida_iv)
 "nsK" = (
-/turf/closed/mineral/smooth/bigred/indestructible{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/outdoors/rock/theme_gelida_iv)
 "nsX" = (
 /turf/open/floor/plating/heatinggrate,
@@ -19781,7 +19823,10 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone/lz2{
 	dir = 2
 	},
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/outdoors/rock/theme_gelida_iv)
 "nvf" = (
 /obj/structure/table/mainship,
@@ -23882,7 +23927,10 @@
 /turf/open/floor/plating,
 /area/gelida/indoors/c_block/cargo/theme_gelida_iv)
 "qbZ" = (
-/turf/closed/mineral/smooth/bigred/indestructible{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/storage/testroom/theme_gelida_iv)
 "qcd" = (
 /obj/structure/cargo_container/gorg,
@@ -25011,7 +25059,10 @@
 /area/gelida/indoors/c_block/cargo/theme_gelida_iv)
 "qRh" = (
 /obj/effect/ai_node,
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/outdoors/rock/theme_gelida_iv)
 "qRn" = (
 /obj/effect/turf_decal/warning_stripes/thin{
@@ -25555,7 +25606,10 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone/lz2{
 	dir = 2
 	},
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/indoors/b_block/bridge/theme_gelida_iv)
 "rhQ" = (
 /obj/machinery/atmospherics/pipe/manifold/green/hidden{
@@ -25648,13 +25702,19 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone/lz2{
 	dir = 2
 	},
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/outdoors/colony_streets/south_street/theme_gelida_iv)
 "rkg" = (
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone/lz2{
 	dir = 2
 	},
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/indoors/c_block/mining/theme_gelida_iv)
 "rkr" = (
 /obj/structure/table/mainship,
@@ -25668,7 +25728,10 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone{
 	dir = 1
 	},
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/outdoors/colony_streets/south_east_street/theme_gelida_iv)
 "rkP" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
@@ -25894,7 +25957,10 @@
 /area/gelida/outdoors/colony_streets/north_west_street/theme_gelida_iv)
 "rrl" = (
 /obj/structure/cable,
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/outdoors/rock/theme_gelida_iv)
 "rrm" = (
 /obj/effect/spawner/random/engineering/wood,
@@ -25935,7 +26001,10 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone{
 	dir = 1
 	},
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/indoors/c_block/garage/theme_gelida_iv)
 "rsY" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
@@ -26234,7 +26303,10 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone{
 	dir = 1
 	},
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/indoors/c_block/bridge/theme_gelida_iv)
 "rDK" = (
 /obj/machinery/light{
@@ -26262,7 +26334,10 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone{
 	dir = 1
 	},
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/indoors/c_block/casino/theme_gelida_iv)
 "rDZ" = (
 /obj/structure/prop/mainship/gelida/smallwire{
@@ -26352,7 +26427,10 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone{
 	dir = 1
 	},
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/outdoors/rock/theme_gelida_iv)
 "rIo" = (
 /obj/effect/landmark/weed_node,
@@ -26462,7 +26540,10 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone{
 	dir = 1
 	},
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/indoors/c_block/cargo/theme_gelida_iv)
 "rME" = (
 /obj/effect/spawner/random/misc/structure/chair_or_metal,
@@ -26524,7 +26605,10 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone{
 	dir = 1
 	},
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/outdoors/colony_streets/south_street/theme_gelida_iv)
 "rOf" = (
 /obj/machinery/light{
@@ -26743,7 +26827,10 @@
 /turf/open/floor/prison/darkred/full,
 /area/gelida/indoors/a_block/kitchen/theme_gelida_iv)
 "rXu" = (
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/caves/central_caves/garbledradio/theme_gelida_iv)
 "rXv" = (
 /obj/effect/landmark/weed_node,
@@ -28086,7 +28173,10 @@
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 2
 	},
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/outdoors/rock/theme_gelida_iv)
 "sQp" = (
 /obj/structure/table/mainship,
@@ -28617,7 +28707,10 @@
 /area/gelida/indoors/a_block/dorms/theme_gelida_iv)
 "tjQ" = (
 /obj/structure/platform/nondense,
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/outdoors/rock/theme_gelida_iv)
 "tjU" = (
 /obj/effect/turf_decal/warning_stripes/thin{
@@ -30583,7 +30676,10 @@
 /obj/structure/platform/nondense{
 	dir = 10
 	},
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/outdoors/rock/theme_gelida_iv)
 "uJf" = (
 /obj/structure/table/mainship,
@@ -30797,7 +30893,10 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone/lz2{
 	dir = 2
 	},
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/outdoors/w_rockies/theme_gelida_iv)
 "uRG" = (
 /obj/effect/ai_node,
@@ -31725,7 +31824,10 @@
 /area/gelida/indoors/c_block/cargo/theme_gelida_iv)
 "vxv" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/outdoors/rock/theme_gelida_iv)
 "vxz" = (
 /obj/effect/ai_node,
@@ -31907,7 +32009,10 @@
 /obj/structure/platform/nondense{
 	dir = 5
 	},
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/outdoors/rock/theme_gelida_iv)
 "vCy" = (
 /obj/machinery/light{
@@ -33126,7 +33231,10 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone{
 	dir = 1
 	},
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/outdoors/rock/theme_gelida_iv)
 "wxi" = (
 /obj/structure/prop/mainship/gelida/smallwire{
@@ -33867,7 +33975,10 @@
 /obj/structure/platform/nondense{
 	dir = 4
 	},
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/gelida/outdoors/rock/theme_gelida_iv)
 "xcj" = (
 /turf/closed/wall,

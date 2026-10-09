@@ -1,9 +1,15 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/closed/mineral/smooth/bigred/indestructible{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/space/theme_original)
 "ab" = (
-/turf/closed/mineral/smooth/bigred/indestructible{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/deathmatch/theme_original)
 "ac" = (
 /obj/structure/largecrate/guns/merc,

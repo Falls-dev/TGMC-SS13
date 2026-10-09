@@ -23,7 +23,10 @@
 /turf/open/floor/industrial,
 /area/deathmatch/theme_de_dust2)
 "ez" = (
-/turf/closed/mineral/smooth/bigred{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/deathmatch/theme_de_dust2)
 "eB" = (
 /obj/effect/landmark/deathmatch,
@@ -454,7 +457,10 @@
 /turf/open/floor/plating/ground/mars/random/dirt,
 /area/deathmatch/theme_de_dust2)
 "MP" = (
-/turf/closed/mineral/smooth/bigred/indestructible{open_turf_type = /turf/open/floor/plating/ground/mars/random/cave; baseturfs = /turf/open/floor/plating/ground/mars/random/cave},
+/turf/closed/mineral/smooth/bigred/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/mars/random/cave;
+	baseturfs = /turf/open/floor/plating/ground/mars/random/cave
+	},
 /area/deathmatch/theme_de_dust2)
 "Ng" = (
 /obj/vehicle/train/cargo/engine,

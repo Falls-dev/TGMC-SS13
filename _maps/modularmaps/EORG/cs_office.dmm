@@ -2229,7 +2229,10 @@
 /turf/open/floor/stairs,
 /area/deathmatch/theme_cs_office)
 "ZD" = (
-/turf/closed/mineral/smooth{open_turf_type = /turf/open/floor/plating/ground/dirt; baseturfs = /turf/open/floor/plating/ground/dirt},
+/turf/closed/mineral/smooth{
+	open_turf_type = /turf/open/floor/plating/ground/dirt;
+	baseturfs = /turf/open/floor/plating/ground/dirt
+	},
 /area/deathmatch/theme_cs_office)
 "ZF" = (
 /obj/structure/table,

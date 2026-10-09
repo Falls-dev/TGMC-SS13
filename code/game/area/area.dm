@@ -4080,30 +4080,37 @@
 	ambience = list('sound/ambience/jungle_amb1.ogg')
 
 /area/deathmatch/theme_cs_mansion
+	eorg_weather_type = /datum/weather/snow_storm
 	temperature = ICE_COLONY_TEMPERATURE
 	ambience = list('sound/ambience/ambi_snow.ogg', 'sound/effects/wind/wind_2_1.ogg')
 
 /area/deathmatch/theme_cs_militia
+	eorg_weather_type = /datum/weather/ash_storm/sand
 	temperature = T20C
 	ambience = list('sound/effects/wind/wind_2_1.ogg')
 
 /area/deathmatch/theme_de_dust2
+	eorg_weather_type = /datum/weather/ash_storm/sand
 	temperature = T20C
 	ambience = list('sound/effects/wind/wind_2_1.ogg')
 
 /area/deathmatch/theme_de_inferno
+	eorg_weather_type = /datum/weather/snow_storm
 	temperature = ICE_COLONY_TEMPERATURE
 	ambience = list('sound/ambience/ambi_snow.ogg', 'sound/effects/wind/wind_2_1.ogg')
 
 /area/deathmatch/theme_cs_office
+	eorg_weather_type = /datum/weather/acid_rain/harmless
 	temperature = T20C
 	ambience = list('sound/ambience/jungle_amb1.ogg')
 
 /area/deathmatch/theme_de_nuke
+	eorg_weather_type = /datum/weather/acid_rain/harmless
 	temperature = T20C
 	ambience = list('sound/ambience/jungle_amb1.ogg')
 
 /area/deathmatch/theme_original
+	eorg_weather_type = /datum/weather/ash_storm/sand
 	temperature = T20C
 	ambience = list('sound/effects/wind/wind_2_1.ogg')
 

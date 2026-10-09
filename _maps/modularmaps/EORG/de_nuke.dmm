@@ -316,7 +316,10 @@
 /turf/open/floor/grass,
 /area/deathmatch/theme_de_nuke)
 "FZ" = (
-/turf/closed/mineral/smooth/indestructible{open_turf_type = /turf/open/floor/plating/ground/dirt; baseturfs = /turf/open/floor/plating/ground/dirt},
+/turf/closed/mineral/smooth/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/dirt;
+	baseturfs = /turf/open/floor/plating/ground/dirt
+	},
 /area/deathmatch/theme_de_nuke)
 "Go" = (
 /obj/effect/landmark/deathmatch,
@@ -535,7 +538,10 @@
 /turf/open/floor/tile/dark,
 /area/deathmatch/theme_de_nuke)
 "XY" = (
-/turf/closed/mineral/smooth{open_turf_type = /turf/open/floor/plating/ground/dirt; baseturfs = /turf/open/floor/plating/ground/dirt},
+/turf/closed/mineral/smooth{
+	open_turf_type = /turf/open/floor/plating/ground/dirt;
+	baseturfs = /turf/open/floor/plating/ground/dirt
+	},
 /area/deathmatch/theme_de_nuke)
 "YE" = (
 /obj/structure/largecrate,
