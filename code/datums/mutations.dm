@@ -111,6 +111,11 @@
 		to_chat(usr, span_warning("This mutation is not unlocked yet!"))
 		return
 
+	// A level (or a mutation) that is already owned, or a lower level than an owned one, can't be bought again.
+	if(mutation_datum.is_purchased(xeno_owner))
+		to_chat(usr, span_xenonotice("Existing mutation chosen. No biomass spent."))
+		return
+
 	var/mutation_cost = get_mutation_cost_for_caste(mutation_datum, xeno_owner.xeno_caste.caste_name)
 
 	if(xeno_owner.biomass < mutation_cost)
@@ -141,8 +146,26 @@
 					ability.remove_action(xeno_owner)
 					xeno_owner.upgrades_holder.Remove(parent_mutation.ability_type)
 
+	// Несовместимые мутации заменяются новой. Биомасса за них не возвращается.
+	for(var/replaced_name in mutation_datum.get_conflicting_purchases(xeno_owner))
+		var/datum/xeno_mutation/replaced_mutation = get_xeno_mutation_by_name(replaced_name)
+		xeno_owner.purchased_mutations -= replaced_name
+		if(!replaced_mutation)
+			continue
+		if(replaced_mutation.status_effect_type)
+			var/datum/status_effect/replaced_effect = locate(replaced_mutation.status_effect_type) in xeno_owner.status_effects
+			if(replaced_effect)
+				xeno_owner.remove_status_effect(replaced_effect)
+			xeno_owner.upgrades_holder.Remove(replaced_mutation.status_effect_type)
+		if(replaced_mutation.ability_type)
+			for(var/datum/action/ability/xeno_action/mutation/replaced_ability in xeno_owner.actions)
+				if(istype(replaced_ability, replaced_mutation.ability_type))
+					replaced_ability.remove_action(xeno_owner)
+					xeno_owner.upgrades_holder.Remove(replaced_mutation.ability_type)
+		to_chat(usr, span_xenonotice("Мутация [replaced_name] заменена."))
+
 	xeno_owner.biomass -= mutation_cost
-	to_chat(usr, span_xenonotice("[mutation_name] mutation gained."))
+	to_chat(usr, span_xenonotice("Мутация [mutation_name] получена."))
 
 	//Add to purchase history
 	xeno_owner.purchased_mutations += mutation_name

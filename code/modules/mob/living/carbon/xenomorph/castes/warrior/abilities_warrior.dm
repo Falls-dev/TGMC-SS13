@@ -74,6 +74,12 @@
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_TOGGLE_AGILITY,
 	)
 	action_type = ACTION_TOGGLE
+	/// The movement speed modifier given while Agility is on. Negative values are faster.
+	var/speed_modifier = WARRIOR_AGILITY_SPEED_MODIFIER
+	/// The amount of soft armor taken away in every category while Agility is on.
+	var/armor_modifier = WARRIOR_AGILITY_ARMOR_MODIFIER
+	/// The amount of soft armor that is currently taken away. Kept apart from armor_modifier so the exact amount is given back even if armor_modifier changed in the meantime.
+	var/applied_armor_modifier = 0
 
 /datum/action/ability/xeno_action/toggle_agility/New(Target)
 	. = ..()
@@ -89,13 +95,35 @@
 	add_cooldown()
 	if(!toggled)
 		xeno_owner.remove_movespeed_modifier(MOVESPEED_ID_WARRIOR_AGILITY)
-		xeno_owner.soft_armor = xeno_owner.soft_armor.modifyAllRatings(WARRIOR_AGILITY_ARMOR_MODIFIER)
+		give_back_armor()
 		return
-	xeno_owner.add_movespeed_modifier(MOVESPEED_ID_WARRIOR_AGILITY, TRUE, 0, NONE, TRUE, WARRIOR_AGILITY_SPEED_MODIFIER)
-	xeno_owner.soft_armor = xeno_owner.soft_armor.modifyAllRatings(-WARRIOR_AGILITY_ARMOR_MODIFIER)
+	xeno_owner.add_movespeed_modifier(MOVESPEED_ID_WARRIOR_AGILITY, TRUE, 0, NONE, TRUE, speed_modifier)
+	take_away_armor()
 	xeno_owner.toggle_move_intent(MOVE_INTENT_RUN)
 	if(xeno_owner.xeno_flags & XENO_AGILITY)
 		owner.drop_all_held_items() // drop items (hugger/jelly)
+
+/// Takes armor away for Agility.
+/datum/action/ability/xeno_action/toggle_agility/proc/take_away_armor()
+	if(applied_armor_modifier)
+		return
+	applied_armor_modifier = armor_modifier
+	xeno_owner.soft_armor = xeno_owner.soft_armor.modifyAllRatings(-applied_armor_modifier)
+
+/// Gives back the armor that Agility took away.
+/datum/action/ability/xeno_action/toggle_agility/proc/give_back_armor()
+	if(!applied_armor_modifier)
+		return
+	xeno_owner.soft_armor = xeno_owner.soft_armor.modifyAllRatings(applied_armor_modifier)
+	applied_armor_modifier = 0
+
+/// Applies changed speed_modifier / armor_modifier to Agility if it is currently on.
+/datum/action/ability/xeno_action/toggle_agility/proc/refresh_agility()
+	if(!toggled)
+		return
+	give_back_armor()
+	take_away_armor()
+	xeno_owner.add_movespeed_modifier(MOVESPEED_ID_WARRIOR_AGILITY, TRUE, 0, NONE, TRUE, speed_modifier) // Overrides the old one.
 
 // ***************************************
 // *********** Parent Ability
@@ -310,6 +338,10 @@
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_FLING,
 	)
 	target_flags = ABILITY_MOB_TARGET
+	/// The distance a target is flung, before the size and Empower adjustments.
+	var/starting_fling_distance = WARRIOR_FLING_DISTANCE
+	/// Multiplier of the cooldown (of this ability and Grapple Toss) if it was used on an allied xenomorph.
+	var/ally_cooldown_multiplier = 1
 
 /datum/action/ability/activable/xeno/warrior/fling/New(Target)
 	. = ..()
@@ -344,22 +376,25 @@
 	playsound(living_target, 'sound/weapons/alien_claw_block.ogg', 75, 1)
 	shake_camera(living_target, 1, 1)
 	xeno_owner.do_attack_animation(living_target, ATTACK_EFFECT_DISARM2)
-	var/fling_distance = WARRIOR_FLING_DISTANCE
+	var/fling_distance = starting_fling_distance
 	if(living_target.mob_size >= MOB_SIZE_BIG) // Penalize fling distance for big creatures.
 		fling_distance--
 	var/datum/action/ability/xeno_action/empower/empower_action = xeno_owner.actions_by_path[/datum/action/ability/xeno_action/empower]
 	if(empower_action?.check_empower(living_target))
 		fling_distance *= WARRIOR_FLING_EMPOWER_MULTIPLIER
+	var/cooldown_to_set = 0 // 0 means the normal cooldown.
 	if(!living_target.issamexenohive(xeno_owner))
 		RegisterSignal(living_target, COMSIG_MOVABLE_IMPACT, PROC_REF(thrown_into))
 		RegisterSignal(living_target, COMSIG_MOVABLE_POST_THROW, PROC_REF(throw_ended))
+	else if(ally_cooldown_multiplier != 1)
+		cooldown_to_set = get_cooldown() * ally_cooldown_multiplier
 	living_target.add_pass_flags(PASS_XENO, THROW_TRAIT)
 	var/fling_direction = get_dir(xeno_owner, living_target)
 	living_target.throw_at(get_ranged_target_turf(xeno_owner, fling_direction ? fling_direction : xeno_owner.dir, fling_distance), fling_distance, 2, xeno_owner, TRUE)
 	succeed_activate()
-	add_cooldown()
+	add_cooldown(cooldown_to_set)
 	var/datum/action/ability/activable/xeno/warrior/grapple_toss/toss_action = xeno_owner.actions_by_path[/datum/action/ability/activable/xeno/warrior/grapple_toss]
-	toss_action?.add_cooldown()
+	toss_action?.add_cooldown(cooldown_to_set)
 
 /datum/action/ability/activable/xeno/warrior/fling/ai_should_start_consider()
 	return TRUE
@@ -394,6 +429,10 @@
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_GRAPPLE_TOSS,
 	)
 	target_flags = ABILITY_TURF_TARGET
+	/// The distance a target is thrown, before the size and Empower adjustments.
+	var/starting_toss_distance = WARRIOR_GRAPPLE_TOSS_DISTANCE
+	/// Multiplier of the cooldown (of this ability and Fling) if it was used on an allied xenomorph.
+	var/ally_cooldown_multiplier = 1
 
 /datum/action/ability/activable/xeno/warrior/grapple_toss/New(Target)
 	. = ..()
@@ -424,7 +463,8 @@
 /datum/action/ability/activable/xeno/warrior/grapple_toss/use_ability(atom/A)
 	. = ..()
 	var/atom/movable/atom_target = xeno_owner.pulling
-	var/fling_distance = WARRIOR_GRAPPLE_TOSS_DISTANCE
+	var/fling_distance = starting_toss_distance
+	var/cooldown_to_set = 0 // 0 means the normal cooldown.
 	var/datum/action/ability/xeno_action/empower/empower_action = xeno_owner.actions_by_path[/datum/action/ability/xeno_action/empower]
 	if(empower_action?.check_empower(atom_target))
 		fling_distance *= WARRIOR_GRAPPLE_TOSS_EMPOWER_MULTIPLIER
@@ -441,15 +481,17 @@
 			living_target.Paralyze(WARRIOR_GRAPPLE_TOSS_THROW_PARALYZE) // very important otherwise the guy can move right as you throw them
 			RegisterSignal(living_target, COMSIG_MOVABLE_IMPACT, PROC_REF(thrown_into))
 			RegisterSignal(living_target, COMSIG_MOVABLE_POST_THROW, PROC_REF(throw_ended))
+		else if(ally_cooldown_multiplier != 1)
+			cooldown_to_set = get_cooldown() * ally_cooldown_multiplier
 	xeno_owner.face_atom(atom_target)
 	atom_target.forceMove(get_turf(xeno_owner))
 	xeno_owner.do_attack_animation(atom_target, ATTACK_EFFECT_DISARM2)
 	playsound(atom_target, 'sound/weapons/alien_claw_block.ogg', 75, 1)
 	atom_target.throw_at(get_turf(A), fling_distance, 2, xeno_owner, TRUE)
 	succeed_activate()
-	add_cooldown()
+	add_cooldown(cooldown_to_set)
 	var/datum/action/ability/activable/xeno/warrior/fling/fling_action = xeno_owner.actions_by_path[/datum/action/ability/activable/xeno/warrior/fling]
-	fling_action?.add_cooldown()
+	fling_action?.add_cooldown(cooldown_to_set)
 
 // ***************************************
 // *********** Punch

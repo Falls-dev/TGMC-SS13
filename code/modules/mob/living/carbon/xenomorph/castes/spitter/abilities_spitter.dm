@@ -108,9 +108,13 @@
 	keybinding_signals = list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_SCATTER_SPIT,
 	)
+	/// The amount of deciseconds for the do_after.
+	var/cast_time = 0.5 SECONDS
+	/// Should the projectile get bonus damage from SPIT_UPGRADE_BONUS?
+	var/should_get_upgrade_bonus = TRUE
 
 /datum/action/ability/activable/xeno/scatter_spit/use_ability(atom/target)
-	if(!do_after(xeno_owner, 0.5 SECONDS, NONE, target, BUSY_ICON_DANGER))
+	if(cast_time > 0 && !do_after(xeno_owner, cast_time, NONE, target, BUSY_ICON_DANGER))
 		return fail_activate()
 
 	//Shoot at the thing
@@ -119,7 +123,7 @@
 	var/datum/ammo/xeno/acid/heavy/scatter/scatter_spit = GLOB.ammo_list[/datum/ammo/xeno/acid/heavy/scatter]
 
 	var/atom/movable/projectile/newspit = new /atom/movable/projectile(get_turf(xeno_owner))
-	newspit.generate_bullet(scatter_spit, scatter_spit.damage * SPIT_UPGRADE_BONUS(xeno_owner))
+	newspit.generate_bullet(scatter_spit, scatter_spit.damage * (should_get_upgrade_bonus ? SPIT_UPGRADE_BONUS(xeno_owner) : 0))
 	newspit.def_zone = xeno_owner.get_limbzone_target()
 
 	newspit.fire_at(target, xeno_owner, xeno_owner, newspit.ammo.max_range)
@@ -170,6 +174,12 @@ GLOBAL_LIST_INIT(globadier_images_list, list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_TOSS_GRENADE,
 		KEYBINDING_ALTERNATE = COMSIG_XENOABILITY_PICK_GRENADE,
 	)
+	/// In exchange for using a grenade while at none, the percentage of maximum health to lose.
+	var/health_loss_percentage_per_grenade = 0
+	/// The amount of deciseconds to add to the detonation if the grenade was thrown at themselves.
+	var/bonus_self_detonation_time = 0
+	/// The amount of deciseconds for the timer that will restore a grenade charge.
+	var/grenade_cooldown = GLOBADIER_GRENADE_REGEN_COOLDOWN
 	///The current amount of grenades this ability has
 	var/current_grenades = 6
 	///The max amount of grenades this ability can store
@@ -215,15 +225,25 @@ GLOBAL_LIST_INIT(globadier_images_list, list(
 
 /datum/action/ability/activable/xeno/toss_grenade/use_ability(atom/target)
 	if(current_grenades <= 0)
-		owner.balloon_alert(owner, "No Grenades!")
-		return fail_activate()
+		// No exchanging life for healing grenades, as that would be infinite healing grenades.
+		if(!health_loss_percentage_per_grenade || xeno_owner.selected_grenade == /obj/item/explosive/grenade/globadier/heal)
+			owner.balloon_alert(owner, "No Grenades!")
+			return fail_activate()
+		var/health_to_lose = xeno_owner.xeno_caste.max_health * health_loss_percentage_per_grenade
+		if(xeno_owner.health_threshold_crit > xeno_owner.health - health_to_lose) // Stops them from suiciding into critical.
+			owner.balloon_alert(owner, "Not enough health!")
+			return fail_activate()
+		xeno_owner.adjust_brute_loss(health_to_lose, TRUE)
+		current_grenades++
 	var/obj/item/explosive/grenade/globadier/nade = new xeno_owner.selected_grenade(owner.loc, owner)
+	if(xeno_owner == target && bonus_self_detonation_time)
+		nade.det_time = max(0.5 SECONDS, nade.det_time + bonus_self_detonation_time)
 	nade.activate(owner)
 	nade.throw_at(target,GLOBADIER_GRENADE_THROW_RANGE,GLOBADIER_GRENADE_THROW_SPEED)
 	owner.visible_message(span_xenowarning("\The [owner] throws something towards \the [target]!"), \
 	span_xenowarning("We throw a grenade towards \the [target]!"))
 	current_grenades--
-	timer = addtimer(CALLBACK(src, PROC_REF(regen_grenade)), GLOBADIER_GRENADE_REGEN_COOLDOWN, TIMER_UNIQUE|TIMER_STOPPABLE)
+	timer = addtimer(CALLBACK(src, PROC_REF(regen_grenade)), grenade_cooldown, TIMER_UNIQUE|TIMER_STOPPABLE)
 	START_PROCESSING(SSprocessing, src)
 	update_button_icon()
 	succeed_activate()
@@ -251,7 +271,7 @@ GLOBAL_LIST_INIT(globadier_images_list, list(
 	current_grenades++
 	update_button_icon()
 	if((current_grenades < max_grenades)) // Second if check as current_grenades has changed
-		timer = addtimer(CALLBACK(src, PROC_REF(regen_grenade)), GLOBADIER_GRENADE_REGEN_COOLDOWN, TIMER_UNIQUE|TIMER_STOPPABLE)
+		timer = addtimer(CALLBACK(src, PROC_REF(regen_grenade)), grenade_cooldown, TIMER_UNIQUE|TIMER_STOPPABLE)
 		return
 	owner.balloon_alert(owner, "Max Grenades!")
 
