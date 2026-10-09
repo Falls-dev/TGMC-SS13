@@ -2,13 +2,18 @@
     "map_name": "Desparity",
     "map_path": "map_files/desparity",
     "map_file": "desparity.dmm",
-	"disk_sets": {
-		"basic": 1
-	},
-    "parallax_icon": "jungle",
-	"armor": "jungle",
-	"announce_text": "Наши сканеры засекли экстренное сообщение, которое было триангулировано на аванпосте в джунглях возле LV624, известном как Деспарити. Товарищи, снаряжайтесь и готовьтесь к высадке!",
-	"traits":[{
-		"weather_rain": true
-	}]
+    "disk_sets": {
+        "basic": 1
+    },
+    "parallax_icon": "ice",
+    "armor": "ice",
+    "announce_text": "Получен сигнал бедствия с объекта Desparity. Разведка сообщает об условиях заснеженной колонии. Корабль движется в сектор. Товарищи, пройдите инструктаж и приготовьтесь к высадке!",
+    "traits": [
+        {
+            "weather_snowstorm": true
+        }
+    ],
+    "environment_traits": {
+        "COLD": true
+    }
 }

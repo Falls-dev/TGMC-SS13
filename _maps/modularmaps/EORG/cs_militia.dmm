@@ -1,140 +1,136 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aB" = (
-/turf/open/floor/plating/ground/mars/random/dirt,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "bl" = (
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
 /obj/structure/flora/desert/grass,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "bE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "bP" = (
-/turf/open/floor/plating/ground/mars/dirttosand{
+/turf/open/floor/plating/ground/dirt{
 	dir = 10
 	},
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "bZ" = (
 /obj/structure/bed/chair/wood/wings{
 	dir = 8
 	},
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "dg" = (
 /obj/effect/spawner/random/engineering/ore_box,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "ds" = (
 /obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	dir = 2;
 	name = "\improper Civilian Housing"
 	},
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "dA" = (
 /turf/closed/mineral/smooth/desertdamrockwall/indestructible,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "eN" = (
 /obj/structure/largecrate/random/barrel/blue,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "gb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
 /obj/structure/bed/chair/wood/wings,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "gi" = (
 /obj/effect/landmark/deathmatch,
-/turf/open/floor/plating/ground/mars/dirttosand{
+/turf/open/floor/plating/ground/dirt{
 	dir = 8
 	},
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "gK" = (
 /obj/structure/window/framed/mainship/requisitions,
 /obj/structure/window/framed/wood,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "hw" = (
 /obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/plating/asteroidplating{
-	color = "#888888"
-	},
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "hy" = (
 /obj/structure/table/mainship,
 /obj/effect/spawner/random/misc/plushie/nospawnninetyfive,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "ip" = (
 /obj/structure/table/wood/gambling,
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "iq" = (
 /obj/structure/closet/secure_closet/freezer,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "kv" = (
-/turf/open/floor/plating/ground/mars/dirttosand{
+/turf/open/floor/plating/ground/dirt{
 	dir = 6
 	},
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "lX" = (
 /obj/effect/decal/cleanable/cobweb{
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "mY" = (
-/turf/open/floor/plating/ground/mars/dirttosand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "no" = (
 /obj/item/frame/rack,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "os" = (
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "oE" = (
-/obj/structure/flora/desert/cactus/multiple,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/obj/structure/flora/desert/grass,
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "pl" = (
-/turf/open/floor/plating/ground/mars/dirttosand{
+/turf/open/floor/plating/ground/dirt{
 	dir = 4
 	},
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "pC" = (
 /obj/structure/table/mainship,
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "qR" = (
 /obj/structure/bed/chair/wood/wings{
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "qU" = (
 /obj/structure/ladder{
 	height = 1;
 	id = "cs_militia_2";
 	pixel_y = 8
 	},
-/turf/open/floor/plating/asteroidplating{
-	color = "#888888"
-	},
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "rf" = (
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "rj" = (
 /obj/effect/landmark/deathmatch,
 /obj/structure/toilet{
@@ -142,29 +138,27 @@
 	},
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "rn" = (
 /obj/effect/landmark/deathmatch,
-/turf/open/floor/plating/ground/mars/random/dirt,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "rs" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "rK" = (
 /obj/machinery/door/window/right,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "sv" = (
 /obj/structure/ladder{
 	height = 1;
 	id = "cs_militia_1";
 	pixel_y = 8
 	},
-/turf/open/floor/plating/asteroidplating{
-	color = "#888888"
-	},
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "sM" = (
 /obj/structure/desertdam/decals/road/edge{
 	pixel_x = -16;
@@ -190,34 +184,34 @@
 	id = "cs_militia_4";
 	pixel_y = 8
 	},
-/turf/open/floor/plating/ground/mars/dirttosand{
+/turf/open/floor/plating/ground/dirt{
 	dir = 4
 	},
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "uN" = (
 /obj/structure/closet/cabinet,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "uR" = (
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "uT" = (
-/obj/structure/flora/tree/joshua,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/obj/structure/flora/tree/dead,
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "vb" = (
-/turf/open/floor/plating/ground/mars/dirttosand{
+/turf/open/floor/plating/ground/dirt{
 	dir = 1
 	},
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "xg" = (
 /obj/structure/flora/desert/grass,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "xp" = (
 /obj/structure/flora/desert/grass,
-/turf/open/floor/plating/ground/mars/random/dirt,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "xA" = (
 /obj/structure/desertdam/decals/road/edge{
 	pixel_x = -16;
@@ -243,222 +237,210 @@
 	id = "cs_militia_3";
 	pixel_y = 8
 	},
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "Bm" = (
 /obj/structure/table/mainship,
 /obj/machinery/microwave,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "Bs" = (
 /obj/structure/fence,
-/turf/open/floor/plating/ground/mars/dirttosand{
+/turf/open/floor/plating/ground/dirt{
 	dir = 5
 	},
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "BJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
 /obj/structure/bed/chair/wood/wings{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "BL" = (
 /obj/structure/table/mainship,
 /obj/effect/landmark/weapon_spawn/tier5_weapon_spawn,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "BN" = (
 /obj/effect/landmark/deathmatch,
-/turf/open/floor/plating/ground/mars/dirttosand{
+/turf/open/floor/plating/ground/dirt{
 	dir = 9
 	},
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "CC" = (
 /obj/structure/fence,
-/turf/open/floor/plating/ground/mars/dirttosand{
+/turf/open/floor/plating/ground/dirt{
 	dir = 10
 	},
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "Dq" = (
 /obj/structure/platform{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroidplating{
-	color = "#888888"
-	},
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "DH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "EP" = (
 /turf/closed/wall/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "EV" = (
 /obj/effect/spawner/random/misc/plushie/nospawnninetynine,
-/turf/open/floor/plating/asteroidplating{
-	color = "#888888"
-	},
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "Gk" = (
 /obj/effect/landmark/deathmatch,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "Gx" = (
-/turf/open/floor/plating/ground/mars/dirttosand{
+/turf/open/floor/plating/ground/dirt{
 	dir = 9
 	},
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "GB" = (
 /obj/structure/platform{
 	dir = 8
 	},
-/turf/open/floor/plating/asteroidplating{
-	color = "#888888"
-	},
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "GH" = (
 /obj/structure/ladder{
 	height = 1;
 	id = "cs_militia_4";
 	pixel_y = 8
 	},
-/turf/open/floor/plating/asteroidplating{
-	color = "#888888"
-	},
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "Ih" = (
 /obj/structure/rack,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "Is" = (
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/plating/ground/mars/dirttosand{
+/turf/open/floor/plating/ground/dirt{
 	dir = 4
 	},
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "IB" = (
 /obj/structure/barricade/wood{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "Jj" = (
 /obj/structure/window/framed/wood,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "Jx" = (
 /obj/structure/table/wood/gambling,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "Kl" = (
 /obj/structure/ladder{
 	height = 1;
 	id = "cs_militia_3";
 	pixel_y = 8
 	},
-/turf/open/floor/plating/asteroidplating{
-	color = "#888888"
-	},
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "LK" = (
 /obj/effect/landmark/deathmatch,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "LT" = (
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "ML" = (
 /obj/structure/bed/chair/wood/wings{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "MN" = (
 /obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	name = "\improper Civilian Housing"
 	},
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "NB" = (
 /obj/effect/landmark/deathmatch,
-/turf/open/floor/plating/asteroidplating{
-	color = "#888888"
-	},
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "Od" = (
 /obj/structure/largecrate/random/barrel/white,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "Or" = (
 /obj/structure/bookcase/manuals,
 /obj/item/book/manual/ripley_build_and_repair,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "Pa" = (
 /obj/structure/table/mainship,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "Po" = (
 /obj/structure/window/framed/mainship/hull,
 /obj/structure/window/framed/wood,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "PH" = (
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "Qa" = (
 /turf/open/floor/wood/broken,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "Qf" = (
 /obj/structure/window/framed/mainship/hull,
 /obj/structure/window/framed/wood,
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "QI" = (
 /turf/closed/wall,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "RD" = (
-/turf/open/floor/plating/ground/mars/dirttosand{
+/turf/open/floor/plating/ground/dirt{
 	dir = 8
 	},
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "RZ" = (
 /obj/item/storage/belt/champion,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "Tb" = (
 /obj/structure/bed/chair/wood/wings,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "TA" = (
 /obj/machinery/vending/boozeomat,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "TC" = (
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/plating/ground/mars/dirttosand{
+/turf/open/floor/plating/ground/dirt{
 	dir = 5
 	},
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "Uv" = (
 /turf/closed/mineral/smooth/desertdamrockwall,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "US" = (
 /obj/structure/bed/chair/wood/wings{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "Vo" = (
 /obj/effect/landmark/deathmatch,
 /obj/structure/flora/desert/grass,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "Vu" = (
 /obj/structure/ladder{
 	height = 2;
@@ -484,52 +466,50 @@
 	pixel_x = -16;
 	pixel_y = -16
 	},
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "WC" = (
 /turf/closed/wall{
 	color = "#888888"
 	},
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "WV" = (
-/turf/open/floor/plating/asteroidplating{
-	color = "#888888"
-	},
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "XA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "Yq" = (
-/turf/open/floor/plating/ground/mars/dirttosand{
+/turf/open/floor/plating/ground/dirt{
 	dir = 5
 	},
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "Yw" = (
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/plating/ground/mars/random/dirt,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "YH" = (
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 "YW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bed/chair/wood/wings,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "Zh" = (
 /obj/structure/fence,
-/turf/open/floor/plating/ground/mars/random/dirt,
-/area/deathmatch)
+/turf/open/floor/plating/ground/dirt,
+/area/deathmatch/theme_cs_militia)
 "ZK" = (
 /obj/machinery/door/window{
 	dir = 8
 	},
 /obj/effect/ai_node,
 /turf/open/floor/wood,
-/area/deathmatch)
+/area/deathmatch/theme_cs_militia)
 
 (1,1,1) = {"
 dA

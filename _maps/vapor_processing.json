@@ -2,9 +2,15 @@
     "map_name": "Vapor Processing",
     "map_path": "map_files/Vapor_Processing",
     "map_file": "Vapor_Processing.dmm",
-	"disk_sets": {
-		"basic": 1
-	},
-    "parallax_icon": "jungle",
-    "announce_text": "Наши сканеры засекли слабый сигнал бедствия и определили, что его источником является колония по парообработке, известная как LV-984. Используя блюспейс технологии, корабль прыгнул в пределы досягаемости аванпоста. Товарищи, снарядитесь и приготовьтесь к высадке!"
+    "disk_sets": {
+        "basic": 1
+    },
+    "parallax_icon": "redrock",
+    "announce_text": "Получен сигнал бедствия с объекта Vapor Processing. Разведка сообщает об условиях красной пустынной колонии. Корабль движется в сектор. Товарищи, пройдите инструктаж и приготовьтесь к высадке!",
+    "armor": "desert",
+    "traits": [
+        {
+            "weather_sandstorm": true
+        }
+    ]
 }

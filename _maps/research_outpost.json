@@ -2,10 +2,16 @@
     "map_name": "Research Outpost",
     "map_path": "map_files/Research_Outpost",
     "map_file": "Research_Outpost.dmm",
-	"disk_sets": {
-		"basic": 1
-	},
-	"parallax_icon": "redrock",
+    "disk_sets": {
+        "basic": 1
+    },
+    "parallax_icon": "jungle",
     "quickbuilds": 1000,
-    "announce_text": "На исследовательском форпосте появился маяк, безостановочно передающий один и тот же сигнал. Попытки связаться с колонией по связи оказались тщетными. Поскольку ваш корабль находился ближе всего, мы отправили вас выяснить в чем дело. Товарищи, приготовиться к высадке!"
+    "announce_text": "Получен сигнал бедствия с объекта Research Outpost. Разведка сообщает об условиях колонии в джунглях. Корабль движется в сектор. Товарищи, пройдите инструктаж и приготовьтесь к высадке!",
+    "armor": "jungle",
+    "traits": [
+        {
+            "weather_rain": true
+        }
+    ]
 }
