@@ -1,3 +1,6 @@
+// Должен совпадать с ROBOT_TOTAL_BUY_POINTS из code/__DEFINES/loadout/loadout.dm
+#define ROBOT_SPECIES_BUY_POINTS 45
+
 /datum/species/robot
 	name = "Combat Robot"
 	species_type = SPECIES_COMBAT_ROBOT
@@ -47,7 +50,7 @@
 	laughs = list(MALE = SFX_ROBOT_MALE_LAUGH, FEMALE = SFX_ROBOT_FEMALE_LAUGH, PLURAL = SFX_ROBOT_MALE_LAUGH, NEUTER = SFX_ROBOT_FEMALE_LAUGH)
 	death_message = "shudders violently whilst spitting out error text before collapsing, their visual sensor darkening..."
 	special_death_message = "You have been shut down.<br><small>But it is not the end of you yet... if you still have your body, wait until somebody can resurrect you...</small>"
-	joinable_roundstart = FALSE
+	joinable_roundstart = TRUE
 
 	inherent_actions = list(/datum/action/repair_self)
 
@@ -60,6 +63,15 @@
 	. = ..()
 	H.speech_span = initial(H.speech_span)
 	H.health_threshold_crit = -50
+
+/datum/species/robot/handle_post_spawn(mob/living/carbon/human/H)
+	. = ..()
+	addtimer(CALLBACK(src, PROC_REF(add_robot_points), H), 1)
+
+/datum/species/robot/proc/add_robot_points(mob/living/carbon/human/H)
+	var/obj/item/card/id/I = H.get_idcard()
+	if(I)
+		I.marine_points[CAT_ROBOT] = ROBOT_SPECIES_BUY_POINTS
 
 /datum/species/robot/handle_unique_behavior(mob/living/carbon/human/H)
 	if(H.health <= 0 && H.health > -50)
@@ -80,7 +92,7 @@
 	return TRUE
 
 /datum/species/robot/prefs_name(datum/preferences/prefs)
-	. = prefs.squad_robot_name
+	. = prefs.real_name
 	if(!. || . == "Undefined") //In case they don't have a name set.
 		. = GLOB.namepool[namepool].get_random_name()
 		to_chat(prefs.parent, span_warning("You forgot to set your robot in your preferences. Please do so next time."))

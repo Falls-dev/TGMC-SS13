@@ -75,7 +75,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/synthetic_type = "Synthetic"
 
 	//Robot specific preferences
-	var/squad_robot_name = "Undefined"
 	var/squad_robot_type = "Basic"
 
 	//Xenomorph specific preferences
@@ -98,6 +97,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/quick_equip = list()
 	var/list/gear
 	var/list/job_preferences = list()
+	var/list/names_by_species = list()
 
 	//Clothing
 	var/underwear = 1
