@@ -70,7 +70,7 @@
 
 	var/list/L = json_decode(response_text)
 
-	if(!islist(L) || isnull(L["status_code"]) || isnull(L["body"]))
+	if(!islist(L) || isnull(L["status_code"]))
 		R.errored = TRUE
 		R.error = _raw_response
 		return R
