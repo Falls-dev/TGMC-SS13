@@ -230,7 +230,7 @@
 		patient.set_oxy_loss(0)
 		patient.update_health()
 
-		var/heal_target = patient.get_death_threshold() - patient.health + 1
+		var/heal_target = patient.get_crit_threshold() - patient.health + 1
 		var/all_loss = patient.get_brute_loss() + patient.get_fire_loss() + patient.get_tox_loss()
 		if(all_loss && (heal_target > 0))
 			var/brute_ratio = patient.get_brute_loss() / all_loss
@@ -239,6 +239,9 @@
 			if(tox_ratio)
 				patient.adjust_tox_loss(-(tox_ratio * heal_target))
 			patient.heal_overall_damage(brute_ratio*heal_target, burn_ratio * heal_target, TRUE) // explicitly also heals robot parts
+		if(HAS_TRAIT_FROM(patient, TRAIT_IMMEDIATE_DEFIB, SUPERSOLDIER_TRAIT))
+			if(heart && !advanced)
+				heart.take_damage(15)
 
 	else if(!issynth(patient)) // TODO make me a trait :)
 		patient.adjust_brute_loss(-defib_heal_amt)
