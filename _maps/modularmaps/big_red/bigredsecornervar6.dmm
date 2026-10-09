@@ -39,10 +39,6 @@
 /obj/docking_port/stationary/crashmode,
 /turf/closed/mineral/smooth/bigred,
 /area/bigredv2/caves/rock)
-"dk" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
 "dI" = (
 /obj/machinery/prop/computer/rdservercontrol,
 /turf/open/shuttle/escapepod,
@@ -51,10 +47,6 @@
 /obj/effect/landmark/xeno_resin_door,
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/bigredv2/caves/south)
-"eM" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/plating_catwalk,
-/area/bigredv2/caves/secomplex)
 "fb" = (
 /obj/effect/ai_node,
 /turf/open/floor/plating/plating_catwalk,
@@ -436,10 +428,6 @@
 /obj/effect/spawner/random/misc/structure/broken_reinforced_window/colonyspawn,
 /turf/open/floor/tile/dark,
 /area/bigredv2/caves/secomplex)
-"zE" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/tile/dark,
-/area/bigredv2/caves/secomplex)
 "zI" = (
 /turf/closed/mineral/smooth/bigred/indestructible,
 /area/space)
@@ -488,10 +476,6 @@
 "Em" = (
 /turf/open/floor/plating/ground/mars/random/cave/rock,
 /area/bigredv2/caves/southeast)
-"Eq" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/shuttle/escapepod,
-/area/bigredv2/caves/secomplex)
 "EN" = (
 /obj/effect/ai_node,
 /turf/open/floor/plating/ground/mars/random/cave/rock,
@@ -792,10 +776,6 @@
 "Wz" = (
 /obj/structure/bed/chair/reinforced,
 /turf/open/shuttle/escapepod,
-/area/bigredv2/caves/secomplex)
-"WB" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/mainship/mono,
 /area/bigredv2/caves/secomplex)
 "WQ" = (
 /obj/structure/prop/mainship/mission_planning_system,
@@ -1946,7 +1926,7 @@ xn
 xn
 xn
 xn
-eM
+xn
 xn
 fp
 aU
@@ -2304,7 +2284,7 @@ Dx
 Dx
 le
 SG
-eM
+xn
 SG
 le
 zI
@@ -2780,7 +2760,7 @@ kX
 fY
 lU
 oB
-Eq
+oB
 sc
 oB
 EX
@@ -3685,7 +3665,7 @@ SG
 sU
 SG
 SG
-WB
+SG
 le
 zI
 fs
@@ -4349,7 +4329,7 @@ Ro
 Ro
 Ro
 Ro
-dk
+Ro
 Ro
 Ro
 My
@@ -5057,7 +5037,7 @@ TA
 kd
 le
 QY
-zE
+yr
 JW
 QY
 le

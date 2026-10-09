@@ -23,10 +23,6 @@
 /obj/effect/landmark/xeno_resin_wall,
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/bigredv2/caves/southwest)
-"r" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southwest)
 "t" = (
 /obj/effect/ai_node,
 /turf/open/floor/plating/ground/mars/random/cave,
@@ -45,11 +41,6 @@
 "E" = (
 /obj/effect/landmark/xeno_resin_wall,
 /turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/southwest)
-"F" = (
-/obj/effect/landmark/excavation_site_spawner,
-/obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
 /area/bigredv2/caves/southwest)
 "I" = (
 /obj/effect/landmark/weed_node,
@@ -835,7 +826,7 @@ c
 c
 c
 c
-r
+c
 c
 c
 c
@@ -1726,7 +1717,7 @@ Q
 Q
 Q
 c
-F
+t
 c
 c
 c
@@ -1738,7 +1729,7 @@ Q
 Q
 Q
 c
-r
+c
 c
 Q
 Q

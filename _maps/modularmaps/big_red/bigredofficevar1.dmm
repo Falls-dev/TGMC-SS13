@@ -256,10 +256,6 @@
 /obj/effect/landmark/weed_node,
 /turf/open/floor/plating/ground/mars/dirttosand/autosmooth,
 /area/bigredv2/outside/c)
-"lZ" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/tile/whiteyellow/full,
-/area/bigredv2/outside/office_complex)
 "ma" = (
 /obj/effect/landmark/corpsespawner/engineer,
 /obj/effect/landmark/weed_node,
@@ -878,10 +874,6 @@
 /obj/item/trash/semki,
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/office_complex)
-"Mh" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/tile/white,
-/area/bigredv2/outside/office_complex)
 "Mq" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
@@ -1355,7 +1347,7 @@ ov
 wo
 ib
 ZR
-Mh
+ZR
 VY
 ZR
 ov
@@ -1716,7 +1708,7 @@ VI
 Za
 ov
 Jy
-lZ
+HY
 dr
 mu
 IO
