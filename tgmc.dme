@@ -835,6 +835,9 @@
 #include "code\game\area\bigred.dm"
 #include "code\game\area\centcom.dm"
 #include "code\game\area\deltastation.dm"
+#include "code\game\area\boxstation.dm"
+#include "code\game\boxstation_map_port.dm"
+#include "code\game\boxstation_shared_map_content.dm"
 #include "code\game\area\gelida_iv.dm"
 #include "code\game\area\general.dm"
 #include "code\game\area\icecolony.dm"
@@ -842,6 +845,11 @@
 #include "code\game\area\kutjevo.dm"
 #include "code\game\area\lawankaoutpost.dm"
 #include "code\game\area\lv624.dm"
+#include "code\game\area\LV759_Hybrisa_Prospera.dm"
+
+#include "code\game\lv759_map_port.dm"
+
+
 #include "code\game\area\magmoor_digsite.dm"
 #include "code\game\area\mainship.dm"
 #include "code\game\area\orion_outpost.dm"
@@ -2561,4 +2569,15 @@
 #include "interface\fonts\spess_font.dm"
 #include "interface\fonts\tiny_unicode.dm"
 #include "interface\fonts\vcr_osd_mono.dm"
+// LV759 behavior overrides follow the stock type definitions.
+#include "code\game\lv759_support\hybrisa_props.dm"
+#include "code\game\lv759_support\vehicle_props.dm"
+#include "code\game\lv759_support\large_vehicle_props.dm"
+#include "code\game\lv759_support\resource_fixes.dm"
+#include "code\game\lv759_support\legacy_map_objects.dm"
+// Compile imported maps for map validation; load the selected map from its JSON in normal rounds.
+#ifdef ALL_MAPS
+#include "_maps\map_files\LV759\LV759.dmm"
+#include "_maps\map_files\BoxStation\BoxStation.dmm"
+#endif
 // END_INCLUDE
