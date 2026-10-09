@@ -122,7 +122,7 @@
 /area/barren/cave/lz2/theme_barrenquilla_mining_facility)
 "aN" = (
 /obj/structure/disposalpipe/segment/corner,
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/barren/theme_barrenquilla_mining_facility)
 "aP" = (
 /obj/structure/largecrate/random/case/double,
@@ -351,7 +351,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/barren/theme_barrenquilla_mining_facility)
 "bW" = (
 /obj/effect/decal/cleanable/blood/writing{
@@ -378,7 +378,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/barren/theme_barrenquilla_mining_facility)
 "ce" = (
 /obj/effect/landmark/weed_node,
@@ -414,7 +414,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 2
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/barren/theme_barrenquilla_mining_facility)
 "cn" = (
 /obj/structure/reagent_dispensers/fueltank,
@@ -437,7 +437,7 @@
 /area/barren/caves/south/theme_barrenquilla_mining_facility)
 "ct" = (
 /obj/effect/decal/remains/human,
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/barren/theme_barrenquilla_mining_facility)
 "cv" = (
 /obj/structure/barricade/guardrail{
@@ -658,7 +658,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/barren/theme_barrenquilla_mining_facility)
 "dE" = (
 /turf/open/floor/tile/blue/whitebluefull,
@@ -787,13 +787,13 @@
 /obj/structure/disposalpipe/junction/yjunc{
 	dir = 1
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/barren/theme_barrenquilla_mining_facility)
 "ei" = (
 /obj/structure/disposalpipe/segment/corner{
 	dir = 8
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/barren/theme_barrenquilla_mining_facility)
 "ek" = (
 /obj/item/ore/iron,
@@ -851,7 +851,7 @@
 /turf/open/floor/plating/ground/ice,
 /area/barren/cave/northwest/theme_barrenquilla_mining_facility)
 "eu" = (
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/barren/theme_barrenquilla_mining_facility)
 "ev" = (
 /obj/structure/closet/secure_closet/engineering_welding,
@@ -892,7 +892,7 @@
 /obj/structure/barricade/guardrail{
 	dir = 8
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/barren/theme_barrenquilla_mining_facility)
 "eB" = (
 /obj/effect/decal/cleanable/blood/gibs/xeno,
@@ -1976,7 +1976,7 @@
 /obj/structure/barricade/guardrail{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/barren/theme_barrenquilla_mining_facility)
 "jk" = (
 /obj/structure/cable,
@@ -2561,7 +2561,7 @@
 	dir = 8
 	},
 /obj/structure/barricade/guardrail,
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/barren/theme_barrenquilla_mining_facility)
 "lY" = (
 /obj/machinery/light{
@@ -4919,7 +4919,7 @@
 /area/barren/engie/engine/theme_barrenquilla_mining_facility)
 "wV" = (
 /obj/structure/lattice,
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/barren/theme_barrenquilla_mining_facility)
 "wW" = (
 /obj/structure/barricade/guardrail,
@@ -4927,7 +4927,7 @@
 	dir = 4;
 	pixel_y = 7
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/barren/theme_barrenquilla_mining_facility)
 "wX" = (
 /obj/effect/decal/cleanable/dirt,
@@ -4979,14 +4979,14 @@
 /obj/structure/barricade/guardrail{
 	dir = 1
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/barren/theme_barrenquilla_mining_facility)
 "xj" = (
 /obj/structure/barricade/guardrail{
 	dir = 4;
 	pixel_y = 7
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/barren/theme_barrenquilla_mining_facility)
 "xl" = (
 /turf/open/floor/plating/ground/ice,
@@ -5109,7 +5109,7 @@
 /obj/structure/barricade/guardrail{
 	dir = 8
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/barren/theme_barrenquilla_mining_facility)
 "xT" = (
 /obj/structure/table/wood,
@@ -8148,7 +8148,7 @@
 /area/barren/cave/central/theme_barrenquilla_mining_facility)
 "MK" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/barren/theme_barrenquilla_mining_facility)
 "ML" = (
 /obj/structure/table,
@@ -9772,7 +9772,7 @@
 	pixel_y = 7
 	},
 /obj/structure/barricade/guardrail,
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/barren/theme_barrenquilla_mining_facility)
 "Ux" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
@@ -10435,7 +10435,7 @@
 	desc = "No bother to sink or swim when you can just float... on lava.";
 	name = "sturdy inflatable duck"
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/barren/theme_barrenquilla_mining_facility)
 "XR" = (
 /obj/structure/table/mainship,
@@ -10701,7 +10701,7 @@
 /area/barren/medical/research/theme_barrenquilla_mining_facility)
 "Zf" = (
 /obj/structure/barricade/guardrail,
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/barren/theme_barrenquilla_mining_facility)
 "Zg" = (
 /turf/open/floor/plating/ground/ice,

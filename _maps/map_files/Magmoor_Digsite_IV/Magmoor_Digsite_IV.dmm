@@ -485,9 +485,10 @@
 /turf/open/floor/mainship/cargo,
 /area/magmoor/cargo/storage/south/theme_magmoor_digsite_iv)
 "aoz" = (
+/obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating/plating_catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/north/theme_magmoor_digsite_iv)
 "aqc" = (
 /obj/structure/cable,
@@ -2097,8 +2098,9 @@
 /turf/open/floor/plating/ground/snow/layer1,
 /area/magmoor/hydroponics/south/theme_magmoor_digsite_iv)
 "buY" = (
+/obj/structure/catwalk,
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/plating_catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/volcano/theme_magmoor_digsite_iv)
 "bva" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
@@ -2613,7 +2615,7 @@
 /obj/structure/barricade/guardrail{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/south/theme_magmoor_digsite_iv)
 "bMW" = (
 /turf/open/floor/mainship/sterile/purple/side{
@@ -2866,7 +2868,7 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment/corner,
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/volcano/theme_magmoor_digsite_iv)
 "bWe" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1{
@@ -3638,9 +3640,10 @@
 /turf/open/floor/plating,
 /area/magmoor/engi/garage/theme_magmoor_digsite_iv)
 "cxu" = (
+/obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating/plating_catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/south/theme_magmoor_digsite_iv)
 "cyr" = (
 /obj/structure/cargo_container/ch_green{
@@ -3832,7 +3835,7 @@
 /area/magmoor/compound/north/theme_magmoor_digsite_iv)
 "cGv" = (
 /obj/structure/barricade/guardrail,
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/southeast/theme_magmoor_digsite_iv)
 "cHl" = (
 /obj/structure/cable,
@@ -4502,7 +4505,7 @@
 /obj/structure/disposalpipe/water_pipe{
 	dir = 8
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/volcano/theme_magmoor_digsite_iv)
 "dhx" = (
 /obj/structure/flora/pottedplant/twentytwo,
@@ -5662,9 +5665,10 @@
 /turf/open/floor/mainship/floor,
 /area/magmoor/landing/theme_magmoor_digsite_iv)
 "dTN" = (
+/obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating/plating_catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/theme_magmoor_digsite_iv)
 "dUz" = (
 /obj/structure/bed/chair/office/light,
@@ -5986,7 +5990,7 @@
 /obj/structure/barricade/guardrail{
 	dir = 1
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/east/theme_magmoor_digsite_iv)
 "ehH" = (
 /obj/item/trash/eat,
@@ -5999,7 +6003,7 @@
 /obj/structure/disposalpipe/down{
 	dir = 1
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/south/theme_magmoor_digsite_iv)
 "eip" = (
 /obj/structure/cable,
@@ -6160,10 +6164,11 @@
 	},
 /area/magmoor/landing/two/theme_magmoor_digsite_iv)
 "eor" = (
+/obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/ai_node,
-/turf/open/floor/plating/plating_catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/north/theme_magmoor_digsite_iv)
 "epk" = (
 /obj/structure/window/framed/colony,
@@ -6196,7 +6201,8 @@
 	},
 /area/magmoor/civilian/pool/theme_magmoor_digsite_iv)
 "eru" = (
-/turf/open/floor/plating/plating_catwalk,
+/obj/structure/catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/volcano/theme_magmoor_digsite_iv)
 "erD" = (
 /obj/structure/table/reinforced,
@@ -7416,7 +7422,7 @@
 /obj/structure/disposalpipe/water_pipe{
 	dir = 1
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/south/theme_magmoor_digsite_iv)
 "fhN" = (
 /obj/effect/ai_node,
@@ -10298,7 +10304,7 @@
 /area/magmoor/civilian/rnr/theme_magmoor_digsite_iv)
 "htt" = (
 /obj/structure/disposalpipe/water_pipe,
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/volcano/theme_magmoor_digsite_iv)
 "htD" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -10681,7 +10687,8 @@
 	},
 /area/magmoor/engi/power/theme_magmoor_digsite_iv)
 "hKB" = (
-/turf/open/floor/plating/plating_catwalk,
+/obj/structure/catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/theme_magmoor_digsite_iv)
 "hKK" = (
 /obj/structure/cable,
@@ -10757,7 +10764,7 @@
 /area/magmoor/security/storage/theme_magmoor_digsite_iv)
 "hNe" = (
 /obj/structure/barricade/guardrail,
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/south/theme_magmoor_digsite_iv)
 "hNf" = (
 /obj/structure/table/wood,
@@ -10906,13 +10913,13 @@
 /area/magmoor/medical/patient/theme_magmoor_digsite_iv)
 "hTW" = (
 /obj/structure/barricade/guardrail,
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/northeast/theme_magmoor_digsite_iv)
 "hTX" = (
 /obj/structure/barricade/guardrail{
 	dir = 1
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/southeast/theme_magmoor_digsite_iv)
 "hUg" = (
 /obj/structure/disposalpipe/segment{
@@ -11281,14 +11288,16 @@
 	},
 /area/magmoor/mining/theme_magmoor_digsite_iv)
 "ifu" = (
+/obj/structure/catwalk,
 /obj/effect/ai_node,
-/turf/open/floor/plating/plating_catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/north/theme_magmoor_digsite_iv)
 "ifC" = (
+/obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
 	},
-/turf/open/floor/plating/plating_catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/theme_magmoor_digsite_iv)
 "igb" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -11569,7 +11578,7 @@
 /obj/structure/barricade/guardrail{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/north/theme_magmoor_digsite_iv)
 "irH" = (
 /obj/structure/barricade/folding{
@@ -12886,7 +12895,8 @@
 /turf/open/floor/mainship/sterile/corner,
 /area/magmoor/medical/lobby/theme_magmoor_digsite_iv)
 "joE" = (
-/turf/open/floor/plating/plating_catwalk,
+/obj/structure/catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/southwest/theme_magmoor_digsite_iv)
 "joM" = (
 /obj/structure/rack,
@@ -13166,13 +13176,14 @@
 /turf/open/floor/tile/white,
 /area/magmoor/civilian/pool/theme_magmoor_digsite_iv)
 "jzv" = (
+/obj/structure/catwalk,
 /obj/structure/barricade/guardrail{
 	dir = 4
 	},
 /obj/structure/barricade/guardrail{
 	dir = 8
 	},
-/turf/open/floor/plating/plating_catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/north/theme_magmoor_digsite_iv)
 "jzX" = (
 /obj/structure/disposalpipe/segment/corner{
@@ -13352,8 +13363,9 @@
 /turf/open/floor/plating/ground/snow/layer2,
 /area/magmoor/compound/north/theme_magmoor_digsite_iv)
 "jFd" = (
+/obj/structure/catwalk,
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/plating_catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/cave/north/theme_magmoor_digsite_iv)
 "jFg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -15326,7 +15338,8 @@
 /turf/open/floor/wood,
 /area/magmoor/command/office/main/theme_magmoor_digsite_iv)
 "law" = (
-/turf/open/floor/plating/plating_catwalk,
+/obj/structure/catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/north/theme_magmoor_digsite_iv)
 "laA" = (
 /obj/structure/cable,
@@ -15382,7 +15395,7 @@
 /area/magmoor/cargo/processing/south/theme_magmoor_digsite_iv)
 "lcq" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/south/theme_magmoor_digsite_iv)
 "lcu" = (
 /obj/structure/bed/chair/office/light{
@@ -15848,7 +15861,7 @@
 /obj/structure/barricade/guardrail{
 	dir = 1
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/southwest/theme_magmoor_digsite_iv)
 "lsp" = (
 /obj/effect/turf_decal/warning_stripes/thin{
@@ -16196,7 +16209,8 @@
 	},
 /area/magmoor/engi/power/theme_magmoor_digsite_iv)
 "lHz" = (
-/turf/open/floor/plating/plating_catwalk,
+/obj/structure/catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/northeast/theme_magmoor_digsite_iv)
 "lIq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
@@ -17582,7 +17596,8 @@
 /turf/open/floor/mainship/blue/corner,
 /area/magmoor/command/commandroom/theme_magmoor_digsite_iv)
 "mJu" = (
-/turf/open/floor/plating/plating_catwalk,
+/obj/structure/catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/east/theme_magmoor_digsite_iv)
 "mJw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
@@ -17808,7 +17823,7 @@
 /obj/structure/barricade/guardrail{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/theme_magmoor_digsite_iv)
 "mQL" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
@@ -18134,8 +18149,9 @@
 /turf/open/floor/wood,
 /area/magmoor/medical/cmo/theme_magmoor_digsite_iv)
 "ndj" = (
+/obj/structure/catwalk,
 /obj/effect/ai_node,
-/turf/open/floor/plating/plating_catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/northeast/theme_magmoor_digsite_iv)
 "ndo" = (
 /obj/machinery/door/poddoor/shutters/mainship{
@@ -18211,7 +18227,8 @@
 /turf/open/floor/cult,
 /area/magmoor/cave/north/theme_magmoor_digsite_iv)
 "nfS" = (
-/turf/open/floor/plating/plating_catwalk,
+/obj/structure/catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/southeast/theme_magmoor_digsite_iv)
 "nfY" = (
 /turf/open/floor/carpet/side{
@@ -18796,13 +18813,14 @@
 /turf/open/floor/plating/ground/ice,
 /area/magmoor/compound/west/theme_magmoor_digsite_iv)
 "nEH" = (
+/obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating/plating_catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/theme_magmoor_digsite_iv)
 "nEK" = (
 /obj/structure/disposalpipe/segment,
@@ -19820,13 +19838,14 @@
 /turf/open/floor/mainship/sterile/purple,
 /area/magmoor/research/rnd/theme_magmoor_digsite_iv)
 "ovp" = (
+/obj/structure/catwalk,
 /obj/structure/barricade/guardrail{
 	dir = 4
 	},
 /obj/structure/barricade/guardrail{
 	dir = 8
 	},
-/turf/open/floor/plating/plating_catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/theme_magmoor_digsite_iv)
 "ovr" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -20379,7 +20398,7 @@
 /area/magmoor/research/theme_magmoor_digsite_iv)
 "oMg" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/volcano/theme_magmoor_digsite_iv)
 "oMm" = (
 /obj/structure/table/reinforced,
@@ -21445,7 +21464,7 @@
 /obj/structure/disposalpipe/water_pipe{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/volcano/theme_magmoor_digsite_iv)
 "puG" = (
 /obj/machinery/air_alarm{
@@ -22581,8 +22600,9 @@
 /turf/open/floor/freezer,
 /area/magmoor/civilian/clean/shower/theme_magmoor_digsite_iv)
 "qiR" = (
+/obj/structure/catwalk,
 /obj/structure/barricade/guardrail,
-/turf/open/floor/plating/plating_catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/north/theme_magmoor_digsite_iv)
 "qjx" = (
 /obj/machinery/science/isolator/inserted,
@@ -22744,7 +22764,7 @@
 /obj/structure/barricade/guardrail{
 	dir = 1
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/northeast/theme_magmoor_digsite_iv)
 "qoY" = (
 /obj/structure/closet/crate/trashcart,
@@ -24207,7 +24227,7 @@
 /obj/structure/barricade/guardrail{
 	dir = 8
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/north/theme_magmoor_digsite_iv)
 "ruF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
@@ -24368,7 +24388,7 @@
 /obj/structure/barricade/guardrail{
 	dir = 8
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/north/theme_magmoor_digsite_iv)
 "rCt" = (
 /obj/machinery/iv_drip,
@@ -24550,7 +24570,7 @@
 /obj/structure/disposalpipe/segment/corner{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/volcano/theme_magmoor_digsite_iv)
 "rJI" = (
 /obj/structure/filingcabinet,
@@ -24568,7 +24588,7 @@
 /obj/structure/barricade/guardrail{
 	dir = 1
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/north/theme_magmoor_digsite_iv)
 "rKd" = (
 /turf/open/floor/plating/ground/snow/layer1{
@@ -25663,7 +25683,7 @@
 /turf/open/floor/engine,
 /area/magmoor/engi/atmos/theme_magmoor_digsite_iv)
 "syD" = (
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/theme_magmoor_digsite_iv)
 "syN" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -25713,7 +25733,7 @@
 /area/magmoor/civilian/mosque/theme_magmoor_digsite_iv)
 "sAc" = (
 /obj/structure/barricade/guardrail,
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/southwest/theme_magmoor_digsite_iv)
 "sAj" = (
 /obj/effect/decal/cleanable/dirt,
@@ -25890,7 +25910,7 @@
 /area/magmoor/cargo/processing/south/theme_magmoor_digsite_iv)
 "sEY" = (
 /obj/structure/barricade/guardrail,
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/east/theme_magmoor_digsite_iv)
 "sFc" = (
 /obj/structure/table/mainship,
@@ -25985,7 +26005,8 @@
 	},
 /area/magmoor/civilian/cryostasis/theme_magmoor_digsite_iv)
 "sIF" = (
-/turf/open/floor/plating/plating_catwalk,
+/obj/structure/catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/south/theme_magmoor_digsite_iv)
 "sIM" = (
 /obj/effect/turf_decal/warning_stripes/thick{
@@ -26094,7 +26115,7 @@
 /obj/structure/barricade/guardrail{
 	dir = 8
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/south/theme_magmoor_digsite_iv)
 "sOy" = (
 /obj/structure/flora/bush,
@@ -26290,7 +26311,7 @@
 /turf/open/floor/freezer,
 /area/magmoor/civilian/clean/toilet/theme_magmoor_digsite_iv)
 "sVr" = (
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/northeast/theme_magmoor_digsite_iv)
 "sWk" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -26731,7 +26752,7 @@
 /area/magmoor/civilian/clean/toilet/theme_magmoor_digsite_iv)
 "tkP" = (
 /obj/structure/barricade/guardrail,
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/north/theme_magmoor_digsite_iv)
 "tkS" = (
 /obj/effect/turf_decal/warning_stripes/thin{
@@ -27738,7 +27759,7 @@
 /turf/open/floor/plating/ground/snow/layer2,
 /area/magmoor/compound/east/theme_magmoor_digsite_iv)
 "tYu" = (
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/cave/northwest/theme_magmoor_digsite_iv)
 "tYF" = (
 /turf/open/floor/plating/ground/ice,
@@ -28605,7 +28626,7 @@
 /area/magmoor/compound/north/theme_magmoor_digsite_iv)
 "uzu" = (
 /obj/structure/barricade/guardrail,
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/volcano/theme_magmoor_digsite_iv)
 "uzK" = (
 /obj/structure/cable,
@@ -28723,13 +28744,14 @@
 /turf/open/floor/prison/kitchen,
 /area/magmoor/civilian/cook/theme_magmoor_digsite_iv)
 "uDM" = (
+/obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating/plating_catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/north/theme_magmoor_digsite_iv)
 "uDV" = (
 /obj/structure/cable,
@@ -29009,8 +29031,9 @@
 	},
 /area/magmoor/engi/theme_magmoor_digsite_iv)
 "uRj" = (
+/obj/structure/catwalk,
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/plating_catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/north/theme_magmoor_digsite_iv)
 "uRt" = (
 /turf/open/floor/mainship/blue{
@@ -29093,7 +29116,8 @@
 /turf/open/floor/mainship/mono,
 /area/magmoor/cargo/processing/south/theme_magmoor_digsite_iv)
 "uTC" = (
-/turf/open/floor/plating/plating_catwalk,
+/obj/structure/catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/cave/north/theme_magmoor_digsite_iv)
 "uTH" = (
 /obj/effect/decal/cleanable/blood/splatter/animated,
@@ -29113,7 +29137,7 @@
 	dir = 4
 	},
 /obj/structure/barricade/guardrail,
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/north/theme_magmoor_digsite_iv)
 "uUg" = (
 /obj/effect/landmark/weed_node,
@@ -29552,8 +29576,9 @@
 /turf/open/floor/wood,
 /area/magmoor/civilian/dorms/theme_magmoor_digsite_iv)
 "vjI" = (
+/obj/structure/catwalk,
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/plating_catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/theme_magmoor_digsite_iv)
 "vjN" = (
 /obj/structure/window_frame/colony/reinforced,
@@ -29793,8 +29818,9 @@
 /turf/open/floor/tile/dark/red2,
 /area/magmoor/security/storage/theme_magmoor_digsite_iv)
 "vtT" = (
+/obj/structure/catwalk,
 /obj/effect/ai_node,
-/turf/open/floor/plating/plating_catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/cave/north/theme_magmoor_digsite_iv)
 "vud" = (
 /obj/machinery/door/airlock/mainship/medical/glass/free_access{
@@ -30002,7 +30028,7 @@
 /obj/structure/disposalpipe/segment/corner{
 	dir = 1
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/volcano/theme_magmoor_digsite_iv)
 "vCX" = (
 /obj/structure/cable,
@@ -30478,7 +30504,7 @@
 /turf/open/floor/mainship/mono,
 /area/magmoor/command/commandroom/theme_magmoor_digsite_iv)
 "vTr" = (
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/east/theme_magmoor_digsite_iv)
 "vTv" = (
 /obj/structure/table/mainship,
@@ -30527,7 +30553,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/volcano/theme_magmoor_digsite_iv)
 "vUE" = (
 /obj/structure/cable,
@@ -30704,7 +30730,7 @@
 /turf/closed/wall,
 /area/magmoor/command/lobby/theme_magmoor_digsite_iv)
 "waE" = (
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/west/theme_magmoor_digsite_iv)
 "waZ" = (
 /obj/structure/prop/mainship/sensor_computer1,
@@ -32737,7 +32763,7 @@
 	dir = 8
 	},
 /obj/structure/barricade/guardrail,
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/north/theme_magmoor_digsite_iv)
 "xrl" = (
 /obj/structure/window/reinforced{
@@ -32771,7 +32797,7 @@
 	},
 /area/magmoor/research/containment/theme_magmoor_digsite_iv)
 "xrM" = (
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/north/theme_magmoor_digsite_iv)
 "xrO" = (
 /obj/effect/turf_decal/warning_stripes/thin{
@@ -32925,7 +32951,7 @@
 	},
 /area/magmoor/cargo/processing/south/theme_magmoor_digsite_iv)
 "xwh" = (
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/southeast/theme_magmoor_digsite_iv)
 "xwt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -32999,7 +33025,7 @@
 /turf/open/floor/prison/kitchen,
 /area/magmoor/civilian/cook/theme_magmoor_digsite_iv)
 "xyy" = (
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/cave/north/theme_magmoor_digsite_iv)
 "xyC" = (
 /turf/open/floor/plating/ground/concrete/lines,
@@ -33027,7 +33053,7 @@
 /obj/structure/barricade/guardrail{
 	dir = 1
 	},
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/south/theme_magmoor_digsite_iv)
 "xzj" = (
 /obj/structure/barricade/guardrail,
@@ -33411,7 +33437,7 @@
 	},
 /area/magmoor/compound/northwest/theme_magmoor_digsite_iv)
 "xMO" = (
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/southwest/theme_magmoor_digsite_iv)
 "xMR" = (
 /turf/open/floor/plating/ground/snow/layer1,
@@ -33481,7 +33507,7 @@
 	},
 /area/magmoor/civilian/arrival/east/theme_magmoor_digsite_iv)
 "xOX" = (
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/cave/west/theme_magmoor_digsite_iv)
 "xOY" = (
 /obj/effect/turf_decal/warning_stripes/thin{
@@ -33563,7 +33589,7 @@
 /area/magmoor/cargo/processing/south/theme_magmoor_digsite_iv)
 "xRm" = (
 /obj/structure/disposalpipe/segment/corner,
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/volcano/theme_magmoor_digsite_iv)
 "xRt" = (
 /obj/structure/bed/chair/wood/wings,
@@ -33673,7 +33699,7 @@
 	dir = 4
 	},
 /obj/structure/barricade/guardrail,
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/theme_magmoor_digsite_iv)
 "xVl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -33735,7 +33761,7 @@
 	},
 /area/magmoor/compound/theme_magmoor_digsite_iv)
 "xXw" = (
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/cave/northeast/theme_magmoor_digsite_iv)
 "xXA" = (
 /obj/structure/table/reinforced,
@@ -33905,7 +33931,7 @@
 /area/magmoor/engi/thermal/theme_magmoor_digsite_iv)
 "ydd" = (
 /obj/structure/barricade/guardrail,
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/theme_magmoor_digsite_iv)
 "ydh" = (
 /turf/open/floor/mainship/black{
@@ -33913,12 +33939,13 @@
 	},
 /area/magmoor/landing/theme_magmoor_digsite_iv)
 "ydJ" = (
+/obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/ai_node,
 /mob/living/simple_animal/mouse/white,
 /obj/structure/cable,
-/turf/open/floor/plating/plating_catwalk,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/cave/north/theme_magmoor_digsite_iv)
 "ydR" = (
 /obj/effect/decal/cleanable/blood/splatter,
@@ -34154,7 +34181,7 @@
 /turf/open/floor/plating/mainship,
 /area/magmoor/engi/garage/theme_magmoor_digsite_iv)
 "ylo" = (
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/compound/south/theme_magmoor_digsite_iv)
 "ylq" = (
 /obj/machinery/power/monitor{
@@ -34180,7 +34207,7 @@
 /turf/open/floor/tile/red/full,
 /area/magmoor/security/infocenter/theme_magmoor_digsite_iv)
 "ymj" = (
-/turf/open/floor/plating/ground/ice,
+/turf/open/liquid/lava/plasma,
 /area/magmoor/volcano/theme_magmoor_digsite_iv)
 
 (1,1,1) = {"
