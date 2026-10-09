@@ -4,112 +4,112 @@
 /area/space)
 "d" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "e" = (
 /obj/effect/landmark/miner_platinum,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "j" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "k" = (
-/turf/closed/mineral/smooth/bigred/indestructible,
-/area/bigredv2/caves/rock)
+/turf/closed/mineral/smooth/bluefrostwall/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "l" = (
 /obj/effect/landmark/miner_platinum,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/garbledradio/theme_bigred_v2)
 "m" = (
 /obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/garbledradio/theme_bigred_v2)
 "o" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "p" = (
 /obj/effect/landmark/xeno_resin_door,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "v" = (
-/turf/closed/mineral/smooth/bigred/indestructible,
+/turf/closed/mineral/smooth/bluefrostwall/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
 /area/space)
 "w" = (
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "y" = (
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/east)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/east/theme_bigred_v2)
 "D" = (
 /obj/effect/landmark/start/job/xenomorph,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "E" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/garbledradio/theme_bigred_v2)
 "F" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
-"G" = (
-/obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/southeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "I" = (
 /obj/docking_port/stationary/crashmode,
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "J" = (
 /obj/effect/landmark/weed_node,
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/garbledradio/theme_bigred_v2)
 "K" = (
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/garbledradio/theme_bigred_v2)
 "O" = (
 /obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "Q" = (
 /obj/effect/landmark/start/job/xenomorph,
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/garbledradio/theme_bigred_v2)
 "R" = (
 /obj/effect/landmark/xeno_silo_spawn,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "S" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/garbledradio/theme_bigred_v2)
 "T" = (
 /obj/effect/landmark/xeno_resin_wall,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
-"U" = (
-/obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/southeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "V" = (
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
-"W" = (
-/obj/effect/landmark/xeno_resin_door,
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/southeast)
-"X" = (
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/southeast/garbledradio)
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "Y" = (
 /obj/effect/landmark/weed_node,
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 
 (1,1,1) = {"
 V
@@ -134,7 +134,7 @@ K
 K
 K
 S
-X
+K
 V
 V
 V
@@ -195,15 +195,15 @@ V
 V
 V
 V
-X
-X
+K
+K
 K
 K
 K
 V
 K
 K
-X
+K
 V
 V
 V
@@ -270,9 +270,9 @@ K
 K
 K
 V
-X
 K
-X
+K
+K
 V
 V
 V
@@ -332,7 +332,7 @@ V
 V
 V
 V
-G
+E
 K
 K
 J
@@ -341,7 +341,7 @@ V
 V
 V
 w
-X
+K
 V
 V
 V
@@ -403,14 +403,14 @@ V
 V
 K
 S
-X
+K
 K
 K
 V
 V
 V
 w
-X
+K
 V
 V
 V
@@ -468,18 +468,18 @@ V
 V
 V
 V
-X
-X
 K
 K
-X
+K
+K
+K
 K
 K
 V
 V
 V
 w
-X
+K
 V
 V
 V
@@ -540,7 +540,7 @@ V
 K
 K
 K
-X
+K
 K
 K
 V
@@ -548,7 +548,7 @@ V
 V
 V
 w
-X
+K
 V
 V
 V
@@ -617,7 +617,7 @@ V
 V
 V
 w
-X
+K
 V
 V
 V
@@ -676,7 +676,7 @@ V
 V
 V
 K
-G
+E
 K
 K
 V
@@ -686,7 +686,7 @@ V
 V
 V
 w
-X
+K
 V
 V
 V
@@ -743,9 +743,9 @@ V
 V
 V
 V
-X
 K
-X
+K
+K
 K
 K
 V
@@ -755,7 +755,7 @@ V
 K
 K
 E
-U
+S
 V
 V
 V
@@ -814,17 +814,17 @@ V
 V
 K
 K
-X
+K
 m
-X
-X
-X
-X
-X
 K
 K
 K
-X
+K
+K
+K
+K
+K
+K
 V
 V
 V
@@ -884,12 +884,12 @@ V
 K
 Q
 K
-X
 K
 K
 K
 K
-X
+K
+K
 K
 S
 K
@@ -1009,7 +1009,7 @@ v
 a
 "}
 (14,1,1) = {"
-X
+K
 K
 V
 V
@@ -1018,7 +1018,6 @@ V
 V
 V
 V
-X
 K
 K
 K
@@ -1030,7 +1029,8 @@ K
 K
 K
 K
-X
+K
+K
 V
 V
 V
@@ -1078,7 +1078,7 @@ v
 a
 "}
 (15,1,1) = {"
-X
+K
 V
 V
 V
@@ -1097,7 +1097,7 @@ K
 E
 K
 K
-X
+K
 V
 V
 V
@@ -1147,17 +1147,17 @@ v
 a
 "}
 (16,1,1) = {"
-X
-V
-V
-V
-V
-V
-V
-X
-X
 K
-X
+V
+V
+V
+V
+V
+V
+K
+K
+K
+K
 K
 K
 K
@@ -1226,14 +1226,14 @@ V
 K
 K
 K
-X
+K
 K
 K
 K
 V
 V
 V
-W
+p
 p
 p
 p
@@ -1292,9 +1292,9 @@ V
 V
 V
 V
-X
 K
-X
+K
+K
 K
 K
 K
@@ -1363,7 +1363,7 @@ V
 K
 K
 K
-X
+K
 K
 V
 V
@@ -1500,7 +1500,7 @@ K
 K
 K
 K
-X
+K
 K
 V
 V
@@ -1565,8 +1565,8 @@ K
 K
 K
 K
-X
-X
+K
+K
 K
 K
 K
@@ -1633,7 +1633,7 @@ a
 l
 E
 K
-X
+K
 K
 K
 E
@@ -1700,13 +1700,13 @@ a
 "}
 (24,1,1) = {"
 K
-X
-U
+K
+S
 K
 K
 K
 K
-X
+K
 V
 V
 V
@@ -1768,10 +1768,10 @@ k
 a
 "}
 (25,1,1) = {"
-X
 K
 K
-X
+K
+K
 V
 V
 V
@@ -1840,7 +1840,7 @@ a
 K
 K
 K
-X
+K
 V
 V
 V

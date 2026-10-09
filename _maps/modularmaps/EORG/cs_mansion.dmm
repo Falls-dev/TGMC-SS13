@@ -1,426 +1,337 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"ai" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/effect/landmark/weapon_spawn/tier4_weapon_spawn,
-/turf/open/floor/grass,
-/area/deathmatch)
 "aj" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/cobweb{
 	dir = 8
 	},
 /obj/effect/turf_decal/riverdecal/edge,
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "as" = (
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/grime,
-/area/deathmatch)
+/turf/open/floor/grayscale/white,
+/area/deathmatch/theme_cs_mansion)
 "aJ" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/riverdecal,
 /obj/effect/landmark/deathmatch,
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "bd" = (
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_cs_mansion)
 "bf" = (
 /obj/effect/landmark/weapon_spawn/tier4_weapon_spawn,
-/turf/open/floor/grime,
-/area/deathmatch)
+/turf/open/floor/grayscale/white,
+/area/deathmatch/theme_cs_mansion)
 "bJ" = (
 /obj/structure/reagent_dispensers/fueltank/barrel,
-/turf/open/floor/wood,
-/area/deathmatch)
-"cT" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/ywflowers,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "dd" = (
 /obj/effect/decal/cleanable/blood/gibs/xeno,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "de" = (
 /obj/effect/landmark/deathmatch,
 /obj/structure/platform,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "dL" = (
 /obj/structure/table/wood,
 /obj/machinery/light{
 	dir = 1
 	},
 /obj/effect/landmark/weapon_spawn/tier4_weapon_spawn,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "dQ" = (
 /obj/effect/decal/cleanable/cobweb{
 	dir = 1
 	},
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "dZ" = (
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush,
 /obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_cs_mansion)
 "es" = (
 /obj/effect/landmark/weapon_spawn/tier5_weapon_spawn,
-/turf/open/floor/grime,
-/area/deathmatch)
+/turf/open/floor/grayscale/white,
+/area/deathmatch/theme_cs_mansion)
 "eQ" = (
 /obj/structure/platform_decoration{
 	dir = 10
 	},
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/riverdecal/edge,
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "eT" = (
 /obj/effect/decal/cleanable/vomit,
 /obj/structure/platform,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "fb" = (
 /obj/structure/largecrate/random/barrel/yellow,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "fs" = (
 /obj/structure/inflatable/popped,
 /obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/wood,
-/area/deathmatch)
-"fy" = (
-/turf/open/ground/jungle/impenetrable,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "fK" = (
 /obj/effect/decal/cleanable/vomit,
-/turf/open/floor/wood,
-/area/deathmatch)
-"fW" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "fZ" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/cobweb2,
 /obj/effect/turf_decal/riverdecal/edge{
 	dir = 1
 	},
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
-"ga" = (
-/obj/structure/flora/ausbushes/sunnybush,
-/obj/structure/flora/ausbushes/lavendergrass,
-/turf/open/floor/grass,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "gy" = (
 /obj/effect/decal/cleanable/vomit,
 /obj/machinery/light,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "gS" = (
 /obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	name = "\improper Civilian Housing"
 	},
-/turf/open/floor/wood,
-/area/deathmatch)
-"hj" = (
-/obj/structure/flora/ausbushes/grassybush,
-/obj/effect/landmark/weapon_spawn/tier4_weapon_spawn,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "hx" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/riverdecal/edge,
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "hE" = (
 /obj/effect/decal/cleanable/vomit,
 /obj/structure/largecrate/random/barrel/green,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "ii" = (
 /obj/structure/table/wood/gambling,
 /obj/item/weapon/gun/minigun,
 /obj/item/ammo_magazine/minigun_powerpack,
-/turf/open/floor/wood,
-/area/deathmatch)
-"ij" = (
-/obj/structure/flora/ausbushes/pointybush,
-/obj/structure/flora/ausbushes/stalkybush,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "jf" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
-/turf/open/floor/grime,
-/area/deathmatch)
+/turf/open/floor/grayscale/white,
+/area/deathmatch/theme_cs_mansion)
 "jm" = (
 /obj/structure/platform{
 	dir = 1
 	},
-/turf/closed/wall/wood,
-/area/deathmatch)
+/turf/closed/wall/mainship/white,
+/area/deathmatch/theme_cs_mansion)
 "jq" = (
 /obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	dir = 2;
 	name = "\improper Civilian Housing"
 	},
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "jt" = (
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
 /obj/structure/platform{
 	dir = 4
 	},
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "jH" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/liquid_fuel,
 /obj/effect/turf_decal/riverdecal/edge,
 /turf/open/floor/plating/plating_catwalk,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "jM" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit,
 /obj/effect/turf_decal/riverdecal/edge{
 	dir = 1
 	},
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
 /turf/open/floor/plating/plating_catwalk,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "jU" = (
 /obj/structure/platform_decoration{
 	dir = 10
 	},
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_cs_mansion)
 "kk" = (
-/obj/structure/flora/tree/jungle/small,
-/obj/structure/flora/ausbushes/sparsegrass,
-/turf/open/floor/grass,
-/area/deathmatch)
+/obj/structure/flora/tree/pine,
+/obj/structure/flora/bush,
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_cs_mansion)
 "kn" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/bed/chair/wood/wings,
-/turf/open/floor/grime,
-/area/deathmatch)
+/turf/open/floor/grayscale/white,
+/area/deathmatch/theme_cs_mansion)
 "kx" = (
 /obj/structure/prop/mainship/valmoric,
-/turf/open/floor/grime,
-/area/deathmatch)
+/turf/open/floor/grayscale/white,
+/area/deathmatch/theme_cs_mansion)
 "la" = (
 /obj/structure/table/wood,
 /obj/effect/landmark/weapon_spawn/tier4_weapon_spawn,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "ld" = (
 /obj/effect/decal/cleanable/blood/gibs/xeno,
 /obj/effect/landmark/weapon_spawn/tier4_weapon_spawn,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "ma" = (
 /obj/effect/spawner/random/engineering/ore_box,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "ne" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb2,
 /obj/effect/decal/remains/human,
 /obj/effect/turf_decal/riverdecal/edge{
 	dir = 1
 	},
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
-"nC" = (
-/obj/effect/turf_decal/riverdecal/edge{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mainship/mono,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "nN" = (
 /obj/effect/decal/cleanable/cobweb2,
 /obj/structure/inflatable/wall,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "nP" = (
 /obj/effect/landmark/weapon_spawn/tier4_weapon_spawn,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "nZ" = (
 /obj/effect/decal/cleanable/cobweb2,
 /obj/structure/table/wood,
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "og" = (
 /obj/effect/decal/cleanable/vomit,
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/wood/broken,
-/area/deathmatch)
-"ol" = (
-/obj/structure/flora/ausbushes/grassybush,
-/obj/effect/landmark/deathmatch,
-/turf/open/floor/grass,
-/area/deathmatch)
-"oq" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/effect/landmark/deathmatch,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "oD" = (
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_cs_mansion)
 "oU" = (
 /obj/structure/platform_decoration{
 	dir = 6
 	},
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/gibs/xeno,
 /obj/effect/turf_decal/riverdecal/edge,
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "pq" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/gibs/xeno,
 /obj/effect/turf_decal/riverdecal,
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "pv" = (
 /obj/structure/platform{
 	dir = 4
 	},
-/turf/closed/wall/wood,
-/area/deathmatch)
+/turf/closed/wall/mainship/white,
+/area/deathmatch/theme_cs_mansion)
 "pD" = (
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "pF" = (
 /obj/structure/barricade/guardrail{
 	dir = 1
 	},
-/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/bush,
 /obj/structure/platform{
 	dir = 1
 	},
-/turf/open/floor/grass,
-/area/deathmatch)
-"pS" = (
-/obj/structure/bed/chair/wood/wings,
-/turf/open/floor/grime,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_cs_mansion)
 "pT" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/remains/human,
 /obj/effect/turf_decal/riverdecal,
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "pZ" = (
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush,
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_cs_mansion)
 "qu" = (
 /obj/structure/platform_decoration{
 	dir = 9
 	},
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_cs_mansion)
 "qG" = (
 /obj/structure/platform{
 	dir = 5
 	},
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "qQ" = (
 /obj/structure/platform,
-/turf/closed/wall/wood,
-/area/deathmatch)
+/turf/closed/wall/mainship/white,
+/area/deathmatch/theme_cs_mansion)
 "qW" = (
 /obj/effect/decal/remains/xeno,
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/wood/broken,
-/area/deathmatch)
-"rk" = (
-/obj/structure/largecrate/random/barrel/yellow,
-/turf/open/floor/wood/broken,
-/area/deathmatch)
-"rE" = (
-/obj/structure/flora/ausbushes/pointybush,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "sb" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/liquid_fuel,
 /obj/effect/turf_decal/riverdecal/edge,
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "sQ" = (
 /obj/effect/decal/cleanable/cobweb{
 	dir = 8
 	},
 /obj/structure/largecrate/guns/merc,
 /obj/item/tool/crowbar,
-/turf/open/floor/wood,
-/area/deathmatch)
-"sR" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "tq" = (
 /obj/effect/landmark/deathmatch,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "tr" = (
 /obj/effect/landmark/weapon_spawn/tier4_weapon_spawn,
-/turf/open/floor/grass,
-/area/deathmatch)
-"tG" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_cs_mansion)
 "tN" = (
 /obj/structure/platform_decoration{
 	dir = 5
 	},
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_cs_mansion)
 "ur" = (
 /obj/structure/table/wood/gambling,
 /obj/structure/largecrate/random/case/small,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "uF" = (
 /obj/structure/platform{
 	dir = 6
 	},
-/turf/closed/wall/wood,
-/area/deathmatch)
-"uS" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/closed/wall/mainship/white,
+/area/deathmatch/theme_cs_mansion)
 "uX" = (
 /obj/vehicle/train/cargo/trolley,
 /obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_cs_mansion)
 "va" = (
 /obj/structure/sink{
 	dir = 8
@@ -428,265 +339,220 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "vl" = (
 /obj/structure/largecrate/random/barrel/blue,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "vx" = (
 /obj/structure/largecrate/random/barrel/white,
 /obj/structure/platform{
 	dir = 4
 	},
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "vB" = (
 /obj/effect/decal/remains/human,
 /obj/structure/platform{
 	dir = 10
 	},
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "vV" = (
-/obj/structure/window/framed/wood,
-/turf/open/floor/wood/broken,
-/area/deathmatch)
+/obj/structure/window/framed/mainship/white,
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "wb" = (
 /obj/machinery/floodlight/landing/hq,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_cs_mansion)
 "we" = (
 /obj/structure/platform{
 	dir = 5
 	},
-/turf/closed/wall/wood,
-/area/deathmatch)
+/turf/closed/wall/mainship/white,
+/area/deathmatch/theme_cs_mansion)
 "wv" = (
-/obj/structure/window/framed/wood,
+/obj/structure/window/framed/mainship/white,
 /obj/structure/platform,
-/turf/open/floor/wood/broken,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "wz" = (
 /turf/closed/wall/mainship/outer,
-/area/deathmatch)
-"wJ" = (
-/obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/grime,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "xc" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/grime,
-/area/deathmatch)
-"xL" = (
-/obj/structure/flora/ausbushes/grassybush,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/grayscale/white,
+/area/deathmatch/theme_cs_mansion)
 "xO" = (
 /obj/structure/window/framed/mainship/hull,
 /obj/structure/window/framed/wood,
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "yh" = (
 /obj/structure/largecrate/random/case,
-/turf/open/floor/wood,
-/area/deathmatch)
-"yl" = (
-/obj/structure/flora/ausbushes/brflowers,
-/obj/effect/landmark/weapon_spawn/tier4_weapon_spawn,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "yo" = (
 /obj/effect/decal/cleanable/blood/gibs/xeno,
 /obj/effect/landmark/deathmatch,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "yr" = (
 /obj/structure/largecrate/guns/merc,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "yI" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/vomit,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "yM" = (
-/turf/closed/wall/wood,
-/area/deathmatch)
+/turf/closed/wall/mainship/white,
+/area/deathmatch/theme_cs_mansion)
 "yR" = (
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
-/turf/open/floor/wood/broken,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "yT" = (
 /obj/structure/largecrate/guns/merc,
 /obj/item/tool/crowbar,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "zd" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/riverdecal/edge{
 	dir = 1
 	},
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "zf" = (
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/effect/landmark/deathmatch,
-/turf/open/floor/grass,
-/area/deathmatch)
+/obj/effect/forcefield{
+	desc = "You can't get in. Heh.";
+	name = "Blocker"
+	},
+/turf/closed/wall/mainship/outer,
+/area/deathmatch/theme_cs_mansion)
 "zt" = (
 /obj/structure/inflatable/wall,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "zM" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit,
 /obj/effect/turf_decal/riverdecal/edge{
 	dir = 1
 	},
 /turf/open/floor/plating/plating_catwalk,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "zP" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/platform,
 /obj/structure/stairs/seamless/edge{
 	dir = 1
 	},
 /turf/open/floor/tile/dark,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "zS" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/inflatable/popped,
 /obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "Ac" = (
 /obj/effect/landmark/deathmatch,
-/turf/open/floor/grime,
-/area/deathmatch)
+/turf/open/floor/grayscale/white,
+/area/deathmatch/theme_cs_mansion)
 "An" = (
 /obj/structure/prop/mainship/ship_memorial{
 	desc = "A ship memorial dedicated to the triumphs of the TGMC and the fallen marines of this ship. On the left there are grand tales of victory etched into the slab. On the right there is a list of famous marines who have fallen in combat serving the TGMC. There seems to be an etch of three spikes on the free space below."
 	},
-/turf/open/floor/grime,
-/area/deathmatch)
+/turf/open/floor/grayscale/white,
+/area/deathmatch/theme_cs_mansion)
 "AB" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/stairs/seamless/edge{
 	dir = 8
 	},
 /turf/open/floor/tile/dark,
-/area/deathmatch)
-"AC" = (
-/obj/structure/largecrate/random/case,
-/turf/open/floor/wood/broken,
-/area/deathmatch)
-"Ba" = (
-/obj/effect/turf_decal/riverdecal/edge,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mainship/mono,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "Bd" = (
 /obj/structure/largecrate/random/barrel/green,
 /obj/structure/platform,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "Be" = (
 /obj/structure/table/wood,
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "Bq" = (
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
 /obj/structure/platform{
 	dir = 1
 	},
-/turf/open/floor/wood,
-/area/deathmatch)
-"BC" = (
-/obj/structure/flora/ausbushes/ppflowers,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "BK" = (
-/turf/open/floor/wood,
-/area/deathmatch)
-"BR" = (
-/obj/structure/barricade/wood{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/deathmatch)
-"BY" = (
-/obj/structure/flora/ausbushes/palebush,
-/obj/effect/landmark/deathmatch,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "Cb" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/turf_decal/riverdecal/edge{
 	dir = 1
 	},
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "CI" = (
 /obj/effect/decal/remains/human,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "CV" = (
 /obj/structure/platform{
 	dir = 4
 	},
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "Db" = (
 /obj/structure/platform_decoration{
 	dir = 4
 	},
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_cs_mansion)
 "Ds" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/remains/xeno,
 /obj/effect/turf_decal/riverdecal/edge,
 /turf/open/floor/plating/plating_catwalk,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "Dt" = (
 /obj/structure/table/wood/gambling,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "DG" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/gibs/xeno,
 /obj/effect/turf_decal/riverdecal/edge{
 	dir = 1
 	},
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "Ed" = (
 /obj/machinery/light,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "EK" = (
 /obj/structure/largecrate/random/secure,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "EM" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
 /obj/structure/bed/chair/wood/wings{
 	dir = 4
 	},
-/turf/open/floor/grime,
-/area/deathmatch)
+/turf/open/floor/grayscale/white,
+/area/deathmatch/theme_cs_mansion)
 "EV" = (
 /obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "Fm" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/platform{
 	dir = 8
 	},
@@ -694,114 +560,87 @@
 	dir = 1
 	},
 /turf/open/floor/tile/dark,
-/area/deathmatch)
-"Fu" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/wood/broken,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "Gc" = (
 /obj/structure/largecrate/random/case/small,
-/turf/open/floor/wood/broken,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "Gl" = (
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_cs_mansion)
 "Go" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/riverdecal/edge{
 	dir = 1
 	},
 /obj/effect/landmark/deathmatch,
 /turf/open/floor/plating/plating_catwalk,
-/area/deathmatch)
-"Gp" = (
-/obj/structure/inflatable/popped,
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/wood/broken,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "Gs" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/riverdecal/edge{
 	dir = 1
 	},
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "GG" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/ash,
 /obj/effect/turf_decal/riverdecal/edge,
 /turf/open/floor/plating/plating_catwalk,
-/area/deathmatch)
-"Hg" = (
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/open/floor/grass,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "Hm" = (
 /obj/effect/decal/remains/human,
 /obj/structure/closet/cabinet,
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "HF" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/riverdecal,
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "HH" = (
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/bush,
 /obj/effect/landmark/deathmatch,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_cs_mansion)
 "HP" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/ppflowers,
-/turf/open/floor/grass,
-/area/deathmatch)
+/obj/structure/flora/bush,
+/obj/structure/flora/bush,
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_cs_mansion)
 "Ip" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/riverdecal/edge,
 /obj/effect/landmark/deathmatch,
 /turf/open/floor/plating/plating_catwalk,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "IM" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/remains/human,
 /obj/effect/turf_decal/riverdecal/edge{
 	dir = 1
 	},
 /turf/open/floor/plating/plating_catwalk,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "IR" = (
 /obj/structure/barricade/wood,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "IV" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/liquid_fuel,
 /obj/effect/turf_decal/riverdecal/edge,
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "IW" = (
 /obj/structure/platform,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "Jd" = (
 /obj/structure/largecrate/guns/merc,
 /obj/item/tool/crowbar,
-/turf/open/floor/grime,
-/area/deathmatch)
+/turf/open/floor/grayscale/white,
+/area/deathmatch/theme_cs_mansion)
 "Jt" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb{
 	dir = 1
 	},
@@ -809,137 +648,102 @@
 /obj/effect/turf_decal/riverdecal/edge,
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
-"Jx" = (
-/obj/structure/flora/ausbushes/brflowers,
-/obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/grass,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "JF" = (
 /obj/item/reagent_containers/food/snacks/grown/poppy{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/turf/open/floor/grime,
-/area/deathmatch)
+/turf/open/floor/grayscale/white,
+/area/deathmatch/theme_cs_mansion)
 "JS" = (
 /obj/structure/window/framed/mainship/requisitions,
 /obj/structure/window/framed/wood,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "Kq" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "Ky" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/grime,
-/area/deathmatch)
-"KR" = (
-/obj/structure/flora/ausbushes/palebush,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/grayscale/white,
+/area/deathmatch/theme_cs_mansion)
 "LG" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/stairs/seamless{
 	dir = 4
 	},
 /turf/open/floor/tile/dark,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "MZ" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/liquid_fuel,
 /obj/effect/turf_decal/riverdecal/edge{
 	dir = 1
 	},
 /turf/open/floor/plating/plating_catwalk,
-/area/deathmatch)
-"Nb" = (
-/obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
-/turf/open/floor/grime,
-/area/deathmatch)
-"Ne" = (
-/obj/structure/flora/ausbushes/grassybush,
-/obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/grass,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "Nn" = (
 /obj/structure/bed/chair/wood/wings{
 	dir = 8
 	},
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "Np" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "Nu" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/riverdecal/edge,
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "Nw" = (
 /obj/vehicle/train/cargo/engine{
 	dir = 2
 	},
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_cs_mansion)
 "Ny" = (
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush,
 /obj/effect/landmark/weapon_spawn/tier4_weapon_spawn,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_cs_mansion)
 "ND" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/gibs/xeno,
 /obj/effect/turf_decal/riverdecal/edge,
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
-"NR" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/grime,
-/area/deathmatch)
-"Oh" = (
-/turf/open/floor/grime,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "Op" = (
 /obj/structure/barricade/wood{
 	dir = 1
 	},
-/turf/open/floor/wood/broken,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "Ox" = (
-/obj/structure/window/framed/wood,
+/obj/structure/window/framed/mainship/white,
 /obj/structure/platform{
 	dir = 1
 	},
-/turf/open/floor/wood/broken,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "OC" = (
 /obj/structure/largecrate/random/barrel/yellow,
 /obj/structure/platform{
 	dir = 6
 	},
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "OI" = (
 /obj/structure/table/wood/gambling,
 /obj/structure/largecrate/random/case,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "OT" = (
 /obj/item/storage/belt/champion,
-/turf/open/floor/grime,
-/area/deathmatch)
-"Pu" = (
-/obj/structure/largecrate/guns/merc,
-/turf/open/floor/wood/broken,
-/area/deathmatch)
+/turf/open/floor/grayscale/white,
+/area/deathmatch/theme_cs_mansion)
 "PE" = (
 /obj/structure/bed/chair/comfy/black{
 	dir = 4
@@ -947,85 +751,74 @@
 /obj/item/toy/plush/rouny{
 	dir = 4
 	},
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "PF" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
 /obj/structure/bed/chair/wood/wings,
-/turf/open/floor/grime,
-/area/deathmatch)
+/turf/open/floor/grayscale/white,
+/area/deathmatch/theme_cs_mansion)
 "PP" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/riverdecal/edge,
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "PT" = (
 /obj/structure/window/framed/wood,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "Qd" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/remains/xeno,
 /obj/effect/turf_decal/riverdecal/edge,
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "Qm" = (
-/obj/structure/flora/ausbushes/sunnybush,
-/turf/open/floor/grass,
-/area/deathmatch)
+/obj/structure/flora/bush,
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_cs_mansion)
 "QL" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/riverdecal/edge{
 	dir = 1
 	},
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "QR" = (
 /obj/machinery/door/window{
 	dir = 8
 	},
 /obj/effect/ai_node,
-/turf/open/floor/grime,
-/area/deathmatch)
+/turf/open/floor/grayscale/white,
+/area/deathmatch/theme_cs_mansion)
 "QX" = (
 /obj/structure/bed/chair/wood/wings{
 	dir = 8
 	},
-/turf/open/floor/grime,
-/area/deathmatch)
+/turf/open/floor/grayscale/white,
+/area/deathmatch/theme_cs_mansion)
 "Rb" = (
 /obj/structure/table/wood,
 /obj/structure/largecrate/random/case/small,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "Sr" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/riverdecal,
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "SC" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/riverdecal/edge,
 /turf/open/floor/plating/plating_catwalk,
-/area/deathmatch)
-"SO" = (
-/obj/structure/flora/ausbushes/brflowers,
-/turf/open/floor/grass,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "SW" = (
 /obj/effect/decal/cleanable/cobweb2,
 /obj/effect/spawner/random/engineering/ore_box,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "SY" = (
 /obj/structure/window/framed/mainship/hull,
 /obj/structure/window/framed/wood,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "Tc" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/platform{
 	dir = 4
 	},
@@ -1033,14 +826,13 @@
 	dir = 1
 	},
 /turf/open/floor/tile/dark,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "Td" = (
 /obj/structure/table/wood/gambling,
 /obj/effect/spawner/random/misc/plushie/nospawnninetyfive,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "Te" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/platform{
 	dir = 1
 	},
@@ -1048,44 +840,37 @@
 	dir = 8
 	},
 /turf/open/floor/tile/dark,
-/area/deathmatch)
-"Tw" = (
-/obj/structure/flora/tree/jungle,
-/obj/structure/flora/ausbushes/sparsegrass,
-/turf/open/floor/grass,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "Tz" = (
 /obj/structure/closet/cabinet,
 /obj/effect/spawner/random/misc/plushie/nospawnninetyfive,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "Un" = (
 /obj/effect/decal/remains/human,
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "Ut" = (
 /obj/structure/largecrate/random/case/double,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "Ux" = (
-/obj/structure/window/framed/wood,
+/obj/structure/window/framed/mainship/white,
 /obj/structure/platform{
 	dir = 4
 	},
-/turf/open/floor/wood/broken,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "UK" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/riverdecal/edge{
 	dir = 1
 	},
 /turf/open/floor/plating/plating_catwalk,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "Vv" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/liquid_fuel,
 /obj/effect/decal/cleanable/ash,
 /obj/effect/turf_decal/riverdecal/edge{
@@ -1093,88 +878,72 @@
 	},
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
 /turf/open/floor/mainship/mono,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "Vy" = (
 /obj/structure/prop/mainship/ship_memorial,
-/turf/open/floor/grime,
-/area/deathmatch)
-"Vz" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/grayscale/white,
+/area/deathmatch/theme_cs_mansion)
 "VE" = (
 /obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_cs_mansion)
 "VZ" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/riverdecal,
 /turf/open/floor/plating/plating_catwalk,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "Wj" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush,
+/obj/structure/flora/bush,
 /obj/effect/landmark/deathmatch,
-/turf/open/floor/grass,
-/area/deathmatch)
-"Wk" = (
-/obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor/wood/broken,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_cs_mansion)
 "Ws" = (
 /obj/effect/landmark/deathmatch,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_cs_mansion)
 "WK" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit,
 /obj/effect/turf_decal/riverdecal/edge,
 /turf/open/floor/plating/plating_catwalk,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "WY" = (
 /obj/effect/decal/cleanable/cobweb2,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "Xb" = (
 /obj/structure/inflatable/popped,
 /obj/machinery/light{
 	dir = 1
 	},
 /obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "Xv" = (
 /obj/effect/decal/cleanable/blood/gibs/xeno,
 /obj/effect/spawner/random/engineering/ore_box,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "Xw" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /obj/effect/landmark/deathmatch,
-/turf/open/floor/wood,
-/area/deathmatch)
-"XJ" = (
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/effect/landmark/weapon_spawn/tier4_weapon_spawn,
-/turf/open/floor/grass,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "XY" = (
 /obj/effect/decal/remains/xeno,
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "Ya" = (
 /obj/machinery/door/window/right,
-/turf/open/floor/grime,
-/area/deathmatch)
+/turf/open/floor/grayscale/white,
+/area/deathmatch/theme_cs_mansion)
 "Yv" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/stairs/seamless/edge{
 	dir = 1
 	},
 /turf/open/floor/tile/dark,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "YE" = (
 /obj/machinery/light{
 	dir = 1
@@ -1182,97 +951,92 @@
 /obj/structure/platform{
 	dir = 8
 	},
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "YK" = (
 /obj/effect/decal/cleanable/blood/gibs/xeno,
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/wood,
-/area/deathmatch)
+/turf/open/floor/tile/barber,
+/area/deathmatch/theme_cs_mansion)
 "YZ" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/riverdecal/edge{
 	dir = 1
 	},
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
 /turf/open/floor/plating/plating_catwalk,
-/area/deathmatch)
-"Ze" = (
-/turf/open/floor/wood/broken,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "ZD" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit,
 /obj/effect/turf_decal/riverdecal/edge,
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
 /turf/open/floor/plating/plating_catwalk,
-/area/deathmatch)
+/area/deathmatch/theme_cs_mansion)
 "ZJ" = (
 /obj/structure/bed/chair/wood/wings{
 	dir = 4
 	},
-/turf/open/floor/grime,
-/area/deathmatch)
+/turf/open/floor/grayscale/white,
+/area/deathmatch/theme_cs_mansion)
 
 (1,1,1) = {"
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
 "}
 (2,1,1) = {"
-wz
+zf
 Gl
 Gl
 Gl
 Gl
 Gl
 Gl
-Vz
+Qm
 Gl
 Gl
 Gl
@@ -1301,29 +1065,29 @@ yM
 yM
 qQ
 Gl
-xL
-xL
+Qm
+Qm
 Gl
 Gl
 VE
 Gl
 Gl
-xL
+Qm
 oD
-wz
+zf
 "}
 (3,1,1) = {"
-wz
+zf
 tr
 HP
-tG
-Vz
+Qm
+Qm
 Gl
 Gl
 Gl
 Qm
-Vz
-Vz
+Qm
+Qm
 Gl
 jm
 Ut
@@ -1336,7 +1100,7 @@ zS
 fs
 yM
 BK
-Fu
+Kq
 BK
 BK
 tq
@@ -1349,29 +1113,29 @@ BK
 zt
 qQ
 Gl
-xL
-Vz
-Vz
+Qm
+Qm
+Qm
 Gl
 Gl
 Gl
 Gl
 Gl
 Gl
-wz
+zf
 "}
 (4,1,1) = {"
-wz
-BC
-BC
-tG
-BC
+zf
+Qm
+Qm
+Qm
+Qm
 HH
 Gl
 Gl
 Gl
-xL
-Vz
+Qm
+Qm
 Gl
 Ox
 BK
@@ -1392,28 +1156,28 @@ BK
 BK
 jq
 BK
-Ze
+BK
 pD
 BK
 wv
 Gl
 Gl
-xL
-Vz
+Qm
+Qm
 Gl
 Gl
-Tw
-rE
-Gl
-xL
-wz
-"}
-(5,1,1) = {"
-wz
+kk
+Qm
 Gl
 Qm
-BC
-Vz
+zf
+"}
+(5,1,1) = {"
+zf
+Gl
+Qm
+Qm
+Qm
 Gl
 Gl
 Gl
@@ -1424,19 +1188,19 @@ Gl
 Ox
 BK
 BK
-Ze
+BK
 BK
 BK
 Kq
 BK
-Ze
+BK
 yM
 la
 BK
 hE
 yr
 BK
-Ze
+BK
 Be
 yM
 ma
@@ -1450,17 +1214,17 @@ Gl
 Gl
 Gl
 Gl
-ij
+HP
 Qm
 oD
 Gl
-wz
+zf
 "}
 (6,1,1) = {"
-wz
+zf
 Gl
 Gl
-SO
+Qm
 Gl
 wb
 Gl
@@ -1482,7 +1246,7 @@ yM
 Be
 BK
 EK
-AC
+yh
 pD
 BK
 Rb
@@ -1495,23 +1259,23 @@ qQ
 Gl
 Gl
 Gl
-KR
+Qm
 Gl
 Gl
 Gl
-xL
+Qm
 Gl
 Gl
-wz
+zf
 "}
 (7,1,1) = {"
-wz
+zf
 Gl
 Gl
-xL
-SO
-KR
-BC
+Qm
+Qm
+Qm
+Qm
 oD
 Gl
 Gl
@@ -1523,7 +1287,7 @@ BK
 fK
 BK
 BK
-Ze
+BK
 BK
 tq
 yM
@@ -1538,7 +1302,7 @@ yM
 nZ
 BK
 BK
-Pu
+yr
 qQ
 qu
 Gl
@@ -1548,19 +1312,19 @@ Gl
 Ws
 Gl
 Gl
-tG
-BC
-wz
+Qm
+Qm
+zf
 "}
 (8,1,1) = {"
-wz
+zf
 Gl
 Gl
 Ws
-xL
-tG
-tG
-BC
+Qm
+Qm
+Qm
+Qm
 Gl
 Gl
 Gl
@@ -1593,25 +1357,25 @@ vB
 Gl
 VE
 Gl
-BC
+Qm
 Gl
 Gl
-BC
+Qm
 Gl
-wz
+zf
 "}
 (9,1,1) = {"
-wz
+zf
 Gl
 Gl
-xL
+Qm
 Gl
-uS
-BC
-Vz
-Vz
+pZ
+Qm
+Qm
+Qm
 Gl
-KR
+Qm
 Gl
 Ox
 BK
@@ -1625,10 +1389,10 @@ BK
 pD
 BK
 IR
-Ze
 BK
 BK
-BR
+BK
+Op
 fK
 BK
 BK
@@ -1640,16 +1404,16 @@ BK
 Bd
 Gl
 Gl
-BC
-tG
-BC
+Qm
+Qm
+Qm
 Gl
 dZ
 Gl
-wz
+zf
 "}
 (10,1,1) = {"
-wz
+zf
 bd
 Gl
 Gl
@@ -1657,7 +1421,7 @@ Gl
 Gl
 Gl
 Gl
-Vz
+Qm
 Gl
 Ws
 Gl
@@ -1669,7 +1433,7 @@ BK
 sQ
 yM
 SW
-Ze
+BK
 BK
 BK
 BK
@@ -1677,7 +1441,7 @@ BK
 tq
 BK
 BK
-Ze
+BK
 BK
 Np
 BK
@@ -1688,16 +1452,16 @@ BK
 IW
 Gl
 Gl
-Vz
-tG
-Vz
-BC
-tG
-SO
-wz
+Qm
+Qm
+Qm
+Qm
+Qm
+Qm
+zf
 "}
 (11,1,1) = {"
-wz
+zf
 AB
 Yv
 wz
@@ -1705,10 +1469,10 @@ Gl
 Gl
 Gl
 Gl
-Tw
-rE
-tG
-SO
+kk
+Qm
+Qm
+Qm
 jm
 yM
 yM
@@ -1736,36 +1500,36 @@ Xw
 eT
 Gl
 Gl
-Vz
+Qm
 wb
 Gl
-KR
-BC
-BC
-wz
+Qm
+Qm
+Qm
+zf
 "}
 (12,1,1) = {"
+zf
+QL
+Nu
 wz
-nC
-Ba
-wz
 Gl
 Gl
 Gl
 Gl
-ij
-SO
-tG
-BC
+HP
+Qm
+Qm
+Qm
 jm
 EV
 BK
 BK
-Ze
+BK
 yM
 yr
 BK
-Ze
+BK
 Op
 Kq
 PE
@@ -1778,7 +1542,7 @@ yM
 EV
 BK
 BK
-Wk
+pD
 yM
 AB
 Yv
@@ -1787,23 +1551,23 @@ Gl
 Gl
 Gl
 Gl
-BC
-tG
+Qm
+Qm
 Ny
-wz
+zf
 "}
 (13,1,1) = {"
-wz
+zf
 jM
 Ip
 wz
 Gl
 Gl
-xL
+Qm
 Gl
 Gl
-BC
-BC
+Qm
+Qm
 Gl
 jm
 fK
@@ -1821,10 +1585,10 @@ OI
 Dt
 BK
 tq
-Ze
+BK
 jq
 BK
-Ze
+BK
 ma
 BK
 qQ
@@ -1832,34 +1596,34 @@ Gl
 Gl
 Gl
 Gl
-xL
+Qm
 Gl
 Gl
 oD
-tG
-tG
-wz
+Qm
+Qm
+zf
 "}
 (14,1,1) = {"
-wz
+zf
 UK
 GG
 wz
 Gl
 Gl
-xL
+Qm
 Gl
 Gl
-Vz
-xL
+Qm
+Qm
 Gl
 jm
 BK
 tq
-Ze
+BK
 gy
 yM
-Gp
+Xb
 BK
 BK
 Td
@@ -1881,15 +1645,15 @@ Gl
 Gl
 oD
 Gl
-xL
+Qm
 Gl
 Gl
 Gl
 Gl
-wz
+zf
 "}
 (15,1,1) = {"
-wz
+zf
 Gs
 Nu
 wz
@@ -1898,8 +1662,8 @@ oD
 Gl
 VE
 Gl
-Vz
-Vz
+Qm
+Qm
 Gl
 jm
 BK
@@ -1909,13 +1673,13 @@ BK
 yM
 fs
 tq
-Ze
+BK
 Nn
 Nn
 Nn
 Nn
 Nn
-Wk
+pD
 BK
 fs
 yM
@@ -1928,26 +1692,26 @@ Gl
 Gl
 kk
 Gl
-SO
+Qm
 Gl
 Qm
 Ws
 Gl
-xL
-wz
+Qm
+zf
 "}
 (16,1,1) = {"
-wz
+zf
 QL
 PP
 wz
 Gl
-Vz
+Qm
 Gl
 Gl
 Gl
 Qm
-Vz
+Qm
 Gl
 jm
 yT
@@ -1968,30 +1732,30 @@ BK
 yr
 yM
 yT
-Ze
+BK
 BK
 pD
 qQ
 Gl
 Gl
 Gl
-SO
-tG
-KR
+Qm
+Qm
+Qm
 Gl
 Gl
-xL
+Qm
 Gl
-wz
+zf
 "}
 (17,1,1) = {"
-wz
+zf
 DG
 Qd
 wz
-Vz
-tG
-tG
+Qm
+Qm
+Qm
 Gl
 Gl
 oD
@@ -2023,27 +1787,27 @@ uF
 Gl
 Gl
 Gl
-tG
-tG
-BC
+Qm
+Qm
+Qm
 Gl
-KR
-xL
+Qm
+Qm
 oD
-wz
+zf
 "}
 (18,1,1) = {"
-wz
+zf
 QL
 ND
 wz
-Vz
-tG
-BC
+Qm
+Qm
+Qm
 Gl
-tG
+Qm
 Gl
-xL
+Qm
 Gl
 Gl
 Gl
@@ -2072,22 +1836,22 @@ Gl
 oD
 Gl
 Gl
-BC
-BC
+Qm
+Qm
 Gl
 Gl
 Gl
 Gl
-wz
+zf
 "}
 (19,1,1) = {"
-wz
+zf
 Go
 SC
 wz
 Gl
-BC
-BC
+Qm
+Qm
 Gl
 Gl
 Gl
@@ -2097,7 +1861,7 @@ Gl
 Gl
 kk
 Gl
-Ne
+pZ
 Gl
 Gl
 qG
@@ -2110,31 +1874,31 @@ CV
 jt
 OC
 Gl
-Vz
-fW
+Qm
+pZ
 Gl
 Gl
 Gl
 VE
-SO
+Qm
 Gl
-xL
-Gl
-Gl
+Qm
 Gl
 Gl
 Gl
 Gl
 Gl
-wz
+Gl
+Gl
+zf
 "}
 (20,1,1) = {"
-wz
+zf
 MZ
 ZD
 wz
 Gl
-BY
+HH
 Gl
 Gl
 Qm
@@ -2146,7 +1910,7 @@ Gl
 Ws
 Gl
 Gl
-xL
+Qm
 Gl
 Gl
 Gl
@@ -2158,26 +1922,26 @@ tN
 Gl
 Gl
 Gl
-BC
-BC
-Vz
+Qm
+Qm
+Qm
 Gl
 Qm
-BC
-tG
-tG
-SO
-xL
+Qm
+Qm
+Qm
+Qm
+Qm
 Gl
 Gl
 VE
 Gl
 Gl
 Gl
-wz
+zf
 "}
 (21,1,1) = {"
-wz
+zf
 Vv
 Nu
 wz
@@ -2195,37 +1959,37 @@ Gl
 Gl
 Gl
 Gl
-fW
-Vz
+pZ
+Qm
 Ky
 Ky
-Oh
-Oh
-Oh
-Oh
+Ky
+Ky
+Ky
+Ky
 Ky
 Gl
-xL
-Vz
+Qm
+Qm
 Gl
 Gl
 Gl
 Gl
 Gl
-BC
+Qm
 Wj
 Gl
 Gl
-sR
-sR
+Qm
+Qm
 Gl
 Gl
 Gl
 Gl
-wz
+zf
 "}
 (22,1,1) = {"
-wz
+zf
 QL
 IV
 wz
@@ -2234,46 +1998,46 @@ wz
 wz
 Gl
 Gl
-fy
-fy
-fy
-fy
-fy
-fy
-fy
-fy
-Vz
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Qm
 Gl
 Ky
 jf
 EM
 ZJ
-Oh
+Ky
 ZJ
 ZJ
 Ky
 Ky
 Gl
 Gl
-fy
-fy
-fy
-fy
-fy
-fy
-fy
-fy
-fy
-fy
-fy
-sR
-Vz
-fy
-fy
-wz
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Qm
+Qm
+Gl
+Gl
+zf
 "}
 (23,1,1) = {"
-wz
+zf
 Gs
 pT
 Sr
@@ -2283,13 +2047,13 @@ wz
 Gl
 Gl
 Gl
-sR
-sR
+Qm
+Qm
 Gl
 Gl
-sR
-sR
-fy
+Qm
+Qm
+Gl
 Gl
 Ky
 xc
@@ -2300,28 +2064,28 @@ QR
 xO
 xO
 yM
-NR
+as
 Ky
-SO
-fy
-sR
-sR
+Qm
+Gl
+Qm
+Qm
 Gl
 Gl
 Gl
 Gl
 Gl
 Gl
-sR
-sR
+Qm
+Qm
 Gl
-Vz
-sR
-sR
-wz
+Qm
+Qm
+Qm
+zf
 "}
 (24,1,1) = {"
-wz
+zf
 fZ
 Sr
 HF
@@ -2329,31 +2093,31 @@ Sr
 ND
 wz
 Gl
-Ne
+pZ
 Gl
 Gl
 bd
-KR
-tG
+Qm
+Qm
 Gl
-sR
-fy
-SO
+Qm
+Gl
+Qm
 Ky
 kn
 JS
 Ac
-Oh
-Oh
-Oh
+Ky
+Ky
+Ky
 Ac
 SY
 kn
 as
-xL
-fy
+Qm
 Gl
-oq
+Gl
+HH
 Gl
 Gl
 Gl
@@ -2362,14 +2126,14 @@ Gl
 Gl
 Gl
 Qm
-SO
+Qm
 Gl
-Vz
-sR
-wz
+Qm
+Qm
+zf
 "}
 (25,1,1) = {"
-wz
+zf
 wz
 wz
 wz
@@ -2378,30 +2142,30 @@ Ds
 wz
 Gl
 Gl
-Vz
-tG
-BC
-tG
-tG
+Qm
+Qm
+Qm
+Qm
+Qm
 Gl
 oD
-fy
 Gl
-Oh
+Gl
+Ky
 kn
 JS
-Oh
-Oh
-Oh
-Oh
-Oh
+Ky
+Ky
+Ky
+Ky
+Ky
 SY
 kn
 Ky
 Gl
-fy
 Gl
-tG
+Gl
+Qm
 HP
 Gl
 Gl
@@ -2410,14 +2174,14 @@ Gl
 wb
 Gl
 Gl
-BC
-tG
+Qm
+Qm
 Gl
-Vz
-wz
+Qm
+zf
 "}
 (26,1,1) = {"
-wz
+zf
 wz
 wz
 wz
@@ -2426,46 +2190,46 @@ ZD
 wz
 Gl
 wb
-Vz
-BC
-BC
-zf
+Qm
+Qm
+Qm
+HH
 Gl
 Qm
 Gl
-fy
+Gl
 wb
-Oh
-pS
+Ky
+kn
 JS
-Oh
-Oh
+Ky
+Ky
 OT
-Oh
-Oh
+Ky
+Ky
 SY
 PF
 Ky
 wb
-fy
-SO
-tG
-BC
+Gl
+Qm
+Qm
+Qm
 Gl
 Gl
 Gl
 Gl
 Gl
 Gl
-BC
-tG
-tG
+Qm
+Qm
+Qm
 Ws
 Gl
-wz
+zf
 "}
 (27,1,1) = {"
-wz
+zf
 Cb
 aJ
 Sr
@@ -2473,47 +2237,47 @@ Sr
 hx
 wz
 Gl
-Vz
-Vz
-Vz
+Qm
+Qm
+Qm
 Gl
 Gl
 Gl
 Gl
-xL
-fy
+Qm
+Gl
 Ws
 Ky
-pS
+kn
 JS
-Oh
-Oh
-Oh
-Oh
-Oh
+Ky
+Ky
+Ky
+Ky
+Ky
 SY
 kn
-Oh
-Gl
-fy
-yl
-BC
+Ky
 Gl
 Gl
+Ny
+Qm
 Gl
-Tw
-ij
+Gl
+Gl
+kk
+HP
 Gl
 Gl
 oD
-BC
+Qm
 VE
 Gl
 Gl
-wz
+zf
 "}
 (28,1,1) = {"
-wz
+zf
 QL
 pq
 Sr
@@ -2521,34 +2285,34 @@ HF
 aj
 wz
 Gl
-xL
-xL
+Qm
+Qm
 Gl
-BC
-tG
+Qm
+Qm
 Gl
-xL
+Qm
 Gl
-fy
-tG
+Gl
+Qm
 Ky
 kn
 JS
 Ac
-Oh
-Oh
-Oh
+Ky
+Ky
+Ky
 Ac
 SY
-pS
-Oh
-Gl
-fy
+kn
+Ky
 Gl
 Gl
 Gl
 Gl
-rE
+Gl
+Gl
+Qm
 Gl
 Gl
 VE
@@ -2558,10 +2322,10 @@ Gl
 Gl
 Gl
 kk
-wz
+zf
 "}
 (29,1,1) = {"
-wz
+zf
 QL
 sb
 wz
@@ -2571,16 +2335,16 @@ wz
 Gl
 Ws
 Qm
-xL
-BC
-BC
-Vz
+Qm
+Qm
+Qm
+Qm
 oD
-xL
-fy
+Qm
+Gl
 oD
 Ky
-NR
+as
 yM
 JS
 JS
@@ -2589,61 +2353,61 @@ SY
 SY
 yM
 as
-Oh
-SO
-fy
-Gl
-Gl
-Gl
-Vz
+Ky
+Qm
 Gl
 Gl
 Gl
 Gl
+Qm
 Gl
 Gl
 Gl
 Gl
-Vz
-Vz
-wz
+Gl
+Gl
+Gl
+Gl
+Qm
+Qm
+zf
 "}
 (30,1,1) = {"
-wz
+zf
 QL
 IV
 wz
-sR
-tG
-BC
+Qm
+Qm
+Qm
 Gl
 Gl
 Gl
 Gl
 oD
-Vz
-Vz
-KR
+Qm
+Qm
+Qm
 Gl
-fy
-BC
-xL
-Oh
-Oh
+Gl
+Qm
+Qm
+Ky
+Ky
 QX
 QX
-Oh
+Ky
 QX
 QX
 Ky
 Ky
 Ws
 Gl
-fy
 Gl
-Vz
-fW
-Vz
+Gl
+Qm
+pZ
+Qm
 yM
 yM
 gS
@@ -2651,91 +2415,91 @@ vV
 yM
 yM
 Gl
-KR
-Vz
-xL
-wz
+Qm
+Qm
+Qm
+zf
 "}
 (31,1,1) = {"
-wz
+zf
 zM
 jH
 wz
-BC
-BC
+Qm
+Qm
 HP
-Vz
+Qm
 Gl
-Vz
+Qm
 oD
 Gl
-Vz
-tG
-tG
+Qm
+Qm
+Qm
 Gl
-fy
-fy
-SO
+Gl
+Gl
+Qm
 VE
-Oh
-Oh
-Oh
+Ky
+Ky
+Ky
 Ac
 Ky
 Ky
 Ky
 Gl
-Vz
-fy
-fy
+Qm
+Gl
+Gl
 Gl
 Qm
-Vz
+Qm
 Gl
 yM
 yT
-Ze
+BK
 yo
 qW
 yM
-Vz
-Vz
+Qm
+Qm
 Gl
-hj
-wz
+Ny
+zf
 "}
 (32,1,1) = {"
-wz
+zf
 MZ
 Ip
 wz
-Vz
-Vz
+Qm
+Qm
 Gl
-Vz
-Oh
+Qm
+Ky
 An
-Oh
+Ky
 Gl
 Gl
-tG
-tG
+Qm
+Qm
 Gl
-sR
-fy
-fy
+Qm
 Gl
 Gl
-Oh
+Gl
+Gl
+Ky
 as
 Ky
 Ky
-NR
+as
 Gl
-Vz
-fy
-fy
-oq
+Qm
+Gl
+Gl
+HH
 Gl
 Gl
 Gl
@@ -2743,46 +2507,46 @@ Gl
 vV
 Gc
 BK
-Ze
+BK
 ld
 vV
-xL
-Vz
+Qm
+Qm
 Gl
 Gl
-wz
+zf
 "}
 (33,1,1) = {"
-wz
+zf
 QL
 IV
 wz
-sR
-ol
+Qm
+HH
 Qm
 Gl
 Jd
-Oh
-Oh
-Oh
+Ky
+Ky
+Ky
 Gl
 HP
-BC
-BC
+Qm
+Qm
 Gl
-sR
-fy
-fy
-tG
-Oh
-Oh
+Qm
+Gl
+Gl
+Qm
+Ky
+Ky
 Ky
 Ky
 Ky
 Gl
-fy
-fy
-sR
+Gl
+Gl
+Qm
 Gl
 Gl
 Gl
@@ -2794,42 +2558,42 @@ yI
 fb
 yh
 yM
-xL
+Qm
 Gl
 Gl
 Gl
-wz
+zf
 "}
 (34,1,1) = {"
-wz
+zf
 Gs
 sb
 wz
-sR
+Qm
 Gl
-xL
+Qm
 Gl
-Oh
+Ky
 es
 kx
 JF
 Ws
 Gl
-BC
+Qm
 Gl
 Gl
 oD
-ga
-fy
+HP
 Gl
-Oh
-Oh
-Nb
+Gl
+Ky
+Ky
+jf
 Ky
 Ky
 Gl
-fy
-sR
+Gl
+Qm
 Gl
 Gl
 Gl
@@ -2840,96 +2604,96 @@ vV
 BK
 vl
 Xv
-Ze
+BK
 vV
 Gl
 Gl
 Qm
 Gl
-wz
+zf
 "}
 (35,1,1) = {"
-wz
+zf
 QL
 Nu
 wz
-BC
-BC
+Qm
+Qm
 Gl
-SO
-Oh
-Vy
-Oh
-Nb
-Gl
-Gl
-Gl
-Gl
-rE
-Gl
-Gl
-fy
-Gl
-Oh
-Oh
-Oh
-Oh
+Qm
 Ky
-xL
-fy
+Vy
+Ky
+jf
+Gl
+Gl
+Gl
+Gl
+Qm
+Gl
+Gl
+Gl
+Gl
+Ky
+Ky
+Ky
+Ky
+Ky
+Qm
+Gl
 Gl
 Qm
 Gl
 wb
 Gl
-KR
+Qm
 Gl
 yM
 Hm
 zt
 XY
-rk
+fb
 yM
-Vz
-Vz
-Jx
+Qm
+Qm
+pZ
 Gl
-wz
+zf
 "}
 (36,1,1) = {"
-wz
+zf
 zd
 Nu
 wz
-XJ
+Ny
 HP
-tG
+Qm
 Gl
-wJ
-Oh
-Oh
+xc
+Ky
+Ky
 Gl
 Gl
 wb
 Gl
 Gl
-Tw
+kk
 Gl
 Gl
-fy
-xL
-Oh
-Oh
-Oh
-Oh
-Oh
 Gl
-fy
+Qm
+Ky
+Ky
+Ky
+Ky
+Ky
+Gl
+Gl
 Gl
 oD
-xL
+Qm
 Gl
-SO
+Qm
 Gl
 Gl
 yM
@@ -2938,171 +2702,171 @@ yM
 yM
 yM
 yM
-Vz
-BC
-BC
-sR
-wz
+Qm
+Qm
+Qm
+Qm
+zf
 "}
 (37,1,1) = {"
-wz
+zf
 UK
 SC
 wz
-BC
-tG
-tG
-SO
+Qm
+Qm
+Qm
+Qm
 Gl
 Gl
-Vz
+Qm
 Gl
 Gl
 Gl
 Gl
 Gl
-ij
+HP
 Gl
 HH
-fy
 Gl
-Oh
-Oh
+Gl
+Ky
+Ky
 as
-Oh
-Oh
-Vz
-fy
-xL
-xL
+Ky
+Ky
+Qm
+Gl
+Qm
+Qm
 Gl
 Gl
 Gl
-tG
-BC
+Qm
+Qm
 Gl
 Gl
 Gl
 oD
 Gl
 Gl
-Vz
-tG
-cT
-oq
-wz
+Qm
+Qm
+HP
+HH
+zf
 "}
 (38,1,1) = {"
-wz
+zf
 UK
 WK
 wz
 Gl
 Gl
-SO
+Qm
 Gl
 Gl
-Vz
-Vz
-Gl
-Gl
-Gl
-Gl
-Gl
-Gl
-Gl
-Vz
-fy
-Vz
-Oh
-Oh
-Oh
-Oh
-Oh
-Gl
-fy
+Qm
+Qm
 Gl
 Gl
 Gl
 Gl
 Gl
-BC
-BC
-SO
+Gl
+Gl
+Qm
+Gl
+Qm
+Ky
+Ky
+Ky
+Ky
+Ky
 Gl
 Gl
 Gl
-tG
 Gl
 Gl
-tG
-tG
-BC
-wz
+Gl
+Gl
+Qm
+Qm
+Qm
+Gl
+Gl
+Gl
+Qm
+Gl
+Gl
+Qm
+Qm
+Qm
+zf
 "}
 (39,1,1) = {"
-wz
+zf
 QL
 Nu
 wz
-sR
+Qm
 oD
-fy
-fy
-fy
-fy
-fy
-fy
-fy
-fy
-fy
-fy
-fy
 Gl
 Gl
-fy
 Gl
-Oh
-Oh
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Ky
+Ky
 bf
-Oh
+Ky
 as
 Gl
-fy
 Gl
 Gl
-fy
-fy
-fy
-fy
-fy
-fy
-fy
-fy
-fy
-fy
-fy
 Gl
-Vz
-BC
-BC
-wz
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Qm
+Qm
+Qm
+zf
 "}
 (40,1,1) = {"
-wz
+zf
 QL
 PP
 wz
-sR
-sR
-Vz
+Qm
+Qm
+Qm
 Gl
 Gl
-Vz
+Qm
 Gl
 oD
 Gl
-Vz
+Qm
 Gl
 Gl
 Gl
@@ -3110,11 +2874,11 @@ Gl
 Gl
 Gl
 Gl
-Oh
-Oh
 Ky
-Oh
-Oh
+Ky
+Ky
+Ky
+Ky
 Gl
 Gl
 Gl
@@ -3131,13 +2895,13 @@ Gl
 Gl
 Gl
 Gl
-SO
-Vz
-sR
-wz
+Qm
+Qm
+Qm
+zf
 "}
 (41,1,1) = {"
-wz
+zf
 QL
 Nu
 wz
@@ -3158,11 +2922,11 @@ wz
 wz
 wz
 Gl
-Oh
+Ky
 Ky
 Ky
 jf
-Oh
+Ky
 Gl
 wz
 wz
@@ -3180,12 +2944,12 @@ wz
 wz
 wz
 Qm
-Vz
+Qm
 wz
-wz
+zf
 "}
 (42,1,1) = {"
-wz
+zf
 QL
 Sr
 oU
@@ -3193,33 +2957,33 @@ pF
 Gl
 Gl
 Gl
-Vz
-Vz
+Qm
+Qm
 Gl
 Gl
-SO
+Qm
 Gl
-Vz
-Vz
+Qm
+Qm
 Gl
 Gl
 Gl
-Vz
+Qm
 Gl
-Oh
 Ky
 Ky
 Ky
-Oh
+Ky
+Ky
 Gl
 Gl
 Gl
-Vz
+Qm
 Gl
 Gl
 Gl
 Gl
-Vz
+Qm
 Gl
 Gl
 Gl
@@ -3230,58 +2994,58 @@ Gl
 Gl
 Gl
 Gl
-wz
+zf
 "}
 (43,1,1) = {"
-wz
+zf
 Go
 VZ
 Fm
 Gl
-xL
+Qm
 Gl
-ol
+HH
 Gl
-Vz
-tG
-tG
+Qm
+Qm
+Qm
 Gl
 Gl
-Vz
-xL
+Qm
+Qm
 Gl
 Gl
 Gl
 Ws
-tG
-NR
+Qm
+as
 Ky
 Ky
-Oh
-Oh
-xL
-ol
-Vz
-Vz
+Ky
+Ky
+Qm
+HH
+Qm
+Qm
 oD
-BC
-tG
-tG
-BC
-Vz
+Qm
+Qm
+Qm
+Qm
+Qm
 Gl
 Gl
-Vz
-xL
-Vz
+Qm
+Qm
+Qm
 Gl
 oD
-Vz
-Vz
-wz
+Qm
+Qm
+zf
 "}
 (44,1,1) = {"
-wz
+zf
 UK
 VZ
 Tc
@@ -3290,59 +3054,59 @@ oD
 Gl
 Gl
 Gl
-BC
-BC
+Qm
+Qm
 HP
 Gl
 Ws
-xL
-Hg
+Qm
+HP
 Gl
 Gl
 kk
-SO
+Qm
 Gl
 Ky
 Ky
 Ky
-Oh
-Oh
-Vz
+Ky
+Ky
+Qm
 Gl
-xL
+Qm
 Gl
 Gl
-BC
-BC
-tG
-KR
+Qm
+Qm
+Qm
+Qm
 Gl
 Gl
 oD
-xL
-Vz
-xL
-Vz
+Qm
+Qm
+Qm
+Qm
 Gl
-Vz
-ol
-wz
+Qm
+HH
+zf
 "}
 (45,1,1) = {"
-wz
+zf
 ne
 HF
 eQ
 pF
 Gl
 Gl
-SO
-SO
-BC
-BC
-KR
+Qm
+Qm
+Qm
+Qm
+Qm
 Gl
-xL
+Qm
 Gl
 Gl
 Gl
@@ -3353,74 +3117,74 @@ Gl
 Ky
 Ky
 jf
-Oh
-Oh
+Ky
+Ky
 Gl
 Gl
-Vz
+Qm
 Gl
 uX
 uX
 Nw
 HH
-Vz
+Qm
 Gl
 Gl
 Gl
 Gl
-Vz
-ai
+Qm
+Ny
 Gl
-Vz
-xL
-xL
-wz
+Qm
+Qm
+Qm
+zf
 "}
 (46,1,1) = {"
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
+zf
 "}

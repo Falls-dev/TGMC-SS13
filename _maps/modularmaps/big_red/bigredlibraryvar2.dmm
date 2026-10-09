@@ -2,13 +2,13 @@
 "aA" = (
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "ce" = (
 /obj/structure/bookcase,
 /obj/item/book/manual/engineering_construction,
 /obj/item/book/manual/engineering_guide,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "da" = (
 /obj/machinery/light{
 	dir = 4
@@ -17,24 +17,29 @@
 /obj/structure/cable,
 /obj/effect/ai_node,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "dg" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /obj/effect/landmark/corpsespawner/security,
 /turf/open/floor/carpet/side{
 	dir = 4
 	},
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "eF" = (
 /obj/structure/bookcase,
 /obj/item/book/manual/barman_recipes,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
+"fC" = (
+/turf/open/floor/marking/warning{
+	dir = 4
+	},
+/area/bigredv2/outside/e/theme_bigred_v2)
 "gS" = (
 /obj/structure/table/wood,
 /obj/item/book/manual/nuclear,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "iU" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -42,13 +47,13 @@
 	on = 1
 	},
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "iX" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /turf/open/floor/carpet/side{
 	dir = 5
 	},
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "jD" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /obj/machinery/door/airlock/multi_tile/mainship/generic{
@@ -56,7 +61,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "li" = (
 /obj/machinery/door_control{
 	dir = 8;
@@ -64,23 +69,23 @@
 	name = "Storm Shutters"
 	},
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "lB" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "mP" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /turf/open/floor/carpet/side{
 	dir = 4
 	},
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "oL" = (
 /turf/open/floor/carpet/side{
 	dir = 1
 	},
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "pO" = (
 /obj/effect/spawner/random/misc/structure/broken_window/colonyspawn,
 /obj/machinery/door/poddoor/shutters/mainship{
@@ -88,12 +93,12 @@
 	name = "\improper Library Shutters"
 	},
 /turf/open/floor/plating,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "pV" = (
 /obj/structure/table/wood,
 /obj/item/toy/dice/d20,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "ql" = (
 /obj/effect/spawner/random/misc/structure/broken_window/colonyspawn,
 /obj/machinery/door/poddoor/shutters/mainship{
@@ -102,81 +107,76 @@
 	name = "\improper Library Shutters"
 	},
 /turf/open/floor/plating,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "qr" = (
 /obj/structure/bookcase,
 /obj/item/book/manual/detective,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "qY" = (
 /obj/structure/bookcase,
 /obj/item/book/manual/ripley_build_and_repair,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "ua" = (
 /turf/open/floor/carpet/side,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "uo" = (
 /obj/structure/bookcase,
 /obj/item/book/manual/engineering_particle_accelerator,
 /obj/item/book/manual/engineering_singularity_safety,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "vg" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "vJ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 6
 	},
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "xz" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/carpet/side{
 	dir = 6
 	},
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "yu" = (
 /obj/structure/bookcase,
 /obj/item/book/manual/evaguide,
 /obj/item/book/manual/marine_law,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "yy" = (
 /turf/closed/wall,
-/area/bigredv2/outside/library)
-"yG" = (
-/turf/open/floor/marking/asteroidwarning{
-	dir = 4
-	},
-/area/bigredv2/outside/e)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "yM" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /turf/open/floor/carpet,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "yV" = (
 /obj/effect/ai_node,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "AJ" = (
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "AN" = (
 /turf/open/floor/carpet/side{
 	dir = 9
 	},
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "AY" = (
 /obj/structure/bookcase,
 /obj/item/book/manual/chef_recipes,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "Bm" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
@@ -187,13 +187,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
-"Cn" = (
-/obj/machinery/atmospherics/pipe/simple/green/hidden,
-/turf/open/floor/marking/asteroidwarning{
-	dir = 8
-	},
-/area/bigredv2/outside/e)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "Dt" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
@@ -203,63 +197,63 @@
 	name = "\improper Library Backroom"
 	},
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "Ey" = (
 /obj/structure/bed/chair/wood/normal{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "EI" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "Fe" = (
 /obj/structure/bookcase,
 /obj/item/book/manual/engineering_guide,
 /obj/item/book/manual/nuclear,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "Ft" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "FB" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /obj/effect/ai_node,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "FH" = (
 /obj/machinery/air_alarm{
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "Ht" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 10
 	},
 /turf/open/floor/carpet/side,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "HF" = (
 /obj/machinery/atmospherics/pipe/manifold/green/hidden{
 	dir = 4
 	},
 /obj/effect/ai_node,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "JC" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 5
 	},
 /obj/effect/landmark/weed_node,
 /turf/open/floor/carpet/side,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "JQ" = (
 /obj/structure/bookcase,
 /obj/machinery/light{
@@ -268,109 +262,115 @@
 /obj/effect/landmark/weed_node,
 /obj/item/book/manual/engineering_singularity_safety,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "KJ" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "Mb" = (
 /obj/machinery/light,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "MU" = (
 /obj/structure/bed/chair/wood/normal,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "Nc" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 9
 	},
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "Nh" = (
 /obj/structure/bookcase,
 /obj/item/book/manual/medical_cloning,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "NC" = (
 /turf/open/floor/carpet/side{
 	dir = 5
 	},
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "NO" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "NR" = (
 /obj/structure/table/wood,
 /obj/item/paper,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "OB" = (
 /obj/structure/bookcase,
 /obj/effect/landmark/weed_node,
 /obj/item/book/manual/engineering_guide,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "PW" = (
 /obj/structure/bookcase,
 /obj/item/book/manual/atmospipes,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "QC" = (
-/turf/open/floor/plating/ground/mars/random/dirt,
-/area/bigredv2/outside/e)
+/turf/open/floor/plating/ground/snow/layer1,
+/area/bigredv2/outside/e/theme_bigred_v2)
 "Sj" = (
 /turf/open/floor/carpet/side{
 	dir = 10
 	},
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "Sy" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /obj/effect/ai_node,
 /turf/open/floor/carpet/side{
 	dir = 4
 	},
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "SK" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "VR" = (
 /obj/structure/bookcase,
 /obj/item/book/manual/engineering_construction,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "Wf" = (
 /turf/open/floor/carpet/side{
 	dir = 8
 	},
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
+"WC" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden,
+/turf/open/floor/marking/warning{
+	dir = 8
+	},
+/area/bigredv2/outside/e/theme_bigred_v2)
 "WJ" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/carpet/side{
 	dir = 4
 	},
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "WY" = (
 /obj/effect/landmark/weed_node,
 /obj/effect/ai_node,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "YQ" = (
 /obj/structure/bookcase,
 /obj/item/book/manual/engineering_construction,
 /obj/item/book/manual/marine_law,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 "ZP" = (
 /obj/structure/nuke_disk_candidate,
 /turf/open/floor/wood,
-/area/bigredv2/outside/library)
+/area/bigredv2/outside/library/theme_bigred_v2)
 
 (1,1,1) = {"
 yy
@@ -490,7 +490,7 @@ oL
 Ht
 SK
 jD
-Cn
+WC
 "}
 (7,1,1) = {"
 yy
@@ -510,7 +510,7 @@ oL
 ua
 AJ
 AJ
-yG
+fC
 "}
 (8,1,1) = {"
 yy

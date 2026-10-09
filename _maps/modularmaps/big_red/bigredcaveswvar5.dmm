@@ -2,87 +2,84 @@
 "d" = (
 /obj/effect/landmark/excavation_site_spawner,
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southwest)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southwest/theme_bigred_v2)
 "f" = (
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "g" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southwest)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southwest/theme_bigred_v2)
 "h" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southwest)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southwest/theme_bigred_v2)
 "j" = (
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southwest)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southwest/theme_bigred_v2)
 "l" = (
 /obj/effect/landmark/xeno_resin_door,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southwest)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southwest/theme_bigred_v2)
 "n" = (
-/turf/closed/mineral/smooth/bigred/indestructible,
+/turf/closed/mineral/smooth/bluefrostwall/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
 /area/space)
-"p" = (
-/obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/southwest)
 "t" = (
 /obj/effect/landmark/weed_node,
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southwest)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southwest/theme_bigred_v2)
 "u" = (
 /obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southwest)
-"w" = (
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/southwest)
-"x" = (
-/obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/southwest)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southwest/theme_bigred_v2)
 "y" = (
 /obj/effect/landmark/weed_node,
 /obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southwest)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southwest/theme_bigred_v2)
 "F" = (
 /obj/effect/landmark/xeno_silo_spawn,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southwest)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southwest/theme_bigred_v2)
 "G" = (
 /obj/effect/landmark/fog_blocker,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southwest)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southwest/theme_bigred_v2)
 "I" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "J" = (
 /obj/effect/landmark/weed_node,
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southwest)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southwest/theme_bigred_v2)
 "K" = (
 /obj/effect/landmark/xeno_tunnel_spawn,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southwest)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southwest/theme_bigred_v2)
 "P" = (
 /obj/effect/landmark/fog_blocker,
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "U" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/southwest)
-"W" = (
-/obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southwest)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southwest/theme_bigred_v2)
 
 (1,1,1) = {"
 n
@@ -328,11 +325,11 @@ f
 f
 f
 j
-w
-w
-w
-w
-w
+j
+j
+j
+j
+j
 j
 h
 j
@@ -361,7 +358,7 @@ f
 f
 j
 j
-W
+U
 j
 j
 f
@@ -370,7 +367,7 @@ f
 f
 I
 j
-p
+h
 l
 j
 j
@@ -422,12 +419,12 @@ j
 h
 j
 h
-W
+U
 j
 j
 j
 j
-W
+U
 j
 f
 f
@@ -492,19 +489,19 @@ n
 (10,1,1) = {"
 j
 j
-W
+U
 j
 h
 h
-W
+U
 j
 h
 j
 h
-W
+U
 j
 y
-W
+U
 f
 f
 f
@@ -559,7 +556,7 @@ f
 f
 j
 K
-w
+j
 j
 j
 h
@@ -626,7 +623,7 @@ n
 "}
 (13,1,1) = {"
 j
-w
+j
 U
 f
 f
@@ -672,7 +669,7 @@ n
 (14,1,1) = {"
 j
 j
-w
+j
 f
 f
 f
@@ -697,7 +694,7 @@ f
 f
 j
 j
-w
+j
 f
 f
 f
@@ -718,8 +715,8 @@ n
 h
 j
 j
-w
-w
+j
+j
 f
 f
 f
@@ -728,8 +725,8 @@ f
 f
 f
 f
-x
-W
+g
+U
 j
 j
 j
@@ -764,7 +761,7 @@ j
 j
 t
 j
-w
+j
 f
 f
 f
@@ -775,12 +772,12 @@ f
 f
 I
 j
-W
+U
 h
 j
 j
 j
-W
+U
 f
 f
 f
@@ -809,7 +806,7 @@ j
 h
 j
 j
-w
+j
 f
 f
 f
@@ -826,7 +823,7 @@ j
 j
 u
 j
-W
+U
 j
 j
 j
@@ -854,7 +851,7 @@ j
 j
 j
 j
-w
+j
 f
 f
 f
@@ -876,7 +873,7 @@ j
 t
 j
 j
-W
+U
 f
 f
 f
@@ -897,7 +894,7 @@ n
 (19,1,1) = {"
 j
 h
-W
+U
 j
 U
 f
@@ -918,7 +915,7 @@ g
 g
 y
 g
-x
+g
 g
 g
 g
@@ -945,7 +942,7 @@ j
 j
 j
 h
-w
+j
 f
 f
 f
@@ -963,7 +960,7 @@ j
 h
 j
 j
-w
+j
 j
 j
 j
@@ -990,7 +987,7 @@ f
 f
 j
 j
-w
+j
 f
 f
 f
@@ -1007,7 +1004,7 @@ j
 j
 j
 j
-w
+j
 j
 j
 h
@@ -1036,23 +1033,23 @@ f
 h
 j
 j
-w
-j
-f
-f
-f
-f
-f
-f
-f
-f
-f
-f
-f
-f
 j
 j
-w
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+j
+j
+j
 f
 f
 j
@@ -1128,7 +1125,7 @@ j
 h
 j
 j
-w
+j
 j
 j
 f
@@ -1168,14 +1165,14 @@ n
 f
 f
 f
-w
+j
 j
 j
 j
 h
 j
 j
-p
+h
 j
 f
 f
@@ -1214,7 +1211,7 @@ f
 f
 f
 f
-W
+U
 j
 j
 j
@@ -1222,7 +1219,7 @@ j
 j
 j
 h
-w
+j
 f
 f
 f
@@ -1236,7 +1233,7 @@ f
 f
 f
 j
-W
+U
 j
 f
 f
@@ -1260,7 +1257,7 @@ f
 f
 j
 h
-W
+U
 j
 j
 j
@@ -1314,7 +1311,7 @@ j
 j
 h
 j
-w
+j
 f
 f
 f
@@ -1399,10 +1396,10 @@ j
 j
 j
 h
-w
+j
 f
-w
-W
+j
+U
 j
 j
 j
@@ -1444,11 +1441,11 @@ j
 j
 j
 j
-w
+j
 f
 f
-w
-W
+j
+U
 h
 j
 j
@@ -1482,31 +1479,31 @@ n
 (32,1,1) = {"
 f
 j
-W
+U
 j
 j
-W
+U
 f
 j
 j
-w
-f
-f
-f
-j
-W
-j
-j
-W
 j
 f
 f
 f
+j
+U
+j
+j
+U
+j
 f
 f
 f
 f
-w
+f
+f
+f
+j
 U
 h
 j
@@ -1532,8 +1529,8 @@ j
 f
 f
 f
-w
-w
+j
+j
 f
 f
 f
@@ -1545,15 +1542,15 @@ h
 j
 h
 j
-w
+j
 f
 f
 f
 f
 f
 f
-w
-W
+j
+U
 j
 j
 f
@@ -1591,7 +1588,7 @@ j
 j
 j
 j
-w
+j
 f
 f
 f
@@ -1635,7 +1632,7 @@ j
 j
 j
 j
-w
+j
 f
 f
 f
@@ -1673,14 +1670,14 @@ f
 f
 f
 f
-w
+j
 j
 j
 j
 j
 h
 j
-w
+j
 f
 f
 f
@@ -1771,13 +1768,13 @@ j
 j
 j
 j
-w
+j
 f
 f
 f
 f
-w
-p
+j
+h
 j
 h
 j
@@ -1811,18 +1808,18 @@ f
 f
 f
 f
-w
 j
 j
 j
 j
-w
+j
+j
 f
 f
 f
 f
-w
-w
+j
+j
 j
 j
 f
@@ -1862,8 +1859,8 @@ f
 h
 h
 j
-w
-w
+j
+j
 f
 f
 f
@@ -1908,7 +1905,7 @@ j
 j
 j
 j
-w
+j
 f
 f
 f

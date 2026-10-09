@@ -2,11 +2,15 @@
     "map_name": "Orion Military Outpost",
     "map_path": "map_files/Orion_Military_Outpost",
     "map_file": "orionoutpost.dmm",
-	"disk_sets": {
-		"basic": 1
-	},
-    "parallax_icon": "jungle",
-	"armor": "jungle",
-	"quickbuilds": 1000,
-	"announce_text": "На военном форпосте Ориона на луне Тривонус IV сработал автоматический аварийный маяк, вероятно нашествие ксеноморфов. Товарищи, приготовиться к бою!"
+    "disk_sets": {
+        "basic": 1
+    },
+    "parallax_icon": "rock",
+    "quickbuilds": 1000,
+    "announce_text": "Получен сигнал бедствия с объекта Orion Military Outpost. Разведка сообщает об условиях шахтёрской колонии среди базальтовых пещер. Корабль движется в сектор. Товарищи, пройдите инструктаж и приготовьтесь к высадке!",
+    "traits": [
+        {
+            "weather_ashstorm": true
+        }
+    ]
 }

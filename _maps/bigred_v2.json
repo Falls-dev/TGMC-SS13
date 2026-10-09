@@ -2,14 +2,19 @@
     "map_name": "Big Red",
     "map_path": "map_files/BigRed_v2",
     "map_file": "BigRed_v2.dmm",
-	"disk_sets": {
-		"basic": 1
-	},
-	"quickbuilds": 1800,
-	"parallax_icon": "redrock",
-	"armor": "desert",
-	"announce_text": "На колонии 2-ого поколения был активирован аварийный маяк, безостановочно передающий один и тот же сигнал. Попытки связаться оказались тщетными. Поскольку ваш корабль находился в близлежащих доках, вас отправляют выяснить, что за чертовщина там творится. Товарищи, приготовиться к высадке!",
-	"traits":[{
-		"weather_sandstorm": true
-	}]
+    "disk_sets": {
+        "basic": 1
+    },
+    "quickbuilds": 1800,
+    "parallax_icon": "ice",
+    "armor": "ice",
+    "announce_text": "Получен сигнал бедствия с объекта Big Red. Разведка сообщает об условиях ледяной колонии. Корабль движется в сектор. Товарищи, пройдите инструктаж и приготовьтесь к высадке!",
+    "traits": [
+        {
+            "weather_snowstorm": true
+        }
+    ],
+    "environment_traits": {
+        "COLD": true
+    }
 }

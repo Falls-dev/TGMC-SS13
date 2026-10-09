@@ -316,6 +316,14 @@ GLOBAL_LIST_INIT(bioscan_locations, list(
 		to_chat(world, "<br><br><h1>[span_danger("End of Round Deathmatch initialization failed, please do not grief.")]</h1><br><br>")
 		return
 
+	var/list/weather_areas = list()
+	for(var/turf/spawn_turf as anything in spawns)
+		var/area/deathmatch/arena = get_area(spawn_turf)
+		if(!istype(arena) || !arena.eorg_weather_type || arena in weather_areas)
+			continue
+		weather_areas += arena
+		SSweather.run_weather(arena.eorg_weather_type, list(spawn_turf.z), arena.type)
+
 	for(var/i in GLOB.player_list)
 		var/mob/M = i
 		add_verb(M, /mob/proc/eord_respawn)

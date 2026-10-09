@@ -1,37 +1,42 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aD" = (
 /obj/effect/landmark/miner_platinum,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "aM" = (
 /obj/effect/turf_decal/sandedge,
 /turf/open/floor/mainship/floor,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "aO" = (
 /obj/structure/window/framed/mainship,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "aP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
+"aS" = (
+/obj/structure/table/mainship,
+/obj/item/flashlight/lamp,
+/turf/open/floor/wood,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "aW" = (
 /obj/docking_port/stationary/crashmode,
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/garbledradio/theme_bigred_v2)
 "bb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "bc" = (
 /obj/effect/landmark/xeno_resin_door,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/garbledradio/theme_bigred_v2)
 "br" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -41,15 +46,15 @@
 	},
 /obj/structure/prop/brokenvendor/brokenuniformvendor,
 /turf/open/floor/mainship,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "bs" = (
 /obj/item/stack/sheet/metal,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "bA" = (
 /obj/effect/turf_decal/sandedge,
 /turf/open/floor/plating/plating_catwalk,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "bZ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -57,41 +62,41 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "cj" = (
 /obj/effect/landmark/weed_node,
 /obj/effect/turf_decal/sandedge{
 	dir = 4
 	},
 /turf/open/floor/plating/plating_catwalk,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "cl" = (
 /obj/item/shard,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "cr" = (
 /obj/effect/spawner/random/misc/trash,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "cJ" = (
 /obj/effect/landmark/start/job/xenomorph,
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/garbledradio/theme_bigred_v2)
 "cS" = (
 /obj/effect/turf_decal/sandedge/corner{
 	dir = 8
 	},
 /turf/open/floor/tile/damaged/panel,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "da" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 8
 	},
 /obj/effect/spawner/random/misc/trash,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "dk" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -99,39 +104,30 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "dr" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/southeast/garbledradio)
-"dD" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/garbledradio/theme_bigred_v2)
 "dI" = (
 /obj/effect/spawner/random/weaponry/gun/shotgun,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
-"eu" = (
-/obj/effect/turf_decal/sandedge/corner2,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "ew" = (
 /obj/item/shard,
 /turf/open/floor/mainship/cargo,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "eI" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/floor/mainship/cargo,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "eM" = (
 /obj/effect/landmark/xeno_silo_spawn,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "fn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
@@ -140,42 +136,27 @@
 	dir = 4
 	},
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "fo" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 1
 	},
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
-"fp" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/bed/chair/office/dark{
-	dir = 4
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
 	},
-/obj/effect/decal/cleanable/blood,
-/turf/open/floor/wood,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "fw" = (
 /obj/effect/turf_decal/sandedge/corner{
 	dir = 1
 	},
 /turf/open/floor/mainship/orange,
-/area/bigredv2/caves/rustedpreparea)
-"fz" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
-	dir = 4
-	},
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "fH" = (
 /obj/effect/turf_decal/sandedge/corner,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "fW" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -186,12 +167,12 @@
 /obj/effect/turf_decal/sandedge/corner2,
 /obj/structure/prop/brokenvendor/brokenweaponsrack,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "gi" = (
 /obj/machinery/door/firedoor/mainship,
 /obj/effect/spawner/random/weaponry/ammo,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "gn" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -201,37 +182,25 @@
 	},
 /obj/structure/prop/brokenvendor/brokenweaponsrack,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "gB" = (
 /obj/structure/prop/brokenvendor/surplusarmor,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
-"gH" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/rustedpreparea)
-"gN" = (
-/obj/effect/turf_decal/sandedge{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/plating_catwalk,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "gO" = (
 /obj/effect/turf_decal/sandedge,
 /turf/open/floor/mainship/floor,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "ha" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "hl" = (
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating/plating_catwalk,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "hp" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -239,7 +208,7 @@
 /obj/item/shard,
 /obj/item/stack/sheet/metal,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "hu" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -252,7 +221,7 @@
 	},
 /obj/structure/prop/brokenvendor/brokenweaponsrack,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "hC" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -263,46 +232,44 @@
 /obj/effect/turf_decal/sandedge,
 /obj/structure/prop/brokenvendor/brokenweaponsrack,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "hI" = (
 /obj/effect/turf_decal/sandedge/corner{
 	dir = 4
 	},
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "hM" = (
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/east)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/east/theme_bigred_v2)
 "hR" = (
 /obj/item/stack/sheet/metal,
 /obj/effect/landmark/xeno_resin_door,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "hW" = (
 /obj/item/paper/clockresearch1,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "ip" = (
 /obj/item/shard,
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating/mainship/striped{
 	dir = 4
 	},
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "iH" = (
 /turf/open/floor/mainship/orange{
 	dir = 8
 	},
-/area/bigredv2/caves/rustedpreparea)
-"iO" = (
-/obj/machinery/computer/cryopod,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "iQ" = (
 /obj/effect/turf_decal/sandedge,
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "iW" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -312,25 +279,25 @@
 	},
 /obj/effect/spawner/random/engineering/tool,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "jg" = (
 /obj/item/stack/sheet/metal,
 /obj/effect/turf_decal/sandedge{
 	dir = 8
 	},
 /turf/open/floor/mainship/floor,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "jh" = (
 /obj/structure/window_frame/mainship,
 /obj/effect/turf_decal/sandedge/corner{
 	dir = 8
 	},
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "ji" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "jq" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 8
@@ -339,39 +306,45 @@
 	dir = 1
 	},
 /turf/open/floor/mainship/floor,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "jr" = (
 /obj/machinery/door/airlock/mainship/command{
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/mainship/floor,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "jx" = (
 /obj/structure/prop/brokenvendor/brokenweaponsrack,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
+"jC" = (
+/obj/effect/turf_decal/sandedge,
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
+"jD" = (
+/obj/effect/turf_decal/sandedge/corner2{
+	dir = 1
+	},
+/turf/open/floor/mainship/floor,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "jS" = (
 /turf/template_noop,
 /area/space)
-"ke" = (
-/obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
 "kD" = (
 /obj/machinery/door/airlock/mainship/command/cic,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "lS" = (
 /obj/structure/prop/brokenvendor/brokenspecialistvendor/sg,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "lZ" = (
 /obj/effect/turf_decal/sandedge,
 /turf/open/floor/mainship/red{
 	dir = 8
 	},
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "md" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -380,34 +353,30 @@
 	dir = 4
 	},
 /obj/structure/prop/brokenvendor/brokenuniformvendor,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "ms" = (
 /obj/effect/turf_decal/sandedge/corner{
 	dir = 8
 	},
 /turf/open/floor/plating/plating_catwalk,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "mB" = (
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/southeast)
-"mU" = (
-/obj/effect/turf_decal/sandedge/corner2{
-	dir = 8
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "mW" = (
 /obj/structure/disposalpipe/segment/corner{
 	dir = 8
 	},
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "na" = (
 /obj/effect/turf_decal/sandedge,
 /turf/open/floor/plating/mainship,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "no" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 4
@@ -415,38 +384,38 @@
 /obj/effect/spawner/random/weaponry/gun/sidearms,
 /obj/effect/spawner/random/weaponry/ammo/sidearm,
 /turf/open/floor/mainship/floor,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "np" = (
 /turf/open/floor/mainship/red{
 	dir = 4
 	},
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "ns" = (
 /obj/item/shard,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "nF" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 4
 	},
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "nW" = (
 /obj/structure/girder,
 /obj/effect/turf_decal/sandedge{
 	dir = 8
 	},
 /turf/open/floor/mainship/floor,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "oh" = (
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "oo" = (
 /obj/structure/table/mainship,
 /obj/effect/spawner/random/weaponry/ammo/shotgun,
 /obj/effect/spawner/random/engineering/tool,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "oq" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -455,29 +424,29 @@
 	dir = 4
 	},
 /turf/open/floor/mainship/cargo,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "os" = (
 /obj/effect/ai_node,
 /obj/effect/turf_decal/sandedge,
 /turf/open/floor/mainship/orange,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "ox" = (
 /obj/structure/table/mainship,
 /obj/effect/spawner/random/weaponry/ammo/shotgun,
 /turf/open/floor/plating,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "oB" = (
 /obj/effect/turf_decal/sandedge/corner{
 	dir = 1
 	},
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "oC" = (
 /obj/effect/turf_decal/sandedge/corner2{
 	dir = 4
 	},
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "oD" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -487,11 +456,11 @@
 	},
 /obj/structure/prop/brokenvendor/brokenweaponsrack,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "oI" = (
 /obj/structure/prop/brokenvendor/brokenspecialistvendor/corpsman,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "oX" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -501,31 +470,31 @@
 	},
 /obj/effect/spawner/random/weaponry/ammo/shotgun,
 /turf/open/floor/mainship/cargo,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "pi" = (
 /obj/effect/turf_decal/sandedge/corner2,
 /turf/open/floor/plating/mainship,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "pq" = (
 /obj/effect/landmark/xeno_resin_door,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/south)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/south/theme_bigred_v2)
 "ps" = (
 /turf/open/floor/plating/mainship/striped{
 	dir = 4
 	},
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "pz" = (
 /obj/structure/window_frame/mainship,
 /obj/machinery/door/poddoor/shutters/mainship,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "pE" = (
 /obj/structure/table/mainship,
 /obj/effect/spawner/random/weaponry/melee,
 /obj/effect/spawner/random/engineering/tool,
 /turf/open/floor/mainship,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "pR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
@@ -533,100 +502,90 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
-"qa" = (
-/obj/effect/turf_decal/sandedge,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "qb" = (
 /turf/open/floor/plating/plating_catwalk,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "qf" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "qg" = (
 /obj/effect/turf_decal/sandedge/corner{
 	dir = 1
 	},
 /turf/open/floor/plating/plating_catwalk,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "qF" = (
 /obj/structure/prop/brokenvendor/brokenspecialistvendor/engineer,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "qG" = (
 /obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "qH" = (
 /obj/structure/table/mainship,
 /obj/machinery/door/window/right{
 	dir = 1
 	},
 /turf/open/floor/plating/mainship,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "qV" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 4
 	},
 /turf/open/floor/mainship/floor,
-/area/bigredv2/caves/rustedpreparea)
-"re" = (
-/obj/item/stack/sheet/metal,
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "rh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 6
 	},
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
-"rF" = (
-/obj/item/shard,
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "rT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "rZ" = (
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/southeast/garbledradio)
-"sk" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/southeast/garbledradio/theme_bigred_v2)
 "sp" = (
 /obj/effect/turf_decal/sandedge/corner{
 	dir = 4
 	},
 /obj/structure/prop/brokenvendor/surplusclothes,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "sq" = (
 /obj/item/stack/sheet/metal,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "sB" = (
 /obj/structure/prop/brokenvendor/brokenspecialistvendor/sg,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
+"sK" = (
+/obj/structure/bed/chair/office/dark{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/wood,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "sM" = (
 /obj/effect/turf_decal/sandedge/corner{
 	dir = 1
 	},
 /obj/effect/ai_node,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "sN" = (
 /obj/item/tool/analyzer/plant_analyzer,
 /obj/effect/turf_decal/sandedge{
@@ -634,62 +593,56 @@
 	},
 /obj/effect/ai_node,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "tc" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/bigredv2/caves/rustedpreparea)
-"tk" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mainship/mono,
-/area/bigredv2/caves/southeast/garbledradio)
-"tG" = (
-/obj/item/shard,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mainship/cargo,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "tH" = (
 /obj/effect/landmark/start/job/xenomorph,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "uv" = (
 /obj/effect/turf_decal/sandedge/corner2{
 	dir = 1
 	},
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "uy" = (
 /obj/effect/spawner/random/clothing/general,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "uz" = (
-/turf/closed/mineral/smooth/bigred/indestructible,
+/turf/closed/mineral/smooth/bluefrostwall/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
 /area/space)
 "uE" = (
 /obj/machinery/door/firedoor/mainship,
 /obj/structure/window_frame/mainship,
 /obj/machinery/door/poddoor/shutters/mainship,
 /obj/item/shard,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "uK" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 8
 	},
 /obj/effect/landmark/xeno_resin_door,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "uL" = (
 /obj/structure/girder,
 /turf/open/floor/mainship/floor,
-/area/bigredv2/caves/rock)
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "vb" = (
 /obj/effect/ai_node,
 /obj/item/stack/cable_coil/cut,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "ve" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 4
@@ -698,20 +651,24 @@
 	dir = 8
 	},
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "vm" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 4
 	},
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/southeast/garbledradio)
+/area/bigredv2/caves/southeast/garbledradio/theme_bigred_v2)
 "vz" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 1
 	},
 /obj/item/ammo_casing,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
+"vS" = (
+/obj/effect/spawner/random/weaponry/ammo/shotgun,
+/turf/open/floor/mainship/mono,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "wd" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/sandedge{
@@ -720,53 +677,39 @@
 /turf/open/floor/mainship/red{
 	dir = 1
 	},
-/area/bigredv2/caves/rustedpreparea)
-"wu" = (
-/obj/effect/turf_decal/sandedge/corner2{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mainship/floor,
-/area/bigredv2/caves/rustedpreparea)
-"wD" = (
-/obj/effect/spawner/random/engineering/toolbox,
-/obj/effect/spawner/random/weaponry/ammo/shotgun,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "wF" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/effect/turf_decal/sandedge/corner2,
 /turf/open/floor/mainship/cargo,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "wL" = (
 /obj/structure/table/mainship,
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/engineering/tool,
 /turf/open/floor/mainship,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "xB" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 8
 	},
 /obj/item/stack/sheet/metal,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "xI" = (
 /obj/effect/landmark/weed_node,
 /obj/effect/ai_node,
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "xL" = (
 /obj/effect/turf_decal/sandedge/corner2{
 	dir = 4
 	},
 /turf/open/floor/mainship/floor,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "xM" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -779,23 +722,23 @@
 	},
 /obj/structure/prop/brokenvendor/brokenweaponsrack,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "xW" = (
 /obj/effect/turf_decal/sandedge/corner,
 /turf/open/floor/plating/plating_catwalk,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "xY" = (
 /obj/effect/spawner/random/weaponry/melee,
 /turf/open/floor/mainship/red{
 	dir = 4
 	},
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "yr" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 8
 	},
 /turf/open/floor/mainship/cargo,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "yt" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -805,7 +748,16 @@
 	},
 /obj/structure/prop/brokenvendor/brokenuniformvendor,
 /turf/open/floor/mainship,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
+"yy" = (
+/obj/effect/turf_decal/sandedge/corner2{
+	dir = 4
+	},
+/obj/effect/turf_decal/sandedge{
+	dir = 8
+	},
+/turf/open/floor/mainship/mono,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "yA" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -814,165 +766,118 @@
 	dir = 8
 	},
 /obj/structure/prop/brokenvendor/brokenuniformvendor,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "yO" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
-"yP" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/bigredv2/caves/rustedpreparea)
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "yU" = (
 /obj/effect/landmark/corpsespawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "zj" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "zm" = (
 /obj/effect/turf_decal/sandedge/corner2,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "zy" = (
 /obj/machinery/door/airlock/mainship/maint{
 	dir = 2
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rock)
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "zC" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "Al" = (
 /obj/structure/prop/brokenvendor/brokenmarinemedvendor,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Aw" = (
 /obj/structure/girder/displaced,
 /turf/open/floor/tile/damaged/five,
-/area/bigredv2/caves/southeast)
-"AP" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mainship/floor,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "AT" = (
 /turf/closed/wall/mainship,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "AV" = (
 /obj/effect/turf_decal/sandedge/corner2{
 	dir = 8
 	},
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Bl" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 1
 	},
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
-"BL" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/weaponry/gun/sidearms,
-/turf/open/floor/mainship/mono,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "BQ" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/mainship/cargo,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
+"BT" = (
+/turf/open/floor/mainship/mono,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "Cb" = (
 /obj/structure/window_frame/mainship,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rock)
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "Cd" = (
 /obj/item/paper,
 /obj/effect/turf_decal/sandedge{
 	dir = 8
 	},
 /turf/open/floor/mainship/floor,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "Ci" = (
 /turf/closed/wall/mainship,
-/area/bigredv2/caves/rock)
-"Cs" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "CB" = (
 /obj/structure/window_frame/mainship,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
-"CD" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/prop/brokenvendor/brokenspecialistvendor/engineer,
-/turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "CK" = (
 /obj/structure/table/mainship,
 /obj/effect/spawner/random/misc/trash,
 /turf/open/floor/mainship,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "CO" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/layer1{
 	dir = 1;
 	on = 1
 	},
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
-"CW" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table/mainship,
-/obj/item/flashlight/lamp,
-/turf/open/floor/wood,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "CZ" = (
 /obj/machinery/firealarm,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
-"Dt" = (
-/obj/effect/turf_decal/sandedge{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
-"Dv" = (
-/obj/effect/turf_decal/sandedge/corner2{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Dw" = (
 /obj/effect/turf_decal/sandedge,
 /turf/open/floor/mainship/orange,
-/area/bigredv2/caves/rustedpreparea)
-"Dx" = (
-/obj/effect/turf_decal/sandedge/corner2{
-	dir = 4
-	},
-/obj/effect/turf_decal/sandedge{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "DB" = (
 /obj/structure/girder,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "DK" = (
 /obj/effect/turf_decal/sandedge,
 /obj/effect/landmark/xeno_resin_door,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "DS" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -985,80 +890,80 @@
 	},
 /obj/structure/prop/brokenvendor/brokenweaponsrack,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "DU" = (
 /obj/structure/target_stake,
 /obj/item/target,
 /obj/item/clothing/suit/storage/faction/militia,
 /obj/effect/turf_decal/sandedge/corner,
 /turf/open/floor/plating/mainship,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "DV" = (
 /obj/effect/turf_decal/sandedge/corner2{
 	dir = 1
 	},
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
-"Ef" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/prop/brokenvendor/brokenweaponsrack,
-/turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
+"DZ" = (
+/obj/effect/turf_decal/sandedge{
+	dir = 1
+	},
+/turf/open/floor/plating/plating_catwalk,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Eg" = (
 /obj/effect/turf_decal/sandedge/corner,
 /obj/structure/prop/brokenvendor/brokenuniformvendor/specialist,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Ei" = (
 /obj/effect/ai_node,
 /turf/open/floor/mainship/floor,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "El" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
 /obj/effect/landmark/xeno_resin_wall,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "Eq" = (
 /obj/effect/turf_decal/sandedge/corner{
 	dir = 1
 	},
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "EB" = (
 /obj/structure/prop/brokenvendor/surplusclothes,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
-"EF" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mainship/floor,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "EH" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 4
 	},
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "EQ" = (
 /obj/structure/table/mainship,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "EV" = (
 /obj/effect/landmark/weed_node,
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/garbledradio/theme_bigred_v2)
 "EY" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "EZ" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/effect/turf_decal/sandedge,
 /turf/open/floor/mainship/cargo,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Fg" = (
 /obj/structure/window/framed/mainship,
 /obj/machinery/door/firedoor/mainship,
@@ -1067,10 +972,7 @@
 	},
 /obj/machinery/door/poddoor/shutters/mainship,
 /turf/open/floor/plating,
-/area/bigredv2/caves/rustedpreparea)
-"Fq" = (
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "FB" = (
 /obj/structure/disposalpipe/segment/corner{
 	dir = 1
@@ -1081,17 +983,17 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "FP" = (
 /turf/closed/wall/mainship,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "FX" = (
 /obj/effect/turf_decal/sandedge/corner{
 	dir = 4
 	},
 /turf/open/floor/plating/plating_catwalk,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "FZ" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 1
@@ -1099,18 +1001,14 @@
 /turf/open/floor/mainship/red{
 	dir = 1
 	},
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "GA" = (
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
-"GH" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "GJ" = (
 /obj/structure/rack/nometal,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "GO" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1123,19 +1021,19 @@
 	},
 /obj/structure/prop/brokenvendor/brokenuniformvendor,
 /turf/open/floor/mainship,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "GQ" = (
 /turf/open/floor/plating/mainship/striped{
 	dir = 8
 	},
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "GZ" = (
 /turf/open/floor/plating/plating_catwalk,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Hb" = (
 /obj/item/paper,
 /turf/open/floor/plating,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "Hj" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/effect/turf_decal/sandedge{
@@ -1143,80 +1041,79 @@
 	},
 /obj/structure/girder/displaced,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Hm" = (
 /obj/effect/landmark/weed_node,
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Hq" = (
 /obj/item/shard,
 /obj/effect/ai_node,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "HB" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 4
 	},
 /obj/effect/ai_node,
 /turf/open/floor/plating/plating_catwalk,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "HC" = (
 /obj/structure/table/mainship,
 /obj/machinery/door/window/right{
 	dir = 1
 	},
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/southeast)
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "HK" = (
 /obj/effect/turf_decal/sandedge/corner2,
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "HT" = (
 /turf/open/floor/plating,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "HZ" = (
 /obj/effect/decal/cleanable/blood/gibs/body,
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Ic" = (
 /obj/item/ammo_casing,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Iz" = (
 /obj/effect/ai_node,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "IM" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 8
 	},
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "IO" = (
 /turf/open/floor/mainship/floor,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Ji" = (
 /obj/effect/landmark/weed_node,
 /obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "Jl" = (
 /obj/structure/prop/brokenvendor/brokenspecialistvendor/leader,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
-"Jr" = (
-/obj/effect/landmark/xeno_resin_door,
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/southeast/garbledradio)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "JF" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 4
 	},
 /obj/item/shard,
 /turf/open/floor/mainship/floor,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "JR" = (
 /obj/structure/table/mainship,
 /obj/machinery/door/window{
@@ -1225,22 +1122,25 @@
 /turf/open/floor/plating/mainship/striped{
 	dir = 8
 	},
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "JU" = (
 /obj/structure/table/mainship,
 /obj/effect/spawner/random/clothing/general,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Kg" = (
 /obj/machinery/door/firedoor/mainship,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "KU" = (
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "KX" = (
 /obj/effect/turf_decal/sandedge/corner2{
 	dir = 8
@@ -1249,33 +1149,36 @@
 	dir = 8
 	},
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Lf" = (
 /obj/structure/window/framed/mainship,
 /obj/machinery/door/firedoor/mainship,
 /turf/open/floor/plating,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Lq" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 4
 	},
 /turf/open/floor/plating/plating_catwalk,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Ls" = (
 /obj/docking_port/stationary/crashmode,
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "Lv" = (
 /obj/effect/turf_decal/sandedge/corner,
 /turf/open/floor/mainship/floor,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Lz" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 1
 	},
 /obj/item/shard,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "LE" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1284,26 +1187,26 @@
 	dir = 8
 	},
 /obj/structure/prop/brokenvendor/brokenweaponsrack,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "LI" = (
 /obj/structure/girder,
 /turf/open/shuttle/escapepod,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "LL" = (
 /obj/effect/ai_node,
 /obj/effect/spawner/random/clothing/general,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Mp" = (
 /obj/structure/window_frame/mainship,
 /obj/item/shard,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rock)
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "MK" = (
 /obj/structure/prop/brokenvendor/brokencorpsmanvendor,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "ML" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1316,213 +1219,207 @@
 	},
 /obj/structure/prop/brokenvendor/brokenweaponsrack,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "MO" = (
 /obj/docking_port/stationary/crashmode,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "MQ" = (
 /obj/effect/spawner/random/misc/trash,
 /turf/open/floor/mainship/floor,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Nd" = (
 /obj/structure/girder,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Nt" = (
 /obj/structure/girder,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "Nv" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Ny" = (
 /turf/open/floor/plating,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "Od" = (
 /obj/docking_port/stationary/crashmode,
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "Oh" = (
 /obj/effect/turf_decal/sandedge/corner{
 	dir = 8
 	},
 /turf/open/floor/mainship/floor,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "Or" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 8
 	},
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Os" = (
 /obj/structure/prop/brokenvendor/engivend,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
+"OC" = (
+/obj/machinery/computer/cryopod,
+/turf/open/floor/mainship/mono,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "OD" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 8
 	},
 /obj/effect/ai_node,
 /turf/open/floor/plating/plating_catwalk,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "OG" = (
 /obj/effect/landmark/xeno_resin_wall,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "OR" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 4
 	},
 /turf/open/floor/plating/plating_catwalk,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
+"OY" = (
+/obj/effect/ai_node,
+/turf/open/floor/plating,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "OZ" = (
 /obj/machinery/door/airlock/mainship/command/cic,
 /obj/effect/mapping_helpers/airlock/locked,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
-"Pt" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/prop/brokenvendor/brokenweaponsrack,
-/turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "PX" = (
 /obj/structure/prop/brokenvendor/brokenspecialistvendor/corpsman,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Qc" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 8
 	},
 /turf/open/floor/plating/plating_catwalk,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Qf" = (
 /obj/item/stack/sheet/metal,
 /obj/item/shard,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Qn" = (
-/turf/closed/mineral/smooth/bigred/indestructible,
-/area/bigredv2/caves/rock)
+/turf/closed/mineral/smooth/bluefrostwall/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "Qz" = (
 /obj/effect/landmark/miner_platinum,
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/garbledradio/theme_bigred_v2)
 "QH" = (
 /obj/docking_port/stationary/crashmode,
 /turf/open/floor/mainship/floor,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
+"QI" = (
+/obj/effect/spawner/random/engineering/toolbox,
+/obj/effect/spawner/random/weaponry/ammo/shotgun,
+/obj/effect/ai_node,
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "QQ" = (
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/southeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/garbledradio/theme_bigred_v2)
 "Rd" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 8
 	},
 /obj/effect/ai_node,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Re" = (
 /obj/effect/landmark/corpsespawner/engineer,
 /obj/effect/turf_decal/sandedge{
 	dir = 1
 	},
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Rh" = (
 /obj/effect/turf_decal/sandedge,
 /turf/open/floor/plating/mainship/striped{
 	dir = 8
 	},
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "Ri" = (
 /obj/effect/landmark/xeno_resin_door,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Rq" = (
 /obj/structure/target_stake,
 /obj/item/target,
 /obj/item/clothing/suit/storage/faction/militia,
 /turf/open/floor/plating/mainship,
-/area/bigredv2/caves/southeast)
-"RA" = (
-/obj/docking_port/stationary/crashmode,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
-"RG" = (
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast/garbledradio)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "RH" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "RJ" = (
 /obj/effect/turf_decal/sandedge/corner{
 	dir = 8
 	},
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "RK" = (
 /obj/effect/turf_decal/sandedge/corner{
 	dir = 1
 	},
 /turf/open/floor/mainship/floor,
-/area/bigredv2/caves/rustedpreparea)
-"RM" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/weaponry/ammo/shotgun,
-/turf/open/floor/mainship/mono,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Sf" = (
 /obj/effect/turf_decal/sandedge/corner,
 /obj/effect/ai_node,
 /turf/open/floor/mainship/floor,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Sw" = (
 /obj/structure/table/mainship,
 /obj/effect/spawner/random/engineering/tool,
 /turf/open/floor/mainship,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "SA" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
 /obj/effect/landmark/xeno_resin_door,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "SD" = (
 /obj/structure/prop/brokenvendor/engivend,
 /turf/open/floor/plating,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "SM" = (
 /obj/effect/turf_decal/sandedge,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
+"SO" = (
+/obj/effect/spawner/random/weaponry/gun/sidearms,
+/turf/open/floor/mainship/mono,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "ST" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Tn" = (
 /obj/machinery/door/firedoor/mainship,
 /obj/structure/window_frame/mainship,
 /obj/machinery/door/poddoor/shutters/mainship,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
-"TC" = (
-/obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "TF" = (
 /obj/effect/turf_decal/sandedge/corner{
 	dir = 8
@@ -1531,26 +1428,26 @@
 /turf/open/floor/mainship/red{
 	dir = 9
 	},
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "TL" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/southeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/garbledradio/theme_bigred_v2)
 "TX" = (
 /obj/effect/landmark/xeno_resin_door,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "Uo" = (
 /obj/effect/turf_decal/sandedge/corner,
 /turf/open/floor/mainship/orange,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Uq" = (
 /obj/item/stack/sheet/metal,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Uz" = (
 /turf/open/floor/mainship/floor,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "UI" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -1561,53 +1458,56 @@
 /obj/effect/turf_decal/sandedge,
 /obj/structure/prop/brokenvendor/brokenweaponsrack,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "UO" = (
 /obj/structure/prop/brokenvendor/brokenuniformvendor/specialist,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "UP" = (
 /turf/open/floor/plating/mainship,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "UR" = (
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Vi" = (
 /obj/structure/girder,
 /turf/open/floor/mainship/floor,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Vl" = (
 /obj/effect/turf_decal/sandedge/corner{
 	dir = 1
 	},
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "Vv" = (
 /obj/effect/turf_decal/sandedge,
 /turf/open/floor/plating,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "VI" = (
 /obj/structure/table/mainship,
 /obj/effect/spawner/random/food_or_drink/drink_alcohol_bottle,
 /turf/open/floor/mainship,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "VL" = (
 /obj/effect/turf_decal/sandedge/corner2,
 /obj/effect/turf_decal/sandedge{
 	dir = 8
 	},
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "VT" = (
 /obj/structure/prop/brokenvendor/brokenweaponsrack,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "VU" = (
 /obj/effect/turf_decal/sandedge,
 /turf/open/floor/plating/mainship/striped{
 	dir = 4
 	},
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "Wl" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1618,115 +1518,86 @@
 /obj/effect/turf_decal/sandedge,
 /obj/structure/girder,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
-"Wu" = (
-/obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast/garbledradio)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Wv" = (
 /obj/machinery/power/apc/drained,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Ww" = (
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating,
-/area/bigredv2/caves/southeast)
-"WW" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/ai_node,
-/turf/open/floor/plating,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "Xd" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Xi" = (
 /obj/structure/girder/displaced,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "Xo" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 4
 	},
 /turf/open/floor/mainship/floor,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "Xp" = (
 /obj/item/stack/cable_coil/cut,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
+"XE" = (
+/obj/structure/table/mainship,
+/obj/effect/spawner/random/weaponry/melee,
+/obj/item/paper/crumpled/bloody,
+/turf/open/floor/wood,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "XP" = (
 /obj/effect/turf_decal/sandedge{
 	dir = 1
 	},
 /obj/structure/prop/brokenvendor/surplusarmor,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "XR" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "XS" = (
 /obj/item/shard,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "Ym" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "Yt" = (
 /obj/item/shard,
 /turf/open/floor/plating/mainship,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "Yu" = (
 /obj/effect/spawner/random/engineering/cable,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Yz" = (
 /obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "YD" = (
 /obj/structure/prop/brokenvendor/brokenuniformvendor/specialist,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
-"YN" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/plating_catwalk,
-/area/bigredv2/caves/southeast)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
+"YP" = (
+/turf/open/floor/wood,
+/area/bigredv2/caves/southeast/theme_bigred_v2)
 "Zo" = (
 /obj/structure/table/mainship,
 /obj/effect/spawner/random/engineering/tool,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/rustedpreparea)
-"Zq" = (
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/rustedpreparea)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 "Zv" = (
 /obj/effect/spawner/random/machinery/machine_frame,
 /turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
-"ZB" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mainship/mono,
-/area/bigredv2/caves/southeast)
-"ZG" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table/mainship,
-/obj/effect/spawner/random/weaponry/melee,
-/obj/item/paper/crumpled/bloody,
-/turf/open/floor/wood,
-/area/bigredv2/caves/southeast)
-"ZK" = (
-/obj/effect/turf_decal/sandedge{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mainship/mono,
-/area/bigredv2/caves/rustedpreparea)
-"ZV" = (
-/obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southeast/garbledradio)
+/area/bigredv2/caves/rustedpreparea/theme_bigred_v2)
 
 (1,1,1) = {"
 KU
@@ -1745,11 +1616,11 @@ KU
 KU
 KU
 KU
-RG
-ZV
-RG
-RG
-RG
+QQ
+TL
+QQ
+QQ
+QQ
 EV
 QQ
 KU
@@ -1814,12 +1685,12 @@ KU
 KU
 QQ
 QQ
-RG
-RG
-RG
+QQ
+QQ
+QQ
 KU
-RG
-RG
+QQ
+QQ
 QQ
 KU
 KU
@@ -1830,7 +1701,7 @@ KU
 KU
 KU
 oh
-TC
+zC
 oh
 oh
 oh
@@ -1881,14 +1752,14 @@ KU
 KU
 KU
 KU
-RG
-RG
-RG
-RG
-RG
+QQ
+QQ
+QQ
+QQ
+QQ
 KU
 QQ
-RG
+QQ
 QQ
 Ci
 Ci
@@ -1911,15 +1782,15 @@ UR
 oB
 Or
 DV
-Cs
-mU
+GA
+AV
 Or
 Or
 Or
 da
 Or
 Or
-Dx
+yy
 ve
 VL
 KX
@@ -1927,9 +1798,9 @@ uK
 Or
 Or
 DV
-mU
+AV
 hI
-Zq
+UR
 ji
 FP
 uz
@@ -1950,14 +1821,14 @@ KU
 KU
 KU
 QQ
-RG
-RG
-Wu
-RG
+QQ
+QQ
+dr
+QQ
 KU
 KU
 KU
-RG
+QQ
 QQ
 oh
 oh
@@ -1971,21 +1842,21 @@ oh
 oh
 zC
 tH
-TC
+zC
 Ym
 DK
 UR
-ke
-Zq
-ke
+ji
+UR
+ji
 UR
 qg
 OD
 FX
-ke
+ji
 UR
-ke
-Zq
+ji
+UR
 UR
 Yu
 xI
@@ -1994,9 +1865,9 @@ Xd
 UR
 hR
 UR
-ke
+ji
 bA
-gN
+DZ
 UR
 UR
 Xd
@@ -2018,15 +1889,15 @@ KU
 KU
 KU
 KU
-RG
-Wu
 QQ
-RG
-RG
+dr
+QQ
+QQ
+QQ
 KU
 KU
 KU
-ZV
+TL
 QQ
 xW
 OR
@@ -2053,7 +1924,7 @@ UR
 uy
 UR
 UR
-Zq
+UR
 UR
 UR
 UR
@@ -2062,8 +1933,8 @@ UR
 UR
 UR
 Ri
-Zq
-Zq
+UR
+UR
 SM
 oC
 nF
@@ -2087,15 +1958,15 @@ KU
 KU
 TL
 QQ
-RG
-RG
 QQ
-RG
-ZV
+QQ
+QQ
+QQ
+TL
 KU
 KU
 KU
-RG
+QQ
 QQ
 aM
 KU
@@ -2108,7 +1979,7 @@ Oh
 oh
 oh
 oh
-Fq
+oh
 oh
 oh
 FP
@@ -2154,17 +2025,17 @@ KU
 KU
 KU
 KU
-RG
-RG
-RG
 QQ
-RG
-RG
+QQ
+QQ
+QQ
+QQ
+QQ
 KU
 KU
 KU
 KU
-RG
+QQ
 QQ
 Ci
 KU
@@ -2182,9 +2053,9 @@ oh
 oh
 FP
 IO
-EF
 IO
-EF
+IO
+IO
 Lz
 UR
 Qf
@@ -2206,7 +2077,7 @@ Zo
 FP
 Or
 Qc
-Dv
+DV
 FP
 uz
 jS
@@ -2223,23 +2094,23 @@ KU
 KU
 KU
 KU
-RG
-RG
-Wu
-RG
+QQ
+QQ
+dr
+QQ
 KU
 KU
 KU
 KU
 KU
 KU
-RG
+QQ
 QQ
 Ci
 Ww
-dD
-fp
-CW
+YP
+sK
+aS
 KU
 KU
 KU
@@ -2250,7 +2121,7 @@ oh
 oh
 oh
 FP
-iO
+OC
 Os
 Al
 EY
@@ -2267,14 +2138,14 @@ Al
 EY
 wd
 mW
-Zq
+UR
 YD
 gn
 ha
 yt
 FP
 UR
-Zq
+UR
 SM
 FP
 uz
@@ -2292,23 +2163,23 @@ KU
 KU
 KU
 KU
-RG
 QQ
-RG
-RG
+QQ
+QQ
+QQ
 KU
 KU
 KU
 KU
 KU
 KU
-ZV
+TL
 QQ
 jr
 Hb
 Ny
 Uz
-ZG
+XE
 Ci
 KU
 KU
@@ -2325,7 +2196,7 @@ FP
 FP
 vz
 UR
-Zq
+UR
 UI
 eI
 br
@@ -2361,17 +2232,17 @@ KU
 KU
 KU
 QQ
-RG
 QQ
-RG
-RG
+QQ
+QQ
+QQ
 KU
 KU
 KU
 KU
-RG
-RG
-RG
+QQ
+QQ
+QQ
 dr
 Ci
 nW
@@ -2413,7 +2284,7 @@ oo
 FP
 nF
 Lq
-eu
+zm
 FP
 uz
 jS
@@ -2429,18 +2300,18 @@ KU
 KU
 KU
 KU
-RG
-RG
-QQ
-RG
 QQ
 QQ
 QQ
 QQ
 QQ
-RG
-RG
-RG
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
 QQ
 Ci
 Ci
@@ -2482,7 +2353,7 @@ yA
 FP
 GA
 hl
-Cs
+GA
 FP
 uz
 jS
@@ -2498,18 +2369,18 @@ KU
 KU
 KU
 KU
-RG
+QQ
 cJ
-RG
 QQ
-RG
-RG
-RG
-RG
 QQ
-RG
-Wu
-RG
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+dr
+QQ
 KU
 KU
 KU
@@ -2529,9 +2400,9 @@ FP
 sB
 UR
 UO
-Zq
 UR
-Zq
+UR
+UR
 Uo
 fW
 eI
@@ -2567,18 +2438,18 @@ KU
 KU
 KU
 KU
-RG
-ZV
-RG
-RG
-RG
-Wu
-RG
-RG
-Wu
-ZV
-RG
-ZV
+QQ
+TL
+QQ
+QQ
+QQ
+dr
+QQ
+QQ
+dr
+TL
+QQ
+TL
 KU
 KU
 KU
@@ -2600,7 +2471,7 @@ FP
 FP
 FP
 Nd
-sk
+UR
 gO
 IO
 IO
@@ -2613,9 +2484,9 @@ FP
 sp
 UR
 UR
-EF
-EF
-EF
+IO
+IO
+IO
 CK
 FP
 AV
@@ -2627,7 +2498,7 @@ jS
 "}
 (14,1,1) = {"
 QQ
-RG
+QQ
 KU
 KU
 KU
@@ -2636,36 +2507,36 @@ KU
 KU
 KU
 QQ
-RG
-RG
-RG
-RG
-RG
-RG
-RG
-RG
-RG
-RG
-RG
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
 QQ
 KU
 KU
 KU
 KU
 KU
-TC
+zC
 Ym
 oh
 oh
 oh
-TC
-Fq
+zC
+oh
 oh
 oh
 oh
 FP
 oI
-yP
+HT
 YD
 FP
 ji
@@ -2688,8 +2559,8 @@ ew
 yt
 FP
 Bl
-ke
-ke
+ji
+ji
 FP
 uz
 jS
@@ -2704,16 +2575,16 @@ KU
 KU
 KU
 KU
-RG
-RG
-RG
-RG
-Wu
-RG
-RG
-RG
-RG
-RG
+QQ
+QQ
+QQ
+QQ
+dr
+QQ
+QQ
+QQ
+QQ
+QQ
 QQ
 KU
 KU
@@ -2725,7 +2596,7 @@ oh
 oh
 oh
 oh
-Fq
+oh
 oh
 oh
 AT
@@ -2736,7 +2607,7 @@ FP
 MK
 IO
 IO
-Dt
+Bl
 UR
 UR
 fw
@@ -2753,11 +2624,11 @@ ST
 UR
 Zv
 iW
-tG
+ew
 br
 FP
 hI
-Zq
+UR
 Xd
 FP
 uz
@@ -2773,18 +2644,18 @@ KU
 KU
 dr
 QQ
-RG
 QQ
-Wu
-RG
-RG
-RG
-RG
-Wu
-RG
-RG
-RG
-RG
+QQ
+dr
+QQ
+QQ
+QQ
+QQ
+dr
+QQ
+QQ
+QQ
+QQ
 KU
 KU
 KU
@@ -2794,7 +2665,7 @@ oh
 oh
 oh
 oh
-RA
+Od
 Yz
 oh
 AT
@@ -2807,60 +2678,60 @@ xY
 YD
 DB
 UR
-gH
-qa
+Xd
+jC
 bs
 UR
-wD
+QI
 UR
 UR
-ke
+ji
 UR
 Nd
 UR
 rh
 CO
-rF
+cl
 Xd
 gO
 Sw
 FP
 GJ
-Zq
+UR
 fH
 FP
 uz
 jS
 "}
 (17,1,1) = {"
-RG
-KU
-KU
-KU
-KU
-KU
-KU
-RG
-RG
-RG
 QQ
-RG
-RG
-RG
+KU
+KU
+KU
+KU
+KU
+KU
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
 Ci
-RG
-RG
-Jr
+QQ
+QQ
 bc
 bc
 bc
+bc
 KU
 KU
 KU
 KU
 oh
 oh
-TC
+zC
 oh
 oh
 oh
@@ -2875,8 +2746,8 @@ FP
 FP
 FP
 FP
-ke
-sk
+ji
+UR
 Uo
 xM
 oq
@@ -2902,7 +2773,7 @@ uz
 jS
 "}
 (18,1,1) = {"
-Wu
+dr
 KU
 KU
 KU
@@ -2910,38 +2781,38 @@ KU
 KU
 KU
 TL
-RG
 QQ
-RG
+QQ
+QQ
 aW
-RG
+QQ
 KU
 Ci
 vm
 vm
 KU
-RG
-TC
+QQ
+zC
 oh
 oh
 oh
 Ym
 Ym
 oh
-TC
+zC
 oh
 AT
 oh
 Ym
 oh
-TC
+zC
 oh
 oh
 oh
 oh
 FP
-CD
-yP
+qF
+HT
 YD
 FP
 UR
@@ -2956,7 +2827,7 @@ UR
 UO
 FP
 GJ
-fz
+bZ
 UR
 Eg
 hu
@@ -2971,22 +2842,22 @@ uz
 jS
 "}
 (19,1,1) = {"
-RG
-KU
-KU
-KU
-KU
-KU
-RG
-RG
-RG
 QQ
-RG
+KU
+KU
+KU
+KU
+KU
+QQ
+QQ
+QQ
+QQ
+QQ
 KU
 KU
 KU
 Ci
-tk
+rZ
 rZ
 KU
 KU
@@ -3002,19 +2873,19 @@ oh
 AT
 oh
 oh
-Fq
+oh
 Yz
 oh
 oh
 oh
 oh
 FP
-Ef
-yP
-AP
+jx
+HT
+IO
 Bl
-Zq
-Zq
+UR
+UR
 Vv
 IO
 IO
@@ -3028,8 +2899,8 @@ UR
 rT
 Lv
 HK
-yP
-WW
+HT
+OY
 JU
 KU
 AV
@@ -3040,17 +2911,17 @@ Qn
 jS
 "}
 (20,1,1) = {"
-RG
+QQ
 KU
 KU
-RG
-Wu
-RG
-RG
-RG
-RG
-RG
-Wu
+QQ
+dr
+QQ
+QQ
+QQ
+QQ
+QQ
+dr
 KU
 KU
 KU
@@ -3083,7 +2954,7 @@ np
 YD
 FP
 UR
-Zq
+UR
 Dw
 gn
 BQ
@@ -3098,27 +2969,27 @@ pR
 os
 KU
 Vi
-yP
+HT
 KU
 KU
-Dt
-ke
+Bl
+ji
 oB
 FP
 Qn
 jS
 "}
 (21,1,1) = {"
-RG
-RG
-RG
-RG
-RG
-RG
-RG
-RG
 QQ
-RG
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
 KU
 KU
 KU
@@ -3144,7 +3015,7 @@ oh
 oh
 AT
 oh
-Fq
+oh
 oh
 FP
 FP
@@ -3154,7 +3025,7 @@ FP
 UR
 UR
 Dw
-Pt
+oD
 eI
 br
 FP
@@ -3178,16 +3049,16 @@ Qn
 jS
 "}
 (22,1,1) = {"
-RG
-RG
-RG
-RG
 QQ
 QQ
-RG
-RG
-RG
-RG
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
+QQ
 KU
 KU
 KU
@@ -3203,7 +3074,7 @@ KU
 AT
 AT
 AT
-Fq
+oh
 oh
 oh
 oh
@@ -3220,11 +3091,11 @@ jx
 iH
 IO
 Bl
-ke
+ji
 UR
 RK
-wu
-EF
+jD
+IO
 wL
 FP
 Xd
@@ -3248,14 +3119,14 @@ jS
 "}
 (23,1,1) = {"
 Qz
-RG
-RG
 QQ
-RG
-Wu
-RG
-ZV
-RG
+QQ
+QQ
+QQ
+dr
+QQ
+TL
+QQ
 KU
 KU
 KU
@@ -3273,7 +3144,7 @@ KU
 KU
 KU
 oh
-TC
+zC
 Ny
 oh
 oh
@@ -3290,7 +3161,7 @@ HT
 YD
 FP
 UR
-Zq
+UR
 UR
 ML
 yr
@@ -3310,19 +3181,19 @@ KU
 KU
 fo
 UR
-re
+bs
 FP
 Qn
 jS
 "}
 (24,1,1) = {"
-RG
+QQ
 QQ
 dr
-RG
-RG
-RG
-RG
+QQ
+QQ
+QQ
+QQ
 QQ
 KU
 KU
@@ -3386,8 +3257,8 @@ jS
 "}
 (25,1,1) = {"
 QQ
-RG
-RG
+QQ
+QQ
 QQ
 KU
 KU
@@ -3418,7 +3289,7 @@ oh
 oh
 oh
 oh
-TC
+zC
 oh
 oh
 DK
@@ -3426,7 +3297,7 @@ UR
 UR
 UR
 UR
-Zq
+UR
 Xd
 UR
 UR
@@ -3445,7 +3316,7 @@ Ri
 UR
 oB
 sN
-ZK
+Or
 hI
 UR
 Xd
@@ -3454,9 +3325,9 @@ Qn
 jS
 "}
 (26,1,1) = {"
-RG
-RG
-RG
+QQ
+QQ
+QQ
 QQ
 KU
 KU
@@ -3486,37 +3357,37 @@ oh
 oh
 oh
 Ym
-Fq
+oh
 oh
 oh
 oh
 DK
 UR
-Zq
 UR
-ke
 UR
-Zq
+ji
+UR
+UR
 UR
 KU
-ke
+ji
 UR
 UR
-Zq
 UR
-Zq
+UR
+UR
 UR
 yU
-Zq
 UR
-Zq
+UR
+UR
 Ri
 UR
 UR
 UR
 UR
 FP
-Zq
+UR
 HZ
 FP
 Qn
@@ -3552,8 +3423,8 @@ oh
 oh
 AT
 AT
-Fq
-Fq
+oh
+oh
 oh
 oh
 oh
@@ -3572,7 +3443,7 @@ KU
 UR
 UR
 UR
-ke
+ji
 UR
 UR
 Xd
@@ -3622,7 +3493,7 @@ oh
 AT
 AT
 Od
-Fq
+oh
 oh
 oh
 oh
@@ -3681,13 +3552,13 @@ KU
 KU
 Ci
 Xi
-TC
+zC
 na
 Yt
 UP
 ip
 oh
-TC
+zC
 oh
 oh
 oh
@@ -3762,7 +3633,7 @@ oh
 oh
 oh
 oh
-TC
+zC
 oh
 AT
 KU
@@ -3819,7 +3690,7 @@ KU
 KU
 KU
 KU
-YN
+qb
 lZ
 qb
 KU
@@ -3910,9 +3781,9 @@ KU
 KU
 KU
 KU
-GH
-GH
-GH
+KU
+KU
+KU
 KU
 KU
 KU
@@ -3941,7 +3812,7 @@ oh
 oh
 Ym
 oh
-TC
+zC
 KU
 KU
 KU
@@ -3952,7 +3823,7 @@ KU
 KU
 KU
 Mp
-ZB
+BT
 KU
 KU
 KU
@@ -3980,7 +3851,7 @@ KU
 KU
 KU
 KU
-GH
+KU
 KU
 KU
 KU
@@ -4022,7 +3893,7 @@ KU
 KU
 Cb
 XS
-RM
+vS
 KU
 KU
 KU
@@ -4048,9 +3919,9 @@ KU
 KU
 KU
 KU
-GH
 KU
-GH
+KU
+KU
 KU
 KU
 KU
@@ -4090,9 +3961,9 @@ KU
 KU
 KU
 zy
-BL
-ZB
-RM
+SO
+BT
+vS
 Ci
 KU
 KU
@@ -4101,7 +3972,7 @@ KU
 Ci
 Ci
 oh
-TC
+zC
 oh
 Ym
 oh
@@ -4160,7 +4031,7 @@ KU
 KU
 KU
 Iz
-ZB
+BT
 Hq
 Ci
 KU
@@ -4437,7 +4308,7 @@ oh
 oh
 oh
 oh
-TC
+zC
 oh
 KU
 KU
@@ -4493,7 +4364,7 @@ oh
 oh
 oh
 oh
-TC
+zC
 oh
 oh
 oh
@@ -4502,12 +4373,12 @@ oh
 Ym
 oh
 oh
-TC
+zC
 oh
 oh
 Ym
 oh
-TC
+zC
 oh
 KU
 KU
@@ -4564,7 +4435,7 @@ oh
 oh
 oh
 oh
-RA
+Od
 oh
 oh
 oh
@@ -4765,25 +4636,25 @@ uz
 jS
 "}
 (45,1,1) = {"
-TC
+zC
 oh
 oh
 oh
-TC
-oh
-oh
-oh
-oh
+zC
 oh
 oh
 oh
 oh
-TC
+oh
+oh
+oh
+oh
+zC
 Ym
 oh
 oh
 oh
-TC
+zC
 oh
 oh
 oh
@@ -4791,7 +4662,7 @@ SA
 oh
 Ym
 oh
-TC
+zC
 Ym
 Nt
 yO
@@ -5274,10 +5145,10 @@ KU
 KU
 KU
 KU
-TC
+zC
 oh
 oh
-TC
+zC
 KU
 KU
 KU
@@ -5335,7 +5206,7 @@ KU
 oh
 oh
 oh
-TC
+zC
 oh
 KU
 KU
@@ -5553,7 +5424,7 @@ KU
 KU
 oh
 oh
-TC
+zC
 KU
 KU
 KU

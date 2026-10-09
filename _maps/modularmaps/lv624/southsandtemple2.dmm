@@ -1,31 +1,34 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aw" = (
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/sand6)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/sand6/theme_lv624)
 "aS" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 8
 	},
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/sand9)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/sand9/theme_lv624)
 "ba" = (
-/obj/structure/flora/jungle/vines,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/sand3)
+/obj/structure/flora/drought/shroom,
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/sand3/theme_lv624)
 "bt" = (
-/obj/structure/flora/jungle/vines{
+/obj/structure/flora/drought/shroom{
 	pixel_y = 1
 	},
-/turf/closed/gm/dense,
-/area/lv624/ground/caves/rock)
+/turf/closed/mineral/smooth/lavawall/indestructible{
+	open_turf_type = /turf/open/lavaland/basalt/cave/autosmooth;
+	baseturfs = /turf/open/lavaland/basalt/cave/autosmooth
+	},
+/area/lv624/ground/caves/rock/theme_lv624)
 "bE" = (
-/turf/open/liquid/water/river/autosmooth,
-/area/lv624/ground/sand3)
+/turf/open/liquid/lava/autosmoothing,
+/area/lv624/ground/sand3/theme_lv624)
 "bO" = (
 /obj/effect/turf_decal/sandytile,
 /obj/effect/turf_decal/sandytile,
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand9)
+/area/lv624/ground/sand9/theme_lv624)
 "bU" = (
 /obj/structure/showcase/six,
 /obj/effect/turf_decal/sandytile,
@@ -34,94 +37,93 @@
 	dir = 10
 	},
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand9)
+/area/lv624/ground/sand9/theme_lv624)
 "bX" = (
 /obj/structure/stairs/seamless/platform,
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand9)
+/area/lv624/ground/sand9/theme_lv624)
 "cK" = (
 /obj/effect/turf_decal/sandytile,
 /obj/effect/turf_decal/sandytile,
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand3)
+/area/lv624/ground/sand3/theme_lv624)
 "cT" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/sand9)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/sand9/theme_lv624)
 "dm" = (
 /obj/structure/platform_decoration,
 /obj/effect/turf_decal/sandytile,
 /obj/effect/turf_decal/sandytile,
 /obj/effect/turf_decal/sandytile,
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand9)
+/area/lv624/ground/sand9/theme_lv624)
 "dD" = (
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/river3)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/river3/theme_lv624)
 "er" = (
-/obj/structure/flora/jungle/vines,
-/turf/closed/gm/dense,
-/area/lv624/ground/caves/rock)
+/obj/structure/flora/drought/shroom,
+/turf/closed/mineral/smooth/lavawall/indestructible{
+	open_turf_type = /turf/open/lavaland/basalt/cave/autosmooth;
+	baseturfs = /turf/open/lavaland/basalt/cave/autosmooth
+	},
+/area/lv624/ground/caves/rock/theme_lv624)
 "fi" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/sand9)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/sand9/theme_lv624)
 "hm" = (
-/obj/structure/flora/jungle/plantbot1/alien,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/river3)
+/obj/structure/flora/drought/grass,
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/river3/theme_lv624)
 "hB" = (
-/obj/structure/flora/ausbushes/palebush,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/river3)
+/obj/structure/flora/drought/shroom,
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/river3/theme_lv624)
 "iB" = (
 /turf/closed/wall/r_wall/chigusa,
-/area/lv624/ground/sand6)
+/area/lv624/ground/sand6/theme_lv624)
 "jg" = (
 /obj/structure/stairs/seamless/platform{
 	dir = 1
 	},
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand9)
+/area/lv624/ground/sand9/theme_lv624)
 "jL" = (
 /obj/structure/platform_decoration{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/river3)
-"kA" = (
-/obj/structure/flora/ausbushes/reedbush,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/river3)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/river3/theme_lv624)
 "kY" = (
 /obj/structure/platform_decoration{
 	dir = 1
 	},
 /obj/effect/turf_decal/sandytile,
 /obj/effect/turf_decal/sandytile,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/sand9)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/sand9/theme_lv624)
 "ls" = (
 /obj/effect/turf_decal/sandytile,
 /obj/effect/turf_decal/sandytile,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/lazarus/sandtemple/garbledradio)
+/area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "lD" = (
-/turf/open/ground/grass,
-/area/lv624/ground/jungle8)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/jungle8/theme_lv624)
 "mS" = (
 /obj/effect/ai_node,
-/turf/open/liquid/water/river/autosmooth,
-/area/lv624/ground/sand6)
+/turf/open/liquid/lava/autosmoothing,
+/area/lv624/ground/sand6/theme_lv624)
 "oo" = (
-/obj/structure/flora/ausbushes/palebush,
-/turf/open/liquid/water/river/autosmooth,
-/area/lv624/ground/river3)
+/obj/structure/flora/drought/shroom,
+/turf/open/liquid/lava/autosmoothing,
+/area/lv624/ground/river3/theme_lv624)
 "oF" = (
 /obj/effect/turf_decal/sandytile,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/sand9)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/sand9/theme_lv624)
 "oX" = (
 /obj/structure/showcase/six,
 /obj/effect/turf_decal/sandytile,
@@ -130,34 +132,34 @@
 	dir = 6
 	},
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand9)
+/area/lv624/ground/sand9/theme_lv624)
 "px" = (
 /obj/structure/stairs/seamless/platform{
 	dir = 1
 	},
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/lazarus/sandtemple/garbledradio)
+/area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "qf" = (
 /turf/closed/wall/r_wall/chigusa,
-/area/lv624/lazarus/sandtemple)
+/area/lv624/lazarus/sandtemple/theme_lv624)
 "ri" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/river3)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/river3/theme_lv624)
 "rS" = (
 /obj/docking_port/stationary/crashmode,
 /obj/structure/stairs/seamless{
 	dir = 8
 	},
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/lazarus/sandtemple/garbledradio)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "sb" = (
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/sand3)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/sand3/theme_lv624)
 "sZ" = (
-/obj/structure/flora/jungle/vines,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/lazarus/sandtemple/garbledradio)
+/obj/structure/flora/drought/shroom,
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "td" = (
 /obj/effect/decal/remains/xeno{
 	pixel_x = -1;
@@ -166,13 +168,13 @@
 /obj/effect/turf_decal/sandytile,
 /obj/effect/turf_decal/sandytile,
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/lazarus/sandtemple/garbledradio)
+/area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "um" = (
 /obj/effect/ai_node,
 /obj/effect/turf_decal/sandytile,
 /obj/structure/platform,
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand9)
+/area/lv624/ground/sand9/theme_lv624)
 "uu" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 8
@@ -180,107 +182,107 @@
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 9
 	},
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/sand9)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/sand9/theme_lv624)
 "uE" = (
 /obj/structure/platform_decoration{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/dirt/dug,
-/area/lv624/ground/sand6)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/sand6/theme_lv624)
 "uN" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/sand6)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/sand6/theme_lv624)
 "uO" = (
-/obj/structure/flora/jungle/vines,
-/turf/open/floor/plating/ground/dirtgrassborder/corner2{
+/obj/structure/flora/drought/shroom,
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 1
 	},
-/area/lv624/ground/jungle8)
+/area/lv624/ground/jungle8/theme_lv624)
 "uY" = (
 /obj/structure/stairs/seamless{
 	dir = 4
 	},
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand9)
+/area/lv624/ground/sand9/theme_lv624)
 "va" = (
 /obj/structure/stairs/seamless{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/sand9)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/sand9/theme_lv624)
 "vn" = (
 /obj/structure/stairs/seamless{
 	dir = 8
 	},
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand9)
+/area/lv624/ground/sand9/theme_lv624)
 "vU" = (
 /obj/effect/turf_decal/sandytile,
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand6)
+/area/lv624/ground/sand6/theme_lv624)
 "wv" = (
 /obj/structure/platform_decoration{
 	dir = 4
 	},
 /obj/structure/stairs/corner_seamless,
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand9)
+/area/lv624/ground/sand9/theme_lv624)
 "wB" = (
-/obj/structure/flora/grass/brown,
-/turf/open/liquid/water/river/autosmooth,
-/area/lv624/ground/river3)
+/obj/structure/flora/drought/grass,
+/turf/open/liquid/lava/autosmoothing,
+/area/lv624/ground/river3/theme_lv624)
 "wJ" = (
 /obj/structure/stairs/seamless/platform,
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/lazarus/sandtemple/garbledradio)
+/area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "xO" = (
 /obj/structure/platform_decoration{
 	dir = 8
 	},
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/sand9)
-"yu" = (
-/turf/open/ground/grass/grass2,
-/area/lv624/ground/jungle8)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/sand9/theme_lv624)
 "zx" = (
-/turf/closed/gm/dense,
-/area/lv624/ground/caves/rock)
+/turf/closed/mineral/smooth/lavawall/indestructible{
+	open_turf_type = /turf/open/lavaland/basalt/cave/autosmooth;
+	baseturfs = /turf/open/lavaland/basalt/cave/autosmooth
+	},
+/area/lv624/ground/caves/rock/theme_lv624)
 "zE" = (
-/turf/open/floor/plating/ground/dirtgrassborder/corner2{
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 1
 	},
-/area/lv624/ground/jungle8)
+/area/lv624/ground/jungle8/theme_lv624)
 "zG" = (
 /obj/structure/showcase,
 /obj/effect/turf_decal/sandytile,
 /obj/effect/turf_decal/sandytile,
 /obj/effect/turf_decal/sandytile,
 /obj/effect/turf_decal/sandytile,
-/obj/structure/flora/jungle/vines,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/lazarus/sandtemple/garbledradio)
+/obj/structure/flora/drought/shroom,
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "AA" = (
-/obj/structure/flora/jungle/vines/heavy,
-/turf/open/floor/plating/ground/dirtgrassborder/corner{
+/obj/structure/flora/drought/shroom,
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 4
 	},
-/area/lv624/ground/jungle8)
+/area/lv624/ground/jungle8/theme_lv624)
 "AP" = (
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/sand9)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/sand9/theme_lv624)
 "Bi" = (
 /obj/effect/turf_decal/sandytile,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand9)
+/area/lv624/ground/sand9/theme_lv624)
 "BH" = (
 /obj/structure/stairs/seamless{
 	dir = 8
 	},
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/sand9)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/sand9/theme_lv624)
 "BI" = (
 /obj/structure/showcase/six,
 /obj/effect/turf_decal/sandytile,
@@ -289,102 +291,102 @@
 	dir = 9
 	},
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand9)
+/area/lv624/ground/sand9/theme_lv624)
 "BP" = (
 /obj/structure/stairs/corner_seamless{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/sand9)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/sand9/theme_lv624)
 "CB" = (
 /obj/effect/turf_decal/sandytile,
 /obj/effect/ai_node,
 /obj/effect/turf_decal/sandytile,
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand9)
+/area/lv624/ground/sand9/theme_lv624)
 "Dk" = (
-/obj/structure/flora/jungle/vines/heavy,
-/turf/open/ground/grass,
-/area/lv624/ground/jungle8)
+/obj/structure/flora/drought/shroom,
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/jungle8/theme_lv624)
 "Dr" = (
 /obj/structure/stairs/seamless{
 	dir = 8
 	},
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/lazarus/sandtemple/garbledradio)
+/area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "Eu" = (
-/obj/structure/flora/jungle/vines,
+/obj/structure/flora/drought/shroom,
 /turf/closed/wall/r_wall/chigusa,
-/area/lv624/ground/caves/rock)
+/area/lv624/ground/caves/rock/theme_lv624)
 "EE" = (
 /turf/closed/wall/r_wall/chigusa,
-/area/lv624/ground/caves/rock)
+/area/lv624/ground/caves/rock/theme_lv624)
 "ES" = (
 /obj/structure/platform_decoration,
 /obj/structure/stairs/seamless{
 	dir = 8
 	},
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand9)
+/area/lv624/ground/sand9/theme_lv624)
 "Fc" = (
 /obj/effect/turf_decal/sandytile,
 /obj/effect/turf_decal/sandytile,
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/lazarus/sandtemple/garbledradio)
+/area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "Fm" = (
-/obj/structure/flora/jungle/vines{
+/obj/structure/flora/drought/shroom{
 	pixel_y = 1
 	},
-/turf/closed/mineral/smooth,
-/area/lv624/ground/caves/rock)
+/turf/closed/mineral/smooth/lavawall{
+	open_turf_type = /turf/open/lavaland/basalt/cave/autosmooth;
+	baseturfs = /turf/open/lavaland/basalt/cave/autosmooth
+	},
+/area/lv624/ground/caves/rock/theme_lv624)
 "Gd" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/dirtgrassborder/corner{
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 4
 	},
-/area/lv624/ground/jungle8)
+/area/lv624/ground/jungle8/theme_lv624)
 "Gj" = (
 /obj/structure/stairs/seamless{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/lazarus/sandtemple/garbledradio)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "GH" = (
 /turf/closed/wall/r_wall/chigusa,
-/area/lv624/ground/sand3)
+/area/lv624/ground/sand3/theme_lv624)
 "GR" = (
 /obj/structure/stairs/seamless/platform,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/sand9)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/sand9/theme_lv624)
 "GT" = (
 /obj/effect/turf_decal/sandytile,
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/sand9)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/sand9/theme_lv624)
 "Hq" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 1
 	},
 /turf/open/floor,
-/area/lv624/ground/sand9)
+/area/lv624/ground/sand9/theme_lv624)
 "HV" = (
 /obj/effect/turf_decal/sandytile,
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand9)
+/area/lv624/ground/sand9/theme_lv624)
 "HW" = (
-/turf/closed/mineral/smooth,
-/area/lv624/ground/caves/rock)
+/turf/closed/mineral/smooth/lavawall{
+	open_turf_type = /turf/open/lavaland/basalt/cave/autosmooth;
+	baseturfs = /turf/open/lavaland/basalt/cave/autosmooth
+	},
+/area/lv624/ground/caves/rock/theme_lv624)
 "If" = (
 /obj/effect/turf_decal/sandytile,
 /obj/structure/platform,
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand9)
-"Ix" = (
-/obj/structure/flora/jungle/vines,
-/turf/open/floor/plating/ground/dirtgrassborder{
-	dir = 1
-	},
-/area/lv624/ground/jungle8)
+/area/lv624/ground/sand9/theme_lv624)
 "IB" = (
 /obj/effect/turf_decal/sandytile,
 /obj/effect/turf_decal/sandytile,
@@ -393,7 +395,7 @@
 	dir = 5
 	},
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand9)
+/area/lv624/ground/sand9/theme_lv624)
 "IU" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 2
@@ -403,28 +405,28 @@
 	dir = 6
 	},
 /turf/open/floor,
-/area/lv624/ground/sand9)
+/area/lv624/ground/sand9/theme_lv624)
 "JI" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/lazarus/sandtemple/garbledradio)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "Kf" = (
 /obj/structure/platform_decoration{
 	dir = 8
 	},
-/turf/open/liquid/water/river/autosmooth,
-/area/lv624/ground/sand6)
+/turf/open/liquid/lava/autosmoothing,
+/area/lv624/ground/sand6/theme_lv624)
 "KR" = (
 /obj/effect/landmark/weed_node,
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/sand3)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/sand3/theme_lv624)
 "LN" = (
 /obj/effect/turf_decal/sandytile,
 /obj/effect/turf_decal/sandytile,
 /obj/effect/turf_decal/sandytile,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/lazarus/sandtemple/garbledradio)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "Mb" = (
 /obj/structure/platform_decoration{
 	dir = 8
@@ -433,16 +435,16 @@
 	dir = 8
 	},
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand9)
+/area/lv624/ground/sand9/theme_lv624)
 "NH" = (
 /obj/structure/stairs/corner_seamless{
 	dir = 1
 	},
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/sand9)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/sand9/theme_lv624)
 "NK" = (
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/lazarus/sandtemple/garbledradio)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "NU" = (
 /obj/effect/decal/remains/xeno{
 	pixel_x = 1;
@@ -450,30 +452,26 @@
 	},
 /obj/effect/turf_decal/sandytile,
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/lazarus/sandtemple/garbledradio)
+/area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "Ow" = (
 /obj/structure/stairs/seamless/platform{
 	dir = 1
 	},
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/sand9)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/sand9/theme_lv624)
 "Pb" = (
 /obj/effect/turf_decal/sandytile,
 /obj/effect/ai_node,
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/lazarus/sandtemple/garbledradio)
+/area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "Pw" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/sand3)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/sand3/theme_lv624)
 "PR" = (
-/obj/structure/flora/jungle/vines,
-/turf/open/liquid/water/river/autosmooth,
-/area/lv624/ground/sand6)
-"PV" = (
-/obj/structure/flora/grass/green,
-/turf/open/liquid/water/river/autosmooth,
-/area/lv624/ground/river3)
+/obj/structure/flora/drought/shroom,
+/turf/open/liquid/lava/autosmoothing,
+/area/lv624/ground/sand6/theme_lv624)
 "Qi" = (
 /obj/structure/showcase/six,
 /obj/effect/turf_decal/sandytile,
@@ -482,88 +480,87 @@
 	dir = 5
 	},
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand9)
+/area/lv624/ground/sand9/theme_lv624)
 "Qq" = (
 /obj/structure/stairs/seamless{
 	dir = 8
 	},
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/lazarus/sandtemple/garbledradio)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "Qt" = (
-/obj/structure/flora/jungle/vines{
+/obj/structure/flora/drought/shroom{
 	pixel_y = 1
 	},
-/obj/structure/flora/jungle/vines{
+/obj/structure/flora/drought/shroom{
 	pixel_y = 1
 	},
-/turf/open/liquid/water/river/autosmooth,
-/area/lv624/ground/river3)
+/turf/open/liquid/lava/autosmoothing,
+/area/lv624/ground/river3/theme_lv624)
 "Qz" = (
 /obj/effect/turf_decal/sandytile,
 /obj/effect/turf_decal/sandytile,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/sand9)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/sand9/theme_lv624)
 "QK" = (
-/obj/structure/flora/jungle/vines,
+/obj/structure/flora/drought/shroom,
 /turf/closed/wall/r_wall/chigusa,
-/area/lv624/lazarus/sandtemple/garbledradio)
+/area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "QQ" = (
-/turf/open/floor/plating/ground/dirtgrassborder/corner2{
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 1
 	},
-/area/lv624/ground/river3)
+/area/lv624/ground/river3/theme_lv624)
 "RZ" = (
-/obj/structure/flora/jungle/plantbot1/alien,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/sand9)
+/obj/structure/flora/drought/grass,
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/sand9/theme_lv624)
 "Sq" = (
 /obj/effect/landmark/weed_node,
 /obj/effect/turf_decal/sandytile,
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand9)
+/area/lv624/ground/sand9/theme_lv624)
 "SR" = (
 /obj/effect/turf_decal/sandytile,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/lazarus/sandtemple/garbledradio)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "Te" = (
 /obj/structure/stairs/seamless{
 	dir = 4
 	},
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/lazarus/sandtemple/garbledradio)
-"Ue" = (
-/obj/structure/flora/jungle/plantbot1/alien,
-/turf/open/liquid/water/river/autosmooth,
-/area/lv624/ground/river3)
+/area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "Vd" = (
 /obj/effect/turf_decal/sandytile,
 /obj/item/weapon/twohanded/spear,
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand9)
+/area/lv624/ground/sand9/theme_lv624)
 "Vj" = (
-/turf/open/floor/plating/ground/dirtgrassborder/corner{
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 4
 	},
-/area/lv624/ground/jungle8)
+/area/lv624/ground/jungle8/theme_lv624)
 "VY" = (
 /obj/structure/showcase,
 /obj/effect/turf_decal/sandytile,
 /obj/effect/turf_decal/sandytile,
 /obj/effect/turf_decal/sandytile,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/lazarus/sandtemple/garbledradio)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "Ww" = (
-/turf/open/liquid/water/river/autosmooth,
-/area/lv624/ground/sand6)
+/turf/open/liquid/lava/autosmoothing,
+/area/lv624/ground/sand6/theme_lv624)
 "WD" = (
-/obj/structure/flora/jungle/vines,
-/turf/closed/mineral/smooth,
-/area/lv624/ground/caves/rock)
+/obj/structure/flora/drought/shroom,
+/turf/closed/mineral/smooth/lavawall{
+	open_turf_type = /turf/open/lavaland/basalt/cave/autosmooth;
+	baseturfs = /turf/open/lavaland/basalt/cave/autosmooth
+	},
+/area/lv624/ground/caves/rock/theme_lv624)
 "WO" = (
 /obj/effect/turf_decal/sandytile,
 /obj/effect/turf_decal/sandytile,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/lazarus/sandtemple/garbledradio)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "Xp" = (
 /obj/effect/turf_decal/sandytile,
 /obj/effect/turf_decal/sandytile,
@@ -572,40 +569,39 @@
 	dir = 9
 	},
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand9)
-"XN" = (
-/obj/structure/flora/ausbushes/reedbush,
-/turf/open/liquid/water/river/autosmooth,
-/area/lv624/ground/river3)
+/area/lv624/ground/sand9/theme_lv624)
 "Ya" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/lazarus/sandtemple/garbledradio)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "Yf" = (
-/obj/structure/flora/jungle/vines{
+/obj/structure/flora/drought/shroom{
 	pixel_y = 1
 	},
-/obj/structure/flora/jungle/vines{
+/obj/structure/flora/drought/shroom{
 	pixel_y = 1
 	},
-/turf/closed/mineral/smooth,
-/area/lv624/ground/caves/rock)
+/turf/closed/mineral/smooth/lavawall{
+	open_turf_type = /turf/open/lavaland/basalt/cave/autosmooth;
+	baseturfs = /turf/open/lavaland/basalt/cave/autosmooth
+	},
+/area/lv624/ground/caves/rock/theme_lv624)
 "Yg" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/sand6)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/sand6/theme_lv624)
 "YA" = (
 /obj/item/clothing/suit/armor/vest/admiral,
 /obj/effect/turf_decal/sandytile,
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand9)
+/area/lv624/ground/sand9/theme_lv624)
 "YR" = (
-/turf/open/liquid/water/river/autosmooth,
-/area/lv624/ground/river3)
+/turf/open/liquid/lava/autosmoothing,
+/area/lv624/ground/river3/theme_lv624)
 "Zk" = (
 /obj/effect/turf_decal/sandytile,
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/lazarus/sandtemple/garbledradio)
+/area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 "ZE" = (
 /obj/structure/platform_decoration{
 	dir = 1
@@ -614,20 +610,20 @@
 	dir = 4
 	},
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/ground/sand9)
+/area/lv624/ground/sand9/theme_lv624)
 "ZP" = (
-/obj/structure/flora/jungle/vines{
+/obj/structure/flora/drought/shroom{
 	pixel_y = 1
 	},
-/turf/open/liquid/water/river/autosmooth,
-/area/lv624/ground/river3)
+/turf/open/liquid/lava/autosmoothing,
+/area/lv624/ground/river3/theme_lv624)
 "ZZ" = (
 /obj/effect/turf_decal/sandytile,
 /obj/effect/turf_decal/sandytile,
 /obj/effect/turf_decal/sandytile,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/whiteyellow/full,
-/area/lv624/lazarus/sandtemple/garbledradio)
+/area/lv624/lazarus/sandtemple/garbledradio/theme_lv624)
 
 (1,1,1) = {"
 Ww
@@ -679,7 +675,7 @@ aS
 AP
 AP
 YR
-XN
+oo
 "}
 (3,1,1) = {"
 PR
@@ -987,7 +983,7 @@ dD
 dD
 dD
 ri
-kA
+hB
 YR
 YR
 YR
@@ -1033,7 +1029,7 @@ Fm
 ZP
 YR
 YR
-Ue
+wB
 YR
 oo
 YR
@@ -1057,17 +1053,17 @@ Yf
 Yf
 ZP
 YR
-PV
+wB
 YR
 YR
 YR
 YR
 YR
-XN
+oo
 YR
 YR
 YR
-XN
+oo
 YR
 YR
 "}
@@ -1081,7 +1077,7 @@ HW
 HW
 Fm
 Qt
-Ue
+wB
 ZP
 YR
 YR
@@ -1110,18 +1106,18 @@ ZP
 ZP
 YR
 YR
-XN
+oo
 YR
 YR
-Ue
-YR
-YR
-YR
+wB
 YR
 YR
 YR
 YR
-Ix
+YR
+YR
+YR
+uO
 "}
 (20,1,1) = {"
 qf
@@ -1160,20 +1156,20 @@ HW
 Fm
 bt
 ZP
-Ue
+wB
 YR
 YR
-XN
+oo
 YR
 YR
-Ue
+wB
 YR
 YR
 YR
 YR
 zE
 Gd
-yu
+lD
 "}
 (22,1,1) = {"
 qf

@@ -1,42 +1,5 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/green/hidden{
-	dir = 5
-	},
-/turf/open/floor/marking/asteroidwarning{
-	dir = 10
-	},
-/area/bigredv2/outside/c)
-"b" = (
-/obj/effect/landmark/weed_node,
-/turf/open/floor/marking/asteroidwarning{
-	dir = 1
-	},
-/area/bigredv2/outside/c)
-"e" = (
-/turf/open/floor/marking/asteroidwarning{
-	dir = 1
-	},
-/area/bigredv2/outside/c)
-"g" = (
-/obj/effect/turf_decal/warning_stripes/thin,
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"h" = (
-/turf/open/floor/marking/asteroidwarning{
-	dir = 9
-	},
-/area/bigredv2/outside/c)
-"i" = (
-/obj/structure/bed/chair{
-	dir = 8
-	},
-/turf/open/floor/marking/asteroidwarning{
-	dir = 5
-	},
-/area/bigredv2/outside/c)
-"l" = (
+"ac" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 8
 	},
@@ -46,141 +9,146 @@
 	id = "basketball";
 	side = "left"
 	},
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"m" = (
-/obj/effect/turf_decal/warning_stripes/thin{
-	dir = 1
-	},
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"n" = (
-/obj/effect/turf_decal/warning_stripes/nscenter,
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"o" = (
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"ad" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/turf/open/floor/marking/asteroidwarning{
+/turf/open/floor/marking/warning{
 	dir = 8
 	},
-/area/bigredv2/outside/c)
-"p" = (
-/obj/effect/turf_decal/warning_stripes/thin{
-	dir = 1
-	},
-/obj/effect/turf_decal/warning_stripes/nscenter,
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"q" = (
-/obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/structure/cable,
-/obj/structure/bed/chair{
-	dir = 8
-	},
-/turf/open/floor/marking/asteroidwarning{
-	dir = 4
-	},
-/area/bigredv2/outside/c)
-"r" = (
-/obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/structure/cable,
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"s" = (
-/obj/effect/turf_decal/warning_stripes/thin{
-	dir = 4
-	},
-/obj/effect/ai_node,
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"t" = (
-/obj/machinery/atmospherics/pipe/simple/green/hidden{
-	dir = 4
-	},
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"u" = (
-/obj/effect/turf_decal/warning_stripes/nscenter,
-/obj/effect/ai_node,
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"v" = (
-/obj/machinery/atmospherics/pipe/simple/green/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"w" = (
-/obj/machinery/atmospherics/pipe/simple/green/hidden{
+/area/bigredv2/outside/c/theme_bigred_v2)
+"af" = (
+/turf/open/floor/marking/warning{
 	dir = 9
 	},
+/area/bigredv2/outside/c/theme_bigred_v2)
+"aj" = (
 /obj/structure/cable,
-/obj/effect/ai_node,
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 10
+	},
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"ak" = (
+/obj/effect/turf_decal/warning_stripes/thin{
+	dir = 8
+	},
+/obj/effect/turf_decal/warning_stripes/thin{
+	dir = 1
+	},
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"ax" = (
+/turf/open/floor/marking/warning{
+	dir = 1
+	},
+/area/bigredv2/outside/c/theme_bigred_v2)
+"ay" = (
+/obj/structure/cable,
+/obj/effect/landmark/weed_node,
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"aB" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 5
+	},
+/turf/open/floor/marking/warning{
+	dir = 10
+	},
+/area/bigredv2/outside/c/theme_bigred_v2)
+"aD" = (
+/turf/open/floor/marking/warning{
+	dir = 8
+	},
+/area/bigredv2/outside/c/theme_bigred_v2)
+"aE" = (
+/obj/effect/turf_decal/warning_stripes/thin{
+	dir = 1
+	},
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"aK" = (
+/obj/effect/turf_decal/warning_stripes/thin{
+	dir = 8
+	},
+/obj/effect/turf_decal/warning_stripes/thin,
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"aU" = (
+/obj/effect/turf_decal/warning_stripes/thin{
+	dir = 8
+	},
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"aV" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/marking/warning,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"aW" = (
+/obj/effect/turf_decal/warning_stripes/thin,
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"aX" = (
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"bG" = (
+/obj/effect/turf_decal/warning_stripes/thin{
+	dir = 4
+	},
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"rx" = (
 /obj/structure/bed/chair{
 	dir = 8
 	},
-/turf/open/floor/marking/asteroidwarning{
-	dir = 6
-	},
-/area/bigredv2/outside/c)
-"z" = (
-/obj/effect/turf_decal/warning_stripes/thin{
+/turf/open/floor/marking/warning{
 	dir = 4
 	},
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"A" = (
-/obj/effect/turf_decal/warning_stripes/thin{
-	dir = 8
-	},
-/obj/effect/turf_decal/warning_stripes/thin,
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"C" = (
-/obj/effect/turf_decal/warning_stripes/thin{
-	dir = 4
-	},
-/obj/effect/turf_decal/warning_stripes/thin{
-	dir = 1
-	},
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"F" = (
-/obj/effect/turf_decal/warning_stripes,
-/obj/item/toy/beach_ball/basketball,
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	on = 1
-	},
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"G" = (
+/area/bigredv2/outside/c/theme_bigred_v2)
+"ud" = (
 /obj/effect/ai_node,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/green/hidden{
 	dir = 1
 	},
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"H" = (
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"ui" = (
+/obj/machinery/atmospherics/pipe/manifold/green/hidden{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/effect/ai_node,
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"vY" = (
+/obj/effect/turf_decal/warning_stripes/thin{
+	dir = 4
+	},
+/obj/effect/turf_decal/warning_stripes/thin{
+	dir = 1
+	},
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"ye" = (
 /obj/effect/turf_decal/warning_stripes/thin,
 /obj/effect/turf_decal/warning_stripes/nscenter,
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"I" = (
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"J" = (
-/obj/machinery/atmospherics/pipe/manifold/green/hidden{
-	dir = 1
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"BQ" = (
+/obj/structure/bed/chair{
+	dir = 8
 	},
-/obj/structure/cable,
-/obj/effect/ai_node,
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"L" = (
+/turf/open/floor/marking/warning{
+	dir = 5
+	},
+/area/bigredv2/outside/c/theme_bigred_v2)
+"Cq" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 4
 	},
@@ -193,250 +161,282 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"M" = (
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"FG" = (
+/obj/effect/turf_decal/warning_stripes/thin{
+	dir = 1
+	},
+/obj/effect/turf_decal/warning_stripes/nscenter,
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"Ic" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 9
+	},
+/obj/structure/cable,
+/obj/effect/ai_node,
+/obj/structure/bed/chair{
+	dir = 8
+	},
+/turf/open/floor/marking/warning{
+	dir = 6
+	},
+/area/bigredv2/outside/c/theme_bigred_v2)
+"Mw" = (
+/obj/effect/turf_decal/warning_stripes/nscenter,
+/obj/effect/ai_node,
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"MY" = (
+/obj/effect/turf_decal/warning_stripes/thin{
+	dir = 4
+	},
+/obj/effect/ai_node,
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"NQ" = (
+/obj/effect/turf_decal/warning_stripes,
+/obj/item/toy/beach_ball/basketball,
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4;
+	on = 1
+	},
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"PO" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden,
+/obj/structure/cable,
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"RS" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 4
+	},
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"Ss" = (
+/obj/effect/landmark/weed_node,
+/turf/open/floor/marking/warning{
+	dir = 1
+	},
+/area/bigredv2/outside/c/theme_bigred_v2)
+"Sz" = (
+/obj/effect/turf_decal/warning_stripes/nscenter,
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"UW" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"Vw" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 4
 	},
 /obj/effect/turf_decal/warning_stripes/thin,
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"N" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/green/hidden{
-	dir = 10
-	},
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"O" = (
-/obj/machinery/atmospherics/pipe/simple/green/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/marking/asteroidwarning,
-/area/bigredv2/outside/c)
-"P" = (
-/obj/effect/turf_decal/warning_stripes/thin{
-	dir = 8
-	},
-/obj/effect/turf_decal/warning_stripes/thin{
-	dir = 1
-	},
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"Q" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/green/hidden{
-	dir = 4
-	},
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"R" = (
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"WJ" = (
 /obj/structure/mopbucket,
 /obj/item/tool/mop,
-/turf/open/floor/marking/asteroidwarning{
+/turf/open/floor/marking/warning{
 	dir = 1
 	},
-/area/bigredv2/outside/c)
-"S" = (
-/turf/open/floor/marking/asteroidwarning{
-	dir = 8
+/area/bigredv2/outside/c/theme_bigred_v2)
+"YH" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 4
 	},
-/area/bigredv2/outside/c)
-"T" = (
-/obj/effect/turf_decal/warning_stripes/thin{
-	dir = 8
-	},
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"Y" = (
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"Zu" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden,
+/obj/structure/cable,
 /obj/structure/bed/chair{
 	dir = 8
 	},
-/turf/open/floor/marking/asteroidwarning{
+/turf/open/floor/marking/warning{
 	dir = 4
 	},
-/area/bigredv2/outside/c)
-"Z" = (
-/obj/structure/cable,
-/obj/effect/landmark/weed_node,
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
+/area/bigredv2/outside/c/theme_bigred_v2)
 
 (1,1,1) = {"
-h
-S
-S
-I
-Z
-N
-o
-o
-a
+af
+aD
+aD
+aX
+ay
+aj
+ad
+ad
+aB
 "}
 (2,1,1) = {"
-e
-P
-T
-T
-l
-T
-T
-A
-O
+ax
+ak
+aU
+aU
+ac
+aU
+aU
+aK
+aV
 "}
 (3,1,1) = {"
-e
-m
-I
-I
-I
-I
-I
-g
-O
+ax
+aE
+aX
+aX
+aX
+aX
+aX
+aW
+aV
 "}
 (4,1,1) = {"
-R
-m
-I
-I
-I
-I
-I
-g
-O
+WJ
+aE
+aX
+aX
+aX
+aX
+aX
+aW
+aV
 "}
 (5,1,1) = {"
-e
-m
-I
-I
-I
-I
-I
-g
-O
+ax
+aE
+aX
+aX
+aX
+aX
+aX
+aW
+aV
 "}
 (6,1,1) = {"
-e
-m
-I
-I
-I
-I
-I
-g
-O
+ax
+aE
+aX
+aX
+aX
+aX
+aX
+aW
+aV
 "}
 (7,1,1) = {"
-e
-m
-I
-I
-I
-I
-I
-g
-Q
+ax
+aE
+aX
+aX
+aX
+aX
+aX
+aW
+RS
 "}
 (8,1,1) = {"
-e
-p
-u
-n
-F
-u
-n
-H
-G
+ax
+FG
+Mw
+Sz
+NQ
+Mw
+Sz
+ye
+ud
 "}
 (9,1,1) = {"
-b
-m
-I
-I
-t
-I
-I
-g
-v
+Ss
+aE
+aX
+aX
+YH
+aX
+aX
+aW
+UW
 "}
 (10,1,1) = {"
-e
-m
-I
-I
-t
-I
-I
-g
-O
+ax
+aE
+aX
+aX
+YH
+aX
+aX
+aW
+aV
 "}
 (11,1,1) = {"
-e
-m
-I
-I
-t
-I
-I
-g
-O
+ax
+aE
+aX
+aX
+YH
+aX
+aX
+aW
+aV
 "}
 (12,1,1) = {"
-e
-m
-I
-I
-t
-I
-I
-g
-O
+ax
+aE
+aX
+aX
+YH
+aX
+aX
+aW
+aV
 "}
 (13,1,1) = {"
-b
-m
-I
-I
-t
-I
-I
-g
-O
+Ss
+aE
+aX
+aX
+YH
+aX
+aX
+aW
+aV
 "}
 (14,1,1) = {"
-e
-C
-z
-z
-L
-s
-z
-M
-O
+ax
+vY
+bG
+bG
+Cq
+MY
+bG
+Vw
+aV
 "}
 (15,1,1) = {"
-e
-I
-I
-I
-t
-I
-I
-I
-O
+ax
+aX
+aX
+aX
+YH
+aX
+aX
+aX
+aV
 "}
 (16,1,1) = {"
-i
-Y
-Y
-I
-J
-r
-q
-q
-w
+BQ
+rx
+rx
+aX
+ui
+PO
+Zu
+Zu
+Ic
 "}

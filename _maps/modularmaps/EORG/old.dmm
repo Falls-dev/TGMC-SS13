@@ -3,166 +3,133 @@
 /turf/template_noop,
 /area/deathmatch)
 "ab" = (
+/obj/effect/forcefield{
+	desc = "You can't get in. Heh.";
+	name = "Blocker"
+	},
 /turf/closed/mineral/smooth/indestructible,
 /area/deathmatch)
 "ac" = (
 /obj/structure/largecrate/guns/russian,
 /obj/item/tool/crowbar,
-/turf/open/ground/grass,
-/area/deathmatch)
-"ad" = (
-/turf/open/floor/plating/ground/dirt,
+/turf/open/floor/plating/ground/mars/random/cave,
 /area/deathmatch)
 "ae" = (
 /obj/structure/fence,
-/turf/open/ground/grass,
+/turf/open/floor/plating/ground/mars/random/cave,
 /area/deathmatch)
 "af" = (
 /obj/structure/largecrate/guns/merc,
 /obj/item/tool/crowbar,
-/turf/open/ground/grass,
-/area/deathmatch)
-"ag" = (
-/turf/open/ground/coast/corner,
+/turf/open/floor/plating/ground/mars/random/cave,
 /area/deathmatch)
 "ah" = (
 /obj/effect/landmark/deathmatch,
-/turf/open/ground/grass,
+/turf/open/floor/plating/ground/mars/random/cave,
 /area/deathmatch)
 "ai" = (
 /obj/effect/ai_node,
-/turf/open/ground/grass,
+/turf/open/floor/plating/ground/mars/random/cave,
 /area/deathmatch)
 "aj" = (
-/turf/open/ground/coast{
-	dir = 8
-	},
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/deathmatch)
 "ak" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/turf/open/ground/grass,
+/obj/structure/flora/drought/ash,
+/turf/open/floor/plating/ground/mars/random/cave,
 /area/deathmatch)
 "al" = (
 /obj/effect/landmark/deathmatch,
-/turf/open/liquid/water/river,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/deathmatch)
 "am" = (
 /turf/closed/shuttle,
 /area/deathmatch)
 "an" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/dirt,
+/turf/open/floor/plating/ground/lavaland/basalt,
 /area/deathmatch)
 "ao" = (
 /obj/structure/grille/broken,
 /obj/item/shard,
 /turf/open/floor/plating,
 /area/deathmatch)
-"ap" = (
-/turf/open/ground/coast{
-	dir = 9
-	},
-/area/deathmatch)
-"aq" = (
-/turf/open/ground/coast{
-	dir = 1
-	},
-/area/deathmatch)
 "ar" = (
-/turf/open/ground/coast/corner{
-	dir = 4
-	},
+/turf/open/floor/plating/ground/lavaland/basalt,
 /area/deathmatch)
 "as" = (
-/turf/closed/wall,
+/turf/closed/wall/desert,
 /area/deathmatch)
 "at" = (
 /obj/structure/grille/smoothing,
 /obj/structure/window/framed/prison/reinforced/hull/tyson/reinforced,
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "au" = (
-/obj/structure/flora/ausbushes/grassybush,
-/turf/open/ground/grass,
+/obj/structure/flora/drought/barrel_cactus,
+/turf/open/floor/plating/ground/mars/random/cave,
 /area/deathmatch)
 "av" = (
 /obj/structure/bed/chair/dropship/passenger{
 	dir = 4
 	},
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "aw" = (
 /obj/effect/ai_node,
-/turf/open/liquid/water/river,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/deathmatch)
 "ax" = (
 /obj/effect/decal/cleanable/blood,
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "ay" = (
 /obj/structure/bed/chair/dropship/passenger{
 	dir = 8
 	},
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "az" = (
 /obj/effect/ai_node,
-/turf/open/shuttle/brig,
-/area/deathmatch)
-"aA" = (
-/turf/open/ground/coast{
-	dir = 4
-	},
+/turf/open/shuttle,
 /area/deathmatch)
 "aB" = (
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "aC" = (
 /obj/effect/landmark/deathmatch,
 /obj/structure/bed/chair/dropship/pilot{
 	dir = 1
 	},
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "aD" = (
 /obj/structure/fence,
-/turf/open/floor/plating/ground/dirtgrassborder{
-	dir = 4
-	},
+/turf/open/floor/plating/ground/lavaland/basalt/cave/autosmooth,
 /area/deathmatch)
 "aE" = (
 /obj/structure/table,
 /obj/machinery/light,
 /obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "aF" = (
 /obj/effect/landmark/weapon_spawn/tier4_weapon_spawn,
-/turf/open/liquid/water/river,
-/area/deathmatch)
-"aG" = (
-/turf/open/ground/coast,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/deathmatch)
 "aH" = (
 /obj/structure/bed/chair/dropship/passenger,
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "aI" = (
 /obj/machinery/door/airlock/mainship/generic{
 	dir = 2
 	},
-/turf/open/shuttle/brig,
-/area/deathmatch)
-"aJ" = (
-/turf/open/floor/plating/ground/dirtgrassborder/corner,
-/area/deathmatch)
-"aK" = (
-/obj/structure/flora/jungle/vines/heavy,
-/turf/open/floor/plating/ground/dirtgrassborder/corner2,
+/turf/open/shuttle,
 /area/deathmatch)
 "aL" = (
 /obj/machinery/door/airlock/mainship/generic,
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "aM" = (
 /obj/structure/closet/walllocker/medical_wall/full,
@@ -170,42 +137,37 @@
 /area/deathmatch)
 "aN" = (
 /obj/structure/closet/walllocker/hydrant/full,
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "aO" = (
 /obj/structure/closet,
 /obj/effect/decal/cleanable/cobweb,
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "aP" = (
 /obj/structure/table,
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "aQ" = (
 /obj/structure/table,
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "aR" = (
 /obj/structure/table,
 /obj/structure/bedsheetbin,
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "aS" = (
 /obj/structure/table,
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "aT" = (
 /obj/structure/closet/athletic_mixed,
-/turf/open/floor,
-/area/deathmatch)
-"aU" = (
-/turf/open/floor/plating/ground/dirtgrassborder{
-	dir = 8
-	},
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "aV" = (
 /obj/structure/bed/chair/dropship/passenger{
@@ -215,7 +177,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/deathmatch,
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "aW" = (
 /obj/structure/bed/chair/dropship/passenger{
@@ -225,11 +187,11 @@
 	dir = 8
 	},
 /obj/effect/spawner/random/misc/plushie/nospawnninetyfive,
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "aX" = (
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "aY" = (
 /obj/structure/bed/chair/dropship/passenger{
@@ -239,81 +201,66 @@
 	dir = 8
 	},
 /obj/effect/ai_node,
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "aZ" = (
 /obj/structure/bed,
 /obj/item/bedsheet,
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "ba" = (
 /obj/effect/decal/cleanable/generic,
-/turf/open/floor,
-/area/deathmatch)
-"bb" = (
-/turf/open/ground/coast/corner2{
-	dir = 2
-	},
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "bc" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "bd" = (
 /obj/effect/landmark/deathmatch,
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "be" = (
 /obj/machinery/door/airlock/mainship/generic,
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "bf" = (
-/turf/open/floor/plating/ground/dirtgrassborder/corner{
-	dir = 4
-	},
+/turf/open/floor/plating/ground/lavaland/basalt/cave/autosmooth,
 /area/deathmatch)
 "bg" = (
 /obj/effect/landmark/deathmatch,
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "bh" = (
 /obj/effect/decal/cleanable/blood/drip,
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "bi" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "bj" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor,
-/area/deathmatch)
-"bk" = (
-/turf/open/floor/plating/ground/dirtgrassborder/corner2{
-	dir = 1
-	},
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "bl" = (
 /obj/effect/decal/cleanable/blood/drip,
-/turf/open/ground/grass,
+/turf/open/floor/plating/ground/mars/random/cave,
 /area/deathmatch)
 "bm" = (
 /obj/structure/closet/cabinet,
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "bn" = (
 /obj/structure/closet/cabinet,
 /obj/machinery/light,
-/turf/open/floor,
-/area/deathmatch)
-"bo" = (
-/turf/open/liquid/water/river,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "bp" = (
 /obj/effect/ai_node,
@@ -321,35 +268,35 @@
 /area/deathmatch)
 "bq" = (
 /obj/machinery/door/airlock/multi_tile/mainship/generic,
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "br" = (
 /obj/machinery/floodlight{
 	name = "Floodlight"
 	},
-/turf/open/ground/grass,
+/turf/open/floor/plating/ground/mars/random/cave,
 /area/deathmatch)
 "bs" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "bt" = (
 /obj/structure/lattice,
-/turf/open/ground/grass,
+/turf/open/floor/plating/ground/mars/random/cave,
 /area/deathmatch)
 "bu" = (
-/turf/open/ground/grass,
+/turf/open/floor/plating/ground/mars/random/cave,
 /area/deathmatch)
 "bv" = (
-/obj/structure/window/framed/colony,
-/turf/open/floor,
+/obj/structure/window/framed/chigusa,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "bw" = (
 /obj/structure/table,
 /obj/item/storage/donut_box,
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "bx" = (
 /obj/item/clothing/shoes/marine{
@@ -361,14 +308,14 @@
 /obj/item/clothing/shoes/marine{
 	pixel_x = 10
 	},
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "by" = (
 /obj/structure/table,
 /obj/item/clothing/under/marine/veteran/freelancer,
 /obj/item/clothing/under/marine/veteran/freelancer,
 /obj/item/clothing/under/marine/veteran/freelancer,
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "bz" = (
 /turf/open/floor/plating,
@@ -379,77 +326,77 @@
 "bB" = (
 /obj/structure/table,
 /obj/item/ammo_magazine/shotgun,
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "bC" = (
 /obj/effect/decal/cleanable/blood/oil,
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "bD" = (
 /obj/structure/table,
 /obj/item/storage/bible,
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "bE" = (
 /obj/structure/table,
 /obj/item/ashtray/glass,
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "bF" = (
 /obj/structure/table,
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "bG" = (
 /obj/structure/table,
 /obj/effect/spawner/random/weaponry/ammo/shotgun,
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "bH" = (
 /obj/item/storage/belt/utility/full,
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "bI" = (
 /obj/structure/largecrate/supply/weapons/flamers,
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "bJ" = (
 /obj/structure/barricade/guardrail{
 	dir = 4
 	},
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "bK" = (
 /obj/effect/landmark/deathmatch,
-/turf/open/floor/mainship/red{
+/obj/effect/turf_decal/siding/red{
 	dir = 9
 	},
+/turf/open/floor/mainship/rubber,
 /area/deathmatch)
 "bL" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/plating/ground/dirtgrassborder{
-	dir = 8
-	},
+/turf/open/floor/plating/ground/lavaland/basalt/cave/autosmooth,
 /area/deathmatch)
 "bM" = (
 /obj/machinery/light,
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "bN" = (
 /obj/structure/barricade/guardrail,
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "bO" = (
 /obj/structure/closet/fireaxecabinet{
 	pixel_y = 32
 	},
 /obj/structure/barricade/guardrail,
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "bP" = (
-/turf/open/floor/mainship/red{
+/obj/effect/turf_decal/siding/red{
 	dir = 1
 	},
+/turf/open/floor/mainship/rubber,
 /area/deathmatch)
 "bQ" = (
 /obj/structure/grille/smoothing,
@@ -457,32 +404,34 @@
 /turf/open/floor/plating,
 /area/deathmatch)
 "bR" = (
-/obj/structure/flora/tree/jungle/small,
-/turf/open/ground/grass,
+/obj/structure/flora/tree/dead/drought,
+/turf/open/floor/plating/ground/mars/random/cave,
 /area/deathmatch)
 "bS" = (
-/turf/open/floor/mainship/orange{
+/obj/effect/turf_decal/siding/yellow{
 	dir = 1
 	},
+/turf/open/floor/mainship/rubber,
 /area/deathmatch)
 "bT" = (
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "bU" = (
 /obj/structure/bed/chair/dropship/passenger{
 	dir = 8
 	},
 /obj/effect/landmark/deathmatch,
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "bV" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "bW" = (
-/turf/open/floor/mainship/red{
+/obj/effect/turf_decal/siding/red{
 	dir = 8
 	},
+/turf/open/floor/mainship/rubber,
 /area/deathmatch)
 "bZ" = (
 /obj/structure/bed/chair/dropship/passenger{
@@ -491,37 +440,36 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "cc" = (
-/turf/open/floor/mainship/blue{
+/obj/effect/turf_decal/siding/blue{
 	dir = 8
 	},
-/area/deathmatch)
-"cd" = (
-/turf/open/floor/mainship/sterile/plain,
+/turf/open/floor/mainship/rubber,
 /area/deathmatch)
 "ce" = (
 /obj/structure/bed/chair/dropship/passenger{
 	dir = 4
 	},
 /obj/effect/landmark/deathmatch,
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "cf" = (
 /obj/effect/landmark/deathmatch,
-/turf/open/floor/mainship/blue{
+/obj/effect/turf_decal/siding/blue{
 	dir = 10
 	},
+/turf/open/floor/mainship/rubber,
 /area/deathmatch)
 "cg" = (
-/turf/open/floor/mainship/mono,
+/turf/open/floor/mainship/rubber,
 /area/deathmatch)
 "ch" = (
 /obj/structure/closet/walllocker/hydrant/full{
 	dir = 1
 	},
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "ci" = (
 /obj/structure/closet/walllocker/medical_wall/full{
@@ -531,126 +479,127 @@
 /area/deathmatch)
 "cj" = (
 /obj/structure/closet/toolcloset,
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "ck" = (
 /obj/structure/table,
 /obj/item/storage/box/matches,
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "cl" = (
 /obj/structure/table,
 /obj/machinery/light,
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "cm" = (
 /obj/structure/grille/broken,
-/turf/open/shuttle/brig,
+/turf/open/shuttle,
 /area/deathmatch)
 "cn" = (
 /obj/effect/landmark/weapon_spawn/tier1_weapon_spawn,
-/turf/open/liquid/water/river,
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/deathmatch)
 "co" = (
 /obj/effect/landmark/deathmatch,
-/turf/open/floor/mainship/orange{
+/obj/effect/turf_decal/siding/yellow{
 	dir = 5
 	},
+/turf/open/floor/mainship/rubber,
 /area/deathmatch)
 "cs" = (
 /obj/structure/flora/tree/jungle,
-/turf/open/ground/grass,
+/turf/open/floor/plating/ground/mars/random/cave,
 /area/deathmatch)
 "cy" = (
 /turf/open/floor/plating/dmg3,
 /area/deathmatch)
 "do" = (
 /obj/effect/landmark/weapon_spawn/tier5_weapon_spawn,
-/turf/open/liquid/water/river,
-/area/deathmatch)
-"dw" = (
-/turf/open/floor/plating/ground/dirtgrassborder{
-	dir = 4
-	},
+/turf/open/liquid/lava/autosmoothing/catwalk,
 /area/deathmatch)
 "fY" = (
-/turf/closed/wall/sulaco,
+/turf/closed/wall/mainship,
 /area/deathmatch)
 "kU" = (
 /obj/structure/barricade/guardrail{
 	dir = 1
 	},
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "my" = (
-/turf/open/floor/mainship/orange{
+/obj/effect/turf_decal/siding/yellow{
 	dir = 4
 	},
+/turf/open/floor/mainship/rubber,
 /area/deathmatch)
 "mE" = (
-/turf/open/floor/mainship/blue,
+/obj/effect/turf_decal/siding/blue,
+/turf/open/floor/mainship/rubber,
 /area/deathmatch)
 "qa" = (
 /obj/structure/lattice,
 /obj/effect/ai_node,
-/turf/open/ground/grass,
+/turf/open/floor/plating/ground/mars/random/cave,
 /area/deathmatch)
 "rB" = (
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/ai_node,
-/turf/open/ground/grass,
+/turf/open/floor/plating/ground/mars/random/cave,
 /area/deathmatch)
 "uq" = (
 /obj/effect/landmark/deathmatch,
-/turf/open/floor/mainship/emerald{
+/obj/effect/turf_decal/siding/purple{
 	dir = 6
 	},
+/turf/open/floor/mainship/rubber,
 /area/deathmatch)
 "vt" = (
 /obj/structure/barricade/guardrail{
 	dir = 4;
 	pixel_y = 7
 	},
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "ya" = (
 /obj/structure/largecrate/guns,
 /obj/item/tool/crowbar,
-/turf/open/ground/grass,
+/turf/open/floor/plating/ground/mars/random/cave,
 /area/deathmatch)
 "Ab" = (
 /obj/structure/bed,
 /obj/item/bedsheet,
 /obj/effect/spawner/random/misc/plushie/nospawnninetyfive,
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "BR" = (
-/turf/open/floor/mainship/emerald{
+/obj/effect/turf_decal/siding/purple{
 	dir = 4
 	},
+/turf/open/floor/mainship/rubber,
 /area/deathmatch)
 "Ci" = (
 /obj/item/storage/belt/champion,
-/turf/open/floor/mainship/sterile/plain,
+/turf/open/floor/mainship/rubber,
 /area/deathmatch)
 "Fu" = (
-/turf/open/floor/mainship/emerald,
+/obj/effect/turf_decal/siding/purple,
+/turf/open/floor/mainship/rubber,
 /area/deathmatch)
 "PC" = (
 /obj/structure/barricade/guardrail{
 	dir = 8
 	},
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "PJ" = (
 /obj/effect/ai_node,
-/turf/open/floor,
+/turf/open/floor/sandstone/runed,
 /area/deathmatch)
 "Sp" = (
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/drought/ash,
 /obj/effect/ai_node,
-/turf/open/ground/grass,
+/turf/open/floor/plating/ground/mars/random/cave,
 /area/deathmatch)
 
 (1,1,1) = {"
@@ -1066,9 +1015,9 @@ as
 bT
 bN
 bP
-cd
-cd
-cd
+cg
+cg
+cg
 mE
 kU
 ck
@@ -1114,9 +1063,9 @@ as
 bT
 bO
 cg
-cd
+cg
 Ci
-cd
+cg
 cg
 kU
 cl
@@ -1162,9 +1111,9 @@ bq
 bT
 bN
 bS
-cd
-cd
-cd
+cg
+cg
+cg
 Fu
 kU
 aS
@@ -1479,35 +1428,35 @@ bu
 bu
 ae
 ae
-aJ
-dw
-dw
-dw
-dw
-dw
-dw
-dw
-dw
-dw
-dw
-dw
-dw
-dw
-dw
-dw
-dw
-dw
-dw
-dw
-dw
-dw
-dw
-dw
-dw
-dw
-dw
-dw
-dw
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
 ab
 aa
 aa
@@ -1526,36 +1475,36 @@ bu
 bu
 ae
 ae
-aJ
-aK
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+bf
+bf
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
 ab
 aa
 aa
@@ -1567,43 +1516,43 @@ aa
 "}
 (20,1,1) = {"
 ab
-dw
-dw
-dw
-dw
-dw
+bf
+bf
+bf
+bf
+bf
 aD
-dw
-aK
-ad
-ad
-ag
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+bf
+bf
+ar
+ar
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 ab
 aa
 aa
@@ -1615,43 +1564,43 @@ aa
 "}
 (21,1,1) = {"
 ab
-ad
+ar
 an
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aG
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 aF
-bo
+aj
 al
-bo
-bo
-bo
-bo
-bo
-bo
+aj
+aj
+aj
+aj
+aj
+aj
 ab
 aa
 aa
@@ -1663,43 +1612,43 @@ aa
 "}
 (22,1,1) = {"
 ab
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-bb
-bo
-bo
-bo
-bo
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 do
-bo
-bo
-bo
+aj
+aj
+aj
 al
-bo
-bo
+aj
+aj
 aF
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 cn
-bo
-bo
-bo
+aj
+aj
+aj
 ab
 aa
 aa
@@ -1711,43 +1660,43 @@ aa
 "}
 (23,1,1) = {"
 ab
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 al
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 al
-bo
-bo
+aj
+aj
 ab
 aa
 aa
@@ -1759,19 +1708,19 @@ aa
 "}
 (24,1,1) = {"
 ab
-bo
-bo
+aj
+aj
 al
-bo
-bo
-bo
+aj
+aj
+aj
 aF
-bo
-bo
-bo
-bo
-bo
-ap
+aj
+aj
+aj
+aj
+aj
+aj
 aj
 aj
 aj
@@ -1807,43 +1756,43 @@ aa
 "}
 (25,1,1) = {"
 ab
-bo
+aj
 aw
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-aq
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 an
-ad
-ad
-ad
+ar
+ar
+ar
 an
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
 an
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
 ab
 aa
 aa
@@ -1868,30 +1817,30 @@ aj
 aj
 aj
 ar
-ad
-ad
-bk
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
+ar
+ar
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
 bL
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
 ab
 aa
 aa
@@ -1903,21 +1852,21 @@ aa
 "}
 (27,1,1) = {"
 ab
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-bk
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+bf
 bf
 ae
 ae
@@ -1951,20 +1900,20 @@ aa
 "}
 (28,1,1) = {"
 ab
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
 bf
 ae
 ae

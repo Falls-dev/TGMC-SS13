@@ -2,10 +2,19 @@
     "map_name": "Magmoor Digsite IV",
     "map_path": "map_files/Magmoor_Digsite_IV",
     "map_file": "Magmoor_Digsite_IV.dmm",
-	"disk_sets": {
-		"basic": 1
-	},
-	"parallax_icon": "lava",
+    "disk_sets": {
+        "basic": 1
+    },
+    "parallax_icon": "ice",
     "quickbuilds": 1800,
-    "announce_text": "Наши сканеры засекли слабый сигнал бедствия и определили, что его источник находится в месте добычи полезных ископаемых и археологических раскопок, известном как Точка Раскопок Магмура IV. Используя блюспейс технологии, корабль прыгнул в зону досягаемости колонии. Товарищи, приготовьтесь к высадке!"
+    "announce_text": "Получен сигнал бедствия с объекта Magmoor Digsite IV. Разведка сообщает об условиях заснеженной колонии. Корабль движется в сектор. Товарищи, пройдите инструктаж и приготовьтесь к высадке!",
+    "environment_traits": {
+        "COLD": true
+    },
+    "armor": "ice",
+    "traits": [
+        {
+            "weather_snowstorm": true
+        }
+    ]
 }
