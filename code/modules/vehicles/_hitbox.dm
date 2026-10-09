@@ -150,10 +150,11 @@
 	var/move_dist = get_dist(oldloc, mover)
 	forceMove(mover.loc)
 	var/new_z = (z != oldloc.z)
+
 	for(var/mob/living/tank_desant AS in tank_desants)
 		tank_desant.set_glide_size(root.glide_size)
 		if(new_z)
-			tank_desant.abstract_move(loc) //todo: have some better code to actually preserve their location
+			tank_desant.abstract_move(loc)
 		else
 			tank_desant.forceMove(get_step(tank_desant, direction))
 		if(isxeno(tank_desant))
@@ -166,6 +167,13 @@
 		var/away_dir = REVERSE_DIR(get_dir(tank_desant, root) || pick(GLOB.alldirs))
 		var/turf/target = get_ranged_target_turf(tank_desant, away_dir, 3)
 		tank_desant.throw_at(target, 3, 3, root)
+
+	for(var/atom/movable/tank_desant AS in tank_desants.Copy())
+		if(QDELETED(tank_desant))
+			continue
+		if(tank_desant.loc in locs)
+			continue
+		remove_desant(tank_desant)
 
 ///called when the tank is off movement cooldown and someone tries to move it
 /obj/hitbox/proc/on_attempt_drive(atom/movable/movable_parent, mob/living/user, direction)
