@@ -53,11 +53,11 @@
 	icon_state = "howi"
 
 /datum/ammo/mortar/howi/drop_nade(turf/target_turf)
-	cell_explosion(target_turf, 200, 100)
+	cell_explosion(target_turf, 450, 100)
 
 /datum/ammo/mortar/howi/incend/drop_nade(turf/target_turf)
-	cell_explosion(target_turf, 45, 30)
-	flame_radius(5, target_turf)
+	cell_explosion(target_turf, 100, 30)
+	flame_radius(6, target_turf)
 	playsound(target_turf, 'sound/weapons/guns/fire/flamethrower2.ogg', 35, 1, 4)
 
 /datum/ammo/mortar/smoke/howi
