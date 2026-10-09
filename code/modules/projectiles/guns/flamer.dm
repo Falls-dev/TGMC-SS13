@@ -284,6 +284,9 @@
 				else
 					log_combat(user, human_caught, "flamed", src)
 
+		if(fire_color == FLAME_COLOR_LIME)
+			mob_caught.apply_melting_stacks(3)
+
 		mob_caught.take_overall_damage(rand(burn_level, (burn_level * mob_flame_damage_mod)), BURN, FIRE, updating_health = TRUE, max_limbs = 4) // Make it so its the amount of heat or twice it for the initial blast.
 		mob_caught.adjust_fire_stacks(rand(5, (burn_level * mob_flame_damage_mod)))
 		mob_caught.IgniteMob()
@@ -505,8 +508,8 @@ GLOBAL_LIST_EMPTY(flamer_particles)
 	fade = 1 SECONDS
 	grow = -0.01
 	velocity = list(0, 0)
-	position = generator(GEN_BOX, list(-16, -16), list(16, 16), NORMAL_RAND)
-	drift = generator(GEN_VECTOR, list(0, -0.2), list(0, 0.2))
+	position = generator(GEN_BOX, list(-22, -22), list(22, 22), NORMAL_RAND)
+	drift = generator(GEN_VECTOR, list(-0.6, -0.2), list(0.6, 0.2))
 	gravity = list(0, 0.95)
 	scale = generator(GEN_VECTOR, list(0.3, 0.3), list(1,1), NORMAL_RAND)
 	rotation = 30

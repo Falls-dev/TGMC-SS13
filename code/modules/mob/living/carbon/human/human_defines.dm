@@ -13,6 +13,7 @@
 	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE|LONG_GLIDE
 	dextrous = TRUE
 	can_crawl = TRUE
+	light_system = MOVABLE_LIGHT
 	hud_type = /datum/hud/human
 
 	/// Used for preventing possible lags in the med_hud_set_status(), yes it's ugly
