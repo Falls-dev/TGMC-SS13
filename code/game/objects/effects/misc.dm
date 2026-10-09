@@ -1,9 +1,3 @@
-/// Makes an atom look like a blue hologram.
-/atom/proc/makeHologram(opacity = 0.5, modify_color_transparency = TRUE)
-	if(modify_color_transparency)
-		add_filter("HOLO: Color and Transparent", 1, color_matrix_filter(rgb(125, 180, 225, opacity * 255)))
-	add_filter("HOLO: Scanline", 2, alpha_mask_filter(0, 0, icon('icons/effects/effects.dmi', "scanline")))
-
 /obj/effect/build_hologram
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
