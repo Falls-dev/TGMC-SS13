@@ -17,6 +17,16 @@
 	var/stealth = FALSE
 	var/can_sneak_attack = FALSE
 	var/stealth_alpha_multiplier = 1
+	/// How long in deciseconds should Sneak Attack paralyze for?
+	var/sneak_attack_stun_duration = 1 SECONDS
+	/// The multiplier of the amount of plasma to consume when moving while Stealth is active.
+	var/movement_cost_multiplier = 1
+	/// The multiplier added to the extra damage of Sneak Attack (the extra hit is 1x the slash damage, plus this).
+	var/bonus_stealth_damage_multiplier = 0
+	/// How much bonus armor piercing should sneak attack get if it was done at maximum stealth level?
+	var/bonus_maximum_stealth_ap = 0
+	/// How many stacks of blindness does a successful sneak attack cause?
+	var/blinding_stacks = 0
 
 /datum/action/ability/xeno_action/stealth/remove_action()
 	if(stealth)
@@ -125,10 +135,10 @@
 /datum/action/ability/xeno_action/stealth/proc/handle_stealth_move()
 	SIGNAL_HANDLER
 	if(xeno_owner.m_intent == MOVE_INTENT_WALK)
-		handle_plasma_usage(xeno_owner, HUNTER_STEALTH_WALK_PLASMADRAIN)
+		handle_plasma_usage(xeno_owner, HUNTER_STEALTH_WALK_PLASMADRAIN * movement_cost_multiplier)
 		animate(xeno_owner, 0.5 SECONDS, alpha = HUNTER_STEALTH_WALK_ALPHA * stealth_alpha_multiplier)
 	else
-		handle_plasma_usage(xeno_owner, HUNTER_STEALTH_RUN_PLASMADRAIN)
+		handle_plasma_usage(xeno_owner, HUNTER_STEALTH_RUN_PLASMADRAIN * movement_cost_multiplier)
 		animate(xeno_owner, 0.5 SECONDS, alpha = HUNTER_STEALTH_RUN_ALPHA * stealth_alpha_multiplier)
 	if(!xeno_owner.plasma_stored)
 		to_chat(xeno_owner, span_xenodanger("We lack sufficient plasma to remain camouflaged."))
@@ -189,10 +199,20 @@
 	span_danger("We strike [target] with vicious precision!"))
 	target.adjust_stagger(2 SECONDS)
 	target.add_slowdown(1)
-	target.ParalyzeNoChain(1 SECONDS)
-	target.apply_damage(damage, BRUTE, xeno_owner.zone_selected, MELEE, , penetration = HUNTER_SNEAK_SLASH_ARMOR_PEN) // additional damage
+	if(blinding_stacks)
+		target.blind_eyes(blinding_stacks)
+	if(sneak_attack_stun_duration > 0)
+		target.ParalyzeNoChain(sneak_attack_stun_duration)
+	var/sneak_penetration = HUNTER_SNEAK_SLASH_ARMOR_PEN
+	if(bonus_maximum_stealth_ap && is_at_maximum_stealth())
+		sneak_penetration += bonus_maximum_stealth_ap
+	target.apply_damage(damage * (1 + bonus_stealth_damage_multiplier), BRUTE, xeno_owner.zone_selected, MELEE, , penetration = sneak_penetration) // additional damage
 
 	cancel_stealth()
+
+/// Returns TRUE if stealth has been standing still long enough to be at its most hidden.
+/datum/action/ability/xeno_action/stealth/proc/is_at_maximum_stealth()
+	return last_stealth <= world.time - HUNTER_STEALTH_INITIAL_DELAY && xeno_owner.last_move_intent < world.time - HUNTER_STEALTH_STEALTH_DELAY
 
 /datum/action/ability/xeno_action/stealth/proc/plasma_regen(datum/source, list/plasma_mod)
 	SIGNAL_HANDLER
@@ -285,6 +305,8 @@
 	var/stun_duration = XENO_POUNCE_STUN_DURATION
 	/// The immobilize duration (inflicted to self) on successful tackle.
 	var/self_immobilize_duration = XENO_POUNCE_STANDBY_DURATION
+	/// Should the target be slashed upon a successful tackle?
+	var/attack_on_pounce = FALSE
 
 /datum/action/ability/activable/xeno/pounce/on_cooldown_finish()
 	owner.balloon_alert(owner, "Pounce ready")
@@ -341,10 +363,14 @@
 ///Triggers the effect of a successful pounce on the target.
 /datum/action/ability/activable/xeno/pounce/proc/trigger_pounce_effect(mob/living/living_target)
 	playsound(get_turf(living_target), 'sound/voice/alien/pounce.ogg', 25, TRUE)
-	xeno_owner.Immobilize(self_immobilize_duration)
+	if(self_immobilize_duration > 0)
+		xeno_owner.Immobilize(self_immobilize_duration)
 	xeno_owner.set_throwing(FALSE)
 	xeno_owner.forceMove(get_turf(living_target))
-	living_target.Knockdown(stun_duration)
+	if(stun_duration > 0)
+		living_target.Knockdown(stun_duration)
+	if(attack_on_pounce)
+		living_target.attack_alien_harm(xeno_owner)
 
 /datum/action/ability/activable/xeno/pounce/proc/pounce_complete()
 	SIGNAL_HANDLER
@@ -542,55 +568,98 @@
 	var/illusion_life_time = 10 SECONDS
 	///How many illusions are created
 	var/illusion_count = 3
+	/// Should an illusion be created upon attacking a living being while the ability is active?
+	var/illusion_on_slash = FALSE
+	/// Should cloaking gas be created upon activation?
+	var/cloaking_gas = FALSE
 	/// List of illusions
 	var/list/mob/illusion/illusions = list()
 	/// If swap has been used during the current set of illusions
 	var/swap_used = FALSE
+	/// The illusion that will take priority when mirage swapping.
+	var/mob/illusion/xeno/prioritized_illusion
+	/// The timer ID of the timer that ends the current activation. Also tells that the ability is active.
+	var/timer_id
 
 /datum/action/ability/xeno_action/mirage/remove_action()
-	illusions = list() //the actual illusions fade on their own, and the cooldown object may be qdel'd
+	clean_illusions(FALSE) // The actual illusions fade on their own.
 	return ..()
 
 /datum/action/ability/xeno_action/mirage/can_use_action(silent = FALSE, override_flags)
 	. = ..()
-	if(swap_used)
-		if(!silent)
-			to_chat(owner, span_xenowarning("We already swapped with an illusion!"))
+	if(!.)
 		return FALSE
+	if(timer_id)
+		if(swap_used)
+			if(!silent)
+				to_chat(owner, span_xenowarning("We already swapped with an illusion!"))
+			return FALSE
+		if(!length(illusions) && !prioritized_illusion)
+			if(!silent)
+				to_chat(owner, span_xenowarning("We have no illusions to swap with!"))
+			return FALSE
+	return TRUE
 
 /datum/action/ability/xeno_action/mirage/action_activate()
-	succeed_activate()
-	if(!length(illusions))
-		spawn_illusions()
-	else
+	if(timer_id)
 		swap()
+		return
+	spawn_illusions()
 
 /// Spawns a set of illusions around the hunter
 /datum/action/ability/xeno_action/mirage/proc/spawn_illusions()
-	var/mob/illusion/xeno/center_illusion = new (owner.loc, owner, owner, illusion_life_time)
-	for(var/i in 1 to (illusion_count - 1))
-		illusions += new /mob/illusion/xeno(owner.loc, owner, center_illusion, illusion_life_time)
-	illusions += center_illusion
-	addtimer(CALLBACK(src, PROC_REF(clean_illusions)), illusion_life_time)
+	succeed_activate()
+	if(illusion_count > 0)
+		var/mob/illusion/xeno/center_illusion = new (owner.loc, owner, owner, illusion_life_time)
+		for(var/i in 1 to (illusion_count - 1))
+			illusions += new /mob/illusion/xeno(owner.loc, owner, center_illusion, illusion_life_time)
+		illusions += center_illusion
+	if(illusion_on_slash)
+		register_on_slash()
+	if(cloaking_gas)
+		var/datum/effect_system/smoke_spread/tactical_xeno/emitted_gas = new(xeno_owner)
+		emitted_gas.set_up(2, get_turf(xeno_owner), illusion_life_time / (2 SECONDS))
+		emitted_gas.start()
+	timer_id = addtimer(CALLBACK(src, PROC_REF(clean_illusions)), illusion_life_time, TIMER_STOPPABLE)
 
-/// Clean up the illusions list
-/datum/action/ability/xeno_action/mirage/proc/clean_illusions()
+/// Registers the signal that creates an illusion on slash.
+/datum/action/ability/xeno_action/mirage/proc/register_on_slash()
+	RegisterSignal(owner, COMSIG_XENOMORPH_ATTACK_LIVING, PROC_REF(on_attack_living))
+
+/// Unregisters the signal that creates an illusion on slash.
+/datum/action/ability/xeno_action/mirage/proc/unregister_on_slash()
+	if(owner)
+		UnregisterSignal(owner, COMSIG_XENOMORPH_ATTACK_LIVING)
+
+/// Creates an illusion on slash that lives as long as the current activation.
+/datum/action/ability/xeno_action/mirage/proc/on_attack_living(datum/source, mob/living/target)
+	SIGNAL_HANDLER
+	if(!timer_id)
+		return
+	illusions += new /mob/illusion/xeno(owner.loc, owner, owner, timeleft(timer_id))
+
+/// Cleans up the illusions list and ends the activation. By default, adds cooldown.
+/datum/action/ability/xeno_action/mirage/proc/clean_illusions(enforce_cooldown = TRUE)
 	illusions = list()
-	add_cooldown()
 	swap_used = FALSE
+	if(timer_id)
+		deltimer(timer_id)
+		timer_id = null
+	if(illusion_on_slash)
+		unregister_on_slash()
+	if(enforce_cooldown)
+		add_cooldown()
 
 /// Swap places of hunter and an illusion
 /datum/action/ability/xeno_action/mirage/proc/swap()
-	swap_used = TRUE
-	if(!length(illusions))
-		to_chat(xeno_owner, span_xenowarning("We have no illusions to swap with!"))
+	var/mob/selected_illusion = prioritized_illusion ? prioritized_illusion : illusions[1]
+	if(selected_illusion.z != xeno_owner.z)
 		return
-
+	succeed_activate()
+	swap_used = TRUE
 	owner.drop_all_held_items()
 	xeno_owner.playsound_local(xeno_owner, 'sound/effects/swap.ogg', 10, 0, 1)
 	var/turf/current_turf = get_turf(xeno_owner)
-
-	var/mob/selected_illusion = illusions[1]
 	xeno_owner.forceMove(get_turf(selected_illusion.loc))
 	selected_illusion.forceMove(current_turf)
 

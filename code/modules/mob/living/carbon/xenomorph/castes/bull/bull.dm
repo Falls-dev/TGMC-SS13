@@ -51,3 +51,30 @@
 
 /mob/living/carbon/xenomorph/bull/Corrupted/fallen
 	hivenumber = XENO_HIVE_FALLEN
+
+/// Returns the duration of a charge, which is lengthened by the Railgun mutation.
+/mob/living/carbon/xenomorph/proc/get_charge_duration(base_duration)
+	return base_duration * (1 + charge_duration_bonus)
+
+/// Called when a charge starts. Gives stagger immunity once the Unstoppable fraction of the charge has passed.
+/mob/living/carbon/xenomorph/proc/on_charge_start(charge_length)
+	if(charge_immunity_timer)
+		deltimer(charge_immunity_timer)
+		charge_immunity_timer = null
+	if(charge_stagger_immunity_fraction <= 0)
+		return
+	charge_immunity_timer = addtimer(CALLBACK(src, PROC_REF(grant_charge_stagger_immunity)), charge_length * charge_stagger_immunity_fraction, TIMER_STOPPABLE)
+
+/// Gives the stagger immunity of the Unstoppable mutation.
+/mob/living/carbon/xenomorph/proc/grant_charge_stagger_immunity()
+	charge_immunity_timer = null
+	if(!bull_charging)
+		return
+	ADD_TRAIT(src, TRAIT_STAGGERIMMUNE, BULL_ABILITY_TRAIT)
+
+/// Called when a charge ends. Removes the stagger immunity of the Unstoppable mutation.
+/mob/living/carbon/xenomorph/proc/on_charge_end()
+	if(charge_immunity_timer)
+		deltimer(charge_immunity_timer)
+		charge_immunity_timer = null
+	REMOVE_TRAIT(src, TRAIT_STAGGERIMMUNE, BULL_ABILITY_TRAIT)

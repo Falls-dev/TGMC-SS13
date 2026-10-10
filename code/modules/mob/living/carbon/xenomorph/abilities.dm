@@ -32,8 +32,12 @@
 		KEYBINDING_ALTERNATE = COMSIG_XENOABILITY_CHOOSE_WEEDS,
 	)
 	use_state_flags = ABILITY_USE_LYING
+	/// The multiplier of ability cost. This is seperate of the weed type's ability cost multiplier.
+	var/cost_multiplier = 1
 	///the maximum range of the ability
 	var/max_range = 0
+	/// List of weed nodes that can be selected. Filled with every weed type when the ability is created.
+	var/list/obj/alien/weeds/node/selectable_weed_typepaths
 	///The seleted type of weeds
 	var/obj/alien/weeds/node/weed_type = /obj/alien/weeds/node
 	///Whether automatic weeding is active
@@ -43,6 +47,7 @@
 
 /datum/action/ability/activable/xeno/plant_weeds/New(Target)
 	. = ..()
+	selectable_weed_typepaths = GLOB.weed_type_list.Copy()
 	if(SSmonitor.gamestate == SHUTTERS_CLOSED)
 		RegisterSignals(SSdcs, list(COMSIG_GLOB_OPEN_SHUTTERS_EARLY, COMSIG_GLOB_OPEN_TIMED_SHUTTERS_LATE), PROC_REF(update_ability_cost_shutters))
 
@@ -52,7 +57,7 @@
 
 /// Updates the ability cost based on gamestate.
 /datum/action/ability/activable/xeno/plant_weeds/proc/update_ability_cost(shutters_recently_opened)
-	ability_cost = initial(ability_cost) * initial(weed_type.ability_cost_mult)
+	ability_cost = initial(ability_cost) * cost_multiplier * initial(weed_type.ability_cost_mult)
 	ability_cost = (!shutters_recently_opened && SSmonitor.gamestate == SHUTTERS_CLOSED) ? ability_cost * 0.5 : ability_cost
 
 /**
@@ -116,7 +121,14 @@
 
 ///Chose which weed will be planted by the xeno owner or toggle automatic weeding
 /datum/action/ability/activable/xeno/plant_weeds/proc/choose_weed()
-	var/weed_choice = show_radial_menu(owner, owner, GLOB.weed_images_list, radius = 35)
+	var/list/available_weeds = list()
+	for(var/obj/alien/weeds/node/weed_type_possible AS in selectable_weed_typepaths)
+		var/weed_image = GLOB.weed_images_list[initial(weed_type_possible.name)]
+		if(!weed_image)
+			continue
+		available_weeds[initial(weed_type_possible.name)] = weed_image
+	available_weeds[AUTOMATIC_WEEDING] = GLOB.weed_images_list[AUTOMATIC_WEEDING] // For automatic weeding.
+	var/weed_choice = show_radial_menu(owner, owner, available_weeds, radius = 35)
 	if(!weed_choice)
 		return
 	if(weed_choice == AUTOMATIC_WEEDING)
@@ -225,6 +237,8 @@
 		)
 	/// Used for the dragging functionality of pre-shuttter building
 	var/dragging = FALSE
+	/// The percentage of maximum health to heal the owner whenever a structure is built.
+	var/heal_percentage = 0
 
 
 /// Helper for handling the start of mouse-down and to begin the drag-building
@@ -483,6 +497,9 @@
 	if(new_resin)
 		add_cooldown(SSmonitor.gamestate == SHUTTERS_CLOSED ? get_cooldown() * 0.5 : get_cooldown())
 		succeed_activate(SSmonitor.gamestate == SHUTTERS_CLOSED ? ability_cost * 0.5 : ability_cost)
+		if(heal_percentage)
+			var/health_healed = xeno_owner.maxHealth * heal_percentage
+			HEAL_XENO_DAMAGE(xeno_owner, health_healed, FALSE)
 	ability_cost = initial(ability_cost) //Reset the plasma cost
 	owner.record_structures_built()
 
@@ -1086,6 +1103,10 @@
 	keybinding_signals = list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_LAY_EGG,
 	)
+	/// Should the egg contain the owner's selected_hugger_type instead?
+	var/use_selected_hugger = FALSE
+	/// The amount to multiply the created hugger's hand attach time by.
+	var/hand_attach_time_multiplier = 1
 
 /datum/action/ability/xeno_action/lay_egg/action_activate(mob/living/carbon/xenomorph/user)
 	var/turf/current_turf = get_turf(xeno_owner)
@@ -1106,7 +1127,7 @@
 	if(!xeno_owner.loc_weeds_type)
 		return fail_activate()
 
-	new /obj/alien/egg/facehugger(current_turf, xeno_owner.hivenumber)
+	new /obj/alien/egg/facehugger(current_turf, xeno_owner.hivenumber, use_selected_hugger ? xeno_owner.selected_hugger_type : null, hand_attach_time_multiplier)
 	playsound(current_turf, 'sound/effects/splat.ogg', 15, 1)
 
 	succeed_activate()
