@@ -32,6 +32,7 @@
 		/datum/job/xenomorph/queen = 1,
 		/datum/job/survivor/rambo = 1,
 	)
+	human_dnr_ticks = TIME_BEFORE_DNR * 2 // 10 minutes at 2 seconds per human life tick.
 	var/siloless_hive_timer
 
 /datum/game_mode/infestation/distress/post_setup()
