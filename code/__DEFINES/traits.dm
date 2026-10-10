@@ -111,6 +111,7 @@
 #define DRAGON_ABILITY_TRAIT "dragon_ability_trait"
 #define WIDOW_ABILITY_TRAIT "widow_ability_trait"
 #define BULL_ABILITY_TRAIT "bull_ability_trait"
+#define HIVELORD_ABILITY_TRAIT "hivelord_ability_trait"
 #define VALHALLA_TRAIT "valhalla"
 #define WEIGHTBENCH_TRAIT "weightbench"
 #define BOILER_ROOTED_TRAIT "boiler_rooted"
@@ -220,6 +221,7 @@
 #define TRAIT_FAKEDEATH "fakedeath" //Makes the owner appear as dead to most forms of medical examination
 #define TRAIT_LEGLESS "legless" //Has lost all the appendages needed to stay standing up.
 #define TRAIT_NOPLASMAREGEN "noplasmaregen"//xeno plasma wont recharge
+#define TRAIT_INNATE_HEALING "innate_healing" //xeno can regenerate health without being on weeds
 #define TRAIT_UNDEFIBBABLE "undefibbable"//human can't be revived
 #define TRAIT_IMMEDIATE_DEFIB "immediate_defib"//immediately revives when defibbed, rather than just healing
 #define TRAIT_IS_RELOADING "is_reloading"
