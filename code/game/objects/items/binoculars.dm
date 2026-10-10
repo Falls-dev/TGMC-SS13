@@ -54,8 +54,6 @@
 	var/turf/target_atom
 	///Linked mortar for remote targeting.
 	var/list/obj/machinery/deployable/mortar/linked_mortars = list()
-	/// Selected mortar index
-	var/selected_mortar = 1
 
 /obj/item/binoculars/tactical/Initialize(mapload)
 	. = ..()
@@ -80,7 +78,7 @@
 	. += span_notice("Use on an artillery piece to link it for remote targeting.")
 	if(length(linked_mortars))
 		. += span_notice("They are currently linked to [length(linked_mortars)] artillery piece(s).")
-		. += span_notice("They are currently set to [linked_mortars[selected_mortar].name] N°[selected_mortar].")
+		. += span_notice("Targeting all linked pieces simultaneously.")
 	else
 		. += span_notice("They are not linked to any artillery piece(s).")
 	if(ishuman(user))
@@ -88,7 +86,6 @@
 		. += span_danger("Unique action to toggle mode.")
 		. += span_danger("Ctrl + Click when using to target something.")
 		. += span_danger("Shift + Click to get coordinates.")
-		. += span_danger("Alt + Click to change selected linked artillery.")
 		if(changeable && mode == MODE_ORBITAL) // we don't want the range-finders to have this message, so it doesn't confuse anyone
 			. += span_danger("Ctrl + Shift + Click to fire OB when lasing in OB mode.")
 
@@ -146,27 +143,6 @@
 			. += "binoculars_railgun"
 		if(MODE_ORBITAL)
 			. += "binoculars_orbital"
-
-/// Proc that when called checks if the selected mortar isnt out of list bounds and if it is, resets to 1
-/obj/item/binoculars/tactical/proc/check_mortar_index()
-	if(!linked_mortars)
-		return
-	if(!length(linked_mortars))
-		selected_mortar = 1 // set back to default but it still wont fire because no mortars and thats good
-		return
-	if(selected_mortar > length(linked_mortars))
-		selected_mortar = 1
-
-/obj/item/binoculars/tactical/AltClick(mob/user)
-	. = ..()
-	if(!length(linked_mortars))
-		return
-	if(length(linked_mortars) == 1)
-		to_chat(user, span_notice("There is only one linked piece, you can't switch to another."))
-	selected_mortar += 1
-	check_mortar_index()
-	var/obj/mortar = linked_mortars[selected_mortar]
-	to_chat(user, span_notice("NOW SENDING COORDINATES TO [linked_mortars[selected_mortar].name] AT: LONGITUDE [mortar.x]. LATITUDE [mortar.y]."))
 
 /obj/item/binoculars/tactical/verb/toggle_mode(mob/user)
 	set category = "IC.Object"
@@ -258,13 +234,15 @@
 			if(!length(linked_mortars))
 				to_chat(user, span_notice("No linked artillery found."))
 				return
-			check_mortar_index() // incase varedit screws something up
 			target_atom = TU
-			to_chat(user, span_notice("COORDINATES TARGETED BY ARTILLERY [selected_mortar]: LONGITUDE [target_atom.x]. LATITUDE [target_atom.y]."))
-			log_game("[key_name(user)] has lased a mortar mission at [AREACOORD(TU)].")
+			to_chat(user, span_notice("COORDINATES SENT TO ALL [length(linked_mortars)] LINKED ARTILLERY: LONGITUDE [target_atom.x]. LATITUDE [target_atom.y]."))
+			log_game("[key_name(user)] has lased a mortar mission at [AREACOORD(TU)] to [length(linked_mortars)] artillery piece(s).")
 			playsound(src, 'sound/effects/binoctarget.ogg', 35)
-			var/obj/machinery/deployable/mortar/mortar = linked_mortars[selected_mortar]
-			mortar.recieve_target(TU,user)
+			for(var/obj/machinery/deployable/mortar/mortar AS in linked_mortars.Copy())
+				if(QDELETED(mortar))
+					linked_mortars -= mortar
+					continue
+				mortar.recieve_target(TU, user)
 			return
 		if(MODE_RAILGUN)
 			if(SSticker?.mode?.round_type_flags & MODE_DISALLOW_RAILGUN)
@@ -357,7 +335,6 @@
 	SIGNAL_HANDLER
 	say("NOTICE: Connection lost with linked artillery.")
 	linked_mortars -= source
-	check_mortar_index()
 
 /obj/item/binoculars/tactical/scout
 	name = "scout tactical binoculars"
