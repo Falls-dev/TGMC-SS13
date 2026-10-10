@@ -344,8 +344,8 @@ SUBSYSTEM_DEF(points)
 		return
 	if(NON_ASCII_CHECK(reason))
 		return
-	if(length(reason) > MAX_LENGTH_REQ_REASON)
-		reason = copytext(reason, 1, MAX_LENGTH_REQ_REASON)
+	if(length_char(reason) > MAX_LENGTH_REQ_REASON)
+		reason = copytext_char(reason, 1, MAX_LENGTH_REQ_REASON + 1)
 	var/list/datum/supply_order/orders = process_cart(user, ckey_shopping_cart)
 	for(var/i in 1 to length(orders))
 		orders[i].reason = reason

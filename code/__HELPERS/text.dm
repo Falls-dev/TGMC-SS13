@@ -76,14 +76,12 @@ GLOBAL_LIST_INIT(en_key_to_ru_key, list(
  * * Presence of ASCII special control characters (horizontal tab and new line not included).
  * */
 /proc/reject_bad_text(text, max_length = 512, ascii_only = TRUE)
+	if(length_char(text) > max_length)
+		return null
 	if(ascii_only)
-		if(length(text) > max_length)
-			return null
 		var/static/regex/non_ascii = regex(@"[^\x20-\x7E\u0410-\u044F\u0401\u0451\t\n]")
 		if(non_ascii.Find(text))
 			return null
-	else if(length_char(text) > max_length)
-		return null
 	var/static/regex/non_whitespace = regex(@"\S")
 	if(!non_whitespace.Find(text))
 		return null
@@ -91,6 +89,16 @@ GLOBAL_LIST_INIT(en_key_to_ru_key, list(
 	if(bad_chars.Find(text))
 		return null
 	return text
+
+/// Limit user input by Unicode characters before encoding, so HTML entities remain intact.
+/proc/sanitize_input_text(text, max_length, encode = TRUE, no_trim = FALSE)
+	if(isnull(text))
+		return null
+	if(isnum(max_length) && max_length > 0 && max_length < INFINITY)
+		text = copytext_char(text, 1, max_length + 1)
+		if(!no_trim)
+			text = trim(text)
+	return encode ? html_encode(text) : text
 
 
 /**
@@ -107,10 +115,7 @@ GLOBAL_LIST_INIT(en_key_to_ru_key, list(
 	var/user_input = input(user, message, title, default) as text|null
 	if(isnull(user_input)) // User pressed cancel
 		return
-	if(no_trim)
-		return copytext(html_encode(user_input), 1, max_length)
-	else
-		return trim(html_encode(user_input), max_length) //trim is "outside" because html_encode can expand single symbols into multiple symbols (such as turning < into &lt;)
+	return sanitize_input_text(user_input, max_length, no_trim = no_trim)
 
 /**
  * Used to get a properly sanitized input in a larger box. Works very similarly to stripped_input.
@@ -126,10 +131,7 @@ GLOBAL_LIST_INIT(en_key_to_ru_key, list(
 	var/user_input = input(user, message, title, default) as message|null
 	if(isnull(user_input)) // User pressed cancel
 		return
-	if(no_trim)
-		return copytext(html_encode(user_input), 1, max_length)
-	else
-		return trim(html_encode(user_input), max_length)
+	return sanitize_input_text(user_input, max_length, no_trim = no_trim)
 
 
 #define NO_CHARS_DETECTED 0

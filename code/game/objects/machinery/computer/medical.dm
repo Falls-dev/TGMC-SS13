@@ -410,7 +410,7 @@
 		if("notes")
 			if(!istype(active2, /datum/data/record))
 				return FALSE
-			value = copytext(html_encode(trim(value)), 1, MAX_MESSAGE_LEN)
+			value = sanitize_input_text(trim(value), MAX_MESSAGE_LEN)
 			if(!value || active2 != a2)
 				return FALSE
 			active2.fields["notes"] = value

@@ -4,7 +4,8 @@
 /// Base font
 /datum/font/grand9k
 	name = "Grand9K Pixel"
-	font_family = 'interface/fonts/Grand9K_Pixel.ttf'
+	// Cyrillic glyph fixes from MassMeta's ru_tweak_say_fonts module.
+	font_family = 'interface/fonts/Grand9K_Pixel_modif.ttf'
 
 /// For icon overlays
 /// Grand9K 6pt metrics generated using Lummox's dmifontsplus (https://www.byond.com/developer/LummoxJR/DmiFontsPlus)
