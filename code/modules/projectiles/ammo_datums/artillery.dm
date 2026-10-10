@@ -53,7 +53,7 @@
 	icon_state = "howi"
 
 /datum/ammo/mortar/howi/drop_nade(turf/target_turf)
-	cell_explosion(target_turf, 450, 100)
+	cell_explosion(target_turf, 350, 75)
 
 /datum/ammo/mortar/howi/incend/drop_nade(turf/target_turf)
 	cell_explosion(target_turf, 100, 30)
