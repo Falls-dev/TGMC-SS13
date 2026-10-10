@@ -408,7 +408,7 @@
 	if(IsAdminAdvancedProcCall())
 		return
 	var/reply_text = href_list["replytext"]
-	if(!reply_text || (length(reply_text) > 2048))
+	if(!reply_text || (length_char(reply_text) > 2048))
 		to_chat(src, span_danger("The text you entered was blank or too long. Please correct the text and submit again."))
 		return
 	var/datum/db_query/query_vote_text = SSdbcore.NewQuery({"
