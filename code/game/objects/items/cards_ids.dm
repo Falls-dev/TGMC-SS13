@@ -37,6 +37,9 @@
 	///What category of items can you buy - used for armor and pouches
 	var/marine_buy_choices = list()
 
+	///for shipside IDs, so the new_marine_vendors.dm doesnt runtime with normal cards
+	var/points_redeemed = 0
+
 	//alt titles are handled a bit weirdly in order to unobtrusively integrate into existing ID system
 	var/assignment = null	//can be alt title or the actual job
 	///actual job
@@ -109,7 +112,50 @@
 		H.update_inv_wear_suit()
 	return ..()
 
-/obj/item/card/id/silver
+/obj/item/card/id/shipside
+	name = "identification card"
+	desc = "A simple holocard which gives you near-zero access to combat equipment. Probably."
+
+/obj/item/card/id/shipside/Initialize(mapload)
+	. = ..()
+	marine_buy_choices = GLOB.shipside_selector_cats.Copy() //at roundstart you are deemed shipside and can't vend a thing through loadouts
+	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(on_alert_change))
+	if(SSsecurity_level.get_current_level_as_number() > 2 && points_redeemed == 0)
+		marine_buy_choices = GLOB.marine_selector_cats.Copy()
+		marine_points = list(
+		CAT_MARINE = MARINE_TOTAL_BUY_POINTS,
+		CAT_SGSUP = SMARTGUNNER_TOTAL_BUY_POINTS,
+		CAT_ENGSUP = ENGINEER_TOTAL_BUY_POINTS,
+		CAT_LEDSUP = LEADER_TOTAL_BUY_POINTS,
+		CAT_MEDSUP = MEDIC_TOTAL_BUY_POINTS,
+		CAT_FCSUP = COMMANDER_TOTAL_BUY_POINTS,
+		CAT_SYNTH = SYNTH_TOTAL_BUY_POINTS,
+		CAT_ROBOT = ROBOT_TOTAL_BUY_POINTS, //necessary to correctly show max points
+	)
+		points_redeemed = 1
+
+/// wrapper so we can update the marine points on [COMSIG_SECURITY_LEVEL_CHANGED]
+/obj/item/card/id/shipside/proc/on_alert_change(datum/source, datum/security_level/next_level, datum/security_level/previous_level)
+	SIGNAL_HANDLER
+	update_vendor_points()
+
+/obj/item/card/id/shipside/proc/update_vendor_points()
+	if(SSsecurity_level.get_current_level_as_number() > 2 && points_redeemed == 0)
+		marine_buy_choices = GLOB.marine_selector_cats.Copy()
+		marine_points = list(
+		CAT_MARINE = MARINE_TOTAL_BUY_POINTS,
+		CAT_SGSUP = SMARTGUNNER_TOTAL_BUY_POINTS,
+		CAT_ENGSUP = ENGINEER_TOTAL_BUY_POINTS,
+		CAT_LEDSUP = LEADER_TOTAL_BUY_POINTS,
+		CAT_MEDSUP = MEDIC_TOTAL_BUY_POINTS,
+		CAT_FCSUP = COMMANDER_TOTAL_BUY_POINTS,
+		CAT_SYNTH = SYNTH_TOTAL_BUY_POINTS,
+		CAT_ROBOT = ROBOT_TOTAL_BUY_POINTS, //necessary to correctly show max points
+	)
+		points_redeemed = 1
+
+
+/obj/item/card/id/shipside/silver
 	name = "identification card"
 	desc = "A silver card which shows honour and dedication."
 	icon_state = "silver"
@@ -120,8 +166,20 @@
 	desc = "A golden card which shows power and might."
 	icon_state = "gold"
 	worn_icon_state = "gold_id"
-	marine_points = list(CAT_SYNTH = SYNTH_TOTAL_BUY_POINTS)
 
+
+
+/obj/item/card/id/silver
+	name = "identification card"
+	desc = "A silver card which shows honour and dedication."
+	icon_state = "silver"
+	worn_icon_state = "silver_id"
+
+/obj/item/card/id/shipside/gold
+	name = "identification card"
+	desc = "A golden card which shows power and might."
+	icon_state = "gold"
+	worn_icon_state = "gold_id"
 /obj/item/card/id/syndicate
 	name = "agent card"
 	access = list(ACCESS_ILLEGAL_PIRATE)
@@ -241,6 +299,9 @@
 
 /obj/item/card/id/dogtag/fc
 	marine_points = list(CAT_FCSUP = COMMANDER_TOTAL_BUY_POINTS)
+
+/obj/item/card/id/dogtag/synth
+	marine_points = list(CAT_SYNTH = SYNTH_TOTAL_BUY_POINTS)
 
 /obj/item/card/id/dogtag/full
 	marine_points = list(

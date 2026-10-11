@@ -22,6 +22,8 @@
 	var/icon_vend
 	var/icon_deny
 
+	var/security_level_restriction = 0
+
 	var/list/categories
 	var/list/listed_products
 
@@ -70,6 +72,11 @@
 		if(vendor_role && !istype(H.job, vendor_role))
 			to_chat(user, span_warning("Access denied. This vendor is heavily restricted."))
 			return FALSE
+
+		if(security_level_restriction && SSsecurity_level.get_current_level_as_number() < 3 && user_id.points_redeemed == 0)
+			to_chat(user, span_warning("Access denied. This vendor is only active during emergencies."))
+			return FALSE
+
 	return TRUE
 
 /obj/machinery/marine_selector/ui_interact(mob/user, datum/tgui/ui)
@@ -237,6 +244,16 @@
 	. = ..()
 	listed_products = GLOB.engineer_clothes_listed_products
 
+/obj/machinery/marine_selector/clothes/engi/shipside
+	name = "\improper GHMME Automated Shipside Technician Closet"
+	vendor_role = /datum/job/terragov/requisitions/tech
+	req_access = list(ACCESS_MARINE_ENGINEERING)
+	security_level_restriction = 1
+
+/obj/machinery/marine_selector/clothes/engi/shipside/ro
+	name = "\improper GHMME Automated Shipside RO Closet"
+	vendor_role = /datum/job/terragov/requisitions/officer
+
 /obj/machinery/marine_selector/clothes/engi/valhalla
 	vendor_role = /datum/job/fallen/marine/engineer
 	resistance_flags = INDESTRUCTIBLE
@@ -264,6 +281,20 @@
 /obj/machinery/marine_selector/clothes/medic/Initialize(mapload)
 	. = ..()
 	listed_products = GLOB.medic_clothes_listed_products
+
+/obj/machinery/marine_selector/clothes/medic/shipside
+	name = "\improper GHMME Automated Shipside Researcher Closet"
+	vendor_role = /datum/job/terragov/medical/researcher
+	req_access = list(ACCESS_MARINE_MEDBAY)
+	security_level_restriction = 1
+
+/obj/machinery/marine_selector/clothes/medic/shipside/doctor
+	name = "\improper GHMME Automated Shipside Doctor Closet"
+	vendor_role = /datum/job/terragov/medical/medicalofficer
+x
+/obj/machinery/marine_selector/clothes/medic/shipside/cmo
+	name = "\improper GHMME Automated Shipside CMO Closet"
+	vendor_role = /datum/job/terragov/medical/professor
 
 /obj/machinery/marine_selector/clothes/medic/valhalla
 	vendor_role = /datum/job/fallen/marine/corpsman
@@ -293,13 +324,30 @@
 	. = ..()
 	listed_products = GLOB.leader_clothes_listed_products
 
+/obj/machinery/marine_selector/clothes/leader/shipside
+	name = "\improper GHMME Automated Shipside Officer Closet"
+	vendor_role = /datum/job/terragov/command/staffofficer
+	req_access = list(ACCESS_MARINE_BRIDGE)
+	security_level_restriction = 1
+
+/obj/machinery/marine_selector/clothes/leader/shipside/tro
+	name = "\improper GHMME Automated Shipside Transport Officer Closet"
+	vendor_role = /datum/job/terragov/command/transportofficer
+
+/obj/machinery/marine_selector/clothes/leader/shipside/po
+	name = "\improper GHMME Automated Shipside Pilot Officer Closet"
+	vendor_role = /datum/job/terragov/command/pilot
+
+
 /obj/machinery/marine_selector/clothes/leader/valhalla
 	vendor_role = /datum/job/fallen/marine/leader
 	resistance_flags = INDESTRUCTIBLE
 
+
 /obj/machinery/marine_selector/clothes/valhalla
 	vendor_role = /datum/job/fallen/marine/standard
 	resistance_flags = INDESTRUCTIBLE
+
 
 /obj/machinery/marine_selector/clothes/commander
 	name = "\improper GHMME Automated Commander Closet"
@@ -310,6 +358,12 @@
 /obj/machinery/marine_selector/clothes/commander/Initialize(mapload)
 	. = ..()
 	listed_products = GLOB.commander_clothes_listed_products
+
+/obj/machinery/marine_selector/clothes/commander/shipside
+	name = "\improper GHMME Automated Senior Officer Closet"
+	vendor_role = /datum/job/terragov/command/captain
+	req_access = list(ACCESS_MARINE_CAPTAIN)
+	security_level_restriction = 1
 
 /obj/machinery/marine_selector/clothes/commander/valhalla
 	vendor_role = /datum/job/fallen/marine/fieldcommander
@@ -341,23 +395,6 @@
 	icon_state = "marinearmory"
 	use_points = TRUE
 
-/obj/machinery/marine_selector/gear/medic
-	name = "\improper NEXUS automated medical equipment rack"
-	desc = "An automated equipment rack hooked up to a colossal storage of medical goods."
-	icon_state = "medic"
-	icon_vend = "medic-vend"
-	icon_deny = "medic-deny"
-	vendor_role = /datum/job/terragov/squad/corpsman
-	req_access = list(ACCESS_MARINE_MEDPREP)
-
-/obj/machinery/marine_selector/gear/medic/Initialize(mapload)
-	. = ..()
-	listed_products = GLOB.medic_gear_listed_products
-
-/obj/machinery/marine_selector/gear/medic/valhalla
-	vendor_role = /datum/job/fallen/marine/corpsman
-	resistance_flags = INDESTRUCTIBLE
-
 /obj/machinery/marine_selector/gear/marine
 	name = "NEXUS Automated Marine Gear Rack"
 	desc = "An automated marine gear rack hooked up to a colossal storage unit."
@@ -374,6 +411,7 @@
 /obj/machinery/marine_selector/gear/marine/valhalla
 	vendor_role = /datum/job/fallen/marine
 	resistance_flags = INDESTRUCTIBLE
+
 
 /obj/machinery/marine_selector/gear/robo
 	name = "NEXUS Automated Combat Robot Gear Rack"
@@ -392,6 +430,7 @@
 	vendor_role = /datum/job/fallen/marine/combat_robot
 	resistance_flags = INDESTRUCTIBLE
 
+
 /obj/machinery/marine_selector/gear/engi
 	name = "\improper NEXUS automated engineering equipment rack"
 	desc = "An automated equipment rack hooked up to a colossal storage of engineering-related goods."
@@ -405,8 +444,50 @@
 	. = ..()
 	listed_products = GLOB.engineer_gear_listed_products
 
+/obj/machinery/marine_selector/gear/engi/shipside
+	name = "\improper NEXUS automated shipside technician equipment rack"
+	vendor_role = /datum/job/terragov/requisitions/tech
+	req_access = list(ACCESS_MARINE_ENGINEERING)
+	security_level_restriction = 1
+
+/obj/machinery/marine_selector/gear/engi/shipside/ro
+	name = "\improper NEXUS automated shipside RO equipment rack"
+	vendor_role = /datum/job/terragov/requisitions/officer
+
 /obj/machinery/marine_selector/gear/engi/valhalla
 	vendor_role = /datum/job/fallen/marine/engineer
+	resistance_flags = INDESTRUCTIBLE
+
+
+/obj/machinery/marine_selector/gear/medic
+	name = "\improper NEXUS automated medical equipment rack"
+	desc = "An automated equipment rack hooked up to a colossal storage of medical goods."
+	icon_state = "medic"
+	icon_vend = "medic-vend"
+	icon_deny = "medic-deny"
+	vendor_role = /datum/job/terragov/squad/corpsman
+	req_access = list(ACCESS_MARINE_MEDPREP)
+
+/obj/machinery/marine_selector/gear/medic/Initialize(mapload)
+	. = ..()
+	listed_products = GLOB.medic_gear_listed_products
+
+/obj/machinery/marine_selector/gear/medic/shipside
+	name = "\improper NEXUS automated shipside researcher equipment rack"
+	vendor_role = /datum/job/terragov/medical/researcher
+	req_access = list(ACCESS_MARINE_MEDBAY)
+	security_level_restriction = 1
+
+/obj/machinery/marine_selector/gear/medic/shipside/doctor
+	name = "\improper NEXUS automated shipside doctor equipment rack"
+	vendor_role = /datum/job/terragov/medical/medicalofficer
+
+/obj/machinery/marine_selector/gear/medic/shipside/cmo
+	name = "\improper NEXUS automated shipside CMO equipment rack"
+	vendor_role = /datum/job/terragov/medical/professor
+
+/obj/machinery/marine_selector/gear/medic/valhalla
+	vendor_role = /datum/job/fallen/marine/corpsman
 	resistance_flags = INDESTRUCTIBLE
 
 /obj/machinery/marine_selector/gear/smartgun
@@ -439,12 +520,26 @@
 	. = ..()
 	listed_products = GLOB.leader_gear_listed_products
 
+/obj/machinery/marine_selector/gear/leader/shipside
+	name = "\improper NEXUS automated shipside officer's equipment rack"
+	vendor_role = /datum/job/terragov/command/staffofficer
+	req_access = list(ACCESS_MARINE_BRIDGE)
+	security_level_restriction = 1
+
+/obj/machinery/marine_selector/gear/leader/shipside/tro
+	name = "\improper NEXUS automated transport officer's equipment rack"
+	vendor_role = /datum/job/terragov/command/transportofficer
+
+/obj/machinery/marine_selector/gear/leader/shipside/po
+	name = "\improper NEXUS automated pilot officer's equipment rack"
+	vendor_role = /datum/job/terragov/command/pilot
+
 /obj/machinery/marine_selector/gear/leader/valhalla
 	vendor_role = /datum/job/fallen/marine/leader
 	resistance_flags = INDESTRUCTIBLE
 
 /obj/machinery/marine_selector/gear/commander
-	name = "\improper NEXUS automated command equipment rack"
+	name = "\improper NEXUS automated field commander equipment rack"
 	desc = "An automated equipment rack hooked up to a colossal storage unit of advanced cat-herding devices."
 	icon_state = "squadleader"
 	icon_vend = "squadleader-vend"
@@ -455,6 +550,12 @@
 /obj/machinery/marine_selector/gear/commander/Initialize(mapload)
 	. = ..()
 	listed_products = GLOB.commander_gear_listed_products
+
+/obj/machinery/marine_selector/gear/commander/shipside
+	name = "\improper NEXUS automated captain equipment rack"
+	vendor_role = /datum/job/terragov/command/captain
+	req_access = list(ACCESS_MARINE_CAPTAIN)
+	security_level_restriction = 1
 
 /obj/machinery/marine_selector/gear/commander/valhalla
 	vendor_role = /datum/job/fallen/marine/fieldcommander
@@ -544,7 +645,11 @@
 		/obj/item/roller/medevac,
 		/obj/item/medevac_beacon,
 		/obj/item/whistle,
+		/obj/item/binoculars/tactical/scout,
+		/obj/item/pinpointer,
+		/obj/item/tweezers,
 		/obj/item/clothing/glasses/hud/health,
+		/obj/item/storage/holster/blade/officer/full,
 	)
 
 /obj/effect/vendor_bundle/synth
@@ -747,6 +852,58 @@
 		/obj/item/armor_module/module/tyr_head/mark2,
 		/obj/item/armor_module/module/tyr_extra_armor,
 	)
+
+/obj/effect/vendor_bundle/surt
+	desc = "A set of advanced gear for flame-walking. Make them regret the day they learnt to shape resin."
+	gear_to_spawn = list(
+		/obj/item/armor_module/module/fire_proof_helmet,
+		/obj/item/armor_module/module/fire_proof,
+	)
+
+//Weapon bundles
+/obj/effect/vendor_bundle/tx8_scout
+	desc = "The BR-8 is a light specialized scout rifle, mostly used by light infantry and scouts. It's designed to be useable at all ranges by being very adaptable to different situations due to the ability to use different ammo types. Has IFF.  Takes specialized overpressured 10x28mm rounds. This bundle comes with a dedicated low-res terrain imager. Give them hell!"
+	gear_to_spawn = list(
+		/obj/item/weapon/gun/rifle/tx8,
+		/obj/item/ammo_magazine/rifle/tx8,
+		/obj/item/ammo_magazine/rifle/tx8,
+		/obj/item/clothing/glasses/night/tx8,
+	)
+
+/obj/effect/vendor_bundle/sg29_sg
+	desc = "The Raummetall-KT SG-29 is the TGMC's current standard IFF-capable medium machine gun. It's known for its ability to lay down heavy fire support very well. It is generally used when someone wants to hold a position or provide fire support. Requires special training and it cannot turn off IFF. This bundle comes with a dedicated low-res terrain imager. Give them hell!"
+	gear_to_spawn = list(
+		/obj/item/weapon/gun/rifle/sg29,
+		/obj/item/ammo_magazine/sg29,
+		/obj/item/clothing/glasses/night/m56_goggles,
+	)
+
+/obj/effect/vendor_bundle/sg85_sg
+	desc = "A true monster of providing supportive suppresing fire, the SG-85 is the TGMC's IFF-capable minigun for heavy fire support duty. Boasting a higher firerate than any other handheld weapon. It is chambered in 10x26 caseless. This bundle comes with a dedicated low-res terrain imager. Give them hell!"
+	gear_to_spawn = list(
+		/obj/item/weapon/gun/minigun/smart_minigun,
+		/obj/item/ammo_magazine/minigun_powerpack/smartgun,
+		/obj/item/clothing/glasses/night/m56_goggles,
+	)
+
+/obj/effect/vendor_bundle/t25_sg
+	desc = "The T-25 is the TGMC's current standard IFF-capable rifle. It's known for its ability to lay down quick fire support very well. Requires special training and it cannot turn off IFF. It uses 10x26mm ammunition. This bundle comes with a dedicated low-res terrain imager and extended magazines. Give them hell!"
+	gear_to_spawn = list(
+		/obj/item/weapon/gun/rifle/t25,
+		/obj/item/ammo_magazine/rifle/t25/extended,
+		/obj/item/ammo_magazine/rifle/t25/extended,
+		/obj/item/clothing/glasses/night/m56_goggles,
+	)
+
+/obj/effect/vendor_bundle/sr220_rail
+	desc = "The SR-220 is a specialized heavy duty railgun made to shred through hard armor to allow for follow up attacks. Uses specialized canisters to reloadThis bundle comes with a dedicated low-res terrain imager and armor-shredding ammunition. Give them hell!"
+	gear_to_spawn = list(
+		/obj/item/weapon/gun/rifle/railgun,
+		/obj/item/ammo_magazine/railgun/hvap,
+		/obj/item/ammo_magazine/railgun/hvap,
+		/obj/item/clothing/glasses/night/m56_goggles,
+	)
+
 
 /obj/effect/vendor_bundle/veteran_uniform
 	name = "Full set of TGMC veteran uniform"

@@ -16,13 +16,19 @@
 	new /obj/item/clothing/gloves/marine/techofficer/captain(src)
 	new /obj/item/clothing/under/marine/officer/command(src)
 	new /obj/item/clothing/head/beret/marine/captain(src)
+	new /obj/item/clothing/head/beret/marine/captain/black(src)
+	new /obj/item/clothing/head/highcap/captain(src)
+	new /obj/item/clothing/head/highcap/captain/black(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/clothing/shoes/white(src)
 	new /obj/item/clothing/gloves/white(src)
 	new /obj/item/clothing/under/marine/whites(src)
 	new /obj/item/clothing/head/white_dress(src)
 	new /obj/item/storage/backpack/marine/satchel/captain_cloak(src)
-	new /obj/item/storage/holster/belt/revolver/mateba/officer/full(src)
+	new /obj/item/storage/backpack/marine/satchel/captain_cloak_red(src)
+	new /obj/item/storage/backpack/marine/satchel/captain_cloak_red/white(src)
+	new /obj/item/storage/holster/blade/officer/sabre/full(src)
+	new /obj/item/supplytablet(src)
 
 
 

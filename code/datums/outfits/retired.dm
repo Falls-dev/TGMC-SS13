@@ -44,7 +44,7 @@
 
 	id = /obj/item/card/id/dogtag/fc
 	head = /obj/item/clothing/head/tgmcberet/fc
-	gloves = /obj/item/clothing/gloves/marine/officer
+	gloves = /obj/item/clothing/gloves/marine/techofficer/officer
 	w_uniform = /obj/item/clothing/under/marine/officer/exec
 	belt = /obj/item/storage/holster/blade/officer/full
 	suit_store = /obj/item/storage/holster/belt/revolver/mateba/full

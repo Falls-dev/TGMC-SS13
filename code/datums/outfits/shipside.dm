@@ -2,15 +2,16 @@
 	name = CAPTAIN
 	jobtype = /datum/job/terragov/command/captain
 
-	id = /obj/item/card/id/gold
+	id = /obj/item/card/id/shipside/gold
 	ears = /obj/item/radio/headset/mainship/mcom
 	w_uniform = /obj/item/clothing/under/marine/officer/command
 	shoes = /obj/item/clothing/shoes/marinechief/captain
-	gloves = /obj/item/clothing/gloves/marine/techofficer/captain
+	gloves = /obj/item/clothing/gloves/marine/techofficer/officer
 	r_pocket = /obj/item/storage/pouch/general/large/command
 	l_pocket = /obj/item/hud_tablet/leadership
-	belt = /obj/item/storage/holster/blade/officer/sabre/full
-	glasses = /obj/item/clothing/glasses/sunglasses/aviator/yellow
+	belt = /obj/item/storage/holster/belt/revolver/mateba/officer/full
+	glasses = /obj/item/clothing/glasses/hud/health
+	back = /obj/item/storage/backpack/lightpack
 	head = null
 	back = FALSE
 	r_hand = /obj/item/weapon/gun/shotgun/double/musket
@@ -21,22 +22,23 @@
 	jobtype = /datum/job/terragov/command/fieldcommander
 
 	id = /obj/item/card/id/dogtag/fc
-	belt = /obj/item/storage/holster/blade/officer/full
+	//belt = /obj/item/storage/holster/blade/officer/full
+	belt = /obj/item/storage/holster/belt/pistol/m4a3/fieldcommander
+	glasses = /obj/item/clothing/glasses/hud/health
+	back = /obj/item/storage/backpack/lightpack
 	ears = /obj/item/radio/headset/mainship/mcom
 	w_uniform = /obj/item/clothing/under/marine/officer/exec
-	wear_suit = /obj/item/clothing/suit/modular/xenonauten
 	shoes = /obj/item/clothing/shoes/marine/full
-	gloves = /obj/item/clothing/gloves/marine/officer
+	gloves = /obj/item/clothing/gloves/marine/techofficer/officer
 	head = /obj/item/clothing/head/tgmcberet/fc
 	r_pocket = /obj/item/storage/pouch/general/large/command
 	l_pocket = /obj/item/hud_tablet/fieldcommand
-	suit_store = /obj/item/storage/holster/belt/pistol/m4a3/fieldcommander
 
 /datum/outfit/job/command/staffofficer
 	name = STAFF_OFFICER
 	jobtype = /datum/job/terragov/command/staffofficer
 
-	id = /obj/item/card/id/silver
+	id = /obj/item/card/id/shipside/silver
 	belt = /obj/item/storage/holster/belt/pistol/m4a3/officer
 	ears = /obj/item/radio/headset/mainship/mcom
 	r_pocket = /obj/item/storage/pouch/general/large
@@ -52,15 +54,15 @@
 	name = TRANSPORT_OFFICER
 	jobtype = /datum/job/terragov/command/transportofficer
 
-	id = /obj/item/card/id/silver
+	id = /obj/item/card/id/shipside/silver
 	belt = /obj/item/storage/belt/utility/full
 	ears = /obj/item/radio/headset/mainship/mcom
 	w_uniform = /obj/item/clothing/under/marine/officer/pilot
-	wear_suit = /obj/item/clothing/suit/modular/xenonauten/pilot
+	//wear_suit = /obj/item/clothing/suit/modular/xenonauten/pilot
 	shoes = /obj/item/clothing/shoes/marine/full
 	gloves = /obj/item/clothing/gloves/marine/insulated
 	glasses = /obj/item/clothing/glasses/welding/superior
-	head = /obj/item/clothing/head/helmet/marine/pilot
+	//head = /obj/item/clothing/head/helmet/marine/pilot
 	r_pocket = /obj/item/storage/pouch/construction
 	l_pocket = /obj/item/hud_tablet/transportofficer
 	back = /obj/item/storage/backpack/marine/engineerpack
@@ -77,16 +79,19 @@
 	name = PILOT_OFFICER
 	jobtype = /datum/job/terragov/command/pilot
 
-	id = /obj/item/card/id/silver
-	belt = /obj/item/storage/holster/belt/pistol/m4a3/vp70
+	id = /obj/item/card/id/shipside/silver
+	belt = /obj/item/storage/belt/utility/full
 	ears = /obj/item/radio/headset/mainship/mcom
 	w_uniform = /obj/item/clothing/under/marine/officer/pilot
-	wear_suit = /obj/item/clothing/suit/modular/xenonauten/pilot
+	//wear_suit = /obj/item/clothing/suit/modular/xenonauten/pilot
 	shoes = /obj/item/clothing/shoes/marine/full
-	gloves = /obj/item/clothing/gloves/insulated
-	glasses = /obj/item/clothing/glasses/sunglasses/aviator
-	head = /obj/item/clothing/head/helmet/marine/pilot
-	l_pocket = /obj/item/hud_tablet/pilot
+	gloves = /obj/item/clothing/gloves/marine/insulated
+	glasses = /obj/item/clothing/glasses/welding/superior
+	//head = /obj/item/clothing/head/helmet/marine/pilot
+	r_pocket = /obj/item/storage/pouch/construction
+	l_pocket = /obj/item/hud_tablet/transportofficer
+	back = /obj/item/storage/backpack/marine/engineerpack
+	suit_store = /obj/item/storage/holster/belt/pistol/m4a3/vp70
 
 /datum/outfit/job/command/mech_pilot
 	name = MECH_PILOT
@@ -155,7 +160,7 @@
 	name = SHIP_TECH
 	jobtype = /datum/job/terragov/requisitions/tech
 
-	id = /obj/item/card/id/silver
+	id = /obj/item/card/id/shipside/silver
 	belt = /obj/item/storage/belt/utility/full
 	ears = /obj/item/radio/headset/mainship/st
 	w_uniform = /obj/item/clothing/under/marine/officer/engi
@@ -171,7 +176,7 @@
 	name = REQUISITIONS_OFFICER
 	jobtype = /datum/job/terragov/requisitions/officer
 
-	id = /obj/item/card/id/silver
+	id = /obj/item/card/id/shipside/silver
 	belt = /obj/item/storage/holster/belt/revolver/m44/full
 	ears = /obj/item/radio/headset/mainship/mcom
 	w_uniform = /obj/item/clothing/under/marine/officer/ro_suit
@@ -186,7 +191,7 @@
 	name = CHIEF_MEDICAL_OFFICER
 	jobtype = /datum/job/terragov/medical/professor
 
-	id = /obj/item/card/id
+	id = /obj/item/card/id/shipside/silver
 	belt = /obj/item/storage/belt/rig/medical
 	ears = /obj/item/radio/headset/mainship/mcom
 	w_uniform = /obj/item/clothing/under/rank/medical/blue
@@ -210,7 +215,7 @@
 	name = MEDICAL_DOCTOR
 	jobtype = /datum/job/terragov/medical/medicalofficer
 
-	id = /obj/item/card/id
+	id = /obj/item/card/id/shipside
 	belt = /obj/item/storage/belt/rig/medical
 	ears = /obj/item/radio/headset/mainship/doc
 	w_uniform = /obj/item/clothing/under/rank/medical
@@ -235,7 +240,7 @@
 	name = FIELD_RESEARCHER
 	jobtype = /datum/job/terragov/medical/researcher
 
-	id = /obj/item/card/id
+	id = /obj/item/card/id/shipside
 	belt = /obj/item/storage/belt/rig/research
 	ears = /obj/item/radio/headset/mainship/res
 	w_uniform = /obj/item/clothing/under/marine/officer/researcher
@@ -267,7 +272,7 @@
 	name = SYNTHETIC
 	jobtype = /datum/job/terragov/silicon/synthetic
 
-	id = /obj/item/card/id/gold
+	id = /obj/item/card/id/dogtag/synth
 	belt = /obj/item/storage/belt/utility/full
 	ears = /obj/item/radio/headset/mainship/mcom
 	w_uniform = /obj/item/clothing/under/rank/synthetic

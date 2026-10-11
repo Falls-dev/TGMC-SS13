@@ -1,5 +1,5 @@
 GLOBAL_LIST_INIT(medic_gear_listed_products, list(
-	/obj/effect/vendor_bundle/medic = list(CAT_ESS, "Essential Medic Set", 0, "white"),
+	/obj/effect/vendor_bundle/medic = list(CAT_ESS, "Essential Medic Set", 1, "white"),
 	/obj/item/implanter/skill/firearms = list(CAT_MEDSUP, "Firearms skills implanter", 25, "cyan2"),
 	/obj/item/implanter/skill/melee = list(CAT_MEDSUP, "CQC skills implanter", 25, "cyan2"),
 	/obj/item/implanter/skill/medical = list(CAT_MEDSUP, "Medical skills implanter", 20, "cyan2"),
@@ -37,7 +37,7 @@ GLOBAL_LIST_INIT(medic_gear_listed_products, list(
 	/obj/item/clothing/gloves/healthanalyzer = list(CAT_MEDSUP, "Health scanner gloves", 2, "yellow"),
 	/obj/item/clothing/gloves/defibrillator = list(CAT_MEDSUP, "Advanced medical gloves", 4, "yellow"),
 	/obj/item/defibrillator/advanced = list(CAT_MEDSUP, "advanced emergency defibrillator", 4, "yellow"),
-	/obj/item/defibrillator/compact = list(CAT_MEDSUP, "Compact Defibrillator", 4, "yellow"),
+	/obj/item/defibrillator/compact = list(CAT_MEDSUP, "Compact Defibrillator", 1, "yellow"),
 	/obj/item/tweezers_advanced = list(CAT_MEDSUP, "Advanced Tweezers", 8, "yellow"),
 	/obj/effect/vendor_bundle/stretcher = list(CAT_MEDSUP, "Medivac Stretcher", 20, "yellow"),
 	/obj/item/deployable_optable = list(CAT_MEDSUP, "Deployable Operating Table", 12, "yellow"),

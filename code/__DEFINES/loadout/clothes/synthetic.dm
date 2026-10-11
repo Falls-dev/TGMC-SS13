@@ -64,7 +64,7 @@ GLOBAL_LIST_INIT(synthetic_clothes_listed_products, list(
 	/obj/item/clothing/tie/horrible = list(CAT_WEB, "Horrible Tie", 0, "black"),
 	/obj/item/clothing/gloves/insulated = list(CAT_GLO, "Insulated gloves", 0, "black"),
 	/obj/item/clothing/gloves/latex = list(CAT_GLO, "Latex gloves", 0, "black"),
-	/obj/item/clothing/gloves/marine/officer = list(CAT_GLO, "Officer gloves", 0, "black"),
+	/obj/item/clothing/gloves/marine/techofficer/officer = list(CAT_GLO, "Officer gloves(insulated)", 0, "white"),
 	/obj/item/clothing/gloves/white = list(CAT_GLO, "White gloves", 0, "black"),
 	/obj/item/storage/belt/lifesaver/full = list(CAT_BEL, "Lifesaver belt", 0, "orange", "synth-attachable"),
 	/obj/item/storage/belt/rig/medical = list(CAT_BEL, "Rig belt", 0, "black"),

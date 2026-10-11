@@ -34,6 +34,8 @@ GLOBAL_LIST_INIT(commander_clothes_listed_products, list(
 	/obj/item/armor_module/module/binoculars = list(CAT_HEL, "Jaeger binoculars module", 0, "orange"),
 	/obj/item/armor_module/module/artemis = list(CAT_HEL, "Jaeger Freyr module", 0, "orange"),
 	/obj/item/armor_module/module/antenna = list(CAT_HEL, "Jaeger Antenna module", 0, "orange"),
+	/obj/item/armor_module/module/night_vision = list(CAT_HEL, "BE-35 night vision kit", 0, "blue"),
+	/obj/item/clothing/glasses/night_vision = list(CAT_HEL, "BE-47 night vision goggles", 0, "blue"),
 	/obj/item/clothing/head/tgmcberet/fc = list(CAT_HEL, "FC Beret", 0, "black"),
 	/obj/item/armor_module/storage/medical = list(CAT_MOD, "Medical Storage Module", 0, "black"),
 	/obj/item/armor_module/storage/injector = list(CAT_MOD, "Injector Storage Module", 0, "black"),
@@ -61,9 +63,6 @@ GLOBAL_LIST_INIT(commander_clothes_listed_products, list(
 	/obj/item/armor_module/module/eshield = list(CAT_ARMMOD, "Svalinn Energy Shield System", 0 , "black"),
 	/obj/item/armor_module/module/mirage = list(CAT_ARMMOD, "Loki Illusion Module", 0, "black"),
 	/obj/item/armor_module/module/armorlock = list(CAT_ARMMOD, "Thor Armorlock Module", 0, "black"),
-	/obj/item/clothing/mask/gas = list(CAT_MAS, "Transparent gas mask", 0,"black"),
-	/obj/item/clothing/mask/gas/tactical = list(CAT_MAS, "Tactical gas mask", 0,"black"),
-	/obj/item/clothing/mask/gas/tactical/coif = list(CAT_MAS, "Tactical coifed gas mask", 0,"black"),
-	/obj/item/clothing/mask/rebreather/scarf = list(CAT_MAS, "Heat absorbent coif", 0, "black"),
-	/obj/item/clothing/mask/rebreather = list(CAT_MAS, "Rebreather", 0, "black"),
+	/obj/effect/vendor_bundle/surt = list(CAT_ARMMOD, "Surt Thermal Insulation System", 0, "blue"),
+	/obj/item/clothing/mask/gas/swat = list(CAT_MAS, "SWAT mask", 0, "orange")
 ))

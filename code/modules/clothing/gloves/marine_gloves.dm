@@ -47,21 +47,6 @@
 	icon_state = "gloves_marine_insulated"
 	siemens_coefficient = 0
 
-/obj/item/clothing/gloves/marine/officer
-	name = "officer gloves"
-	desc = "Shiny and impressive. They look expensive."
-	icon_state = "black"
-
-/obj/item/clothing/gloves/marine/officer/chief
-	name = "chief officer gloves"
-	desc = "Blood crusts are attached to its metal studs, which are slightly dented."
-
-/obj/item/clothing/gloves/marine/officer/chief/sa
-	name = "spatial agent's gloves"
-	desc = "Gloves worn by a Spatial Agent."
-	siemens_coefficient = 0
-	permeability_coefficient = 0
-	item_flags = DELONDROP
 
 /obj/item/clothing/gloves/marine/techofficer
 	name = "tech officer gloves"
@@ -74,6 +59,25 @@
 	name = "captain's gloves"
 	desc = "You may like these gloves, but THEY think you are unworthy of them."
 	icon_state = "captain"
+
+
+/obj/item/clothing/gloves/marine/techofficer/officer
+	name = "officer gloves"
+	desc = "Shiny and impressive replica of B18 defensive gauntlets. They look expensive, for sure, but their advanced armor plating has been replaced with an electrical insulation layer."
+	icon_state = "armored"
+	resistance_flags = UNACIDABLE
+
+/obj/item/clothing/gloves/marine/techofficer/officer/chief
+	name = "chief officer gloves"
+	desc = "Blood crusts are attached to its metal studs, which are slightly dented."
+
+/obj/item/clothing/gloves/marine/techofficer/officer/chief/sa
+	name = "spatial agent's gloves"
+	desc = "Gloves worn by a Spatial Agent."
+	siemens_coefficient = 0
+	permeability_coefficient = 0
+	item_flags = DELONDROP
+
 
 /obj/item/clothing/gloves/marine/specialist
 	name = "\improper B18 defensive gauntlets"

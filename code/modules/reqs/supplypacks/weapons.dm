@@ -155,18 +155,17 @@
 /datum/supply_packs/weapons/napalm
 	name = "FL-84 standard fuel tank"
 	contains = list(/obj/item/ammo_magazine/flamer_tank/large)
-	cost = 60
+	cost = 25
 
 /datum/supply_packs/weapons/napalm_G
 	name = "FL-84 G-fuel tank"
 	contains = list(/obj/item/ammo_magazine/flamer_tank/large/G)
-	cost = 75
+	cost = 40
 
 /datum/supply_packs/weapons/napalm_X
 	name = "FL-84 X-fuel tank"
 	contains = list(/obj/item/ammo_magazine/flamer_tank/large/X)
-	cost = 300
-
+	cost = 65
 /datum/supply_packs/weapons/back_fuel_tank
 	name = "Standard backpack fuel tank"
 	contains = list(/obj/item/ammo_magazine/flamer_tank/backtank)
@@ -175,7 +174,7 @@
 /datum/supply_packs/weapons/back_fuel_tank_g
 	name = "G-fuel tank"
 	contains = list(/obj/item/ammo_magazine/flamer_tank/backtank/G)
-	cost = 150
+	cost = 300
 
 /datum/supply_packs/weapons/back_fuel_tank_x
 	name = "X-fuel backpack fuel tank"

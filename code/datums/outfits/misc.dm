@@ -31,7 +31,7 @@
 	w_uniform = /obj/item/clothing/under/rank/centcom_commander/sa
 	belt = /obj/item/storage/belt/utility/full
 	shoes = /obj/item/clothing/shoes/marinechief/sa
-	gloves = /obj/item/clothing/gloves/marine/officer/chief/sa
+	gloves = /obj/item/clothing/gloves/marine/techofficer/officer/chief/sa
 	glasses = /obj/item/clothing/glasses/sunglasses/sa/nodrop
 	back = /obj/item/storage/backpack/marine/satchel
 	ears = /obj/item/radio/headset/mainship/spatial

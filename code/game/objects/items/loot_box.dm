@@ -582,3 +582,36 @@
 	new /obj/item/weapon/gun/launcher/rocket/sadar(src)
 	new /obj/item/storage/backpack/marine/satchel/scout_cloak(src)
 	new /obj/item/ammo_magazine/rocket/sadar/ap(src)
+
+//Weapon bundles
+/obj/item/storage/box/crate/loot/tx8_bundle/PopulateContents()
+	new /obj/item/weapon/gun/rifle/tx8/scout(src)
+	for(var/i in 1 to 2)
+		new /obj/item/ammo_magazine/rifle/tx8(src)
+	new /obj/item/clothing/glasses/night/tx8(src)
+
+/obj/item/storage/box/crate/loot/sg29_bundle/PopulateContents()
+	new /obj/item/weapon/gun/rifle/sg29(src)
+	new /obj/item/ammo_magazine/sg29(src)
+	new /obj/item/clothing/glasses/night/m56_goggles(src)
+
+/obj/item/storage/box/crate/loot/sg85_bundle/PopulateContents()
+	new /obj/item/weapon/gun/minigun/smart_minigun(src)
+	new /obj/item/attachable/magnetic_harness(src)
+	new /obj/item/ammo_magazine/minigun_powerpack/smartgun(src)
+	new /obj/item/clothing/glasses/night/m56_goggles(src)
+
+/obj/item/storage/box/crate/loot/t25_bundle/PopulateContents()
+	new /obj/item/weapon/gun/rifle/t25(src)
+	for(var/i in 1 to 2)
+		new /obj/item/ammo_magazine/rifle/t25/extended(src)
+	new /obj/item/clothing/glasses/night/m56_goggles(src)
+
+/obj/item/storage/box/crate/loot/sr220_bundle/PopulateContents()
+	new /obj/item/weapon/gun/rifle/railgun(src)
+	for(var/i in 1 to 2)
+		new /obj/item/ammo_magazine/railgun(src)
+	new /obj/item/clothing/glasses/night/m56_goggles(src)
+
+
+
