@@ -130,8 +130,8 @@
 	log_game("[activator] has detonated a Sacred Orbital Bombardment vest at [AREACOORD(target)]")
 
 	activator.ex_act(1500)
-	cell_explosion(target, 750, 50)
-	flame_radius(15, target)
+	cell_explosion(target, 1000, 50)
+	flame_radius(20, target)
 	qdel(src)
 
 //AI logic
