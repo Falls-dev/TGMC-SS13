@@ -100,10 +100,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/text/lobby)
 /atom/movable/screen/text/lobby/clickable/join_game/update_text()
 	switch(SSticker?.current_state)
 		if(GAME_STATE_PREGAME, GAME_STATE_STARTUP)
-			maptext = span_lobbytext("ПРИСОЕДИНИТЬСЯ \[Раунд не начат\]")
+			maptext = span_lobbytext("Раунд не начат")
 			icon_state = "join"
 		if(GAME_STATE_SETTING_UP)
-			maptext = span_lobbytext("ПРИСОЕДИНИТЬСЯ \[Загрузка\]")
+			maptext = span_lobbytext("Загрузка карты...")
 			icon_state = "join"
 		else
 			maptext = span_lobbytext("ПРИСОЕДИНИТЬСЯ")

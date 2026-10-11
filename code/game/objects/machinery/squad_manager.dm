@@ -45,7 +45,7 @@
 	if(!GLOB.custom_squad_colors[new_color])
 		return
 
-	if(length(new_name) > MAX_SQUAD_NAME_LEN)
+	if(length_char(new_name) > MAX_SQUAD_NAME_LEN)
 		to_chat(user, span_danger("Squad name is too long"))
 		return FALSE
 	new_name = sanitize(new_name)
