@@ -115,6 +115,25 @@
 	flame_radius(15, target)
 	qdel(src)
 
+/obj/item/clothing/suit/storage/marine/boomvest/ob_vest/sacred
+	name = "orbital islam delivery vest"
+	desc = "This is your God speaking, I know exactly what those prayers are for."
+	resistance_flags = INDESTRUCTIBLE
+
+/obj/item/clothing/suit/storage/marine/boomvest/ob_vest/sacred/boom(mob/living/carbon/human/activator)
+	if(activator.allah_blessed != 1)
+		activator.balloon_alert(activator, "You have not yet earned your ticket to the promised land!")
+		return FALSE
+	var/turf/target = get_turf(loc)
+	activator.say("الموت للأوغاد الذين يقومون بالحفر!!")
+	message_admins("[activator] has detonated a Sacred Orbital Bombardment vest at [ADMIN_VERBOSEJMP(target)]")
+	log_game("[activator] has detonated a Sacred Orbital Bombardment vest at [AREACOORD(target)]")
+
+	activator.ex_act(1500)
+	cell_explosion(target, 750, 50)
+	flame_radius(15, target)
+	qdel(src)
+
 //AI logic
 /datum/action/item_action/toggle/suit_toggle/boom/ai_should_start_consider()
 	return TRUE

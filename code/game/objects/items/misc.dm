@@ -188,8 +188,11 @@
 	if(locate(/obj/structure/bed/namaz, activator.loc))
 		activator.say("أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا ٱللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا رَسُولُ ٱللَّهِ")
 		TIMER_COOLDOWN_START(activator, "Koran", 10 MINUTES)
-		if(prob(10))
-			cell_explosion(activator, 150, 150)
+		if(prob(3))
+			cell_explosion(activator, 200, 2000)
+			activator.allah_blessed = 1
+			//new /obj/item/clothing/suit/storage/marine/boomvest/ob_vest/sacred(activator.loc) //шанс мелкий, но совесть мучает
+			activator.playsound_local(loc, 'sound/hallucinations/im_here1.ogg', 50)
 		if(prob(80))
 			activator.heal_limb_damage(50, 50, TRUE)
 			activator.adjust_clone_loss(-10)

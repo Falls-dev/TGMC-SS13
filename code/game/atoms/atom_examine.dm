@@ -13,6 +13,7 @@
 
 /mob/living/carbon/human
 	examine_thats = "This is"
+	var/allah_blessed = 0
 
 /mob/living/silicon/ai
 	examine_thats = "This is"

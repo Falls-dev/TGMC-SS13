@@ -11688,6 +11688,9 @@
 /obj/structure/rack,
 /obj/item/namaz,
 /obj/item/namaz,
+/obj/machinery/light/mainship{
+	dir = 1
+	},
 /turf/open/floor/carpet/green,
 /area/mainship/living/starboard_garden)
 "gXB" = (
@@ -17626,6 +17629,9 @@
 /obj/structure/rack,
 /obj/item/storage/bible/koran,
 /obj/item/storage/bible/koran,
+/obj/machinery/light/mainship{
+	dir = 1
+	},
 /turf/open/floor/carpet/green,
 /area/mainship/living/starboard_garden)
 "kFY" = (
@@ -37751,10 +37757,9 @@
 	dir = 2;
 	req_access = list(40)
 	},
-/obj/item/clothing/suit/storage/marine/boomvest/ob_vest{
+/obj/item/clothing/suit/storage/marine/boomvest/ob_vest/sacred{
 	pixel_x = 0;
-	pixel_y = 4;
-	anchored = 1
+	pixel_y = 4
 	},
 /turf/open/floor/carpet/green,
 /area/mainship/living/starboard_garden)
