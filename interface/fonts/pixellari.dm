@@ -4,7 +4,6 @@
 /// Base font
 /datum/font/pixellari
 	name = "Pixellari"
-	// Cyrillic glyph fixes from MassMeta's ru_tweak_say_fonts module.
 	font_family = 'interface/fonts/Pixellari_modif.ttf'
 
 /// For icon overlays

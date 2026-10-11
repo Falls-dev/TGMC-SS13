@@ -249,7 +249,7 @@
 	message.maptext_width = CHAT_MESSAGE_WIDTH
 	message.maptext_height = mheight * 1.25 // We add extra because some characters are superscript, like actions
 	message.maptext_x = (CHAT_MESSAGE_WIDTH - owner.bound_width) * -0.5
-	message.maptext = complete_text
+	message.maptext = MAPTEXT(complete_text)
 
 	animate_start = rough_time
 	animate_lifespan = lifespan

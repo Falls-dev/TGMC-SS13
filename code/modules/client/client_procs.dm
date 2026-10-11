@@ -507,6 +507,18 @@
 
 /// Send resources to the client. Sends both game resources and browser assets.
 /client/proc/send_resources()
+	// Skin font-family names do not request their TTF resources when preload_rsc is 0.
+	// Send native fonts directly, independently of browser assets and external RSCs.
+	var/static/list/skin_fonts
+	if(isnull(skin_fonts))
+		skin_fonts = list()
+		for(var/datum/font/font_type as anything in typesof(/datum/font))
+			var/font_resource = initial(font_type.font_family)
+			if(isfile(font_resource))
+				skin_fonts |= font_resource
+	for(var/font_resource in skin_fonts)
+		src << browse_rsc(font_resource)
+
 #if (PRELOAD_RSC == 0)
 	var/static/next_external_rsc = 0
 	var/static/list/external_rsc_url_keys = list()
