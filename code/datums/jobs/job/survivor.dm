@@ -141,9 +141,15 @@ Good luck, but do not expect to survive."})
 
 // Rambo Survivor - pretty overpowered, pls spawn with caution
 /datum/job/survivor/rambo
-	title = SURVIVOR
+	title = "Rambo Survivor"
 	skills_type = /datum/skills/civilian/survivor/master
 	outfit = /datum/outfit/job/survivor/rambo
+
+/datum/job/survivor/clf
+	title = SURVIVOR
+	skills_type = /datum/skills/civilian/survivor/master
+	faction = FACTION_CLF
+	outfit = /datum/outfit/job/survivor/clf
 	job_points_needed = 6
 	job_flags = JOB_FLAG_ROUNDSTARTJOINABLE
 	html_description = {"
