@@ -147,4 +147,8 @@
 		if(thermal_protection_flags & HAND_RIGHT)
 			thermal_protection += THERMAL_PROTECTION_HAND_RIGHT
 
+	var/obj/structure/tent/shelter = locate(/obj/structure/tent) in loc
+	if(shelter)
+		thermal_protection += shelter.cold_protection_factor
+
 	return min(1, thermal_protection)

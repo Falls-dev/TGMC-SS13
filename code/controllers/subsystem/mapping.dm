@@ -8,6 +8,9 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/map_templates = list()
 
+	/// Portable field tent templates, indexed by preset ID.
+	var/list/tent_type_templates = list()
+
 	var/list/shuttle_templates = list()
 	var/list/minidropship_templates = list()
 
@@ -256,6 +259,7 @@ SUBSYSTEM_DEF(mapping)
 	map_templates = SSmapping.map_templates
 	minidropship_templates = SSmapping.minidropship_templates
 	shuttle_templates = SSmapping.shuttle_templates
+	tent_type_templates = SSmapping.tent_type_templates
 	modular_templates = SSmapping.modular_templates
 	unused_turfs = SSmapping.unused_turfs
 	turf_reservations = SSmapping.turf_reservations
@@ -408,6 +412,7 @@ SUBSYSTEM_DEF(mapping)
 
 	preloadShuttleTemplates()
 	preloadModularTemplates()
+	preloadTentTemplates()
 
 /proc/generateMapList(filename)
 	. = list()
@@ -733,3 +738,8 @@ SUBSYSTEM_DEF(mapping)
 	if(!target)
 		CRASH("Attempted to lazy load a template key that does not exist: '[template_key]'")
 	return target.lazy_load()
+
+/datum/controller/subsystem/mapping/proc/preloadTentTemplates()
+	for(var/template_type in subtypesof(/datum/map_template/tent))
+		var/datum/map_template/tent/template = new template_type
+		tent_type_templates[template.map_id] = template

@@ -207,6 +207,10 @@ GLOBAL_LIST_INIT(surgery_steps, init_surgery())
 		if(locate(/obj/machinery/optable) in M.loc)
 			step_duration = max(0.5 SECONDS, surgery_step.min_duration - 1 SECONDS * user.skills.getRating(SKILL_SURGERY))
 
+		var/obj/structure/tent/med/medical_tent = locate(/obj/structure/tent/med) in M.loc
+		if(medical_tent)
+			step_duration *= medical_tent.surgery_speed_mult
+
 		//Multiply tool success rate with multipler
 		if(do_after(user, step_duration, NONE, M, BUSY_ICON_FRIENDLY, BUSY_ICON_MEDICAL, extra_checks = CALLBACK(user, TYPE_PROC_REF(/mob, break_do_after_checks), null, null, user.zone_selected)) && prob(surgery_step.tool_quality(tool) * CLAMP01(multipler)))
 			if(surgery_step.can_use(user, M, user.zone_selected, tool, affected, TRUE) == SURGERY_CAN_USE) //to check nothing changed during the do_mob
