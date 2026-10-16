@@ -93,3 +93,55 @@
 		/datum/action/ability/activable/xeno/acid_shroud,
 		/datum/action/ability/xeno_action/place_trap,
 	)
+
+/datum/xeno_caste/boiler/sizzler
+	caste_type_path = /mob/living/carbon/xenomorph/boiler/sizzler
+	base_caste_type_path = /mob/living/carbon/xenomorph/boiler
+	upgrade_name = ""
+	caste_name = "Sizzler Boiler"
+	display_name = "Sizzler"
+	upgrade = XENO_UPGRADE_BASETYPE
+	caste_desc = "Gross! The large creature is venting a hot steam."
+
+	// *** Melee Attacks *** //
+	attack_delay = 7
+
+	// *** Speed *** //
+	speed = -0.7
+
+	max_health = 450
+
+	// *** Defense *** //
+	soft_armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 10, BIO = 40, FIRE = 40, ACID = 40)
+
+	actions = list(
+		/datum/action/ability/xeno_action/xeno_resting,
+		/datum/action/ability/xeno_action/watch_xeno,
+		/datum/action/ability/activable/xeno/psydrain,
+		/datum/action/ability/xeno_action/place_acidwell,
+		/datum/action/ability/activable/xeno/corrosive_acid/strong,
+		/datum/action/ability/activable/xeno/smokescreen_spit,
+		/datum/action/ability/activable/xeno/charge/sizzler_acid_dash,
+		/datum/action/ability/xeno_action/steam_rush,
+	)
+
+/datum/xeno_caste/boiler/sizzler/normal
+	upgrade = XENO_UPGRADE_NORMAL
+
+/datum/xeno_caste/boiler/sizzler/primordial
+	upgrade_name = "Primordial"
+	upgrade = XENO_UPGRADE_PRIMO
+	caste_desc = "A living steam engine. Its body spews hot gas."
+	primordial_message = "Our steam is ceaseless. We are the hive's living engine. May our enemies perish in our scalding radiance."
+
+	actions = list(
+		/datum/action/ability/xeno_action/xeno_resting,
+		/datum/action/ability/xeno_action/watch_xeno,
+		/datum/action/ability/activable/xeno/psydrain,
+		/datum/action/ability/xeno_action/place_acidwell,
+		/datum/action/ability/activable/xeno/corrosive_acid/strong,
+		/datum/action/ability/activable/xeno/smokescreen_spit,
+		/datum/action/ability/activable/xeno/charge/sizzler_acid_dash,
+		/datum/action/ability/xeno_action/steam_rush,
+		/datum/action/ability/activable/xeno/high_pressure_spit,
+	)

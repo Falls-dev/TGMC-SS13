@@ -125,6 +125,8 @@
 		if(!isxeno(M))
 			M.smokecloak_off()
 			return
+		if(M.has_status_effect(STATUS_EFFECT_XENOMORPH_CLOAKING))
+			M.remove_status_effect(STATUS_EFFECT_XENOMORPH_CLOAKING)
 
 /obj/effect/particle_effect/smoke/proc/apply_smoke_effect(turf/T)
 	T.effect_smoke(src)
@@ -274,6 +276,12 @@
 	opacity = FALSE
 	smoke_traits = SMOKE_CAMO
 
+/obj/effect/particle_effect/smoke/tactical_xeno
+	alpha = 40
+	opacity = FALSE
+	color = "#282e36"
+	smoke_traits = SMOKE_CAMO|SMOKE_XENO // Only affects xenomorphs.
+
 /////////////////////////////////////////////
 // Sleep smoke
 /////////////////////////////////////////////
@@ -381,6 +389,9 @@
 	opacity = FALSE
 	smoke_traits = SMOKE_XENO|SMOKE_XENO_ACID|SMOKE_GASP|SMOKE_COUGH
 
+/obj/effect/particle_effect/smoke/xeno/burn/fast
+	lifetime = 1
+
 //Xeno neurotox smoke.
 /obj/effect/particle_effect/smoke/xeno/neuro
 	color = "#ffbf58" //Mustard orange?
@@ -443,6 +454,9 @@
 /datum/effect_system/smoke_spread/tactical
 	smoke_type = /obj/effect/particle_effect/smoke/tactical
 
+/datum/effect_system/smoke_spread/tactical_xeno
+	smoke_type = /obj/effect/particle_effect/smoke/tactical_xeno
+
 /datum/effect_system/smoke_spread/sleepy
 	smoke_type = /obj/effect/particle_effect/smoke/sleepy
 
@@ -484,6 +498,9 @@
 
 /datum/effect_system/smoke_spread/xeno/acid/opaque
 	smoke_type = /obj/effect/particle_effect/smoke/xeno/burn/opaque
+
+/datum/effect_system/smoke_spread/xeno/acid/fast
+	smoke_type = /obj/effect/particle_effect/smoke/xeno/burn/fast
 
 /datum/effect_system/smoke_spread/xeno/neuro
 	smoke_type = /obj/effect/particle_effect/smoke/xeno/neuro

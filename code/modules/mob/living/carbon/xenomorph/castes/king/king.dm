@@ -25,6 +25,10 @@
 
 /mob/living/carbon/xenomorph/king/Initialize(mapload)
 	. = ..()
+	spawn_cry()
+
+/// Plays a sound when the King spawns in.
+/mob/living/carbon/xenomorph/king/proc/spawn_cry()
 	playsound(loc, 'sound/voice/alien/xenos_roaring.ogg', 75, 0)
 
 /mob/living/carbon/xenomorph/king/generate_name()
@@ -59,6 +63,59 @@
 
 /mob/living/carbon/xenomorph/king/primordial
 	upgrade = XENO_UPGRADE_PRIMO
+
+// ***************************************
+// *********** Conqueror
+// ***************************************
+/mob/living/carbon/xenomorph/king/conqueror
+	caste_base_type = /datum/xeno_caste/king/conqueror
+	name = "Conqueror"
+	desc = "A primordial beast, sculpted by countless fights, intent on conquering the battlefield."
+	icon = 'icons/Xeno/castes/king/conqueror.dmi'
+	icon_state = "Conqueror Walking"
+	effects_icon = 'icons/Xeno/castes/king/conqueror_effects.dmi'
+	skins = null
+
+/mob/living/carbon/xenomorph/king/conqueror/primordial
+	upgrade = XENO_UPGRADE_PRIMO
+
+/mob/living/carbon/xenomorph/king/conqueror/generate_name()
+	var/playtime_mins = client?.get_exp(xeno_caste.caste_name)
+	var/rank_name
+	var/prefix = (hive.prefix || xeno_caste.upgrade_name) ? "[hive.prefix][xeno_caste.upgrade_name] " : ""
+	if(!client?.prefs.show_xeno_rank || !client)
+		name = prefix + "[xeno_caste.display_name] ([nicknumber])"
+		real_name = name
+		if(mind)
+			mind.name = name
+		return
+	switch(playtime_mins)
+		if(601 to 1500) //10 hours
+			rank_name = "Mature"
+		if(1501 to 4200) //25 hours
+			rank_name = "Elder"
+		if(4201 to 10500) //70 hours
+			rank_name = "Ancient"
+		if(10501 to INFINITY) //175 hours
+			rank_name = "Exalted"
+		else
+			rank_name = "Young"
+	name = prefix + "[rank_name ? "[rank_name] " : ""][xeno_caste.display_name] ([nicknumber])"
+	real_name = name
+	if(mind)
+		mind.name = name
+
+/mob/living/carbon/xenomorph/king/conqueror/spawn_cry()
+	return
+
+/// Includes Endurance's health as a HUD element.
+/mob/living/carbon/xenomorph/king/conqueror/hud_set_plasma()
+	. = ..()
+	if(!xeno_caste || stat == DEAD)
+		return
+	var/image/holder = hud_list[PLASMA_HUD]
+	var/endurance_amount = round(endurance_health * 100 / endurance_health_max, 10)
+	holder?.overlays += image('icons/mob/hud/xeno_endurance.dmi', icon_state = "[endurance_broken ? "no_endurance" : "endurance"][endurance_amount]")
 
 /mob/living/carbon/xenomorph/king/Corrupted
 	hivenumber = XENO_HIVE_CORRUPTED

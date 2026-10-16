@@ -167,8 +167,6 @@
 #define COMSIG_XENOABILITY_RALLY_MINION "xenoability_rally_minion"
 #define COMSIG_XENOABILITY_MINION_BEHAVIOUR "xenoability_minion_behavior"
 #define COMSIG_XENOABILITY_SILENCE "xenoability_silence"
-#define COMSIG_XENOABILITY_PLACE_PATTERN "xenoability_place_pattern"
-#define COMSIG_XENOABILITY_SELECT_PATTERN "xenoability_select_pattern"
 
 #define COMSIG_XENOABILITY_DODGE "xenoability_dodge"
 #define COMSIG_XENOABILITY_IMPALE "xenoability_impale"
@@ -195,6 +193,9 @@
 #define COMSIG_XENOABILITY_ACID_SHROUD "xenoability_acid_shroud"
 #define COMSIG_XENOABILITY_ACID_SHROUD_MELTER "xenoability_acid_shroud_melter"
 #define COMSIG_XENOABILITY_ACID_SHROUD_SELECT "xenoability_acid_shroud_select"
+#define COMSIG_XENOABILITY_SMOKESCREEN_SPIT "xenoability_smokescreen_spit"
+#define COMSIG_XENOABILITY_STEAM_RUSH "xenoability_steam_rush"
+#define COMSIG_XENOABILITY_HIGH_PRESSURE_SPIT "xenoability_high_pressure_spit"
 
 #define COMSIG_XENOABILITY_THROW_HUGGER "xenoability_throw_hugger"
 #define COMSIG_XENOABILITY_CALL_YOUNGER "xenoability_call_younger"
@@ -400,3 +401,13 @@
 #define COMSIG_XENOABILITY_UNLEASHPUPPETS "xenoability_unleashpuppets"
 #define COMSIG_XENOABILITY_RECALLPUPPETS "xenoability_recallpuppets"
 #define COMSIG_XENOABILITY_BESTOWBLESSINGS "xenoability_giveblessings"
+
+#define COMSIG_XENOABILITY_CONQUEROR_DASH "xenoability_conqueror_dash"
+#define COMSIG_XENOABILITY_CONQUEROR_WILL "xenoability_conqueror_will"
+#define COMSIG_XENOABILITY_CONQUEROR_ENDURANCE_HOLD "xenoability_conqueror_endurance_hold"
+	#define COMSIG_XENOABILITY_CONQUEROR_ENDURANCE_UP "xenoability_conqueror_endurance_up"
+#define COMSIG_XENOABILITY_CONQUEROR_ENDURANCE_TOGGLE "xenoability_conqueror_endurance_toggle"
+#define COMSIG_XENOABILITY_CONQUEROR_DOMINATION "xenoability_conqueror_domination"
+#define COMSIG_XENOABILITY_CONQUEROR_OBLITERATION_HOLD "xenoability_conqueror_obliteration_hold"
+	#define COMSIG_XENOABILITY_CONQUEROR_OBLITERATION_UP "xenoability_conqueror_obliteration_up"
+#define COMSIG_XENOABILITY_CONQUEROR_OBLITERATION_TOGGLE "xenoability_conqueror_obliteration_toggle"
