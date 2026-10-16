@@ -32,6 +32,7 @@
 /obj/item/weapon/gun/rifle/ar18
 	name = "\improper AR-18 Kauser carbine"
 	desc = "The Keckler and Hoch AR-18 carbine is one of the standard rifles used by the TerraGov Marine Corps. It's commonly used by people who prefer greater mobility in combat, like scouts and other light infantry. Uses 10x24mm caseless ammunition."
+	icon = 'icons/obj/items/gun/rifle64.dmi'
 	icon_state = "t18"
 	worn_icon_state = "t18"
 	fire_sound = 'sound/weapons/guns/fire/tgmc/kinetic/gun_ar18.ogg'
@@ -49,7 +50,10 @@
 		/obj/item/ammo_magazine/rifle/ar18/ap,
 	)
 	attachable_allowed = list(
-		/obj/item/attachable/stock/ar18stock,
+		/obj/item/attachable/foldable/stock_l,
+		/obj/item/attachable/stock/stock_m,
+		/obj/item/attachable/stock/stock_mh,
+		/obj/item/attachable/stock/stock_h,
 		/obj/item/attachable/reddot,
 		/obj/item/attachable/b7_scope,
 		/obj/item/attachable/verticalgrip,
@@ -87,8 +91,8 @@
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
 	gun_firemode_list = list(GUN_FIREMODE_AUTOMATIC, GUN_FIREMODE_BURSTFIRE, GUN_FIREMODE_AUTOBURST)
-	starting_attachment_types = list(/obj/item/attachable/stock/ar18stock)
-	attachable_offset = list("muzzle_x" = 30, "muzzle_y" = 16,"rail_x" = 5, "rail_y" = 19, "under_x" = 18, "under_y" = 14, "stock_x" = 0, "stock_y" = 13)
+	starting_attachment_types = list(/obj/item/attachable/foldable/stock_l)
+	attachable_offset = list("muzzle_x" = 34, "muzzle_y" = 17, "rail_x" = 5, "rail_y" = 20, "under_x" = 24, "under_y" = 14, "stock_x" = 0, "stock_y" = 13)
 	aim_fire_delay = 0.1 SECONDS
 	aim_speed_modifier = 2
 
@@ -103,22 +107,22 @@
 	movement_acc_penalty_mult = 4
 
 /obj/item/weapon/gun/rifle/ar18/pointman
-	starting_attachment_types = list(/obj/item/attachable/stock/ar18stock, /obj/item/attachable/lasersight, /obj/item/attachable/flashlight)
+	starting_attachment_types = list(/obj/item/attachable/foldable/stock_l, /obj/item/attachable/lasersight, /obj/item/attachable/flashlight)
 
 /obj/item/weapon/gun/rifle/ar18/standard
-	starting_attachment_types = list(/obj/item/attachable/stock/ar18stock, /obj/item/weapon/gun/grenade_launcher/underslung, /obj/item/attachable/reddot, /obj/item/attachable/extended_barrel)
+	starting_attachment_types = list(/obj/item/attachable/foldable/stock_l, /obj/item/weapon/gun/grenade_launcher/underslung, /obj/item/attachable/reddot, /obj/item/attachable/extended_barrel)
 
 /obj/item/weapon/gun/rifle/ar18/scout
-	starting_attachment_types = list(/obj/item/attachable/stock/ar18stock, /obj/item/weapon/gun/grenade_launcher/underslung, /obj/item/attachable/motiondetector, /obj/item/attachable/extended_barrel)
+	starting_attachment_types = list(/obj/item/attachable/foldable/stock_l, /obj/item/weapon/gun/grenade_launcher/underslung, /obj/item/attachable/motiondetector, /obj/item/attachable/extended_barrel)
 
 /obj/item/weapon/gun/rifle/ar18/engineer
-	starting_attachment_types = list(/obj/item/attachable/stock/ar18stock, /obj/item/attachable/magnetic_harness, /obj/item/attachable/lasersight)
+	starting_attachment_types = list(/obj/item/attachable/foldable/stock_l, /obj/item/attachable/magnetic_harness, /obj/item/attachable/lasersight)
 
 /obj/item/weapon/gun/rifle/ar18/plasma_pistol
-	starting_attachment_types = list(/obj/item/attachable/stock/ar18stock, /obj/item/weapon/gun/pistol/plasma_pistol, /obj/item/attachable/motiondetector, /obj/item/attachable/compensator)
+	starting_attachment_types = list(/obj/item/attachable/foldable/stock_l, /obj/item/weapon/gun/pistol/plasma_pistol, /obj/item/attachable/motiondetector, /obj/item/attachable/compensator)
 
 /obj/item/weapon/gun/rifle/ar18/beginner
-	starting_attachment_types = list(/obj/item/attachable/stock/ar18stock, /obj/item/attachable/magnetic_harness, /obj/item/attachable/angledgrip, /obj/item/attachable/compensator)
+	starting_attachment_types = list(/obj/item/attachable/foldable/stock_l, /obj/item/attachable/magnetic_harness, /obj/item/attachable/angledgrip, /obj/item/attachable/compensator)
 
 //-------------------------------------------------------
 //AR-12 Assault Rifle
@@ -126,6 +130,7 @@
 /obj/item/weapon/gun/rifle/ar12
 	name = "\improper AR-12 K&H assault rifle"
 	desc = "The Keckler and Hoch AR-12 assault rifle used to be the TerraGov Marine Corps standard issue rifle before the AR-18 carbine replaced it. It is, however, still used widely despite that. The gun itself is very good at being used in most situations however it suffers in engagements at close quarters and is relatively hard to shoulder than some others. It uses 10x24mm caseless ammunition."
+	icon = 'icons/obj/items/gun/rifle64.dmi'
 	icon_state = "t12"
 	worn_icon_state = "t12"
 	fire_sound = SFX_GUN_AR12
@@ -142,7 +147,10 @@
 		/obj/item/ammo_magazine/rifle/ar12/incendiary,
 	)
 	attachable_allowed = list(
-		/obj/item/attachable/stock/ar12stock,
+		/obj/item/attachable/foldable/stock_l,
+		/obj/item/attachable/stock/stock_m,
+		/obj/item/attachable/stock/stock_mh,
+		/obj/item/attachable/stock/stock_h,
 		/obj/item/attachable/reddot,
 		/obj/item/attachable/b7_scope,
 		/obj/item/attachable/verticalgrip,
@@ -180,11 +188,11 @@
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
 	gun_firemode_list = list(GUN_FIREMODE_AUTOMATIC, GUN_FIREMODE_BURSTFIRE, GUN_FIREMODE_AUTOBURST)
-	attachable_offset = list("muzzle_x" = 30, "muzzle_y" = 17,"rail_x" = 0, "rail_y" = 23, "under_x" = 17, "under_y" = 13, "stock_x" = 0, "stock_y" = 13)
+	attachable_offset = list("muzzle_x" = 36, "muzzle_y" = 17,"rail_x" = 4, "rail_y" = 24, "under_x" = 23, "under_y" = 13, "stock_x" = 0, "stock_y" = 13)
 	aim_fire_delay = 0.1 SECONDS
 	aim_speed_modifier = 2
 
-	starting_attachment_types = list(/obj/item/attachable/stock/ar12stock)
+	starting_attachment_types = list(/obj/item/attachable/stock/stock_m)
 
 	fire_delay = 0.2 SECONDS
 	burst_delay = 0.15 SECONDS
@@ -199,13 +207,13 @@
 	placed_overlay_iconstate = "t12"
 
 /obj/item/weapon/gun/rifle/ar12/rifleman
-	starting_attachment_types = list(/obj/item/attachable/stock/ar12stock, /obj/item/attachable/reddot, /obj/item/attachable/extended_barrel, /obj/item/weapon/gun/grenade_launcher/underslung)
+	starting_attachment_types = list(/obj/item/attachable/stock/stock_m, /obj/item/attachable/reddot, /obj/item/attachable/extended_barrel, /obj/item/weapon/gun/grenade_launcher/underslung)
 
 /obj/item/weapon/gun/rifle/ar12/engineer
-	starting_attachment_types = list(/obj/item/attachable/stock/ar12stock, /obj/item/attachable/magnetic_harness, /obj/item/attachable/extended_barrel, /obj/item/weapon/gun/flamer/mini_flamer)
+	starting_attachment_types = list(/obj/item/attachable/stock/stock_m, /obj/item/attachable/magnetic_harness, /obj/item/attachable/extended_barrel, /obj/item/weapon/gun/flamer/mini_flamer)
 
 /obj/item/weapon/gun/rifle/ar12/medic
-	starting_attachment_types = list(/obj/item/attachable/stock/ar12stock, /obj/item/attachable/magnetic_harness, /obj/item/attachable/extended_barrel, /obj/item/weapon/gun/grenade_launcher/underslung)
+	starting_attachment_types = list(/obj/item/attachable/stock/stock_m, /obj/item/attachable/magnetic_harness, /obj/item/attachable/extended_barrel, /obj/item/weapon/gun/grenade_launcher/underslung)
 
 //-------------------------------------------------------
 //DMR-37 DMR
@@ -1118,7 +1126,7 @@
 
 	icon_state = "t42"
 	worn_icon_state = "t42"
-	icon = 'icons/obj/items/gun/machinegun.dmi'
+	icon = 'icons/obj/items/gun/machinegun64.dmi'
 	worn_icon_list = list(
 		slot_l_hand_str = 'icons/mob/inhands/gun/machinegun_lefthand_64.dmi',
 		slot_r_hand_str = 'icons/mob/inhands/gun/machinegun_righthand_64.dmi',
@@ -1140,7 +1148,9 @@
 	default_ammo_type = /obj/item/ammo_magazine/mg42
 	allowed_ammo_types = list(/obj/item/ammo_magazine/mg42)
 	attachable_allowed = list(
-		/obj/item/attachable/stock/t42stock,
+		/obj/item/attachable/foldable/stock_l,
+		/obj/item/attachable/stock/stock_m,
+		/obj/item/attachable/stock/stock_h,
 		/obj/item/attachable/reddot,
 		/obj/item/attachable/b7_scope,
 		/obj/item/attachable/verticalgrip,
@@ -1176,11 +1186,11 @@
 	gun_features_flags = GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
 	gun_firemode_list = list(GUN_FIREMODE_AUTOMATIC, GUN_FIREMODE_AUTOBURST)
 	gun_skill_category = SKILL_HEAVY_WEAPONS
-	attachable_offset = list("muzzle_x" = 30, "muzzle_y" = 17,"rail_x" = 4, "rail_y" = 20, "under_x" = 16, "under_y" = 14, "stock_x" = 0, "stock_y" = 13)
+	attachable_offset = list("muzzle_x" = 37, "muzzle_y" = 17,"rail_x" = 8, "rail_y" = 20, "under_x" = 23, "under_y" = 14, "stock_x" = 0, "stock_y" = 13)
 	aim_fire_delay = 0.1 SECONDS
 	aim_speed_modifier = 2
 
-	starting_attachment_types = list(/obj/item/attachable/stock/t42stock)
+	starting_attachment_types = list(/obj/item/attachable/stock/stock_h)
 
 	fire_delay = 0.2 SECONDS
 	burst_delay = 0.15 SECONDS
@@ -2001,6 +2011,10 @@
 		/obj/item/ammo_magazine/rifle/ar21/extended,
 	)
 	attachable_allowed = list(
+		/obj/item/attachable/stock/stock_mh,
+		/obj/item/attachable/foldable/stock_l,
+		/obj/item/attachable/stock/stock_m,
+		/obj/item/attachable/stock/stock_h,
 		/obj/item/attachable/reddot,
 		/obj/item/attachable/b7_scope,
 		/obj/item/attachable/verticalgrip,
@@ -2035,7 +2049,8 @@
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
 	gun_firemode_list = list(GUN_FIREMODE_AUTOMATIC)
-	attachable_offset = list("muzzle_x" = 46, "muzzle_y" = 16,"rail_x" = 18, "rail_y" = 19, "under_x" = 34, "under_y" = 13, "stock_x" = 0, "stock_y" = 13)
+	starting_attachment_types = list(/obj/item/attachable/stock/stock_mh)
+	attachable_offset = list("muzzle_x" = 37, "muzzle_y" = 16,"rail_x" = 8, "rail_y" = 19, "under_x" = 24, "under_y" = 13, "stock_x" = 0, "stock_y" = 12)
 	aim_speed_modifier = 2.5
 
 	fire_delay = 0.25 SECONDS
