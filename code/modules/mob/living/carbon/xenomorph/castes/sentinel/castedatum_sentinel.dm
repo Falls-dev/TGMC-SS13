@@ -38,7 +38,7 @@
 
 	// *** Ranged Attack *** //
 	spit_delay = 1.0 SECONDS
-	spit_types = list(/datum/ammo/xeno/acid/toxic_spit)
+	spit_types = list(/datum/ammo/xeno/acid/toxic_spit, /datum/ammo/xeno/toxin/sent)
 
 	// *** Sentinel Abilities ***
 	additional_stacks = 3

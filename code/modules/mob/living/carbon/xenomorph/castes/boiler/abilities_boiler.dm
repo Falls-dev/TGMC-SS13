@@ -6,13 +6,17 @@
 
 ///List of globs, keyed by icon state. Used for radial selection.
 GLOBAL_LIST_INIT(boiler_glob_list, list(
+	BOILER_GLOB_NEURO = /datum/ammo/xeno/boiler_gas,
 	BOILER_GLOB_ACID = /datum/ammo/xeno/boiler_gas/corrosive,
+	BOILER_GLOB_NEURO_LANCE = /datum/ammo/xeno/boiler_gas/lance,
 	BOILER_GLOB_ACID_LANCE = /datum/ammo/xeno/boiler_gas/corrosive/lance,
 ))
 
 ///List of glob action button images, used for radial selection.
 GLOBAL_LIST_INIT(boiler_glob_image_list, list(
+	BOILER_GLOB_NEURO = image('icons/Xeno/actions/spit.dmi', icon_state = "neurotoxin"),
 	BOILER_GLOB_ACID = image('icons/Xeno/actions/boiler.dmi', icon_state = BOILER_GLOB_ACID),
+	BOILER_GLOB_NEURO_LANCE = image('icons/Xeno/actions/spit.dmi', icon_state = "xeno_sent_neuro"),
 	BOILER_GLOB_ACID_LANCE = image('icons/Xeno/actions/boiler.dmi', icon_state = BOILER_GLOB_ACID_LANCE),
 ))
 
@@ -58,6 +62,16 @@ GLOBAL_LIST_INIT(boiler_glob_image_list, list(
 		KEYBINDING_ALTERNATE = COMSIG_XENOABILITY_TOGGLE_BOMB_RADIAL,
 	)
 
+/datum/action/ability/xeno_action/toggle_bomb/can_use_action(silent = FALSE, override_flags)
+	. = ..()
+	if(length(xeno_owner.xeno_caste.spit_types) > 2)
+		return	//They might just be skipping past a invalid type
+	if((xeno_owner.corrosive_ammo + xeno_owner.neuro_ammo) >= xeno_owner.xeno_caste.max_ammo)
+		if((xeno_owner.ammo.type == /datum/ammo/xeno/boiler_gas/corrosive && xeno_owner.neuro_ammo == 0) || (xeno_owner.ammo.type == /datum/ammo/xeno/boiler_gas && xeno_owner.corrosive_ammo == 0))
+			if(!silent)
+				to_chat(xeno_owner, span_warning("We won't be able to carry this kind of globule"))
+			return FALSE
+
 /datum/action/ability/xeno_action/toggle_bomb/action_activate()
 	var/list/spit_types = xeno_owner.xeno_caste.spit_types
 	var/found_pos = spit_types.Find(xeno_owner.ammo?.type)
@@ -65,7 +79,7 @@ GLOBAL_LIST_INIT(boiler_glob_image_list, list(
 		xeno_owner.ammo = GLOB.ammo_list[spit_types[1]]
 	else
 		xeno_owner.ammo = GLOB.ammo_list[spit_types[(found_pos % length(spit_types)) + 1]]	//Loop around if we would exceed the length
-	var/datum/ammo/xeno/boiler_gas/corrosive/boiler_glob = xeno_owner.ammo
+	var/datum/ammo/xeno/boiler_gas/boiler_glob = xeno_owner.ammo
 	to_chat(xeno_owner, span_notice(boiler_glob.select_text))
 	update_button_icon()
 
@@ -85,7 +99,7 @@ GLOBAL_LIST_INIT(boiler_glob_image_list, list(
 **/
 /datum/action/ability/xeno_action/toggle_bomb/proc/select_glob_radial()
 	var/list/available_globs = list()
-	for(var/datum/ammo/xeno/boiler_gas/corrosive/glob_type AS in xeno_owner.xeno_caste.spit_types)
+	for(var/datum/ammo/xeno/boiler_gas/glob_type AS in xeno_owner.xeno_caste.spit_types)
 		var/glob_image = GLOB.boiler_glob_image_list[initial(glob_type.icon_key)]
 		if(!glob_image)
 			continue
@@ -96,13 +110,21 @@ GLOBAL_LIST_INIT(boiler_glob_image_list, list(
 		return
 	var/referenced_path = GLOB.boiler_glob_list[glob_choice]
 	xeno_owner.ammo = GLOB.ammo_list[referenced_path]
-	var/datum/ammo/xeno/boiler_gas/corrosive/boiler_glob = xeno_owner.ammo
+	var/datum/ammo/xeno/boiler_gas/boiler_glob = xeno_owner.ammo
 	to_chat(xeno_owner, span_notice(boiler_glob.select_text))
 	update_button_icon()
 
 /datum/action/ability/xeno_action/toggle_bomb/update_button_icon()
-	var/datum/ammo/xeno/boiler_gas/corrosive/boiler_glob = xeno_owner.ammo	//Should be safe as this always selects a ammo.
-	action_icon_state = boiler_glob.icon_key
+	var/datum/ammo/xeno/boiler_gas/boiler_glob = xeno_owner.ammo	//Should be safe as this always selects a ammo.
+	if(boiler_glob.icon_key == BOILER_GLOB_NEURO)
+		action_icon = 'icons/Xeno/actions/spit.dmi'
+		action_icon_state = "neurotoxin"
+	else if(boiler_glob.icon_key == BOILER_GLOB_NEURO_LANCE)
+		action_icon = 'icons/Xeno/actions/spit.dmi'
+		action_icon_state = "xeno_sent_neuro"
+	else
+		action_icon = 'icons/Xeno/actions/boiler.dmi'
+		action_icon_state = boiler_glob.icon_key
 	return ..()
 
 // ***************************************
@@ -129,18 +151,23 @@ GLOBAL_LIST_INIT(boiler_glob_image_list, list(
 		xeno_owner.balloon_alert(xeno_owner,"Can't while zoomed in!")
 		return
 
-	if(xeno_owner.corrosive_ammo >= xeno_owner.xeno_caste.max_ammo)
+	var/current_ammo = xeno_owner.corrosive_ammo + xeno_owner.neuro_ammo
+	if(current_ammo >= xeno_owner.xeno_caste.max_ammo)
 		to_chat(xeno_owner, span_notice("We can carry no more globules."))
 		return
 
 	succeed_activate()
-	xeno_owner.corrosive_ammo++
-	to_chat(xeno_owner, span_notice("We prepare a corrosive acid globule."))
+	if(istype(xeno_owner.ammo, /datum/ammo/xeno/boiler_gas/corrosive))
+		xeno_owner.corrosive_ammo++
+		to_chat(xeno_owner, span_notice("We prepare a corrosive acid globule."))
+	else
+		xeno_owner.neuro_ammo++
+		to_chat(xeno_owner, span_notice("We prepare a neurotoxic gas globule."))
 	update_button_icon()
 	xeno_owner.update_ammo_glow()
 
 /datum/action/ability/xeno_action/create_boiler_bomb/update_button_icon()
-	action_icon_state = "bomb_count_[xeno_owner.corrosive_ammo]"
+	action_icon_state = "bomb_count_[xeno_owner.corrosive_ammo + xeno_owner.neuro_ammo]"
 	return ..()
 
 /particles/xeno_smoke/acid_light
@@ -151,7 +178,7 @@ GLOBAL_LIST_INIT(boiler_glob_image_list, list(
 // ***************************************
 /datum/action/ability/activable/xeno/bombard
 	name = "Bombard"
-	desc = "Launch a glob of acid."
+	desc = "Launch a glob of neurotoxin or acid."
 	action_icon_state = "bombard"
 	action_icon = 'icons/Xeno/actions/boiler.dmi'
 	keybinding_signals = list(
@@ -160,7 +187,7 @@ GLOBAL_LIST_INIT(boiler_glob_image_list, list(
 	use_state_flags = NONE
 
 /datum/action/ability/activable/xeno/bombard/get_cooldown()
-	return xeno_owner.xeno_caste.bomb_delay - xeno_owner.corrosive_ammo * BOILER_BOMBARD_COOLDOWN_REDUCTION SECONDS
+	return xeno_owner.xeno_caste.bomb_delay - (xeno_owner.corrosive_ammo + xeno_owner.neuro_ammo) * BOILER_BOMBARD_COOLDOWN_REDUCTION SECONDS
 
 /datum/action/ability/activable/xeno/bombard/on_cooldown_finish()
 	to_chat(xeno_owner, span_notice("We feel your toxin glands swell. We are able to bombard an area again."))
@@ -181,9 +208,14 @@ GLOBAL_LIST_INIT(boiler_glob_image_list, list(
 	var/turf/T = get_turf(A)
 	var/turf/S = get_turf(owner)
 
-	if(xeno_owner.corrosive_ammo <= 0)
-		xeno_owner.balloon_alert(xeno_owner, "No corrosive globules.")
-		return FALSE
+	if(istype(xeno_owner.ammo, /datum/ammo/xeno/boiler_gas/corrosive))
+		if(xeno_owner.corrosive_ammo <= 0)
+			xeno_owner.balloon_alert(xeno_owner, "No corrosive globules.")
+			return FALSE
+	else
+		if(xeno_owner.neuro_ammo <= 0)
+			xeno_owner.balloon_alert(xeno_owner, "No neurotoxin globules.")
+			return FALSE
 
 	if(!isturf(T) || T.z != S.z)
 		if(!silent)
@@ -198,7 +230,7 @@ GLOBAL_LIST_INIT(boiler_glob_image_list, list(
 /datum/action/ability/activable/xeno/bombard/on_selection()
 	if(!xeno_owner)
 		return
-	var/current_ammo = xeno_owner.corrosive_ammo
+	var/current_ammo = xeno_owner.corrosive_ammo + xeno_owner.neuro_ammo
 	if(current_ammo <= 0)
 		to_chat(xeno_owner, span_notice("We have nothing prepared to fire."))
 		return FALSE
@@ -258,16 +290,22 @@ GLOBAL_LIST_INIT(boiler_glob_image_list, list(
 	if((locate(/obj/effect/forcefield/fog) in xeno_owner.loc) && !get_nearest_target(xeno_owner, 5, TARGET_HUMAN, xeno_owner.faction, xeno_owner.hivenumber)) //говнокод, да
 		return
 
-	xeno_owner.visible_message(span_xenowarning("\The [xeno_owner] launches a huge glob of acid hurling into the distance!"), \
-	span_xenowarning("We launch a huge glob of acid hurling into the distance!"), null, 5)
+	var/glob_name = istype(xeno_owner.ammo, /datum/ammo/xeno/boiler_gas/corrosive) ? "acid" : "neurotoxic gas"
+	xeno_owner.visible_message(span_xenowarning("\The [xeno_owner] launches a huge glob of [glob_name] hurling into the distance!"), \
+	span_xenowarning("We launch a huge glob of [glob_name] hurling into the distance!"), null, 5)
 
 	var/atom/movable/projectile/P = new /atom/movable/projectile(xeno_owner.loc)
 	P.generate_bullet(xeno_owner.ammo)
 	P.fire_at(target, xeno_owner, xeno_owner, xeno_owner.ammo.max_range, xeno_owner.ammo.shell_speed)
 	playsound(xeno_owner, 'sound/effects/blobattack.ogg', 25, 1)
-	GLOB.round_statistics.boiler_acid_smokes++
-	SSblackbox.record_feedback(FEEDBACK_TALLY, "round_statistics", 1, "boiler_acid_smokes")
-	xeno_owner.corrosive_ammo--
+	if(istype(xeno_owner.ammo, /datum/ammo/xeno/boiler_gas/corrosive))
+		GLOB.round_statistics.boiler_acid_smokes++
+		SSblackbox.record_feedback(FEEDBACK_TALLY, "round_statistics", 1, "boiler_acid_smokes")
+		xeno_owner.corrosive_ammo--
+	else
+		GLOB.round_statistics.boiler_neuro_smokes++
+		SSblackbox.record_feedback(FEEDBACK_TALLY, "round_statistics", 1, "boiler_neuro_smokes")
+		xeno_owner.neuro_ammo--
 	owner.record_war_crime()
 
 	xeno_owner.update_ammo_glow()
@@ -310,4 +348,4 @@ GLOBAL_LIST_INIT(boiler_glob_image_list, list(
 		deltimer(bombard_action.cooldown_timer)
 		bombard_action.cooldown_timer = null
 		bombard_action.countdown.stop()
-	bombard_action?.add_cooldown(xeno_owner.xeno_caste.bomb_delay + 8.5 SECONDS - (xeno_owner.corrosive_ammo * BOILER_BOMBARD_COOLDOWN_REDUCTION SECONDS)) //The cooldown of Bombard that is added when this ability is used. It is the calculation of Bombard cooldown + 10 seconds.
+	bombard_action?.add_cooldown(xeno_owner.xeno_caste.bomb_delay + 8.5 SECONDS - ((xeno_owner.corrosive_ammo + xeno_owner.neuro_ammo) * BOILER_BOMBARD_COOLDOWN_REDUCTION SECONDS)) //The cooldown of Bombard that is added when this ability is used. It is the calculation of Bombard cooldown + 10 seconds.

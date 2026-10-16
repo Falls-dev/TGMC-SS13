@@ -97,6 +97,7 @@ GLOBAL_LIST_INIT(defiler_toxin_type_list, list(
 	/datum/reagent/toxin/xeno_ozelomelyn,
 	/datum/reagent/toxin/xeno_hemodile,
 	/datum/reagent/toxin/xeno_transvitox,
+	/datum/reagent/toxin/xeno_neurotoxin,
 	/datum/reagent/toxin/acid,
 ))
 
@@ -105,6 +106,7 @@ GLOBAL_LIST_INIT(defiler_toxins_typecache_list, typecacheof(list(
 	/datum/reagent/toxin/xeno_ozelomelyn,
 	/datum/reagent/toxin/xeno_hemodile,
 	/datum/reagent/toxin/xeno_transvitox,
+	/datum/reagent/toxin/xeno_neurotoxin,
 	/datum/reagent/toxin/xeno_sanguinal,
 	/datum/reagent/toxin/acid,
 	/datum/status_effect/stacking/intoxicated,
@@ -140,6 +142,7 @@ GLOBAL_LIST_INIT(resin_images_list, list(
 GLOBAL_LIST_INIT(panther_toxin_type_list, list(
 	/datum/reagent/toxin/xeno_hemodile,
 	/datum/reagent/toxin/xeno_transvitox,
+	/datum/reagent/toxin/xeno_neurotoxin,
 	/datum/reagent/toxin/xeno_ozelomelyn,
 	/datum/reagent/toxin/xeno_sanguinal,
 ))
