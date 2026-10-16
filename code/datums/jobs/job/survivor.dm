@@ -152,3 +152,24 @@ Good luck, but do not expect to survive."})
 		<b>Duty</b>: Survive with the resources you have against the swarms of xenomorphs intil help arrives.
 	"}
 	job_desc = "Выживайте теми ресурсами что у вас есть, пока не подоспеет помощь."
+
+// Чтобы нельзя было плавить быстро кады сюрва(
+#define SURVIVOR_ACID_PROTECT_RANGE 10
+
+/proc/is_near_survivor(atom/target, range = SURVIVOR_ACID_PROTECT_RANGE)
+	if(!target)
+		return FALSE
+	var/turf/center = get_turf(target)
+	if(!center)
+		return FALSE
+	for(var/mob/living/carbon/human/H in range(range, center))
+		if(H.stat == DEAD)
+			continue
+		if(!istype(H.job, /datum/job/survivor))
+			continue
+		// Ну типа стелс?
+		var/obj/structure/closet/C = H.loc
+		if(istype(C) && !C.opened)
+			continue
+		return TRUE
+	return FALSE

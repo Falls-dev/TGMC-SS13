@@ -36,7 +36,7 @@
 	caste_traits = null
 
 	// *** Defense *** //
-	soft_armor = list(MELEE = 65, BULLET = 70, LASER = 70, ENERGY = 65, BOMB = 100, BIO = 60, FIRE = 100, ACID = 60)
+	soft_armor = list(MELEE = 65, BULLET = 70, LASER = 70, ENERGY = 65, BOMB = 80, BIO = 60, FIRE = 60, ACID = 60)
 
 	// *** Pheromones *** //
 	aura_strength = 6
