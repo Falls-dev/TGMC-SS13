@@ -21,3 +21,7 @@ Use the item in hand, choose offsets, and stand still for six seconds.
 The entrance always faces south. A clear footprint on a ground level is required.
 An unfolded shovel tears down a deployed tent in fifteen seconds. Fixed tent
 equipment disappears with the tent; furniture and loose items remain.
+
+Deployed tents shelter their entire footprint from all weather effects handled by
+`/datum/weather/can_weather_act`, even with open curtains. Protection ends when leaving the tent or when its tent
+or roof is destroyed. Weather visuals and sounds are unchanged.

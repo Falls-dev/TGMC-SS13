@@ -8,6 +8,9 @@
 	isshared = TRUE
 	products = list(
 		"Surplus Special Equipment" = list(
+			/obj/item/folded_tent/med = 1,
+			/obj/item/folded_tent/big = 1,
+			/obj/item/folded_tent/mess = 1,
 			/obj/item/pinpointer = 1,
 			/obj/item/supply_beacon = 1,
 			/obj/item/explosive/plastique = 5,

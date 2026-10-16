@@ -195,6 +195,10 @@
 		return FALSE
 	if(!(get_area(L) in impacted_areas))
 		return FALSE
+	// A deployed tent shelters its entire footprint, even with open curtains.
+	var/obj/structure/tent/shelter = locate(/obj/structure/tent) in mob_turf
+	if(!QDELETED(shelter) && !QDELETED(shelter.roof))
+		return FALSE
 	return TRUE
 
 /**
