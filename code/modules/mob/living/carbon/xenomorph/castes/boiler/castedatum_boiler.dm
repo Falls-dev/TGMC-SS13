@@ -35,7 +35,7 @@
 
 	// *** Ranged Attack *** //
 	spit_delay = 1 SECONDS
-	spit_types = list(/datum/ammo/xeno/boiler_gas/corrosive, /datum/ammo/xeno/boiler_gas)
+	spit_types = list(/datum/ammo/xeno/boiler_gas, /datum/ammo/xeno/boiler_gas/corrosive)
 
 	// *** Minimap Icon *** //
 	minimap_icon = "boiler"
@@ -78,7 +78,7 @@
 	primordial_message = "We have refined the art of bombardement to perfection. End them before they can utter a desperate plea."
 
 	// *** Ranged Attack *** //
-	spit_types = list(/datum/ammo/xeno/boiler_gas/corrosive, /datum/ammo/xeno/boiler_gas, /datum/ammo/xeno/boiler_gas/corrosive/lance, /datum/ammo/xeno/boiler_gas/lance)
+	spit_types = list(/datum/ammo/xeno/boiler_gas, /datum/ammo/xeno/boiler_gas/lance, /datum/ammo/xeno/boiler_gas/corrosive, /datum/ammo/xeno/boiler_gas/corrosive/lance)
 
 	actions = list(
 		/datum/action/ability/xeno_action/xeno_resting,

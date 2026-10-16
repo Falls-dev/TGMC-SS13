@@ -14,9 +14,9 @@ GLOBAL_LIST_INIT(boiler_glob_list, list(
 
 ///List of glob action button images, used for radial selection.
 GLOBAL_LIST_INIT(boiler_glob_image_list, list(
-	BOILER_GLOB_NEURO = image('icons/Xeno/actions/spit.dmi', icon_state = "neurotoxin"),
+	BOILER_GLOB_NEURO = image('icons/Xeno/actions.dmi', icon_state = BOILER_GLOB_NEURO),
 	BOILER_GLOB_ACID = image('icons/Xeno/actions/boiler.dmi', icon_state = BOILER_GLOB_ACID),
-	BOILER_GLOB_NEURO_LANCE = image('icons/Xeno/actions/spit.dmi', icon_state = "xeno_sent_neuro"),
+	BOILER_GLOB_NEURO_LANCE = image('icons/Xeno/actions.dmi', icon_state = BOILER_GLOB_NEURO_LANCE),
 	BOILER_GLOB_ACID_LANCE = image('icons/Xeno/actions/boiler.dmi', icon_state = BOILER_GLOB_ACID_LANCE),
 ))
 
@@ -116,15 +116,11 @@ GLOBAL_LIST_INIT(boiler_glob_image_list, list(
 
 /datum/action/ability/xeno_action/toggle_bomb/update_button_icon()
 	var/datum/ammo/xeno/boiler_gas/boiler_glob = xeno_owner.ammo	//Should be safe as this always selects a ammo.
-	if(boiler_glob.icon_key == BOILER_GLOB_NEURO)
-		action_icon = 'icons/Xeno/actions/spit.dmi'
-		action_icon_state = "neurotoxin"
-	else if(boiler_glob.icon_key == BOILER_GLOB_NEURO_LANCE)
-		action_icon = 'icons/Xeno/actions/spit.dmi'
-		action_icon_state = "xeno_sent_neuro"
+	if(boiler_glob.icon_key == BOILER_GLOB_NEURO || boiler_glob.icon_key == BOILER_GLOB_NEURO_LANCE)
+		action_icon = 'icons/Xeno/actions.dmi'
 	else
 		action_icon = 'icons/Xeno/actions/boiler.dmi'
-		action_icon_state = boiler_glob.icon_key
+	action_icon_state = boiler_glob.icon_key
 	return ..()
 
 // ***************************************

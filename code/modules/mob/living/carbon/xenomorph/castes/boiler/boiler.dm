@@ -25,7 +25,7 @@
 
 /mob/living/carbon/xenomorph/boiler/Initialize(mapload)
 	. = ..()
-	ammo = GLOB.ammo_list[/datum/ammo/xeno/boiler_gas/corrosive]
+	ammo = GLOB.ammo_list[/datum/ammo/xeno/boiler_gas]
 
 // ***************************************
 // *********** Gibbing behaviour
