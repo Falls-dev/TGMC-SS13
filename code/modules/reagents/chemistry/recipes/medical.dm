@@ -47,8 +47,8 @@
 
 /datum/chemical_reaction/ryetalyn
 	name = "Ryetalyn"
-	results = list(/datum/reagent/medicine/ryetalyn = 3)
-	required_reagents = list(/datum/reagent/medicine/arithrazine = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/lemoline = 1)
+	results = list(/datum/reagent/medicine/ryetalyn = 2)
+	required_reagents = list(/datum/reagent/medicine/arithrazine = 1, /datum/reagent/carbon = 1)
 
 /datum/chemical_reaction/clonexadone
 	name = "Clonexadone"
