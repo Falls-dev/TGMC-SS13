@@ -1,0 +1,11 @@
+{
+  "map_name": "BoxStation",
+  "map_path": "map_files/BoxStation",
+  "map_file": "BoxStation.dmm",
+  "disk_sets": {
+    "basic": 1
+  },
+  "parallax_icon": "",
+  "armor": "prison",
+  "announce_text": "Корабельная система связи засекла сигнал о срочной эвакуации с космической станции BoxStation. Станция захвачена враждебными формами жизни. Экипируйтесь и приготовьтесь к высадке!"
+}
