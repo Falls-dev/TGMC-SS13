@@ -110,6 +110,7 @@
 #define ZERO_FORM_BEAM_ABILITY_TRAIT "zero_form_beam_ability_trait"
 #define DRAGON_ABILITY_TRAIT "dragon_ability_trait"
 #define WIDOW_ABILITY_TRAIT "widow_ability_trait"
+#define BULL_ABILITY_TRAIT "bull_ability_trait"
 #define CONQUEROR_ABILITY_TRAIT "conqueror_ability_trait"
 #define CONQUEROR_ENDURANCE_TRAIT "conqueror_endurance_trait"
 #define CONQUEROR_OBLITERATION_TRAIT "conqueror_obliteration_trait"
