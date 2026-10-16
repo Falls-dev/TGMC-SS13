@@ -95,12 +95,14 @@
 	fire_delay = 0.2 SECONDS
 	burst_delay = 0.1 SECONDS
 	extra_delay = 0.1 SECONDS
-	accuracy_mult = 1.05
-	scatter = 0
+	accuracy_mult = 1.50
+	scatter = 3
+	w_class = 3
+	recoil = 1
 	burst_amount = 4
-	aim_slowdown = 0.30
+	aim_slowdown = 0.20
 	damage_falloff_mult = 0.9
-	movement_acc_penalty_mult = 4
+	movement_acc_penalty_mult = 3
 
 /obj/item/weapon/gun/rifle/ar18/pointman
 	starting_attachment_types = list(/obj/item/attachable/stock/ar18stock, /obj/item/attachable/lasersight, /obj/item/attachable/flashlight)
@@ -189,12 +191,15 @@
 	fire_delay = 0.2 SECONDS
 	burst_delay = 0.15 SECONDS
 	extra_delay = 0.05 SECONDS
-	accuracy_mult = 1.1
-	scatter = -2
-	wield_delay = 0.9 SECONDS
+	accuracy_mult = 1.9
+	scatter = 3
+	w_class = 5
+	wield_delay = 0.5 SECONDS
+	recoil = 1
 	burst_amount = 3
-	aim_slowdown = 0.4
+	aim_slowdown = 0.6
 	damage_falloff_mult = 0.5
+	movement_acc_penalty_mult = 3
 
 	placed_overlay_iconstate = "t12"
 
@@ -1129,8 +1134,8 @@
 	caliber = CALIBER_10X24_CASELESS //codex
 	max_shells = 120 //codex
 	force = 30
-	aim_slowdown = 0.8
-	wield_delay = 1.2 SECONDS
+	aim_slowdown = 0.6
+	wield_delay = 0.9 SECONDS
 	fire_sound = 'sound/weapons/guns/fire/tgmc/kinetic/gun_mg42.ogg'
 	dry_fire_sound = 'sound/weapons/guns/fire/m41a_empty.ogg'
 	cocked_sound = 'sound/weapons/guns/machineguns/MG-42/MG42_boltpull.ogg'
@@ -1185,11 +1190,13 @@
 	fire_delay = 0.2 SECONDS
 	burst_delay = 0.15 SECONDS
 	extra_delay = 0.05 SECONDS
-	accuracy_mult = 1.1
+	accuracy_mult = 2.1
+	w_class = 7
+	recoil = 3
 	accuracy_mult_unwielded = 0.5
-	scatter = 2
-	scatter_unwielded = 80
-	movement_acc_penalty_mult = 6
+	scatter = 10
+	scatter_unwielded = 20
+	movement_acc_penalty_mult = 3
 
 /obj/item/weapon/gun/rifle/mg42/autorifleman
 	starting_attachment_types = list(/obj/item/attachable/verticalgrip, /obj/item/attachable/reddot)
@@ -2041,10 +2048,13 @@
 	fire_delay = 0.25 SECONDS
 	burst_amount = 1
 	burst_delay = 0.15 SECONDS
-	accuracy_mult = 1.2
-	scatter = -2
+	accuracy_mult = 2.2
+	w_class = 7
+	recoil = 2
+	scatter = 4
 	wield_delay = 0.8 SECONDS
 	aim_slowdown = 0.5
+	movement_acc_penalty_mult = 2.5
 	damage_falloff_mult = 0.5
 
 /obj/item/weapon/gun/rifle/ar21/standard
