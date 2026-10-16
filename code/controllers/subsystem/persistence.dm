@@ -140,9 +140,16 @@ SUBSYSTEM_DEF(persistence)
 ///Loads seasons data, advances seasons and saves the data
 /datum/controller/subsystem/persistence/proc/LoadSeasonalItems()
 	var/json_file = file("data/seasonal_items.json")
+	var/list/seasons_file_info
+
 	if(!fexists(json_file))
-		initialize_seasonal_items_file()
-	var/list/seasons_file_info = json_decode(file2text(json_file))
+		seasons_file_info = list()
+	else
+		var/json_text = file2text(json_file)
+		if(!length(json_text))
+			seasons_file_info = list()
+		else
+			seasons_file_info = json_decode(json_text)
 
 	for(var/season_class in seasons_durations)
 		seasons_file_info = update_season_data(season_class, seasons_file_info)

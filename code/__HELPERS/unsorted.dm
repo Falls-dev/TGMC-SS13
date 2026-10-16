@@ -1262,10 +1262,7 @@ GLOBAL_VAR_INIT(roles_whitelist, load_role_whitelist())
 	var/ckey
 	var/role
 	for(i in L)
-		if(!i)
-			continue
-			i = trim(i)
-
+		i = trim(i)
 		if(!length(i))
 			continue
 
