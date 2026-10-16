@@ -2,10 +2,16 @@
     "map_name": "Kutjevo Refinery",
     "map_path": "map_files/kutjevo",
     "map_file": "kutjevo.dmm",
-	"disk_sets": {
-		"basic": 1
-	},
-	"parallax_icon": "redrock",
-	"quickbuilds": 1800,
-	"announce_text": "С нефтеперерабатывающего завода колонии НаноТрейзен в Кутьево, известного своими ботаническими исследованиями, экспортом и переработкой сырья, был получен автоматический сигнал бедствия. Для расследования было отправлено наше судно."
+    "disk_sets": {
+        "basic": 1
+    },
+    "parallax_icon": "jungle",
+    "quickbuilds": 1800,
+    "announce_text": "Получен сигнал бедствия с объекта Kutjevo Refinery. Разведка сообщает об условиях колонии в джунглях. Корабль движется в сектор. Товарищи, пройдите инструктаж и приготовьтесь к высадке!",
+    "armor": "jungle",
+    "traits": [
+        {
+            "weather_acidrain": true
+        }
+    ]
 }

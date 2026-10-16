@@ -1,53 +1,45 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "b" = (
 /obj/effect/landmark/fog_blocker,
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "d" = (
 /obj/effect/landmark/weed_node,
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/east/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/east/garbledradio/theme_bigred_v2)
 "n" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/east/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/east/garbledradio/theme_bigred_v2)
 "p" = (
 /obj/effect/landmark/fog_blocker,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/east/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/east/garbledradio/theme_bigred_v2)
 "t" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/east/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/east/garbledradio/theme_bigred_v2)
 "w" = (
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/northeast/garbledradio)
-"y" = (
-/obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/east/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/northeast/garbledradio/theme_bigred_v2)
 "B" = (
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/east/garbledradio)
-"H" = (
-/obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/east/garbledradio)
-"I" = (
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/east/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/east/garbledradio/theme_bigred_v2)
 "J" = (
 /obj/effect/landmark/start/job/xenomorph,
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/east/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/east/garbledradio/theme_bigred_v2)
 "M" = (
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
-"P" = (
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast/garbledradio)
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 
 (1,1,1) = {"
 M
@@ -65,8 +57,8 @@ M
 (2,1,1) = {"
 M
 M
-I
-I
+B
+B
 M
 M
 M
@@ -80,9 +72,9 @@ M
 t
 B
 B
-I
-I
-I
+B
+B
+B
 M
 M
 M
@@ -90,12 +82,12 @@ M
 "}
 (4,1,1) = {"
 M
-H
+n
 B
 B
 B
 B
-y
+t
 n
 M
 M
@@ -109,26 +101,26 @@ B
 B
 B
 B
-I
+B
 M
 M
 M
 "}
 (6,1,1) = {"
-P
+w
 B
 B
-y
+t
 B
 B
 B
-I
+B
 B
 M
 M
 "}
 (7,1,1) = {"
-P
+w
 B
 B
 B
@@ -136,25 +128,25 @@ B
 B
 B
 B
-I
-I
-I
+B
+B
+B
 "}
 (8,1,1) = {"
-P
-H
-y
+w
+n
+t
 B
 B
 B
 B
 d
 B
-H
+n
 p
 "}
 (9,1,1) = {"
-P
+w
 B
 B
 B
@@ -164,24 +156,24 @@ B
 B
 B
 p
-H
+n
 "}
 (10,1,1) = {"
-P
+w
 B
 B
 B
 M
 M
 B
-I
+B
 B
 p
 B
 "}
 (11,1,1) = {"
-P
-H
+w
+n
 B
 M
 M
@@ -193,20 +185,20 @@ B
 J
 "}
 (12,1,1) = {"
-P
+w
 B
 M
 M
 M
 M
 b
-I
+B
 B
 B
 B
 "}
 (13,1,1) = {"
-P
+w
 M
 M
 M

@@ -5,18 +5,18 @@
 	dir = 1
 	},
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "ax" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/tile/dark/brown2/corner,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "aX" = (
 /obj/structure/cryofeed/right,
 /obj/effect/turf_decal/warning_stripes/thick{
 	dir = 10
 	},
 /turf/open/floor/engine,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "cn" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 4
@@ -24,7 +24,7 @@
 /turf/open/floor/tile/dark/brown2{
 	dir = 8
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "ct" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/effect/turf_decal/warning_stripes/thin{
@@ -33,7 +33,7 @@
 /obj/effect/landmark/excavation_site_spawner,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/engine,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "cU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
@@ -42,7 +42,7 @@
 /turf/open/floor/tile/dark/brown2{
 	dir = 8
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "dr" = (
 /obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 1;
@@ -51,12 +51,12 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/structure/cable,
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "dA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/structure/window/framed/colony/reinforced,
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "ef" = (
 /turf/template_noop,
 /area/template_noop)
@@ -70,26 +70,26 @@
 	dir = 8
 	},
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "eQ" = (
 /obj/structure/dispenser/oxygen,
 /turf/open/floor/tile/dark/brown2/corner{
 	dir = 1
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "fd" = (
 /obj/structure/closet/wardrobe/engineering_yellow,
 /turf/open/floor/tile/dark/brown2{
 	dir = 8
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "ga" = (
 /obj/structure/cryofeed,
 /obj/effect/turf_decal/warning_stripes/thick{
 	dir = 6
 	},
 /turf/open/floor/engine,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "gi" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 10
@@ -99,7 +99,7 @@
 	dir = 10
 	},
 /turf/open/floor/engine,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "iF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/layer1,
 /obj/machinery/air_alarm{
@@ -109,27 +109,27 @@
 	dir = 10
 	},
 /turf/open/floor/engine,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "iN" = (
 /turf/closed/wall,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "kc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/structure/cable,
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "kA" = (
 /obj/structure/closet/firecloset/full,
 /turf/open/floor/tile/dark/brown2/corner{
 	dir = 4
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "kB" = (
 /obj/effect/spawner/random/engineering/toolbox,
 /turf/open/floor/tile/dark/brown2{
 	dir = 9
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "kI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 5
@@ -139,23 +139,23 @@
 	dir = 9
 	},
 /turf/open/floor/engine,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "lX" = (
 /obj/structure/window/framed/colony/reinforced,
 /turf/open/floor/plating,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "mQ" = (
 /obj/structure/cryofeed,
 /obj/effect/turf_decal/warning_stripes/thick{
 	dir = 5
 	},
 /turf/open/floor/engine,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "mZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/structure/cable,
 /turf/open/floor/tile/dark/brown2,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "nQ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/layer1{
 	dir = 4;
@@ -164,7 +164,7 @@
 /turf/open/floor/tile/dark/brown2{
 	dir = 10
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "oO" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 10
@@ -172,68 +172,68 @@
 /turf/open/floor/tile/dark/brown2{
 	dir = 4
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "pt" = (
 /obj/machinery/pipedispenser,
 /turf/open/floor/tile/dark/brown2/corner{
 	dir = 4
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "pD" = (
 /obj/effect/spawner/random/engineering/technology_scanner,
 /turf/open/floor/tile/dark/brown2{
 	dir = 8
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "qf" = (
 /obj/item/stool,
 /obj/effect/landmark/excavation_site_spawner,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "qq" = (
 /obj/item/stool,
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "su" = (
 /obj/structure/cryofeed/right,
 /obj/effect/turf_decal/warning_stripes/thick{
 	dir = 9
 	},
 /turf/open/floor/engine,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "tr" = (
 /turf/open/floor/tile/dark/brown2{
 	dir = 10
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "tO" = (
 /obj/machinery/computer/area_atmos/area,
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "ut" = (
 /obj/effect/decal/cleanable/blood/drip,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/structure/cable,
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "vn" = (
 /turf/open/floor/tile/dark/brown2{
 	dir = 9
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "wd" = (
 /obj/structure/closet/secure_closet/atmos_personal,
 /turf/open/floor/tile/dark/brown2{
 	dir = 8
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "ww" = (
 /obj/effect/spawner/random/engineering/tool,
 /turf/open/floor/tile/dark/brown2/corner{
 	dir = 8
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "wH" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 1
@@ -241,7 +241,7 @@
 /turf/open/floor/tile/dark/brown2{
 	dir = 8
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "xU" = (
 /obj/machinery/light,
 /obj/effect/turf_decal/warning_stripes/thin{
@@ -250,20 +250,20 @@
 /turf/open/floor/tile/dark/brown2{
 	dir = 1
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "xV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/structure/cable,
 /turf/open/floor/tile/dark/brown2{
 	dir = 1
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "yj" = (
 /obj/effect/spawner/random/engineering/technology_scanner,
 /turf/open/floor/tile/dark/brown2{
 	dir = 4
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "ym" = (
 /obj/machinery/door/airlock/mainship/engineering/free_access{
 	name = "\improper Atmospherics Condenser"
@@ -273,7 +273,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "za" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 6
@@ -281,7 +281,7 @@
 /turf/open/floor/tile/dark/brown2{
 	dir = 8
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "zx" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 8
@@ -290,34 +290,34 @@
 /turf/open/floor/tile/dark/brown2{
 	dir = 4
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "AF" = (
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "Bl" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/closed/wall,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "Bw" = (
 /turf/closed/wall/r_wall,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "BD" = (
 /obj/structure/cryofeed/right,
 /obj/effect/turf_decal/warning_stripes/linethick{
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "BV" = (
 /obj/structure/closet/firecloset/full,
 /turf/open/floor/tile/dark/brown2/corner{
 	dir = 1
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "BW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
@@ -327,7 +327,7 @@
 /turf/open/floor/tile/dark/brown2{
 	dir = 10
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "CJ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/layer1,
 /obj/machinery/air_alarm{
@@ -337,29 +337,29 @@
 	dir = 6
 	},
 /turf/open/floor/engine,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "CS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "Dp" = (
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "DR" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /obj/effect/decal/remains/human,
 /turf/open/floor/tile/dark/brown2,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "DS" = (
 /turf/open/floor/tile/dark/brown2{
 	dir = 8
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "DW" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1,
 /obj/effect/decal/cleanable/blood,
@@ -367,30 +367,30 @@
 /obj/effect/ai_node,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "En" = (
 /turf/open/floor/tile/dark/brown2{
 	dir = 1
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "Ep" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/structure/cable,
 /obj/effect/ai_node,
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "EN" = (
 /obj/structure/cryofeed,
 /obj/effect/turf_decal/warning_stripes/linethick{
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "Gh" = (
 /turf/open/floor/tile/dark/brown2{
 	dir = 5
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "Gi" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
@@ -399,18 +399,18 @@
 /turf/open/floor/tile/dark/brown2{
 	dir = 6
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "GC" = (
 /turf/open/floor/tile/dark/brown2{
 	dir = 4
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "Hy" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer1,
 /obj/effect/ai_node,
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "IT" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1{
 	dir = 4
@@ -418,12 +418,12 @@
 /obj/effect/decal/cleanable/blood/drip,
 /obj/structure/cable,
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "IZ" = (
 /turf/open/floor/tile/dark/brown2/corner{
 	dir = 1
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "Jy" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/effect/turf_decal/warning_stripes/thin{
@@ -431,23 +431,23 @@
 	},
 /obj/effect/landmark/weed_node,
 /turf/open/floor/engine,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "Ke" = (
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/structure/cable,
 /obj/effect/ai_node,
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "Ks" = (
 /obj/structure/extinguisher_cabinet,
 /turf/open/floor/tile/dark/brown2/corner,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "Kw" = (
 /obj/machinery/power/apc/drained,
 /obj/structure/cable,
 /turf/open/floor/tile/dark/brown2,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "Ln" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 6
@@ -457,12 +457,12 @@
 	dir = 6
 	},
 /turf/open/floor/engine,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "LL" = (
 /obj/machinery/computer/atmos_alert,
 /obj/structure/table,
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "Mh" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 1
@@ -470,7 +470,7 @@
 /turf/open/floor/tile/dark/brown2{
 	dir = 4
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "MA" = (
 /obj/machinery/light,
 /obj/effect/turf_decal/warning_stripes/thin{
@@ -479,25 +479,25 @@
 /turf/open/floor/tile/dark/brown2{
 	dir = 1
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "Nt" = (
 /obj/effect/ai_node,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "NM" = (
 /obj/machinery/door/airlock/mainship/engineering/free_access{
 	name = "\improper Atmospherics Condenser"
 	},
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "OT" = (
 /obj/machinery/computer3/server,
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 4
 	},
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "PD" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 5
@@ -505,58 +505,58 @@
 /turf/open/floor/tile/dark/brown2{
 	dir = 8
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "PW" = (
 /turf/open/floor/tile/dark/brown2{
 	dir = 6
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "Qn" = (
 /obj/structure/closet/secure_closet/atmos_personal,
 /turf/open/floor/tile/dark/brown2{
 	dir = 4
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "QR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
 	},
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "Rn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 5
 	},
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "RH" = (
 /obj/item/clothing/mask/gas,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "Sf" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/tile/dark/brown2/corner{
 	dir = 8
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "Su" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/structure/cable,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "SU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/tile/dark/brown2,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "Tt" = (
 /turf/open/floor/tile/dark/brown2,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "TE" = (
 /obj/structure/window/framed/colony/reinforced,
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "TS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/effect/decal/cleanable/blood/drip,
@@ -564,12 +564,12 @@
 /turf/open/floor/tile/dark/brown2{
 	dir = 1
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "UH" = (
 /turf/open/floor/tile/dark/brown2/corner{
 	dir = 4
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "Vm" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
@@ -577,7 +577,7 @@
 /obj/item/book/manual/atmospipes,
 /obj/structure/cable,
 /turf/open/floor/tile/dark,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "Vq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 9
@@ -587,7 +587,7 @@
 	dir = 5
 	},
 /turf/open/floor/engine,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "Wh" = (
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 9
@@ -595,29 +595,29 @@
 /turf/open/floor/tile/dark/brown2{
 	dir = 4
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "Wz" = (
 /obj/structure/dispenser/oxygen,
 /turf/open/floor/tile/dark/brown2{
 	dir = 1
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "WZ" = (
 /obj/machinery/air_alarm,
 /turf/open/floor/tile/dark/brown2,
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "Xp" = (
 /obj/structure/closet/wardrobe/engineering_yellow,
 /turf/open/floor/tile/dark/brown2{
 	dir = 4
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 "YC" = (
 /obj/machinery/vending/tool,
 /turf/open/floor/tile/dark/brown2{
 	dir = 8
 	},
-/area/lv624/lazarus/atmos)
+/area/lv624/lazarus/atmos/theme_lv624)
 
 (1,1,1) = {"
 ef

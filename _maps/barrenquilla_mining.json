@@ -2,12 +2,18 @@
     "map_name": "Barrenquilla Mining Facility",
     "map_path": "map_files/Barrenquilla_Mining",
     "map_file": "Barrenquilla_Mining_Facility.dmm",
-    "parallax_icon": "rock",
-    "announce_text": "Наши сканеры зафиксировали слабый сигнал бедствия, который привёл нас к LO145. Благодаря блюспейс технологиям, мы оказались рядом с аванпостом. Товарищи, приготовьтесь к битве!",
+    "parallax_icon": "ice",
+    "announce_text": "Получен сигнал бедствия с объекта Barrenquilla Mining Facility. Разведка сообщает об условиях ледяных пещер. Корабль движется в сектор. Товарищи, пройдите инструктаж и приготовьтесь к высадке!",
     "disk_sets": {
-		"basic": 1
-	},
-    "traits":[{
-		"weather_ashstorm": true
-	}]
+        "basic": 1
+    },
+    "traits": [
+        {
+            "weather_snowstorm": true
+        }
+    ],
+    "environment_traits": {
+        "COLD": true
+    },
+    "armor": "ice"
 }

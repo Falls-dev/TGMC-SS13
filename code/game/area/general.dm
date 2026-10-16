@@ -319,6 +319,8 @@
 
 /area/deathmatch
 	name = "End of Round Deathmatch Arena"
+	/// Weather started for this arena when the end-of-round deathmatch begins.
+	var/datum/weather/eorg_weather_type
 	icon_state = "green"
 	base_lighting_alpha = 255
 
