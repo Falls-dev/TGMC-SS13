@@ -115,7 +115,9 @@
 		return
 	var/image/holder = hud_list[PLASMA_HUD]
 	var/endurance_amount = round(endurance_health * 100 / endurance_health_max, 10)
-	holder?.overlays += image('icons/mob/hud/xeno_endurance.dmi', icon_state = "[endurance_broken ? "no_endurance" : "endurance"][endurance_amount]")
+	var/image/endurance_overlay = image('icons/mob/hud/xeno_endurance.dmi', icon_state = "[endurance_broken ? "no_endurance" : "endurance"][endurance_amount]")
+	endurance_overlay.pixel_x = -3
+	holder?.overlays += endurance_overlay
 
 /mob/living/carbon/xenomorph/king/Corrupted
 	hivenumber = XENO_HIVE_CORRUPTED

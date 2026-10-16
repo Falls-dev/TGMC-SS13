@@ -12,8 +12,8 @@
 	name = "Dash"
 	desc = "Move in a burst of speed. Double tap any movement direction to dash towards it."
 	action_type = ACTION_TOGGLE
-	action_icon = 'icons/Xeno/actions/wraith.dmi'
-	action_icon_state = "rewind"
+	action_icon = 'icons/Xeno/actions/runner.dmi'
+	action_icon_state = "pounce"
 	ability_cost = 15
 	cooldown_duration = 4.5 SECONDS
 	use_state_flags = ABILITY_USE_FORTIFIED
@@ -713,7 +713,7 @@
 		return
 	if(xeno_owner.endurance_health >= xeno_owner.endurance_health_max)
 		return
-	if(!xeno_owner.loc_weeds_type && !HAS_TRAIT(xeno_owner, TRAIT_INNATE_HEALING))
+	if(!xeno_owner.loc_weeds_type)
 		return
 	var/regen_amount = 1 + (xeno_owner.xeno_caste.max_health * 0.0375)
 	if(xeno_owner.recovery_aura)
