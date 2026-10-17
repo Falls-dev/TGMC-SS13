@@ -65,12 +65,12 @@
 /mob/illusion/proc/remove_hit_filter()
 	remove_filter(ILLUSION_HIT_FILTER)
 
-/mob/illusion/xeno/Initialize(mapload, mob/living/carbon/xenomorph/original_mob, atom/escorted_atom, life_time)
+/mob/illusion/xeno/Initialize(mapload, mob/living/carbon/xenomorph/original_mob, atom/escorted_atom, life_time, ai_behavior_typepath = /datum/ai_behavior/xeno/illusion)
 	. = ..()
 	if(.)
 		return INITIALIZE_HINT_QDEL
 	add_movespeed_modifier(MOVESPEED_ID_XENO_CASTE_SPEED, TRUE, 0, NONE, TRUE, MOB_RUN_MOVE_MOD + original_mob.xeno_caste.speed * pick(0.9, 1, 1.1, 1.2, 1.3)) // rand doesn't work here because it's decimals
-	AddComponent(/datum/component/ai_controller, /datum/ai_behavior/xeno/illusion, escorted_atom)
+	AddComponent(/datum/component/ai_controller, ai_behavior_typepath, escorted_atom)
 	GLOB.mob_illusions_list += src
 
 /mob/illusion/xeno/Destroy()

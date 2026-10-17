@@ -783,8 +783,10 @@
 	var/health_ticks_remaining
 	///Sunder recovery ticks
 	var/sunder_ticks_remaining
+	/// Should the TRAIT_INNATE_HEALING trait be given?
+	var/innate_healing = FALSE
 
-/datum/status_effect/healing_infusion/on_creation(mob/living/new_owner, set_duration = HIVELORD_HEALING_INFUSION_DURATION, stacks_to_apply = HIVELORD_HEALING_INFUSION_TICKS)
+/datum/status_effect/healing_infusion/on_creation(mob/living/new_owner, set_duration = HIVELORD_HEALING_INFUSION_DURATION, stacks_to_apply = HIVELORD_HEALING_INFUSION_TICKS, new_innate_healing)
 	if(!isxeno(new_owner))
 		CRASH("something applied [id] on a nonxeno, dont do that")
 
@@ -792,6 +794,8 @@
 	owner = new_owner
 	health_ticks_remaining = stacks_to_apply //Apply stacks
 	sunder_ticks_remaining = stacks_to_apply
+	if(new_innate_healing)
+		innate_healing = new_innate_healing
 	return ..()
 
 
@@ -800,12 +804,16 @@
 	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_HEALING_INFUSION, TRAIT_STATUS_EFFECT(id))
+	if(innate_healing)
+		ADD_TRAIT(owner, TRAIT_INNATE_HEALING, TRAIT_STATUS_EFFECT(id))
 	owner.add_filter("hivelord_healing_infusion_outline", 3, outline_filter(1, COLOR_VERY_PALE_LIME_GREEN)) //Set our cool aura; also confirmation we have the buff
 	RegisterSignal(owner, COMSIG_XENOMORPH_HEALTH_REGEN, PROC_REF(healing_infusion_regeneration)) //Register so we apply the effect whenever the target heals
 	RegisterSignal(owner, COMSIG_XENOMORPH_SUNDER_REGEN, PROC_REF(healing_infusion_sunder_regeneration)) //Register so we apply the effect whenever the target heals
 
 /datum/status_effect/healing_infusion/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_HEALING_INFUSION, TRAIT_STATUS_EFFECT(id))
+	if(innate_healing)
+		REMOVE_TRAIT(owner, TRAIT_INNATE_HEALING, TRAIT_STATUS_EFFECT(id))
 	owner.remove_filter("hivelord_healing_infusion_outline")
 	UnregisterSignal(owner, list(COMSIG_XENOMORPH_HEALTH_REGEN, COMSIG_XENOMORPH_SUNDER_REGEN))
 
@@ -1417,3 +1425,24 @@
 	var/mob/living/carbon/xenomorph/xeno_owner = owner
 	xeno_owner.xeno_melee_damage_modifier -= damage_modifier
 	xeno_owner.remove_filter("[id]_outline")
+
+// ***************************************
+// *********** Xenomorph cloaking (cloaking gas of Cloaking Mirage)
+// ***************************************
+/datum/status_effect/xenomorph_cloaking
+	id = "xenomorph_cloaking"
+	duration = -1
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
+
+/datum/status_effect/xenomorph_cloaking/on_apply()
+	if(!isxeno(owner))
+		return FALSE
+	animate(owner, 0.5 SECONDS, alpha = HUNTER_STEALTH_STILL_ALPHA)
+	return TRUE
+
+/datum/status_effect/xenomorph_cloaking/on_remove()
+	// Hunter's Stealth manages the alpha by itself while it is active.
+	if(!HAS_TRAIT(owner, TRAIT_STEALTH))
+		animate(owner, 0.5 SECONDS, alpha = 255)
+	return ..()
