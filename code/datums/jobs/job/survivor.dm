@@ -155,6 +155,6 @@ Good luck, but do not expect to survive."})
 	html_description = {"
 		<b>Difficulty</b>: Astonishing<br /><br />
 		<b>Gamemode Availability</b>: Distress Signal, Nuclear War<br /><br /><br />
-		<b>Duty</b>: Survive with the resources you have against the swarms of xenomorphs intil help arrives.
+		<b>Duty</b>: Выживайте, используя имеющиеся у вас ресурсы, в противостоянии с полчищами ксеноморфов Вы враждебны к Терра Гов. Примирение с морпехами недопустимо. Как боец колониально либерального фронта вам запрещено снимать вашу форму, вы обязаны действовать под флагом КЛФ.
 	"}
 	job_desc = "Выживайте теми ресурсами что у вас есть, пока не подоспеет помощь."
