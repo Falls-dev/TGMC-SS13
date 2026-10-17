@@ -36,6 +36,7 @@
 		/obj/item/armored_weapon/secondary_flamer,
 		/obj/item/armored_weapon/tow,
 		/obj/item/armored_weapon/microrocket_pod,
+		/obj/item/armored_weapon/secondary_tesla
 	)
 	max_occupants = 4
 	move_delay = 0.75 SECONDS
