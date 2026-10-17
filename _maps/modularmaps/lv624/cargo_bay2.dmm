@@ -98,7 +98,6 @@
 	},
 /area/lv624/lazarus/quartstorage/two)
 "mS" = (
-/obj/effect/landmark/excavation_site_spawner,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/brown{
 	dir = 5
@@ -224,10 +223,6 @@
 /obj/structure/cable,
 /turf/open/floor/tile/neutral,
 /area/lv624/lazarus/quartstorage/two)
-"Cx" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
 "CF" = (
 /obj/effect/spawner/random/weaponry/ammo,
 /turf/open/floor/tile/brown{
@@ -327,12 +322,6 @@
 	dir = 1
 	},
 /turf/open/floor/tile/neutral,
-/area/lv624/lazarus/quartstorage/two)
-"Kr" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/tile/brown{
-	dir = 10
-	},
 /area/lv624/lazarus/quartstorage/two)
 "Lv" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
@@ -538,7 +527,7 @@ au
 wF
 jV
 jV
-Kr
+ah
 gJ
 Iu
 "}
@@ -583,7 +572,7 @@ NH
 RN
 RN
 RN
-Cx
+RN
 yx
 Cp
 RN

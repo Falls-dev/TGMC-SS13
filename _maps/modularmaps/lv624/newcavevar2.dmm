@@ -84,10 +84,6 @@
 /obj/effect/ai_node,
 /turf/open/floor/plating/ground/dirt,
 /area/lv624/ground/caves/central1)
-"gM" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/caves/central1)
 "gX" = (
 /obj/effect/landmark/xeno_resin_door,
 /turf/open/floor/plating/ground/dirt,
@@ -250,10 +246,6 @@
 	dir = 8
 	},
 /area/lv624/ground/caves/central1)
-"CL" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/caves/central2)
 "CO" = (
 /obj/effect/turf_decal/lvsanddecal{
 	dir = 4
@@ -813,7 +805,7 @@ Ux
 Ux
 Ux
 Ux
-CL
+Ux
 Ux
 Ux
 Ux
@@ -2093,7 +2085,7 @@ jJ
 Ux
 XM
 Ux
-CL
+Ux
 Ux
 Ux
 xX
@@ -2634,7 +2626,7 @@ XC
 Ux
 Ux
 Ux
-CL
+Ux
 Ux
 Ux
 Ux
@@ -3056,7 +3048,7 @@ Bt
 XC
 qW
 vo
-gM
+vo
 vo
 qW
 XC

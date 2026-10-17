@@ -102,3 +102,70 @@
 		if(16 to INFINITY)
 			icon_state = "pinonfar"
 
+/obj/item/pinpointer/archaeology
+    name = "Archaeological pinpointer"
+    desc = "An advanced acoustic scanner tuned to detect dense organic fossils. Tap the ground to scan for depth."
+
+/obj/item/pinpointer/archaeology/Initialize(mapload)
+    . = ..()
+    tracked_list = null
+
+/obj/item/pinpointer/archaeology/set_target(mob/living/user)
+    if(!SSxeno_archaeology || !length(SSxeno_archaeology.active_sites))
+        balloon_alert(user, "No signals found")
+        return
+
+    var/list/options = list()
+    var/list/site_by_name = list()
+
+    for(var/datum/dig_site/S in SSxeno_archaeology.active_sites)
+        var/option_name = "[S.site_name]"
+        options += option_name
+        site_by_name[option_name] = S
+
+    var/chosen = tgui_input_list(user, "Select the site you wish to track.", "Archaeology Pinpointer", options)
+    if(!chosen || QDELETED(src) || QDELETED(user))
+        return
+
+    var/datum/dig_site/selected_site = site_by_name[chosen]
+    target = selected_site.location
+
+    var/turf/pinpointer_loc = get_turf(src)
+    if(target.z != pinpointer_loc.z)
+        balloon_alert(user, "Signal too weak")
+        target = null
+        return
+
+/obj/item/pinpointer/archaeology/process()
+    if(!target)
+        active = FALSE
+        icon_state = "pinonnull"
+        return PROCESS_KILL
+
+    setDir(get_dir(src, target))
+    var/dist = get_dist(src, target)
+    switch(dist)
+        if(0)
+            icon_state = "pinondirect"
+        if(1 to 8)
+            icon_state = "pinonclose"
+        if(9 to 16)
+            icon_state = "pinonmedium"
+        if(17 to INFINITY)
+            icon_state = "pinonfar"
+
+/obj/item/pinpointer/archaeology/afterattack(atom/target_atom, mob/user, proximity_flag, click_parameters)
+    if(!proximity_flag)
+        return ..()
+
+    var/turf/T = get_turf(target_atom)
+    if(!T)
+        return ..()
+
+    var/datum/dig_site/S = SSxeno_archaeology?.get_site_at(T)
+    if(S)
+        balloon_alert(user, "Depth: [S.target_depth] cm")
+        to_chat(user, span_notice("\[[src.name]\]: Acoustic sounding of sector [S.site_name] is complete. Fossil has been recorded at depth [S.target_depth] cm."))
+    else
+        balloon_alert(user, "Nothing found")
+

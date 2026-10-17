@@ -220,10 +220,6 @@
 /obj/effect/landmark/xeno_resin_door,
 /turf/open/floor/plating/ground/dirt,
 /area/lv624/ground/caves/central1)
-"Kf" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/caves/central2)
 "Kr" = (
 /obj/structure/rack,
 /obj/item/tool/shovel,
@@ -1099,7 +1095,7 @@ aT
 aT
 ah
 ah
-Kf
+ah
 aV
 aZ
 ah
@@ -1545,7 +1541,7 @@ aT
 aT
 aT
 aV
-Kf
+ah
 ah
 ah
 aT
@@ -1909,7 +1905,7 @@ aT
 aT
 aT
 ah
-Kf
+ah
 ah
 aT
 aT
@@ -2398,7 +2394,7 @@ aT
 aT
 aT
 ah
-Kf
+ah
 ah
 aT
 aT
