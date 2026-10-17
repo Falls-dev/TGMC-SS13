@@ -192,7 +192,7 @@
 		var/psy_points_amount = MARINE_BURST_PSY_POINTS_REWARD
 		if(victim.job == null)
 			psy_points_amount = 10
-		else if(victim.job.type == /datum/job/survivor/rambo)
+		else if(victim.job.type == /datum/job/survivor/clf)
 			psy_points_amount = 50
 		SSpoints.add_psy_points(hivenumber, psy_points_amount)
 		GLOB.round_statistics.psypoints_from_burst += psy_points_amount
