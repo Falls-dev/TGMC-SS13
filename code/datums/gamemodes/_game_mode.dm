@@ -31,6 +31,8 @@ GLOBAL_VAR(common_report) //Contains common part of roundend report
 	var/respawn_time = 15 MINUTES
 	//The respawn time for Xenomorphs
 	var/xenorespawn_time = 3 MINUTES
+	/// Human life ticks before a corpse becomes unrevivable; one tick is 2 seconds, stasis pauses counting.
+	var/human_dnr_ticks = TIME_BEFORE_DNR
 	///How many points do you need to win in a point gamemode
 	var/win_points_needed = 0
 	///The points per faction, assoc list

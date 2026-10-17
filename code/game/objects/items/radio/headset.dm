@@ -290,12 +290,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 			SSminimaps.add_marker(wearer, marker_flags, image('icons/UI_icons/map_blips.dmi', null, "defibbable_robo", MINIMAP_LABELS_LAYER))
 		else if(ishuman(wearer))
 			var/stage
-			switch(wearer.dead_ticks)
-				if(0 to 0.4 * TIME_BEFORE_DNR)
+			switch(wearer.dead_ticks / wearer.get_dnr_limit())
+				if(0 to 0.4)
 					stage = 1
-				if(0.4 * TIME_BEFORE_DNR to 0.8 * TIME_BEFORE_DNR)
+				if(0.4 to 0.8)
 					stage = 2
-				if(0.8 * TIME_BEFORE_DNR to INFINITY)
+				if(0.8 to INFINITY)
 					stage = 3
 			SSminimaps.add_marker(wearer, marker_flags, image('icons/UI_icons/map_blips.dmi', null, "defibbable[stage]", MINIMAP_LABELS_LAYER))
 		return
