@@ -442,6 +442,8 @@ GLOBAL_LIST_INIT(strain_list, init_glob_strain_list())
 	var/huggers = 0
 	///Boiler acid ammo
 	var/corrosive_ammo = 0
+	///Boiler neurotoxin gas ammo
+	var/neuro_ammo = 0
 	///Количество спрайтов поврежедний (effects_icon)
 	var/max_wound_states = 3
 	///Текущий скин

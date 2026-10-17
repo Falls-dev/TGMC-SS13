@@ -420,6 +420,7 @@
 	var/static/list/panther_toxin_images_list = list(
 		REAGENT_HEMODILE = image('icons/Xeno/actions/general.dmi', icon_state = REAGENT_HEMODILE),
 		REAGENT_TRANSVITOX = image('icons/Xeno/actions/general.dmi', icon_state = REAGENT_TRANSVITOX),
+		REAGENT_NEUROTOXIN = image('icons/Xeno/actions/general.dmi', icon_state = REAGENT_NEUROTOXIN),
 		REAGENT_OZELOMELYN = image('icons/Xeno/actions/general.dmi', icon_state = REAGENT_OZELOMELYN),
 		REAGENT_SANGUINAL = image('icons/Xeno/actions/general.dmi', icon_state = REAGENT_SANGUINAL),
 	)
