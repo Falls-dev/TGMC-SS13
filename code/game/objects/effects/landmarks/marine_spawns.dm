@@ -66,10 +66,6 @@
 	icon_state = "Synth"
 	job = /datum/job/terragov/silicon/synthetic
 
-/obj/effect/landmark/start/job/squadrobot
-	icon_state = "Robot"
-	job = /datum/job/terragov/squad/robot
-
 /obj/effect/landmark/start/job/squadmarine
 	icon_state = "PFC"
 	job = /datum/job/terragov/squad/standard
