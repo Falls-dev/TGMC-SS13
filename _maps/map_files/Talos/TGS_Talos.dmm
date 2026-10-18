@@ -1818,7 +1818,7 @@
 "aYN" = (
 /obj/structure/cable,
 /obj/machinery/light/mainship,
-/obj/machinery/power/fusion_engine/random,
+/obj/machinery/power/fusion_engine/preset,
 /turf/open/floor/plating/plating_catwalk/dark,
 /area/mainship/engineering/engine_core)
 "aYU" = (
@@ -7432,7 +7432,7 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden/layer1{
 	dir = 10
 	},
-/obj/machinery/power/fusion_engine/random,
+/obj/machinery/power/fusion_engine/preset,
 /turf/open/floor/plating/plating_catwalk/dark,
 /area/mainship/engineering/engine_core)
 "eoO" = (
@@ -10861,7 +10861,7 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden/layer1{
 	dir = 4
 	},
-/obj/machinery/power/fusion_engine/random,
+/obj/machinery/power/fusion_engine/preset,
 /turf/open/floor/plating/plating_catwalk/dark,
 /area/mainship/engineering/engine_core)
 "gvu" = (
@@ -25144,7 +25144,7 @@
 /area/mainship/shipboard/weapon_room)
 "oOb" = (
 /obj/structure/cable,
-/obj/machinery/power/fusion_engine/random,
+/obj/machinery/power/fusion_engine/preset,
 /turf/open/floor/plating/plating_catwalk/dark,
 /area/mainship/engineering/engine_core)
 "oOf" = (
@@ -25519,7 +25519,7 @@
 "pbj" = (
 /obj/structure/cable,
 /obj/machinery/camera/autoname,
-/obj/machinery/power/fusion_engine/random,
+/obj/machinery/power/fusion_engine/preset,
 /turf/open/floor/plating/plating_catwalk/dark,
 /area/mainship/engineering/engine_core)
 "pbx" = (
@@ -32497,7 +32497,7 @@
 	dir = 1
 	},
 /obj/machinery/camera/autoname,
-/obj/machinery/power/fusion_engine/random,
+/obj/machinery/power/fusion_engine/preset,
 /turf/open/floor/plating/plating_catwalk/dark,
 /area/mainship/engineering/engine_core)
 "thX" = (
@@ -32764,7 +32764,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 8
 	},
-/obj/machinery/power/fusion_engine/random,
+/obj/machinery/power/fusion_engine/preset,
 /turf/open/floor/plating/plating_catwalk/dark,
 /area/mainship/engineering/engine_core)
 "tqj" = (
@@ -36071,7 +36071,7 @@
 /obj/machinery/light/mainship{
 	dir = 1
 	},
-/obj/machinery/power/fusion_engine/random,
+/obj/machinery/power/fusion_engine/preset,
 /turf/open/floor/plating/plating_catwalk/dark,
 /area/mainship/engineering/engine_core)
 "vxU" = (
