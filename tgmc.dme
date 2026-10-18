@@ -2387,7 +2387,6 @@
 #include "code\modules\reqs\ui\vehicle_ui_interacting\set_primary.dm"
 #include "code\modules\reqs\ui\vehicle_ui_interacting\set_secondary.dm"
 #include "code\modules\reqs\ui\vehicle_ui_interacting\set_vehicle.dm"
-#include "code\modules\reqtorio\assembly_crafts.dm"
 #include "code\modules\reqtorio\craft_components.dm"
 #include "code\modules\reqtorio\howtopaper.dm"
 #include "code\modules\reqtorio\machines.dm"
