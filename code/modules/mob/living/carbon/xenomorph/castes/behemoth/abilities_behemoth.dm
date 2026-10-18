@@ -340,6 +340,7 @@
 #define EARTH_RISER_THROW_SLOWDOWN 5 // stacks
 #define EARTH_RISER_THROW_COOLDOWN 10 SECONDS
 #define EARTH_RISER_THROW_COST 20
+#define EARTH_RISER_EDGE_DAMAGE_MULTIPLIER 0.5 // Урон на дальней клетке при падении камня
 
 /datum/action/ability/activable/xeno/earth_riser
 	name = "Earth Riser"
@@ -527,8 +528,10 @@
 				continue
 			mobs_hit += hit_living // Prevents double damage in overlapping explosions
 			hit_living.AdjustKnockdown(EARTH_RISER_THROW_KNOCKDOWN)
-			if(get_dist(hit_living, target) <= 1)
-				hit_living.apply_damage(xeno_owner.xeno_caste.melee_damage * xeno_owner.xeno_melee_damage_modifier, BRUTE, ran_zone(), xeno_owner.xeno_caste.melee_damage_armor, FALSE, FALSE, TRUE, xeno_owner.xeno_caste.melee_ap, xeno_owner)
+			var/pillar_damage = xeno_owner.xeno_caste.melee_damage * xeno_owner.xeno_melee_damage_modifier
+			if(get_dist(hit_living, target) > 1)
+				pillar_damage *= EARTH_RISER_EDGE_DAMAGE_MULTIPLIER
+			hit_living.apply_damage(pillar_damage, BRUTE, ran_zone(), xeno_owner.xeno_caste.melee_damage_armor, FALSE, FALSE, TRUE, xeno_owner.xeno_caste.melee_ap, xeno_owner)
 			hit_living.adjust_stagger(EARTH_RISER_THROW_STAGGER)
 			hit_living.add_slowdown(EARTH_RISER_THROW_SLOWDOWN)
 			hit_living.apply_damage(xeno_owner.xeno_caste.melee_damage * xeno_owner.xeno_melee_damage_modifier, STAMINA, ran_zone(), xeno_owner.xeno_caste.melee_damage_armor, FALSE, FALSE, TRUE, xeno_owner.xeno_caste.melee_ap, xeno_owner)
@@ -597,7 +600,7 @@
 #define LANDSLIDE_SPEED 1
 #define LANDSLIDE_DAMAGE_MECHA_MODIFIER 1.5
 #define LANDSLIDE_DAMAGE_VEHICLE_MODIFIER 10
-#define LANDSLIDE_DAMAGE_LIVING_MULTIPLIER 1.3 // percent
+#define LANDSLIDE_DAMAGE_LIVING_MULTIPLIER 1.4 // percent
 #define LANDSLIDE_KNOCKDOWN_DURATION 2 SECONDS
 
 /datum/action/ability/activable/xeno/landslide
@@ -894,7 +897,7 @@
 #define GEOCRUSH_RANGE 1 // tiles
 #define GEOCRUSH_STAMINA_DAMAGE_MODIFIER 1.0 // percent
 #define GEOCRUSH_OBJECT_DAMAGE_MODIFIER 4.0 // percent
-#define GEOCRUSH_LIVING_DAMAGE_MULTIPLIER 1.3
+#define GEOCRUSH_LIVING_DAMAGE_MULTIPLIER 1.5
 #define GEOCRUSH_SLOWDOWN 5 // stacks
 #define GEOCRUSH_STAGGER 5 // stacks
 #define GEOCRUSH_KNOCKDOWN 2 SECONDS
@@ -1069,8 +1072,10 @@
 				L.AdjustKnockdown(EARTH_RISER_THROW_KNOCKDOWN)
 				L.adjust_stagger(EARTH_RISER_THROW_STAGGER)
 				L.add_slowdown(EARTH_RISER_THROW_SLOWDOWN)
-				if(get_dist(L, loc) <= 1)
-					L.apply_damage(damage, damage_type, ran_zone(), armor_type, FALSE, FALSE, TRUE, armor_penetration, xeno_owner)
+				var/edge_damage = damage
+				if(get_dist(L, loc) > 1)
+					edge_damage *= EARTH_RISER_EDGE_DAMAGE_MULTIPLIER
+				L.apply_damage(edge_damage, damage_type, ran_zone(), armor_type, FALSE, FALSE, TRUE, armor_penetration, xeno_owner)
 				L.apply_damage(damage, STAMINA, ran_zone(), armor_type, FALSE, FALSE, TRUE, armor_penetration, xeno_owner)
 				step_towards(L, loc, get_dist(L, loc) - 1)
 		qdel(src)

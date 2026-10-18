@@ -29796,9 +29796,9 @@
 /turf/open/floor/mainship/metal,
 /area/mainship/hallways/bow_hallway)
 "rBw" = (
-/obj/structure/bed/chair/comfy/black,
 /obj/machinery/power/apc/mainship,
 /obj/structure/cable,
+/obj/machinery/vending/MarineMed/Blood,
 /turf/open/floor/mainship/metal,
 /area/mainship/medical/chemistry)
 "rBy" = (
