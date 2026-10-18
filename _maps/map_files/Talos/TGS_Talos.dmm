@@ -23874,7 +23874,7 @@
 /obj/machinery/light/mainship/small{
 	dir = 8
 	},
-/obj/vehicle/unmanned/droid/ripley,
+/obj/effect/ai_droid_spawner/cargo,
 /turf/open/floor/prison/plate,
 /area/mainship/squads/req)
 "nZT" = (
@@ -40726,13 +40726,17 @@
 /area/mainship/hull/starboard_hull)
 
 "aaa" = (
-/obj/effect/ai_droid_spawner/cargo,
 /turf/open/floor/prison/plate,
 /area/mainship/squads/req)
 "aab" = (
-/obj/effect/ai_droid_spawner/medical,
 /turf/open/floor/mainship/metal/gray,
 /area/mainship/medical/surgery_hallway)
+"aac" = (
+/obj/effect/ai_droid_spawner/medical,
+/turf/open/floor/prison/whitepurple{
+	dir = 10
+	},
+/area/mainship/medical/medical_science)
 (1,1,1) = {"
 dBM
 dBM
@@ -58153,7 +58157,7 @@ ojC
 icV
 cif
 lrM
-lwo
+aac
 lhv
 mpG
 oad
