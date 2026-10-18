@@ -40725,6 +40725,14 @@
 /turf/open/floor/mainship/metal/full,
 /area/mainship/hull/starboard_hull)
 
+"aaa" = (
+/obj/effect/ai_droid_spawner/cargo,
+/turf/open/floor/prison/plate,
+/area/mainship/squads/req)
+"aab" = (
+/obj/effect/ai_droid_spawner/medical,
+/turf/open/floor/mainship/metal/gray,
+/area/mainship/medical/surgery_hallway)
 (1,1,1) = {"
 dBM
 dBM
@@ -63279,7 +63287,7 @@ tuz
 moQ
 sgv
 nfK
-lco
+aab
 pYC
 ugB
 lco
@@ -72293,7 +72301,7 @@ vdI
 oKG
 xMA
 xMA
-xMA
+aaa
 xMA
 xMA
 fkn

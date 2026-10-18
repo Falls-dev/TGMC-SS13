@@ -57,6 +57,7 @@
 	var/datum/action/innate/order/retreat_order/send_retreat_order = new
 	var/datum/action/innate/order/rally_order/send_rally_order = new
 	var/datum/action/control_vehicle/control = new
+	var/datum/action/deploy_droid/deploy_droid = new
 	var/datum/action/innate/squad_message/squad_message = new
 
 	/// If it is currently controlling an object
@@ -139,6 +140,7 @@
 	send_rally_order.target = src
 	send_rally_order.give_action(src)
 	control.give_action(src)
+	deploy_droid.give_action(src)
 	squad_message.give_action(src)
 
 /mob/living/silicon/ai/Destroy()
@@ -148,6 +150,7 @@
 	QDEL_NULL(mini)
 	QDEL_NULL(current_order)
 	QDEL_NULL(eyeobj)
+	QDEL_NULL(deploy_droid)
 	QDEL_NULL(send_attack_order)
 	QDEL_NULL(send_defend_order)
 	QDEL_NULL(send_retreat_order)
