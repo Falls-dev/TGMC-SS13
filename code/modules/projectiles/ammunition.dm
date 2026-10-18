@@ -101,6 +101,13 @@
 	. = ..()
 	if(.)
 		return
+	// Matter containers are universal ammo sources. Let them refill a normal magazine
+	// without pretending to have a fixed caliber or bullet type of their own.
+	if(istype(I, /obj/item/matter_ammo_container/box))
+		var/obj/item/matter_ammo_container/box/matter_box = I
+		matter_box.refill_magazine(src, user)
+		return
+
 	if(!istype(I, /obj/item/ammo_magazine))
 		if(!CHECK_BITFIELD(magazine_flags, MAGAZINE_WORN) || !istype(I, /obj/item/weapon/gun) || loc != user)
 			return ..()

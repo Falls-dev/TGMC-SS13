@@ -206,7 +206,7 @@
 	item_to_fabricate = /obj/item/stack/gun_powder/large_stack
 
 /obj/machinery/fabricator/gunpowder/Destroy()
-	cell_explosion(loc, 300, 100)
+	cell_explosion(loc, 300, 60)
 	return ..()
 
 /obj/machinery/fabricator/junk
@@ -218,6 +218,10 @@
 	name = "Plasteel fabricator"
 	desc = "Spends requisition points to create plasteel."
 	item_to_fabricate = /obj/item/stack/sheet/plasteel/large_stack
+
+/obj/machinery/fabricator/plasteel/Destroy()
+	cell_explosion(loc, 500, 100)
+	return ..()
 
 /obj/machinery/splitter
 	name = "Splitter"

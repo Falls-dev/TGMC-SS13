@@ -35,7 +35,7 @@
 	penetration = 40
 	max_range = 25
 	additional_xeno_penetration = 0
-	matter_cost = 0
+	matter_cost = 12
 
 /datum/ammo/bullet/revolver/t500/on_hit_mob(mob/target_mob,atom/movable/projectile/proj)
 	staggerstun(target_mob, proj, stagger = 0, slowdown = 0, knockback = 2)
@@ -68,7 +68,7 @@
 	damage = 100
 	penetration = 40
 	additional_xeno_penetration = 0
-	matter_cost = 0
+	matter_cost = 12
 
 /datum/ammo/bullet/revolver/t312/on_hit_mob(mob/target_mob, atom/movable/projectile/proj)
 	staggerstun(target_mob, proj, knockback = 1)

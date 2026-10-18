@@ -1,0 +1,12 @@
+{
+    "map_name": "Procedural Frontier Compact",
+    "map_path": "map_files/Procedural_Frontier_Compact",
+    "map_file": "Procedural_Frontier_Compact.dmm",
+    "disk_sets": {
+        "basic": 1
+    },
+    "quickbuilds": 1800,
+    "parallax_icon": "redrock",
+    "armor": "desert",
+    "announce_text": "A compact, shifting cave system surrounds the expedition landing zone."
+}

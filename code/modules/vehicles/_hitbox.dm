@@ -101,7 +101,10 @@
 
 ///Removes a desant
 /obj/hitbox/proc/remove_desant(atom/movable/desant)
-	SET_PLANE_IMPLICIT(desant, LAZYACCESS(tank_desants, desant))
+	var/old_plane = LAZYACCESS(tank_desants, desant)
+	if(isnull(old_plane)) //not ours, or already removed. Never write a null plane, that makes the desant invisible
+		old_plane = GAME_PLANE
+	SET_PLANE_IMPLICIT(desant, old_plane)
 	desant.remove_traits(list(TRAIT_TANK_DESANT, TRAIT_NOSUBMERGE), VEHICLE_TRAIT)
 	LAZYREMOVE(tank_desants, desant)
 	UnregisterSignal(desant, COMSIG_QDELETING)
@@ -123,6 +126,8 @@
 /obj/hitbox/proc/on_exited(atom/source, atom/movable/AM, direction)
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(AM, TRAIT_TANK_DESANT))
+		return
+	if(!(AM in tank_desants)) //the trait is global, only the hitbox that owns this desant may remove it
 		return
 	if(AM.loc in locs)
 		return
@@ -150,11 +155,10 @@
 	var/move_dist = get_dist(oldloc, mover)
 	forceMove(mover.loc)
 	var/new_z = (z != oldloc.z)
-
 	for(var/mob/living/tank_desant AS in tank_desants)
 		tank_desant.set_glide_size(root.glide_size)
 		if(new_z)
-			tank_desant.abstract_move(loc)
+			tank_desant.abstract_move(loc) //todo: have some better code to actually preserve their location
 		else
 			tank_desant.forceMove(get_step(tank_desant, direction))
 		if(isxeno(tank_desant))
@@ -167,13 +171,6 @@
 		var/away_dir = REVERSE_DIR(get_dir(tank_desant, root) || pick(GLOB.alldirs))
 		var/turf/target = get_ranged_target_turf(tank_desant, away_dir, 3)
 		tank_desant.throw_at(target, 3, 3, root)
-
-	for(var/atom/movable/tank_desant AS in tank_desants.Copy())
-		if(QDELETED(tank_desant))
-			continue
-		if(tank_desant.loc in locs)
-			continue
-		remove_desant(tank_desant)
 
 ///called when the tank is off movement cooldown and someone tries to move it
 /obj/hitbox/proc/on_attempt_drive(atom/movable/movable_parent, mob/living/user, direction)
@@ -494,6 +491,12 @@
 			bound_y = -32
 			root.pixel_x = -40
 			root.pixel_y = -32
+
+	//the bounds changed, anyone who is no longer under the hitbox must stop riding, otherwise they get dragged along while floating
+	for(var/atom/movable/desant AS in tank_desants.Copy())
+		if(desant.loc in locs)
+			continue
+		remove_desant(desant)
 
 	SEND_SIGNAL(src, COMSIG_MULTITILE_VEHICLE_ROTATED, loc, new_dir, null, old_locs)
 

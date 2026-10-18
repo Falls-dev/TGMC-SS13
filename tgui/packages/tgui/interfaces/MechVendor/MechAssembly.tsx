@@ -23,6 +23,13 @@ import {
   partdefinetofluff,
 } from './data';
 
+// label shown in UI -> bodytype string the server expects (GLOB.mech_bodytypes)
+const bodytypes = [
+  { label: 'Light', type: 'Recon', icon: 'feather' },
+  { label: 'Medium', type: 'Assault', icon: 'fist-raised' },
+  { label: 'Heavy', type: 'Vanguard', icon: 'shield-alt' },
+];
+
 function tryAssemble(setFailReason) {
   const { act, data } = useBackend<MechVendData>();
   const { selected_equipment, max_weight, weight } = data;
@@ -276,21 +283,27 @@ export const MechAssembly = (props) => {
               />
             </Stack.Item>
             <Stack.Item>
-              <Button
-                fluid
-                icon={'fist-raised'}
-                textAlign={'center'}
-                fontSize="120%"
-                selected={selected_variants[selectedBodypart] === 'Medium'}
-                onClick={() =>
-                  act('set_bodypart', {
-                    bodypart: selectedBodypart,
-                    new_bodytype: 'Medium',
-                  })
-                }
-              >
-                Medium
-              </Button>
+              <Stack>
+                {bodytypes.map((bt) => (
+                  <Stack.Item grow key={bt.type}>
+                    <Button
+                      fluid
+                      icon={bt.icon}
+                      textAlign={'center'}
+                      fontSize="120%"
+                      selected={selected_variants[selectedBodypart] === bt.type}
+                      onClick={() =>
+                        act('set_bodypart', {
+                          bodypart: selectedBodypart,
+                          new_bodytype: bt.type,
+                        })
+                      }
+                    >
+                      {bt.label}
+                    </Button>
+                  </Stack.Item>
+                ))}
+              </Stack>
               <Button
                 content={
                   cooldown_left
