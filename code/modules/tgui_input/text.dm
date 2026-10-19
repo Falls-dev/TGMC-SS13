@@ -25,16 +25,12 @@
 			return
 	// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.tgui_input)
-		if(encode)
-			if(multiline)
-				return stripped_multiline_input(user, message, title, default, max_length)
-			else
-				return stripped_input(user, message, title, default, max_length)
+		var/native_entry
+		if(multiline)
+			native_entry = input(user, message, title, default) as message|null
 		else
-			if(multiline)
-				return input(user, message, title, default) as message|null
-			else
-				return input(user, message, title, default) as text|null
+			native_entry = input(user, message, title, default) as text|null
+		return sanitize_input_text(native_entry, max_length, encode)
 	var/datum/tgui_input_text/text_input = new(user, message, title, default, max_length, multiline, encode, timeout)
 	text_input.ui_interact(user)
 	text_input.wait()
@@ -132,10 +128,8 @@
 	switch(action)
 		if("submit")
 			if(isnum(max_length) && max_length > 0 && max_length < INFINITY)
-				if(length(params["entry"]) > max_length)
+				if(length_char(params["entry"]) > max_length)
 					CRASH("[usr] typed a text string longer than the max length")
-				if(encode && (length(html_encode(params["entry"])) > max_length))
-					to_chat(usr, span_notice("Your message was clipped due to special character usage."))
 			set_entry(params["entry"])
 			closed = TRUE
 			SStgui.close_uis(src)
@@ -148,13 +142,7 @@
 /**
  * Sets the return value for the tgui text proc.
  * If html encoding is enabled, the text will be encoded.
- * This can sometimes result in a string that is longer than the max length.
- * If the string is longer than the max length, it will be clipped.
+ * The limit counts characters in the input, before HTML encoding.
  */
 /datum/tgui_input_text/proc/set_entry(entry)
-	if(!isnull(entry))
-		var/converted_entry = encode ? html_encode(entry) : entry
-		if(isnum(max_length) && max_length > 0 && max_length < INFINITY)
-			src.entry = trim(converted_entry, PREVENT_CHARACTER_TRIM_LOSS(max_length))
-		else
-			src.entry = converted_entry
+	src.entry = sanitize_input_text(entry, max_length, encode)

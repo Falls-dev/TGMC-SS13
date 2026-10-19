@@ -206,7 +206,7 @@
 	switch(action)
 		if("ActivateAutolabeler")
 			var/mob/user = usr
-			var/str = copytext(reject_bad_text(tgui_input_text(user,"Hypospray label text?", "Set label", "", MAX_NAME_LEN, timeout = 0)), 1, MAX_NAME_LEN)
+			var/str = reject_bad_text(tgui_input_text(user,"Hypospray label text?", "Set label", "", MAX_NAME_LEN, timeout = 0))
 			if(!length(str))
 				user.balloon_alert(user, "Invalid text.")
 				return
@@ -216,7 +216,7 @@
 
 		if("ActivateTagger")
 			var/mob/user = usr
-			var/str = copytext(reject_bad_text(tgui_input_text(user,"Hypospray tag text?", "Set tag", "", MAX_NAME_HYPO, timeout = 0)), 1, MAX_NAME_HYPO)
+			var/str = reject_bad_text(tgui_input_text(user,"Hypospray tag text?", "Set tag", "", MAX_NAME_HYPO, timeout = 0))
 			if(!length(str))
 				user.balloon_alert(user, "Invalid text.")
 				return

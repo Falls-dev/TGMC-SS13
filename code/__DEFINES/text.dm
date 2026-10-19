@@ -24,6 +24,9 @@
 /// Smallest size. (ie: whisper runechat) - Size options: 6pt 12pt 18pt.
 #define MAPTEXT_SPESSFONT(text) {"<span style='font-family: \"Spess Font\"; font-size: 6pt; line-height: 1.4; -dm-text-outline: 1px black'>[##text]</span>"}
 
+#define MAPTEXT_HOMEVIDEO(text) {"<span style='font-family: \"Home Video\"; font-size: 12pt; line-height: 1.4; -dm-text-outline: 1px black'>[##text]</span>"}
+
+#define MAPTEXT_PT_MONO(text) {"<span style='font-family: \"PT Mono\"; font-size: 12pt; line-height: 1.4; -dm-text-outline: 1px black'>[##text]</span>"}
 #define CENTER_ALIGN_TEXT "center"
 #define LEFT_ALIGN_TEXT "left"
 
@@ -58,7 +61,7 @@
 #define SANITIZE_FILENAME(text) (GLOB.filename_forbidden_chars.Replace(text, ""))
 
 /// Simply removes the < and > characters, and limits the length of the message.
-#define STRIP_HTML_SIMPLE(text, limit) (GLOB.angular_brackets.Replace(copytext(text, 1, limit), ""))
+#define STRIP_HTML_SIMPLE(text, limit) (GLOB.angular_brackets.Replace(copytext_char(text, 1, limit), ""))
 
 /**
  * stuff like `copytext(input, length(input))` will trim the last character of the input,

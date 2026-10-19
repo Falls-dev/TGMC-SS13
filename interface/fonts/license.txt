@@ -11,3 +11,9 @@ Tiny Unicode created by Jakob Riedle/DuffsDevice. Website indicates free for com
 
 VCR OSD Mono created by Riciery Leal/mrmanet. Website indicates 100% free, author confirms it's free for all to use.
 (https://www.dafont.com/font-comment.php?file=vcr_osd_mono)
+
+HomeVideo Regular created by GGBotNet. Website indicates free for commercial use.
+(https://ggbot.itch.io/home-video-font)
+
+PTMono Regular created by ParaType. Used Open Font License (OFL).
+(https://fonts.google.com/specimen/PT+Mono)
