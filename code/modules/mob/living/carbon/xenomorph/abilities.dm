@@ -19,6 +19,60 @@
 	return succeed_activate()
 
 // ***************************************
+// *********** Cut rock
+// ***************************************
+/datum/action/ability/activable/xeno/cut_rock
+	name = "Cut Rock"
+	desc = "Cut through an adjacent destructible rock with at most two cardinal neighboring rocks."
+	action_icon = 'icons/Xeno/actions/hivelord.dmi'
+	action_icon_state = "build_tunnel"
+	keybinding_signals = list(
+		KEYBINDING_NORMAL = COMSIG_XENOABILITY_CUT_ROCK,
+	)
+
+/datum/action/ability/activable/xeno/cut_rock/can_use_ability(atom/target, silent = FALSE, override_flags)
+	if(!..())
+		return FALSE
+	if(!istype(target, /turf/closed/mineral/smooth))
+		if(!silent)
+			xeno_owner.balloon_alert(xeno_owner, "Must target a rock")
+		return FALSE
+	if(!xeno_owner.Adjacent(target))
+		if(!silent)
+			xeno_owner.balloon_alert(xeno_owner, "Too far")
+		return FALSE
+	if(target.resistance_flags & (INDESTRUCTIBLE|PLASMACUTTER_IMMUNE))
+		if(!silent)
+			xeno_owner.balloon_alert(xeno_owner, "Rock is too tough")
+		return FALSE
+	var/neighbor_count = 0
+	for(var/direction in GLOB.cardinals)
+		var/turf/neighbor = get_step(target, direction)
+		if(!istype(neighbor, /turf/closed/mineral/smooth))
+			continue
+		neighbor_count++
+		if(neighbor_count > 2)
+			if(!silent)
+				xeno_owner.balloon_alert(xeno_owner, "Too many neighboring rocks")
+			return FALSE
+	return TRUE
+
+/datum/action/ability/activable/xeno/cut_rock/use_ability(atom/target)
+	var/turf/closed/mineral/smooth/rock = target
+	xeno_owner.face_atom(rock)
+	xeno_owner.visible_message(span_xenowarning("[xeno_owner] begins cutting through [rock]."), span_xenonotice("We begin cutting through [rock]."))
+	playsound(rock, 'sound/weapons/pierce.ogg', 25, TRUE)
+	if(!do_after(xeno_owner, PLASMACUTTER_CUT_DELAY, IGNORE_HELD_ITEM, rock, BUSY_ICON_HOSTILE, extra_checks = CALLBACK(src, PROC_REF(can_use_ability), rock, TRUE, ABILITY_USE_BUSY)))
+		return fail_activate()
+	if(!can_use_ability(rock, TRUE))
+		return fail_activate()
+	xeno_owner.do_attack_animation(rock)
+	xeno_owner.visible_message(span_xenowarning("[xeno_owner] cuts through [rock]!"), span_xenonotice("We cut through [rock]!"))
+	playsound(rock, SFX_BEHEMOTH_EARTH_PILLAR_HIT, 25, TRUE)
+	rock.ChangeTurf(rock.open_turf_type)
+	return succeed_activate()
+
+// ***************************************
 // *********** Drone-y abilities
 // ***************************************
 /datum/action/ability/activable/xeno/plant_weeds

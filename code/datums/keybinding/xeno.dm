@@ -62,6 +62,12 @@
 	keybind_signal = COMSIG_XENOABILITY_SECRETE_RESIN
 	hotkey_keys = list("R")
 
+/datum/keybinding/xeno/cut_rock
+	name = "cut_rock"
+	full_name = "Cut Rock"
+	description = "Cut through an adjacent destructible rock with at most two cardinal neighboring rocks."
+	keybind_signal = COMSIG_XENOABILITY_CUT_ROCK
+
 /datum/keybinding/xeno/recycle
 	name = "Recycle"
 	full_name = "Recycle xenomorph"

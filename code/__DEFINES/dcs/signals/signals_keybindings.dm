@@ -251,6 +251,7 @@
 #define COMSIG_XENOABILITY_CREATE_JELLY "xenoability_create_jelly"
 #define COMSIG_XENOABILITY_HEALING_INFUSION "xenoability_healing_infusion"
 #define COMSIG_XENOABILITY_RECYCLE "xenoability_recycle"
+#define COMSIG_XENOABILITY_CUT_ROCK "xenoability_cut_rock"
 
 #define COMSIG_XENOABILITY_TOGGLE_STEALTH "xenoability_toggle_stealth"
 #define COMSIG_XENOABILITY_HUNTER_BLINK "xenoability_hunter_blink"
