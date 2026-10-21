@@ -157,7 +157,7 @@
 		user.visible_message(span_notice("[user] fumbles around figuring out how to use [src]."),
 		span_notice("You fumble around figuring out how to use [src]."))
 		var/fumbling_time = SKILL_TASK_AVERAGE - (SKILL_TASK_VERY_EASY * medical_skill) // 3 seconds with medical skill, 5 without
-		if(!do_after(user, fumbling_time, NONE, patient, BUSY_ICON_UNSKILLED))
+		if(!do_after(user, fumbling_time, REQUIRE_ONLY_ADJACENCY, patient, BUSY_ICON_UNSKILLED))
 			return
 
 	var/defib_heal_amt = DEFIBRILLATOR_HEALING_TIMES_SKILL(medical_skill, defibrillator_healing)
@@ -201,7 +201,7 @@
 	span_notice("You start setting up the paddles on [patient]'s chest."))
 	playsound(get_turf(src),'sound/items/defib_charge.ogg', 45, 0) // Don't vary this, it should be exactly 7 seconds
 
-	if(!do_after(user, shock_time, NONE, patient, BUSY_ICON_FRIENDLY, BUSY_ICON_MEDICAL))
+	if(!do_after(user, shock_time, REQUIRE_ONLY_ADJACENCY, patient, BUSY_ICON_FRIENDLY, BUSY_ICON_MEDICAL))
 		to_chat(user, span_warning("You stop setting up the paddles on [patient]'s chest."))
 		return
 

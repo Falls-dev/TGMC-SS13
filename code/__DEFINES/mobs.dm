@@ -969,8 +969,12 @@ GLOBAL_LIST_INIT(human_body_parts, list(
 #define IGNORE_INCAPACITATED (1<<3)
 /// Used to prevent important slowdowns from being abused by drugs like kronkaine
 #define IGNORE_SLOWDOWNS (1<<4)
+/// Requires a target within touch range throughout the action.
+#define REQUIRE_ADJACENCY (1<<5)
 
 #define IGNORE_LOC_CHANGE (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE)
+/// Allows both participants to move while requiring them to remain within touch range.
+#define REQUIRE_ONLY_ADJACENCY (IGNORE_LOC_CHANGE | REQUIRE_ADJACENCY)
 
 // Pheromones and buff orders
 
