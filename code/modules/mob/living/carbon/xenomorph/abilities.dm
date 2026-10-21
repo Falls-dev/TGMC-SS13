@@ -62,7 +62,7 @@
 	xeno_owner.face_atom(rock)
 	xeno_owner.visible_message(span_xenowarning("[xeno_owner] begins cutting through [rock]."), span_xenonotice("We begin cutting through [rock]."))
 	playsound(rock, 'sound/weapons/pierce.ogg', 25, TRUE)
-	if(!do_after(xeno_owner, PLASMACUTTER_CUT_DELAY, IGNORE_HELD_ITEM, rock, BUSY_ICON_HOSTILE, extra_checks = CALLBACK(src, PROC_REF(can_use_ability), rock, TRUE, ABILITY_USE_BUSY)))
+	if(!do_after(xeno_owner, 300, IGNORE_HELD_ITEM, rock, BUSY_ICON_HOSTILE, extra_checks = CALLBACK(src, PROC_REF(can_use_ability), rock, TRUE, ABILITY_USE_BUSY)))
 		return fail_activate()
 	if(!can_use_ability(rock, TRUE))
 		return fail_activate()
