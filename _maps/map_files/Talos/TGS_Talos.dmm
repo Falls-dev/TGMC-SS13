@@ -14333,7 +14333,9 @@
 	},
 /obj/machinery/power/smes{
 	charge = 0;
-	name = "SMES #2"
+	name = "SMES #2";
+	input_level = 200000;
+	output_level = 190000
 	},
 /obj/structure/cable,
 /turf/open/floor/mainship/stripesquare,
@@ -29972,7 +29974,9 @@
 	},
 /obj/machinery/power/smes{
 	charge = 0;
-	name = "SMES #4"
+	name = "SMES #4";
+	input_level = 200000;
+	output_level = 190000
 	},
 /obj/structure/cable,
 /turf/open/floor/mainship/stripesquare,
@@ -35840,7 +35844,9 @@
 	},
 /obj/machinery/power/smes{
 	charge = 0;
-	name = "SMES #3"
+	name = "SMES #3";
+	input_level = 200000;
+	output_level = 190000
 	},
 /obj/structure/cable,
 /turf/open/floor/mainship/stripesquare,
@@ -39990,7 +39996,9 @@
 	},
 /obj/machinery/power/smes{
 	charge = 0;
-	name = "SMES #1"
+	name = "SMES #1";
+	input_level = 190000;
+	output_level = 200000
 	},
 /obj/structure/cable,
 /turf/open/floor/mainship/stripesquare,
