@@ -716,6 +716,9 @@
 	crashing_dropship.crashing = TRUE
 	crashing_dropship.unlock_all()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_DROPSHIP_HIJACKED)
+	// A hijacked dropship automatically calls for an emergency response.
+	if(CONFIG_GET(flag/infestation_ert_allowed) && SSticker?.mode && !SSticker.mode.on_distress_cooldown && !SSticker.mode.waiting_for_candidates)
+		SSticker.mode.activate_distress()
 	priority_announce("Зафиксирован незапланированный вылет Нормандии из зоны боевых действий. Вероятен угон.", title = "Неисправность Нормандии", type = ANNOUNCEMENT_PRIORITY, sound = 'sound/AI/hijack.ogg', color_override = "red")
 	to_chat(user, span_danger("A loud alarm erupts from [src]! The fleshy hosts must know that you can access it!"))
 	user.hive.on_shuttle_hijack(crashing_dropship)
