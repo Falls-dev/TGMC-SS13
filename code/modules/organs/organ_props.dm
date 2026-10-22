@@ -11,6 +11,12 @@
 	name = "heart"
 	icon_state = "heart-on"
 
+// Used by the legacy Big Red modular medical rooms.
+/obj/item/organ/heart/prosthetic
+	name = "prosthetic heart"
+	desc = "Artifical heart."
+	icon_state = "heart-prosthetic"
+
 /obj/item/organ/heart/examine(mob/user)
 	. = ..()
 	if(iszombiecrashgamemode(SSticker.mode))

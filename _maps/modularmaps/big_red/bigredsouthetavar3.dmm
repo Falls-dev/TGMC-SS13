@@ -2,45 +2,54 @@
 "h" = (
 /obj/effect/landmark/fog_blocker,
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/south)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/south/theme_bigred_v2)
 "i" = (
 /obj/effect/landmark/fog_blocker,
 /turf/closed/wall/r_wall,
-/area/bigredv2/outside/nanotrasen_lab/inside)
+/area/bigredv2/outside/nanotrasen_lab/inside/theme_bigred_v2)
 "n" = (
 /obj/effect/landmark/fog_blocker,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/south)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/south/theme_bigred_v2)
 "v" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/south)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/south/theme_bigred_v2)
 "x" = (
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/south)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/south/theme_bigred_v2)
 "J" = (
-/turf/closed/mineral/smooth/bigred/indestructible,
+/turf/closed/mineral/smooth/bluefrostwall/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	 baseturfs = /turf/open/floor/plating/ground/ice
+	},
 /area/space)
 "L" = (
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	 baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "O" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/south)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/south/theme_bigred_v2)
 "Q" = (
 /turf/closed/wall/r_wall,
-/area/bigredv2/outside/nanotrasen_lab/inside)
+/area/bigredv2/outside/nanotrasen_lab/inside/theme_bigred_v2)
 "S" = (
 /obj/effect/landmark/fog_blocker,
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	 baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "Z" = (
 /obj/effect/landmark/weed_node,
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/south)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/south/theme_bigred_v2)
 
 (1,1,1) = {"
 Q

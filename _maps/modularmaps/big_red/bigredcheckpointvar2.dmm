@@ -1,65 +1,68 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
+"g" = (
 /obj/machinery/door/poddoor/mainship{
 	dir = 8
 	},
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/se)
-"h" = (
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/se)
-"i" = (
-/obj/effect/ai_node,
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/se)
-"I" = (
-/obj/machinery/door/poddoor/mainship{
-	dir = 8
-	},
-/turf/open/floor/marking/asteroidwarning{
+/turf/open/floor/marking/warning{
 	dir = 1
 	},
-/area/bigredv2/outside/se)
-"N" = (
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
-"T" = (
+/area/bigredv2/outside/se/theme_bigred_v2)
+"k" = (
+/obj/effect/ai_node,
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/se/theme_bigred_v2)
+"p" = (
+/obj/machinery/door/poddoor/mainship{
+	dir = 8
+	},
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/se/theme_bigred_v2)
+"t" = (
 /obj/effect/landmark/weed_node,
 /obj/machinery/door/poddoor/mainship{
 	dir = 8
 	},
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/se)
-"W" = (
-/turf/open/floor/marking/asteroidwarning{
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/se/theme_bigred_v2)
+"E" = (
+/turf/open/floor/marking/warning{
 	dir = 1
 	},
-/area/bigredv2/outside/se)
+/area/bigredv2/outside/se/theme_bigred_v2)
+"L" = (
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/se/theme_bigred_v2)
+"N" = (
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "Z" = (
 /turf/closed/wall/r_wall,
-/area/bigredv2/caves/rock)
+/area/bigredv2/caves/rock/theme_bigred_v2)
 
 (1,1,1) = {"
 Z
-I
-T
-a
+g
+t
+p
 "}
 (2,1,1) = {"
 N
-W
-h
-h
+E
+L
+L
 "}
 (3,1,1) = {"
 N
-W
-i
-h
+E
+k
+L
 "}
 (4,1,1) = {"
 Z
-I
-a
-a
+g
+p
+p
 "}

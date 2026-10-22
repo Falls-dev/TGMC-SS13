@@ -1,119 +1,75 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/green/hidden{
-	dir = 5
-	},
-/turf/open/floor/marking/asteroidwarning{
-	dir = 10
-	},
-/area/bigredv2/outside/c)
-"b" = (
+"ab" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/weaponry/ammo/machinegun,
 /turf/open/floor,
-/area/bigredv2/outside/storage)
-"c" = (
+/area/bigredv2/outside/storage/theme_bigred_v2)
+"ac" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	on = 1
 	},
 /turf/open/floor,
-/area/bigredv2/outside/storage)
-"d" = (
+/area/bigredv2/outside/storage/theme_bigred_v2)
+"ad" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 6
 	},
 /turf/open/floor,
-/area/bigredv2/outside/storage)
-"g" = (
-/obj/machinery/atmospherics/pipe/simple/green/hidden{
-	dir = 9
-	},
-/obj/structure/cable,
-/obj/effect/ai_node,
-/turf/open/floor/marking/asteroidwarning{
-	dir = 6
-	},
-/area/bigredv2/outside/c)
-"h" = (
-/turf/open/floor/marking/asteroidwarning{
-	dir = 4
-	},
-/area/bigredv2/outside/c)
-"i" = (
-/obj/machinery/atmospherics/pipe/simple/green/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor,
-/area/bigredv2/outside/storage)
-"j" = (
-/obj/structure/cable,
-/obj/effect/ai_node,
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"k" = (
+/area/bigredv2/outside/storage/theme_bigred_v2)
+"ae" = (
 /obj/structure/cable,
 /obj/effect/landmark/weed_node,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 10
 	},
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"l" = (
-/obj/machinery/atmospherics/pipe/simple/green/hidden,
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"af" = (
 /obj/structure/cable,
-/turf/open/floor/marking/asteroidwarning{
+/obj/machinery/atmospherics/pipe/simple/green/hidden,
+/turf/open/floor/marking/warning{
 	dir = 8
 	},
-/area/bigredv2/outside/c)
-"m" = (
+/area/bigredv2/outside/c/theme_bigred_v2)
+"ai" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor,
+/area/bigredv2/outside/storage/theme_bigred_v2)
+"am" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/weaponry/ammo/rifle,
 /turf/open/floor,
-/area/bigredv2/outside/storage)
-"n" = (
-/obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/structure/cable,
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"o" = (
+/area/bigredv2/outside/storage/theme_bigred_v2)
+"ao" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/weaponry/gun/rifles,
 /obj/effect/spawner/random/weaponry/gun/machineguns,
 /turf/open/floor,
-/area/bigredv2/outside/storage)
-"q" = (
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"r" = (
-/turf/closed/wall/r_wall,
-/area/bigredv2/outside/storage)
-"s" = (
-/obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/bigredv2/outside/c)
-"t" = (
-/obj/machinery/atmospherics/pipe/simple/green/hidden{
-	dir = 4
-	},
+/area/bigredv2/outside/storage/theme_bigred_v2)
+"ap" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden,
 /obj/structure/cable,
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"u" = (
+/turf/open/floor/marking/warning{
+	dir = 8
+	},
+/area/bigredv2/outside/c/theme_bigred_v2)
+"ar" = (
+/turf/closed/wall/r_wall,
+/area/bigredv2/outside/storage/theme_bigred_v2)
+"as" = (
+/obj/effect/landmark/weed_node,
+/turf/open/floor/plating/ground/snow/layer2,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"au" = (
 /obj/effect/ai_node,
 /turf/open/floor,
-/area/bigredv2/outside/storage)
-"v" = (
-/obj/machinery/atmospherics/pipe/simple/green/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/marking/asteroidwarning,
-/area/bigredv2/outside/c)
-"w" = (
+/area/bigredv2/outside/storage/theme_bigred_v2)
+"aw" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/weaponry/ammo/sidearm,
 /obj/effect/spawner/random/weaponry/ammo/sidearm,
@@ -123,111 +79,70 @@
 /obj/machinery/power/apc/drained,
 /obj/structure/cable,
 /turf/open/floor,
-/area/bigredv2/outside/storage)
-"y" = (
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/bigredv2/outside/c)
-"A" = (
+/area/bigredv2/outside/storage/theme_bigred_v2)
+"ax" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 5
+	},
+/turf/open/floor/marking/warning{
+	dir = 10
+	},
+/area/bigredv2/outside/c/theme_bigred_v2)
+"ay" = (
+/turf/open/floor/plating/ground/snow/layer2,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"az" = (
+/turf/open/floor/marking/warning{
+	dir = 8
+	},
+/area/bigredv2/outside/c/theme_bigred_v2)
+"aA" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/weaponry/gun/sidearms,
 /turf/open/floor,
-/area/bigredv2/outside/storage)
-"B" = (
+/area/bigredv2/outside/storage/theme_bigred_v2)
+"aB" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/weaponry/gun,
 /turf/open/floor,
-/area/bigredv2/outside/storage)
-"C" = (
+/area/bigredv2/outside/storage/theme_bigred_v2)
+"aC" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/weaponry/gun/shotgun,
 /obj/effect/spawner/random/weaponry/gun,
 /turf/open/floor,
-/area/bigredv2/outside/storage)
-"D" = (
-/turf/open/floor/marking/asteroidwarning{
-	dir = 1
-	},
-/area/bigredv2/outside/c)
-"E" = (
-/obj/effect/ai_node,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/green/hidden{
-	dir = 1
-	},
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"F" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/green/hidden,
-/turf/open/floor/marking/asteroidwarning{
-	dir = 8
-	},
-/area/bigredv2/outside/c)
-"G" = (
-/turf/open/floor/marking/asteroidwarning{
-	dir = 8
-	},
-/area/bigredv2/outside/c)
-"H" = (
-/obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/structure/cable,
-/turf/open/floor/marking/asteroidwarning{
-	dir = 4
-	},
-/area/bigredv2/outside/c)
-"I" = (
-/obj/structure/sign/securearea,
-/turf/open/floor/marking/asteroidwarning{
-	dir = 1
-	},
-/area/bigredv2/outside/c)
-"J" = (
+/area/bigredv2/outside/storage/theme_bigred_v2)
+"aJ" = (
 /turf/open/floor,
-/area/bigredv2/outside/storage)
-"K" = (
+/area/bigredv2/outside/storage/theme_bigred_v2)
+"aK" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/weaponry/ammo/shotgun,
 /turf/open/floor,
-/area/bigredv2/outside/storage)
-"L" = (
+/area/bigredv2/outside/storage/theme_bigred_v2)
+"aL" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/weaponry/ammo/shotgun,
 /obj/effect/spawner/random/weaponry/ammo/shotgun,
 /turf/open/floor,
-/area/bigredv2/outside/storage)
-"M" = (
-/obj/machinery/atmospherics/pipe/manifold/green/hidden{
-	dir = 1
-	},
-/obj/structure/cable,
-/obj/effect/ai_node,
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"O" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/green/hidden{
-	dir = 4
-	},
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"P" = (
-/turf/open/floor/marking/asteroidwarning{
-	dir = 5
-	},
-/area/bigredv2/outside/c)
-"Q" = (
+/area/bigredv2/outside/storage/theme_bigred_v2)
+"aN" = (
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"aQ" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/weaponry/ammo/shotgun,
 /obj/effect/spawner/random/weaponry/ammo/shotgun,
 /obj/effect/spawner/random/weaponry/ammo,
 /turf/open/floor,
-/area/bigredv2/outside/storage)
-"R" = (
+/area/bigredv2/outside/storage/theme_bigred_v2)
+"aR" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/weaponry/gun/machineguns,
 /turf/open/floor,
-/area/bigredv2/outside/storage)
-"S" = (
+/area/bigredv2/outside/storage/theme_bigred_v2)
+"aS" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
@@ -236,211 +151,296 @@
 	name = "\improper Emergency Vault"
 	},
 /turf/open/floor,
-/area/bigredv2/outside/storage)
-"U" = (
+/area/bigredv2/outside/storage/theme_bigred_v2)
+"aT" = (
+/obj/structure/cable,
+/obj/effect/ai_node,
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"aU" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/weaponry/ammo/machinegun,
 /obj/effect/spawner/random/weaponry/ammo/machinegun,
 /turf/open/floor,
-/area/bigredv2/outside/storage)
-"V" = (
+/area/bigredv2/outside/storage/theme_bigred_v2)
+"aV" = (
 /obj/structure/rack,
 /obj/structure/sign/securearea,
 /turf/open/floor,
-/area/bigredv2/outside/storage)
-"W" = (
-/turf/open/floor/marking/asteroidwarning{
-	dir = 9
-	},
-/area/bigredv2/outside/c)
-"X" = (
+/area/bigredv2/outside/storage/theme_bigred_v2)
+"aX" = (
 /obj/structure/cable,
 /turf/open/floor,
-/area/bigredv2/outside/storage)
-"Y" = (
-/obj/effect/landmark/weed_node,
-/turf/open/floor/marking/asteroidwarning{
-	dir = 1
-	},
-/area/bigredv2/outside/c)
-"Z" = (
+/area/bigredv2/outside/storage/theme_bigred_v2)
+"aZ" = (
 /obj/structure/rack,
 /turf/open/floor,
-/area/bigredv2/outside/storage)
+/area/bigredv2/outside/storage/theme_bigred_v2)
+"df" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden,
+/obj/structure/cable,
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"gu" = (
+/turf/open/floor/marking/warning{
+	dir = 1
+	},
+/area/bigredv2/outside/c/theme_bigred_v2)
+"oE" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"sc" = (
+/obj/effect/landmark/weed_node,
+/turf/open/floor/marking/warning{
+	dir = 1
+	},
+/area/bigredv2/outside/c/theme_bigred_v2)
+"si" = (
+/obj/machinery/atmospherics/pipe/manifold/green/hidden{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/effect/ai_node,
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"sU" = (
+/turf/open/floor/marking/warning{
+	dir = 5
+	},
+/area/bigredv2/outside/c/theme_bigred_v2)
+"yp" = (
+/turf/open/floor/marking/warning{
+	dir = 4
+	},
+/area/bigredv2/outside/c/theme_bigred_v2)
+"Ff" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/marking/warning,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"Rx" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 9
+	},
+/obj/structure/cable,
+/obj/effect/ai_node,
+/turf/open/floor/marking/warning{
+	dir = 6
+	},
+/area/bigredv2/outside/c/theme_bigred_v2)
+"RI" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 4
+	},
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
+"Sb" = (
+/turf/open/floor/marking/warning{
+	dir = 9
+	},
+/area/bigredv2/outside/c/theme_bigred_v2)
+"Sv" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden,
+/obj/structure/cable,
+/turf/open/floor/marking/warning{
+	dir = 4
+	},
+/area/bigredv2/outside/c/theme_bigred_v2)
+"TH" = (
+/obj/structure/sign/securearea,
+/turf/open/floor/marking/warning{
+	dir = 1
+	},
+/area/bigredv2/outside/c/theme_bigred_v2)
+"XU" = (
+/obj/effect/ai_node,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/green/hidden{
+	dir = 1
+	},
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
 
 (1,1,1) = {"
-s
-W
-G
-q
-j
-k
-l
-F
-a
+as
+Sb
+az
+aN
+aT
+ae
+ap
+af
+ax
 "}
 (2,1,1) = {"
-y
-D
-r
-r
-r
-r
-r
-r
-v
+ay
+gu
+ar
+ar
+ar
+ar
+ar
+ar
+Ff
 "}
 (3,1,1) = {"
-y
-I
-r
-K
-J
-J
-V
-r
-v
+ay
+TH
+ar
+aK
+aJ
+aJ
+aV
+ar
+Ff
 "}
 (4,1,1) = {"
-y
-D
-r
-U
-J
-J
-C
-r
-v
+ay
+gu
+ar
+aU
+aJ
+aJ
+aC
+ar
+Ff
 "}
 (5,1,1) = {"
-s
-D
-r
-Z
-J
-J
-Z
-r
-v
+as
+gu
+ar
+aZ
+aJ
+aJ
+aZ
+ar
+Ff
 "}
 (6,1,1) = {"
-y
-D
-r
-Z
-J
-J
-R
-r
-v
+ay
+gu
+ar
+aZ
+aJ
+aJ
+aR
+ar
+Ff
 "}
 (7,1,1) = {"
-y
-D
-r
-L
-u
-J
-o
-r
-O
+ay
+gu
+ar
+aL
+au
+aJ
+ao
+ar
+RI
 "}
 (8,1,1) = {"
-y
-D
-r
-w
-X
-J
-A
-r
-E
+ay
+gu
+ar
+aw
+aX
+aJ
+aA
+ar
+XU
 "}
 (9,1,1) = {"
-y
-Y
-r
-b
-X
-J
-Z
-r
-t
+ay
+sc
+ar
+ab
+aX
+aJ
+aZ
+ar
+oE
 "}
 (10,1,1) = {"
-y
-D
-r
-L
-d
-c
-Z
-r
-v
+ay
+gu
+ar
+aL
+ad
+ac
+aZ
+ar
+Ff
 "}
 (11,1,1) = {"
-y
-D
-r
-m
-i
-J
-Z
-r
-v
+ay
+gu
+ar
+am
+ai
+aJ
+aZ
+ar
+Ff
 "}
 (12,1,1) = {"
-y
-D
-r
-Z
-i
-J
-Z
-r
-v
+ay
+gu
+ar
+aZ
+ai
+aJ
+aZ
+ar
+Ff
 "}
 (13,1,1) = {"
-y
-Y
-r
-Z
-i
-J
-B
-r
-v
+ay
+sc
+ar
+aZ
+ai
+aJ
+aB
+ar
+Ff
 "}
 (14,1,1) = {"
-y
-I
-r
-Q
-i
-J
-V
-r
-v
+ay
+TH
+ar
+aQ
+ai
+aJ
+aV
+ar
+Ff
 "}
 (15,1,1) = {"
-y
-D
-r
-r
-S
-r
-r
-r
-v
+ay
+gu
+ar
+ar
+aS
+ar
+ar
+ar
+Ff
 "}
 (16,1,1) = {"
-y
-P
-h
-q
-M
-n
-H
-H
-g
+ay
+sU
+yp
+aN
+si
+df
+Sv
+Sv
+Rx
 "}
