@@ -191,7 +191,7 @@
 	ears = /obj/item/radio/headset/mainship/mcom
 	w_uniform = /obj/item/clothing/under/rank/medical/blue
 	wear_suit = /obj/item/clothing/suit/storage/labcoat/cmo
-	shoes = /obj/item/clothing/shoes/white
+	shoes = /obj/item/clothing/shoes/marine/white
 	gloves = /obj/item/clothing/gloves/latex
 	glasses = /obj/item/clothing/glasses/hud/health
 	mask = /obj/item/clothing/mask/surgical
@@ -215,7 +215,7 @@
 	ears = /obj/item/radio/headset/mainship/doc
 	w_uniform = /obj/item/clothing/under/rank/medical
 	wear_suit = /obj/item/clothing/suit/storage/labcoat
-	shoes = /obj/item/clothing/shoes/white
+	shoes = /obj/item/clothing/shoes/marine/white
 	gloves = /obj/item/clothing/gloves/latex
 	glasses = /obj/item/clothing/glasses/hud/health
 	mask = /obj/item/clothing/mask/surgical
@@ -271,7 +271,7 @@
 	belt = /obj/item/storage/belt/utility/full
 	ears = /obj/item/radio/headset/mainship/mcom
 	w_uniform = /obj/item/clothing/under/rank/synthetic
-	shoes = /obj/item/clothing/shoes/white
+	shoes = /obj/item/clothing/shoes/marine/white
 	gloves = /obj/item/clothing/gloves/insulated
 	r_pocket = /obj/item/storage/pouch/general/medium
 	l_pocket = /obj/item/storage/pouch/general/medium

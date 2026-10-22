@@ -50,8 +50,8 @@
 			/obj/item/clothing/shoes/marine/brown/full = -1,
 			/obj/item/clothing/shoes/marine/headskin = -1,
 			/obj/item/clothing/shoes/marine/separatist = -1,
-			/obj/item/clothing/shoes/cowboy = -1,
-			/obj/item/clothing/shoes/white = -1,
+			/obj/item/clothing/shoes/marine/cowboy = -1,
+			/obj/item/clothing/shoes/marine/white = -1,
 		),
 		"Webbings" = list(
 			/obj/item/armor_module/storage/uniform/black_vest = -1,
@@ -213,7 +213,7 @@
 			/obj/item/clothing/suit/surgical = -1,
 			/obj/item/clothing/mask/surgical = -1,
 			/obj/item/clothing/gloves/latex = -1,
-			/obj/item/clothing/shoes/white = -1,
+			/obj/item/clothing/shoes/marine/white = -1,
 			/obj/item/clothing/suit/storage/labcoat/paramedic = -1,
 		),
 		"Eyewear" = list(
@@ -237,7 +237,7 @@
 			/obj/item/clothing/under/marine/whites = -1,
 			/obj/item/clothing/suit/white_dress_jacket = -1,
 			/obj/item/clothing/head/white_dress = -1,
-			/obj/item/clothing/shoes/white = -1,
+			/obj/item/clothing/shoes/marine/white = -1,
 			/obj/item/clothing/gloves/white = -1,
 			/obj/item/clothing/under/marine/service = -1,
 			/obj/item/clothing/head/garrisoncap = -1,
@@ -274,6 +274,6 @@
 			/obj/item/clothing/head/tgmcberet/medical = 3,
 			/obj/item/storage/backpack/satchel/med = 3,
 			/obj/item/clothing/gloves/latex = -1,
-			/obj/item/clothing/shoes/white = -1,
+			/obj/item/clothing/shoes/marine/white = -1,
 		),
 	)

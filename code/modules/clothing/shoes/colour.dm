@@ -34,7 +34,7 @@
 	desc = "Stylish red shoes."
 	icon_state = "red"
 
-/obj/item/clothing/shoes/white
+/obj/item/clothing/shoes/marine/white
 	name = "white shoes"
 	icon_state = "white"
 	permeability_coefficient = 0.01

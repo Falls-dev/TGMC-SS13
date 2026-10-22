@@ -332,7 +332,7 @@
 	back = /obj/item/storage/backpack/satchel/chem
 	belt = /obj/item/storage/belt/hypospraybelt
 	gloves = /obj/item/clothing/gloves/latex
-	shoes = /obj/item/clothing/shoes/white
+	shoes = /obj/item/clothing/shoes/marine/white
 	ears = /obj/item/radio/survivor
 	glasses = /obj/item/clothing/glasses/science
 	l_pocket = /obj/item/flashlight
