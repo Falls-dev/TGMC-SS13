@@ -227,9 +227,6 @@
 /obj/item/card/id/dogtag/smartgun
 	marine_points = list(CAT_SGSUP = SMARTGUNNER_TOTAL_BUY_POINTS)
 
-/obj/item/card/id/dogtag/robot
-	marine_points = list(CAT_ROBOT = ROBOT_TOTAL_BUY_POINTS)
-
 /obj/item/card/id/dogtag/engineer
 	marine_points = list(CAT_ENGSUP = ENGINEER_TOTAL_BUY_POINTS)
 

@@ -74,7 +74,6 @@
 			data["xeno_name"] = xeno_name
 			data["synthetic_name"] = synthetic_name
 			data["synthetic_type"] = synthetic_type
-			data["squad_robot_name"] = squad_robot_name
 			data["squad_robot_type"] = squad_robot_type
 			data["random_name"] = random_name
 			data["ai_name"] = ai_name
@@ -479,14 +478,6 @@
 
 			yautja_status = options[new_yautja_status]
 
-		if("squad_robot_name")
-			var/newValue = params["newValue"]
-			newValue = reject_bad_name(newValue, TRUE)
-			if(!newValue)
-				tgui_alert(user, "Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .", "Invalid name", list("Ok"))
-				return
-			squad_robot_name = newValue
-
 		if("squad_robot_type")
 			var/choice = tgui_input_list(ui.user, "What model of robot do you want to play with?", "Robot model choice", ROBOT_TYPES)
 			if(!choice)
@@ -547,9 +538,14 @@
 			var/choice = tgui_input_list(ui.user, "What species do you want to play with?", "Species choice", get_playable_species())
 			if(!choice || species == choice)
 				return
+			names_by_species[species] = real_name
 			species = choice
-			var/datum/species/S = GLOB.all_species[species]
-			real_name = S.random_name(gender)
+			if(names_by_species[species])
+				real_name = names_by_species[species]
+			else
+				var/datum/species/S = GLOB.all_species[species]
+				real_name = S.random_name(gender)
+				names_by_species[species] = real_name
 			update_preview_icon()
 
 		if("toggle_eyesight")

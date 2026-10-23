@@ -48,12 +48,19 @@
 	police = SKILL_POLICE_MP
 	powerloader = SKILL_POWERLOADER_MASTER
 
-/datum/skills/synthetic/early
-	name = "Early Synthetic"
+/datum/skills/synthetic/engineer
+	name = "Engineer Synthetic"
 	engineer = SKILL_ENGINEER_MASTER
 	construction = SKILL_CONSTRUCTION_MASTER
 	medical = SKILL_MEDICAL_COMPETENT
 	surgery = SKILL_SURGERY_PROFESSIONAL
+
+/datum/skills/synthetic/medical
+	name = "Medical Synthetic"
+	engineer = SKILL_ENGINEER_ENGI
+	construction = SKILL_CONSTRUCTION_ADVANCED
+	medical = SKILL_MEDICAL_MASTER
+	surgery = SKILL_SURGERY_MASTER
 
 /datum/skills/captain
 	name = CAPTAIN
