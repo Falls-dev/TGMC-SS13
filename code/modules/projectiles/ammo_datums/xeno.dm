@@ -38,8 +38,8 @@ GLOBAL_LIST_INIT(no_sticky_resin, typecacheof(list(
 	var/hivenumber = XENO_HIVE_NORMAL
 
 /datum/ammo/xeno/toxin
-	icon_state = "transvitox"
-	name = "transvitox spit"
+	icon_state = "neurotoxin"
+	name = "neurotoxic spit"
 	ammo_behavior_flags = AMMO_XENO|AMMO_TARGET_TURF|AMMO_SKIPS_ALIENS
 	spit_cost = 55
 	added_spit_delay = 0
@@ -54,14 +54,14 @@ GLOBAL_LIST_INIT(no_sticky_resin, typecacheof(list(
 	smoke_strength = 0.5
 	smoke_range = 0
 	reagent_transfer_amount = 4
-	bullet_color = COLOR_TOXIN_XENO_TRANSVITOX
+	bullet_color = COLOR_LIGHT_ORANGE
 
 ///Set up the list of reagents the spit transfers upon impact
 /datum/ammo/xeno/toxin/proc/set_reagents()
-	spit_reagents = list(/datum/reagent/toxin/xeno_transvitox = reagent_transfer_amount)
+	spit_reagents = list(/datum/reagent/toxin/xeno_neurotoxin = reagent_transfer_amount)
 
 /datum/ammo/xeno/toxin/on_hit_mob(mob/living/carbon/carbon_victim, atom/movable/projectile/proj)
-	drop_transvitox_smoke(get_turf(carbon_victim))
+	drop_neuro_smoke(get_turf(carbon_victim))
 
 	if(!istype(carbon_victim) || carbon_victim.stat == DEAD || carbon_victim.issamexenohive(proj.firer) )
 		return
@@ -82,18 +82,18 @@ GLOBAL_LIST_INIT(no_sticky_resin, typecacheof(list(
 
 /datum/ammo/xeno/toxin/on_hit_obj(obj/target_object, atom/movable/projectile/proj)
 	var/turf/target_turf = get_turf(target_object)
-	drop_transvitox_smoke(target_turf.density ? proj.loc : target_turf)
+	drop_neuro_smoke(target_turf.density ? proj.loc : target_turf)
 
 /datum/ammo/xeno/toxin/on_hit_turf(turf/target_turf, atom/movable/projectile/proj)
-	drop_transvitox_smoke(target_turf.density ? proj.loc : target_turf)
+	drop_neuro_smoke(target_turf.density ? proj.loc : target_turf)
 
 /datum/ammo/xeno/toxin/do_at_max_range(turf/target_turf, atom/movable/projectile/proj)
-	drop_transvitox_smoke(target_turf.density ? proj.loc : target_turf)
+	drop_neuro_smoke(target_turf.density ? proj.loc : target_turf)
 
 /datum/ammo/xeno/toxin/set_smoke()
-	smoke_system = new /datum/effect_system/smoke_spread/xeno/transvitox/light()
+	smoke_system = new /datum/effect_system/smoke_spread/xeno/neuro/light()
 
-/datum/ammo/xeno/toxin/proc/drop_transvitox_smoke(turf/target_turf)
+/datum/ammo/xeno/toxin/proc/drop_neuro_smoke(turf/target_turf)
 	if(target_turf.density)
 		return
 
