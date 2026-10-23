@@ -1818,7 +1818,7 @@
 "aYN" = (
 /obj/structure/cable,
 /obj/machinery/light/mainship,
-/obj/machinery/power/fusion_engine/random,
+/obj/machinery/power/fusion_engine/preset,
 /turf/open/floor/plating/plating_catwalk/dark,
 /area/mainship/engineering/engine_core)
 "aYU" = (
@@ -7432,7 +7432,7 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden/layer1{
 	dir = 10
 	},
-/obj/machinery/power/fusion_engine/random,
+/obj/machinery/power/fusion_engine/preset,
 /turf/open/floor/plating/plating_catwalk/dark,
 /area/mainship/engineering/engine_core)
 "eoO" = (
@@ -10855,7 +10855,7 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden/layer1{
 	dir = 4
 	},
-/obj/machinery/power/fusion_engine/random,
+/obj/machinery/power/fusion_engine/preset,
 /turf/open/floor/plating/plating_catwalk/dark,
 /area/mainship/engineering/engine_core)
 "gvu" = (
@@ -14327,7 +14327,9 @@
 	},
 /obj/machinery/power/smes{
 	charge = 0;
-	name = "SMES #2"
+	name = "SMES #2";
+	input_level = 200000;
+	output_level = 190000
 	},
 /obj/structure/cable,
 /turf/open/floor/mainship/stripesquare,
@@ -25140,7 +25142,7 @@
 /area/mainship/shipboard/weapon_room)
 "oOb" = (
 /obj/structure/cable,
-/obj/machinery/power/fusion_engine/random,
+/obj/machinery/power/fusion_engine/preset,
 /turf/open/floor/plating/plating_catwalk/dark,
 /area/mainship/engineering/engine_core)
 "oOf" = (
@@ -25515,7 +25517,7 @@
 "pbj" = (
 /obj/structure/cable,
 /obj/machinery/camera/autoname,
-/obj/machinery/power/fusion_engine/random,
+/obj/machinery/power/fusion_engine/preset,
 /turf/open/floor/plating/plating_catwalk/dark,
 /area/mainship/engineering/engine_core)
 "pbx" = (
@@ -29965,7 +29967,9 @@
 	},
 /obj/machinery/power/smes{
 	charge = 0;
-	name = "SMES #4"
+	name = "SMES #4";
+	input_level = 200000;
+	output_level = 190000
 	},
 /obj/structure/cable,
 /turf/open/floor/mainship/stripesquare,
@@ -32490,7 +32494,7 @@
 	dir = 1
 	},
 /obj/machinery/camera/autoname,
-/obj/machinery/power/fusion_engine/random,
+/obj/machinery/power/fusion_engine/preset,
 /turf/open/floor/plating/plating_catwalk/dark,
 /area/mainship/engineering/engine_core)
 "thX" = (
@@ -32757,7 +32761,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 8
 	},
-/obj/machinery/power/fusion_engine/random,
+/obj/machinery/power/fusion_engine/preset,
 /turf/open/floor/plating/plating_catwalk/dark,
 /area/mainship/engineering/engine_core)
 "tqj" = (
@@ -35832,7 +35836,9 @@
 	},
 /obj/machinery/power/smes{
 	charge = 0;
-	name = "SMES #3"
+	name = "SMES #3";
+	input_level = 200000;
+	output_level = 190000
 	},
 /obj/structure/cable,
 /turf/open/floor/mainship/stripesquare,
@@ -36063,7 +36069,7 @@
 /obj/machinery/light/mainship{
 	dir = 1
 	},
-/obj/machinery/power/fusion_engine/random,
+/obj/machinery/power/fusion_engine/preset,
 /turf/open/floor/plating/plating_catwalk/dark,
 /area/mainship/engineering/engine_core)
 "vxU" = (
@@ -39982,7 +39988,9 @@
 	},
 /obj/machinery/power/smes{
 	charge = 0;
-	name = "SMES #1"
+	name = "SMES #1";
+	input_level = 190000;
+	output_level = 200000
 	},
 /obj/structure/cable,
 /turf/open/floor/mainship/stripesquare,
