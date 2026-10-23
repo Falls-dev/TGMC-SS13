@@ -116,10 +116,6 @@
 /obj/effect/ai_node,
 /turf/open/floor/tile/dark,
 /area/lv624/ground/caves/central1)
-"oL" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/caves/central1)
 "po" = (
 /obj/effect/decal/cleanable/blood/drip,
 /obj/structure/table/wood,
@@ -280,10 +276,6 @@
 /area/lv624/ground/caves/central2)
 "JW" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/caves/central2)
-"KA" = (
-/obj/effect/landmark/excavation_site_spawner,
 /turf/open/floor/plating/ground/dirt,
 /area/lv624/ground/caves/central2)
 "KV" = (
@@ -783,7 +775,7 @@ fs
 fs
 fs
 fs
-KA
+fs
 fs
 fs
 fs
@@ -2063,7 +2055,7 @@ fs
 fs
 fs
 fs
-KA
+fs
 fs
 fs
 fs
@@ -2604,7 +2596,7 @@ QP
 fs
 fs
 fs
-KA
+fs
 fs
 fs
 fs
@@ -3026,7 +3018,7 @@ TO
 QP
 Fz
 Dn
-oL
+Dn
 Dn
 Fz
 QP

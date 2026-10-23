@@ -195,13 +195,6 @@
 	dir = 9
 	},
 /area/lv624/lazarus/comms)
-"A" = (
-/obj/effect/landmark/excavation_site_spawner,
-/obj/effect/landmark/weed_node,
-/turf/open/floor/tile/brown{
-	dir = 9
-	},
-/area/lv624/lazarus/comms)
 "B" = (
 /obj/structure/window/framed/colony/reinforced,
 /turf/open/floor/plating,
@@ -390,7 +383,7 @@ a
 B
 w
 x
-A
+U
 x
 x
 q
@@ -513,7 +506,7 @@ P
 P
 t
 L
-A
+U
 P
 P
 G

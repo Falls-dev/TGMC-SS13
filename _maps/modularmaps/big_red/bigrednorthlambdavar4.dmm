@@ -79,11 +79,6 @@
 	dir = 5
 	},
 /area/bigredv2/caves/lambda_lab)
-"R" = (
-/obj/effect/ai_node,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast)
 "S" = (
 /obj/machinery/chem_dispenser,
 /turf/open/floor/tile/whiteyellow{
@@ -1827,7 +1822,7 @@ q
 q
 s
 s
-R
+d
 s
 s
 s

@@ -179,10 +179,6 @@
 /obj/effect/landmark/xeno_resin_wall,
 /turf/open/floor/plating/ground/dirt,
 /area/lv624/ground/caves/central1)
-"aT" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/caves/central2)
 "aU" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
 /turf/closed/mineral/smooth,
@@ -242,10 +238,6 @@
 /turf/open/floor/tile/vault{
 	dir = 8
 	},
-/area/lv624/ground/caves/central1)
-"VY" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
 /area/lv624/ground/caves/central1)
 "ZQ" = (
 /obj/effect/landmark/xeno_resin_door,
@@ -577,7 +569,7 @@ af
 af
 ac
 af
-aT
+af
 af
 ad
 ac
@@ -1307,7 +1299,7 @@ aC
 ac
 af
 af
-aT
+af
 af
 ad
 af
@@ -2398,7 +2390,7 @@ aC
 af
 af
 af
-aT
+af
 af
 ac
 af
@@ -2820,7 +2812,7 @@ aM
 aC
 ar
 ar
-VY
+ar
 ar
 ar
 aC

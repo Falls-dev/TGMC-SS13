@@ -911,10 +911,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/broken,
 /area/oscar_outpost/village/abandonedbase)
-"wa" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/tile/bar,
-/area/oscar_outpost/village/abandonedbase)
 "wq" = (
 /obj/machinery/light{
 	dir = 8
@@ -3135,7 +3131,7 @@ mH
 Eq
 Op
 Ax
-wa
+WR
 WR
 Dt
 Ax
@@ -4316,7 +4312,7 @@ vR
 Eq
 Op
 ZG
-wa
+WR
 pz
 ZG
 RN

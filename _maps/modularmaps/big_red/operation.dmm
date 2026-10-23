@@ -59,13 +59,6 @@
 	dir = 8
 	},
 /area/bigredv2/outside/admin_building)
-"dQ" = (
-/obj/structure/bed/chair/office/dark{
-	dir = 1
-	},
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/tile/white,
-/area/bigredv2/outside/admin_building)
 "dW" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/dark/red2{
@@ -533,10 +526,6 @@
 	dir = 1
 	},
 /area/bigredv2/outside/admin_building)
-"wh" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/tile/dark,
-/area/bigredv2/outside/admin_building)
 "wG" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
@@ -836,10 +825,6 @@
 	},
 /turf/open/floor,
 /area/bigredv2/outside/admin_building)
-"Em" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/wood,
-/area/bigredv2/outside/admin_building)
 "Ex" = (
 /obj/effect/ai_node,
 /turf/open/floor/tile/dark/red2{
@@ -1004,10 +989,6 @@
 "Jj" = (
 /turf/open/floor/wood,
 /area/bigredv2/outside/admin_building)
-"JE" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/carpet/edge2,
-/area/bigredv2/outside/admin_building)
 "JP" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
@@ -1073,10 +1054,6 @@
 /obj/structure/table/wood,
 /obj/item/tool/lighter/zippo,
 /turf/open/floor/wood,
-/area/bigredv2/outside/admin_building)
-"LU" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/tile/dark/red2,
 /area/bigredv2/outside/admin_building)
 "LW" = (
 /obj/machinery/computer3/server,
@@ -1269,11 +1246,6 @@
 /turf/open/floor/tile/dark/blue2{
 	dir = 8
 	},
-/area/bigredv2/outside/admin_building)
-"SL" = (
-/obj/effect/landmark/excavation_site_spawner,
-/obj/effect/landmark/weed_node,
-/turf/open/floor/wood,
 /area/bigredv2/outside/admin_building)
 "Tx" = (
 /obj/structure/bed/chair/office/dark{
@@ -1538,7 +1510,7 @@ BN
 (4,1,1) = {"
 BN
 pR
-dQ
+uu
 Pj
 Bw
 Dj
@@ -1606,7 +1578,7 @@ ru
 ZJ
 ZJ
 ru
-JE
+ZJ
 ZJ
 ZJ
 OA
@@ -1756,7 +1728,7 @@ QL
 QL
 jM
 Gr
-wh
+fO
 PN
 fO
 fO
@@ -1920,7 +1892,7 @@ UW
 sT
 wY
 Jj
-SL
+gV
 Jj
 gV
 BN
@@ -2072,7 +2044,7 @@ uP
 fO
 Nv
 sm
-LU
+vW
 sT
 tW
 Cy
@@ -2136,7 +2108,7 @@ BN
 (27,1,1) = {"
 BN
 Ls
-Em
+Jj
 gV
 sT
 Ls

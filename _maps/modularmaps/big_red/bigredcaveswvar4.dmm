@@ -4,10 +4,6 @@
 /obj/effect/ai_node,
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/bigredv2/caves/southwest)
-"ac" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southwest)
 "ad" = (
 /obj/effect/landmark/fog_blocker,
 /turf/open/floor/plating/ground/mars/random/cave,
@@ -39,22 +35,12 @@
 /obj/effect/ai_node,
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/bigredv2/caves/southwest)
-"an" = (
-/obj/effect/landmark/excavation_site_spawner,
-/obj/effect/landmark/fog_blocker/xeno_spawn,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southwest)
 "aq" = (
 /obj/effect/landmark/fog_blocker,
 /turf/closed/mineral/smooth/bigred,
 /area/bigredv2/caves/rock)
 "ar" = (
 /obj/effect/landmark/xeno_resin_wall,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/southwest)
-"as" = (
-/obj/effect/landmark/excavation_site_spawner,
-/obj/effect/ai_node,
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/bigredv2/caves/southwest)
 "au" = (
@@ -838,7 +824,7 @@ af
 af
 af
 af
-an
+az
 az
 az
 az
@@ -1736,7 +1722,7 @@ aH
 aH
 aH
 af
-as
+am
 af
 af
 af
@@ -1748,7 +1734,7 @@ aH
 aH
 aH
 af
-ac
+af
 af
 aH
 aH

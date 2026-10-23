@@ -196,10 +196,6 @@
 /obj/structure/cable,
 /turf/open/floor,
 /area/bigredv2/outside/engineering)
-"nu" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
 "oX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
@@ -709,11 +705,6 @@
 /obj/structure/table,
 /obj/effect/spawner/random/misc/earmuffs,
 /obj/effect/landmark/weed_node,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
-"Pi" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/excavation_site_spawner,
 /turf/open/floor,
 /area/bigredv2/outside/engineering)
 "Pp" = (
@@ -1239,7 +1230,7 @@ pq
 GK
 GK
 GK
-nu
+GK
 GK
 vP
 ZD
@@ -1288,7 +1279,7 @@ fm
 SV
 "}
 (13,1,1) = {"
-Pi
+jg
 OA
 Mw
 ky
@@ -1528,7 +1519,7 @@ Xh
 pX
 pX
 jg
-nu
+GK
 jg
 GK
 vP

@@ -252,10 +252,6 @@
 "DQ" = (
 /turf/closed/wall/r_wall,
 /area/lv624/ground/caves/central1/garbledradio)
-"Gy" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/caves/central1)
 "Hm" = (
 /obj/effect/landmark/weed_node,
 /obj/effect/decal/cleanable/dirt,
@@ -295,10 +291,6 @@
 /area/lv624/ground/caves/central2)
 "Lx" = (
 /obj/effect/spawner/random/misc/trash,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/caves/central2)
-"LS" = (
-/obj/effect/landmark/excavation_site_spawner,
 /turf/open/floor/plating/ground/dirt,
 /area/lv624/ground/caves/central2)
 "NO" = (
@@ -692,7 +684,7 @@ ss
 ss
 AJ
 AJ
-LS
+gM
 gM
 iJ
 gM
@@ -1118,7 +1110,7 @@ gM
 Hm
 gM
 Ya
-LS
+gM
 gM
 gM
 AJ
@@ -1464,7 +1456,7 @@ AJ
 AJ
 gM
 iJ
-LS
+gM
 gM
 gM
 iJ
@@ -1969,7 +1961,7 @@ gM
 gM
 iJ
 gM
-LS
+gM
 gM
 Xy
 gM
@@ -2240,7 +2232,7 @@ AJ
 Ya
 gM
 gM
-LS
+gM
 Xy
 Ya
 jO
@@ -2932,7 +2924,7 @@ Aj
 ss
 KY
 KY
-Gy
+wf
 wf
 wf
 wg

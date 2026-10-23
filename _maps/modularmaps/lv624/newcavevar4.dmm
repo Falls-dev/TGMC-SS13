@@ -46,10 +46,6 @@
 /obj/effect/ai_node,
 /turf/open/floor/plating/ground/dirt,
 /area/lv624/ground/caves/central1)
-"pd" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/caves/central1)
 "sd" = (
 /turf/closed/mineral/smooth/indestructible,
 /area/lv624/ground/caves/rock)
@@ -137,10 +133,6 @@
 /obj/effect/landmark/xeno_resin_door,
 /turf/open/floor/plating/ground/dirt,
 /area/lv624/ground/caves/central3)
-"Ia" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/caves/central2)
 "Iz" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/plating/ground/dirt,
@@ -541,7 +533,7 @@ sr
 Nb
 sr
 sr
-Ia
+sr
 sr
 Nb
 sr
@@ -1821,7 +1813,7 @@ sr
 sr
 Nb
 sr
-Ia
+sr
 sr
 sr
 Nb
@@ -2362,7 +2354,7 @@ KW
 sr
 sr
 sr
-Ia
+sr
 sr
 sr
 sr
@@ -2784,7 +2776,7 @@ sd
 KW
 mI
 Iz
-pd
+mI
 mI
 mI
 KW

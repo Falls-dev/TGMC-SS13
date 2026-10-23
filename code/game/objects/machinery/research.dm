@@ -331,6 +331,69 @@
 		RES_TIER_RARE = 50,
 	)
 
+/obj/item/research_resource/remains
+	name = "Xenomorph fossil remains"
+	icon = 'icons/obj/alien_autopsy.dmi'
+	icon_state = "sample_0"
+
+/obj/item/research_resource/remains/Initialize(mapload)
+	. = ..()
+	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+
+/obj/item/research_resource/remains/tier_zero
+	name = "Xenomorph fossil remains - tier 0"
+	icon_state = "remains_t0"
+	w_class = WEIGHT_CLASS_TINY
+	reward_probs = list(
+		RES_TIER_BASIC = 50,
+		RES_TIER_COMMON = 5,
+		RES_TIER_UNCOMMON = 0,
+		RES_TIER_RARE = 0,
+	)
+
+/obj/item/research_resource/remains/tier_one
+	name = "Xenomorph fossil remains - tier 1"
+	icon_state = "remains_t1"
+	w_class = WEIGHT_CLASS_SMALL
+	reward_probs = list(
+		RES_TIER_BASIC = 75,
+		RES_TIER_COMMON = 10,
+		RES_TIER_UNCOMMON = 4,
+		RES_TIER_RARE = 0,
+	)
+
+/obj/item/research_resource/remains/tier_two
+	name = "Xenomorph fossil remains - tier 2"
+	icon_state = "remains_t2"
+	w_class = WEIGHT_CLASS_NORMAL
+	reward_probs = list(
+		RES_TIER_BASIC = 100,
+		RES_TIER_COMMON = 25,
+		RES_TIER_UNCOMMON = 15,
+		RES_TIER_RARE = 3,
+	)
+
+/obj/item/research_resource/remains/tier_three
+	name = "Xenomorph fossil remains - tier 3"
+	icon_state = "remains_t3"
+	w_class = WEIGHT_CLASS_BULKY
+	reward_probs = list(
+		RES_TIER_BASIC = 100,
+		RES_TIER_COMMON = 40,
+		RES_TIER_UNCOMMON = 30,
+		RES_TIER_RARE = 7,
+	)
+
+/obj/item/research_resource/remains/tier_four
+	name = "Xenomorph fossil remains - tier 4"
+	icon_state = "remains_t4"
+	w_class = WEIGHT_CLASS_GIGANTIC
+	reward_probs = list(
+		RES_TIER_BASIC = 100,
+		RES_TIER_COMMON = 50,
+		RES_TIER_UNCOMMON = 30,
+		RES_TIER_RARE = 40,
+	)
 
 #undef RESEARCH_REWARD_BASIC
 #undef RESEARCH_REWARD_COMMON
