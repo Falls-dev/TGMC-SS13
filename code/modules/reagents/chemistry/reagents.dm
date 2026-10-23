@@ -192,7 +192,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	if(!LAZYLEN(purge_list))
 		return
 	var/count = LAZYLEN(purge_list)
-	for(var/datum/reagent/R in L.reagents.reagent_list)
+	for(var/datum/reagent/R in (L.reagents.reagent_list - src)) //Исключаем самого себя шоб не чистить самого себя
 		if(count < 1)
 			break
 		if(is_type_in_typecache(R, purge_list))

@@ -221,6 +221,8 @@
 
 	if(!emitted_gas)
 		switch(xeno_owner.selected_reagent)
+			if(/datum/reagent/toxin/xeno_neurotoxin)
+				emitted_gas = new /datum/effect_system/smoke_spread/xeno/neuro/medium(xeno_owner)
 			if(/datum/reagent/toxin/xeno_hemodile)
 				emitted_gas = new /datum/effect_system/smoke_spread/xeno/hemodile(xeno_owner)
 			if(/datum/reagent/toxin/xeno_transvitox)
@@ -256,6 +258,8 @@
 		return
 
 	switch(xeno_owner.selected_reagent)
+		if(/datum/reagent/toxin/xeno_neurotoxin)
+			particle_holder = new(owner, /particles/xeno_smoke/neurotoxin)
 		if(/datum/reagent/toxin/xeno_hemodile)
 			particle_holder = new(owner, /particles/xeno_smoke/hemodile)
 		if(/datum/reagent/toxin/xeno_transvitox)
@@ -320,6 +324,8 @@
 
 	var/obj/alien/egg/gas/newegg = new(A.loc, xeno_owner.hivenumber)
 	switch(xeno_owner.selected_reagent)
+		if(/datum/reagent/toxin/xeno_neurotoxin)
+			newegg.gas_type = /datum/effect_system/smoke_spread/xeno/neuro/medium
 		if(/datum/reagent/toxin/xeno_ozelomelyn)
 			newegg.gas_type = /datum/effect_system/smoke_spread/xeno/ozelomelyn
 		if(/datum/reagent/toxin/xeno_hemodile)
@@ -340,7 +346,7 @@
 // ***************************************
 /datum/action/ability/xeno_action/select_reagent
 	name = "Select Reagent"
-	desc = "Selects which reagent to use for reagent slash and noxious gas. Hemodile slows targets down, multiplied by each other xeno-based toxin. Transvitox converts burns to toxin, and causes additional toxin damage when they take brute damage, both effects multiplied by other xeno-based toxins. Ozelomelyn purges all medicines from their system rapidly and causes minor toxin damage. Acid is transparent but causes major burn damage."
+	desc = "Selects which reagent to use for reagent slash and noxious gas. Hemodile slows targets down, multiplied by each other xeno-based toxin. Transvitox converts burns to toxin, and causes additional toxin damage when they take brute damage, both effects multiplied by other xeno-based toxins. Neurotoxin deals increasing stamina damage the longer it remains in the victim's system and prevents stamina regeneration. Ozelomelyn purges all medicines from their system rapidly and causes minor toxin damage. Acid is transparent but causes major burn damage."
 	action_icon_state = "select_reagent0"
 	action_icon = 'icons/Xeno/actions/general.dmi'
 	use_state_flags = ABILITY_USE_BUSY|ABILITY_USE_LYING
@@ -382,6 +388,7 @@
 	var/static/list/defiler_toxin_images_list = list(
 		REAGENT_HEMODILE = image('icons/Xeno/actions/general.dmi', icon_state = REAGENT_HEMODILE),
 		REAGENT_TRANSVITOX = image('icons/Xeno/actions/general.dmi', icon_state = REAGENT_TRANSVITOX),
+		REAGENT_NEUROTOXIN = image('icons/Xeno/actions/general.dmi', icon_state = REAGENT_NEUROTOXIN),
 		REAGENT_OZELOMELYN = image('icons/Xeno/actions/general.dmi', icon_state = REAGENT_OZELOMELYN),
 		REAGENT_ACID = image('icons/Xeno/actions/general.dmi', icon_state = REAGENT_ACID),
 	)
@@ -492,6 +499,8 @@
 		return
 
 	switch(xeno_owner.selected_reagent)
+		if(/datum/reagent/toxin/xeno_neurotoxin)
+			particle_holder = new(owner, /particles/xeno_slash/neurotoxin)
 		if(/datum/reagent/toxin/xeno_hemodile)
 			particle_holder = new(owner, /particles/xeno_slash/hemodile)
 		if(/datum/reagent/toxin/xeno_transvitox)
