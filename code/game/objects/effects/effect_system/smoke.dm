@@ -125,6 +125,8 @@
 		if(!isxeno(M))
 			M.smokecloak_off()
 			return
+		if(M.has_status_effect(STATUS_EFFECT_XENOMORPH_CLOAKING))
+			M.remove_status_effect(STATUS_EFFECT_XENOMORPH_CLOAKING)
 
 /obj/effect/particle_effect/smoke/proc/apply_smoke_effect(turf/T)
 	T.effect_smoke(src)
@@ -273,6 +275,12 @@
 	alpha = 40
 	opacity = FALSE
 	smoke_traits = SMOKE_CAMO
+
+/obj/effect/particle_effect/smoke/tactical_xeno
+	alpha = 40
+	opacity = FALSE
+	color = "#282e36"
+	smoke_traits = SMOKE_CAMO|SMOKE_XENO // Only affects xenomorphs.
 
 /////////////////////////////////////////////
 // Sleep smoke
@@ -442,6 +450,9 @@
 
 /datum/effect_system/smoke_spread/tactical
 	smoke_type = /obj/effect/particle_effect/smoke/tactical
+
+/datum/effect_system/smoke_spread/tactical_xeno
+	smoke_type = /obj/effect/particle_effect/smoke/tactical_xeno
 
 /datum/effect_system/smoke_spread/sleepy
 	smoke_type = /obj/effect/particle_effect/smoke/sleepy

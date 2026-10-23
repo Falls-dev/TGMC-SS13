@@ -21,13 +21,54 @@
 	var/buff_desc = ""
 	///Касты, которым будет доступна данная мутация
 	var/list/caste_restrictions = list()
+	///Типы каст-датумов (/datum/xeno_caste), которым доступна мутация. Дополняет caste_restrictions, нужно чтобы отделить подкасту (например Globadier) от основной касты с тем же caste_name
+	var/list/caste_type_restrictions = list()
+	///Типы xeno_caste, для которых мутация недоступна, даже если они подходят под caste_type_restrictions (например, Globadier для мутаций Spitter)
+	var/list/caste_type_exclusions = list()
+	///Имя мутации без номера уровня. Если не задано, используется name. По нему определяются взаимоисключения
+	var/base_name
+	///Типы способностей, которые xeno должен реально иметь (actions_by_path), иначе мутация недоступна. Нужно, чтобы штаммы с тем же caste_name, но без этих способностей, не тратили биомассу впустую
+	var/list/required_ability_types = list()
+	///base_name мутаций, несовместимых с этой. Покупка запрещена, если куплен любой уровень одной из них. Указывается с обеих сторон
+	var/list/conflicting_base_names = list()
 
 
 /datum/xeno_mutation/proc/is_available(mob/living/carbon/xenomorph/xeno)
 	if(length(caste_restrictions) > 0)
 		var/current_caste = lowertext(xeno.xeno_caste.caste_name)
-		return current_caste in caste_restrictions
+		if(!(current_caste in caste_restrictions))
+			return FALSE
+	if(length(caste_type_restrictions) > 0)
+		var/type_matches = FALSE
+		for(var/allowed_caste_type in caste_type_restrictions)
+			if(istype(xeno.xeno_caste, allowed_caste_type))
+				type_matches = TRUE
+				break
+		if(!type_matches)
+			return FALSE
+	for(var/excluded_caste_type in caste_type_exclusions)
+		if(istype(xeno.xeno_caste, excluded_caste_type))
+			return FALSE
+	for(var/required_ability_type in required_ability_types)
+		if(!xeno.actions_by_path[required_ability_type])
+			return FALSE
 	return TRUE
+
+///Возвращает base_name (или name, если он не задан)
+/datum/xeno_mutation/proc/get_base_name()
+	return base_name ? base_name : name
+
+///Возвращает список названий купленных мутаций (всех уровней), несовместимых с этой. Они заменяются при покупке.
+/datum/xeno_mutation/proc/get_conflicting_purchases(mob/living/carbon/xenomorph/xeno)
+	. = list()
+	var/our_base_name = get_base_name()
+	for(var/purchased_name in xeno.purchased_mutations)
+		var/datum/xeno_mutation/purchased_mutation = get_xeno_mutation_by_name(purchased_name)
+		if(!purchased_mutation || purchased_mutation == src)
+			continue
+		var/purchased_base_name = purchased_mutation.get_base_name()
+		if((purchased_base_name in conflicting_base_names) || (our_base_name in purchased_mutation.conflicting_base_names))
+			. += purchased_name
 
 /datum/xeno_mutation/proc/is_purchased(mob/living/carbon/xenomorph/xeno)
 	if(name in xeno.purchased_mutations)
@@ -62,7 +103,8 @@
 		"children" = child_name ? list(child_name) : list(),
 		"unlocked" = is_unlocked(xeno),
 		"buff_desc" = buff_desc,
-		"caste_restriction" = caste_restrictions
+		"caste_restriction" = caste_restrictions,
+		"conflicts" = conflicting_base_names
 	)
 
 
@@ -324,6 +366,11 @@ GLOBAL_LIST_EMPTY(xeno_mutations)
 
 	for(var/mutation_type in subtypesof(/datum/xeno_mutation))
 		var/datum/xeno_mutation/mutation = new mutation_type()
+		// Leveled templates are never registered themselves, only the per-level mutations they build (see xeno_mutations_leveled.dm)
+		if(istype(mutation, /datum/xeno_mutation/leveled))
+			var/datum/xeno_mutation/leveled/template = mutation
+			GLOB.xeno_mutations += template.build_levels()
+			continue
 		// Only initialize mutations that have a proper name and cost (exclude abstract base classes)
 		if(mutation.name && mutation.cost > 0)
 			GLOB.xeno_mutations += mutation
@@ -332,6 +379,14 @@ GLOBAL_LIST_EMPTY(xeno_mutations)
 	initialize_xeno_mutations()
 	for(var/datum/xeno_mutation/mutation in GLOB.xeno_mutations)
 		if(mutation.name == mutation_name)
+			return mutation
+	return null
+
+/// Returns the registered mutation (one specific level) that applies the given status effect type, if any
+/proc/get_xeno_mutation_by_effect(effect_type)
+	initialize_xeno_mutations()
+	for(var/datum/xeno_mutation/mutation in GLOB.xeno_mutations)
+		if(mutation.status_effect_type == effect_type)
 			return mutation
 	return null
 
@@ -348,3 +403,19 @@ GLOBAL_LIST_EMPTY(xeno_mutations)
 		return base_cost + mutation.cost_change[caste_name]
 
 	return base_cost
+
+
+/// Re-applies the status effect of every purchased mutation (only the highest purchased level of each chain). Used after something wiped the status effects, like revive().
+/mob/living/carbon/xenomorph/proc/reapply_mutation_effects()
+	if(!length(purchased_mutations))
+		return
+	initialize_xeno_mutations()
+	for(var/mutation_name in purchased_mutations)
+		var/datum/xeno_mutation/mutation_datum = get_xeno_mutation_by_name(mutation_name)
+		if(!mutation_datum || !mutation_datum.status_effect_type)
+			continue
+		if(mutation_datum.is_higher_tier_purchased(src))
+			continue
+		if(has_status_effect(mutation_datum.status_effect_type))
+			continue
+		apply_status_effect(mutation_datum.status_effect_type)
