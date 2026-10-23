@@ -40,6 +40,12 @@
 /mob/living/carbon/xenomorph/boiler/primordial
 	upgrade = XENO_UPGRADE_PRIMO
 
+/mob/living/carbon/xenomorph/boiler/sizzler
+	caste_base_type = /datum/xeno_caste/boiler/sizzler
+
+/mob/living/carbon/xenomorph/boiler/sizzler/primordial
+	upgrade = XENO_UPGRADE_PRIMO
+
 /mob/living/carbon/xenomorph/boiler/Corrupted
 	hivenumber = XENO_HIVE_CORRUPTED
 
