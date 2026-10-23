@@ -94,6 +94,9 @@
 /obj/item/explosive/grenade/proc/activate(mob/user)
 	if(active)
 		return
+	if(istype(user, /mob/living/carbon/human/ai_droid))
+		to_chat(user, span_warning("Combat protocols are disabled."))
+		return
 
 	if(user?.client)
 		log_bomber(user, "primed", src)
