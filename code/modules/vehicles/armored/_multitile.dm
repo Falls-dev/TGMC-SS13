@@ -254,4 +254,4 @@
 
 	for(var/turf/T in track_turfs)
 		for(var/obj/alien/weeds/W in T)
-			qdel(W)
+			W.take_damage(W.max_integrity, BRUTE, MELEE)

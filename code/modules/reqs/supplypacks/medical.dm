@@ -35,6 +35,11 @@
 	)
 	cost = 20
 
+/datum/supply_packs/medical/Med_hud_implant
+	name = "Medical HUD implanter"
+	contains = list(/obj/item/implanter/hud/medical)
+	cost = 75
+
 /datum/supply_packs/medical/medical
 	name = "Pills and chemicals"
 	contains = list(
