@@ -790,6 +790,14 @@
 	aim_speed_modifier = 2.5
 	placed_overlay_iconstate = "ak47"
 
+/obj/item/weapon/gun/rifle/type16/survivor_clf
+	starting_attachment_types = list(
+		/obj/item/attachable/stock/mpi_km,
+		/obj/item/attachable/magnetic_harness,
+		/obj/item/attachable/bayonet,
+		/obj/item/weapon/gun/shotgun/combat/masterkey,
+	)
+
 /obj/item/weapon/gun/rifle/type16/m2
 	name = "\improper Type-16M2 Zarya carbine"
 	desc = "Chinese replica of MPi-KM rifle, made in fashionable polymer with tactical picatinny rail and folding stock. Uses 6.02x41mm ammo."

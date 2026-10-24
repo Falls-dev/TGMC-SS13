@@ -100,7 +100,7 @@
 
 /obj/effect/landmark/start/job/survivor
 	icon_state = "Survivor"
-	job = /datum/job/survivor/rambo
+	job = /datum/job/survivor/clf
 
 /obj/effect/landmark/start/job/fallen
 	job = /datum/job/fallen/marine

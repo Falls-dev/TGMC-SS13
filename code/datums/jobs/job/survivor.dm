@@ -141,14 +141,20 @@ Good luck, but do not expect to survive."})
 
 // Rambo Survivor - pretty overpowered, pls spawn with caution
 /datum/job/survivor/rambo
-	title = SURVIVOR
+	title = "Rambo Survivor"
 	skills_type = /datum/skills/civilian/survivor/master
 	outfit = /datum/outfit/job/survivor/rambo
-	job_points_needed = 6
+
+/datum/job/survivor/clf
+	title = SURVIVOR
+	skills_type = /datum/skills/civilian/survivor/master
+	faction = FACTION_CLF
+	outfit = /datum/outfit/job/survivor/clf
+	job_points_needed = 4
 	job_flags = JOB_FLAG_ROUNDSTARTJOINABLE
 	html_description = {"
 		<b>Difficulty</b>: Astonishing<br /><br />
 		<b>Gamemode Availability</b>: Distress Signal, Nuclear War<br /><br /><br />
-		<b>Duty</b>: Survive with the resources you have against the swarms of xenomorphs intil help arrives.
+		<b>Duty</b>: Выживайте, используя имеющиеся у вас ресурсы, в противостоянии с полчищами ксеноморфов Вы враждебны к Терра Гов. Примирение с морпехами недопустимо. Как боец колониально либерального фронта вам запрещено снимать вашу форму, вы обязаны действовать под флагом КЛФ.
 	"}
 	job_desc = "Выживайте теми ресурсами что у вас есть, пока не подоспеет помощь."
