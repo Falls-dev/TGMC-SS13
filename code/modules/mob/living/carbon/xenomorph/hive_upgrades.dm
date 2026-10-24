@@ -184,7 +184,7 @@ GLOBAL_LIST_INIT(tier_to_primo_upgrade, list(
 	building_type = /obj/structure/xeno/silo
 
 /datum/hive_upgrade/building/silo/proc/get_current_cost()
-	return SILO_PRICE + (times_bought * 200)
+	return SILO_PRICE + (times_bought * 150)
 
 /datum/hive_upgrade/building/silo/can_buy(mob/living/carbon/xenomorph/buyer, silent = TRUE)
 	psypoint_cost = get_current_cost()
