@@ -13,7 +13,7 @@
 		/obj/item/clothing/under/marine/whites = -1,
 		/obj/item/clothing/suit/white_dress_jacket = -1,
 		/obj/item/clothing/head/white_dress = -1,
-		/obj/item/clothing/shoes/white = -1,
+		/obj/item/clothing/shoes/marine/white = -1,
 		/obj/item/clothing/gloves/white = -1,
 		/obj/effect/vendor_bundle/service_uniform = -1,
 		/obj/item/clothing/under/marine/service = -1,

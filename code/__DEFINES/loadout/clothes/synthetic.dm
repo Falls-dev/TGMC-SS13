@@ -70,7 +70,7 @@ GLOBAL_LIST_INIT(synthetic_clothes_listed_products, list(
 	/obj/item/storage/belt/rig/medical = list(CAT_BEL, "Rig belt", 0, "black"),
 	/obj/item/storage/belt/hypospraybelt/full = list(CAT_BEL, "Hypospray belt", 0, "black"),
 	/obj/item/clothing/shoes/marine = list(CAT_SHO, "Marine combat boots", 0, "synth-rcmarmor"),
-	/obj/item/clothing/shoes/white = list(CAT_SHO, "White shoes", 0, "synth-armor"),
+	/obj/item/clothing/shoes/marine/white = list(CAT_SHO, "White shoes", 0, "synth-armor"),
 	/obj/item/clothing/shoes/brown = list(CAT_SHO, "Brown shoes", 0, "synth-armor"),
 	/obj/item/clothing/shoes/leather = list(CAT_SHO, "Leather Shoes", 0, "synth-armor"),
 	/obj/item/clothing/shoes/centcom = list(CAT_SHO, "Dress Shoes", 0, "synth-armor"),

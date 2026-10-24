@@ -37,10 +37,11 @@
 	contains = list(/obj/item/storage/backpack/marine/corpsman)
 	cost = 125 // higher price because it has a better cell
 
-/datum/supply_packs/clothing/Med_hud_implant
-	name = "Medical HUD implanter"
-	contains = list(/obj/item/implanter/hud/medical)
-	cost = 75
+/datum/supply_packs/clothing/flamethrower_bag
+	name = "TGMC flamethrower bag"
+	notes = "Contains FL-86 incinerator unit"
+	contains = list(/obj/item/storage/holster/backholster/flamer/full)
+	cost = 200
 
 /datum/supply_packs/clothing/officer_outfits
 	name = "Officer outfits"

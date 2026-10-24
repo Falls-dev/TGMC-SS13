@@ -129,7 +129,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, SECTOID_TRAIT)
 
-/obj/item/clothing/shoes/cowboy
+/obj/item/clothing/shoes/marine/cowboy
 	name = "sturdy western boots"
 	desc = "As sturdy as they are old fashioned these will keep your ankles from snake bites on any planet. These cannot store anything, but has extra fashion with those unneeded spurs on their heels."
 	icon_state = "cboots"

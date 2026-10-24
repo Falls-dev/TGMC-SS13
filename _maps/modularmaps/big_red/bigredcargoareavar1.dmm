@@ -1,4 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/closed/mineral/smooth/bigred/indestructible,
+/area/bigredv2/caves/rock)
 "ag" = (
 /turf/open/floor/plating/ground/mars/random/dirt,
 /area/bigredv2/outside/virology)
@@ -733,20 +736,20 @@ QR
 QR
 "}
 (2,1,1) = {"
-dR
-dR
-dR
-dR
-dR
-dR
-dR
-dR
-dR
-dR
-dR
-dR
-dR
-dR
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 dR
 dR
 dR
@@ -757,20 +760,20 @@ dR
 dR
 "}
 (3,1,1) = {"
-dR
-dR
-dR
-dR
-dR
-dR
-dR
-dR
-dR
-dR
-dR
-dR
-dR
-dR
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 dR
 dR
 Tb
@@ -781,19 +784,19 @@ dR
 dR
 "}
 (4,1,1) = {"
-dR
-dR
-dR
-dR
-dR
-dR
-dR
-dR
-dR
-dR
-dR
-dR
-dR
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 dR
 dR
 Tb
@@ -805,14 +808,14 @@ Tb
 dR
 "}
 (5,1,1) = {"
-dR
-dR
-dR
-dR
-dR
-dR
-dR
-dR
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 dR
 dR
 dR
@@ -829,7 +832,7 @@ gV
 Tb
 "}
 (6,1,1) = {"
-dR
+aa
 dR
 dR
 dR
@@ -1099,7 +1102,7 @@ dR
 dR
 dR
 dR
-dR
+aa
 dR
 dR
 VE
@@ -1122,8 +1125,8 @@ dR
 dR
 dR
 dR
-dR
-dR
+aa
+aa
 HC
 HC
 HC
@@ -1144,10 +1147,10 @@ pc
 dR
 dR
 dR
-dR
-dR
-dR
-dR
+aa
+aa
+aa
+aa
 HC
 em
 Pe
@@ -1167,11 +1170,11 @@ ag
 (20,1,1) = {"
 dR
 dR
-dR
-dR
-dR
-dR
-dR
+aa
+aa
+aa
+aa
+aa
 HC
 kA
 em
@@ -1189,13 +1192,13 @@ Yw
 Tv
 "}
 (21,1,1) = {"
-dR
-dR
-dR
-dR
-dR
-dR
-dR
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 HC
 em
 em
@@ -1213,9 +1216,9 @@ ag
 OM
 "}
 (22,1,1) = {"
-dR
-dR
-dR
+aa
+aa
+aa
 dR
 dR
 dR
@@ -1237,7 +1240,7 @@ YI
 ri
 "}
 (23,1,1) = {"
-dR
+aa
 dR
 dR
 dR

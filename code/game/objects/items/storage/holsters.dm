@@ -250,12 +250,34 @@
  * param1 - The flamer tank, the actual tank we are refilling
  * param2 - The person wearing the backpack
 */
+/obj/item/storage/holster/backholster/flamer/MouseDrop_T(obj/item/W, mob/living/user)
+	. = ..()
+	if(istype(W, /obj/item/ammo_magazine/flamer_tank/backtank))
+		absorb_fuel(W, user)
+	else if(istype(W, /obj/item/ammo_magazine/flamer_tank))
+		refuel(W, user)
+
+/obj/item/storage/holster/backholster/flamer/afterattack(obj/O, mob/user, proximity)
+	. = ..()
+	if(istype(O, /obj/structure/reagent_dispensers/fueltank))
+		tank.afterattack(O, user)
+		return
+	if(istype(O, /obj/item/ammo_magazine/flamer_tank/backtank))
+		absorb_fuel(O, user)
+		return
+	if(istype(O, /obj/item/ammo_magazine/flamer_tank))
+		refuel(O, user)
+
 /obj/item/storage/holster/backholster/flamer/proc/refuel(obj/item/ammo_magazine/flamer_tank/flamer_tank, mob/living/user)
 	if(!istype(flamer_tank,/obj/item/ammo_magazine/flamer_tank))
 		return
 	if(get_dist(user, flamer_tank) > 1)
 		return
-	if(flamer_tank.default_ammo != /datum/ammo/flamethrower) // hardcoded check for right fuel type
+	if(!ispath(flamer_tank.default_ammo, /datum/ammo/flamethrower))
+		to_chat(user, span_warning("This isn't flamer fuel!"))
+		return
+	if(flamer_tank.default_ammo != tank.default_ammo)
+		to_chat(user, span_warning("Fuel type mismatch! Empty the bag first to change fuel."))
 		return
 	if(flamer_tank.current_rounds >= flamer_tank.max_rounds)
 		to_chat(user, span_warning("[flamer_tank] is already full."))
@@ -270,9 +292,62 @@
 	to_chat(user, span_notice("[flamer_tank] is refilled with [lowertext(tank.caliber)]."))
 	update_icon()
 
+/obj/item/storage/holster/backholster/flamer/proc/absorb_fuel(obj/item/ammo_magazine/flamer_tank/backtank/source, mob/living/user)
+	if(!istype(source))
+		return
+	if(get_dist(user, source) > 1)
+		return
+	if(source.current_rounds <= 0)
+		to_chat(user, span_warning("[source] is empty!"))
+		return
+
+	if(tank.current_rounds <= 0)
+		tank.default_ammo = source.default_ammo
+		tank.dispenser_type = source.dispenser_type
+		tank.caliber = source.caliber
+	else if(source.default_ammo != tank.default_ammo)
+		to_chat(user, span_warning("Fuel type mismatch! Empty the bag first to change fuel."))
+		return
+
+	if(tank.current_rounds >= tank.max_rounds)
+		to_chat(user, span_warning("Internal tank is already full."))
+		return
+
+	var/transfer = min(source.current_rounds, tank.max_rounds - tank.current_rounds)
+	source.current_rounds -= transfer
+	tank.current_rounds += transfer
+	source.update_icon()
+	playsound(loc, 'sound/effects/refill.ogg', 25, 1, 3)
+	to_chat(user, span_notice("You fill [src] with [transfer] units from [source]."))
+	update_icon()
+
 /obj/item/storage/holster/backholster/flamer/examine(mob/user)
 	. = ..()
-	. += span_notice("[tank.current_rounds] units of fuel left!")
+	var/fuel_name = "Napthal"
+	if(tank.default_ammo == /datum/ammo/flamethrower/blue)
+		fuel_name = "X-fuel"
+	else if(tank.default_ammo == /datum/ammo/flamethrower/green)
+		fuel_name = "G-fuel"
+	. += span_notice("[tank.current_rounds]/[tank.max_rounds] units of [fuel_name] left. Use verb to empty internal fueltank.")
+
+/obj/item/storage/holster/backholster/flamer/verb/empty_internal_fuel()
+	set name = "Empty Internal Fuel Tank"
+	set category = "Object"
+	set src in usr
+
+	var/mob/living/user = usr
+	if(!istype(user) || user.incapacitated())
+		return
+	if(tank.current_rounds <= 0)
+		to_chat(user, span_warning("[tank] is already empty."))
+		return
+
+	user.visible_message(span_notice("[user] starts emptying [src]..."), span_notice("You start emptying the internal fuel tank..."))
+	if(!do_after(user, 3 SECONDS, NONE, src, BUSY_ICON_GENERIC))
+		return
+	if(tank.empty_fuel(user))
+		playsound(loc, 'sound/effects/refill.ogg', 25, 1, 3)
+		update_icon()
 
 /obj/item/storage/holster/backholster/flamer/full/PopulateContents()
 	new /obj/item/weapon/gun/flamer/big_flamer/marinestandard/engineer(src)

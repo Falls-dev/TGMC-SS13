@@ -70,11 +70,12 @@ GLOBAL_LIST_INIT(tier_to_primo_upgrade, list(
 			var/mob/living/carbon/xenomorph/user = usr
 			if(!upgrade.can_buy(user, FALSE))
 				return
+			var/cost_paid = upgrade.psypoint_cost
 			if(!upgrade.on_buy(user))
 				return
-			log_game("[key_name(user)] has purchased \a [upgrade] Blessing for [upgrade.psypoint_cost] psypoints for the [user.hive.hivenumber] hive")
+			log_game("[key_name(user)] has purchased a [upgrade.name] Blessing for [cost_paid] psypoints for the [user.hive.hivenumber] hive")
 			if(upgrade.upgrade_flags & UPGRADE_FLAG_MESSAGE_HIVE)
-				xeno_message("[user] has purchased \a [upgrade] Blessing", "xenoannounce", 5, user.hivenumber)
+				xeno_message("[user] has purchased a [upgrade.name] Blessing", "xenoannounce", 5, user.hivenumber)
 
 /datum/hive_upgrade
 	///name of the upgrade, string, used in ui
@@ -176,13 +177,17 @@ GLOBAL_LIST_INIT(tier_to_primo_upgrade, list(
 
 /datum/hive_upgrade/building/silo
 	name = "Larva Silo"
-	desc = "Constructs a silo that generates xeno larvas over time."
+	desc = "Constructs a silo that generates xeno larvas over time. Each subsequent silo costs 200 more points."
 	psypoint_cost = SILO_PRICE
 	icon = "silo"
 	gamemode_flags = ABILITY_DISTRESS
 	building_type = /obj/structure/xeno/silo
 
+/datum/hive_upgrade/building/silo/proc/get_current_cost()
+	return SILO_PRICE + (times_bought * 150)
+
 /datum/hive_upgrade/building/silo/can_buy(mob/living/carbon/xenomorph/buyer, silent = TRUE)
+	psypoint_cost = get_current_cost()
 	. = ..()
 	if(!.)
 		return
@@ -207,6 +212,12 @@ GLOBAL_LIST_INIT(tier_to_primo_upgrade, list(
 		if(!silent)
 			to_chat(buyer, span_xenowarning("Hive cannot support more than [max_silo] active silos!"))
 		return FALSE
+
+/datum/hive_upgrade/building/silo/on_buy(mob/living/carbon/xenomorph/buyer)
+	psypoint_cost = get_current_cost()
+	. = ..()
+	if(.)
+		psypoint_cost = get_current_cost()
 
 /datum/hive_upgrade/building/evotower
 	name = "Evolution Tower"
