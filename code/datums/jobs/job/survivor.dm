@@ -150,7 +150,7 @@ Good luck, but do not expect to survive."})
 	skills_type = /datum/skills/civilian/survivor/master
 	faction = FACTION_CLF
 	outfit = /datum/outfit/job/survivor/clf
-	job_points_needed = 6
+	job_points_needed = 4
 	job_flags = JOB_FLAG_ROUNDSTARTJOINABLE
 	html_description = {"
 		<b>Difficulty</b>: Astonishing<br /><br />
