@@ -180,7 +180,6 @@
 	current_rounds = 0
 	default_ammo = /datum/ammo/flamethrower
 	dispenser_type = /obj/structure/reagent_dispensers/fueltank
-	update_icon()
 	return TRUE
 
 /obj/item/ammo_magazine/flamer_tank/internal/proc/set_fuel_from_dispenser(obj/structure/reagent_dispensers/dispenser)
@@ -225,7 +224,6 @@
 	var/liquid_transfer_amount = min(dispenser.reagents.total_volume, (max_rounds - current_rounds))
 	dispenser.reagents.remove_any(liquid_transfer_amount)
 	current_rounds += liquid_transfer_amount
-	playsound(loc, 'sound/effects/refill.ogg', 25, 1, 3)
+	playsound(user, 'sound/effects/refill.ogg', 25, 1, 3)
 	to_chat(user, span_notice("You refill [src] with [lowertext(caliber)]."))
-	update_icon()
 

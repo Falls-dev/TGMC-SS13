@@ -379,7 +379,14 @@
 	else if(istype(I, /obj/item/storage/holster/backholster/flamer))
 		var/obj/item/storage/holster/backholster/flamer/flamer_bag = I
 		var/obj/item/ammo_magazine/flamer_tank/internal/internal_tank = flamer_bag.tank
-		if(internal_tank.current_rounds == internal_tank.max_rounds)
+		if(internal_tank.current_rounds == internal_tank.max_rounds || !reagents.total_volume)
+			return ..()
+		if(internal_tank.current_rounds <= 0)
+			internal_tank.default_ammo = /datum/ammo/flamethrower
+			internal_tank.dispenser_type = /obj/structure/reagent_dispensers/fueltank
+			internal_tank.caliber = CALIBER_FUEL_THICK
+		else if(internal_tank.default_ammo != /datum/ammo/flamethrower)
+			balloon_alert(user, "Wrong fuel")
 			return ..()
 		var/fuel_to_transfer = min(reagents.total_volume, (internal_tank.max_rounds - internal_tank.current_rounds))
 		reagents.remove_reagent(/datum/reagent/fuel, fuel_to_transfer)
