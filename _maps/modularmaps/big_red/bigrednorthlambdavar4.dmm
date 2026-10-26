@@ -1,103 +1,102 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/northeast/garbledradio/theme_bigred_v2)
 "d" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/northeast/theme_bigred_v2)
 "f" = (
 /obj/effect/landmark/fog_blocker,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/northeast/theme_bigred_v2)
 "g" = (
 /turf/open/floor/plating,
-/area/bigredv2/caves/lambda_lab)
+/area/bigredv2/caves/lambda_lab/theme_bigred_v2)
 "i" = (
 /obj/effect/landmark/weed_node,
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/northeast/theme_bigred_v2)
 "o" = (
 /obj/effect/landmark/fog_blocker,
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "p" = (
 /obj/effect/landmark/miner_platinum,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/northeast/theme_bigred_v2)
 "q" = (
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "r" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/northeast/theme_bigred_v2)
 "s" = (
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/northeast/theme_bigred_v2)
 "u" = (
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/northeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/northeast/garbledradio/theme_bigred_v2)
 "v" = (
-/turf/closed/mineral/smooth/bigred/indestructible,
+/turf/closed/mineral/smooth/bluefrostwall/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
 /area/space)
 "y" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/northeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/northeast/garbledradio/theme_bigred_v2)
 "A" = (
 /obj/machinery/chem_dispenser,
 /turf/open/floor/tile/whiteyellow{
 	dir = 1
 	},
-/area/bigredv2/caves/lambda_lab)
-"D" = (
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast/garbledradio)
-"E" = (
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/northeast)
+/area/bigredv2/caves/lambda_lab/theme_bigred_v2)
 "I" = (
 /turf/closed/wall/r_wall,
-/area/bigredv2/caves/rock)
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "L" = (
 /obj/structure/closet/crate/internals,
 /turf/open/floor/plating,
-/area/bigredv2/caves/lambda_lab)
+/area/bigredv2/caves/lambda_lab/theme_bigred_v2)
 "M" = (
 /turf/closed/wall/r_wall,
-/area/bigredv2/caves/lambda_lab)
+/area/bigredv2/caves/lambda_lab/theme_bigred_v2)
 "N" = (
 /obj/structure/closet/crate/freezer/rations,
 /turf/open/floor/plating,
-/area/bigredv2/caves/lambda_lab)
+/area/bigredv2/caves/lambda_lab/theme_bigred_v2)
 "Q" = (
 /obj/machinery/chem_master,
 /turf/open/floor/tile/whiteyellow{
 	dir = 5
 	},
-/area/bigredv2/caves/lambda_lab)
+/area/bigredv2/caves/lambda_lab/theme_bigred_v2)
 "R" = (
 /obj/effect/ai_node,
 /obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/northeast/theme_bigred_v2)
 "S" = (
 /obj/machinery/chem_dispenser,
 /turf/open/floor/tile/whiteyellow{
 	dir = 9
 	},
-/area/bigredv2/caves/lambda_lab)
+/area/bigredv2/caves/lambda_lab/theme_bigred_v2)
 "T" = (
 /obj/effect/landmark/xeno_resin_wall,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast/garbledradio)
-"Y" = (
-/obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/northeast/garbledradio/theme_bigred_v2)
 
 (1,1,1) = {"
 v
@@ -125,10 +124,10 @@ q
 q
 q
 q
-D
-D
-D
-D
+u
+u
+u
+u
 u
 q
 q
@@ -159,10 +158,10 @@ q
 q
 u
 u
-Y
-D
-D
-D
+y
+u
+u
+u
 u
 q
 q
@@ -190,13 +189,13 @@ q
 q
 q
 q
-D
-D
-D
-D
-D
-D
-D
+u
+u
+u
+u
+u
+u
+u
 u
 q
 q
@@ -223,15 +222,15 @@ q
 q
 q
 q
-D
-D
-D
-D
-D
-D
-D
-D
-D
+u
+u
+u
+u
+u
+u
+u
+u
+u
 u
 q
 "}
@@ -256,15 +255,15 @@ q
 q
 q
 q
-D
-D
+u
+u
 a
-D
+u
 a
-D
-D
-Y
-D
+u
+u
+y
+u
 a
 u
 q
@@ -288,18 +287,18 @@ q
 q
 q
 a
-D
-D
-D
+u
+u
+u
 a
-D
+u
 y
-D
-D
-D
-D
-D
-D
+u
+u
+u
+u
+u
+u
 u
 q
 "}
@@ -320,20 +319,20 @@ q
 q
 q
 q
-D
-D
-D
-D
-D
-D
-D
+u
+u
+u
+u
+u
+u
+u
 q
 q
 u
-D
-D
-D
-D
+u
+u
+u
+u
 u
 q
 "}
@@ -354,21 +353,21 @@ q
 q
 q
 q
-D
-D
-D
+u
+u
+u
 q
-D
-D
-q
-q
+u
+u
 q
 q
-D
-D
-D
-D
-Y
+q
+q
+u
+u
+u
+u
+y
 u
 "}
 (9,1,1) = {"
@@ -388,9 +387,9 @@ q
 q
 q
 q
-D
+u
 a
-D
+u
 q
 q
 q
@@ -399,11 +398,11 @@ q
 q
 q
 y
-D
-D
-D
-D
-D
+u
+u
+u
+u
+u
 "}
 (10,1,1) = {"
 v
@@ -421,10 +420,10 @@ q
 q
 q
 q
-D
+u
 a
-D
-D
+u
+u
 q
 q
 q
@@ -434,10 +433,10 @@ q
 q
 q
 u
-D
+u
 a
-D
-D
+u
+u
 "}
 (11,1,1) = {"
 v
@@ -454,11 +453,11 @@ q
 q
 q
 q
-D
-D
-D
-D
-D
+u
+u
+u
+u
+u
 q
 q
 q
@@ -469,9 +468,9 @@ q
 q
 q
 q
-D
+u
 a
-D
+u
 "}
 (12,1,1) = {"
 v
@@ -488,11 +487,11 @@ q
 q
 q
 q
-D
-D
-D
-D
-D
+u
+u
+u
+u
+u
 q
 q
 q
@@ -504,7 +503,7 @@ q
 q
 q
 u
-D
+u
 a
 "}
 (13,1,1) = {"
@@ -521,11 +520,11 @@ v
 q
 q
 q
-D
-D
-D
-D
-D
+u
+u
+u
+u
+u
 q
 q
 q
@@ -555,9 +554,9 @@ v
 q
 q
 a
-D
-D
-D
+u
+u
+u
 a
 q
 q
@@ -588,9 +587,9 @@ v
 v
 q
 q
-D
-D
-D
+u
+u
+u
 q
 q
 q
@@ -622,9 +621,9 @@ v
 v
 q
 q
-D
-D
-D
+u
+u
+u
 q
 q
 q
@@ -655,9 +654,9 @@ v
 v
 v
 q
-D
-D
-D
+u
+u
+u
 q
 q
 q
@@ -673,9 +672,9 @@ q
 q
 I
 q
-D
-D
-D
+u
+u
+u
 "}
 (18,1,1) = {"
 v
@@ -689,7 +688,7 @@ v
 v
 v
 q
-D
+u
 a
 s
 q
@@ -707,8 +706,8 @@ q
 q
 I
 q
-D
-D
+u
+u
 a
 "}
 (19,1,1) = {"
@@ -741,9 +740,9 @@ q
 q
 q
 q
-D
-D
-D
+u
+u
+u
 "}
 (20,1,1) = {"
 v
@@ -775,9 +774,9 @@ q
 q
 q
 q
-D
-D
-D
+u
+u
+u
 "}
 (21,1,1) = {"
 v
@@ -810,8 +809,8 @@ q
 q
 q
 q
-D
-D
+u
+u
 "}
 (22,1,1) = {"
 v
@@ -844,8 +843,8 @@ q
 q
 q
 q
-D
-D
+u
+u
 "}
 (23,1,1) = {"
 v
@@ -878,7 +877,7 @@ q
 q
 q
 q
-D
+u
 a
 "}
 (24,1,1) = {"
@@ -912,8 +911,8 @@ q
 q
 q
 q
-Y
-D
+y
+u
 "}
 (25,1,1) = {"
 v
@@ -947,7 +946,7 @@ q
 q
 q
 q
-D
+u
 "}
 (26,1,1) = {"
 v
@@ -1831,7 +1830,7 @@ R
 s
 s
 s
-E
+s
 "}
 (52,1,1) = {"
 v

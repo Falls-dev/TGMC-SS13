@@ -12,13 +12,13 @@
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "c" = (
 /obj/structure/table,
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "d" = (
 /obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 1;
@@ -29,7 +29,7 @@
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "e" = (
 /obj/structure/table,
 /obj/item/radio/headset/survivor{
@@ -43,27 +43,27 @@
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "f" = (
 /obj/structure/bed/chair/office/light,
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "g" = (
 /obj/structure/table,
 /obj/item/tool/multitool,
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "h" = (
 /obj/structure/table,
 /obj/item/flashlight,
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "i" = (
 /obj/structure/table,
 /obj/item/radio/survivor,
@@ -73,13 +73,13 @@
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "j" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "k" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
@@ -88,7 +88,7 @@
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "l" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
@@ -99,13 +99,13 @@
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "m" = (
 /obj/structure/extinguisher_cabinet,
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "n" = (
 /obj/structure/table,
 /obj/item/ashtray/glass,
@@ -113,27 +113,27 @@
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "o" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "p" = (
 /obj/machinery/power/apc/drained,
 /obj/structure/cable,
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "q" = (
 /obj/effect/ai_node,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "r" = (
 /obj/structure/table,
 /obj/item/radio/survivor,
@@ -142,11 +142,11 @@
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "s" = (
 /obj/structure/window_frame/colony/reinforced,
 /turf/open/floor/plating,
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "t" = (
 /obj/machinery/light{
 	dir = 1
@@ -154,14 +154,14 @@
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "u" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/structure/cable,
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "v" = (
 /obj/structure/bed/chair/office/light{
 	dir = 1
@@ -170,42 +170,42 @@
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "w" = (
 /obj/machinery/vending/engineering,
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "x" = (
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "y" = (
 /obj/machinery/computer/telecomms/server,
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "z" = (
 /obj/structure/table,
 /obj/item/radio/survivor,
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "A" = (
 /obj/effect/landmark/excavation_site_spawner,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "B" = (
 /obj/structure/window/framed/colony/reinforced,
 /turf/open/floor/plating,
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "C" = (
 /obj/machinery/door/airlock/mainship/engineering/free_access{
 	name = "\improper Communications Dome"
@@ -213,7 +213,7 @@
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "D" = (
 /obj/structure/sign/atmosplaque{
 	dir = 1
@@ -221,13 +221,13 @@
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "E" = (
 /obj/machinery/computer/telecomms/monitor,
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "F" = (
 /obj/structure/bed/chair/office/light{
 	dir = 8
@@ -235,7 +235,7 @@
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "G" = (
 /obj/structure/extinguisher_cabinet{
 	dir = 1
@@ -243,24 +243,24 @@
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "H" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas,
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "I" = (
 /turf/closed/wall/r_wall,
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "J" = (
 /obj/item/tool/multitool,
 /obj/structure/rack,
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "L" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
@@ -269,7 +269,7 @@
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "M" = (
 /obj/machinery/door/airlock/mainship/engineering/free_access{
 	name = "\improper Communications Dome"
@@ -281,7 +281,7 @@
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "O" = (
 /obj/structure/table,
 /obj/item/clothing/head/soft/blue,
@@ -289,10 +289,10 @@
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "P" = (
 /turf/closed/wall,
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "Q" = (
 /obj/structure/table,
 /obj/item/tool/weldingtool,
@@ -300,13 +300,13 @@
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "R" = (
 /obj/structure/largecrate/random,
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "S" = (
 /obj/structure/bed/chair/office/light{
 	dir = 1
@@ -314,34 +314,34 @@
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "U" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "V" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "W" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1,
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "X" = (
 /obj/structure/table,
 /obj/item/weapon/twohanded/fireaxe,
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 "Z" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/layer1{
 	on = 1
@@ -349,7 +349,7 @@
 /turf/open/floor/tile/brown{
 	dir = 9
 	},
-/area/lv624/lazarus/comms)
+/area/lv624/lazarus/comms/theme_lv624)
 
 (1,1,1) = {"
 a

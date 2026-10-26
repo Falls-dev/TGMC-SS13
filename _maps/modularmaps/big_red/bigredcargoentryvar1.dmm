@@ -1,25 +1,17 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/wall,
-/area/bigredv2/outside/cargo)
-"o" = (
+/area/bigredv2/outside/cargo/theme_bigred_v2)
+"e" = (
 /obj/structure/barricade/wood,
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
-"z" = (
-/obj/structure/barricade/wood{
-	dir = 4
-	},
-/turf/open/floor/marking/asteroidwarning{
-	dir = 4
-	},
-/area/bigredv2/outside/c)
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
 "D" = (
 /obj/structure/barricade/wood{
 	dir = 4
 	},
 /turf/open/floor,
-/area/bigredv2/outside/cargo)
+/area/bigredv2/outside/cargo/theme_bigred_v2)
 "E" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
@@ -29,24 +21,32 @@
 	dir = 4
 	},
 /turf/open/floor,
-/area/bigredv2/outside/cargo)
+/area/bigredv2/outside/cargo/theme_bigred_v2)
 "L" = (
 /obj/structure/barricade/wood{
 	dir = 4
 	},
 /obj/effect/landmark/weed_node,
 /turf/open/floor,
-/area/bigredv2/outside/cargo)
+/area/bigredv2/outside/cargo/theme_bigred_v2)
 "Q" = (
 /turf/open/floor,
-/area/bigredv2/outside/cargo)
-"T" = (
+/area/bigredv2/outside/cargo/theme_bigred_v2)
+"R" = (
+/obj/structure/barricade/wood{
+	dir = 4
+	},
+/turf/open/floor/marking/warning{
+	dir = 4
+	},
+/area/bigredv2/outside/c/theme_bigred_v2)
+"W" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/c)
+/turf/open/floor/grayscale,
+/area/bigredv2/outside/c/theme_bigred_v2)
 
 (1,1,1) = {"
 a
@@ -63,9 +63,9 @@ E
 a
 "}
 (3,1,1) = {"
-z
-z
-z
-T
-o
+R
+R
+R
+W
+e
 "}

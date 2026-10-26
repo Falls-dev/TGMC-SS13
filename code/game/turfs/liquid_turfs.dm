@@ -290,3 +290,34 @@
 /turf/open/liquid/lava/autosmoothing/catwalk/Initialize(mapload)
 	. = ..()
 	new /obj/structure/catwalk(src)
+
+// Chilled liquid plasma; animated state ported from tgstation's floors.dmi.
+/turf/open/liquid/lava/plasma
+	name = "liquid plasma"
+	desc = "A liquid coldest hot plasma. Do not swim."
+	icon = 'icons/turf/plasma_lava.dmi'
+	icon_state = "liquidplasma"
+	baseturfs = /turf/open/liquid/lava/plasma
+	light_range = 3
+	light_power = 0.75
+	light_color = LIGHT_COLOR_PURPLE
+	minimap_color = "#952cf4d0"
+
+// Use TGMC's liquid coverage and processing hooks without igniting cold plasma.
+/turf/open/liquid/lava/plasma/burn_stuff(atom/movable/target)
+	var/list/targets = target ? list(target) : contents
+	for(var/mob/living/victim in targets)
+		if(victim.stat == DEAD || (victim.resistance_flags & INDESTRUCTIBLE) || (victim.status_flags & INCORPOREAL))
+			continue
+		if(!check_submerge(victim))
+			continue
+		. = TRUE
+		if(victim.status_flags & GODMODE)
+			continue
+		victim.adjust_tox_loss(15)
+		victim.take_overall_damage(25, BURN, updating_health = TRUE, max_limbs = 3)
+
+/turf/open/liquid/lava/plasma/catwalk/Initialize(mapload)
+	. = ..()
+	if(!locate(/obj/structure/catwalk) in src)
+		new /obj/structure/catwalk(src)

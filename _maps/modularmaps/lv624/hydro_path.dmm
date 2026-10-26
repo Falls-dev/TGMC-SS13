@@ -1,24 +1,20 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "bv" = (
-/obj/structure/flora/jungle/vines,
-/obj/structure/flora/jungle/vines/heavy,
-/turf/open/ground/grass,
-/area/lv624/ground/jungle9)
+/obj/structure/flora/drought/shroom,
+/obj/structure/flora/drought/shroom,
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/jungle9/theme_lv624)
 "bA" = (
-/turf/open/ground/grass,
-/area/lv624/ground/jungle7)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/jungle7/theme_lv624)
 "dr" = (
 /obj/structure/fence,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/compound/ne)
-"eg" = (
-/obj/structure/fence,
-/turf/open/floor/plating/ground/dirtgrassborder,
-/area/lv624/ground/compound/ne)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/compound/ne/theme_lv624)
 "eM" = (
-/obj/structure/flora/jungle/vines,
+/obj/structure/flora/drought/shroom,
 /turf/closed/wall,
-/area/lv624/ground/compound/ne)
+/area/lv624/ground/compound/ne/theme_lv624)
 "fl" = (
 /obj/structure/window_frame/colony/reinforced,
 /obj/item/shard,
@@ -28,151 +24,132 @@
 	name = "\improper Nexus Blast Door"
 	},
 /turf/open/floor/plating,
-/area/lv624/lazarus/main_hall)
+/area/lv624/lazarus/main_hall/theme_lv624)
 "gd" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/dirtgrassborder{
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 1
 	},
-/area/lv624/ground/jungle9)
-"hE" = (
-/turf/open/floor/plating/ground/dirtgrassborder/corner2,
-/area/lv624/ground/jungle7)
+/area/lv624/ground/jungle9/theme_lv624)
 "hH" = (
-/obj/structure/flora/jungle/vines,
+/obj/structure/flora/drought/shroom,
 /obj/effect/landmark/weed_node,
-/turf/open/ground/grass,
-/area/lv624/ground/jungle7)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/jungle7/theme_lv624)
 "hI" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/dirtgrassborder{
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 8
 	},
-/area/lv624/ground/compound/ne)
+/area/lv624/ground/compound/ne/theme_lv624)
 "hJ" = (
 /obj/machinery/floodlight/colony{
 	dir = 8
 	},
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/jungle7)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/jungle7/theme_lv624)
 "iQ" = (
-/obj/structure/flora/jungle/vines,
-/turf/open/floor/plating/ground/dirtgrassborder{
+/obj/structure/flora/drought/shroom,
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 4
 	},
-/area/lv624/ground/jungle9)
+/area/lv624/ground/jungle9/theme_lv624)
 "jL" = (
-/obj/structure/flora/jungle/planttop1,
-/turf/open/ground/grass,
-/area/lv624/ground/jungle9)
+/obj/structure/flora/drought/grass,
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/jungle9/theme_lv624)
 "jX" = (
-/obj/structure/flora/jungle/vines,
+/obj/structure/flora/drought/shroom,
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/dirtgrassborder/corner{
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 8
 	},
-/area/lv624/ground/jungle9)
-"kt" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/open/floor/plating/ground/dirtgrassborder{
-	dir = 4
-	},
-/area/lv624/ground/jungle9)
+/area/lv624/ground/jungle9/theme_lv624)
 "lf" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/jungle9)
+/obj/structure/flora/drought/shroom,
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/jungle9/theme_lv624)
 "ls" = (
-/turf/open/floor/plating/ground/dirtgrassborder/corner,
-/area/lv624/ground/jungle9)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/jungle9/theme_lv624)
 "lF" = (
 /turf/closed/wall,
-/area/lv624/ground/jungle7)
+/area/lv624/ground/jungle7/theme_lv624)
 "md" = (
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/drought/shroom,
 /obj/machinery/floodlight/colony{
 	dir = 8
 	},
-/turf/closed/gm/dense,
-/area/lv624/ground/compound/ne)
+/turf/closed/mineral/smooth/lavawall/indestructible{
+	open_turf_type = /turf/open/lavaland/basalt/cave/autosmooth;
+	baseturfs = /turf/open/lavaland/basalt/cave/autosmooth
+	},
+/area/lv624/ground/compound/ne/theme_lv624)
 "me" = (
 /obj/effect/landmark/weed_node,
-/turf/open/ground/grass,
-/area/lv624/ground/jungle9)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/jungle9/theme_lv624)
 "mC" = (
-/obj/structure/flora/jungle/vines,
+/obj/structure/flora/drought/shroom,
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/jungle7)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/jungle7/theme_lv624)
 "nL" = (
 /obj/structure/fence,
-/turf/open/floor/plating/ground/dirtgrassborder{
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 4
 	},
-/area/lv624/ground/jungle9)
+/area/lv624/ground/jungle9/theme_lv624)
 "on" = (
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/drought/shroom,
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/compound/ne)
-"ov" = (
-/turf/open/floor/plating/ground/dirtgrassborder/corner,
-/area/lv624/ground/jungle7)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/compound/ne/theme_lv624)
 "pc" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/open/floor/plating/ground/dirtgrassborder/corner{
+/obj/structure/flora/drought/shroom,
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 1
 	},
-/area/lv624/ground/jungle7)
+/area/lv624/ground/jungle7/theme_lv624)
 "po" = (
 /obj/docking_port/stationary/crashmode,
-/turf/closed/gm/dense,
-/area/lv624/ground/caves/rock)
+/turf/closed/mineral/smooth/lavawall/indestructible{
+	open_turf_type = /turf/open/lavaland/basalt/cave/autosmooth;
+	baseturfs = /turf/open/lavaland/basalt/cave/autosmooth
+	},
+/area/lv624/ground/caves/rock/theme_lv624)
 "px" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/open/floor/plating/ground/dirtgrassborder/corner{
+/obj/structure/flora/drought/shroom,
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 4
 	},
-/area/lv624/ground/jungle7)
+/area/lv624/ground/jungle7/theme_lv624)
 "pI" = (
-/turf/open/floor/plating/ground/dirtgrassborder/corner{
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 8
 	},
-/area/lv624/ground/jungle7)
+/area/lv624/ground/jungle7/theme_lv624)
 "qj" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/compound/ne)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/compound/ne/theme_lv624)
 "qo" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/compound/ne)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/compound/ne/theme_lv624)
 "qD" = (
-/turf/open/floor/plating/ground/dirtgrassborder/corner{
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 4
 	},
-/area/lv624/ground/jungle7)
-"rd" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/effect/landmark/weed_node,
-/turf/open/ground/grass/grass2,
-/area/lv624/ground/jungle7)
-"rp" = (
-/obj/structure/flora/jungle/plantbot1,
-/turf/open/ground/grass,
-/area/lv624/ground/jungle9)
+/area/lv624/ground/jungle7/theme_lv624)
 "rv" = (
-/obj/structure/flora/jungle/vines,
-/turf/open/floor/plating/ground/dirtgrassborder/corner{
+/obj/structure/flora/drought/shroom,
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 8
 	},
-/area/lv624/ground/jungle9)
-"se" = (
-/obj/structure/flora/jungle/vines,
-/turf/open/ground/grass,
-/area/lv624/ground/jungle9)
+/area/lv624/ground/jungle9/theme_lv624)
 "sG" = (
 /obj/machinery/door/poddoor/mainship/open{
 	dir = 2;
@@ -181,31 +158,27 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/tile/white,
-/area/lv624/lazarus/main_hall)
+/area/lv624/lazarus/main_hall/theme_lv624)
 "tI" = (
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/drought/shroom,
 /obj/effect/ai_node,
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/jungle9)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/jungle9/theme_lv624)
 "tQ" = (
 /obj/structure/fence,
-/turf/open/floor/plating/ground/dirtgrassborder/corner2{
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 8
 	},
-/area/lv624/ground/compound/ne)
-"uR" = (
-/obj/structure/flora/jungle/vines,
-/turf/open/floor/plating/ground/dirtgrassborder/corner,
-/area/lv624/ground/jungle9)
+/area/lv624/ground/compound/ne/theme_lv624)
 "uV" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/open/ground/grass,
-/area/lv624/ground/jungle7)
+/obj/structure/flora/drought/shroom,
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/jungle7/theme_lv624)
 "vw" = (
 /obj/effect/decal/remains/xeno,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/compound/ne)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/compound/ne/theme_lv624)
 "wl" = (
 /obj/structure/window/framed/colony/reinforced,
 /obj/machinery/door/poddoor/mainship/open{
@@ -214,77 +187,56 @@
 	name = "\improper Nexus Blast Door"
 	},
 /turf/open/floor/plating,
-/area/lv624/lazarus/main_hall)
-"wn" = (
-/obj/structure/flora/jungle/vines/heavy,
-/turf/open/ground/grass,
-/area/lv624/ground/jungle9)
+/area/lv624/lazarus/main_hall/theme_lv624)
 "wt" = (
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/drought/shroom,
 /obj/machinery/floodlight/colony{
 	dir = 1
 	},
-/turf/open/floor/plating/ground/dirtgrassborder,
-/area/lv624/ground/jungle9)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/jungle9/theme_lv624)
 "wD" = (
-/turf/open/ground/grass,
-/area/lv624/ground/compound/ne)
-"wT" = (
-/turf/open/floor/plating/ground/dirtgrassborder,
-/area/lv624/ground/jungle9)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/compound/ne/theme_lv624)
 "xI" = (
-/obj/structure/flora/jungle/vines,
-/turf/open/ground/grass,
-/area/lv624/ground/compound/ne)
+/obj/structure/flora/drought/shroom,
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/compound/ne/theme_lv624)
 "yb" = (
-/turf/open/floor/plating/ground/dirtgrassborder{
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 1
 	},
-/area/lv624/ground/jungle7)
-"yC" = (
-/turf/open/ground/grass,
-/area/lv624/ground/jungle9)
-"yG" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/open/ground/grass,
-/area/lv624/ground/jungle9)
-"zh" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/open/floor/plating/ground/dirtgrassborder/corner2{
-	dir = 1
-	},
-/area/lv624/ground/jungle7)
-"zj" = (
-/obj/structure/flora/jungle/vines,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/jungle7)
+/area/lv624/ground/jungle7/theme_lv624)
 "Aw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
 	},
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/compound/ne)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/compound/ne/theme_lv624)
 "AK" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/dirtgrassborder{
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 1
 	},
-/area/lv624/ground/jungle7)
+/area/lv624/ground/jungle7/theme_lv624)
 "AV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/compound/ne)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/compound/ne/theme_lv624)
 "Dd" = (
-/obj/structure/flora/jungle/vines/heavy,
+/obj/structure/flora/drought/shroom,
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/dirtgrassborder/corner{
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 1
 	},
-/area/lv624/ground/jungle9)
+/area/lv624/ground/jungle9/theme_lv624)
 "DF" = (
-/turf/closed/gm/dense,
-/area/lv624/ground/caves/rock)
+/turf/closed/mineral/smooth/lavawall/indestructible{
+	open_turf_type = /turf/open/lavaland/basalt/cave/autosmooth;
+	baseturfs = /turf/open/lavaland/basalt/cave/autosmooth
+	},
+/area/lv624/ground/caves/rock/theme_lv624)
 "EK" = (
 /obj/machinery/door/airlock/multi_tile/mainship/generic{
 	name = "\improper Nexus Dome"
@@ -295,7 +247,7 @@
 	name = "\improper Nexus Blast Door"
 	},
 /turf/open/floor/tile/white,
-/area/lv624/lazarus/main_hall)
+/area/lv624/lazarus/main_hall/theme_lv624)
 "EN" = (
 /obj/machinery/door/poddoor/mainship/open{
 	dir = 2;
@@ -303,470 +255,336 @@
 	name = "\improper Nexus Blast Door"
 	},
 /turf/open/floor/tile/white,
-/area/lv624/lazarus/main_hall)
-"Fv" = (
-/obj/structure/flora/jungle/vines,
-/turf/open/floor/plating/ground/dirtgrassborder{
-	dir = 8
-	},
-/area/lv624/ground/jungle9)
-"FF" = (
-/obj/structure/flora/jungle/vines/heavy,
-/turf/open/ground/grass,
-/area/lv624/ground/jungle7)
-"GL" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/open/ground/grass,
-/area/lv624/ground/compound/ne)
+/area/lv624/lazarus/main_hall/theme_lv624)
 "HE" = (
-/obj/structure/flora/jungle/vines,
+/obj/structure/flora/drought/shroom,
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/dirtgrassborder{
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 8
 	},
-/area/lv624/ground/jungle7)
-"HV" = (
-/obj/structure/flora/jungle/vines,
-/turf/open/floor/plating/ground/dirtgrassborder/corner{
-	dir = 4
-	},
-/area/lv624/ground/jungle9)
-"HZ" = (
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/compound/ne)
+/area/lv624/ground/jungle7/theme_lv624)
 "Id" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/compound/ne)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/compound/ne/theme_lv624)
 "Im" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/open/floor/plating/ground/dirtgrassborder{
+/obj/structure/flora/drought/shroom,
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 8
 	},
-/area/lv624/ground/jungle7)
+/area/lv624/ground/jungle7/theme_lv624)
 "IA" = (
 /obj/structure/fence,
-/turf/open/floor/plating/ground/dirtgrassborder{
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 1
 	},
-/area/lv624/ground/compound/ne)
+/area/lv624/ground/compound/ne/theme_lv624)
 "II" = (
 /obj/structure/fence,
-/turf/open/ground/grass,
-/area/lv624/ground/jungle7)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/jungle7/theme_lv624)
 "IT" = (
 /obj/structure/fence,
-/turf/open/floor/plating/ground/dirtgrassborder/corner2,
-/area/lv624/ground/jungle9)
-"IZ" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/effect/landmark/weed_node,
-/turf/open/ground/grass,
-/area/lv624/ground/jungle7)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/jungle9/theme_lv624)
 "Jv" = (
 /turf/closed/wall,
-/area/lv624/ground/jungle9)
+/area/lv624/ground/jungle9/theme_lv624)
 "Jy" = (
-/obj/structure/flora/jungle/vines,
-/turf/open/floor/plating/ground/dirtgrassborder/corner{
+/obj/structure/flora/drought/shroom,
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 1
 	},
-/area/lv624/ground/jungle9)
-"Kf" = (
-/obj/structure/flora/jungle/vines,
-/turf/open/floor/plating/ground/dirtgrassborder/corner2{
-	dir = 8
-	},
-/area/lv624/ground/jungle7)
-"Kk" = (
-/turf/open/ground/grass/grass2,
-/area/lv624/ground/jungle7)
+/area/lv624/ground/jungle9/theme_lv624)
 "Kx" = (
-/turf/open/floor/plating/ground/dirtgrassborder/corner{
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 4
 	},
-/area/lv624/ground/jungle9)
+/area/lv624/ground/jungle9/theme_lv624)
 "KD" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/jungle7)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/jungle7/theme_lv624)
 "KP" = (
-/turf/open/floor/plating/ground/dirtgrassborder/corner{
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 8
 	},
-/area/lv624/ground/jungle9)
+/area/lv624/ground/jungle9/theme_lv624)
 "KW" = (
 /obj/machinery/floodlight/colony,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/jungle7)
-"Lp" = (
-/obj/structure/flora/jungle/vines,
-/turf/open/floor/plating/ground/dirtgrassborder{
-	dir = 1
-	},
-/area/lv624/ground/jungle9)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/jungle7/theme_lv624)
 "Lq" = (
-/turf/open/floor/plating/ground/dirtgrassborder/corner2{
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 4
 	},
-/area/lv624/ground/compound/ne)
+/area/lv624/ground/compound/ne/theme_lv624)
 "LF" = (
-/turf/open/floor/plating/ground/dirtgrassborder{
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 8
 	},
-/area/lv624/ground/compound/ne)
-"MK" = (
-/obj/structure/flora/jungle/vines,
-/turf/open/floor/plating/ground/dirtgrassborder{
-	dir = 8
-	},
-/area/lv624/ground/jungle7)
-"NS" = (
-/turf/open/floor/plating/ground/dirtgrassborder{
-	dir = 4
-	},
-/area/lv624/ground/jungle9)
+/area/lv624/ground/compound/ne/theme_lv624)
 "Oi" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
 	},
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/compound/ne)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/compound/ne/theme_lv624)
 "On" = (
 /turf/closed/wall/r_wall,
-/area/lv624/lazarus/main_hall)
-"Po" = (
-/turf/open/floor/plating/ground/dirtgrassborder,
-/area/lv624/ground/compound/ne)
-"Pr" = (
-/obj/structure/fence,
-/turf/open/floor/plating/ground/dirtgrassborder{
-	dir = 8
-	},
-/area/lv624/ground/compound/ne)
-"Pw" = (
-/turf/open/floor/plating/ground/dirtgrassborder,
-/area/lv624/ground/jungle7)
-"Pz" = (
-/turf/open/floor/plating/ground/dirtgrassborder/corner{
-	dir = 1
-	},
-/area/lv624/ground/jungle7)
-"PM" = (
-/obj/structure/flora/jungle/vines,
-/turf/open/floor/plating/ground/dirtgrassborder/corner{
-	dir = 8
-	},
-/area/lv624/ground/jungle7)
-"QM" = (
-/obj/structure/flora/ausbushes/ppflowers,
-/turf/open/ground/grass,
-/area/lv624/ground/jungle7)
+/area/lv624/lazarus/main_hall/theme_lv624)
 "QV" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/closed/gm/dense,
-/area/lv624/ground/compound/ne)
-"RA" = (
-/turf/open/floor/plating/ground/dirtgrassborder{
-	dir = 4
+/obj/structure/flora/drought/shroom,
+/turf/closed/mineral/smooth/lavawall/indestructible{
+	open_turf_type = /turf/open/lavaland/basalt/cave/autosmooth;
+	baseturfs = /turf/open/lavaland/basalt/cave/autosmooth
 	},
-/area/lv624/ground/jungle7)
+/area/lv624/ground/compound/ne/theme_lv624)
 "Ss" = (
 /obj/structure/fence,
-/turf/open/floor/plating/ground/dirtgrassborder{
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 1
 	},
-/area/lv624/ground/jungle9)
-"SX" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/jungle7)
-"TU" = (
-/obj/structure/flora/jungle/vines,
-/turf/open/floor/plating/ground/dirtgrassborder,
-/area/lv624/ground/jungle9)
-"Vd" = (
-/obj/structure/flora/jungle/vines,
-/turf/open/ground/grass,
-/area/lv624/ground/jungle7)
+/area/lv624/ground/jungle9/theme_lv624)
 "Vg" = (
 /obj/effect/ai_node,
-/turf/open/ground/grass,
-/area/lv624/ground/jungle9)
-"Vx" = (
-/obj/effect/landmark/weed_node,
-/turf/open/ground/grass,
-/area/lv624/ground/compound/ne)
-"VI" = (
-/obj/effect/landmark/weed_node,
-/turf/open/ground/grass,
-/area/lv624/ground/jungle7)
-"VQ" = (
-/turf/open/floor/plating/ground/dirtgrassborder{
-	dir = 8
-	},
-/area/lv624/ground/jungle9)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/jungle9/theme_lv624)
 "Wt" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 10
 	},
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/compound/ne)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/compound/ne/theme_lv624)
 "Xa" = (
-/turf/open/floor/plating/ground/dirtgrassborder{
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 1
 	},
-/area/lv624/ground/jungle9)
-"Xt" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/open/floor/plating/ground/dirtgrassborder{
-	dir = 1
-	},
-/area/lv624/ground/jungle9)
-"XC" = (
-/turf/open/floor/plating/ground/dirtgrassborder{
-	dir = 8
-	},
-/area/lv624/ground/jungle7)
+/area/lv624/ground/jungle9/theme_lv624)
 "XR" = (
-/turf/open/floor/plating/ground/dirtgrassborder/corner{
+/turf/open/floor/plating/ground/mars/random/dirt{
 	dir = 1
 	},
-/area/lv624/ground/compound/ne)
-"Yx" = (
-/turf/open/floor/plating/ground/dirtgrassborder/corner{
-	dir = 1
-	},
-/area/lv624/ground/jungle9)
-"YD" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/compound/ne)
-"YY" = (
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/jungle7)
+/area/lv624/ground/compound/ne/theme_lv624)
 "Zj" = (
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/drought/shroom,
 /obj/machinery/floodlight/colony{
 	dir = 4
 	},
-/turf/open/ground/grass,
-/area/lv624/ground/jungle9)
-"Zo" = (
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/jungle9)
+/turf/open/floor/plating/ground/mars/random/dirt,
+/area/lv624/ground/jungle9/theme_lv624)
 "ZU" = (
 /turf/closed/wall,
-/area/lv624/ground/compound/ne)
+/area/lv624/ground/compound/ne/theme_lv624)
 
 (1,1,1) = {"
-hE
-SX
-YY
+bA
+uV
+bA
 KD
-HZ
+wD
 on
 Oi
-HZ
+wD
 Jv
-yC
-yG
-se
-wn
-yC
+ls
+lf
+lf
+lf
+ls
 DF
-yC
-yC
-yC
-wn
+ls
+ls
+ls
+lf
 DF
 "}
 (2,1,1) = {"
-YY
-YY
-YY
-SX
-HZ
-HZ
+bA
+bA
+bA
+uV
+wD
+wD
 qj
-HZ
+wD
 Ss
 ls
-kt
+iQ
 jX
-yC
+ls
 DF
 DF
 DF
 DF
-NS
+Kx
 KP
-uR
+lf
 "}
 (3,1,1) = {"
 KD
-zh
+pc
 Im
-XC
+pI
 Lq
-HZ
+wD
 qj
-HZ
+wD
 Ss
 wt
 lf
-Lp
+Jy
 DF
 DF
 DF
 DF
-TU
+lf
 tI
-Xt
-wT
+Jy
+ls
 "}
 (4,1,1) = {"
-XC
+pI
 px
-QM
+uV
 bA
-Po
-HZ
+wD
+wD
 qj
-HZ
+wD
 Jv
-Yx
-Fv
-HV
+Xa
+rv
+iQ
 po
 DF
 DF
 bv
 Dd
-VQ
+KP
 Kx
 Jy
 "}
 (5,1,1) = {"
 uV
-rd
+hH
 bA
-Kk
-Po
-HZ
+bA
+wD
+wD
 Oi
-HZ
+wD
 Ss
-yC
-se
+ls
+lf
 bv
-yC
+ls
 DF
-yC
+ls
 Vg
-se
+lf
 DF
 DF
 DF
 "}
 (6,1,1) = {"
-ov
-RA
+bA
+qD
 pI
 lF
-Po
-HZ
+wD
+wD
 qj
-HZ
+wD
 Ss
 me
 DF
 DF
-yC
-se
+ls
+lf
 Vg
 me
 DF
 DF
 DF
-yC
+ls
 "}
 (7,1,1) = {"
-Pw
+bA
 KW
 AK
 II
-Po
-HZ
+wD
+wD
 Aw
-HZ
+wD
 Jv
-se
+lf
 DF
 DF
-yC
-yG
-yC
-yG
+ls
+lf
+ls
+lf
 ls
 iQ
 rv
-se
+lf
 "}
 (8,1,1) = {"
-Pz
-XC
+yb
+pI
 qD
 II
-Po
-HZ
+wD
+wD
 qj
-HZ
+wD
 Ss
-yC
+ls
 DF
-yC
+ls
 me
-yC
+ls
 jL
-rp
-wT
+jL
+ls
 lf
 gd
-se
+lf
 "}
 (9,1,1) = {"
 bA
-Vd
+uV
 bA
 II
-Po
-HZ
+wD
+wD
 Oi
-HZ
+wD
 Ss
-yC
-yC
-yC
-yG
-yC
+ls
+ls
+ls
+lf
+ls
 Zj
-yC
-wT
-Zo
+ls
+ls
+ls
 Xa
-yC
+ls
 "}
 (10,1,1) = {"
 DF
 DF
 bA
 lF
-Po
-HZ
+wD
+wD
 qj
-HZ
+wD
 Jv
 nL
 nL
@@ -785,21 +603,21 @@ DF
 DF
 bA
 II
-Po
-HZ
+wD
+wD
 qj
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
+wD
+wD
+wD
+wD
+wD
+wD
+wD
 Id
-HZ
-HZ
+wD
+wD
 vw
-HZ
+wD
 EK
 "}
 (12,1,1) = {"
@@ -807,8 +625,8 @@ DF
 DF
 hH
 II
-Po
-HZ
+wD
+wD
 Wt
 AV
 AV
@@ -829,70 +647,70 @@ DF
 DF
 bA
 lF
-Po
-HZ
+wD
+wD
 qo
-HZ
-HZ
-YD
+wD
+wD
+xI
 qo
-HZ
-HZ
-HZ
+wD
+wD
+wD
 qo
-HZ
-HZ
-HZ
+wD
+wD
+wD
 qo
 wl
 "}
 (14,1,1) = {"
-PM
+Im
 bA
 bA
 II
-Po
-HZ
+wD
+wD
 Id
-HZ
-HZ
-HZ
-HZ
+wD
+wD
+wD
+wD
 Id
-HZ
-HZ
+wD
+wD
 Id
-HZ
-HZ
-HZ
+wD
+wD
+wD
 Id
 fl
 "}
 (15,1,1) = {"
-Kf
-RA
+Im
+qD
 pI
 II
-Po
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
 Id
-HZ
+wD
 wl
 "}
 (16,1,1) = {"
 mC
-zj
+uV
 yb
 II
 XR
@@ -901,19 +719,19 @@ hI
 LF
 LF
 Lq
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
 EK
 "}
 (17,1,1) = {"
-MK
+Im
 HE
 qD
 lF
@@ -924,52 +742,52 @@ II
 II
 ZU
 qo
-HZ
-HZ
-YD
+wD
+wD
+xI
 qo
-HZ
-HZ
-HZ
+wD
+wD
+wD
 qo
 EN
 "}
 (18,1,1) = {"
-Vd
-Vd
-Vd
-VI
+uV
+uV
+uV
+KD
 bA
 bA
-ov
-RA
+bA
+qD
 pI
-eg
-HZ
-HZ
-HZ
+dr
+wD
+wD
+wD
 ZU
-Pr
-Pr
+tQ
+tQ
 eM
-Pr
-Pr
+tQ
+tQ
 On
 "}
 (19,1,1) = {"
-FF
+uV
 DF
 DF
 DF
-Vd
+uV
 bA
-Pw
+bA
 hJ
 yb
-eg
-HZ
-HZ
-HZ
+dr
+wD
+wD
+wD
 IA
 md
 QV
@@ -983,20 +801,20 @@ DF
 DF
 DF
 DF
-Vd
-IZ
+uV
+hH
 pc
-XC
+pI
 qD
 ZU
-HZ
-HZ
+wD
+wD
 qo
 IA
-GL
+xI
 QV
 xI
-Vx
+qo
 xI
 wD
 "}

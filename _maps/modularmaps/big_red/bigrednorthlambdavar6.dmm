@@ -1,112 +1,111 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "c" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/northeast/theme_bigred_v2)
 "e" = (
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/northeast/garbledradio/theme_bigred_v2)
 "f" = (
 /obj/machinery/chem_dispenser,
 /turf/open/floor/tile/whiteyellow{
 	dir = 1
 	},
-/area/bigredv2/caves/lambda_lab)
+/area/bigredv2/caves/lambda_lab/theme_bigred_v2)
 "g" = (
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/northeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/northeast/theme_bigred_v2)
 "h" = (
 /obj/effect/landmark/miner_platinum,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast)
-"i" = (
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/northeast/theme_bigred_v2)
 "j" = (
 /obj/machinery/chem_dispenser,
 /turf/open/floor/tile/whiteyellow{
 	dir = 9
 	},
-/area/bigredv2/caves/lambda_lab)
+/area/bigredv2/caves/lambda_lab/theme_bigred_v2)
 "k" = (
 /obj/effect/landmark/fog_blocker,
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "l" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/northeast/garbledradio/theme_bigred_v2)
 "m" = (
 /turf/open/floor/plating,
-/area/bigredv2/caves/lambda_lab)
+/area/bigredv2/caves/lambda_lab/theme_bigred_v2)
 "n" = (
 /obj/effect/landmark/weed_node,
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/northeast/garbledradio/theme_bigred_v2)
 "q" = (
 /obj/structure/closet/crate/freezer/rations,
 /turf/open/floor/plating,
-/area/bigredv2/caves/lambda_lab)
+/area/bigredv2/caves/lambda_lab/theme_bigred_v2)
 "s" = (
-/turf/closed/mineral/smooth/bigred,
-/area/bigredv2/caves/rock)
+/turf/closed/mineral/smooth/bluefrostwall{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "t" = (
 /obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/northeast/garbledradio/theme_bigred_v2)
 "x" = (
 /turf/closed/wall/r_wall,
-/area/bigredv2/caves/rock)
+/area/bigredv2/caves/rock/theme_bigred_v2)
 "F" = (
-/turf/closed/mineral/smooth/bigred/indestructible,
+/turf/closed/mineral/smooth/bluefrostwall/indestructible{
+	open_turf_type = /turf/open/floor/plating/ground/ice;
+	baseturfs = /turf/open/floor/plating/ground/ice
+	},
 /area/space)
 "H" = (
 /obj/effect/ai_node,
 /obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/northeast/theme_bigred_v2)
 "I" = (
 /obj/machinery/chem_master,
 /turf/open/floor/tile/whiteyellow{
 	dir = 5
 	},
-/area/bigredv2/caves/lambda_lab)
+/area/bigredv2/caves/lambda_lab/theme_bigred_v2)
 "J" = (
 /obj/effect/landmark/weed_node,
 /obj/effect/ai_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/northeast/theme_bigred_v2)
 "K" = (
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/northeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/northeast/garbledradio/theme_bigred_v2)
 "M" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/northeast/theme_bigred_v2)
 "N" = (
 /obj/effect/landmark/xeno_resin_wall,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast/garbledradio)
-"P" = (
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast/garbledradio)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/northeast/garbledradio/theme_bigred_v2)
 "S" = (
 /turf/closed/wall/r_wall,
-/area/bigredv2/caves/lambda_lab)
+/area/bigredv2/caves/lambda_lab/theme_bigred_v2)
 "V" = (
 /obj/structure/closet/crate/internals,
 /turf/open/floor/plating,
-/area/bigredv2/caves/lambda_lab)
-"W" = (
-/obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/random/cave/rock,
-/area/bigredv2/caves/northeast/garbledradio)
+/area/bigredv2/caves/lambda_lab/theme_bigred_v2)
 "X" = (
 /obj/effect/landmark/fog_blocker,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/northeast)
+/turf/open/floor/plating/ground/ice,
+/area/bigredv2/caves/northeast/theme_bigred_v2)
 
 (1,1,1) = {"
 F
@@ -134,10 +133,10 @@ s
 s
 s
 s
-P
-P
-P
-P
+K
+K
+K
+K
 K
 s
 s
@@ -169,9 +168,9 @@ s
 K
 K
 l
-P
-P
-P
+K
+K
+K
 K
 s
 s
@@ -200,12 +199,12 @@ F
 s
 s
 s
-P
-P
-P
-P
-P
-P
+K
+K
+K
+K
+K
+K
 K
 s
 s
@@ -234,13 +233,13 @@ F
 s
 s
 s
-P
-P
-P
-P
-P
-P
-P
+K
+K
+K
+K
+K
+K
+K
 K
 s
 "}
@@ -268,12 +267,12 @@ F
 s
 s
 s
-P
+K
 e
-P
-P
+K
+K
 l
-P
+K
 e
 K
 s
@@ -302,13 +301,13 @@ F
 s
 s
 s
-W
-P
-P
-P
-P
-P
-P
+l
+K
+K
+K
+K
+K
+K
 K
 s
 "}
@@ -339,10 +338,10 @@ s
 s
 s
 K
-P
-P
-P
-P
+K
+K
+K
+K
 K
 s
 "}
@@ -373,10 +372,10 @@ s
 s
 s
 s
-P
-P
-P
-P
+K
+K
+K
+K
 l
 K
 "}
@@ -407,12 +406,12 @@ s
 s
 s
 s
-W
-P
-P
-P
-P
-P
+l
+K
+K
+K
+K
+K
 "}
 (10,1,1) = {"
 F
@@ -443,10 +442,10 @@ s
 s
 s
 K
-P
+K
 e
-P
-P
+K
+K
 "}
 (11,1,1) = {"
 F
@@ -478,9 +477,9 @@ s
 s
 s
 s
-P
+K
 e
-P
+K
 "}
 (12,1,1) = {"
 F
@@ -513,7 +512,7 @@ s
 s
 s
 K
-P
+K
 e
 "}
 (13,1,1) = {"
@@ -682,9 +681,9 @@ s
 s
 x
 N
-P
-P
-P
+K
+K
+K
 "}
 (18,1,1) = {"
 F
@@ -716,8 +715,8 @@ s
 s
 x
 N
-P
-P
+K
+K
 e
 "}
 (19,1,1) = {"
@@ -750,9 +749,9 @@ s
 s
 N
 N
-P
-P
-P
+K
+K
+K
 "}
 (20,1,1) = {"
 F
@@ -782,11 +781,11 @@ s
 s
 s
 s
-P
-P
-P
-P
-P
+K
+K
+K
+K
+K
 "}
 (21,1,1) = {"
 F
@@ -816,11 +815,11 @@ s
 s
 s
 s
-P
-P
+K
+K
 l
-P
-P
+K
+K
 "}
 (22,1,1) = {"
 F
@@ -849,12 +848,12 @@ s
 s
 s
 s
-P
-P
-P
-P
-P
-P
+K
+K
+K
+K
+K
+K
 "}
 (23,1,1) = {"
 F
@@ -882,12 +881,12 @@ s
 s
 s
 s
-P
+K
 e
-P
-P
-P
-P
+K
+K
+K
+K
 e
 "}
 (24,1,1) = {"
@@ -916,13 +915,13 @@ s
 s
 s
 s
-P
-P
-P
-P
-P
+K
+K
+K
+K
+K
 l
-P
+K
 "}
 (25,1,1) = {"
 F
@@ -949,14 +948,14 @@ s
 s
 s
 s
-P
-P
-P
-P
-P
-P
-P
-P
+K
+K
+K
+K
+K
+K
+K
+K
 "}
 (26,1,1) = {"
 F
@@ -984,12 +983,12 @@ s
 s
 s
 l
-P
-P
-P
+K
+K
+K
 t
-P
-P
+K
+K
 s
 "}
 (27,1,1) = {"
@@ -1016,12 +1015,12 @@ F
 s
 s
 s
-P
-P
-P
-P
-P
-P
+K
+K
+K
+K
+K
+K
 s
 s
 s
@@ -1050,11 +1049,11 @@ F
 s
 s
 e
-P
-P
-P
+K
+K
+K
 n
-P
+K
 s
 s
 s
@@ -1084,10 +1083,10 @@ F
 s
 s
 s
-P
-P
-P
-P
+K
+K
+K
+K
 s
 s
 s
@@ -1118,10 +1117,10 @@ F
 s
 s
 s
-P
-P
-P
-P
+K
+K
+K
+K
 s
 s
 k
@@ -1152,10 +1151,10 @@ F
 s
 s
 s
-P
-P
-P
-P
+K
+K
+K
+K
 s
 s
 k
@@ -1185,11 +1184,11 @@ F
 F
 s
 s
-P
-P
-P
-P
-P
+K
+K
+K
+K
+K
 s
 s
 k
@@ -1219,10 +1218,10 @@ F
 F
 s
 s
-P
-P
+K
+K
 e
-P
+K
 n
 s
 s
@@ -1254,10 +1253,10 @@ F
 s
 s
 s
-P
-P
-P
-P
+K
+K
+K
+K
 s
 s
 k
@@ -1287,10 +1286,10 @@ F
 F
 s
 s
-P
-P
-P
-i
+K
+K
+K
+g
 s
 s
 s
@@ -1321,9 +1320,9 @@ F
 F
 s
 s
-P
-P
-i
+K
+K
+g
 M
 s
 s
@@ -1355,10 +1354,10 @@ F
 F
 s
 s
-i
-i
-i
-i
+g
+g
+g
+g
 s
 s
 s
@@ -1389,10 +1388,10 @@ F
 F
 s
 s
-i
-i
-i
-i
+g
+g
+g
+g
 s
 s
 s
@@ -1424,10 +1423,10 @@ F
 s
 s
 s
-i
-i
-i
-i
+g
+g
+g
+g
 s
 s
 k
@@ -1458,11 +1457,11 @@ F
 s
 s
 s
-i
-i
-i
+g
+g
+g
 M
-i
+g
 s
 k
 S
@@ -1492,11 +1491,11 @@ F
 s
 s
 s
-i
-i
-i
+g
+g
+g
 M
-i
+g
 s
 k
 S
@@ -1526,11 +1525,11 @@ F
 s
 s
 s
-i
-i
-i
-i
-i
+g
+g
+g
+g
+g
 s
 k
 S
@@ -1559,12 +1558,12 @@ F
 F
 s
 s
-i
-i
+g
+g
 J
-i
+g
 c
-i
+g
 s
 k
 S
@@ -1593,13 +1592,13 @@ F
 F
 s
 s
-i
-i
-i
-i
-i
-i
-i
+g
+g
+g
+g
+g
+g
+g
 k
 S
 j
@@ -1627,13 +1626,13 @@ F
 F
 s
 s
-i
-i
-i
-i
-i
-i
-i
+g
+g
+g
+g
+g
+g
+g
 X
 S
 f
@@ -1661,13 +1660,13 @@ F
 F
 s
 s
-i
-i
-i
-i
-i
-i
-i
+g
+g
+g
+g
+g
+g
+g
 X
 S
 f
@@ -1696,11 +1695,11 @@ F
 s
 s
 s
-i
-i
-i
-i
-i
+g
+g
+g
+g
+g
 s
 k
 S
@@ -1731,9 +1730,9 @@ s
 s
 s
 s
-i
-i
-i
+g
+g
+g
 s
 s
 k
@@ -1765,9 +1764,9 @@ s
 s
 s
 s
-i
-i
-i
+g
+g
+g
 s
 s
 s
@@ -1799,10 +1798,10 @@ s
 s
 s
 s
-i
-i
-i
-i
+g
+g
+g
+g
 s
 s
 s
@@ -1834,12 +1833,12 @@ s
 s
 s
 s
-i
-i
+g
+g
 H
-i
-i
-i
+g
+g
+g
 g
 "}
 (52,1,1) = {"
@@ -1868,13 +1867,13 @@ s
 s
 s
 s
-i
+g
 c
-i
-i
-i
+g
+g
+g
 c
-i
+g
 "}
 (53,1,1) = {"
 F
@@ -1903,12 +1902,12 @@ s
 s
 s
 s
-i
-i
+g
+g
 M
-i
-i
-i
+g
+g
+g
 "}
 (54,1,1) = {"
 F
@@ -1937,12 +1936,12 @@ s
 s
 s
 s
-i
-i
-i
-i
-i
-i
+g
+g
+g
+g
+g
+g
 "}
 (55,1,1) = {"
 F
@@ -1972,11 +1971,11 @@ s
 s
 s
 s
-i
+g
 h
-i
-i
-i
+g
+g
+g
 "}
 (56,1,1) = {"
 F
@@ -2006,11 +2005,11 @@ s
 s
 s
 s
-i
-i
-i
+g
+g
+g
 M
-i
+g
 "}
 (57,1,1) = {"
 F
@@ -2040,11 +2039,11 @@ s
 s
 s
 s
-i
-i
-i
-i
-i
+g
+g
+g
+g
+g
 "}
 (58,1,1) = {"
 F
@@ -2074,11 +2073,11 @@ s
 s
 s
 s
-i
-i
-i
+g
+g
+g
 c
-i
+g
 "}
 (59,1,1) = {"
 F
@@ -2108,11 +2107,11 @@ s
 s
 s
 s
-i
-i
-i
-i
-i
+g
+g
+g
+g
+g
 "}
 (60,1,1) = {"
 F
@@ -2143,10 +2142,10 @@ s
 s
 s
 s
-i
-i
+g
+g
 c
-i
+g
 "}
 (61,1,1) = {"
 F
@@ -2178,9 +2177,9 @@ s
 s
 s
 s
-i
+g
 M
-i
+g
 "}
 (62,1,1) = {"
 F
@@ -2212,9 +2211,9 @@ s
 s
 s
 s
-i
-i
-i
+g
+g
+g
 "}
 (63,1,1) = {"
 F
@@ -2246,9 +2245,9 @@ s
 s
 s
 s
-i
-i
-i
+g
+g
+g
 "}
 (64,1,1) = {"
 F
@@ -2280,9 +2279,9 @@ s
 s
 s
 s
-i
-i
-i
+g
+g
+g
 "}
 (65,1,1) = {"
 F
@@ -2314,7 +2313,7 @@ s
 s
 s
 s
-i
+g
 M
-i
+g
 "}

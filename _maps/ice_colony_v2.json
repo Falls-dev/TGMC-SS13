@@ -2,17 +2,16 @@
     "map_name": "Ice Colony",
     "map_path": "map_files/Ice_Colony_v2",
     "map_file": "Ice_Colony_v2.dmm",
-    "environment_traits": {
-        "COLD": true
+    "disk_sets": {
+        "basic": 1
     },
-	"disk_sets": {
-		"basic": 1
-	},
-    "parallax_icon": "ice",
-	"armor": "ice",
-	"quickbuilds": 1600,
-	"announce_text": "На общей частоте было передано запутанное, неразборчивое сообщение, которое принял наш ретранслятор. Судя по всему, сообщение пришло из поселения второго поколения, расположенного на ледяной планете. Корабль движется в сектор на максимальном ходу. Товарищи, пройдите инструктаж и выдвигайтесь!",
-	"traits":[{
-		"weather_snowstorm": true
-	}]
+    "parallax_icon": "redrock",
+    "armor": "desert",
+    "quickbuilds": 1600,
+    "announce_text": "Получен сигнал бедствия с объекта Ice Colony. Разведка сообщает об условиях красной пустынной колонии. Корабль движется в сектор. Товарищи, пройдите инструктаж и приготовьтесь к высадке!",
+    "traits": [
+        {
+            "weather_sandstorm": true
+        }
+    ]
 }

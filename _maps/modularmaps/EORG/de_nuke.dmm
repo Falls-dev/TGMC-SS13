@@ -5,76 +5,56 @@
 	dir = 8
 	},
 /turf/open/floor/tile/dark,
-/area/deathmatch)
+/area/deathmatch/theme_de_nuke)
 "ay" = (
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
-/turf/open/floor/plating/asteroidfloor,
-/area/deathmatch)
-"bi" = (
-/turf/open/floor/plating/ground/mars/random/dirt,
-/area/deathmatch)
-"db" = (
-/obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer0,
+/area/deathmatch/theme_de_nuke)
 "dh" = (
 /obj/structure/cargo_container/wy{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_de_nuke)
 "dj" = (
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/obj/machinery/door/poddoor/mainship/ammo,
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_de_nuke)
 "dl" = (
 /obj/effect/turf_decal/sandytile/sandyplating,
-/turf/closed/wall,
-/area/deathmatch)
+/turf/closed/wall/mainship/white,
+/area/deathmatch/theme_de_nuke)
 "dA" = (
 /obj/item/storage/belt/champion,
-/turf/open/floor/grime,
-/area/deathmatch)
-"dB" = (
-/obj/effect/landmark/deathmatch,
-/turf/open/floor/plating/asteroidplating,
-/area/deathmatch)
+/turf/open/floor/wood/thatch,
+/area/deathmatch/theme_de_nuke)
 "dD" = (
-/obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/plating/ground/mars/dirttosand{
-	dir = 1
+/obj/structure/stairs/seamless{
+	color = "#888888";
+	dir = 8
 	},
-/area/deathmatch)
-"dO" = (
-/turf/open/floor/plating/asteroidplating{
-	color = "#888888"
-	},
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer3,
+/area/deathmatch/theme_de_nuke)
 "fF" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/misc/plushie/nospawnninetyfive,
-/turf/open/floor/plating/asteroidplating,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_de_nuke)
 "hw" = (
 /obj/effect/landmark/deathmatch,
-/turf/open/floor/plating/ground/mars/random/dirt,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer1,
+/area/deathmatch/theme_de_nuke)
 "ie" = (
 /obj/structure/stairs/seamless/edge{
 	color = "#888888"
 	},
-/turf/open/floor/tile/dark,
-/area/deathmatch)
-"iv" = (
-/obj/structure/cargo_container/wy{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroidplating,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer3,
+/area/deathmatch/theme_de_nuke)
 "ix" = (
 /obj/structure/rack,
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
-/turf/open/floor/plating/asteroidfloor,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer0,
+/area/deathmatch/theme_de_nuke)
 "iZ" = (
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
 /obj/structure/stairs/seamless{
@@ -82,160 +62,133 @@
 	dir = 8
 	},
 /turf/open/floor/tile/dark,
-/area/deathmatch)
+/area/deathmatch/theme_de_nuke)
 "jc" = (
 /obj/machinery/door/poddoor/railing{
 	dir = 1
 	},
-/turf/open/floor/plating/asteroidwarning{
-	dir = 1
-	},
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer1,
+/area/deathmatch/theme_de_nuke)
 "jJ" = (
 /obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/plating/ground/mars/dirttosand{
-	dir = 9
-	},
-/area/deathmatch)
-"jM" = (
-/obj/effect/spawner/random/engineering/ore_box,
-/turf/open/floor/plating/ground/mars/dirttosand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_de_nuke)
 "jP" = (
 /obj/machinery/door/poddoor/railing,
-/turf/open/floor/plating/asteroidfloor,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer0,
+/area/deathmatch/theme_de_nuke)
 "jU" = (
-/obj/structure/window/framed/mainship/hull,
-/obj/structure/window/framed/wood,
-/turf/open/floor/wood,
-/area/deathmatch)
+/obj/structure/window/phoronreinforced{
+	dir = 2
+	},
+/obj/structure/window/phoronreinforced{
+	dir = 1
+	},
+/turf/open/floor/light,
+/area/deathmatch/theme_de_nuke)
 "kR" = (
 /obj/structure/prop/mainship/hangar_stencil/two,
-/turf/open/floor/plating/asteroidplating,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_de_nuke)
 "lY" = (
 /obj/structure/stairs/seamless{
 	color = "#888888";
 	dir = 8
 	},
 /turf/open/floor/tile/dark,
-/area/deathmatch)
+/area/deathmatch/theme_de_nuke)
 "nk" = (
 /obj/machinery/door/window{
 	dir = 8
 	},
 /obj/effect/ai_node,
-/turf/open/floor/grime,
-/area/deathmatch)
-"nt" = (
-/obj/effect/spawner/random/engineering/ore_box,
-/turf/open/floor/plating/ground/mars/dirttosand{
-	dir = 8
-	},
-/area/deathmatch)
+/turf/open/floor/wood/thatch,
+/area/deathmatch/theme_de_nuke)
 "od" = (
-/turf/closed/wall,
-/area/deathmatch)
+/turf/closed/wall/mainship/white,
+/area/deathmatch/theme_de_nuke)
 "oD" = (
 /obj/effect/decal/cleanable/rune,
 /obj/item/explosive/plastique,
-/turf/open/floor/plating/asteroidplating,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_de_nuke)
 "oH" = (
 /obj/structure/largecrate/random/barrel/yellow,
-/turf/open/floor/plating/asteroidfloor,
-/area/deathmatch)
-"pV" = (
-/obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/plating/ground/mars/dirttosand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer0,
+/area/deathmatch/theme_de_nuke)
 "pX" = (
 /obj/structure/largecrate,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_de_nuke)
 "qF" = (
-/obj/structure/window/framed/mainship/hull,
-/obj/structure/window/framed/wood,
-/turf/open/floor/mainship/mono,
-/area/deathmatch)
+/obj/structure/window/phoronreinforced{
+	dir = 1
+	},
+/obj/structure/window/phoronreinforced{
+	dir = 8
+	},
+/obj/structure/window/phoronreinforced{
+	dir = 4
+	},
+/turf/open/floor/glass/plasma,
+/area/deathmatch/theme_de_nuke)
 "rv" = (
 /obj/machinery/door/poddoor/railing,
-/turf/open/floor/plating/asteroidplating,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_de_nuke)
 "sr" = (
 /obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/plating/ground/mars/random/dirt,
-/area/deathmatch)
-"sw" = (
-/obj/structure/largecrate,
-/turf/open/floor/plating/ground/mars/dirttosand{
-	dir = 10
-	},
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer1,
+/area/deathmatch/theme_de_nuke)
 "tf" = (
-/obj/structure/largecrate,
-/turf/open/floor/plating/asteroidplating,
-/area/deathmatch)
+/obj/structure/window/phoronreinforced{
+	dir = 8
+	},
+/obj/structure/window/phoronreinforced{
+	dir = 4
+	},
+/turf/open/floor/glass/plasma,
+/area/deathmatch/theme_de_nuke)
 "tF" = (
 /obj/structure/rack,
-/turf/open/floor/plating/asteroidplating,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_de_nuke)
 "tZ" = (
 /obj/structure/rack,
-/turf/open/floor/plating/asteroidfloor,
-/area/deathmatch)
-"up" = (
-/turf/open/floor/plating/ground/mars/dirttosand{
-	dir = 10
-	},
-/area/deathmatch)
-"vi" = (
-/obj/effect/landmark/deathmatch,
-/turf/open/floor/plating/ground/mars/dirttosand{
-	dir = 6
-	},
-/area/deathmatch)
-"vv" = (
-/turf/open/floor/plating/ground/mars/dirttosand{
-	dir = 9
-	},
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer0,
+/area/deathmatch/theme_de_nuke)
 "wl" = (
 /obj/structure/cargo_container/ch_red{
 	dir = 4
 	},
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_de_nuke)
 "ww" = (
-/turf/closed/wall/wood,
-/area/deathmatch)
+/turf/closed/wall/variable/siding,
+/area/deathmatch/theme_de_nuke)
 "wH" = (
 /obj/machinery/door/poddoor/railing{
 	dir = 1
 	},
 /obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/plating/asteroidwarning{
-	dir = 1
-	},
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer1,
+/area/deathmatch/theme_de_nuke)
 "wI" = (
-/obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/plating/asteroidplating,
-/area/deathmatch)
+/obj/structure/window/phoronreinforced{
+	dir = 4
+	},
+/obj/structure/window/phoronreinforced{
+	dir = 8
+	},
+/turf/open/floor/glass/plasma,
+/area/deathmatch/theme_de_nuke)
 "xt" = (
 /obj/effect/landmark/deathmatch,
 /obj/structure/stairs/seamless{
 	dir = 8
 	},
-/turf/open/floor/tile/dark,
-/area/deathmatch)
-"xB" = (
-/obj/structure/cargo_container/wy{
-	dir = 4
-	},
-/turf/open/floor/plating/asteroidplating,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer1,
+/area/deathmatch/theme_de_nuke)
 "yt" = (
 /obj/machinery/door/poddoor/railing{
 	dir = 1
@@ -245,54 +198,48 @@
 	dir = 4
 	},
 /turf/open/floor/tile/dark,
-/area/deathmatch)
+/area/deathmatch/theme_de_nuke)
 "yA" = (
 /obj/structure/stairs/seamless/edge,
-/turf/open/floor/tile/dark,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer3,
+/area/deathmatch/theme_de_nuke)
 "zr" = (
 /obj/structure/cargo_container{
 	dir = 1
 	},
-/turf/open/floor/plating/ground/mars/random/dirt,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_de_nuke)
 "zB" = (
-/obj/structure/window/framed/mainship/requisitions,
-/obj/structure/window/framed/wood,
-/turf/open/floor/wood,
-/area/deathmatch)
-"zQ" = (
-/obj/effect/spawner/random/engineering/ore_box,
-/turf/open/floor/plating/ground/mars/random/dirt,
-/area/deathmatch)
-"Ab" = (
-/obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/plating/asteroidplating{
-	color = "#888888"
+/obj/structure/window/phoronreinforced{
+	dir = 1
 	},
-/area/deathmatch)
+/obj/structure/window/phoronreinforced{
+	dir = 2
+	},
+/turf/open/floor/light,
+/area/deathmatch/theme_de_nuke)
 "Aw" = (
 /obj/structure/platform{
 	dir = 1
 	},
-/turf/closed/wall,
-/area/deathmatch)
+/turf/closed/wall/mainship/white,
+/area/deathmatch/theme_de_nuke)
 "Ax" = (
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_de_nuke)
 "AA" = (
 /obj/structure/stairs/seamless/edge{
 	dir = 8
 	},
 /turf/open/floor/tile/dark,
-/area/deathmatch)
+/area/deathmatch/theme_de_nuke)
 "AF" = (
 /obj/structure/cargo_container/ch_red{
 	dir = 1
 	},
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_de_nuke)
 "DQ" = (
 /obj/machinery/door/poddoor/railing{
 	dir = 2
@@ -301,35 +248,32 @@
 	color = "#888888"
 	},
 /turf/open/floor/tile/dark,
-/area/deathmatch)
+/area/deathmatch/theme_de_nuke)
 "Ei" = (
 /obj/structure/platform{
 	dir = 1
 	},
-/turf/open/floor/plating/asteroidfloor,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer0,
+/area/deathmatch/theme_de_nuke)
 "Fc" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/plating/asteroidfloor,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer0,
+/area/deathmatch/theme_de_nuke)
 "Fm" = (
 /obj/effect/decal/cleanable/rune,
-/turf/open/floor/plating/asteroidplating,
-/area/deathmatch)
-"Fp" = (
-/turf/open/floor/plating/asteroidplating,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_de_nuke)
 "FZ" = (
-/turf/closed/mineral/smooth/desertdamrockwall/indestructible,
-/area/deathmatch)
-"Go" = (
-/obj/effect/landmark/deathmatch,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/obj/effect/forcefield{
+	desc = "You can't get in. Heh.";
+	name = "Blocker"
+	},
+/turf/closed/mineral/smooth/frostwall/indestructible,
+/area/deathmatch/theme_de_nuke)
 "Gz" = (
 /obj/machinery/door/window/right,
-/turf/open/floor/grime,
-/area/deathmatch)
+/turf/open/floor/wood/thatch,
+/area/deathmatch/theme_de_nuke)
 "GJ" = (
 /obj/machinery/door/poddoor/railing{
 	dir = 8
@@ -337,49 +281,51 @@
 /turf/open/floor/plating/asteroidwarning{
 	dir = 8
 	},
-/area/deathmatch)
+/area/deathmatch/theme_de_nuke)
 "GO" = (
 /obj/structure/stairs/seamless{
 	dir = 8
 	},
-/turf/open/floor/tile/dark,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer1,
+/area/deathmatch/theme_de_nuke)
 "HB" = (
 /obj/structure/stairs/seamless/edge{
 	dir = 4
 	},
-/turf/open/floor/tile/dark,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer3,
+/area/deathmatch/theme_de_nuke)
 "HV" = (
-/obj/structure/window/framed/wood,
-/turf/open/floor/wood,
-/area/deathmatch)
+/obj/structure/window/phoronreinforced{
+	dir = 8
+	},
+/obj/structure/window/phoronreinforced{
+	dir = 4
+	},
+/obj/structure/window/phoronreinforced{
+	dir = 2
+	},
+/turf/open/floor/glass/plasma,
+/area/deathmatch/theme_de_nuke)
 "Ib" = (
 /obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
 /obj/structure/stairs/seamless/edge{
 	dir = 1
 	},
 /turf/open/floor/tile/dark,
-/area/deathmatch)
-"Ip" = (
-/turf/open/floor/plating/ground/mars/dirttosand,
-/area/deathmatch)
+/area/deathmatch/theme_de_nuke)
 "Ix" = (
-/obj/structure/cargo_container/wy,
-/turf/open/floor/plating/asteroidplating,
-/area/deathmatch)
-"Jf" = (
-/turf/open/floor/plating/ground/mars/dirttosand{
-	dir = 5
+/obj/structure/stairs/seamless{
+	dir = 8
 	},
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer3,
+/area/deathmatch/theme_de_nuke)
 "Jn" = (
 /obj/effect/spawner/random/engineering/ore_box,
-/turf/open/floor/plating/asteroidplating,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_de_nuke)
 "JT" = (
-/turf/open/floor/grime,
-/area/deathmatch)
+/turf/open/floor/wood/thatch,
+/area/deathmatch/theme_de_nuke)
 "JW" = (
 /obj/machinery/door/poddoor/railing{
 	dir = 8
@@ -388,22 +334,17 @@
 /turf/open/floor/plating/asteroidwarning{
 	dir = 8
 	},
-/area/deathmatch)
+/area/deathmatch/theme_de_nuke)
 "Kz" = (
 /obj/structure/cargo_container/wy{
 	dir = 1
 	},
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
-"KZ" = (
-/turf/open/floor/plating/ground/mars/dirttosand{
-	dir = 4
-	},
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_de_nuke)
 "Lt" = (
 /obj/structure/cargo_container/wy,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_de_nuke)
 "Lv" = (
 /obj/machinery/door/poddoor/railing{
 	dir = 2
@@ -411,57 +352,56 @@
 /obj/machinery/door/poddoor/railing{
 	dir = 8
 	},
-/turf/open/floor/plating/asteroidfloor,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer0,
+/area/deathmatch/theme_de_nuke)
 "Mn" = (
-/turf/open/floor/plating/asteroidfloor,
-/area/deathmatch)
-"Mx" = (
-/obj/structure/rack,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer0,
+/area/deathmatch/theme_de_nuke)
 "My" = (
 /obj/effect/landmark/deathmatch,
-/turf/open/floor/plating/asteroidfloor,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer0,
+/area/deathmatch/theme_de_nuke)
 "MV" = (
 /obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/plating/asteroidfloor,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer0,
+/area/deathmatch/theme_de_nuke)
 "Pa" = (
 /obj/effect/forcefield{
 	desc = "You can't get in. Heh.";
 	name = "Blocker"
 	},
-/turf/closed/wall/r_wall/unmeltable/regular,
-/area/deathmatch)
+/turf/closed/wall/mainship/white/outer,
+/area/deathmatch/theme_de_nuke)
 "Pv" = (
 /obj/structure/fence,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_de_nuke)
 "PF" = (
-/turf/open/floor/plating/ground/mars/dirttosand{
-	dir = 1
+/obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
+/obj/structure/stairs/seamless{
+	color = "#888888";
+	dir = 8
 	},
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer3,
+/area/deathmatch/theme_de_nuke)
 "QE" = (
 /obj/effect/landmark/weapon_spawn/tier5_weapon_spawn,
-/turf/open/floor/plating/ground/mars/dirttosand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_de_nuke)
 "QN" = (
 /obj/structure/prop/mainship/hangar_stencil,
-/turf/open/floor/plating/asteroidplating,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_de_nuke)
 "QO" = (
 /obj/structure/largecrate,
-/turf/open/floor/plating/asteroidfloor,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer0,
+/area/deathmatch/theme_de_nuke)
 "QR" = (
 /obj/structure/platform{
 	dir = 9
 	},
-/turf/open/floor/plating/asteroidfloor,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer0,
+/area/deathmatch/theme_de_nuke)
 "RI" = (
 /obj/machinery/door/poddoor/railing{
 	dir = 1
@@ -471,122 +411,110 @@
 	dir = 8
 	},
 /turf/open/floor/tile/dark,
-/area/deathmatch)
+/area/deathmatch/theme_de_nuke)
 "Sf" = (
 /obj/machinery/door/poddoor/railing{
 	dir = 2
 	},
-/turf/open/floor/plating/asteroidwarning,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer1,
+/area/deathmatch/theme_de_nuke)
 "Sp" = (
 /obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
 /obj/structure/stairs/seamless{
 	dir = 8
 	},
-/turf/open/floor/tile/dark,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer1,
+/area/deathmatch/theme_de_nuke)
 "Uc" = (
 /obj/machinery/door/poddoor/railing{
 	dir = 2
 	},
-/turf/open/floor/plating/asteroidfloor,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer0,
+/area/deathmatch/theme_de_nuke)
 "VQ" = (
 /obj/structure/cargo_container/ch_red,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_de_nuke)
 "VU" = (
 /obj/effect/landmark/deathmatch,
-/turf/open/floor/grime,
-/area/deathmatch)
+/turf/open/floor/wood/thatch,
+/area/deathmatch/theme_de_nuke)
 "Wa" = (
 /obj/machinery/door/poddoor/railing{
 	dir = 8
 	},
-/turf/open/floor/plating/asteroidfloor,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer0,
+/area/deathmatch/theme_de_nuke)
 "Wj" = (
 /obj/structure/window/framed/colony,
 /turf/open/floor/plating,
-/area/deathmatch)
+/area/deathmatch/theme_de_nuke)
 "WO" = (
 /obj/effect/landmark/deathmatch,
 /obj/structure/platform{
 	dir = 1
 	},
-/turf/open/floor/plating/asteroidfloor,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer0,
+/area/deathmatch/theme_de_nuke)
 "Xa" = (
 /obj/structure/stairs/seamless{
 	dir = 4
 	},
 /turf/open/floor/tile/dark,
-/area/deathmatch)
+/area/deathmatch/theme_de_nuke)
 "Xe" = (
-/turf/open/floor/plating/ground/mars/dirttosand{
-	dir = 8
-	},
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_de_nuke)
 "XI" = (
-/turf/open/floor/plating/ground/mars/dirttosand{
-	dir = 6
-	},
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer1,
+/area/deathmatch/theme_de_nuke)
 "XK" = (
 /obj/structure/stairs/seamless/edge{
 	dir = 1
 	},
 /turf/open/floor/tile/dark,
-/area/deathmatch)
+/area/deathmatch/theme_de_nuke)
 "XY" = (
-/turf/closed/mineral/smooth/desertdamrockwall,
-/area/deathmatch)
+/turf/closed/mineral/smooth/frostwall,
+/area/deathmatch/theme_de_nuke)
 "YE" = (
 /obj/structure/largecrate,
-/turf/open/floor/plating/ground/mars/random/dirt,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer1,
+/area/deathmatch/theme_de_nuke)
 "YK" = (
 /obj/machinery/door/poddoor/railing{
 	dir = 2
 	},
 /obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
-/turf/open/floor/plating/asteroidfloor,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer0,
+/area/deathmatch/theme_de_nuke)
 "YO" = (
 /obj/structure/stairs/edge{
 	dir = 4
 	},
 /turf/open/floor/tile/dark,
-/area/deathmatch)
+/area/deathmatch/theme_de_nuke)
 "ZA" = (
 /obj/structure/table/reinforced,
 /obj/effect/spawner/random/misc/plushie/nospawnninetyfive,
-/turf/open/floor/plating/asteroidfloor,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer0,
+/area/deathmatch/theme_de_nuke)
 "ZH" = (
 /obj/effect/forcefield{
 	desc = "You can't get in. Heh.";
 	name = "Blocker"
 	},
 /obj/machinery/door/poddoor/mainship/ammo,
-/turf/open/floor/plating/ground/mars/random/sand,
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_de_nuke)
 "ZI" = (
 /obj/effect/landmark/deathmatch,
-/turf/open/floor/plating/ground/mars/dirttosand,
-/area/deathmatch)
-"ZO" = (
-/obj/effect/landmark/deathmatch,
-/turf/open/floor/plating/asteroidplating{
-	color = "#888888"
-	},
-/area/deathmatch)
+/turf/open/floor/plating/ground/snow/layer2,
+/area/deathmatch/theme_de_nuke)
 "ZT" = (
-/obj/effect/landmark/weapon_spawn/tier2_weapon_spawn,
-/turf/open/floor/plating/ground/mars/dirttosand{
-	dir = 8
-	},
-/area/deathmatch)
+/obj/structure/stairs/seamless/edge,
+/turf/open/floor/plating/ground/snow/layer1,
+/area/deathmatch/theme_de_nuke)
 
 (1,1,1) = {"
 FZ
@@ -909,15 +837,15 @@ XY
 XY
 od
 GO
-yA
+ZT
 od
 od
 Sf
-Fp
-Fp
-Fp
-Fp
-dB
+Xe
+Xe
+Xe
+Xe
+ZI
 jc
 od
 Mn
@@ -961,11 +889,11 @@ GO
 od
 od
 Sf
-wI
-Fp
+jJ
+Xe
 oD
-Fp
-Fp
+Xe
+Xe
 jc
 od
 Mn
@@ -989,15 +917,15 @@ XY
 XY
 XY
 XY
-dj
-dj
-dj
-dj
-vv
 Xe
 Xe
-up
-dj
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
 Ax
 XY
 XY
@@ -1009,11 +937,11 @@ GO
 od
 od
 Sf
-Fp
-Fp
-Fp
-Fp
-Fp
+Xe
+Xe
+Xe
+Xe
+Xe
 jc
 Mn
 Mn
@@ -1036,17 +964,17 @@ XY
 XY
 XY
 XY
-dj
-vv
 Xe
-ZT
 Xe
-bi
-bi
+Xe
+jJ
+XI
+XI
+XI
 hw
-bi
-up
-dj
+XI
+Xe
+Xe
 XY
 XY
 XY
@@ -1057,11 +985,11 @@ Sp
 od
 od
 Sf
-Fp
+Xe
 fF
-tf
+pX
 kR
-Fp
+Xe
 jc
 Mn
 Mn
@@ -1082,21 +1010,21 @@ XY
 XY
 XY
 XY
-vv
 Xe
 Xe
-bi
-bi
-bi
-bi
-bi
-bi
-bi
-bi
-sr
-up
-dj
-dj
+XI
+XI
+XI
+Xe
+Xe
+Xe
+XI
+XI
+XI
+jJ
+Xe
+Xe
+Xe
 od
 XY
 od
@@ -1105,11 +1033,11 @@ GO
 od
 od
 Sf
-Fp
-tf
-tf
-Fp
-Fp
+Xe
+pX
+pX
+Xe
+Xe
 jc
 Mn
 MV
@@ -1129,22 +1057,22 @@ XY
 XY
 XY
 XY
-vv
-sr
-bi
-bi
+Xe
+jJ
+Xe
+XI
 hw
-bi
-bi
+XI
+Xe
 zr
-bi
-bi
-bi
-bi
-bi
-Ip
-dj
-Go
+Xe
+XI
+XI
+XI
+XI
+Xe
+Xe
+ZI
 od
 od
 od
@@ -1153,11 +1081,11 @@ GO
 od
 od
 Sf
-Fp
-Fp
-Fp
-Fp
-Fp
+Xe
+Xe
+Xe
+Xe
+Xe
 wH
 Mn
 Mn
@@ -1176,21 +1104,21 @@ XY
 XY
 XY
 XY
-vv
-bi
-bi
-bi
-bi
-bi
-bi
-bi
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
 zr
-zQ
-bi
-bi
-bi
-bi
-bi
+Jn
+Xe
+Xe
+Xe
+XI
+Xe
 Xe
 od
 od
@@ -1201,11 +1129,11 @@ GO
 od
 od
 Sf
-dB
-Fp
-wI
-Fp
-Fp
+ZI
+Xe
+jJ
+Xe
+Xe
 jc
 od
 Mn
@@ -1222,26 +1150,26 @@ XY
 XY
 XY
 XY
-vv
-bi
-bi
-bi
-bi
-hw
-bi
-bi
-bi
-bi
-bi
-bi
-bi
-hw
-bi
-bi
-bi
-bi
-sr
-Fp
+Xe
+Xe
+Xe
+Xe
+Xe
+ZI
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+ZI
+Xe
+Xe
+Xe
+Xe
+jJ
+Xe
 Mn
 Uc
 GO
@@ -1249,11 +1177,11 @@ xt
 od
 od
 Sf
-Fp
-Fp
-Fp
-Fp
-Fp
+Xe
+Xe
+Xe
+Xe
+Xe
 jc
 od
 MV
@@ -1270,25 +1198,25 @@ XY
 XY
 XY
 jJ
-bi
-bi
-bi
-KZ
-KZ
-KZ
-bi
-sr
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+jJ
 ww
-HV
+tf
 HV
 nk
 qF
-qF
+tf
 ww
-sr
-bi
-bi
-bi
+jJ
+XI
+Xe
+Xe
 od
 Mn
 Mn
@@ -1297,11 +1225,11 @@ Mn
 od
 od
 Sf
-Fp
+Xe
 HB
-GO
+Ix
 yA
-Fp
+Xe
 jc
 od
 Fc
@@ -1316,16 +1244,16 @@ XY
 XY
 XY
 XY
-vv
-bi
-bi
-bi
-XI
+Xe
+Xe
+Xe
+Xe
+Xe
 XY
 XY
 XY
-Jf
-KZ
+Xe
+Xe
 zB
 VU
 JT
@@ -1333,10 +1261,10 @@ JT
 JT
 VU
 jU
-bi
-bi
-bi
-hw
+Xe
+XI
+Xe
+ZI
 od
 My
 Mn
@@ -1364,16 +1292,16 @@ XY
 XY
 XY
 XY
-PF
-bi
-bi
-vi
+Xe
+Xe
+Xe
+ZI
 XY
 XY
 XY
 XY
-dj
-dj
+Xe
+Xe
 zB
 JT
 JT
@@ -1381,10 +1309,10 @@ JT
 JT
 JT
 jU
-bi
-bi
-bi
-Ip
+Xe
+XI
+Xe
+Xe
 od
 od
 Mn
@@ -1394,9 +1322,9 @@ od
 od
 od
 od
-dO
-Ab
-dO
+Xe
+jJ
+Xe
 od
 od
 od
@@ -1412,16 +1340,16 @@ XY
 XY
 XY
 XY
-PF
-sr
-Ip
+Xe
+jJ
+Xe
 XY
 XY
 XY
 XY
 XY
 XY
-db
+jJ
 zB
 JT
 JT
@@ -1429,9 +1357,9 @@ dA
 JT
 JT
 jU
-bi
-bi
-bi
+Xe
+XI
+Xe
 QE
 Lt
 od
@@ -1441,11 +1369,11 @@ Mn
 od
 XY
 od
-dO
-dO
-dO
-dO
-dO
+Xe
+Xe
+Xe
+Xe
+Xe
 od
 XY
 XY
@@ -1460,9 +1388,9 @@ XY
 XY
 XY
 XY
-PF
-bi
-XI
+Xe
+Xe
+Xe
 XY
 XY
 XY
@@ -1477,10 +1405,10 @@ JT
 JT
 JT
 jU
-KZ
-bi
-bi
-Ip
+Xe
+Xe
+Xe
+Xe
 Kz
 od
 Mn
@@ -1489,11 +1417,11 @@ oH
 od
 XY
 od
-dO
+Xe
 od
 od
 od
-dO
+Xe
 od
 XY
 XY
@@ -1507,9 +1435,9 @@ XY
 XY
 XY
 XY
-vv
-bi
-Ip
+Xe
+Xe
+Xe
 XY
 XY
 XY
@@ -1526,22 +1454,22 @@ JT
 VU
 jU
 od
-bi
-bi
-Ip
+Xe
+XI
+XI
 dh
 od
-Fp
-Fp
+Xe
+Xe
 od
 od
 XY
 od
-dO
-dO
-dO
-dO
-ZO
+Xe
+Xe
+Xe
+Xe
+ZI
 od
 XY
 XY
@@ -1555,39 +1483,39 @@ XY
 XY
 XY
 XY
-PF
-hw
-Ip
-dj
-dj
-XY
-od
-od
-od
-od
-od
-ww
-zB
-zB
-Gz
-jU
-jU
-ww
-od
-bi
-sr
-bi
-nt
 Xe
-bi
 ZI
-dj
-dj
+Xe
+Xe
+Xe
 XY
 od
 od
-lY
-lY
+od
+od
+od
+ww
+wI
+HV
+Gz
+qF
+tf
+ww
+od
+Xe
+sr
+XI
+Jn
+Xe
+Xe
+ZI
+Xe
+Xe
+XY
+od
+od
+dD
+dD
 ie
 od
 od
@@ -1603,12 +1531,12 @@ XY
 XY
 XY
 XY
-PF
-bi
-XI
+Xe
+Xe
+Xe
 VQ
-dj
-dj
+Xe
+Xe
 od
 Mn
 Mn
@@ -1616,26 +1544,26 @@ Mn
 My
 Mn
 Mn
-Fp
-Fp
-Fp
-Fp
-Fp
+Xe
+Xe
+Xe
+Xe
+Xe
 od
-bi
-bi
-bi
-bi
-bi
-bi
-Ip
-dj
+Xe
+XI
+XI
+XI
+XI
+Xe
+Xe
+Xe
 XY
 XY
 XY
 od
-lY
-iZ
+dD
+PF
 ie
 od
 XY
@@ -1650,13 +1578,13 @@ XY
 XY
 XY
 XY
-dj
-dD
-Ip
-dj
+Xe
+jJ
+Xe
+Xe
 AF
-Go
-dj
+ZI
+Xe
 od
 Mn
 Mn
@@ -1664,19 +1592,19 @@ Mn
 Mn
 Mn
 Mn
-Fp
-dB
-Fp
-wI
-Fp
+Xe
+ZI
+Xe
+jJ
+Xe
 od
-YE
-bi
-bi
-bi
-bi
-bi
-pV
+pX
+Xe
+XI
+XI
+XI
+Xe
+jJ
 XY
 XY
 XY
@@ -1697,13 +1625,13 @@ FZ
 XY
 XY
 XY
-dj
-vv
-bi
-jM
-dj
+Xe
+Xe
+Xe
+Jn
+Xe
 wl
-dj
+Xe
 Ax
 od
 Mn
@@ -1712,19 +1640,19 @@ Aw
 od
 od
 od
-Fp
-Fp
-Fp
+Xe
+Xe
+Xe
 QN
-Fp
+Xe
 od
 Lv
-bi
-bi
-bi
-bi
-bi
-Ip
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
 XY
 XY
 XY
@@ -1745,10 +1673,10 @@ FZ
 XY
 XY
 XY
-dj
-PF
-hw
-Ip
+Xe
+Xe
+ZI
+Xe
 od
 od
 od
@@ -1760,19 +1688,19 @@ Ei
 Mn
 Mn
 Wj
-Fp
-Fp
-Fp
-Fp
-Fp
+Xe
+Xe
+Xe
+Xe
+Xe
 od
 YK
-Jf
-bi
-hw
-bi
-bi
-Ip
+Xe
+Xe
+ZI
+Xe
+Xe
+Xe
 XY
 XY
 XY
@@ -1793,10 +1721,10 @@ FZ
 XY
 XY
 XY
-dj
-PF
-bi
-Ip
+Xe
+Xe
+Xe
+Xe
 od
 Mn
 Mn
@@ -1808,21 +1736,21 @@ Mn
 od
 Mn
 Wj
-Fp
-Fp
-Ix
+Xe
+Xe
+Lt
 Jn
-Fp
+Xe
 od
 Uc
-dj
-PF
-bi
-bi
-bi
-Ip
-dj
-dj
+Xe
+Xe
+Xe
+XI
+Xe
+Xe
+Xe
+Xe
 XY
 XY
 XY
@@ -1839,12 +1767,12 @@ FZ
 (27,1,1) = {"
 FZ
 XY
-dj
-dj
-db
-PF
-bi
-Ip
+Xe
+Xe
+jJ
+Xe
+Xe
+Xe
 od
 Mn
 MV
@@ -1856,21 +1784,21 @@ Ei
 od
 Mn
 Wj
-Fp
-Fp
-iv
-Fp
-Fp
+Xe
+Xe
+Kz
+Xe
+Xe
 od
 Uc
-db
-PF
-bi
-bi
-bi
-YE
-sw
-dj
+jJ
+Xe
+Xe
+Xe
+Xe
+pX
+pX
+Xe
 XY
 XY
 XY
@@ -1886,13 +1814,13 @@ FZ
 "}
 (28,1,1) = {"
 FZ
-db
-Go
+jJ
+ZI
 Ax
-dj
-PF
-hw
-Ip
+Xe
+Xe
+ZI
+Xe
 od
 Mn
 Mn
@@ -1904,43 +1832,43 @@ Mn
 od
 YO
 od
-Fp
-Fp
-xB
-Fp
-dB
+Xe
+Xe
+dh
+Xe
+ZI
 od
 Wj
 Wj
 Wj
 od
-bi
-bi
+Xe
+XI
 YE
-Ip
-db
+Xe
+jJ
+Xe
+XY
+XY
+XY
+XY
+XY
+XY
+XY
 dj
-XY
-XY
-XY
-XY
-XY
-XY
-XY
-ZH
-ZH
+dj
 XY
 FZ
 "}
 (29,1,1) = {"
 FZ
-dj
-dj
-dj
-dj
-Jf
-bi
-Ip
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
 od
 Mn
 Mn
@@ -1950,33 +1878,33 @@ Mn
 WO
 ZA
 od
-Fp
-Fp
-Fp
-Fp
+Xe
+Xe
+Xe
+Xe
 Fm
-Fp
-Fp
+Xe
+Xe
 od
 ay
 Mn
 Mn
 od
-bi
-bi
-bi
-Ip
-dj
-dj
+Xe
+XI
+XI
+Xe
+Xe
+Xe
 XY
 XY
 XY
 XY
 XY
 XY
-db
-dj
-dj
+jJ
+Xe
+Xe
 Ax
 FZ
 "}
@@ -1986,9 +1914,9 @@ ZH
 ZH
 XY
 XY
-dj
-PF
-pV
+Xe
+Xe
+jJ
 od
 My
 Mn
@@ -1998,34 +1926,34 @@ Mn
 Ei
 QO
 od
-Fp
-dB
-Fp
-Fp
-Fp
-Fp
-Fp
+Xe
+ZI
+Xe
+Xe
+Xe
+Xe
+Xe
 od
 od
 od
 Mn
 od
-bi
-bi
-bi
-Ip
-dj
-dj
-db
+Xe
+XI
+XI
+Xe
+Xe
+Xe
+jJ
 XY
 XY
 XY
 XY
 XY
-dj
-dj
-dj
-Go
+Xe
+Xe
+Xe
+ZI
 FZ
 "}
 (31,1,1) = {"
@@ -2034,46 +1962,46 @@ XY
 XY
 XY
 XY
-dj
-Jf
-bi
-bi
-bi
-sr
+Xe
+Xe
+Xe
+Xe
+Xe
+jJ
 od
 MV
 Mn
 Aw
 od
 od
-Fp
-wI
-Fp
-Fp
-Fp
-Fp
-Fp
+Xe
+jJ
+Xe
+Xe
+Xe
+Xe
+Xe
 od
 Mn
 MV
 Mn
-Fp
-bi
-bi
-bi
+Xe
+Xe
+Xe
+Xe
 ZI
-dj
-dj
-dj
+Xe
+Xe
+Xe
 XY
 XY
 XY
 XY
-dj
-dj
-dj
-dj
-dj
+Xe
+Xe
+XI
+XI
+Xe
 FZ
 "}
 (32,1,1) = {"
@@ -2083,11 +2011,11 @@ XY
 XY
 XY
 XY
-dj
-Jf
-KZ
-bi
-bi
+Xe
+Xe
+Xe
+Xe
+Xe
 od
 Mn
 Mn
@@ -2105,23 +2033,23 @@ od
 tZ
 Mn
 My
-Fp
-bi
-bi
-bi
-Ip
-dj
-dj
-dj
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
 XY
 XY
-XY
-dj
-dj
-dj
-dj
-dj
-dj
+XI
+XI
+XI
+XI
+XI
+Xe
+Xe
 FZ
 "}
 (33,1,1) = {"
@@ -2131,11 +2059,11 @@ XY
 XY
 XY
 XY
-dj
-dj
-dj
-Jf
-KZ
+Xe
+Xe
+Xe
+Xe
+Xe
 od
 My
 Mn
@@ -2154,22 +2082,22 @@ od
 Mn
 MV
 od
-bi
-bi
-KZ
+Xe
+Xe
+Xe
 XI
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-Go
-dj
-dj
-dj
-dj
+Xe
+Xe
+Xe
+Xe
+Xe
+XI
+XI
+hw
+XI
+XI
+Xe
+Xe
 FZ
 "}
 (34,1,1) = {"
@@ -2181,9 +2109,9 @@ XY
 XY
 XY
 XY
-dj
-db
-dj
+Xe
+jJ
+Xe
 od
 Mn
 Mn
@@ -2191,32 +2119,32 @@ Mn
 Mn
 od
 tF
-Fp
-Fp
-tf
-Fp
-Fp
+Xe
+Xe
+pX
+Xe
+Xe
 tF
 od
 od
 Mn
 Mn
 od
-KZ
+Xe
+Xe
+Xe
 XI
-dj
-dj
-dj
-dj
-dj
-Go
-dj
-dj
-dj
-dj
-dj
-dj
-db
+Xe
+Xe
+Xe
+ZI
+Xe
+XI
+XI
+XI
+XI
+XI
+jJ
 XY
 FZ
 "}
@@ -2230,40 +2158,40 @@ XY
 XY
 XY
 XY
-dj
-Go
+Xe
+ZI
 od
 od
 Mn
 MV
 Mn
 Mn
-dB
-Fp
-Fp
-Fp
-Fp
-wI
-Fp
+ZI
+Xe
+Xe
+Xe
+Xe
+jJ
+Xe
 My
 Mn
 Mn
 Mn
 od
-dj
-db
-dj
-dj
+Xe
+jJ
+Xe
+Xe
 XY
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-dj
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
 XY
 XY
 FZ
@@ -2278,21 +2206,21 @@ XY
 XY
 XY
 XY
-dj
-dj
+Xe
+Xe
 XY
 od
 od
 Mn
 Mn
 Mn
-Fp
-Fp
-wI
-Fp
-Fp
-Fp
-Fp
+Xe
+Xe
+jJ
+Xe
+Xe
+Xe
+Xe
 Mn
 Mn
 MV
@@ -2304,10 +2232,10 @@ XY
 XY
 XY
 XY
-db
-dj
-dj
-dj
+jJ
+Xe
+Xe
+Xe
 XY
 XY
 XY
@@ -2326,7 +2254,7 @@ XY
 XY
 XY
 XY
-Mx
+tF
 pX
 XY
 XY
@@ -2334,13 +2262,13 @@ od
 od
 od
 od
-Fp
-Fp
+Xe
+Xe
 rv
 rv
 rv
-Fp
-Fp
+Xe
+Xe
 dl
 od
 od
@@ -2526,13 +2454,13 @@ XY
 XY
 XY
 od
-Fp
-dB
-Fp
-Fp
-Fp
-Fp
-Fp
+Xe
+ZI
+Xe
+Xe
+Xe
+Xe
+Xe
 od
 XY
 XY
@@ -2574,13 +2502,13 @@ XY
 XY
 XY
 od
-Fp
-Fp
-Fp
-Fp
-dB
-Fp
-Fp
+Xe
+Xe
+Xe
+Xe
+ZI
+Xe
+Xe
 od
 XY
 XY
@@ -2624,9 +2552,9 @@ XY
 od
 od
 od
-Fp
-wI
-Fp
+Xe
+jJ
+Xe
 od
 od
 XY
@@ -2672,9 +2600,9 @@ XY
 XY
 XY
 od
-Fp
-Fp
-Fp
+Xe
+Xe
+Xe
 od
 XY
 XY
@@ -2720,8 +2648,8 @@ XY
 XY
 XY
 od
-tf
-Fp
+pX
+Xe
 tF
 od
 XY
