@@ -220,11 +220,8 @@
 			/obj/item/clothing/glasses/regular = -1,
 			/obj/item/clothing/glasses/eyepatch = -1,
 			/obj/item/clothing/glasses/sunglasses/fake/big = -1,
-			/obj/item/clothing/glasses/sunglasses/fake/big/prescription = -1,
 			/obj/item/clothing/glasses/sunglasses/fake = -1,
-			/obj/item/clothing/glasses/sunglasses/fake/prescription = -1,
 			/obj/item/clothing/glasses/mgoggles = -1,
-			/obj/item/clothing/glasses/mgoggles/prescription = -1,
 			/obj/item/clothing/glasses/orange = -1,
 		),
 		"Clothes bundles" = list(

@@ -136,6 +136,9 @@
 	else if(istype(I, /obj/item/clothing/glasses/meson))
 		new_eyepatch = new /obj/item/clothing/glasses/meson/eyepatch
 		to_chat(user, span_notice("You fasten the meson projector to the inside of the eyepatch."))
+	else if(istype(I, /obj/item/clothing/glasses/night/m56_goggles))
+		new_eyepatch = new /obj/item/clothing/glasses/night/eyepatch
+		to_chat(user, span_notice("You fasten the KTLD sight to the inside of the eyepatch."))
 	if(!new_eyepatch)
 		return
 	new_eyepatch.vars["right_eye"] = right_eye
@@ -212,6 +215,10 @@
 		else
 			our_glasses = new /obj/item/clothing/glasses/meson/enggoggles
 		to_chat(user, span_notice("You fasten the optical meson scanner to the inside of the goggles."))
+
+	else if(istype(our_item, /obj/item/clothing/glasses/night/m56_goggles))
+		our_glasses = new /obj/item/clothing/glasses/night/mgoggles
+		to_chat(user, span_notice("You fasten the KTLD sight to the inside of the goggles."))
 
 	if(!our_glasses)
 		return
@@ -375,6 +382,17 @@
 	icon_state = "bigsunglasses"
 	worn_icon_state = "bigsunglasses"
 
+/obj/item/clothing/glasses/sunglasses/fake/big/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/clothing/glasses/night/m56_goggles))
+		var/obj/item/clothing/glasses/our_glasses = new /obj/item/clothing/glasses/night/bigsunglasses
+		to_chat(user, span_notice("You fasten the KTLD sight to the inside of the glasses."))
+		qdel(I)
+		qdel(src)
+		user.put_in_hands(our_glasses)
+		update_icon()
+		return TRUE
+	return ..()
+
 /obj/item/clothing/glasses/sunglasses/fake/big/prescription
 	name = "prescription designer sunglasses"
 	prescription = TRUE
@@ -420,7 +438,6 @@
 	desc = "A pair of orange glasses."
 	icon_state = "orange"
 	worn_icon_state = "orange"
-	species_exception = list(/datum/species/robot)
 
 /obj/item/clothing/glasses/orange/attackby(obj/item/our_item, mob/user, params)
 	. = ..()
@@ -433,6 +450,9 @@
 	else if(istype(our_item, /obj/item/clothing/glasses/meson))
 		our_glasses = new /obj/item/clothing/glasses/meson/orange_glasses
 		to_chat(user, span_notice("You fasten the optical meson scaner to the inside of the glasses."))
+	else if(istype(our_item, /obj/item/clothing/glasses/night/m56_goggles))
+		our_glasses = new /obj/item/clothing/glasses/night/orange
+		to_chat(user, span_notice("You fasten the KTLD sight to the inside of the glasses."))
 	if(!our_glasses)
 		return
 	qdel(our_item)
