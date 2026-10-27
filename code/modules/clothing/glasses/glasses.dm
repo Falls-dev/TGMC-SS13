@@ -101,24 +101,48 @@
 	icon_state = "eyepatch"
 	worn_icon_state = "eyepatch"
 	armor_protection_flags = NONE
+	/// То, какой глаз закрывает повязка (FALSE = левый, TRUE = правый)
+	var/right_eye = FALSE
+
+/obj/item/clothing/glasses/eyepatch/update_icon_state()
+	. = ..()
+	icon_state = right_eye ? "eyepatch_a" : "eyepatch"
+	worn_icon_state = icon_state
+
+/obj/item/clothing/glasses/eyepatch/verb/switcheye()
+	set name = "Switch Eyepatch Side"
+	set category = "IC.Clothing"
+	set src in usr
+
+	if(!isliving(usr) || usr.incapacitated())
+		return
+
+	right_eye = !right_eye
+	to_chat(usr, span_notice("You adjust the eyepatch to cover your [right_eye ? "right" : "left"] eye."))
+	update_icon()
+	if(ismob(loc))
+		var/mob/user = loc
+		user.update_inv_glasses()
 
 /obj/item/clothing/glasses/eyepatch/attackby(obj/item/I, mob/user, params)
 	. = ..()
 	if(.)
 		return
-	var/obj/item/clothing/glasses/eyepatch
+
+	var/obj/item/clothing/glasses/new_eyepatch
 	if(istype(I, /obj/item/clothing/glasses/hud/health))
-		eyepatch = new /obj/item/clothing/glasses/hud/medpatch
+		new_eyepatch = new /obj/item/clothing/glasses/hud/medpatch
 		to_chat(user, span_notice("You fasten the medical hud projector to the inside of the eyepatch."))
 	else if(istype(I, /obj/item/clothing/glasses/meson))
-		eyepatch = new /obj/item/clothing/glasses/meson/eyepatch
+		new_eyepatch = new /obj/item/clothing/glasses/meson/eyepatch
 		to_chat(user, span_notice("You fasten the meson projector to the inside of the eyepatch."))
-	if(!eyepatch)
+	if(!new_eyepatch)
 		return
+	new_eyepatch.vars["right_eye"] = right_eye
+	new_eyepatch.update_icon()
 	qdel(I)
 	qdel(src)
-	user.put_in_hands(eyepatch)
-	update_icon()
+	user.put_in_hands(new_eyepatch)
 
 /obj/item/clothing/glasses/monocle
 	name = "monocle"

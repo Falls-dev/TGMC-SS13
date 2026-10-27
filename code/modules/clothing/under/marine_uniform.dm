@@ -603,8 +603,8 @@
 	icon_state = "bhavai"
 	worn_icon_state = "bhavai"
 	adjustment_variants = list(
+		"Without Cuff" = "_d",
 		"Rolled Sleeves" = "_h",
-		"No Sleeves" = "_d",
 	)
 
 /obj/item/clothing/under/marine/whites/blacks
