@@ -12,6 +12,7 @@ GLOBAL_LIST_INIT(gear_datums, populate_gear_list())
 	var/path               //Path to item.
 	var/cost               //Number of points used.
 	var/slot               //Slot to equip to.
+	var/squad			   //Здесь можно задать отряд, который нужен для выдачи этого предмета. Пример: "Bravo"
 
 /datum/gear/flower
 	display_name = "Flower Pin"
@@ -36,6 +37,7 @@ GLOBAL_LIST_INIT(gear_datums, populate_gear_list())
 	path = /obj/item/clothing/head/bandanna/brown
 	cost = 3
 	slot = SLOT_HEAD
+
 /datum/gear/eye_patch
 	display_name = "Eye Patch"
 	path = /obj/item/clothing/glasses/eyepatch
@@ -127,13 +129,6 @@ GLOBAL_LIST_INIT(gear_datums, populate_gear_list())
 	cost = 3
 	slot = SLOT_HEAD
 
-
-/datum/gear/eyepatch
-	display_name = "Eyepatch"
-	path = /obj/item/clothing/glasses/eyepatch
-	cost = 2
-	slot = SLOT_GLASSES
-
 /datum/gear/glasses
 	display_name = "Prescription Glasses"
 	path = /obj/item/clothing/glasses/regular
@@ -148,23 +143,9 @@ GLOBAL_LIST_INIT(gear_datums, populate_gear_list())
 	slot = SLOT_GLASSES
 
 
-/datum/gear/shades_prescription
-	display_name = "Big shades (prescription)"
-	path = /obj/item/clothing/glasses/sunglasses/fake/big/prescription
-	cost = 2
-	slot = SLOT_GLASSES
-
-
 /datum/gear/sunglasses
 	display_name = "Sunglasses"
 	path = /obj/item/clothing/glasses/sunglasses/fake
-	cost = 2
-	slot = SLOT_GLASSES
-
-
-/datum/gear/sunglasses_prescription
-	display_name = "Sunglasses (prescription)"
-	path = /obj/item/clothing/glasses/sunglasses/fake/prescription
 	cost = 2
 	slot = SLOT_GLASSES
 
@@ -213,12 +194,6 @@ GLOBAL_LIST_INIT(gear_datums, populate_gear_list())
 	slot = SLOT_GLASSES
 
 
-/datum/gear/bgoggles_prescription
-	display_name = "Ballistic goggles (prescription)"
-	path = /obj/item/clothing/glasses/mgoggles/prescription
-	cost = 2
-	slot = SLOT_GLASSES
-
 /datum/gear/kotahi
 	display_name = "Kotahi deck"
 	path = /obj/item/toy/deck/kotahi
@@ -265,16 +240,58 @@ GLOBAL_LIST_INIT(gear_datums, populate_gear_list())
 	display_name = "Rosary"
 	path = /obj/item/rosary
 	cost = 1
-	slot = SLOT_R_HAND
+	slot = SLOT_IN_BACKPACK
 
 /datum/gear/card/ace/hearts
 	display_name = "Old Ace of Hearts card"
 	path = /obj/item/toy/card/ace/hearts
 	cost = 1
-	slot = SLOT_R_HAND
+	slot = SLOT_IN_BACKPACK
 
 /datum/gear/card/ace/spades
 	display_name = "Old Ace of Spades card"
 	path = /obj/item/toy/card/ace/spades
 	cost = 1
+	slot = SLOT_IN_BACKPACK
+
+/datum/gear/bravo_hawaii
+	display_name = "The Bravo Hawaiian shirt"
+	path = /obj/item/clothing/under/marine/bravo_hawaii
+	cost = 4
+	slot = SLOT_W_UNIFORM
+	squad = "Bravo"
+
+/datum/gear/delta_tomahawk
+	display_name = "Delta Tomahawk"
+	path = /obj/item/weapon/sword/tomahawk/classic
+	cost = 4
 	slot = SLOT_R_HAND
+	squad = "Delta"
+
+/datum/gear/delta_turtleneck
+	display_name = "The TGMC Delta turtleneck"
+	path = /obj/item/clothing/under/marine/squad/neck/delta
+	cost = 2
+	slot = SLOT_W_UNIFORM
+	squad = "Delta"
+
+/datum/gear/charlie_turtleneck
+	display_name = "The TGMC Charlie turtleneck"
+	path = /obj/item/clothing/under/marine/squad/neck/charlie
+	cost = 2
+	slot = SLOT_W_UNIFORM
+	squad = "Charlie"
+
+/datum/gear/bravo_turtleneck
+	display_name = "The TGMC Bravo turtleneck"
+	path = /obj/item/clothing/under/marine/squad/neck/bravo
+	cost = 2
+	slot = SLOT_W_UNIFORM
+	squad = "Bravo"
+
+/datum/gear/alpha_turtleneck
+	display_name = "The TGMC Alpha turtleneck"
+	path = /obj/item/clothing/under/marine/squad/neck/alpha
+	cost = 2
+	slot = SLOT_W_UNIFORM
+	squad = "Alpha"
