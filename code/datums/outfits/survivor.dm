@@ -395,29 +395,43 @@
 /datum/outfit/job/survivor/rambo
 	name = "Overpowered Survivor"
 	jobtype = /datum/job/survivor/rambo
-	w_uniform = /obj/item/clothing/under/marine/striped
-	wear_suit = /obj/item/clothing/suit/storage/marine/specops
-	shoes = /obj/item/clothing/shoes/marine/clf/full
-	back = /obj/item/storage/holster/blade/machete/full
-	gloves = /obj/item/clothing/gloves/ruggedgloves
-	suit_store = /obj/item/weapon/gun/rifle/alf_machinecarbine/freelancer
-	belt = /obj/item/storage/belt/marine/alf_machinecarbine
+	id = /obj/item/card/id/silver
+	w_uniform = /obj/item/clothing/under/colonist/webbing
+	wear_suit = /obj/item/clothing/suit/storage/faction/militia
+	shoes = /obj/item/clothing/shoes/marine/separatist
+	head = /obj/item/clothing/head/helmet/marine
+	ears = /obj/item/radio/headset/distress/dutch
+	glasses = /obj/item/clothing/glasses/welding
+	gloves = /obj/item/clothing/gloves/marine/separatist
+	suit_store = /obj/item/weapon/gun/rifle/type16/survivor_rambo
+	belt = /obj/item/storage/holster/blade/machete/full
+	back = /obj/item/storage/backpack/lightpack
 	l_pocket = /obj/item/storage/ai2
 	r_pocket = /obj/item/storage/pouch/survival/full
-	glasses = /obj/item/clothing/glasses/welding/flipped
-	head = /obj/item/clothing/head/headband
-	ears = /obj/item/radio/headset/survivor
 
-	suit_contents = list(
-		/obj/item/explosive/grenade/m15 = 2,
-	)
 	shoe_contents = list(
-		/obj/item/weapon/combat_knife = 1, // an extra knife
+		/obj/item/storage/fancy/chemrettes = 1,
 	)
-
-
-/datum/outfit/job/survivor/rambo/post_equip(mob/living/carbon/human/H, visualsOnly)
-	. = ..()
-	H.makeup_style = "black" // we are cosplaying rambo, aren't we?
-	H.alpha = max(0, initial(H.alpha) - 1)
-	H.update_body()
+	head_contents = list(
+		/obj/item/reagent_containers/food/snacks/protein_pack = 2,
+	)
+	suit_contents = list(
+		/obj/item/ammo_magazine/rifle/type16 = 2,
+	)
+	webbing_contents = list(
+		/obj/item/stack/medical/splint = 1,
+		/obj/item/explosive/grenade/stick = 1,
+		/obj/item/storage/pill_bottle/isotonic = 1,
+		/obj/item/attachable/motiondetector = 1,
+		/obj/item/reagent_containers/hypospray/autoinjector/synaptizine = 1,
+	)
+	backpack_contents = list(
+		/obj/item/ammo_magazine/handful/incendiary = 1,
+		/obj/item/ammo_magazine/handful/slug = 1,
+		/obj/item/storage/box/m94 = 1,
+		/obj/item/radio = 1,
+		/obj/item/ammo_magazine/rifle/type16 = 2,
+		/obj/item/weapon/gun/sentry/basic = 1,
+		/obj/item/explosive/grenade/stick = 2,
+		/obj/item/ammo_magazine/packet/p602x41 = 1,
+	)
