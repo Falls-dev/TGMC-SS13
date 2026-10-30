@@ -146,7 +146,7 @@
 /obj/effect/kinesis_holo/proc/decorate()
 	if(isnull(shown))
 		return
-	shown.filters += filter(type = "outline", size = 3, color = KINESIS_COLOR, alpha = 160)
+	shown.filters += filter(type = "outline", size = 3, color = "[KINESIS_COLOR]A0")
 
 /obj/effect/kinesis_holo/Destroy(override = TRUE, ...)
 	//Hand the object back rather than deleting it, so switching the field off mid-hold does not

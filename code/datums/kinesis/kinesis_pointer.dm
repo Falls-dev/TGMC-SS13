@@ -301,5 +301,5 @@
 	//too. This is what made the highlight appear and vanish as the cursor crossed between a visible
 	//item and one already being held - RESET_ALPHA does not rescue it, the source has nothing left.
 	copy.alpha = 255
-	copy.filters += filter(type = "outline", size = 2, color = KINESIS_PREVIEW_COLOR, alpha = 220)
+	copy.filters += filter(type = "outline", size = 2, color = "[KINESIS_PREVIEW_COLOR]DC")
 	appearance = copy
