@@ -1541,6 +1541,58 @@
 	starting_attachment_types = list(/obj/item/attachable/stock/sh15, /obj/item/attachable/motiondetector, /obj/item/attachable/extended_barrel, /obj/item/weapon/gun/pistol/plasma_pistol)
 
 //-------------------------------------------------------
+// TYPE 12-ASH AUTOMATIC SHOTGUN
+
+/obj/item/weapon/gun/rifle/tash12
+	name = "Type 12-ASH"
+	desc = "Experimental automatic rifle modification Святогор with 12-caliber cartridges for 25 rounds and a new generation feeding system"
+	icon = 'icons/obj/items/gun/tash12.dmi'
+	icon_state = "tash12"
+	worn_icon_state = "tash12"
+	worn_icon_list = list(
+		slot_l_hand_str = 'icons/mob/inhands/gun/tash12_lefthand.dmi',
+		slot_r_hand_str = 'icons/mob/inhands/gun/tash12_righthand.dmi',
+		slot_s_store_str = 'icons/mob/tash12_suit_slot.dmi',
+		slot_back_str = 'icons/mob/tash12_back.dmi',
+	)
+	fire_sound = 'sound/weapons/guns/fire/tash12.ogg'
+	unload_sound = 'sound/weapons/guns/interact/ak47_unload.ogg'
+	reload_sound = 'sound/weapons/guns/interact/ak47_reload.ogg'
+	cocked_sound = 'sound/weapons/guns/interact/ak47_cocked.ogg'
+	dry_fire_sound = 'sound/weapons/guns/fire/shotgun_empty.ogg'
+	caliber = CALIBER_12G //codex
+	max_shells = 25 //codex
+	force = 20
+	default_ammo_type = /obj/item/ammo_magazine/rifle/tash12
+	allowed_ammo_types = list(
+		/obj/item/ammo_magazine/rifle/tash12,
+		/obj/item/ammo_magazine/rifle/tash12/slug,
+		/obj/item/ammo_magazine/rifle/tash12/flechette,
+	)
+	attachable_allowed = list(
+		/obj/item/attachable/scope/marine,
+		/obj/item/attachable/flashlight,
+		/obj/item/attachable/magnetic_harness,
+		/obj/item/attachable/scope,
+	)
+
+	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES|GUN_WIELDED_FIRING_ONLY
+	gun_firemode_list = list(GUN_FIREMODE_AUTOMATIC)
+	gun_skill_category = SKILL_SHOTGUNS
+	attachable_offset = list("muzzle_x" = 57, "muzzle_y" = 23,"rail_x" = 22, "rail_y" = 26, "under_x" = 23, "under_y" = 17, "stock_x" = 28, "stock_y" = 17)
+
+	fire_delay = 0.55 SECONDS
+	burst_delay = 0.35 SECONDS
+	accuracy_mult_unwielded = 0.9
+	scatter = 3
+	scatter_unwielded = -2
+	accuracy_mult = 1.15
+	aim_slowdown = 1.5
+	damage_falloff_mult = 10
+	recoil = 0.5
+	movement_acc_penalty_mult = 5
+
+//-------------------------------------------------------
 //SG-29 Smart Machine Gun (It's more of a rifle than the SG.)
 
 /obj/item/weapon/gun/rifle/sg29

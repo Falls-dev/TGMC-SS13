@@ -323,3 +323,35 @@
 	name = "PL-96 plasma cannon"
 	contains = list(/obj/item/weapon/gun/energy/lasgun/lasrifle/plasma/cannon)
 	cost = 400
+
+/datum/supply_packs/weapons/tash12
+	name = "Type 12-ASH modification"
+	contains = list(/obj/item/weapon/gun/rifle/tash12)
+	cost = 500
+
+/datum/supply_packs/weapons/tash12s
+	name = "Type 12-ASH slug magazines x3"
+	contains = list(
+		/obj/item/ammo_magazine/rifle/tash12/slug,
+		/obj/item/ammo_magazine/rifle/tash12/slug,
+		/obj/item/ammo_magazine/rifle/tash12/slug,
+	)
+	cost = 150
+
+/datum/supply_packs/weapons/tash12b
+	name = "Type 12-ASH buckshot magazines x3"
+	contains = list(
+		/obj/item/ammo_magazine/rifle/tash12,
+		/obj/item/ammo_magazine/rifle/tash12,
+		/obj/item/ammo_magazine/rifle/tash12,
+	)
+	cost = 150
+
+/datum/supply_packs/weapons/tash12f
+	name = "Type 12-ASH flechette magazines x3"
+	contains = list(
+		/obj/item/ammo_magazine/rifle/tash12/flechette,
+		/obj/item/ammo_magazine/rifle/tash12/flechette,
+		/obj/item/ammo_magazine/rifle/tash12/flechette,
+	)
+	cost = 150
