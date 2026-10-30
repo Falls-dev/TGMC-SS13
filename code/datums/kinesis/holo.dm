@@ -48,18 +48,18 @@
 	//
 	//Invisible, but not gone: alpha 0 only affects drawing. Ballistics and beams go by coordinates,
 	//so they still hit it, which is the behaviour worth having - being shot is a way to lose grip.
-	//A person or a crate is not an item and cannot be hidden with alpha - a mob carries a HUD, a name
-	//and a health readout, and an invisible one standing in the middle of a corridor is a problem
-	//rather than a feature. Those are parked out of the world and represented only by the graphic,
-//which is what this did for everything before the reserve of charge came along and made them
-	//real atoms again.
-	if(istype(stored, /obj/item))
+	//Mobs cannot be hidden safely because they carry a HUD, a name and a health readout. Objects,
+	//including structures and reagent tanks, can: keep the real object on the map so its density,
+	//collision and interaction procs continue to work, while the holo supplies the visible sprite.
+	if(istype(stored, /obj))
 		stored_alpha = stored.alpha
 		stored_density = stored.density
 		stored.alpha = 0
-		//Invisible and solid is the worst combination there is: a thing you cannot see blocking a
-		//doorway. It stops blocking while held and takes its real density back when put down.
-		stored.density = FALSE
+		//Items are carried by the player while held, so their collision is disabled. Structures and
+		//machinery stay dense and move with the holo; this is what keeps their collision at the current
+		//position and lets bullets reach their real attack handlers.
+		if(istype(stored, /obj/item))
+			stored.density = FALSE
 	//Recorded and cleared whatever it is, not just for items: a crate is anchored to the floor and
 	//has to be unbolted before it can be moved at all, and putting it down has to put it back.
 	var/atom/movable/parked = stored
@@ -73,6 +73,10 @@
 ///follows the cursor, and a laser would hit thin air where the player is looking.
 /obj/effect/kinesis_holo/proc/carry_to(turf/where)
 	if(isnull(stored) || !isturf(where))
+		return
+	//Objects stay in the world while held so their collision follows the holo. Mobs are the only
+	//supported non-object case and remain parked out of the world until release.
+	if(!istype(stored, /obj))
 		return
 	if(stored.loc != where)
 		stored.forceMove(where)
@@ -88,8 +92,13 @@
 /obj/effect/kinesis_holo/proc/hand_back(turf/where)
 	if(isnull(stored))
 		return
-	stored.alpha = stored_alpha
-	stored.density = stored_density
+	//Only an item was hidden, so only an item has anything to put back. These two are left unset for a
+	//person or a crate, and assigning null to alpha aborts this proc before the object is moved back
+	//into the world - which is how a released body simply vanished instead of landing.
+	if(!isnull(stored_alpha))
+		stored.alpha = stored_alpha
+	if(!isnull(stored_density))
+		stored.density = stored_density
 	//Bolted back down, because a crate that came off its bolts has to go back on them when the field
 	//lets go. Anything that was not anchored to begin with is untouched by this.
 	if(stored_anchored)
@@ -98,8 +107,9 @@
 			standing.anchored = TRUE
 	stored.pixel_x = 0
 	stored.pixel_y = 0
-	//A parked non-item has no alpha to restore, so it goes back into the world where it came from.
-	if(!isturf(stored.loc) && isturf(where))
+	//Mobs and other non-object movable atoms are parked out of the world while held, so put those
+	//back on the map on release. Objects have already been moved with the holo and are left there.
+	if(!istype(stored, /obj) && !isturf(stored.loc) && isturf(where))
 		stored.forceMove(where)
 	stored = null
 

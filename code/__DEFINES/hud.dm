@@ -61,6 +61,10 @@
 //Middle right (status indicators)
 #define UI_STAMINA "EAST-1:28,CENTER-2:13"
 #define ui_health "EAST-1:28,CENTER-1:15"
+///Charge left in the TK-5 gauntlets, directly under the health bar and above the alert row, where
+///the eye already goes for the wearer's state. CENTER is the gap between ui_health at CENTER-1 and
+///ui_alert5 at CENTER+1; the previous value of CENTER+1 put it in the middle of the ammo row.
+#define ui_kinesis_charge "EAST-1:28,CENTER:15"
 #define ui_ammo1 "EAST-1:28,CENTER+1:25"
 #define ui_ammo2 "EAST-1:28,CENTER+2:27"
 #define ui_ammo3 "EAST-1:28,CENTER+3:29"

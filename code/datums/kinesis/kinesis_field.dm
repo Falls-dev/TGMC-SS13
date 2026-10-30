@@ -23,6 +23,9 @@
 #define KINESIS_TIER_SMALL 1
 #define KINESIS_TIER_CRATE 2
 #define KINESIS_TIER_BODY 3
+#define KINESIS_CHARGE_DELAY 2
+#define KINESIS_CHARGE_REGEN 100
+#define KINESIS_CHARGE_UNWORN_RATE 10
 #define CHARGE_SMALL 50
 #define THROW_SMALL 100
 #define CHARGE_CRATE 250
@@ -74,7 +77,6 @@
 	///offset inside the cell, so a tile-level reading throws that away; params2screenpixel
 	///recovers it, and the throw direction and the grip graphic both want it. Sub-tile precision
 	///is not exotic here - mobs and items already use pixel offsets with SLIDE_STEPS.
-	var/aim_pixel
 	///Measured size of a world tile in pixels, needed to turn an absolute pixel into an offset
 	///inside a tile. 32 is BYOND's world icon size; the codebase has no define for it.
 	var/tile_pixels = 32
@@ -82,6 +84,20 @@
 	var/charge = 1000
 	///What the reserve refills to when the gauntlets are switched off.
 	var/max_charge = 1000
+	///When the bar was last redrawn, so a full reserve costs nothing to watch.
+	var/last_message = 0
+	///When the reserve last topped itself up, so spending resets the clock the way a cell
+	///does with last_use, and the bar does not tick while the wearer is actually working.
+	var/last_charge_tick = 0
+	///The add_timer id, so Destroy can stop it. -1 is what BYOND returns when a timer is not
+	///stoppable, and is the safe value to hold before the timer exists.
+	var/recharge_timer = -1
+	///Passive refill, and whether tearing the field down instead resets it outright. Left TRUE this was
+	///a deliberate fallback: a field torn down mid-round - thrown off, dropped, wearer killed - should
+	///come back whole, because a reserve that leaked would silently soft-lock the gloves for the rest of
+	///the shift. It is switchable only so the behaviour can be turned off without deleting the code that
+	///does it.
+	var/passive_charge = TRUE
 	///Invisible atom parked under the cursor. /datum/beam needs two atoms and a cursor is not
 	///one, so the pointer gets a stand-in to be the far end of the tether.
 	var/obj/effect/kinesis_aim_anchor/aim_anchor
@@ -101,25 +117,28 @@
 	//The graphic is re-seated when the wearer moves or turns rather than on a timer, so it tracks
 	//them exactly instead of stepping along behind.
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_wearer_shifted))
+	START_PROCESSING(SSobj, src)
 	RegisterSignal(user, COMSIG_MOB_FACE_DIR, PROC_REF(on_wearer_shifted))
-	//Dying lets go. The field is torn down when the gauntlets come off, and death does not take
-	//gloves off, so the object was simply left hanging in the air where the wearer fell - which
-	//looked worse in a normal round than in Valhalla, where bodies are cleaned up quickly.
-	RegisterSignal(user, COMSIG_MOB_DEATH, PROC_REF(on_wearer_died))
-
-///The wearer died, so whatever the field was holding is dropped where it is.
-/datum/kinesis_field/proc/on_wearer_died(gibbing)
-	SIGNAL_HANDLER
-	release_all()
 
 /datum/kinesis_field/Destroy(override = TRUE, ...)
+	STOP_PROCESSING(SSobj, src)
+	var/obj/item/clothing/gloves/kinesis/ds13/gloves = gauntlets
+	if(istype(gloves) && gloves.field == src)
+		gloves.field = null
+	//release_all must not redraw a charge indicator while the field is being destroyed.
+	gauntlets = null
 	release_all()
 	drop_preview()
 	clear_tether()
 	QDEL_NULL(aim_anchor)
 	UnregisterSignal(user, list(COMSIG_MOB_CLICKON, COMSIG_MOB_ATTACK_RANGED, COMSIG_MOVABLE_MOVED, COMSIG_MOB_FACE_DIR))
 	UnregisterSignal(user, COMSIG_MOB_DEATH)
-	return ..()
+	var/mob/living/carbon/human/wearer = user
+	user = null
+	. = ..()
+	//Presentation is last, after release, signal cleanup and the parent destructor.
+	if(istype(wearer))
+		wearer.kinesis_hud_clear_charge()
 
 // Acquisition.
 
@@ -194,24 +213,42 @@
 	if(isnull(grabbable))
 		last_refusal = "nothing"
 		return FALSE
+	//The field cannot close its own fist on the wearer. can_grip runs on whatever was clicked, and a
+	//click that lands on your own sprite hands over you - which parked the wearer mid-stride, and a
+	//field holding its own user is not a thing any of the rest of this can survive.
+	if(grabbable == user)
+		last_refusal = "yourself"
+		user.balloon_alert(user, "Not yourself.")
+		return FALSE
+	//Vehicles can have a separate hitbox object which is not part of the vehicle's loc
+	//contents. Parking the vehicle while the field follows the cursor would leave that
+	//hitbox at the old position, allowing the vehicle to be used as a teleport anchor.
+	//They also carry occupants, so never let the kinesis field take a vehicle at all.
+	if(istype(grabbable, /obj/vehicle))
+		last_refusal = "vehicle"
+		return FALSE
 	//A crate is a /obj/structure and every /obj/structure is anchored by default (structures.dm:4),
 	//so the plain anchored refusal below threw crates out along with walls - and both of those paths
 	//begin /obj/structure/, which is why they read as the same sort of thing at a glance. What
-	//actually separates them is not the name but whether it can be unbolted, so that is the test: a
-	//loose closet or crate comes away, a wall or a bolted locker does not.
+	//actually separates them is not the name but whether it can be unbolted, so that is the test.
+	//Tanks and the big crate came in with the tanks and the cargo: all loose, all heavy, all bolted
+	//to the floor, and all worth dragging rather than walking around.
 	var/obj/structure/fixed_thing = grabbable
 	if(istype(fixed_thing, /obj/structure))
-		if(!istype(fixed_thing, /obj/structure/closet) || istype(fixed_thing, /obj/structure/closet/secure_closet))
+		var/unscrewable = istype(fixed_thing, /obj/structure/closet) && !istype(fixed_thing, /obj/structure/closet/secure_closet)
+		var/tank = istype(fixed_thing, /obj/structure/reagent_dispensers/fueltank) || istype(fixed_thing, /obj/structure/reagent_dispensers/watertank)
+		if(!unscrewable && !tank && !istype(fixed_thing, /obj/structure/largecrate))
 			last_refusal = "fixed in place"
 			return FALSE
 	else if(grabbable.anchored)
 		last_refusal = "anchored"
 		return FALSE
-	//Living people can be carried now, so this is no longer a blanket refusal. Only humans are; every
-	//other species stays out, because the field is a piece of marine equipment and a dragged alien
-	//is not a thing this thing does. Corpses of anything were always allowed, and still are.
+	//No people. It worked, and it was removed on purpose: a field that can pick up a human will pick
+	//up a human, including the one holding it, including the ones it should not have, and every one
+	//of those is a thing that has to be handled specially rather than a thing that should be
+	//possible. Corpses are a different matter and still allowed - a body is cargo.
 	var/mob/living/grabbable_body = grabbable
-	if(istype(grabbable_body) && grabbable_body.stat != DEAD && !istype(grabbable_body, /mob/living/carbon/human))
+	if(istype(grabbable_body) && grabbable_body.stat != DEAD)
 		last_refusal = "living"
 		return FALSE
 	if(!isturf(grabbable.loc))
@@ -225,7 +262,20 @@
 	if(!isturf(grabbable_from) || !isturf(grabbable_to))
 		last_refusal = "off map"
 		return FALSE
-	if(!has_clear_path(grabbable_from, grabbable_to))
+	//Line of sight is drawn to a tile BESIDE the target, not to the tile the target is on. A dense
+	//thing blocks the tile it stands on, so a closed crate blocks the sight line to itself and
+	//check_path refused it every time - "no line" on a crate standing against the wall next to you.
+	//Open the crate and it stops being dense, which is why it suddenly became grabbable and then
+	//fell apart on everything else. A hand reaching for a crate reaches at the space beside it.
+	var/can_see_it = FALSE
+	for(var/step_dir in list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
+		var/turf/beside = get_step(grabbable_to, step_dir)
+		if(!isturf(beside))
+			continue
+		if(beside == grabbable_from || has_clear_path(grabbable_from, beside))
+			can_see_it = TRUE
+			break
+	if(!can_see_it)
 		last_refusal = "no line"
 		return FALSE
 	return TRUE
@@ -262,7 +312,26 @@
 		last_refusal = "no charge"
 		return FALSE
 	charge -= amount
+	//The clock is pushed out on every spend, so the reserve refills from the moment the wearer stops
+	//spending it rather than while he is in the middle of spending it. Without this the field would
+	//quietly pay back the cost of a grab in the same second, and the whole balancing exercise would
+	//be decorative. This is what last_use does for /obj/item/cell's self_recharge.
+	last_charge_tick = world.time
+	//Drawn here rather than left to the next mouse event: the mouse may well be resting still, and
+	//a bar that only moved when the pointer did would sit on a quarter long after the reserve was
+	//below it. The wearer has to be able to spend their last charge and see it go to zero.
+	refresh_charge_hud()
 	return TRUE
+
+///Pushes the reserve onto the bar, if the gauntlets are still showing one.
+/datum/kinesis_field/proc/refresh_charge_hud()
+	set waitfor = FALSE
+	if(isnull(gauntlets))
+		return
+	var/mob/living/carbon/human/wearer_now = user
+	if(!istype(wearer_now))
+		return
+	wearer_now.kinesis_hud_set_charge(charge, max_charge)
 
 ///Charged on take and again on throw. The second cost is what stops a field being a free telekinetic
 ///tractor: without it you could pick something up for fifty and fling it for nothing, and the reserve
@@ -301,11 +370,13 @@
 			return FALSE
 	else
 		//A crate cannot be moved at all until it is unbolted, and a structure left anchored is a
-		//crate still standing in the corridor with a grip held on nothing.
+		//crate still standing in the corridor with a grip held on nothing. Keep objects on the map:
+		//the real structure must carry its collision and interaction procs while the holo moves.
 		var/obj/structure/loose_thing = wanted
 		if(istype(loose_thing, /obj/structure))
 			loose_thing.anchored = FALSE
-		wanted.loc = null
+		if(!istype(wanted, /obj))
+			wanted.loc = null
 	become_holo(wanted)
 	playsound(get_turf(user), 'sound/effects/telekinesis/kinesis_grab.ogg', 20, 1)
 	to_chat(user, span_notice("You take hold of [wanted] with the field."))
@@ -318,10 +389,19 @@
 ///already locless when the inventory proc reaches for it, and then throw_at has no starting turf
 ///to walk away from, so the object is simply lost.
 /datum/kinesis_field/proc/become_holo(atom/movable/thing)
-	user.temporarilyRemoveItemFromInventory(thing)
+	//Only an item is taken out of a hand this way, and only if it is in one. temporarilyRemoveItemFromInventory
+	//runs UnEquip, which calls dropped() on the thing - a proc only /obj/item has - so pointing the
+	//field at a person threw "undefined proc or verb .../dropped()". That aborted this proc one line
+	//early: the charge had already been spent, the person was already parked, and no graphic was ever
+	//made. A crate did exactly the same. Both are already out of the world by this point.
+	if(istype(thing, /obj/item) && thing.loc == user)
+		user.temporarilyRemoveItemFromInventory(thing)
 	holo = new /obj/effect/kinesis_holo(get_turf(user), thing)
 	subject = thing
 	state = KINESIS_HELD
+	//Place the real object immediately, not only on the next mouse event. This prevents the
+	//first grab from leaving a structure's collision at the pickup tile while its holo is elsewhere.
+	update_holo()
 	//The object is a real atom again, so it can be hit. Losing it to a shot is the whole point of
 	//putting it back in the world rather than parking it out.
 	//
@@ -452,7 +532,7 @@
 		//hand_back restores alpha and density before the reference is dropped, which matters now
 		//that the object is a live atom on the map: a grenade left at alpha 0 would arm and vanish
 		//again the next time it was picked up.
-		holo.hand_back(get_turf(src))
+		holo.hand_back(get_turf(user))
 		QDEL_NULL(holo)
 	else
 		real = subject
@@ -462,6 +542,40 @@
 
 ///Used when the gauntlets switch off. The object is put back on the map rather than deleted, so
 ///switching the field off never eats whatever was in it.
+///Used when the gauntlets switch off. The object is put back on the map rather than deleted, so
+///switching the field off never eats whatever was in it.
+///Tops the reserve up on a tick, so it comes back whether the gauntlets are switched on, switched
+///off, or being worn by someone face down in a corridor. Nothing here runs every tick: the first
+///two comparisons return long before any work happens, which is the same shape as
+////obj/item/cell's self_recharge (power_cells.dm:52) behind its own charge_delay gate.
+///
+///No /proc/ on this definition. That keyword declares a NEW procedure, and declaring one that a
+///parent already has is exactly what the compiler calls a duplicate. Overriding an inherited
+///procedure means leaving /proc/ off, which is what /obj/item/cell/process() does four hundred
+///lines away in this same codebase. Every earlier attempt here kept the keyword and was therefore
+///never an override at all.
+///
+///Deliberately does not return ..(). The parent returns PROCESS_KILL, and the subsystem reads that
+///as stop processing me forever - a field that recharged once and then never again.
+/datum/kinesis_field/process()
+	var/mob/living/wearer_now = user
+	if(isnull(wearer_now))
+		return
+	if(world.time < last_charge_tick + KINESIS_CHARGE_DELAY * 10)
+		return
+	last_charge_tick = world.time
+	if(charge >= max_charge)
+		return
+	var/switched_on = !isnull(gauntlets) && gauntlets.active
+	//A marine on the floor does not recharge his own gloves. Only the unworn rate keeps running
+	//while he is down, and that is what stops a field emptied and then dropped from coming back
+	//whole the instant something shakes him loose.
+	var/rate = KINESIS_CHARGE_UNWORN_RATE
+	if(switched_on && !wearer_now.incapacitated() && !wearer_now.lying_angle)
+		rate = KINESIS_CHARGE_REGEN
+	charge = min(max_charge, charge + rate)
+	refresh_charge_hud()
+
 /datum/kinesis_field/proc/release_all()
 	marking = FALSE
 	drop_preview()
@@ -471,7 +585,9 @@
 	//torn down - unequipped, dropped, or the gauntlets switched off. A cell that recharged on both
 	//paths would quietly refill twice, which is the sort of thing nobody notices until a balance
 	//argument turns out to be wrong.
-	charge = max_charge
+	if(!passive_charge)
+		charge = max_charge
+	refresh_charge_hud()
 
 // The held graphic.
 
@@ -484,8 +600,13 @@
 		return FALSE
 	if(destination == from)
 		return TRUE
-	if(is_blocked_turf(destination))
+	//is_blocked_turf() cannot exclude the carried structure, which is intentionally still dense.
+	//Check the tile locally so the object's own collision does not make every destination look blocked.
+	if(destination.density)
 		return FALSE
+	for(var/atom/destination_occupant in destination)
+		if(destination_occupant != holo?.stored && destination_occupant.density)
+			return FALSE
 	//Opacity as well as density. check_path bottoms out in LinkBlocked (unsorted.dm:179), which
 	//only ever asks whether a tile is dense, and glass is see-through and not dense, so it went
 	//straight through. You can see a window and still not swing a crate through it, so sight is not
@@ -495,10 +616,14 @@
 	//What is standing on that tile decides it, and so does what the field is carrying. is_blocked_turf
 	//answers "is this tile blocked" with one blunt yes for anything dense on it, which put tables and
 	//chairs in the way of everything - a grenade can be held over a desk, a crate cannot be shoved
-	//through one. The carried object's real density is on the graphic as stored_density, because its
-	//own density is forced to FALSE while held and would read as a false no.
+	//through one. Items have their density disabled while held; structures keep theirs active so their
+	//collision and projectile handlers remain live.
 	for(var/atom/occupant in destination)
 		if(!occupant.density)
+			continue
+		//The carried structure is still on the map so its collision and interaction procs remain
+		//active. It must not block the destination against itself while following the holo.
+		if(occupant == holo?.stored)
 			continue
 		//Bolted to the floor or tied to the map: nothing goes through it. Narrowed through a typed
 		//variable because /atom has no anchored var at all, and DM will not read a property off an
@@ -508,7 +633,16 @@
 			return FALSE
 		if(!isnull(holo?.stored_density) && holo.stored_density)
 			return FALSE
-	if(check_path(from, destination, PASS_THROW) != destination)
+	//The carried structure is deliberately dense. Temporarily ignore only that atom while checking
+	//the route; leaving it dense for the actual move preserves collision at its new position.
+	var/obj/carried_object = holo?.stored
+	var/old_carried_density = carried_object?.density
+	if(carried_object)
+		carried_object.density = FALSE
+	var/path_result = check_path(from, destination, PASS_THROW)
+	if(carried_object)
+		carried_object.density = old_carried_density
+	if(path_result != destination)
 		return FALSE
 	return TRUE
 
@@ -532,74 +666,30 @@
 	//can hold something and how far you can throw it are different questions, and sharing one
 	//number meant loosening the throw to give the grip room.
 	var/grip_range = 2
-	var/reach = grip_range * tile_pixels
 	var/turf/wanted = aimed
 	if(!isturf(wanted))
 		wanted = turf_ahead()
 	if(!isturf(wanted))
 		return
-	//The cursor's offset inside the tile it is over, added to the wearer's own tile. aim_pixel is
-	//already centred on its tile, so this is a tile offset plus a pixel offset, and neither depends
-	//on the client's view.
-	var/origin_x = (here.x - 1) * tile_pixels + tile_pixels / 2
-	var/origin_y = (here.y - 1) * tile_pixels + tile_pixels / 2
-	var/want_x = origin_x
-	var/want_y = origin_y
-	//aimed is deliberately untyped, and DM will not read a property off an untyped var, so it goes
-	//through a typed one first.
-	var/turf/aim_tile = aimed
-	if(isturf(aim_tile) && aim_pixel && length(aim_pixel) == 2)
-		//Pulled towards the cursor's tile first so a far cursor still has a direction, then
-		//nudged by the pixel offset so it lands under the pointer rather than on a tile corner.
-		want_x = (aim_tile.x - 1) * tile_pixels + tile_pixels / 2 + aim_pixel[1]
-		want_y = (aim_tile.y - 1) * tile_pixels + tile_pixels / 2 + aim_pixel[2]
-	var/off_x = want_x - origin_x
-	var/off_y = want_y - origin_y
-	var/distance = sqrt(off_x * off_x + off_y * off_y)
-
-	if(distance > reach && distance > 0)
-		off_x = off_x * reach / distance
-		off_y = off_y * reach / distance
-	var/final_x = origin_x + off_x
-	var/final_y = origin_y + off_y
-	var/tile_x = floor(final_x / tile_pixels) + 1
-	var/tile_y = floor(final_y / tile_pixels) + 1
-	var/turf/seat = locate(clamp(tile_x, 1, world.maxx), clamp(tile_y, 1, world.maxy), here.z)
+	//Leash, by walking the tile back towards the wearer rather than scaling a vector. grip_range
+	//is two tiles, so this is never more than a couple of steps.
+	while(get_dist(here, wanted) > grip_range)
+		wanted = get_step_towards(wanted, here)
+	var/turf/seat = wanted
 	var/turf/was = holo.loc
-	//Collide rather than pass through. A move the grip cannot make is retried one tile at a time
-	//along a single axis, which is the usual slide.
-	//
-	//Measured off where the object already is, not off the wearer. The first version built the axis
-	//candidates from the wearer's own tile, so with the object two tiles out and the cursor four
-	//tiles away behind a wall, sliding teleported it back onto the wearer's row - the log filled
-	//with it bouncing between two tiles every frame. One tile per attempt keeps it smooth whatever
-	//the distance.
 	//Collision is only worth working out when the object would actually change tile. check_path calls
 	//get_line (math.dm:10), which builds a list and walks it a tile at a time, and this proc runs on
 	//every single mouse event - so spinning the mouse meant hundreds of list allocations a second and
 	//the server's tick budget went with it. Between tile crossings, which is the overwhelming
 	//majority of events, there is nothing to collide with and this is now only a couple of reads.
-	var/blocked = FALSE
+	//
+	//Hold position when the tile cannot be had. Sliding a step towards it every frame is right while a
+	//wall is merely in the way, but when the tile is unreachable altogether every step is still
+	//closer, and the object walked across the whole map towards somewhere it could never arrive.
 	if(seat != holo.loc && !reachable(here, seat))
-		//Hold position rather than slide. Sliding steps one tile towards the wanted tile every
-		//frame, which is right while a wall is merely in the way - the object works along it and
-		//arrives. But when the wanted tile cannot be reached at all, every step is still "closer", so
-		//the object marched across the whole map towards a tile it could never arrive at.
-		blocked = TRUE
 		seat = isturf(was) ? was : here
 	if(holo.loc != seat)
 		holo.forceMove(seat)
-	//The offset comes straight from the cursor's position inside its own tile, so it is correct
-	//whichever tile the collision logic ended up choosing. Deriving it from final_x - which belongs
-	//to the tile that was wanted, not the one that was reachable - put a whole tile of error in
-	//here, and the clamp then pinned it to the tile corner, which is why the object flickered between
-	//its real offset and -16 on every frame.
-	//
-	//Frozen while blocked, though. The tile cannot change, so letting the offset keep chasing the
-	//cursor only made the object shiver inside one tile, worst of all when dragging into a wall.
-	if(!blocked && aim_pixel && length(aim_pixel) == 2)
-		holo.pixel_x = clamp(aim_pixel[1], -tile_pixels / 2, tile_pixels / 2)
-		holo.pixel_y = clamp(aim_pixel[2], -tile_pixels / 2, tile_pixels / 2)
 	//The object is a real atom again rather than something parked out of the world, so it has to
 	//be carried along with the graphic.
 	holo.carry_to(seat)

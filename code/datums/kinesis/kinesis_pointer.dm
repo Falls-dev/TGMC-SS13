@@ -46,7 +46,7 @@
 ///One decisecond is one tick, which is also how often the game actually shows anything, so
 ///throttling to it costs nothing visible and removes the bulk of the per-event work.
 var/next_aim_handled = 0
-
+/client/var/next_aim_handled = 0
 /client/MouseMove(atom/object, location, control, params)
 	#if KINESIS_MOUSE_TRACKING
 	//Throttled to one handling per decisecond, and that is the whole point of it. MouseMove fires
@@ -72,8 +72,11 @@ var/next_aim_handled = 0
 
 ///Whether the field is in a state where pointing means anything.
 /datum/kinesis_field/proc/wants_aim()
+	//Both states, not just marking. This reads the cursor, it does not decide what to draw, and
+	//dropping KINESIS_HELD from it stops the held graphic following the mouse at all - the
+	//pointer is then never read while something is held and the graphic sits wherever it was
+	//born. What to draw is decided lower down, by show_preview.
 	return marking || state == KINESIS_HELD
-
 ///The DS13 tether, on TGMC's own beam.
 ///
 ///DS13 draws it with /obj/effect/projectile/tether, which stretches a 128x64 sprite through a
@@ -147,9 +150,6 @@ var/next_aim_handled = 0
 		return
 	if(aim_anchor.loc != aim_tile)
 		aim_anchor.forceMove(aim_tile)
-	if(aim_pixel && length(aim_pixel) == 2)
-		aim_anchor.pixel_x = clamp(aim_pixel[1], -tile_pixels / 2, tile_pixels / 2)
-		aim_anchor.pixel_y = clamp(aim_pixel[2], -tile_pixels / 2, tile_pixels / 2)
 
 ///Records where the cursor is and parks the preview on it.
 /datum/kinesis_field/proc/note_mouse(params)
@@ -165,31 +165,21 @@ var/next_aim_handled = 0
 	//This is also why aimed is assigned above the early out: throw_turf and update_holo read it,
 	//and both have to keep working while the pointer sits still inside one tile.
 	aimed = pointed
-	//Where the cursor sits inside the tile it is over, centred, so -16 to 16. Deliberately NOT
-	//params2screenpixel: that returns pixels counted from the middle of the client's view, because
-	//params2turf has to add origin.x and subtract half the view size to turn one into a tile.
-	//Feeding its result straight into a world coordinate mixes two origins, and the object walked
-	//off in an arbitrary direction as soon as the view was not centred on the wearer.
-	//The second number of each pair in screen-loc is the pixel within the cell, which is what is
-	//wanted here and does not depend on the view at all.
-	var/list/raw = splittext(parsed["screen-loc"], ",")
-	if(length(raw) == 2)
-		var/list/x_pair = splittext(raw[1], ":")
-		var/list/y_pair = splittext(raw[2], ":")
-		if(length(x_pair) == 2 && length(y_pair) == 2)
-			aim_pixel = list(text2num(x_pair[2]) - tile_pixels / 2, text2num(y_pair[2]) - tile_pixels / 2)
-	//Re-seats the held graphic on every mouse event, not only when the cursor changes tile. It used
-	//to sit below the early out, which meant a pointer resting inside one tile never moved the
-	//graphic at all - so it snapped tile to tile instead of gliding around the wearer. Sub-tile
-	//movement is the whole point of reading pixels rather than tiles.
+	//Re-seats the held graphic on every mouse event. It used to sit below the early out, so a
+	//pointer resting inside one tile never moved it at all.
 	if(state == KINESIS_HELD)
 		update_holo()
 	seat_aim_anchor()
 	update_tether()
+	//The preview belongs to marking alone. Drawing it while something was held put the amber
+	//ghost of the target underneath the indigo hold graphic - the same object on screen twice,
+	//which read as a duplicate standing beside the real one. The hold graphic still moves with
+	//the pointer, because update_holo above has already used it by this point.
+	if(!marking)
+		return
 	if(pointed == last_aimed)
 		return
 	last_aimed = pointed
-	//Capped: a mouse sweep makes hundreds of tile changes a second and the point of this is to
 	show_preview(pointed)
 
 ///Puts the preview on a tile, rebuilding it only when the object under the cursor is a different

@@ -3,6 +3,7 @@
 // /datum/atom_hud expects these to be unique
 // these need to be strings in order to make them associative lists
 #define HEALTH_HUD "health_hud" // a simple line rounding the mob's number health
+#define KINESIS_HUD "kinesis_hud" // four-state bar for the TK-5 gauntlets' reserve, over the wearer.
 #define STATUS_HUD_SIMPLE "status_hud_simple" // basic statuses: dead, asleep, knocked out, sluggish, etc.
 #define STATUS_HUD "status_hud" // medical hud, shows simple status plus defib stages.
 #define XENO_EMBRYO_HUD "xeno_embryo_hud" // xeno larval stage.

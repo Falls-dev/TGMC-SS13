@@ -7,8 +7,8 @@
 /// Enabling it is the two lines documented at the top of code/_onclick/telekinesis.dm:
 /// register the ranged attack handler and raise the TK_USER flag.
 ///
-/// Admin-only. Nothing in the codebase spawns, vendors or loadouts them, so they are
-/// reachable through the spawn menu alone. Note that the telekinesis they expose is the
+/// Admin/debug-only. The Spatial Agent carries these in its backpack; they are not part
+/// of the Special Forces outfit. Note that the telekinesis they expose is the
 /// untouched /tg/station13 implementation: it has no line of sight check, no mass model
 /// and no power cost, and clicking an anchored object falls through to a free ranged
 /// unarmed attack. See telekinesis.dm for the details.
@@ -60,7 +60,7 @@
 
 /obj/item/clothing/gloves/kinesis/unequipped(mob/user, slot)
 	. = ..()
-	disable_field(user)
+	power_off_field(user)
 	//Taking them off switches them off. It used to only tear the field down, which left the gauntlets
 	//sitting switched on in a backpack - and anything already held went with the field rather than
 	//being handed back to a wearer who no longer had the gloves on. Off is also the honest state: if
@@ -69,7 +69,7 @@
 
 /obj/item/clothing/gloves/kinesis/dropped(mob/user)
 	. = ..()
-	disable_field(user)
+	power_off_field(user)
 
 /obj/item/clothing/gloves/kinesis/ui_action_click(mob/user, datum/action/item_action/action)
 	if(!istype(action, /datum/action/item_action/toggle))
@@ -98,7 +98,8 @@
 	else
 		//Safe to call unconditionally - it only ever tears an existing field down.
 		power_off_field(wearer)
-	wearer?.update_inv_gloves()
+	if(istype(wearer))
+		wearer.update_inv_gloves()
 	update_action_button_icons()
 	if(istype(wearer))
 		to_chat(wearer, active ? "You power up the telekinesis field." : "You shut the telekinesis field down.")
@@ -205,20 +206,44 @@
 /obj/item/clothing/gloves/kinesis/ds13/power_off_field(mob/living/user)
 	disable_field_ds(user)
 
+/obj/item/clothing/gloves/kinesis/ds13/Destroy()
+	disable_field_ds()
+	return ..()
+
 ///Starts a DS13 field. This is the counterpart to enable_field, which is what raises
 ///TK_USER instead - the two fields share nothing but the gauntlets they are bolted to.
 /obj/item/clothing/gloves/kinesis/ds13/proc/enable_field_ds(mob/living/user)
 	if(!istype(user) || field)
 		return
 	field = new(src, user)
+	show_charge_hud(user)
 	to_chat(user, span_notice("You power up the telekinesis field."))
 
 ///Tears the field down, which lets go of whatever it was holding.
 /obj/item/clothing/gloves/kinesis/ds13/proc/disable_field_ds(mob/living/user)
-	if(!istype(user))
+	var/mob/living/owner = field?.user
+	var/datum/kinesis_field/old_field = field
+	//Detach first; neither presentation nor a missing caller may keep an old field installed.
+	field = null
+	qdel(old_field)
+	hide_charge_hud(owner ? owner : user)
+
+///Visible to anyone who can see the wearer, including when the wearer has no client.
+/obj/item/clothing/gloves/kinesis/ds13/proc/show_charge_hud(mob/living/user)
+	set waitfor = FALSE
+	var/mob/living/carbon/human/wearer = user
+	if(!istype(wearer) || QDELETED(field))
 		return
-	if(field)
-		QDEL_NULL(field)
+	wearer.kinesis_hud_set_charge(field.charge, field.max_charge)
+
+///Takes it back off. Called from power_off_field, so it also covers the gauntlets being removed
+///mid-hold, which would otherwise leave a frozen bar over a field that no longer exists.
+/obj/item/clothing/gloves/kinesis/ds13/proc/hide_charge_hud(mob/living/user)
+	set waitfor = FALSE
+	var/mob/living/carbon/human/wearer = user
+	if(!istype(wearer))
+		return
+	wearer.kinesis_hud_clear_charge()
 
 ///Mark a target, or set down what is held. This is the action button's default job, and the one
 ///its key does. While the field is empty it arms the marker, and the next map click is what gets

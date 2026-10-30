@@ -35,11 +35,20 @@ Redefine as needed.
 	add_fingerprint(user, "attack_tk")
 
 
+//Turfs are not movable, so they cannot be placed in a tk_grab. TK-7 still gets universal
+//remote interaction with floors, walls and ceilings through the normal unarmed attack path.
+/turf/attack_tk(mob/user)
+	if(user.incapacitated() || !tkMaxRangeCheck(user, src))
+		return FALSE
+	new /obj/effect/temp_visual/telekinesis(get_turf(src))
+	attack_hand(user)
+	add_fingerprint(user, "attack_tk")
+
+
+
 /obj/attack_tk(mob/user)
 	if(user.incapacitated())
 		return FALSE
-	if(anchored)
-		return ..()
 	attack_tk_grab(user)
 
 
@@ -49,7 +58,8 @@ Redefine as needed.
 	attack_tk_grab(user)
 
 
-/obj/proc/attack_tk_grab(mob/user)
+
+/atom/movable/proc/attack_tk_grab(mob/user)
 	var/obj/item/tk_grab/O = new(src)
 	O.tk_user = user
 	if(O.focus_object(src))
@@ -58,7 +68,9 @@ Redefine as needed.
 
 
 /mob/attack_tk(mob/user)
-	return
+	if(user.incapacitated())
+		return FALSE
+	attack_tk_grab(user)
 
 /*
 	This is similar to item attack_self, but applies to anything
@@ -186,7 +198,7 @@ Redefine as needed.
 	return
 
 
-/obj/item/tk_grab/proc/focus_object(obj/target)
+/obj/item/tk_grab/proc/focus_object(atom/movable/target)
 	if(!check_if_focusable(target))
 		return FALSE
 	focus = target
@@ -195,11 +207,13 @@ Redefine as needed.
 	return TRUE
 
 
-/obj/item/tk_grab/proc/check_if_focusable(obj/target)
+/obj/item/tk_grab/proc/check_if_focusable(atom/movable/target)
 	if(!istype(tk_user) || QDELETED(target) || !istype(target) || !CHECK_BITFIELD(tk_user.status_flags, TK_USER))
 		qdel(src)
 		return FALSE
-	if(!tkMaxRangeCheck(tk_user, target) || target.anchored || !isturf(target.loc))
+	//TK-7 is an administrator tool rather than a gameplay grab. It may take anchored objects,
+	//living mobs and vehicles; TK-5 has its own separate field and does not use this path.
+	if(!tkMaxRangeCheck(tk_user, target) || !isturf(target.loc))
 		qdel(src)
 		return FALSE
 	return TRUE
