@@ -45,7 +45,6 @@
 ///When this client last had a mouse movement acted on, so the ones in between can be dropped.
 ///One decisecond is one tick, which is also how often the game actually shows anything, so
 ///throttling to it costs nothing visible and removes the bulk of the per-event work.
-var/next_aim_handled = 0
 /client/var/next_aim_handled = 0
 /client/MouseMove(atom/object, location, control, params)
 	#if KINESIS_MOUSE_TRACKING
