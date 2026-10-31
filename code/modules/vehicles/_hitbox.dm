@@ -98,6 +98,9 @@
 	SET_PLANE_IMPLICIT(new_desant, ABOVE_GAME_PLANE)
 	RegisterSignal(new_desant, COMSIG_QDELETING, PROC_REF(on_desant_del))
 	root.add_desant(new_desant)
+	if(isxeno(new_desant))
+		var/mob/living/carbon/xenomorph/X = new_desant
+		X.update_wounds()
 
 ///Removes a desant
 /obj/hitbox/proc/remove_desant(atom/movable/desant)
@@ -109,6 +112,9 @@
 	LAZYREMOVE(tank_desants, desant)
 	UnregisterSignal(desant, COMSIG_QDELETING)
 	root.remove_desant(desant)
+	if(isxeno(desant))
+		var/mob/living/carbon/xenomorph/X = desant
+		X.update_wounds()
 
 ///signal handler when someone jumping lands on us
 /obj/hitbox/proc/on_jump_landed(datum/source, atom/movable/lander)
