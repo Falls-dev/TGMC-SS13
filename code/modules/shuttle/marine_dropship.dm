@@ -445,7 +445,7 @@
 	var/xenos_on_ground = living_player_list[2]
 	var/marine_threshold = CEILING(xenos_on_ground / 2, 1)
 	if(marines_on_ground > marine_threshold)
-		to_chat(user, span_warning("Ещё много живой добычи на земле ([marines_on_ground]/[marine_threshold]). Они мешают нашему психическому полю. Мы должны уничтожить их, прежде чем сможем это сделать."))
+		to_chat(user, span_warning("Ещё много живой добычи на земле. Они мешают нашему психическому полю. Мы должны уничтожить их, прежде чем сможем это сделать."))
 		return FALSE
 	return TRUE
 
