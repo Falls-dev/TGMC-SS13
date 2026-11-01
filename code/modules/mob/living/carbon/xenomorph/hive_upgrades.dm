@@ -177,7 +177,7 @@ GLOBAL_LIST_INIT(tier_to_primo_upgrade, list(
 
 /datum/hive_upgrade/building/silo
 	name = "Larva Silo"
-	desc = "Constructs a silo that generates xeno larvas over time. Each subsequent silo costs 200 more points."
+	desc = "Constructs a silo that generates xeno larvas over time. Each subsequent silo costs 150 more points."
 	psypoint_cost = SILO_PRICE
 	icon = "silo"
 	gamemode_flags = ABILITY_DISTRESS
