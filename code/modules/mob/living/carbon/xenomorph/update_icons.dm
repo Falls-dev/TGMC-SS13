@@ -100,6 +100,7 @@
 
 	var/health_thresholds
 	wound_overlay.layer = layer + 0.3
+	wound_overlay.plane = plane
 	wound_overlay.icon = src.icon
 	wound_overlay.vis_flags |= VIS_HIDE
 	if(HAS_TRAIT(src, TRAIT_XENOMORPH_INVISIBLE_BLOOD) || HAS_TRAIT(src, TRAIT_BURROWED))

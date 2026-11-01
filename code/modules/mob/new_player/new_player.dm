@@ -325,6 +325,10 @@
 		if(reasons)
 			reasons += "Invalid job."
 		return FALSE
+	if(latejoin && !(job.job_flags & JOB_FLAG_LATEJOINABLE))
+		if(reasons)
+			reasons += "This job is not available for latejoin."
+		return FALSE
 	if((job.current_positions >= job.total_positions) && job.total_positions != -1)
 		if(reasons)
 			reasons += "There are no more [job.title] slots available."

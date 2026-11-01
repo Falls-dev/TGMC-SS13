@@ -19,7 +19,7 @@
 	plasma_gain = 20
 
 	// *** Health *** //
-	max_health = 350
+	max_health = 400
 
 	// *** Sunder *** //
 	sunder_multiplier = 0.8
@@ -65,6 +65,7 @@
 		/datum/action/ability/xeno_action/watch_xeno,
 		/datum/action/ability/activable/xeno/psydrain,
 		/datum/action/ability/xeno_action/empower,
+		/datum/action/ability/xeno_action/toggle_agility,
 		/datum/action/ability/activable/xeno/warrior/lunge,
 		/datum/action/ability/activable/xeno/warrior/fling,
 		/datum/action/ability/activable/xeno/warrior/grapple_toss,
@@ -102,7 +103,6 @@
 		/datum/action/ability/xeno_action/xeno_resting,
 		/datum/action/ability/xeno_action/watch_xeno,
 		/datum/action/ability/activable/xeno/psydrain,
-		/datum/action/ability/xeno_action/empower,
 		/datum/action/ability/xeno_action/toggle_plates,
 		/datum/action/ability/activable/xeno/plate_bash,
 		/datum/action/ability/xeno_action/tail_sweep/bulwark,
@@ -122,7 +122,6 @@
 		/datum/action/ability/xeno_action/xeno_resting,
 		/datum/action/ability/xeno_action/watch_xeno,
 		/datum/action/ability/activable/xeno/psydrain,
-		/datum/action/ability/xeno_action/empower,
 		/datum/action/ability/xeno_action/toggle_plates,
 		/datum/action/ability/activable/xeno/plate_bash,
 		/datum/action/ability/xeno_action/tail_sweep/bulwark,
