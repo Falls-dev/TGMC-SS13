@@ -41,7 +41,7 @@
 	name = "TGMC flamethrower bag"
 	notes = "Contains FL-86 incinerator unit"
 	contains = list(/obj/item/storage/holster/backholster/flamer/full)
-	cost = 200
+	cost = 175
 
 /datum/supply_packs/clothing/officer_outfits
 	name = "Officer outfits"
@@ -58,6 +58,11 @@
 	name = "Jetpack"
 	contains = list(/obj/item/jetpack_marine)
 	cost = 120
+
+/datum/supply_packs/clothing/meson
+	name = "Optical meson scanner"
+	contains = list(/obj/item/clothing/glasses/meson)
+	cost = 100
 
 /datum/supply_packs/clothing/night_vision
 	name = "BE-47 NVG night vision goggles"
