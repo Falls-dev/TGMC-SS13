@@ -308,7 +308,10 @@
 	bound_height = 32
 	resistance_flags = UNACIDABLE
 	allow_pass_flags = NONE
-	var/list/fallen_list
+	var/list/fallen_list = list(
+		"Eles Abysser",
+		"Achek Makatavimeshekaka"
+	)
 
 /obj/structure/prop/mainship/ship_memorial/attackby(obj/item/I, mob/user)
 	if(!istype(I, /obj/item/card/id/dogtag))

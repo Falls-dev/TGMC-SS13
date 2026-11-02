@@ -72,7 +72,7 @@
 		REMOVE_TRAIT(src, TRAIT_STAGGERIMMUNE, RAGE_TRAIT)
 		staggerstun_immune = FALSE
 
-	xeno_melee_damage_modifier = initial(xeno_melee_damage_modifier) + rage_power * 0.333
+	xeno_melee_damage_modifier = initial(xeno_melee_damage_modifier) + rage_power * 0.5
 	add_movespeed_modifier(MOVESPEED_ID_RAVAGER_RAGE, TRUE, 0, NONE, TRUE, xeno_caste.speed * 0.5 * rage_power)
 
 	if((health <= 0) && !on_cooldown && stat == CONSCIOUS)

@@ -316,9 +316,14 @@
 	if(!length(gear))
 		return
 
+	var/mob/living/carbon/human/human_mob = ishuman(src) ? src : null
+	var/player_squad = human_mob?.assigned_squad?.name || P.preferred_squad
+
 	for(var/i in GLOB.gear_datums)
 		var/datum/gear/G = GLOB.gear_datums[i]
 		if(!G || !gear.Find(i))
+			continue
+		if(G.squad && G.squad != player_squad)
 			continue
 		if(!equip_to_slot_or_del(new G.path, G.slot)) //try to put in the slot it says its supposed to go, if you can't: put it in a bag
 			equip_to_slot_or_del(new G.path, SLOT_IN_BACKPACK)

@@ -82,7 +82,6 @@
 			data["gender"] = gender
 			data["ethnicity"] = ethnicity
 			data["species"] = species || "Human"
-			data["good_eyesight"] = good_eyesight
 			data["citizenship"] = citizenship
 			data["tts_voice"] = tts_voice
 			data["tts_pitch"] = "[tts_pitch]"
@@ -551,9 +550,6 @@
 			var/datum/species/S = GLOB.all_species[species]
 			real_name = S.random_name(gender)
 			update_preview_icon()
-
-		if("toggle_eyesight")
-			good_eyesight = !good_eyesight
 
 		if("be_special")
 			var/flag = text2num(params["flag"])

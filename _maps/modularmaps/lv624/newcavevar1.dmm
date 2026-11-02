@@ -217,12 +217,12 @@
 /area/lv624/ground/caves/central1)
 
 (1,1,1) = {"
-AO
-AO
-AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
+Ka
+Ka
+Ka
 AO
 AO
 AO
@@ -252,12 +252,12 @@ EQ
 EQ
 "}
 (2,1,1) = {"
-AO
-AO
-AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
+Ka
+Ka
+Ka
 AO
 AO
 AO
@@ -287,10 +287,10 @@ AO
 EQ
 "}
 (3,1,1) = {"
-AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
+Ka
 AO
 AO
 AO
@@ -311,21 +311,21 @@ AO
 AO
 AO
 AO
+Ka
+Ka
+Ka
 AO
 AO
-Ka
-Ka
-Ka
-Ka
-Ka
+AO
+AO
 AO
 AO
 "}
 (4,1,1) = {"
-AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
+Ka
 AO
 AO
 AO
@@ -347,20 +347,20 @@ hY
 AO
 AO
 AO
+Ka
+Ka
+Ka
+Ka
+Ka
 AO
-Ka
-Ka
-Ka
-Ka
-Ka
 AO
 AO
 "}
 (5,1,1) = {"
-AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
+Ka
 AO
 AO
 AO
@@ -392,9 +392,9 @@ AO
 AO
 "}
 (6,1,1) = {"
-AO
-AO
-AO
+Ka
+Ka
+Ka
 AO
 AO
 AO
@@ -419,17 +419,17 @@ MM
 AO
 AO
 AO
-AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
+Ka
 AO
 AO
 "}
 (7,1,1) = {"
-AO
-AO
-AO
+Ka
+Ka
+Ka
 AO
 AO
 AO
@@ -454,16 +454,16 @@ MM
 AO
 AO
 AO
-AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
+Ka
 AO
 AO
 "}
 (8,1,1) = {"
-AO
-AO
+Ka
+Ka
 AO
 AO
 AO
@@ -488,8 +488,8 @@ hY
 MM
 MM
 AO
-Ka
-Ka
+AO
+AO
 Ka
 Ka
 Ka
@@ -497,34 +497,34 @@ AO
 AO
 "}
 (9,1,1) = {"
-AO
-AO
-AO
-AO
-AO
-MM
-hY
-hY
-hY
-aK
-hY
-hY
-MM
-MM
-hY
-hY
-hY
-hY
-hY
-aK
-hY
-aK
-hY
-hY
-MM
-AO
 Ka
 Ka
+AO
+AO
+AO
+MM
+hY
+hY
+hY
+aK
+hY
+hY
+MM
+MM
+hY
+hY
+hY
+hY
+hY
+aK
+hY
+aK
+hY
+hY
+MM
+AO
+AO
+AO
 Ka
 Ka
 Ka
@@ -532,8 +532,8 @@ AO
 AO
 "}
 (10,1,1) = {"
-AO
-AO
+Ka
+Ka
 AO
 AO
 AO
@@ -558,7 +558,7 @@ hY
 hY
 AO
 AO
-Ka
+AO
 Ka
 Ka
 Ka
@@ -567,8 +567,8 @@ AO
 AO
 "}
 (11,1,1) = {"
-AO
-AO
+Ka
+Ka
 AO
 AO
 AO
@@ -594,16 +594,16 @@ hY
 AO
 AO
 AO
-AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
+Ka
 AO
 AO
 "}
 (12,1,1) = {"
-AO
-AO
+Ka
+Ka
 AO
 AO
 AO
@@ -629,16 +629,16 @@ hY
 AO
 AO
 AO
-AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
+Ka
 AO
 AO
 "}
 (13,1,1) = {"
-AO
-AO
+Ka
+Ka
 AO
 AO
 AO
@@ -663,16 +663,16 @@ hY
 hY
 AO
 AO
-Ka
-Ka
-Ka
-Ka
-Ka
 AO
+Ka
+Ka
+Ka
+Ka
+Ka
 AO
 "}
 (14,1,1) = {"
-AO
+Ka
 AO
 AO
 AO
@@ -703,8 +703,8 @@ Ka
 Ka
 Ka
 Ka
-AO
-AO
+Ka
+Ka
 "}
 (15,1,1) = {"
 AO
@@ -738,8 +738,8 @@ Ka
 Ka
 Ka
 Ka
-AO
-AO
+Ka
+Ka
 "}
 (16,1,1) = {"
 AO
@@ -772,9 +772,9 @@ AO
 AO
 AO
 AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
 "}
 (17,1,1) = {"
 AO
@@ -807,9 +807,9 @@ AO
 AO
 AO
 AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
 "}
 (18,1,1) = {"
 AO
@@ -949,7 +949,7 @@ MM
 AO
 AO
 AO
-AO
+Ka
 "}
 (22,1,1) = {"
 AO
@@ -984,7 +984,7 @@ MM
 AO
 AO
 AO
-AO
+Ka
 "}
 (23,1,1) = {"
 AO
@@ -996,7 +996,7 @@ hY
 MM
 AO
 AO
-AO
+Ka
 AO
 AO
 AO
@@ -1031,8 +1031,8 @@ hY
 MM
 AO
 AO
-AO
-AO
+Ka
+Ka
 AO
 AO
 AO
@@ -1067,7 +1067,7 @@ MM
 AO
 AO
 AO
-AO
+Ka
 AO
 AO
 AO
@@ -1101,8 +1101,8 @@ hY
 aK
 AO
 AO
-AO
-AO
+Ka
+Ka
 AO
 AO
 MM
@@ -1136,7 +1136,7 @@ hY
 ze
 AO
 AO
-AO
+Ka
 AO
 AO
 MM
@@ -1229,7 +1229,7 @@ MM
 AO
 AO
 AO
-AO
+Ka
 "}
 (30,1,1) = {"
 AO
@@ -1264,7 +1264,7 @@ MM
 AO
 AO
 AO
-AO
+Ka
 "}
 (31,1,1) = {"
 AO
@@ -1299,7 +1299,7 @@ MM
 AO
 AO
 AO
-AO
+Ka
 "}
 (32,1,1) = {"
 AO
@@ -1334,7 +1334,7 @@ MM
 AO
 AO
 AO
-AO
+Ka
 "}
 (33,1,1) = {"
 AO
@@ -1368,8 +1368,8 @@ hY
 AO
 AO
 AO
-AO
-AO
+Ka
+Ka
 "}
 (34,1,1) = {"
 AO
@@ -1403,8 +1403,8 @@ hY
 AO
 Ka
 Ka
-AO
-AO
+Ka
+Ka
 "}
 (35,1,1) = {"
 AO
@@ -1438,8 +1438,8 @@ hY
 AO
 Ka
 Ka
-AO
-AO
+Ka
+Ka
 "}
 (36,1,1) = {"
 AO
@@ -1473,8 +1473,8 @@ aK
 AO
 Ka
 Ka
-AO
-AO
+Ka
+Ka
 "}
 (37,1,1) = {"
 AO
@@ -1508,8 +1508,8 @@ hY
 AO
 Ka
 Ka
-AO
-AO
+Ka
+Ka
 "}
 (38,1,1) = {"
 AO
@@ -1543,7 +1543,7 @@ hY
 AO
 Ka
 Ka
-AO
+Ka
 Ka
 "}
 (39,1,1) = {"
@@ -1578,7 +1578,7 @@ hY
 AO
 Ka
 Ka
-AO
+Ka
 Ka
 "}
 (40,1,1) = {"
@@ -1792,7 +1792,7 @@ aK
 hY
 "}
 (46,1,1) = {"
-AO
+Ka
 AO
 AO
 AO
@@ -1827,7 +1827,7 @@ hY
 hY
 "}
 (47,1,1) = {"
-AO
+Ka
 AO
 AO
 AO
@@ -1862,7 +1862,7 @@ hY
 hY
 "}
 (48,1,1) = {"
-AO
+Ka
 AO
 AO
 AO
@@ -1897,7 +1897,7 @@ hY
 hY
 "}
 (49,1,1) = {"
-AO
+Ka
 AO
 AO
 AO
@@ -1932,8 +1932,8 @@ hY
 dV
 "}
 (50,1,1) = {"
-AO
-AO
+Ka
+Ka
 AO
 AO
 AO
@@ -1967,8 +1967,8 @@ vC
 hY
 "}
 (51,1,1) = {"
-AO
-AO
+Ka
+Ka
 AO
 AO
 AO
@@ -2002,8 +2002,8 @@ hY
 hY
 "}
 (52,1,1) = {"
-AO
-AO
+Ka
+Ka
 AO
 AO
 AO
@@ -2037,8 +2037,8 @@ hY
 AO
 "}
 (53,1,1) = {"
-AO
-AO
+Ka
+Ka
 AO
 AO
 AO
@@ -2072,8 +2072,8 @@ hY
 AO
 "}
 (54,1,1) = {"
-AO
-AO
+Ka
+Ka
 AO
 AO
 AO
@@ -2107,8 +2107,8 @@ hY
 AO
 "}
 (55,1,1) = {"
-AO
-AO
+Ka
+Ka
 AO
 AO
 AO
@@ -2142,8 +2142,8 @@ hY
 AO
 "}
 (56,1,1) = {"
-AO
-AO
+Ka
+Ka
 AO
 AO
 AO
@@ -2177,8 +2177,8 @@ dV
 AO
 "}
 (57,1,1) = {"
-AO
-AO
+Ka
+Ka
 AO
 AO
 AO
@@ -2212,8 +2212,8 @@ AO
 AO
 "}
 (58,1,1) = {"
-AO
-AO
+Ka
+Ka
 AO
 AO
 AO
@@ -2244,12 +2244,12 @@ hY
 hY
 AO
 AO
-AO
+Ka
 "}
 (59,1,1) = {"
-AO
-AO
-AO
+Ka
+Ka
+Ka
 AO
 AO
 AO
@@ -2279,12 +2279,12 @@ AV
 AV
 AO
 AO
-AO
+Ka
 "}
 (60,1,1) = {"
-AO
-AO
-AO
+Ka
+Ka
+Ka
 AO
 AO
 AO
@@ -2313,14 +2313,14 @@ aK
 hY
 AO
 AO
-AO
-AO
+Ka
+Ka
 "}
 (61,1,1) = {"
-AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
+Ka
 AO
 AO
 AO
@@ -2347,15 +2347,15 @@ hY
 hY
 AO
 AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
 "}
 (62,1,1) = {"
-AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
+Ka
 AO
 AO
 AO
@@ -2382,18 +2382,18 @@ hY
 AO
 AO
 AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
 "}
 (63,1,1) = {"
+Ka
+Ka
+Ka
+Ka
 AO
 AO
 AO
-AO
-AO
-AO
-AO
 hY
 hY
 hY
@@ -2416,18 +2416,18 @@ hY
 AO
 AO
 AO
-AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
+Ka
 "}
 (64,1,1) = {"
-AO
-AO
-AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
+Ka
+Ka
+Ka
 AO
 AO
 hY
@@ -2450,19 +2450,19 @@ hY
 dV
 AO
 AO
-AO
-AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
+Ka
+Ka
 "}
 (65,1,1) = {"
-AO
-AO
-AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
+Ka
+Ka
+Ka
 AO
 AO
 hY
@@ -2485,19 +2485,19 @@ aK
 hY
 AO
 AO
-AO
-AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
+Ka
+Ka
 "}
 (66,1,1) = {"
-AO
-AO
-AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
+Ka
+Ka
+Ka
 AO
 AO
 AO
@@ -2524,15 +2524,15 @@ Ka
 Ka
 Ka
 Ka
-AO
+Ka
 "}
 (67,1,1) = {"
-AO
-AO
-AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
+Ka
+Ka
+Ka
 AO
 AO
 AO
@@ -2559,15 +2559,15 @@ Ka
 Ka
 Ka
 Ka
-AO
+Ka
 "}
 (68,1,1) = {"
-AO
-AO
-AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
+Ka
+Ka
+Ka
 AO
 AO
 AO
@@ -2594,15 +2594,15 @@ Ka
 Ka
 Ka
 Ka
-AO
+Ka
 "}
 (69,1,1) = {"
-AO
-AO
-AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
+Ka
+Ka
+Ka
 AO
 AO
 AO
@@ -2614,7 +2614,7 @@ hY
 AO
 AO
 AO
-AO
+Ka
 AO
 AO
 MM
@@ -2625,19 +2625,19 @@ hY
 hY
 AO
 AO
-AO
-AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
+Ka
+Ka
 "}
 (70,1,1) = {"
-AO
-AO
-AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
+Ka
+Ka
+Ka
 AO
 AO
 AO
@@ -2649,7 +2649,7 @@ hY
 AO
 AO
 AO
-AO
+Ka
 AO
 AO
 AO
@@ -2664,27 +2664,16 @@ Ka
 Ka
 Ka
 Ka
-AO
+Ka
 "}
 (71,1,1) = {"
 Ka
 Ka
 Ka
 Ka
-AO
 Ka
 Ka
 Ka
-Ka
-AO
-hY
-hY
-hY
-hY
-hY
-AO
-AO
-AO
 AO
 AO
 AO
@@ -2696,21 +2685,32 @@ hY
 AO
 AO
 Ka
-Ka
-Ka
-Ka
 AO
+AO
+AO
+hY
+hY
+hY
+hY
+hY
+AO
+AO
+Ka
+Ka
+Ka
+Ka
+Ka
 "}
 (72,1,1) = {"
 Ka
 Ka
 Ka
 Ka
+Ka
+Ka
+Ka
 AO
-Ka
-Ka
-Ka
-Ka
+AO
 AO
 AV
 dO
@@ -2719,7 +2719,7 @@ AV
 AV
 AO
 AO
-AO
+Ka
 AO
 AO
 AO
@@ -2734,18 +2734,18 @@ Ka
 Ka
 Ka
 Ka
-AO
+Ka
 "}
 (73,1,1) = {"
 Ka
 Ka
 Ka
 Ka
+Ka
+Ka
+Ka
 AO
-Ka
-Ka
-Ka
-Ka
+AO
 AO
 hY
 hY
@@ -2769,18 +2769,18 @@ AO
 AO
 AO
 AO
-AO
+Ka
 "}
 (74,1,1) = {"
 Ka
 Ka
 Ka
 Ka
+Ka
+Ka
+Ka
 AO
-Ka
-Ka
-Ka
-Ka
+AO
 AO
 hY
 hY
@@ -2807,13 +2807,13 @@ hn
 Dm
 "}
 (75,1,1) = {"
-AO
-AO
-AO
-AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
+Ka
+Ka
+Ka
+Ka
 AO
 AO
 AO
@@ -2846,11 +2846,11 @@ Ka
 Ka
 Ka
 Ka
+Ka
+Ka
+Ka
 AO
-Ka
-Ka
-Ka
-Ka
+AO
 AO
 hY
 hY
@@ -2881,11 +2881,11 @@ Ka
 Ka
 Ka
 Ka
+Ka
+Ka
+Ka
 AO
-Ka
-Ka
-Ka
-Ka
+AO
 AO
 hY
 hY
@@ -2916,11 +2916,11 @@ Ka
 Ka
 Ka
 Ka
+Ka
+Ka
+Ka
+Ka
 AO
-Ka
-Ka
-Ka
-Ka
 AO
 AO
 aK
@@ -2947,15 +2947,15 @@ AR
 fb
 "}
 (79,1,1) = {"
-AO
-AO
-AO
-AO
-AO
-AO
-AO
-AO
-AO
+Ka
+Ka
+Ka
+Ka
+Ka
+Ka
+Ka
+Ka
+Ka
 AO
 AO
 AO
@@ -2986,12 +2986,12 @@ Ka
 Ka
 Ka
 Ka
-AO
 Ka
 Ka
 Ka
 Ka
-AO
+Ka
+Ka
 AO
 AO
 AO

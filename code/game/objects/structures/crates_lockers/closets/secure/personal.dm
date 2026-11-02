@@ -18,7 +18,7 @@
 
 /obj/structure/closet/secure_closet/personal/patient/PopulateContents()
 	new /obj/item/clothing/under/color/white( src )
-	new /obj/item/clothing/shoes/white( src )
+	new /obj/item/clothing/shoes/marine/white( src )
 
 /obj/structure/closet/secure_closet/personal/cabinet
 	icon_state = "cabinetdetective_locked"

@@ -399,7 +399,7 @@ SUBSYSTEM_DEF(persistence)
 
 /datum/season_datum/weapons/guns/heavy_remote
 	name = "Remote Weapons"
-	description = "Unmanned vehicles and MLRS for roundstart vendors."
+	description = "Unmanned vehicles for roundstart vendors."
 	item_list = list(
 		/obj/item/unmanned_vehicle_remote = 6,
 		/obj/vehicle/unmanned = 1,
@@ -411,6 +411,4 @@ SUBSYSTEM_DEF(persistence)
 		/obj/item/uav_turret/heavy = 1,
 		/obj/item/ammo_magazine/box12x40mm = 3,
 		/obj/item/uav_turret/claw = 1,
-		/obj/structure/closet/crate/mortar_ammo/mlrs_kit = 2,
-		/obj/item/storage/box/mlrs_rockets_gas = 4,
 	)

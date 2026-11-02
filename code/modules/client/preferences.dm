@@ -91,7 +91,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/age = 20
 	var/species = "Human"
 	var/ethnicity = "Western"
-	var/good_eyesight = TRUE
 	var/preferred_squad = "None"
 	var/alternate_option = RETURN_TO_LOBBY
 	///Quick equip slots, up to [MAX_QUICK_EQUIP_SLOTS]. One per quick equip hotkey.

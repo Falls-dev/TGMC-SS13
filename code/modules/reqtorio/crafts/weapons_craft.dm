@@ -344,9 +344,9 @@
 /datum/assembly_craft/weapons/b11
 	name = "B11 smart scope"
 	input = list(/obj/item/stack/sheet/glass/glass = 5, /obj/item/stack/sheet/mineral/silver = 5, /obj/item/stack/sheet/mineral/copper = 5) // 10 + 40 + 20 = 70 points
-	output = list(/obj/item/attachable/b11_scope = 1) // 150 points
+	output = list(/obj/item/attachable/b11_scope = 1) // 100 points
 
 /datum/assembly_craft/weapons/b15
 	name = "B15 smart scope"
 	input = list(/obj/item/stack/sheet/glass/glass = 5, /obj/item/stack/sheet/mineral/silver = 5, /obj/item/stack/sheet/mineral/copper = 5) // 10 + 40 + 20 = 70 points
-	output = list(/obj/item/attachable/b15_scope = 1) // 150 points
+	output = list(/obj/item/attachable/b15_scope = 1) // 100 points

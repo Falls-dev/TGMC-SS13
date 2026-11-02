@@ -788,13 +788,29 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return FALSE
 
 	if(!is_type_in_typecache(item_to_insert, typecacheof(storage_type_limits)) && item_to_insert.w_class > max_w_class)
-		if(warning)
-			to_chat(user, span_notice("\The [item_to_insert] is too long for this [parent.name]."))
-		return FALSE
+		if(!istype(item_to_insert, /obj/item/stack))
+			if(warning)
+				to_chat(user, span_notice("\The [item_to_insert] is too long for this [parent.name]."))
+			return FALSE
 
-	var/sum_storage_cost = item_to_insert.w_class
+		var/obj/item/stack/stack = item_to_insert
+		var/max_fit = max_stack_merging(null, stack)
+		if(max_fit <= 0)
+			if(warning)
+				to_chat(user, span_notice("\The [item_to_insert] is too long for this [parent.name]."))
+			return FALSE
+	var/sum_storage_cost = 0
+	if(!is_type_in_typecache(item_to_insert, typecacheof(storage_type_limits)))
+		sum_storage_cost = item_to_insert.w_class
+		if(istype(item_to_insert, /obj/item/stack) && item_to_insert.w_class > max_w_class)
+			var/obj/item/stack/stack = item_to_insert
+			var/max_fit = max_stack_merging(null, stack)
+			if(max_fit > 0)
+				sum_storage_cost = max_w_class
+
 	for(var/obj/item/item in parent.contents)
-		sum_storage_cost += item.w_class
+		if(!is_type_in_typecache(item, typecacheof(storage_type_limits)))
+			sum_storage_cost += item.w_class
 
 	if(sum_storage_cost > max_storage_space)
 		if(warning)
@@ -872,6 +888,17 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/handle_item_insertion(obj/item/item, prevent_warning = FALSE, mob/user) //todo: this isnt called when spawning some populated items. lacking INVOKE_ASYNC(storage_datum, TYPE_PROC_REF(/datum/storage, handle_item_insertion), new_item)
 	if(!istype(item))
 		return FALSE
+	if(istype(item, /obj/item/stack) && !is_type_in_typecache(item, typecacheof(storage_type_limits)) && item.w_class > max_w_class)
+		var/obj/item/stack/stack = item
+		var/max_fit = max_stack_merging(null, stack)
+		if(max_fit <= 0)
+			return FALSE
+		if(stack.amount > max_fit)
+			var/obj/item/stack/to_insert = new stack.type(null, max_fit)
+			if(!stack.use(max_fit))
+				qdel(to_insert)
+				return FALSE
+			item = to_insert
 	if(!handle_access_delay(item, user, taking_out = FALSE))
 		item.forceMove(item.drop_location())
 		return FALSE
@@ -1088,13 +1115,16 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/max_stack_merging(datum/source, obj/item/stack/stacks)
 	if(is_type_in_typecache(stacks, typecacheof(storage_type_limits)))
 		return FALSE //No need for limits if we can bypass it.
-	var/weight_diff = initial(stacks.w_class) - max_w_class
-	if(weight_diff <= 0)
-		return FALSE //Nor if the limit is not higher than what we have.
-	var/max_amt = round((stacks.max_amount / STACK_WEIGHT_STEPS) * (STACK_WEIGHT_STEPS - weight_diff)) //How much we can fill per weight step times the valid steps.
-	if(max_amt <= 0 || max_amt > stacks.max_amount)
-		stack_trace("\The [parent.name] tried to max_stack_merging([stacks]) with [max_w_class] max_w_class and [weight_diff] weight_diff, resulting in [max_amt] max_amt.")
-	return max_amt
+	var/full_w_class = initial(stacks.w_class)
+	if(full_w_class <= max_w_class)
+		return FALSE
+	var/w_at_33 = clamp(full_w_class - 2, WEIGHT_CLASS_TINY, full_w_class)
+	if(w_at_33 > max_w_class)
+		return stacks.amount
+	var/w_at_66 = clamp(full_w_class - 1, WEIGHT_CLASS_TINY, full_w_class)
+	if(w_at_66 <= max_w_class)
+		return floor(stacks.max_amount * 0.66)
+	return floor(stacks.max_amount * 0.33)
 
 ///Called from signal in order to update the color of our storage, it's "fullness" basically
 /datum/storage/proc/recalculate_storage_space(datum/source)
