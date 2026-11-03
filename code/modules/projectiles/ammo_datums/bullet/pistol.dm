@@ -24,7 +24,7 @@
 	penetration = 15 //So it can actually hurt something.
 	additional_xeno_penetration = 7.5
 	damage_falloff = 1.5
-	matter_cost = 0
+	matter_cost = 2
 
 /datum/ammo/bullet/pistol/tranq
 	name = "tranq bullet"

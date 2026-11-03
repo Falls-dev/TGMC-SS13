@@ -1,5 +1,3 @@
-#define DEFAULT_MAX_ARMORED_AMMO 20
-
 GLOBAL_LIST_EMPTY(armored_gunammo)
 GLOBAL_LIST_EMPTY(armored_modtypes)
 GLOBAL_LIST_INIT(armored_guntypes, armored_init_guntypes())
@@ -77,13 +75,14 @@ GLOBAL_LIST_EMPTY(purchased_tanks)
 					"type" = gun,
 					"isselected" = primary_selected,
 				))
+
 				if(primary_selected)
 					for(var/obj/item/ammo_magazine/mag AS in primary_ammo)
 						data["primaryammotypes"] += list(list(
 							"name" = initial(mag.name),
 							"type" = mag,
 							"current" = primary_ammo[mag],
-							"max" = DEFAULT_MAX_ARMORED_AMMO, //TODO make vehicle ammo dynamic instead of fixed number
+							"max" = initial(gun.max_ammo),
 						))
 
 			if(initial(gun.armored_weapon_flags) & MODULE_SECONDARY)
@@ -99,7 +98,7 @@ GLOBAL_LIST_EMPTY(purchased_tanks)
 							"name" = initial(mag.name),
 							"type" = mag,
 							"current" = secondary_ammo[mag],
-							"max" = DEFAULT_MAX_ARMORED_AMMO, //TODO make vehicle ammo dynamic instead of fixed number
+							"max" = initial(gun.max_ammo),
 						))
 
 		for(var/obj/item/tank_module/mod AS in GLOB.armored_modtypes[vehtype])
@@ -157,106 +156,30 @@ GLOBAL_LIST_EMPTY(purchased_tanks)
 
 	switch(action)
 		if("setvehicle")
-			var/newtype = text2path(params["type"])
-			if(!ispath(newtype, /obj/vehicle/sealed/armored))
-				return
-			var/obj/vehicle/sealed/armored/tank_type = newtype
-			var/is_assault = initial(tank_type.armored_flags) & ARMORED_PURCHASABLE_ASSAULT
-			if(GLOB.purchased_tanks[usr.faction]?["[is_assault]"])
-				to_chat(usr, span_danger("A vehicle of this type has already been purchased!"))
-				return
-			current_veh_type = newtype
-			current_primary = null
-			current_secondary = null
-			current_driver_mod = null
-			current_gunner_mod = null
-			primary_ammo = list()
-			secondary_ammo = list()
-			. = TRUE
+			. = set_vehicle(action, params, ui, state)
 
 		if("setprimary")
-			if(!current_veh_type)
-				return
-			var/obj/item/armored_weapon/newtype = text2path(params["type"])
-			if(!(newtype in GLOB.armored_guntypes[current_veh_type]))
-				return
-			if(initial(newtype.armored_weapon_flags) & MODULE_NOT_FABRICABLE)
-				return
-			current_primary = newtype
-			var/list/assoc_cast = GLOB.armored_gunammo[newtype]
-			primary_ammo = assoc_cast.Copy()
-			for(var/ammo in primary_ammo)
-				primary_ammo[ammo] = trunc(DEFAULT_MAX_ARMORED_AMMO / length(primary_ammo))
-			. = TRUE
+			. = set_primary(action, params, ui, state)
+
 
 		if("setsecondary")
-			if(!current_veh_type)
-				return
-			var/obj/item/armored_weapon/newtype = text2path(params["type"])
-			if(!(newtype in GLOB.armored_guntypes[current_veh_type]))
-				return
-			if(initial(newtype.armored_weapon_flags) & MODULE_NOT_FABRICABLE)
-				return
-			current_secondary = newtype
-			var/list/assoc_cast = GLOB.armored_gunammo[newtype]
-			secondary_ammo = assoc_cast.Copy()
-			for(var/ammo in secondary_ammo)
-				secondary_ammo[ammo] = trunc(DEFAULT_MAX_ARMORED_AMMO / length(secondary_ammo))
-			. = TRUE
+			. = set_secondary(action, params, ui, state)
 
 		if("set_ammo_primary")
-			if(!current_primary)
-				return
-			var/newtype = text2path(params["type"])
-			if(!(newtype in primary_ammo))
-				return
-			var/non_adjusted_total = 0
-			for(var/ammo in primary_ammo)
-				if(ammo == newtype)
-					continue
-				non_adjusted_total += primary_ammo[ammo]
-			var/newvalue = clamp(params["new_value"], 0, DEFAULT_MAX_ARMORED_AMMO-non_adjusted_total)
-			primary_ammo[newtype] = newvalue
-			. = TRUE
+			. = set_ammo_primary(action, params, ui, state)
+
 
 		if("set_ammo_secondary")
-			if(!current_secondary)
-				return
-			var/newtype = text2path(params["type"])
-			if(!(newtype in secondary_ammo))
-				return
-			var/non_adjusted_total = 0
-			for(var/ammo in secondary_ammo)
-				if(ammo == newtype)
-					continue
-				non_adjusted_total += secondary_ammo[ammo]
-			var/newvalue = clamp(params["new_value"], 0, DEFAULT_MAX_ARMORED_AMMO-non_adjusted_total)
-			secondary_ammo[newtype] = newvalue
-			. = TRUE
+			. = set_ammo_secondary(action, params, ui, state)
 
 		if("set_driver_mod")
-			if(!current_veh_type)
-				return
-			var/newtype = text2path(params["type"])
-			if(!ispath(newtype, /obj/item/tank_module))
-				return
-			if(!(newtype in GLOB.armored_modtypes[current_veh_type]))
-				return
-			current_driver_mod = newtype
-			. = TRUE
+			. = set_driver_mod(action, params, ui, state)
+
 
 		if("set_gunner_mod")
-			if(!current_veh_type)
-				return
-			var/newtype = text2path(params["type"])
-			if(!ispath(newtype, /obj/item/tank_module))
-				return
-			if(!(newtype in GLOB.armored_modtypes[current_veh_type]))
-				return
-			current_gunner_mod = newtype
-			. = TRUE
+			. = set_gunner_mod(action, params, ui, state)
+
 
 	if(.)
 		update_static_data(usr)
 
-#undef DEFAULT_MAX_ARMORED_AMMO

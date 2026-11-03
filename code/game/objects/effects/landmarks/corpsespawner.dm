@@ -330,7 +330,7 @@
 	corpseuniform = /obj/item/clothing/under/marine/officer/researcher
 	corpsesuit = /obj/item/clothing/suit/storage/labcoat
 	corpseback = /obj/item/storage/backpack
-	corpseshoes = /obj/item/clothing/shoes/white
+	corpseshoes = /obj/item/clothing/shoes/marine/white
 	corpseid = 1
 	corpseidjob = "Scientist"
 //	corpseidaccess = "Scientist"

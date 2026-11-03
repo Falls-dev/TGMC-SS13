@@ -372,7 +372,7 @@
 		if(ERROR_JUST_NO)
 			return
 
-	for(var/mob/living/carbon/human AS in cheap_get_humans_near(T, 7))
+	for(var/mob/living/carbon/human AS in cheap_get_humans_near(T, 10))
 		if(human.client && human.stat != DEAD)
 			owner.balloon_alert(owner, "Somebody humanlike is alive nearby!")
 			return
@@ -643,7 +643,8 @@
 /datum/action/ability/activable/xeno/corrosive_acid/can_use_ability(atom/A, silent = FALSE, override_flags)
 	var/obj/effect/xenomorph/acid/current_acid_type = acid_type
 	if(SSmonitor.gamestate == SHUTTERS_CLOSED && CHECK_BITFIELD(SSticker.mode?.round_type_flags, MODE_ALLOW_XENO_QUICKBUILD) && SSresinshaping.active)
-		current_acid_type = /obj/effect/xenomorph/acid/strong //if it is before shutters open, everyone gets strong acid
+		if(!is_near_survivor(A))
+			current_acid_type = /obj/effect/xenomorph/acid/strong //if it is before shutters open, everyone gets strong acid
 	// Check if it's an acid object we're upgrading
 	if (istype(A, /obj/effect/xenomorph/acid))
 		var/obj/effect/xenomorph/acid/existing_acid = A
@@ -679,8 +680,9 @@
 
 	var/aciddelay = max(0, A.get_acid_delay() * acid_speed_multiplier);
 	if(SSmonitor.gamestate == SHUTTERS_CLOSED && CHECK_BITFIELD(SSticker.mode?.round_type_flags, MODE_ALLOW_XENO_QUICKBUILD) && SSresinshaping.active)
-		current_acid_type = /obj/effect/xenomorph/acid/strong //if it is before shutters open, everyone gets strong acid
-		aciddelay = 0
+		if(!is_near_survivor(A))
+			current_acid_type = /obj/effect/xenomorph/acid/strong //if it is before shutters open, everyone gets strong acid
+			aciddelay = 0
 
 	if(!A.dissolvability(current_acid_type::acid_strength))
 		return fail_activate()

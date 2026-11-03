@@ -61,15 +61,23 @@
 
 /datum/http_request/proc/into_response()
 	var/datum/http_response/R = new()
+	var/response_text = trimtext(_raw_response)
 
-	try
-		var/list/L = json_decode(_raw_response)
-		R.status_code = L["status_code"]
-		R.headers = L["headers"]
-		R.body = L["body"]
-	catch
+	if(!length(response_text) || copytext(response_text, 1, 2) != "{")
 		R.errored = TRUE
 		R.error = _raw_response
+		return R
+
+	var/list/L = json_decode(response_text)
+
+	if(!islist(L) || isnull(L["status_code"]))
+		R.errored = TRUE
+		R.error = _raw_response
+		return R
+
+	R.status_code = L["status_code"]
+	R.headers = L["headers"]
+	R.body = L["body"]
 
 	return R
 

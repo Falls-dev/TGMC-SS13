@@ -90,12 +90,15 @@
 /obj/vehicle/proc/grant_action_type_to_mob(actiontype, mob/grant_to)
 	if(isnull(LAZYACCESS(occupants, grant_to)) || !actiontype)
 		return FALSE
-	LAZYINITLIST(occupant_actions[grant_to])
-	if(occupant_actions[grant_to][actiontype])
+	var/list/action_entries = occupant_actions[grant_to]
+	if(!action_entries)
+		action_entries = list()
+		occupant_actions[grant_to] = action_entries
+	if(action_entries[actiontype])
 		return TRUE
 	var/datum/action/action = generate_action_type(actiontype)
 	action.give_action(grant_to)
-	occupant_actions[grant_to][action.type] = action
+	action_entries[action.type] = action
 	return TRUE
 
 /**
@@ -111,11 +114,14 @@
 /obj/vehicle/proc/remove_action_type_from_mob(actiontype, mob/take_from)
 	if(isnull(LAZYACCESS(occupants, take_from)) || !actiontype)
 		return FALSE
-	LAZYINITLIST(occupant_actions[take_from])
-	if(occupant_actions[take_from][actiontype])
-		var/datum/action/action = occupant_actions[take_from][actiontype]
-		action.remove_action(take_from)
-		occupant_actions[take_from] -= actiontype
+	var/list/action_entries = occupant_actions[take_from]
+	if(!action_entries || !action_entries[actiontype])
+		return TRUE
+	var/datum/action/action = action_entries[actiontype]
+	action.remove_action(take_from)
+	action_entries -= actiontype
+	if(!length(action_entries))
+		occupant_actions -= take_from
 	return TRUE
 
 /**
@@ -174,12 +180,14 @@
 /obj/vehicle/proc/cleanup_actions_for_mob(mob/M)
 	if(!istype(M))
 		return FALSE
-	for(var/path in occupant_actions[M])
-		stack_trace("Leftover action type [path] in vehicle type [type] for mob type [M.type] - THIS SHOULD NOT BE HAPPENING!")
-		var/datum/action/action = occupant_actions[M][path]
-		action.remove_action(M)
-		occupant_actions[M] -= path
-	occupant_actions -= M
+	var/list/action_entries = occupant_actions[M]
+	if(action_entries)
+		for(var/path in action_entries)
+			stack_trace("Leftover action type [path] in vehicle type [type] for mob type [M.type] - THIS SHOULD NOT BE HAPPENING!")
+			var/datum/action/action = action_entries[path]
+			action.remove_action(M)
+			action_entries -= path
+		occupant_actions -= M
 	return TRUE
 
 /***************** ACTION DATUMS *****************/

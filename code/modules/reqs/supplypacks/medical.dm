@@ -19,7 +19,7 @@
 	contains = list(
 		/obj/item/reagent_containers/hypospray/autoinjector/sulfasalazine,
 	)
-	cost = 250
+	cost = 175
 
 /datum/supply_packs/medical/biomass
 	name = "Biomass beaker"
@@ -34,6 +34,11 @@
 		/obj/item/clothing/glasses/hud/health,
 	)
 	cost = 20
+
+/datum/supply_packs/medical/Med_hud_implant
+	name = "Medical HUD implanter"
+	contains = list(/obj/item/implanter/hud/medical)
+	cost = 75
 
 /datum/supply_packs/medical/medical
 	name = "Pills and chemicals"

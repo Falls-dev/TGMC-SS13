@@ -8,10 +8,10 @@
 	force = 2
 	throw_speed = 5
 	throw_range = 1
-	max_amount = 25
+	max_amount = 50
 
 /obj/item/stack/gun_powder/large_stack
-	amount = 25
+	amount = 50
 
 /obj/item/stack/sheet/composite
 	name = "iron-copper composite"

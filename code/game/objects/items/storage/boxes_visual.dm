@@ -218,6 +218,22 @@
 			storage_datum.max_w_class = max(initial(I.w_class), storage_datum.max_w_class)
 	return ..()
 
+/obj/item/storage/box/visual/magazine/matter_ammo
+	name = "universal ammunition container box"
+	desc = "A compact box specifically designed to hold universal ammunition boxes and packets."
+	storage_type = /datum/storage/box/visual/magazine
+
+
+/obj/item/storage/box/visual/magazine/matter_ammo/full_box
+	name = "universal box ammunition container "
+	spawn_number = 21
+	spawn_type = /obj/item/matter_ammo_container/box
+
+/obj/item/storage/box/visual/magazine/matter_ammo/full_packets
+	name = "universal packet ammunition container "
+	spawn_number = 32
+	spawn_type = /obj/item/matter_ammo_container/box/packet
+
 // --PREFILLED MAG BOXES--
 
 // -Pistol-

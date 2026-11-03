@@ -691,6 +691,8 @@ directive is properly returned.
 /// Stacks and storage redefined procs.
 /atom/proc/max_stack_merging(obj/item/stack/S)
 	SHOULD_CALL_PARENT(TRUE)
+	if(storage_datum)
+		return storage_datum.max_stack_merging(src, S)
 	SEND_SIGNAL(src, ATOM_MAX_STACK_MERGING, S)
 	return FALSE //But if they do, limit is not an issue.
 

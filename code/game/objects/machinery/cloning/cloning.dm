@@ -128,7 +128,10 @@ These act as a respawn mechanic growning a body and offering it up to ghosts.
 		return FALSE
 	if(tgui_alert(user, "Do you want to become a clone?", "Become a clone", list("Yes", "No")) != "Yes")
 		return FALSE
-	occupant.take_over(user)
+	var/datum/job/job_instance = occupant.job
+	if(!occupant.take_over(user))
+		return FALSE
+	job_instance.occupy_job_positions(1)
 	return TRUE
 
 /obj/machinery/cloning/vats/Destroy()

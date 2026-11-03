@@ -62,8 +62,11 @@ SUBSYSTEM_DEF(tts)
 	request.begin_async()
 	UNTIL(request.is_complete())
 	var/datum/http_response/response = request.into_response()
-	if(response.errored || response.status_code != 200)
-		stack_trace(response.error)
+	if(response.errored)
+		message_admins("TTS: failed to connect to [CONFIG_GET(string/tts_http_url)]: [response.error]")
+		return FALSE
+	if(response.status_code != 200)
+		message_admins("TTS: /tts-voices returned HTTP [response.status_code]: [response.body]")
 		return FALSE
 	available_speakers = json_decode(response.body)
 	tts_enabled = TRUE
