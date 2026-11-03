@@ -63,11 +63,20 @@
 		return respawnee.respawn()
 
 	var/respawn_delay = CAMPAIGN_RESPAWN_TIME + stat_list[respawnee.faction]?.respawn_delay_modifier
-	if((player_death_times[respawnee.ckey] + respawn_delay) > world.time)
+	if((respawnee.ckey in player_death_times) && (player_death_times[respawnee.ckey] + respawn_delay) > world.time)
 		to_chat(respawnee, span_warning("Respawn timer has [round((player_death_times[respawnee.ckey] + respawn_delay - world.time) / 10)] seconds remaining."))
 		return
 
 	attempt_respawn(respawnee)
+
+/datum/game_mode/hvh/campaign/select_respawn_job(mob/candidate, datum/job/job_datum)
+	if(!candidate?.client || !(candidate.faction in factions))
+		return
+	var/respawn_delay = CAMPAIGN_RESPAWN_TIME + stat_list[candidate.faction]?.respawn_delay_modifier
+	if((candidate.ckey in player_death_times) && player_death_times[candidate.ckey] + respawn_delay > world.time)
+		to_chat(candidate, span_warning("Your respawn timer has not expired yet."))
+		return
+	return ..()
 
 /datum/game_mode/hvh/campaign/intro_sequence()
 	var/op_name_faction_one = GLOB.operation_namepool[/datum/operation_namepool].get_random_name()
@@ -86,7 +95,8 @@
 		return
 	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_BIOSCAN) || bioscan_interval == 0 || current_mission.mission_state != MISSION_STATE_ACTIVE)
 		return
-	announce_bioscans_marine_som(ztrait = ZTRAIT_AWAY) //todo: make this faction neutral
+	if(current_mission.mission_z_level)
+		announce_bioscans_marine_som(z_levels = list(current_mission.mission_z_level.z_value))
 
 /datum/game_mode/hvh/campaign/check_finished(game_status) //todo: add the actual logic once the persistance stuff is done
 	if(round_finished)

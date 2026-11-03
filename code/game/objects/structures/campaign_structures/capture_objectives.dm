@@ -87,7 +87,10 @@
 
 ///Checks if this objective can be captured
 /obj/structure/campaign_objective/capture_objective/proc/capture_check(mob/living/user)
-	if(user.status_flags & INCORPOREAL)
+	var/datum/game_mode/hvh/campaign/mode = SSticker.mode
+	if(!istype(mode) || mode.current_mission?.mission_state != MISSION_STATE_ACTIVE || z != mode.current_mission.mission_z_level?.z_value || !(user.faction in mode.factions))
+		return FALSE
+	if(user.stat || (user.status_flags & INCORPOREAL))
 		return FALSE
 
 	if(capturing_faction)
@@ -111,30 +114,31 @@
 
 ///Tries to capture or decapture the objective
 /obj/structure/campaign_objective/capture_objective/proc/do_capture(mob/living/user)
-	capturing_faction = null
 	capture_timer = null
 	countdown.stop()
 
 	if(owning_faction)
-		if(owning_faction == user.faction)
-			CRASH("objective captured by own faction")
+		capturing_faction = null
 		owning_faction = null
 		update_icon()
 		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CAMPAIGN_CAPTURE_OBJECTIVE_DECAPTURED, src, user)
-		if(user.ckey)
+		if(user?.ckey)
 			var/datum/personal_statistics/personal_statistics = GLOB.personal_statistics_list[user.ckey]
-			personal_statistics.mission_objective_decaptured ++
+			if(personal_statistics)
+				personal_statistics.mission_objective_decaptured ++
 		return
 	finish_capture(user)
 
 ///Fully captures or activates the objective
 /obj/structure/campaign_objective/capture_objective/proc/finish_capture(mob/living/user)
 	SHOULD_CALL_PARENT(TRUE)
-	owning_faction = user.faction
+	owning_faction = capturing_faction
+	capturing_faction = null
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CAMPAIGN_CAPTURE_OBJECTIVE_CAPTURED, src, user)
-	if(user.ckey)
+	if(user?.ckey)
 		var/datum/personal_statistics/personal_statistics = GLOB.personal_statistics_list[user.ckey]
-		personal_statistics.mission_objective_captured ++
+		if(personal_statistics)
+			personal_statistics.mission_objective_captured ++
 	update_icon()
 
 /obj/structure/campaign_objective/capture_objective/get_time_left()
@@ -253,7 +257,6 @@
 	return ..()
 
 /obj/structure/campaign_objective/capture_objective/asat_system/do_capture(mob/living/user)
-	capturing_faction = null
 	capture_timer = null
 	countdown.stop()
 	finish_capture(user)

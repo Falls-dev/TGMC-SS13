@@ -40,6 +40,10 @@
 
 	allowed_uniform_type = /obj/item/clothing/under
 
+/obj/item/clothing/suit/modular/som/generate_attachments_allowed()
+	// SOM suits supply their own module list, including Apollo on Gorgon.
+	return
+
 /obj/item/clothing/suit/modular/som/engineer
 	starting_attachments = list(
 		/obj/item/armor_module/module/better_shoulder_lamp,

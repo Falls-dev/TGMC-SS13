@@ -72,21 +72,21 @@
 	objective_reward_bonus()
 
 ///An objective capture cycle was started
-/datum/campaign_mission/capture_mission/proc/objective_cap_started(datum/source, obj/structure/campaign_objective/capture_objective/fultonable/objective, mob/living/user)
+/datum/campaign_mission/capture_mission/proc/objective_cap_started(datum/source, obj/structure/campaign_objective/capture_objective/objective, mob/living/user)
 	SIGNAL_HANDLER
 	var/capturing_team = user.faction
 	var/losing_team = objective.capturing_faction
 
 	map_text_broadcast(capturing_team, "[objective] is activating, hold it down until its finished!", "Objective activated")
 
-	if(!losing_team) //no cap was interupted
-		losing_team = starting_faction == user.faction ? hostile_faction : starting_faction
+	if(losing_team)
 		map_text_broadcast(losing_team, "[objective] activation was overridden, take it back!", "Activation cancelled")
 	else
+		losing_team = starting_faction == user.faction ? hostile_faction : starting_faction
 		map_text_broadcast(losing_team, "[objective] is being activated by the enemy. Get in there and stop them!", "Enemy activation")
 
 ///Handles the effect of an objective being claimed
-/datum/campaign_mission/capture_mission/proc/objective_extracted(datum/source, obj/structure/campaign_objective/capture_objective/fultonable/objective, mob/living/user)
+/datum/campaign_mission/capture_mission/proc/objective_extracted(datum/source, obj/structure/campaign_objective/capture_objective/objective, mob/living/user)
 	SIGNAL_HANDLER
 	var/capturing_team
 	var/losing_team

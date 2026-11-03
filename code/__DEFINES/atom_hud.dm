@@ -50,6 +50,7 @@
 #define DATA_HUD_XENO_HEART 13
 #define DATA_HUD_HUNTER 14
 #define DATA_HUD_HUNTER_CLAN 15
+#define DATA_HUD_SQUAD_SOM 16
 
 
 // Notification action types

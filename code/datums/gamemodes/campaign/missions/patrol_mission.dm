@@ -64,6 +64,9 @@
 	var/start_team_cap_points = 0
 	///hostile team's point count
 	var/hostile_team_cap_points = 0
+	///A team cannot be wiped before it has deployed anyone.
+	var/start_team_deployed = FALSE
+	var/hostile_team_deployed = FALSE
 
 /datum/campaign_mission/tdm/load_mission()
 	. = ..()
@@ -102,6 +105,8 @@
 
 /datum/campaign_mission/tdm/process()
 	for(var/obj/structure/campaign_objective/capture_objective/sensor_tower/tower in GLOB.campaign_objectives)
+		if(tower.z != mission_z_level.z_value)
+			continue
 		if(tower.owning_faction == starting_faction)
 			start_team_cap_points += 1
 		else if(tower.owning_faction == hostile_faction)
@@ -135,6 +140,12 @@
 	var/num_hostile_team = length(player_list[2])
 	var/num_dead_start_team = length(player_list[3])
 	var/num_dead_hostile_team = length(player_list[4])
+	if(num_start_team || num_dead_start_team)
+		start_team_deployed = TRUE
+	if(num_hostile_team || num_dead_hostile_team)
+		hostile_team_deployed = TRUE
+	if(!max_time_reached && (!start_team_deployed || !hostile_team_deployed))
+		return FALSE
 
 	if(num_hostile_team && num_start_team && !max_time_reached)
 		return //fighting is ongoing
@@ -188,7 +199,7 @@
 	Generate_rewards(2, hostile_faction)
 
 ///An objective capture cycle was started
-/datum/campaign_mission/tdm/proc/objective_cap_started(datum/source, obj/structure/campaign_objective/capture_objective/fultonable/objective, mob/living/user)
+/datum/campaign_mission/tdm/proc/objective_cap_started(datum/source, obj/structure/campaign_objective/capture_objective/sensor_tower/objective, mob/living/user)
 	SIGNAL_HANDLER
 	var/capturing_team = user.faction
 	var/losing_team = objective.owning_faction
@@ -206,10 +217,10 @@
 		map_text_broadcast(losing_team, "[objective] is being activated by the enemy. Get in there and stop them!", "Enemy activating")
 
 ///Handles the effect of an objective being claimed
-/datum/campaign_mission/tdm/proc/objective_captured(datum/source, obj/structure/campaign_objective/capture_objective/fultonable/objective, mob/living/user)
+/datum/campaign_mission/tdm/proc/objective_captured(datum/source, obj/structure/campaign_objective/capture_objective/sensor_tower/objective, mob/living/user)
 	SIGNAL_HANDLER
-	var/capturing_team = user.faction
-	var/losing_team = starting_faction == user.faction ? hostile_faction : starting_faction
+	var/capturing_team = objective.owning_faction
+	var/losing_team = starting_faction == capturing_team ? hostile_faction : starting_faction
 
 	map_text_broadcast(capturing_team, "[objective] is active. Don't let them retake it!", "Objective activated")
 	map_text_broadcast(losing_team, "[objective] was activated by the enemy. Get it offline!", "Activation cancelled")

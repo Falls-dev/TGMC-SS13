@@ -330,6 +330,9 @@
 	network = list("marine")
 	resistance_flags = RESIST_ALL //If the containing headset is not destroyed, neither should this be.
 
+/obj/machinery/camera/headset/som
+	network = list(SOM_CAMERA_NETWORK)
+
 //used by the laser camera dropship equipment
 /obj/machinery/camera/laser_cam
 	name = "laser camera"

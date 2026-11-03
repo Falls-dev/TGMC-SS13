@@ -84,44 +84,46 @@
 	attempt_respawn(respawnee)
 
 /datum/game_mode/hvh/Topic(href, href_list[])
-	switch(href_list["gamemode_choice"])
-		if("SelectedJob")
-			if(!SSticker)
-				return
-			var/mob/candidate = locate(href_list["player"])
-			if(!candidate?.client || candidate != usr || (isliving(candidate) && candidate.stat != DEAD))
-				return
+	if(href_list["gamemode_choice"] != "SelectedJob")
+		return
+	var/mob/candidate = locate(href_list["player"])
+	if(candidate != usr || istype(src, /datum/game_mode/hvh/campaign))
+		return
+	var/datum/job/job_datum = locate(href_list["job_selected"]) in SSjob.active_joinable_occupations
+	select_respawn_job(candidate, job_datum)
 
-			if(!GLOB.enter_allowed)
-				to_chat(candidate, span_warning("Spawning currently disabled, please observe."))
-				return
+///Revalidates the selection before moving the mind and spending any respawn resources.
+/datum/game_mode/hvh/proc/select_respawn_job(mob/candidate, datum/job/job_datum)
+	if(SSticker?.mode != src || !candidate?.client || !candidate.mind || (isliving(candidate) && candidate.stat != DEAD))
+		return
+	if(!GLOB.enter_allowed)
+		to_chat(candidate, span_warning("Spawning currently disabled, please observe."))
+		return
+	if(!job_datum || !IsJobAvailable(candidate, job_datum, candidate.faction))
+		to_chat(candidate, span_warning("Selected job is not available."))
+		return
+	var/mob/new_player/ready_candidate = new()
+	candidate.client.screen.Cut()
+	candidate.mind.transfer_to(ready_candidate)
 
-			var/datum/job/job_datum = locate(href_list["job_selected"]) in SSjob.active_joinable_occupations
-			if(!job_datum)
-				return
+	ready_candidate.faction = candidate.faction
 
-			var/mob/new_player/ready_candidate = new()
-			candidate.client.screen.Cut()
-			candidate.mind.transfer_to(ready_candidate)
+	if(!do_respawn(ready_candidate, job_datum))
+		ready_candidate.mind.transfer_to(candidate)
+		ready_candidate?.client?.screen?.Cut()
+		qdel(ready_candidate)
+		return
 
-			ready_candidate.faction = candidate.faction
-
-			if(!do_respawn(ready_candidate, job_datum))
-				ready_candidate.mind.transfer_to(candidate)
-				ready_candidate?.client?.screen?.Cut()
-				qdel(ready_candidate)
-				return
-
-			var/mob/living/carbon/human/human_current = candidate
-			//The player might be a brain or some other unusual circumstance
-			if(isobserver(candidate))
-				var/mob/dead/observer/observer_candidate = candidate
-				if(!isnull(observer_candidate.can_reenter_corpse))
-					human_current = observer_candidate.can_reenter_corpse.resolve()
-				qdel(candidate)
-			if(!ishuman(human_current))
-				return
-			human_current.set_undefibbable(TRUE)
+	var/mob/living/carbon/human/human_current = candidate
+	//The player might be a brain or some other unusual circumstance
+	if(isobserver(candidate))
+		var/mob/dead/observer/observer_candidate = candidate
+		if(!isnull(observer_candidate.can_reenter_corpse))
+			human_current = observer_candidate.can_reenter_corpse.resolve()
+		qdel(candidate)
+	if(!ishuman(human_current))
+		return
+	human_current.set_undefibbable(TRUE)
 
 /datum/game_mode/hvh/announce_round_stats()
 	//sets up some stats which are added if applicable
@@ -172,18 +174,16 @@
 	var/list/tgmc_alive = list()
 	var/list/tgmc_dead = list()
 
-	for(var/z in z_levels)
-		//counts the live marines and SOM
-		for(var/i in GLOB.humans_by_zlevel["[z]"])
-			var/mob/living/carbon/human/H = i
-			if(!istype(H))
-				continue
-			if(count_flags & COUNT_IGNORE_HUMAN_SSD && !H.client)
-				continue
-			if(H.faction == FACTION_SOM)
-				som_alive += H
-			else if(H.faction == FACTION_TERRAGOV)
-				tgmc_alive += H
+	for(var/mob/living/carbon/human/H AS in GLOB.alive_human_list)
+		var/turf/location = get_turf(H)
+		if(!(location?.z in z_levels))
+			continue
+		if(count_flags & COUNT_IGNORE_HUMAN_SSD && !H.client)
+			continue
+		if(H.faction == FACTION_SOM)
+			som_alive += H
+		else if(H.faction == FACTION_TERRAGOV)
+			tgmc_alive += H
 	//counts the dead marines and SOM
 	for(var/i in GLOB.dead_human_list)
 		var/mob/living/carbon/human/H = i
@@ -200,10 +200,10 @@
 #define BIOSCAN_DELTA(count, delta) count ? max(0, count + rand(-delta, delta)) : 0
 
 ///Annonce to everyone the number of SOM and marines on ship and ground
-/datum/game_mode/hvh/proc/announce_bioscans_marine_som(show_locations = TRUE, delta = 2, announce_marines = TRUE, announce_som = TRUE, ztrait = ZTRAIT_GROUND)
+/datum/game_mode/hvh/proc/announce_bioscans_marine_som(show_locations = TRUE, delta = 2, announce_marines = TRUE, announce_som = TRUE, ztrait = ZTRAIT_GROUND, list/z_levels)
 	TIMER_COOLDOWN_START(src, COOLDOWN_BIOSCAN, bioscan_interval)
 	//pulls the number of marines and SOM
-	var/list/player_list = count_humans(SSmapping.levels_by_trait(ztrait), COUNT_IGNORE_ALIVE_SSD)
+	var/list/player_list = count_humans(z_levels || SSmapping.levels_by_trait(ztrait), COUNT_IGNORE_ALIVE_SSD)
 	var/list/som_list = player_list[1]
 	var/list/tgmc_list = player_list[2]
 	var/num_som = length(player_list[1])
@@ -211,9 +211,9 @@
 	var/tgmc_location
 	var/som_location
 
-	if(num_som)
+	if(show_locations && num_som)
 		som_location = get_area(pick(player_list[1]))
-	if(num_tgmc)
+	if(show_locations && num_tgmc)
 		tgmc_location = get_area(pick(player_list[2]))
 
 	//Adjust the randomness there so everyone gets the same thing
@@ -327,6 +327,9 @@ Sensors indicate [num_som_delta || "no"] unknown lifeform signature[num_som_delt
 		if(!forced_faction)
 			return
 	candidate.faction = forced_faction
+	if(istype(src, /datum/game_mode/hvh/campaign))
+		GLOB.campaign_respawn_menu.ui_interact(candidate)
+		return
 	dat += "<div class='latejoin-container' style='width: 100%'>"
 	for(var/cat in SSjob.active_joinable_occupations_by_category)
 		var/list/category = SSjob.active_joinable_occupations_by_category[cat]

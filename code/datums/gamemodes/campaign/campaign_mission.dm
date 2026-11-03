@@ -85,6 +85,8 @@
 	)
 	/// Timer used to calculate how long till mission ends
 	var/game_timer
+	///Delay between deployment opening and the start of the mission clock.
+	var/game_timer_start
 	/// Timer for when the mission starts
 	var/start_timer
 	///The length of time until mission ends, if timed
@@ -155,6 +157,7 @@
 
 /datum/campaign_mission/Destroy(force, ...)
 	STOP_PROCESSING(SSslowprocess, src)
+	stop_mission_timers()
 	mission_z_level = null
 	mode = null
 	return ..()
@@ -288,7 +291,8 @@
 
 ///sets up the timer for the mission
 /datum/campaign_mission/proc/set_mission_timer()
-	if(game_timer)
+	game_timer_start = null
+	if(game_timer || max_time_reached || mission_state != MISSION_STATE_ACTIVE || HAS_TRAIT(src, CAMPAIGN_MISSION_TIMER_PAUSED))
 		return
 	game_timer = addtimer(VARSET_CALLBACK(src, max_time_reached, TRUE), max_game_time, TIMER_STOPPABLE)
 
@@ -305,26 +309,39 @@
 
 ///Attempts to resume the gametimer
 /datum/campaign_mission/proc/resume_mission_timer(trait_source = TRAIT_GENERIC, forced = FALSE)
-	REMOVE_TRAIT(src, CAMPAIGN_MISSION_TIMER_PAUSED, trait_source)
-	if(!forced && HAS_TRAIT(src, CAMPAIGN_MISSION_TIMER_PAUSED))
+	var/sources_to_remove = forced ? null : trait_source
+	REMOVE_TRAIT(src, CAMPAIGN_MISSION_TIMER_PAUSED, sources_to_remove)
+	if(game_timer_start || HAS_TRAIT(src, CAMPAIGN_MISSION_TIMER_PAUSED))
 		return
 	set_mission_timer()
 
 ///accesses the timer for status panel
 /datum/campaign_mission/proc/mission_end_countdown()
-	//if(max_time_reached)
-	//	return "Mission finished"
-	if(!game_timer && HAS_TRAIT(src, CAMPAIGN_MISSION_TIMER_PAUSED))
+	if(!max_game_time)
+		return "No time limit"
+	if(HAS_TRAIT(src, CAMPAIGN_MISSION_TIMER_PAUSED))
 		return "Timer paused"
-	var/eta = game_timer ? (timeleft(game_timer) * 0.1) : (max_game_time * 0.1)
-	if(eta > 0)
-		return "[(eta / 60) % 60]:[add_leading(num2text(eta % 60), 2, "0")]"
+	if(start_timer)
+		return "Deployment in [format_mission_time(timeleft(start_timer))]"
+	if(game_timer_start)
+		return "Clock starts in [format_mission_time(timeleft(game_timer_start))]"
+	return format_mission_time(game_timer ? timeleft(game_timer) : max_game_time)
+
+/datum/campaign_mission/proc/format_mission_time(deciseconds)
+	var/seconds = CEILING(max(0, deciseconds) / (1 SECONDS), 1)
+	return "[FLOOR(seconds / 60, 1)]:[add_leading(num2text(seconds % 60), 2, "0")]"
 
 ///Mission start proper
 /datum/campaign_mission/proc/start_mission()
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(SSdcs, COMSIG_GLOB_CAMPAIGN_MISSION_STARTED)
 	start_timer = null
+	mission_state = MISSION_STATE_ACTIVE
+	if(max_game_time)
+		if(game_timer_delay)
+			game_timer_start = addtimer(CALLBACK(src, PROC_REF(set_mission_timer)), game_timer_delay, TIMER_STOPPABLE)
+		else
+			set_mission_timer()
+	SEND_SIGNAL(SSdcs, COMSIG_GLOB_CAMPAIGN_MISSION_STARTED)
 	if(!shutter_open_delay[MISSION_STARTING_FACTION])
 		SEND_GLOBAL_SIGNAL(GLOB.faction_to_campaign_door_signal[starting_faction])
 	else
@@ -338,14 +355,21 @@
 	START_PROCESSING(SSslowprocess, src) //this may be excessive
 	play_start_intro()
 
-	if(max_game_time)
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/campaign_mission, set_mission_timer)), game_timer_delay)
-
-	mission_state = MISSION_STATE_ACTIVE
+/datum/campaign_mission/proc/stop_mission_timers()
+	if(start_timer)
+		deltimer(start_timer)
+		start_timer = null
+	if(game_timer_start)
+		deltimer(game_timer_start)
+		game_timer_start = null
+	if(game_timer && !max_time_reached)
+		deltimer(game_timer)
+	game_timer = null
 
 ///Mission end wrap up
 /datum/campaign_mission/proc/end_mission()
 	SHOULD_CALL_PARENT(TRUE)
+	stop_mission_timers()
 	unregister_mission_signals()
 	QDEL_LIST(GLOB.campaign_objectives)
 	QDEL_LIST(GLOB.campaign_structures)
@@ -460,32 +484,33 @@
 	mode.stat_list[hostile_faction].apply_cash(hostile_team_cash)
 
 ///checks how many marines and SOM are still alive
-/datum/campaign_mission/proc/count_humans(list/z_levels = SSmapping.levels_by_trait(ZTRAIT_AWAY), count_flags) //todo: make new Z's not away levels, or ensure ground and away is consistant in behavior
+/datum/campaign_mission/proc/count_humans(list/z_levels, count_flags)
 	var/list/team_one_alive = list()
 	var/list/team_one_dead = list()
 	var/list/team_two_alive = list()
 	var/list/team_two_dead = list()
 
-	for(var/z in z_levels)
-		//counts the live marines and SOM
-		for(var/i in GLOB.humans_by_zlevel["[z]"])
-			var/mob/living/carbon/human/H = i
-			if(!istype(H))
-				continue
-			if(count_flags & COUNT_IGNORE_HUMAN_SSD && !H.client)
-				continue
-			if(H.faction == starting_faction)
-				team_one_alive += H
-			else //assumption here that there is only 2 teams
-				team_two_alive += H
+	if(isnull(z_levels))
+		z_levels = mission_z_level ? list(mission_z_level.z_value) : list()
+	for(var/mob/living/carbon/human/H AS in GLOB.alive_human_list)
+		var/turf/location = get_turf(H)
+		if(!(location?.z in z_levels))
+			continue
+		if(count_flags & COUNT_IGNORE_HUMAN_SSD && !H.client)
+			continue
+		if(H.faction == starting_faction)
+			team_one_alive += H
+		else if(H.faction == hostile_faction)
+			team_two_alive += H
 	//counts the dead marines and SOM
 	for(var/i in GLOB.dead_human_list)
 		var/mob/living/carbon/human/H = i
-		if(!istype(H))
+		var/turf/location = get_turf(H)
+		if(!istype(H) || !(location?.z in z_levels))
 			continue
 		if(H.faction == starting_faction)
 			team_one_dead += H
-		else
+		else if(H.faction == hostile_faction)
 			team_two_dead += H
 
 	return list(team_one_alive, team_two_alive, team_one_dead, team_two_dead)

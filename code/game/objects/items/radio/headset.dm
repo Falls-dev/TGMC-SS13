@@ -175,7 +175,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/mainship/Initialize(mapload)
 	. = ..()
-	camera = new /obj/machinery/camera/headset(src)
+	var/camera_type = faction == FACTION_SOM ? /obj/machinery/camera/headset/som : /obj/machinery/camera/headset
+	camera = new camera_type(src)
 
 /obj/item/radio/headset/mainship/equipped(mob/living/carbon/human/user, slot)
 	if(slot == SLOT_EARS)

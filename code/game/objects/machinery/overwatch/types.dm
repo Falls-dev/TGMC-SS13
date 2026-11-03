@@ -36,6 +36,15 @@
 	overwatch_title = "Main"
 	console_type = "main"
 
+/obj/machinery/computer/camera_advanced/overwatch/military/som
+	faction = FACTION_SOM
+	icon_state = "som_console"
+	screen_overlay = "som_overwatch_emissive"
+	light_color = LIGHT_COLOR_FLARE
+	networks = list(SOM_CAMERA_NETWORK)
+	req_access = list(ACCESS_MARINE_BRIDGE)
+	map_flags = MINIMAP_FLAG_MARINE_SOM
+
 /obj/machinery/computer/camera_advanced/overwatch/military/som/yankee
 	name = "\improper Yankee Overwatch Console"
 

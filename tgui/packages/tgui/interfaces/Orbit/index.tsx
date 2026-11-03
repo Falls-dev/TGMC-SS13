@@ -46,6 +46,7 @@ const ObservableSearch = (props) => {
     auto_observe,
     humans = [],
     marines = [],
+    som = [],
     yautja = [],
     survivors = [],
     xenos = [],
@@ -58,7 +59,7 @@ const ObservableSearch = (props) => {
 
   /** Gets a list of Observables, then filters the most relevant to orbit */
   function orbitMostRelevant() {
-    const mostRelevant = [humans, marines, yautja, survivors, xenos, valhalla]
+    const mostRelevant = [humans, marines, som, yautja, survivors, xenos, valhalla]
       .flat()
       .filter((observable) => isJobCkeyOrNameMatch(observable, searchQuery))
       .sort((observable) => -(observable.orbiters || 0))[0];
@@ -124,6 +125,7 @@ const ObservableContent = (props) => {
     valhalla = [],
     humans = [],
     marines = [],
+    som = [],
     yautja = [],
     misc = [],
     npcs = [],
@@ -135,6 +137,7 @@ const ObservableContent = (props) => {
     <Stack vertical>
       <ObservableSection color="violet" section={xenos} title="Xenomorphs" />
       <ObservableSection color="blue" section={marines} title="Marines" />
+      <ObservableSection color="orange" section={som} title="SOM" />
       <ObservableSection color="teal" section={humans} title="Humans" />
       <ObservableSection color="good" section={survivors} title="Survivors" />
       <ObservableSection color="red" section={yautja} title="Predators" />
