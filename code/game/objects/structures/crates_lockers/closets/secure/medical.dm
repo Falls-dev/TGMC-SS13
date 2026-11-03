@@ -140,7 +140,7 @@
 /obj/structure/closet/secure_closet/CMO/PopulateContents()
 	new /obj/item/clothing/suit/radiation(src)
 	new /obj/item/clothing/head/radiation(src)
-	new /obj/item/clothing/shoes/white(src)
+	new /obj/item/clothing/shoes/marine/white(src)
 	new /obj/item/clothing/gloves/latex(src)
 	new /obj/item/clothing/under/rank/medical/blue(src)
 	new /obj/item/clothing/under/rank/medical/green(src)

@@ -105,7 +105,7 @@
 
 /datum/outfit/job/som/medical
 	belt = /obj/item/storage/belt/rig/medical
-	shoes = /obj/item/clothing/shoes/white
+	shoes = /obj/item/clothing/shoes/marine/white
 	gloves = /obj/item/clothing/gloves/latex
 	glasses = /obj/item/clothing/glasses/hud/health
 	mask = /obj/item/clothing/mask/surgical
@@ -148,7 +148,7 @@
 	ears = /obj/item/radio/headset/mainship/doc
 	w_uniform = /obj/item/clothing/under/rank/medical/purple
 	wear_suit = /obj/item/clothing/suit/storage/labcoat
-	shoes = /obj/item/clothing/shoes/white
+	shoes = /obj/item/clothing/shoes/marine/white
 	gloves = /obj/item/clothing/gloves/latex
 	glasses = /obj/item/clothing/glasses/hud/health
 	mask = /obj/item/clothing/mask/surgical

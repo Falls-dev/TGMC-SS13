@@ -43,7 +43,7 @@
 /datum/loadout_item/feet/white_dress
 	name = "Dress shoes"
 	desc = "Fancy white shoes to go with your white dress uniform. Do not come with a combat knife."
-	item_typepath = /obj/item/clothing/shoes/white
+	item_typepath = /obj/item/clothing/shoes/marine/white
 	jobs_supported = list(SQUAD_MARINE, SQUAD_CORPSMAN, SQUAD_ENGINEER, SQUAD_SMARTGUNNER, SQUAD_LEADER, FIELD_COMMANDER, STAFF_OFFICER, CAPTAIN)
 
 //Captain
