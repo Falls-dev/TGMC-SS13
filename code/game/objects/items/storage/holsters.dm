@@ -825,3 +825,20 @@
 	for(var/i in 1 to 5)
 		new /obj/item/cell/lasgun/lasrifle(src)
 	new /obj/item/weapon/gun/energy/lasgun/lasrifle/standard_marine_pistol/tactical(src)
+
+/obj/item/storage/holster/belt/m44/full/PopulateContents()
+	new /obj/item/weapon/gun/revolver/single_action/m44(src)
+	new /obj/item/ammo_magazine/revolver/heavy(src)
+	new /obj/item/ammo_magazine/revolver/marksman(src)
+	new /obj/item/ammo_magazine/revolver/single_action/m44(src)
+	new /obj/item/ammo_magazine/revolver/single_action/m44(src)
+	new /obj/item/ammo_magazine/revolver/single_action/m44(src)
+	new /obj/item/ammo_magazine/revolver/single_action/m44(src)
+
+/obj/item/storage/holster/belt/pistol/standard_pistol
+	name = "\improper T457 pattern pistol holster rig"
+	desc = "The T457 is the standard load-bearing equipment of the TGMC. It consists of a modular belt with various clips."
+	icon_state = "tp14_holster"
+
+/obj/item/storage/holster/blade/machete/full_alt/PopulateContents()
+	new /obj/item/weapon/sword/machete/alt(src)

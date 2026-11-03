@@ -120,3 +120,25 @@ GLOBAL_LIST_INIT(faction_to_portrait, list(
 	FACTION_TERRAGOV = /atom/movable/screen/text/screen_text/picture/potrait,
 	FACTION_SOM = /atom/movable/screen/text/screen_text/picture/potrait/som_over,
 ))
+
+#define FACTION_SPIDER "Spider"
+#define FACTION_HIVEBOT "Hivebot"
+
+GLOBAL_LIST_INIT(faction_to_mech_spawner, list(
+	FACTION_TERRAGOV = list(
+		"heavy" = /obj/effect/landmark/campaign/vehicle_spawner/mech/heavy,
+		"medium" = /obj/effect/landmark/campaign/vehicle_spawner/mech,
+		"light" = /obj/effect/landmark/campaign/vehicle_spawner/mech/light,
+	),
+	FACTION_SOM = list(
+		"heavy" = /obj/effect/landmark/campaign/vehicle_spawner/mech/som/heavy,
+		"medium" = /obj/effect/landmark/campaign/vehicle_spawner/mech/som,
+		"light" = /obj/effect/landmark/campaign/vehicle_spawner/mech/som/light,
+	),
+))
+
+GLOBAL_LIST_INIT(faction_to_formatted_text, list(
+	FACTION_TERRAGOV = "tgmc",
+	FACTION_SOM = "som",
+	FACTION_XENO = "xeno"
+))

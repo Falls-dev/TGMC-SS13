@@ -101,7 +101,7 @@ SUBSYSTEM_DEF(job)
 	if(!job.player_old_enough(player.client))
 		JobDebug("AR player not old enough, Player: [player], Job:[job.title]")
 		return FALSE
-	if(ismarinejob(job))
+	if(ismarinejob(job) || issommarinejob(job))
 		if(!handle_initial_squad(player, job, latejoin, job.faction))
 			JobDebug("Failed to assign marine role to a squad. Player: [player.key] Job: [job.title]")
 			return FALSE
@@ -208,6 +208,8 @@ SUBSYSTEM_DEF(job)
 	for(var/mob/new_player/player AS in unassigned)
 		if(PopcapReached())
 			RejectPlayer(player)
+		if(SSticker.mode?.round_type_flags & MODE_TWO_HUMAN_FACTIONS)
+			faction_rejected = faction_rejected == FACTION_TERRAGOV ? FACTION_SOM : FACTION_TERRAGOV
 		// Loop through all jobs
 		for(var/datum/job/job AS in occupations_to_assign)
 			// If the player wants that job on this level, then try give it to him.
@@ -276,6 +278,8 @@ SUBSYSTEM_DEF(job)
 		SendToLateJoin(new_character, job)
 
 	job.radio_help_message(player)
+	if(iscampaigngamemode(SSticker.mode))
+		to_chat(player, jointext(job.campaign_spawn_information(player), ""))
 
 	job.after_spawn(new_character, player, joined_late) // note: this happens before new_character has a key!
 

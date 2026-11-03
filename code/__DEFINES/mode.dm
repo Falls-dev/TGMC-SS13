@@ -197,3 +197,12 @@
 #define BIOSCAN_LOCATION(show_locations, location) ((show_locations && location) ? ", включая одного в [location]" : "")
 
 #define AI_SCAN_DELAY 15 SECONDS
+
+#define MODE_HUMAN_ONLY (1<<20)
+#define MODE_TWO_HUMAN_FACTIONS (1<<21)
+#define MODE_COMBAT_PATROL_MARINE_MAJOR "Marine Major Victory"
+#define MODE_COMBAT_PATROL_MARINE_MINOR "Marine Minor Victory"
+#define MODE_COMBAT_PATROL_SOM_MAJOR "Sons of Mars Major Victory"
+#define MODE_COMBAT_PATROL_SOM_MINOR "Sons of Mars Minor Victory"
+#define MODE_COMBAT_PATROL_DRAW "DRAW: Mutual Annihilation"
+#define NUCLEAR_WAR_MECH_MINIMUM_POP_REQUIRED 40 // This amount of clients must be connected at gamemode setup to get the first mech pilot slot.

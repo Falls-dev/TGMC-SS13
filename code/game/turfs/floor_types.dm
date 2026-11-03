@@ -1373,3 +1373,30 @@
 
 /turf/open/floor/kutjevo/colors/red/inner_corner
 	icon_state = "red4"
+
+/turf/open/urban/street/asphalt
+	icon_state = "asphalt_old"
+	minimap_color = MINIMAP_DIRT
+
+/turf/open/floor/mainship/ntlogo/nt2
+	icon_state = "nt2"
+
+/turf/open/floor/mainship/ntlogo/nt3
+	icon_state = "nt3"
+
+//Cargo elevator
+
+/turf/open/floor/mainship/ntlogo
+	icon_state = "nt1"
+
+/turf/open/urban/street/sidewalkfull
+	icon_state = "sidewalkfull"
+
+/turf/open/floor/urban/tile/supermartfloor1
+	icon_state = "supermartfloor1"
+
+/turf/open/floor/mainship/yellow_cargo
+	icon_state = "yellow_cargo"
+
+/turf/open/floor/mainship/yellow_cargo/arrow
+	icon_state = "yellow_cargo_arrow"

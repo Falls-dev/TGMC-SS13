@@ -398,3 +398,6 @@ GLOBAL_PROTECT(exp_specialmap)
 		CRASH("Occupy xenomorph position was call with amount = [amount] and respawn =[respawn ? "TRUE" : "FALSE"] \n \
 		This would have created a negative larva situation")
 	return ..()
+
+/datum/job/proc/campaign_spawn_information(mob/M)
+	return list()

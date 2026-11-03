@@ -97,3 +97,11 @@
 #define CALIBER_11X35 "11x35mm"
 #define CALIBER_ANTIMATTER "antimatter" //BFG
 #define CALIBER_105MM "105mm" //MBT Main Cannon
+
+#define CALIBER_10x26_CASELESS "10x26mm caseless" //GPMG and SG
+
+#define CALIBER_12x7 "12.7 Magnum"
+
+#define CALIBER_10x27_CASELESS "10x27mm caseless"
+
+#define CALIBER_10x265_CASELESS "10x26.5mm caseless"

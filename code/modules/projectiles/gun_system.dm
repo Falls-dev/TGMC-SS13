@@ -803,6 +803,8 @@
 
 ///Wrapper proc to complete the whole firing process.
 /obj/item/weapon/gun/proc/Fire()
+	if(gun_fire_angle && target && get_between_angles(Get_Angle(get_turf(src), target), dir2angle(loc.dir)) > gun_fire_angle / 2)
+		return NONE
 	if(!target || !(gun_user || issentry(loc)) || !(CHECK_BITFIELD(deploy_flags, IS_DEPLOYED) || able_to_fire(gun_user)) || windup_checked == WEAPON_WINDUP_CHECKING)
 		return NONE
 	if(windup_delay && windup_checked == WEAPON_WINDUP_NOT_CHECKED)
@@ -1892,3 +1894,6 @@
 		return
 	magharn.reequip_component.active = FALSE
 	addtimer(VARSET_CALLBACK(magharn.reequip_component, active, TRUE), 2 SECONDS)
+
+/obj/item/weapon/gun
+	var/gun_fire_angle

@@ -399,3 +399,8 @@
 	network = list("miner")
 	status = FALSE // by default miners are inactive
 	internal_light = FALSE
+
+/obj/machinery/camera/autoname/mainship/somship
+	network = list(SOM_CAMERA_NETWORK)
+
+//cameras installed inside the dropships, accessible via both cockpit monitor and ship camera computers

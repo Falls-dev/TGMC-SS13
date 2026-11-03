@@ -877,3 +877,15 @@
 	name = "\improper Research Dome"
 	icon_state = "door_locked"
 	locked = TRUE
+
+/obj/machinery/door/airlock/urban/generic_solid
+	name = "\improper Airlock"
+	icon = 'icons/obj/doors/hybrisa/hybrisa_generic.dmi'
+
+// Medical
+
+/obj/machinery/door/airlock/urban/medical
+	name = "\improper Airlock"
+	icon = 'icons/obj/doors/hybrisa/hybrisa_medidoor_glass.dmi'
+	opacity = FALSE
+	glass = TRUE

@@ -312,3 +312,21 @@
 	back = /obj/item/storage/backpack/satchel/sec
 	wear_suit = /obj/item/clothing/suit/armor/bulletproof/mp
 	suit_store = /obj/item/weapon/gun/energy/taser
+
+/datum/outfit/job/command/captain_campaign
+	name = CAPTAIN
+	jobtype = /datum/job/terragov/command/captain
+
+	id = /obj/item/card/id/gold
+
+/datum/outfit/job/command/fieldcommander_campaign
+	name = FIELD_COMMANDER
+	jobtype = /datum/job/terragov/command/fieldcommander/campaign
+
+	id = /obj/item/card/id/dogtag/fc
+
+/datum/outfit/job/command/staffofficer_campaign
+	name = STAFF_OFFICER
+	jobtype = /datum/job/terragov/command/staffofficer
+
+	id = /obj/item/card/id/silver

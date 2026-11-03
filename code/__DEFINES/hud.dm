@@ -115,3 +115,7 @@
 #define PLANE_GROUP_MAIN "main"
 /// A secondary group, used when a client views a generic window
 #define PLANE_GROUP_POPUP_WINDOW(screen) "popup-[REF(screen)]"
+
+#define ui_ai_floor_indicator "BOTTOM+5,RIGHT"
+
+#define ui_ai_godownup "BOTTOM+5,RIGHT-1"

@@ -252,3 +252,6 @@
 	layer = FLY_LAYER
 	plane = GAME_PLANE
 	alpha = 70
+
+/obj/effect/forcefield/allow_bullet_travel
+	resistance_flags = RESIST_ALL | PROJECTILE_IMMUNE

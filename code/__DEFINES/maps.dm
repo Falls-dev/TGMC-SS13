@@ -114,3 +114,13 @@ require only minor tweaks.
 #define MAP_ARMOR_STYLE_JUNGLE "jungle"
 #define MAP_ARMOR_STYLE_PRISON "prison"
 #define MAP_ARMOR_STYLE_DESERT "desert"
+
+#define ZTRAIT_NOPARALLAX "No Parallax"
+#define SHELTER_DEPLOY_ALLOWED "allowed"
+#define SHELTER_DEPLOY_BAD_TURFS "bad turfs"
+#define SHELTER_DEPLOY_BAD_AREA "bad area"
+#define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
+#define SHELTER_DEPLOY_BANNED_OBJECTS "banned objects"
+#define SHELTER_DEPLOY_OUTSIDE_MAP "outside map"
+#define CAPSULE_IGNORE_ANCHORED_OBJECTS (1<<0)
+#define CAPSULE_IGNORE_BANNED_OBJECTS (1<<1)

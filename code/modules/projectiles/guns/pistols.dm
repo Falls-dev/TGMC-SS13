@@ -870,3 +870,18 @@ It is a modified Beretta 93R, and can fire three round burst or single fire. Whe
 	scatter_unwielded = 7
 	recoil = -2
 	recoil_unwielded = 2
+
+/obj/item/weapon/gun/pistol/standard_pistol/standard
+	starting_attachment_types = list(/obj/item/attachable/lace, /obj/item/attachable/reddot, /obj/item/attachable/lasersight)
+
+//-------------------------------------------------------
+//PP-7 Plasma Pistol
+
+/obj/item/weapon/gun/pistol/standard_heavypistol/tactical
+	starting_attachment_types = list(/obj/item/attachable/reddot)
+
+/obj/item/weapon/gun/pistol/highpower/standard
+	starting_attachment_types = list(/obj/item/attachable/lace, /obj/item/attachable/reddot, /obj/item/attachable/gyro)
+
+//-------------------------------------------------------
+//VP70

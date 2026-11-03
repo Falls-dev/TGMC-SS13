@@ -35,6 +35,11 @@
 			var/datum/action/observer_action/A = new path(src)
 			A.give_action(src)
 
+	if(!SSticker.mode)
+		RegisterSignal(SSdcs, COMSIG_GLOB_GAMEMODE_LOADED, PROC_REF(load_ghost_gamemode_actions))
+	else
+		load_ghost_gamemode_actions()
+
 	client.AddComponent(/datum/component/larva_queue)
 
 	if(!actions_by_path[/datum/action/minimap/observer])
@@ -58,3 +63,11 @@
 	))
 	if(!isnull(can_reenter_corpse))
 		addtimer(CALLBACK(src, TYPE_VERB_REF(/mob/dead/observer, reenter_corpse)), 6 SECONDS)
+
+/mob/dead/observer/proc/load_ghost_gamemode_actions()
+	SIGNAL_HANDLER
+	UnregisterSignal(SSdcs, COMSIG_GLOB_GAMEMODE_LOADED)
+	for(var/path in SSticker.mode.ghost_verbs())
+		if(!actions_by_path[path])
+			var/datum/action/action = new path(src)
+			action.give_action(src)

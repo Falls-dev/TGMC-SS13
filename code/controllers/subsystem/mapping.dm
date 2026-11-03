@@ -7,6 +7,7 @@ SUBSYSTEM_DEF(mapping)
 	var/list/datum/map_config/next_map_configs
 
 	var/list/map_templates = list()
+	var/list/capsule_templates = list()
 
 	var/list/shuttle_templates = list()
 	var/list/minidropship_templates = list()
@@ -254,6 +255,7 @@ SUBSYSTEM_DEF(mapping)
 	flags |= SS_NO_INIT
 	initialized = SSmapping.initialized
 	map_templates = SSmapping.map_templates
+	capsule_templates = SSmapping.capsule_templates
 	minidropship_templates = SSmapping.minidropship_templates
 	shuttle_templates = SSmapping.shuttle_templates
 	modular_templates = SSmapping.modular_templates
@@ -408,6 +410,7 @@ SUBSYSTEM_DEF(mapping)
 
 	preloadShuttleTemplates()
 	preloadModularTemplates()
+	preloadShelterTemplates()
 
 /proc/generateMapList(filename)
 	. = list()
@@ -733,3 +736,16 @@ SUBSYSTEM_DEF(mapping)
 	if(!target)
 		CRASH("Attempted to lazy load a template key that does not exist: '[template_key]'")
 	return target.lazy_load()
+
+/datum/controller/subsystem/mapping/proc/preloadShelterTemplates()
+	for(var/item in subtypesof(/datum/map_template/capsule))
+		var/datum/map_template/capsule/shelter_type = item
+		if(!(initial(shelter_type.mappath)))
+			continue
+		var/datum/map_template/capsule/S = new shelter_type()
+
+		capsule_templates[S.shelter_id] = S
+		map_templates[S.shelter_id] = S
+
+/// Adds a new reservation z level. A bit of space that can be handed out on request
+/// Of note, reservations default to transit turfs, to make their most common use, shuttles, faster

@@ -474,3 +474,6 @@
 	light_range = 4
 	light_power = 0.75
 	light_color = LIGHT_COLOR_LAVA
+
+/turf/open/shuttle/escapepod/plain/buildable
+	allow_construction = TRUE

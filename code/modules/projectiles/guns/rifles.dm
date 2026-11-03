@@ -3287,3 +3287,141 @@
 
 /obj/item/weapon/gun/rifle/vsd_rifle/medic
 	starting_attachment_types = list(/obj/item/attachable/magnetic_harness, /obj/item/attachable/verticalgrip, /obj/item/attachable/suppressor)
+
+/obj/item/weapon/gun/rifle/tx55/freelancer_custom/combat_patrol
+	starting_attachment_types = list(
+		/obj/item/weapon/gun/rifle/tx54/mini,
+		/obj/item/attachable/motiondetector,
+		/obj/item/attachable/extended_barrel,
+		/obj/item/attachable/verticalgrip,
+	)
+
+//-------------------------------------------------------
+//A true classic, the Garand. Ping.
+
+/obj/item/weapon/gun/rifle/standard_gpmg/machinegunner
+	starting_attachment_types = list(/obj/item/attachable/stock/t60stock, /obj/item/attachable/foldable/bipod, /obj/item/attachable/magnetic_harness, /obj/item/attachable/extended_barrel)
+
+/obj/item/weapon/gun/rifle/standard_smarttargetrifle/motion
+	starting_attachment_types = list(/obj/item/weapon/gun/rifle/standard_spottingrifle, /obj/item/attachable/stock/strstock, /obj/item/attachable/motiondetector)
+
+/obj/item/weapon/gun/rifle/standard_autoshotgun/engineer
+	starting_attachment_types = list(/obj/item/attachable/stock/tx15, /obj/item/attachable/magnetic_harness, /obj/item/weapon/gun/grenade_launcher/underslung)
+
+/obj/item/weapon/gun/rifle/standard_skirmishrifle/standard
+	starting_attachment_types = list(
+		/obj/item/attachable/reddot,
+		/obj/item/attachable/extended_barrel,
+		/obj/item/weapon/gun/grenade_launcher/underslung,
+	)
+
+//-------------------------------------------------------
+//AF-51B MACHINEcarbine
+
+/obj/item/weapon/gun/rifle/standard_carbine/standard
+	starting_attachment_types = list(/obj/item/attachable/stock/t18stock, /obj/item/weapon/gun/grenade_launcher/underslung, /obj/item/attachable/reddot, /obj/item/attachable/extended_barrel)
+
+/obj/item/weapon/gun/rifle/standard_assaultrifle/medic
+	starting_attachment_types = list(/obj/item/attachable/stock/t12stock, /obj/item/attachable/magnetic_harness, /obj/item/attachable/extended_barrel, /obj/item/weapon/gun/grenade_launcher/underslung)
+
+//-------------------------------------------------------
+//DMR-37 DMR
+
+/obj/item/weapon/gun/rifle/standard_carbine/engineer
+	starting_attachment_types = list(/obj/item/attachable/stock/t18stock, /obj/item/attachable/magnetic_harness, /obj/item/attachable/verticalgrip, /obj/item/attachable/extended_barrel)
+
+/obj/item/weapon/gun/rifle/standard_assaultrifle/engineer
+	starting_attachment_types = list(/obj/item/attachable/stock/t12stock, /obj/item/attachable/magnetic_harness, /obj/item/attachable/extended_barrel, /obj/item/weapon/gun/flamer/mini_flamer)
+
+/obj/item/weapon/gun/rifle/m41a/field_commander
+	starting_attachment_types = list(
+		/obj/item/attachable/stock/m41a,
+		/obj/item/weapon/gun/grenade_launcher/underslung/invisible,
+		/obj/item/attachable/reddot,
+		/obj/item/attachable/extended_barrel,
+	)
+
+/obj/item/weapon/gun/rifle/standard_assaultrifle/rifleman
+	starting_attachment_types = list(/obj/item/attachable/stock/t12stock, /obj/item/attachable/reddot, /obj/item/attachable/extended_barrel, /obj/item/weapon/gun/grenade_launcher/underslung)
+
+/obj/item/weapon/gun/rifle/standard_carbine/plasma_pistol
+	starting_attachment_types = list(/obj/item/attachable/stock/t18stock, /obj/item/weapon/gun/pistol/plasma_pistol, /obj/item/attachable/motiondetector, /obj/item/attachable/compensator)
+
+/obj/item/weapon/gun/rifle/standard_br/standard
+	starting_attachment_types = list(/obj/item/attachable/stock/t64stock, /obj/item/weapon/gun/grenade_launcher/underslung/battle_rifle, /obj/item/attachable/reddot, /obj/item/attachable/extended_barrel)
+
+//-------------------------------------------------------
+//PR-412 Pulse Rifle
+
+/obj/item/weapon/gun/rifle/standard_autoshotgun/standard
+	starting_attachment_types = list(/obj/item/attachable/stock/tx15, /obj/item/attachable/magnetic_harness, /obj/item/attachable/bayonet, /obj/item/weapon/gun/grenade_launcher/underslung)
+
+/obj/item/weapon/gun/rifle/standard_carbine/scout
+	starting_attachment_types = list(/obj/item/attachable/stock/t18stock, /obj/item/weapon/gun/grenade_launcher/underslung, /obj/item/attachable/motiondetector, /obj/item/attachable/extended_barrel)
+
+/obj/item/weapon/gun/rifle/standard_carbine/suppressed
+	starting_attachment_types = list(/obj/item/attachable/stock/t18stock, /obj/item/weapon/gun/grenade_launcher/underslung, /obj/item/attachable/reddot, /obj/item/attachable/suppressor)
+
+/obj/item/weapon/gun/rifle/tx54/motion_sensor
+	starting_attachment_types = list(/obj/item/attachable/motiondetector)
+	default_ammo_type = /obj/item/ammo_magazine/rifle/tx54
+
+//-------------------------------------------------------
+// AR-55 built in grenade launcher
+
+/obj/item/weapon/gun/rifle/standard_autoshotgun/plasma_pistol
+	starting_attachment_types = list(/obj/item/attachable/stock/tx15, /obj/item/attachable/motiondetector, /obj/item/attachable/extended_barrel, /obj/item/weapon/gun/pistol/plasma_pistol)
+
+//-------------------------------------------------------
+//SG-29 Smart Machine Gun (It's more of a rifle than the SG.)
+
+/obj/item/weapon/gun/rifle/som/suppressed
+	starting_attachment_types = list(
+		/obj/item/weapon/gun/shotgun/micro_grenade,
+		/obj/item/attachable/verticalgrip,
+		/obj/item/attachable/suppressor,
+		/obj/item/attachable/magnetic_harness,
+	)
+
+/obj/item/weapon/gun/rifle/standard_spottingrifle
+	name = "SG-153 spotting rifle"
+	desc = "An underslung spotting rifle, generally found ontop of another gun."
+	icon_state = "sg153"
+	icon = 'icons/obj/items/guns/marksman64.dmi'
+	fire_sound =  'sound/weapons/guns/fire/spottingrifle.ogg'
+	caliber = CALIBER_12x7
+	slot = ATTACHMENT_SLOT_UNDER
+	gun_skill_category = SKILL_SMARTGUN
+	max_shells = 5
+	default_ammo_type =/obj/item/ammo_magazine/rifle/standard_spottingrifle
+	allowed_ammo_types = list(
+		/obj/item/ammo_magazine/rifle/standard_spottingrifle,
+		/obj/item/ammo_magazine/rifle/standard_spottingrifle/highimpact,
+		/obj/item/ammo_magazine/rifle/standard_spottingrifle/heavyrubber,
+		/obj/item/ammo_magazine/rifle/standard_spottingrifle/plasmaloss,
+		/obj/item/ammo_magazine/rifle/standard_spottingrifle/tungsten,
+		/obj/item/ammo_magazine/rifle/standard_spottingrifle/incendiary,
+		/obj/item/ammo_magazine/rifle/standard_spottingrifle/flak,
+	)
+	force = 5
+	attachable_allowed = list()
+	actions_types = list()
+	gun_firemode_list = list(GUN_FIREMODE_SEMIAUTO)
+	gun_features_flags = GUN_IS_ATTACHMENT|GUN_WIELDED_FIRING_ONLY|GUN_ATTACHMENT_FIRE_ONLY|GUN_AMMO_COUNTER|GUN_IFF|GUN_SMOKE_PARTICLES
+	attach_features_flags = NONE
+	fire_delay = 1 SECONDS
+	accuracy_mult = 1.25
+	pixel_shift_x = 18
+	pixel_shift_y = 16
+
+//-------------------------------------------------------
+//SG-25 Smart Rifle (Added back spefically for NT PMC ert, do not expect it to return in marine roster)
+
+/obj/item/weapon/gun/rifle/standard_lmg/autorifleman
+	starting_attachment_types = list(/obj/item/attachable/verticalgrip, /obj/item/attachable/reddot)
+
+/obj/item/weapon/gun/rifle/standard_lmg/beginner
+	starting_attachment_types = list(/obj/item/attachable/extended_barrel, /obj/item/attachable/reddot, /obj/item/attachable/verticalgrip)
+
+//-------------------------------------------------------
+//MG-60 General Purpose Machine Gun

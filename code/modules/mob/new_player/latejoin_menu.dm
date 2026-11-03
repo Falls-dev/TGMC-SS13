@@ -43,6 +43,8 @@ GLOBAL_LIST_INIT(latejoin_menu_department_colors, list(
 		)
 
 		for(var/datum/job/job_datum as anything in category)
+			if(SSticker.mode?.round_type_flags & MODE_TWO_HUMAN_FACTIONS && job_datum.faction != user.faction)
+				continue
 			department_jobs[job_datum.title] = list(
 				"command" = !!(job_datum.job_flags & JOB_FLAG_BOLD_NAME_ON_SELECTION),
 				"duty" = job_datum.job_desc,
@@ -70,6 +72,8 @@ GLOBAL_LIST_INIT(latejoin_menu_department_colors, list(
 		departments[category_name] = list("jobs" = department_jobs)
 
 		for(var/datum/job/job_datum as anything in category)
+			if(SSticker.mode?.round_type_flags & MODE_TWO_HUMAN_FACTIONS && job_datum.faction != user.faction)
+				continue
 			var/list/reasons = list()
 			var/available = istype(owner) && owner.IsJobAvailable(job_datum, TRUE, reasons)
 

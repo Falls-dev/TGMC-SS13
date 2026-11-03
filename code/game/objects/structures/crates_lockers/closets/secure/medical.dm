@@ -126,3 +126,29 @@
 
 /obj/structure/closet/secure_closet/chemical/colony
 	req_access = list(ACCESS_CIVILIAN_PUBLIC)
+
+/obj/structure/closet/secure_closet/CMO
+	name = "chief medical officer's locker"
+	req_access = list(ACCESS_MARINE_CMO)
+	icon_state = "cmosecure1"
+	icon_closed = "cmosecure"
+	icon_locked = "cmosecure1"
+	icon_opened = "cmosecureopen"
+	icon_broken = "cmosecurebroken"
+	icon_off = "cmosecureoff"
+
+/obj/structure/closet/secure_closet/CMO/PopulateContents()
+	new /obj/item/clothing/suit/radiation(src)
+	new /obj/item/clothing/head/radiation(src)
+	new /obj/item/clothing/shoes/white(src)
+	new /obj/item/clothing/gloves/latex(src)
+	new /obj/item/clothing/under/rank/medical/blue(src)
+	new /obj/item/clothing/under/rank/medical/green(src)
+	new /obj/item/clothing/under/rank/medical/purple(src)
+	new /obj/item/clothing/head/cmo(src)
+	new /obj/item/clothing/suit/storage/labcoat(src)
+	new /obj/item/clothing/mask/surgical(src)
+	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/flash(src)
+	new /obj/item/clothing/suit/surgical(src)
+	new /obj/item/storage/box/trampop(src)

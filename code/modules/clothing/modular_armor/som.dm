@@ -254,3 +254,69 @@
 	desc = "Made for use with Gorgon pattern assault armor, providing superior protection. This one has gold markings indicating it belongs to a high ranking field officer."
 	icon_state = "som_helmet_officer"
 	worn_icon_state = "som_helmet_officer"
+
+/obj/item/clothing/suit/modular/som/heavy/lorica/medic
+	starting_attachments = list(
+		/obj/item/armor_module/module/tyr_extra_armor/som,
+		/obj/item/armor_module/storage/general/som,
+	)
+
+/obj/item/clothing/suit/modular/som/heavy/lorica/engineer
+	starting_attachments = list(
+		/obj/item/armor_module/module/tyr_extra_armor/som,
+		/obj/item/armor_module/storage/engineering/som,
+	)
+
+/obj/item/clothing/suit/modular/som/light/shield_overclocked
+	starting_attachments = list(
+		/obj/item/armor_module/module/eshield/som/overclocked,
+		/obj/item/armor_module/storage/medical/som,
+	)
+
+/obj/item/clothing/suit/modular/som/light/shield_overclocked/medic
+	starting_attachments = list(
+		/obj/item/armor_module/module/eshield/som/overclocked,
+		/obj/item/armor_module/storage/general/som,
+	)
+
+/obj/item/clothing/suit/modular/som/light/shield_overclocked/engineer
+	starting_attachments = list(
+		/obj/item/armor_module/module/eshield/som/overclocked,
+		/obj/item/armor_module/storage/engineering,
+	)
+
+/obj/item/clothing/suit/modular/som/shield_overclocked
+	starting_attachments = list(
+		/obj/item/armor_module/module/eshield/som/overclocked,
+		/obj/item/armor_module/storage/medical/som,
+	)
+
+/obj/item/clothing/suit/modular/som/shield_overclocked/medic
+	starting_attachments = list(
+		/obj/item/armor_module/module/eshield/som/overclocked,
+		/obj/item/armor_module/storage/general/som,
+	)
+
+/obj/item/clothing/suit/modular/som/shield_overclocked/engineer
+	starting_attachments = list(
+		/obj/item/armor_module/module/eshield/som/overclocked,
+		/obj/item/armor_module/storage/engineering,
+	)
+
+/obj/item/clothing/suit/modular/som/heavy/shield_overclocked
+	starting_attachments = list(
+		/obj/item/armor_module/module/eshield/som/overclocked,
+		/obj/item/armor_module/storage/medical/som,
+	)
+
+/obj/item/clothing/suit/modular/som/light/engineer
+	starting_attachments = list(
+		/obj/item/armor_module/module/better_shoulder_lamp,
+		/obj/item/armor_module/storage/engineering,
+	)
+
+/obj/item/clothing/suit/modular/som/light/medic
+	starting_attachments = list(
+		/obj/item/armor_module/module/better_shoulder_lamp,
+		/obj/item/armor_module/storage/general/som,
+	)

@@ -1001,3 +1001,23 @@
 		icon_state = "bomb_pod_installed"
 	else
 		icon_state = "bomb_pod"
+
+/obj/structure/dropship_equipment/cas/weapon/bomblet_pod
+	name = "bomblet pod"
+	icon_state = "bomblet_pod"
+	desc = "A pnuematic thrower machine capable of up to 40 smaller bombs, generally called 'bomblets'. Moving this will require some sort of lifter."
+	icon = 'icons/obj/structures/prop/mainship_64.dmi'
+	firing_sound = 'sound/weapons/gunship_rocketpod.ogg'
+	firing_delay = 0.5 SECONDS
+	point_cost = 450
+	dropship_equipment_flags = USES_AMMO|IS_WEAPON|IS_INTERACTABLE
+	ammo_type_used = CAS_BOMBLET
+
+/obj/structure/dropship_equipment/cas/weapon/bomblet_pod/update_icon_state()
+	. = ..()
+	if(ammo_equipped?.ammo_count)
+		icon_state = "bomblet_pod_loaded"
+	else if(ship_base)
+		icon_state = "bomblet_pod_installed"
+	else
+		icon_state = "bomblet_pod"

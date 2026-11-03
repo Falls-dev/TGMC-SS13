@@ -267,3 +267,17 @@
 	default_ammo = /datum/ammo/energy/bfg
 	max_rounds = 1
 	loading_sound = 'sound/vehicles/weapons/ltb_reload.ogg'
+
+/obj/item/ammo_magazine/tank/ltb_cannon/canister/incendiary
+	name = "LTB Incendiary Canister round (105mm)"
+	desc = "A 105mm canister shell for demolishing soft targets. The payload of incendiary shrapnel imitates a shotgun blast in trajectory."
+	icon_state = "ltb_canister_incend"
+	default_ammo = /datum/ammo/tx54/tank_canister/incendiary
+
+/obj/item/ammo_magazine/tank/ltaap_chaingun/hv
+	name = "\improper LTA-AP HV chaingun Magazine"
+	desc = "A primary armament chaingun magazine. Loaded with high velocity, non-IFF rounds."
+	icon_state = "ltaap_hv"
+	default_ammo = /datum/ammo/bullet/minigun/ltaap/hv
+	max_rounds = 200
+	magazine_flags = MAGAZINE_REFILLABLE|MAGAZINE_NOT_FABRICABLE

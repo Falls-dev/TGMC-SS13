@@ -290,3 +290,6 @@
 /turf/open/liquid/lava/autosmoothing/catwalk/Initialize(mapload)
 	. = ..()
 	new /obj/structure/catwalk(src)
+
+/turf/open/liquid/water/river/desertdam/notliquid/clean/shallow_water_cave_coast
+	icon_state = "shallow_water_cave_coast"

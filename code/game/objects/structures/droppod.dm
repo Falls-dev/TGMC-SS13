@@ -49,7 +49,9 @@ GLOBAL_LIST_INIT(blocked_droppod_tiles, typecacheof(list(/turf/open/space/transi
 	interaction_actions = list()
 	interaction_actions += new /datum/action/innate/set_drop_target(src)
 	interaction_actions += new /datum/action/innate/launch_droppod(src)
-	RegisterSignal(SSdcs, COMSIG_GLOB_DROPSHIP_HIJACKED, PROC_REF(disable_launching))
+	RegisterSignals(SSdcs, list(COMSIG_GLOB_DROPSHIP_HIJACKED, COMSIG_GLOB_CAMPAIGN_MISSION_ENDED, COMSIG_GLOB_CAMPAIGN_DISABLE_DROPPODS), PROC_REF(disable_launching))
+	RegisterSignal(SSdcs, COMSIG_GLOB_CAMPAIGN_ENABLE_DROPPODS, PROC_REF(allow_drop))
+	RegisterSignal(SSdcs, COMSIG_GLOB_CAMPAIGN_MISSION_LOADED, PROC_REF(change_targeted_z))
 	RegisterSignals(SSdcs, list(COMSIG_GLOB_OPEN_TIMED_SHUTTERS_LATE, COMSIG_GLOB_OPEN_SHUTTERS_EARLY, COMSIG_GLOB_TADPOLE_LANDED_OUT_LZ), PROC_REF(allow_drop))
 	GLOB.droppod_list += src
 	update_icon()
@@ -593,3 +595,26 @@ GLOBAL_LIST_INIT(blocked_droppod_tiles, typecacheof(list(/turf/open/space/transi
 
 #undef DROPPOD_TRANSIT_TIME
 #undef LEADER_POD_DISPERSION
+
+/obj/structure/drop_pod_launcher/sentry
+	pod_type = /obj/structure/droppod/nonmob/turret_pod
+
+#undef DROPPOD_TRANSIT_TIME
+#undef LEADER_POD_DISPERSION
+#undef DROPPOD_BASE_DISPERSION
+
+/obj/structure/drop_pod_launcher/supply
+	pod_type = /obj/structure/droppod/nonmob/supply_pod
+
+/obj/structure/drop_pod_launcher/mech
+	pod_type = /obj/structure/droppod/nonmob/mech_pod
+
+/obj/structure/droppod/proc/change_targeted_z(datum/source, new_z)
+	SIGNAL_HANDLER
+	for(var/mob/dropper AS in buckled_mobs)
+		unbuckle_mob(dropper)
+	target_z = new_z
+	target_x = 1
+	target_y = 1
+
+///returns boolean if the currently set target/optionally passed turf are valid to drop to

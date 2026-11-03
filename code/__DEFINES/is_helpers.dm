@@ -352,3 +352,16 @@ GLOBAL_VAR_INIT(refid_filter, TYPEID(filter(type="angular_blur")))
 #define ispredalien(A) (istype(A, /mob/living/carbon/xenomorph/predalien))
 #define isxenopredalienlarva(A) (istype(A, /mob/living/carbon/xenomorph/larva/predalien))
 #define isxenohellhound(A) (istype(A, /mob/living/carbon/xenomorph/hellhound))
+
+#define iscampaigngamemode(O) (istype(O, /datum/game_mode/hvh/campaign))
+#define isdestroobjective(O) (istype(O, /obj/structure/campaign_objective/destruction_objective))
+
+#define issommarinecommandjob(J) (istype(J, /datum/job/som/command))
+
+#define issommarineleaderjob(J) (istype(J, /datum/job/som/squad/leader))
+
+#define isholster(A) (istype(A, /obj/item/storage/holster))
+
+#define issensorcapturegamemode(O) (istype(O, /datum/game_mode/hvh/combat_patrol/sensor_capture))
+
+#define issommarinejob(J) (istype(J, /datum/job/som/squad))

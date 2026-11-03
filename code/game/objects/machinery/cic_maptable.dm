@@ -173,3 +173,15 @@
 	screen_overlay = ""
 
 	minimap_flag = MINIMAP_FLAG_XENO|MINIMAP_FLAG_MARINE|MINIMAP_FLAG_EXCAVATION_ZONE|MINIMAP_FLAG_YAUTJA
+
+/obj/machinery/cic_maptable/drawable/big/som
+	minimap_flag = MINIMAP_FLAG_MARINE_SOM
+	screen_overlay = "som_maptable_screen"
+	light_color = LIGHT_COLOR_FLARE
+	light_range = 3
+
+/obj/machinery/cic_maptable/som_maptable
+	icon_state = "som_console"
+	screen_overlay = "som_maptable_screen"
+	minimap_flag = MINIMAP_FLAG_MARINE_SOM
+	light_color = LIGHT_COLOR_FLARE

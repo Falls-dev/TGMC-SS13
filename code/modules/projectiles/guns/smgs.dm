@@ -872,3 +872,15 @@
 
 /obj/item/weapon/gun/smg/vsd_pdw/medic
 	starting_attachment_types = list(/obj/item/attachable/motiondetector, /obj/item/attachable/lasersight, /obj/item/attachable/extended_barrel)
+
+/obj/item/weapon/gun/smg/standard_machinepistol/scanner
+	starting_attachment_types = list(/obj/item/attachable/foldable/t19stock, /obj/item/attachable/motiondetector, /obj/item/attachable/compensator, /obj/item/attachable/lasersight)
+
+//-------------------------------------------------------
+// War is hell. Not glorious.
+
+/obj/item/weapon/gun/smg/m25/vgrip
+	starting_attachment_types = list(/obj/item/attachable/magnetic_harness, /obj/item/attachable/compensator, /obj/item/attachable/verticalgrip)
+
+/obj/item/weapon/gun/smg/m25/plasma
+	starting_attachment_types = list(/obj/item/attachable/magnetic_harness, /obj/item/attachable/compensator, /obj/item/weapon/gun/pistol/plasma_pistol)

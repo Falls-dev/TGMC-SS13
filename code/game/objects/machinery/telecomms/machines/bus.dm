@@ -82,3 +82,58 @@
 	id = "Backup Bus 4"
 	freq_listening = list(FREQ_COMMON)
 	autolinkers = list("processor4", "common")
+
+/obj/machinery/telecomms/bus/preset_three
+	id = "Bus 3"
+	network = "tcommsat"
+	freq_listening = list(FREQ_ALPHA, FREQ_BRAVO, FREQ_CHARLIE, FREQ_DELTA, FREQ_ECHO)
+	autolinkers = list("processor3", "alpha", "bravo", "charlie", "delta", "echo")
+
+/obj/machinery/telecomms/bus/preset_three/som
+	id = "Bus 3 som"
+	freq_listening = list(FREQ_ZULU, FREQ_YANKEE, FREQ_XRAY, FREQ_WHISKEY)
+	autolinkers = list("processor3_som", "zulu", "yankee", "xray", "whiskey")
+
+/obj/machinery/telecomms/bus/preset_two
+	id = "Bus 2"
+	network = "tcommsat"
+	freq_listening = list(FREQ_PMC, FREQ_COLONIST, FREQ_USL, FREQ_DEATHSQUAD, FREQ_IMPERIAL, FREQ_SOM, FREQ_SECTOID, FREQ_ECHO)
+	autolinkers = list("processor2", "ert")
+
+/obj/machinery/telecomms/bus/preset_one
+	id = "Bus 1"
+	network = "tcommsat"
+	freq_listening = list(FREQ_COMMAND, FREQ_CAS, FREQ_MEDICAL, FREQ_ENGINEERING, FREQ_REQUISITIONS)
+	autolinkers = list("processor1", "command", "firesupport", "medical", "engineering", "requisitions")
+
+/obj/machinery/telecomms/bus/preset_one/som
+	id = "Bus 1 som"
+	freq_listening = list(FREQ_COMMAND_SOM, FREQ_MEDICAL_SOM, FREQ_ENGINEERING_SOM) //No need for extra channels at this stage
+	autolinkers = list("processor1_som", "command_som", "medical_som", "engineering_som")
+
+/obj/machinery/telecomms/bus/preset_four
+	id = "Bus 4"
+	network = "tcommsat"
+	freq_listening = list(FREQ_COMMON)
+	autolinkers = list("processor4", "common")
+
+//proper cicbackup bus
+
+/obj/machinery/telecomms/bus/preset_four/cicbackup
+	on = 0
+	id = "Backup Bus 4"
+	network = "tcommsat"
+	freq_listening = list(FREQ_COMMON)
+	autolinkers = list("processor4", "common")
+
+//SOM
+
+/obj/machinery/telecomms/bus/preset_four/som
+	id = "Bus 4 som"
+	freq_listening = list(FREQ_SOM) //same channel as SOM ert
+	autolinkers = list("processor4_som", "common_som")
+
+/obj/machinery/telecomms/bus/preset_four/Initialize(mapload)
+	. = ..()
+	for(var/i = MIN_FREQ, i <= MAX_FREQ, i += 2)
+		freq_listening |= i

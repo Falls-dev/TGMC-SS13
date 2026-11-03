@@ -148,3 +148,23 @@ GLOBAL_LIST_EMPTY_TYPED(custom_updating_encryptkeys, /obj/item/encryptionkey)
 	name = "\improper Pranksters encryption key"
 	channels = list(RADIO_CHANNEL_ERP = TRUE)
 	independent = TRUE
+
+/obj/item/encryptionkey/squadlead/som
+	channels = list(RADIO_CHANNEL_COMMAND_SOM = TRUE)
+
+/obj/item/encryptionkey/engi/som
+	channels = list(RADIO_CHANNEL_ENGINEERING_SOM = TRUE)
+
+/obj/item/encryptionkey/med/som
+	channels = list(RADIO_CHANNEL_MEDICAL_SOM = TRUE)
+
+/obj/item/encryptionkey/general/som
+	name = "\improper SOM general radio encryption key"
+	icon_state = "cypherkey"
+	channels = list(RADIO_CHANNEL_SOM = TRUE)
+
+//Spatial agent
+
+/obj/item/encryptionkey/mcom/som
+	channels = list(RADIO_CHANNEL_SOM = TRUE, RADIO_CHANNEL_COMMAND_SOM = TRUE, RADIO_CHANNEL_ZULU = TRUE, RADIO_CHANNEL_YANKEE = TRUE, RADIO_CHANNEL_XRAY = TRUE, RADIO_CHANNEL_WHISKEY = TRUE, RADIO_CHANNEL_ENGINEERING_SOM = TRUE, RADIO_CHANNEL_MEDICAL_SOM = TRUE)
+	custom_squad_factions = ENCRYPT_CUSTOM_SOM

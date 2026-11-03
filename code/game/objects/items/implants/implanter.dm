@@ -104,3 +104,9 @@
 /obj/item/implanter/jump_mod
 	name = "fortified ankles implant"
 	internal_implant = /obj/item/implant/jump_mod
+
+/obj/effect/supply_drop/jump_mod/Initialize(mapload)
+	. = ..()
+	new /obj/item/implanter/jump_mod(loc)
+	new /obj/item/implanter/jump_mod(loc)
+	return INITIALIZE_HINT_QDEL

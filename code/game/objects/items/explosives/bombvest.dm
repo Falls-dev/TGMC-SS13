@@ -134,3 +134,7 @@
 	if(!can_use_action())
 		return FALSE
 	return TRUE
+
+/obj/item/clothing/suit/storage/marine/boomvest/fast
+
+//AI logic

@@ -1184,3 +1184,9 @@
 
 /obj/item/weapon/gun/shotgun/pump/ksg/support
 	starting_attachment_types = list(/obj/item/attachable/motiondetector, /obj/item/attachable/flashlight/under, /obj/item/attachable/compensator,)
+
+/obj/item/weapon/gun/shotgun/som/back_slot
+	starting_attachment_types = list(/obj/item/attachable/bayonet/som, /obj/item/attachable/magnetic_harness, /obj/item/attachable/flashlight/under)
+
+/obj/item/weapon/gun/shotgun/pump/t35/back_slot
+	equip_slot_flags = ITEM_SLOT_BACK

@@ -675,3 +675,34 @@ GLOBAL_LIST_INIT(slot_str_to_slot, list(
 			return SLOT_IN_HEAD
 		else
 			return 0
+
+#define Z_FLYING (PASS_LOW_STRUCTURE|PASS_FIRE)
+#define UNUSED_RESERVATION_TURF_1 (1<<0)
+#define CAN_REFILL (1<<14)
+#define ITEM_ACTIVATABLE (1<<15)
+#define NOPRESSUREDMAGE (1<<7) //This flag is used on the flags variable for SUIT and HEAD items which stop pressure damage.
+#define ARMOR_IS_REINFORCED (1<<3)
+#define ITEM_SLOT_L_HAND (1<<15) //left hand
+#define ITEM_SLOT_R_HAND (1<<16) //right hand
+#define ITEM_SLOT_SECONDARY (1<<17) //campaign loadouts only
+
+GLOBAL_LIST_INIT(inventory_slots_to_string, list(
+	"[ITEM_SLOT_OCLOTHING]" = "Suit",
+	"[ITEM_SLOT_ICLOTHING]" = "Uniform",
+	"[ITEM_SLOT_GLOVES]" = "Gloves",
+	"[ITEM_SLOT_EYES]" = "Eyes",
+	"[ITEM_SLOT_EARS]" = "Ears",
+	"[ITEM_SLOT_MASK]" = "Mask",
+	"[ITEM_SLOT_HEAD]" = "Head",
+	"[ITEM_SLOT_FEET]" = "Feet",
+	"[ITEM_SLOT_ID]" = "ID",
+	"[ITEM_SLOT_BELT]" = "Belt",
+	"[ITEM_SLOT_BACK]" = "Back",
+	"[ITEM_SLOT_R_POCKET]" = "R pocket",
+	"[ITEM_SLOT_L_POCKET]" = "L pocket",
+	"[ITEM_SLOT_SUITSTORE]" = "Suit storage",
+	"[ITEM_SLOT_HANDCUFF]" = "Handcuffs",
+	"[ITEM_SLOT_L_HAND]" = "Left hand",
+	"[ITEM_SLOT_R_HAND]" = "Right hand",
+	"[ITEM_SLOT_SECONDARY]" = "Secondary",
+))

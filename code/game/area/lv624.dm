@@ -491,3 +491,6 @@
 	icon_state = "landingzone2"
 	area_flags = NO_DROPPOD
 	minimap_color = MINIMAP_AREA_LZ
+
+/area/lv624/ground/caves/west1/garbledradio
+	ceiling = CEILING_UNDERGROUND
