@@ -124,13 +124,6 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /turf/open/floor/asteroidfloor,
 /area/bigredv2/outside/general_offices)
-"eP" = (
-/obj/effect/landmark/excavation_site_spawner,
-/obj/structure/barricade/wood{
-	dir = 8
-	},
-/turf/open/floor,
-/area/bigredv2/outside/general_offices)
 "fi" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /turf/open/floor,
@@ -289,7 +282,6 @@
 /obj/structure/sign/safety/EVA{
 	dir = 1
 	},
-/obj/effect/landmark/excavation_site_spawner,
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/general_offices)
 "nh" = (
@@ -439,11 +431,6 @@
 "rN" = (
 /obj/effect/spawner/random/misc/structure/broken_reinforced_window/colonyspawn,
 /turf/open/floor/plating,
-/area/bigredv2/outside/general_offices)
-"rW" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor,
 /area/bigredv2/outside/general_offices)
 "se" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
@@ -1400,7 +1387,7 @@ OU
 ZT
 Wv
 XG
-eP
+Ue
 hK
 Sr
 XG
@@ -1426,7 +1413,7 @@ kI
 me
 YR
 XG
-rW
+Wv
 Sq
 hT
 JR

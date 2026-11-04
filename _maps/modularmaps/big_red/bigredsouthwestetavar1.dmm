@@ -196,11 +196,6 @@
 /obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/nanotrasen_lab/inside)
-"qx" = (
-/obj/effect/landmark/xeno_resin_wall,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/south)
 "qR" = (
 /turf/open/floor/tile/dark/red2,
 /area/bigredv2/outside/nanotrasen_lab/inside)
@@ -424,15 +419,6 @@
 /obj/effect/ai_node,
 /turf/open/floor/plating,
 /area/bigredv2/outside/nanotrasen_lab/inside)
-"Nj" = (
-/obj/structure/bed/chair{
-	dir = 4
-	},
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/tile/dark/red2{
-	dir = 4
-	},
-/area/bigredv2/outside/nanotrasen_lab/inside)
 "NI" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/plating/ground/mars/random/cave/rock,
@@ -458,10 +444,6 @@
 "Qr" = (
 /turf/closed/wall,
 /area/bigredv2/outside/nanotrasen_lab/inside)
-"Ra" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/south)
 "Rw" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/plating,
@@ -2011,7 +1993,7 @@ uA
 gE
 gE
 gE
-qx
+gE
 gE
 tP
 tP
@@ -2471,7 +2453,7 @@ uA
 Is
 Yi
 HR
-Ra
+Is
 Is
 Is
 Is
@@ -2777,7 +2759,7 @@ Vx
 Qr
 Ti
 mA
-Nj
+Ti
 Qr
 Ti
 mA

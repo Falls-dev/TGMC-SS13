@@ -30,7 +30,6 @@
 /obj/effect/turf_decal/warning_stripes/thin{
 	dir = 4
 	},
-/obj/effect/landmark/excavation_site_spawner,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/engine,
 /area/lv624/lazarus/atmos)
@@ -187,7 +186,6 @@
 /area/lv624/lazarus/atmos)
 "qf" = (
 /obj/item/stool,
-/obj/effect/landmark/excavation_site_spawner,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/dark,
 /area/lv624/lazarus/atmos)

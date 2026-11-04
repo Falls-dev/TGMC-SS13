@@ -117,11 +117,6 @@
 /obj/structure/window_frame/colony,
 /turf/open/floor/plating,
 /area/bigredv2/outside/general_store)
-"hB" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/misc/handcuffs/cable/cyan,
-/turf/open/floor,
-/area/bigredv2/outside/general_store)
 "hX" = (
 /turf/open/floor,
 /area/bigredv2/outside/general_store)
@@ -731,7 +726,6 @@
 /obj/structure/table,
 /obj/item/reagent_containers/food/drinks/flask/vacuumflask,
 /obj/item/reagent_containers/food/drinks/flask,
-/obj/effect/landmark/excavation_site_spawner,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/bigredv2/outside/general_store)
 "Qa" = (
@@ -976,7 +970,7 @@ Ev
 Ns
 Jm
 Ty
-hB
+mk
 BL
 SM
 "}

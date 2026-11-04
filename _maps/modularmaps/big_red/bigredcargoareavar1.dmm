@@ -115,10 +115,6 @@
 	},
 /turf/open/floor/plating,
 /area/bigredv2/outside/nw)
-"gB" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating,
-/area/bigredv2/outside/nw)
 "gP" = (
 /obj/structure/cargo_container/horizontal,
 /turf/open/floor/plating,
@@ -458,11 +454,6 @@
 /obj/effect/ai_node,
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/bigredv2/caves/northwest)
-"GJ" = (
-/obj/effect/landmark/excavation_site_spawner,
-/obj/effect/landmark/weed_node,
-/turf/open/floor/plating,
-/area/bigredv2/outside/nw)
 "Ha" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/plating/ground/mars/random/dirt,
@@ -1276,7 +1267,7 @@ em
 em
 em
 em
-gB
+em
 em
 em
 em
@@ -1877,7 +1868,7 @@ em
 Yn
 em
 em
-GJ
+Pe
 UW
 HC
 JP

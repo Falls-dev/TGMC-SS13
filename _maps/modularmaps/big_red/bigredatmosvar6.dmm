@@ -152,11 +152,6 @@
 /obj/effect/spawner/random/weaponry/ammo/sidearm,
 /turf/open/floor/plating/ground/mars/random/dirt,
 /area/bigredv2/outside/se)
-"lR" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/s)
 "lS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/weed_node,
@@ -444,10 +439,6 @@
 "BV" = (
 /turf/closed/wall/r_wall,
 /area/bigredv2/caves/rock)
-"Cd" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/outside/s)
 "CB" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
@@ -921,7 +912,7 @@ CB
 CS
 qo
 Bc
-Cd
+rV
 rV
 rV
 rO
@@ -1017,7 +1008,7 @@ FE
 OK
 OK
 Qv
-lR
+Qv
 OK
 OK
 OK

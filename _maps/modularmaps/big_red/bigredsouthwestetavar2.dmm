@@ -81,10 +81,6 @@
 /obj/effect/landmark/fog_blocker/xeno_spawn,
 /turf/closed/mineral/smooth/bigred,
 /area/bigredv2/caves/rock)
-"iZ" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/south)
 "ju" = (
 /obj/effect/ai_node,
 /turf/open/floor/tile/dark,
@@ -301,20 +297,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/ai_node,
 /turf/open/floor/tile/dark/red2/corner,
-/area/bigredv2/outside/nanotrasen_lab/inside)
-"IU" = (
-/obj/effect/landmark/xeno_resin_wall,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves/south)
-"Jq" = (
-/obj/structure/bed/chair{
-	dir = 4
-	},
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/tile/dark/red2{
-	dir = 4
-	},
 /area/bigredv2/outside/nanotrasen_lab/inside)
 "JI" = (
 /obj/item/target,
@@ -1938,7 +1920,7 @@ EF
 bC
 bC
 bC
-IU
+bC
 bC
 RD
 RD
@@ -2398,7 +2380,7 @@ EF
 EF
 ym
 eC
-iZ
+uH
 uH
 uH
 uH
@@ -2704,7 +2686,7 @@ Uo
 NW
 xk
 tQ
-Jq
+xk
 NW
 xk
 tQ

@@ -216,10 +216,6 @@
 "kJ" = (
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/bigredv2/caves/southwest)
-"kS" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
 "kT" = (
 /obj/machinery/light{
 	dir = 4
@@ -492,11 +488,6 @@
 /obj/effect/ai_node,
 /turf/open/floor,
 /area/bigredv2/outside/engineering)
-"wv" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor,
-/area/bigredv2/outside/engineering)
 "wL" = (
 /obj/effect/spawner/random/misc/structure/broken_reinforced_window/colonyspawn,
 /obj/machinery/door/poddoor/mainship{
@@ -736,10 +727,6 @@
 /obj/structure/cable,
 /obj/effect/ai_node,
 /turf/open/floor,
-/area/bigredv2/outside/engineering)
-"HX" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating,
 /area/bigredv2/outside/engineering)
 "Ib" = (
 /turf/closed/wall/r_wall,
@@ -1351,7 +1338,7 @@ sf
 lU
 lU
 lU
-kS
+lU
 lU
 wL
 Hk
@@ -1400,7 +1387,7 @@ ix
 Ib
 "}
 (13,1,1) = {"
-wv
+nZ
 CS
 GG
 Ri
@@ -1541,7 +1528,7 @@ Hk
 Hk
 Hk
 ix
-HX
+ix
 Ib
 "}
 (18,1,1) = {"
@@ -1640,7 +1627,7 @@ HF
 nz
 nz
 nZ
-kS
+lU
 nZ
 lU
 wL

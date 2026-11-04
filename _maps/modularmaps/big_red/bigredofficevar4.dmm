@@ -1333,10 +1333,6 @@
 	dir = 4
 	},
 /area/bigredv2/outside/office_complex)
-"WQ" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/tile/whiteyellow/full,
-/area/bigredv2/outside/office_complex)
 "Xo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/ammo_casing/bullet,
@@ -1957,7 +1953,7 @@ es
 VR
 Zu
 bQ
-WQ
+Yq
 tQ
 nZ
 nR

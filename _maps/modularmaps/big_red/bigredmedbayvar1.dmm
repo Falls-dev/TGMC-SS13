@@ -122,13 +122,6 @@
 /obj/item/bodybag,
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/medical)
-"dN" = (
-/obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/tile/white,
-/area/bigredv2/outside/medical)
 "dZ" = (
 /obj/effect/ai_node,
 /turf/open/floor/tile/green/whitegreen{
@@ -1254,7 +1247,6 @@
 /area/bigredv2/outside/medical)
 "GF" = (
 /obj/machinery/light,
-/obj/effect/landmark/excavation_site_spawner,
 /turf/open/floor/tile/green/whitegreen{
 	dir = 6
 	},
@@ -1586,10 +1578,6 @@
 /obj/item/reagent_containers/pill/happy,
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/medical)
-"Qj" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/tile/dark,
-/area/bigredv2/outside/medical)
 "Qt" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/green/whitegreen{
@@ -1803,7 +1791,6 @@
 "Wx" = (
 /obj/machinery/optable,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/organ/heart/prosthetic,
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/medical)
 "WQ" = (
@@ -2555,7 +2542,7 @@ Hm
 dn
 hn
 WQ
-dN
+yk
 yk
 yk
 ZM
@@ -2770,7 +2757,7 @@ ek
 (31,1,1) = {"
 Ip
 aF
-Qj
+RV
 RV
 RV
 aF

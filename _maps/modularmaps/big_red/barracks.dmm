@@ -152,7 +152,6 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
-/obj/effect/landmark/excavation_site_spawner,
 /obj/effect/landmark/weed_node,
 /obj/structure/cable,
 /turf/open/floor/tile/dark,
@@ -289,10 +288,6 @@
 /turf/open/floor/tile/dark/blue2{
 	dir = 4
 	},
-/area/bigredv2/outside/admin_building)
-"mU" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/tile/dark,
 /area/bigredv2/outside/admin_building)
 "nt" = (
 /obj/machinery/computer/station_alert,
@@ -729,7 +724,6 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
-/obj/effect/landmark/excavation_site_spawner,
 /turf/open/floor/tile/dark/blue2/corner{
 	dir = 4
 	},
@@ -1122,7 +1116,6 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 6
 	},
-/obj/effect/landmark/excavation_site_spawner,
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/admin_building)
 "SW" = (
@@ -1396,7 +1389,7 @@ ep
 lq
 cD
 IN
-mU
+cD
 jj
 ep
 ep

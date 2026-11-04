@@ -366,10 +366,6 @@
 /obj/structure/flora/jungle/plantbot1/alien,
 /turf/open/liquid/water/river/autosmooth,
 /area/lv624/ground/caves/central2)
-"AF" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/caves/central2)
 "Bi" = (
 /obj/effect/turf_decal/tile/full/black,
 /obj/effect/landmark/xeno_silo_spawn,
@@ -640,10 +636,6 @@
 /obj/effect/spawner/random/food_or_drink/drink_alcohol_bottle,
 /turf/open/floor/dark2,
 /area/lv624/ground/caves/central2)
-"TZ" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/caves/central1)
 "Uc" = (
 /obj/effect/landmark/corpsespawner/security,
 /obj/effect/decal/cleanable/blood/drip,
@@ -1091,7 +1083,7 @@ aa
 lx
 lx
 lx
-AF
+lx
 lx
 GP
 aa
@@ -1771,7 +1763,7 @@ aa
 aa
 aa
 lx
-AF
+lx
 MN
 lx
 lx
@@ -2371,7 +2363,7 @@ mR
 lx
 lx
 lx
-AF
+lx
 lx
 lx
 lx
@@ -2912,7 +2904,7 @@ aa
 aa
 GP
 lx
-AF
+lx
 lx
 lx
 jx
@@ -3334,7 +3326,7 @@ MM
 aa
 XE
 XE
-TZ
+XE
 XE
 XE
 aa

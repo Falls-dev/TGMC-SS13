@@ -175,7 +175,6 @@
 /obj/structure/sign/safety/EVA{
 	dir = 1
 	},
-/obj/effect/landmark/excavation_site_spawner,
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/general_offices)
 "jG" = (
@@ -821,10 +820,6 @@
 	},
 /turf/open/floor,
 /area/bigredv2/outside/general_offices)
-"NV" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor,
-/area/bigredv2/outside/general_offices)
 "Oa" = (
 /turf/open/floor/marking/asteroidwarning,
 /area/bigredv2/outside/ne)
@@ -941,11 +936,6 @@
 "RQ" = (
 /obj/effect/spawner/random/misc/structure/broken_window/colonyspawn,
 /turf/open/floor/plating,
-/area/bigredv2/outside/general_offices)
-"RW" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor,
 /area/bigredv2/outside/general_offices)
 "Sd" = (
 /obj/machinery/vending/tool,
@@ -1306,7 +1296,7 @@ ck
 IS
 lz
 Eb
-NV
+Iw
 to
 Iw
 Eb
@@ -1332,7 +1322,7 @@ IH
 lz
 DT
 Eb
-RW
+lz
 fz
 Iw
 IQ

@@ -14,10 +14,6 @@
 /obj/effect/landmark/weed_node,
 /turf/open/floor,
 /area/lv624/ground/caves/central1/garbledradio)
-"eb" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
-/area/lv624/ground/caves/central2)
 "eE" = (
 /obj/structure/rack,
 /obj/item/tool/shovel,
@@ -114,10 +110,6 @@
 /turf/open/floor/tile/vault{
 	dir = 8
 	},
-/area/lv624/ground/caves/central1)
-"HV" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/plating/ground/dirt,
 /area/lv624/ground/caves/central1)
 "IQ" = (
 /obj/structure/rack,
@@ -551,7 +543,7 @@ bj
 kc
 kc
 kc
-eb
+kc
 kc
 kc
 kc
@@ -1831,7 +1823,7 @@ LK
 LK
 kc
 kc
-eb
+kc
 kc
 kc
 kc
@@ -2372,7 +2364,7 @@ bj
 bj
 kc
 kc
-eb
+kc
 kc
 LL
 kc
@@ -2794,7 +2786,7 @@ oc
 bj
 Ux
 Ux
-HV
+Ux
 Ux
 Ux
 bj

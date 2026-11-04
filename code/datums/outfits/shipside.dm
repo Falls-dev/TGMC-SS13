@@ -253,6 +253,9 @@
 	suit_contents = list(
 		/obj/item/reagent_containers/glass/bottle/lemoline/doctor = 1,
 	)
+	backpack_contents = list(
+		/obj/item/pinpointer/archaeology = 1,
+	)
 
 /datum/outfit/job/liaison
 	name = CORPORATE_LIAISON

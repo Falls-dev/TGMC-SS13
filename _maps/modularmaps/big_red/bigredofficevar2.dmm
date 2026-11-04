@@ -157,12 +157,6 @@
 	dir = 1
 	},
 /area/bigredv2/outside/e)
-"dP" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/tile/red/redtaupecorner{
-	dir = 4
-	},
-/area/bigredv2/outside/office_complex)
 "dV" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/marking/asteroidwarning{
@@ -1528,10 +1522,6 @@
 /obj/effect/landmark/corpsespawner/security,
 /turf/open/floor,
 /area/bigredv2/outside/office_complex)
-"Vc" = (
-/obj/effect/landmark/excavation_site_spawner,
-/turf/open/floor/mainship/mono,
-/area/bigredv2/outside/office_complex)
 "Vv" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/mainship/generic{
@@ -1977,7 +1967,7 @@ ow
 nc
 uh
 vy
-Vc
+Yr
 FF
 Yr
 gN
@@ -2228,7 +2218,7 @@ EA
 mv
 WJ
 Tx
-dP
+vO
 Yd
 Tx
 Tx

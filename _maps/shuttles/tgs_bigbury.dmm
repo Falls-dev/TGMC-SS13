@@ -564,6 +564,10 @@
 	},
 /turf/open/floor/mainship/mono,
 /area/shuttle/canterbury)
+"jg" = (
+/obj/effect/landmark/start/job/crash/researcher,
+/turf/open/floor/mainship/sterile/dark,
+/area/shuttle/canterbury/medical)
 "jo" = (
 /obj/machinery/light{
 	dir = 4
@@ -1323,7 +1327,7 @@ aI
 aA
 aA
 aA
-aA
+jg
 ap
 ah
 "}
