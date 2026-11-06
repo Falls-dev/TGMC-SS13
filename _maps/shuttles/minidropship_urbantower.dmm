@@ -18,6 +18,10 @@
 	},
 /turf/template_noop,
 /area/shuttle/minidropship)
+"c" = (
+/obj/machinery/vending/nanoammo/directional/west,
+/turf/open/floor/plating/plating_catwalk,
+/area/shuttle/minidropship)
 "i" = (
 /mob/living/simple_animal/pig/mini{
 	name = "Yadot"
@@ -276,7 +280,7 @@ s
 D
 I
 D
-D
+c
 L
 "}
 (5,1,1) = {"

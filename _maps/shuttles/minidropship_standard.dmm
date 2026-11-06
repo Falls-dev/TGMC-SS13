@@ -42,6 +42,9 @@
 	},
 /area/shuttle/minidropship)
 "j" = (
+/obj/machinery/vending/nanoammo/directional/south{
+	pixel_x = -5
+	},
 /obj/machinery/door_control{
 	id = "minidropship_podlock";
 	name = "inner door-control"

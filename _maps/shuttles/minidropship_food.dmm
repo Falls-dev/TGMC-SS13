@@ -14,6 +14,9 @@
 /turf/open/floor/iron/white/textured_half,
 /area/shuttle/minidropship)
 "d" = (
+/obj/machinery/vending/nanoammo/directional/west{
+	pixel_y = -7
+	},
 /obj/machinery/door_control{
 	dir = 8;
 	id = "minidropship_podlock";

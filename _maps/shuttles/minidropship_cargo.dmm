@@ -222,6 +222,7 @@
 	dir = 1
 	},
 /obj/item/stack/barbed_wire/small_stack,
+/obj/machinery/vending/nanoammo/directional/east,
 /turf/open/floor/mainship/mono,
 /area/shuttle/minidropship)
 "Z" = (

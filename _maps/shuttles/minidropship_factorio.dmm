@@ -11,6 +11,10 @@
 /obj/effect/spawner/random/engineering/structure/tank/fuelweighted,
 /turf/open/floor/plating/plating_catwalk,
 /area/shuttle/minidropship)
+"d" = (
+/obj/machinery/vending/nanoammo/directional/west,
+/turf/open/floor/mainship/mono,
+/area/shuttle/minidropship)
 "e" = (
 /obj/machinery/holopad,
 /turf/open/floor/plating/plating_catwalk,
@@ -235,7 +239,7 @@ q
 l
 q
 B
-B
+d
 X
 "}
 (6,1,1) = {"

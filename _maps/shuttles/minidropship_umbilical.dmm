@@ -10,6 +10,13 @@
 "b" = (
 /turf/template_noop,
 /area/template_noop)
+"c" = (
+/obj/machinery/vending/nanoammo/directional/north,
+/obj/structure/barricade/folding{
+	dir = 8
+	},
+/turf/open/floor/plating/plating_catwalk,
+/area/shuttle/minidropship)
 "d" = (
 /obj/machinery/cic_maptable,
 /obj/effect/turf_decal/tile/transparent/dark_blue/full,
@@ -264,7 +271,7 @@ X
 F
 s
 l
-l
+c
 F
 X
 R

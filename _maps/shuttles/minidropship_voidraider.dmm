@@ -125,6 +125,7 @@
 /obj/machinery/door/window{
 	dir = 2
 	},
+/obj/machinery/vending/nanoammo/directional/west,
 /turf/open/floor/plating/plating_catwalk,
 /area/shuttle/minidropship)
 "aK" = (
