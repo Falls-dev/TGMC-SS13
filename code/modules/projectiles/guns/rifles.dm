@@ -3311,8 +3311,6 @@
 	reload_sound = 'sound/weapons/guns/interact/lok_reload.ogg'
 	cocked_sound = 'sound/weapons/guns/interact/lok_cocked.ogg'
 	caliber = CALIBER_GUIDE_ROUNDS
-	gun_firemode = GUN_FIREMODE_SEMIAUTO
-	gun_firemode_list = list(GUN_FIREMODE_SEMIAUTO)
 	max_shells = 36
 	default_ammo_type = /obj/item/ammo_magazine/rifle/lok
 	allowed_ammo_types = list(/obj/item/ammo_magazine/rifle/lok)
