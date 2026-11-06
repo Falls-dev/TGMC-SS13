@@ -27,6 +27,11 @@
 
 /obj/structure/teleporter_array/Initialize(mapload)
 	. = ..()
+	var/datum/game_mode/hvh/campaign/campaign = SSticker?.mode
+	if(istype(campaign))
+		targetted_zlevel = campaign.current_mission?.mission_state != MISSION_STATE_FINISHED ? campaign.current_mission?.mission_z_level?.z_value : null
+		if(teleporter_status != TELEPORTER_ARRAY_INOPERABLE)
+			teleporter_status = TELEPORTER_ARRAY_INACTIVE
 	interaction_actions = list()
 	interaction_actions += new /datum/action/innate/set_teleport_target(src)
 	interaction_actions += new /datum/action/innate/activate_teleporter(src)
@@ -80,10 +85,10 @@
 /obj/structure/teleporter_array/proc/change_targeted_z(datum/source, new_z)
 	SIGNAL_HANDLER
 	remove_user()
-	if(isnum(new_z))
-		targetted_zlevel = new_z
+	targetted_zlevel = isnum(new_z) ? new_z : null
 	target_turf = null
-	teleporter_status = TELEPORTER_ARRAY_INACTIVE
+	if(teleporter_status != TELEPORTER_ARRAY_INOPERABLE)
+		teleporter_status = TELEPORTER_ARRAY_INACTIVE
 
 //starts the teleportation process
 /obj/structure/teleporter_array/proc/activate()
@@ -112,7 +117,7 @@
 
 	teleporter_status = TELEPORTER_ARRAY_IN_USE
 	addtimer(CALLBACK(src, PROC_REF(do_startup)), windup - 1.5 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(do_teleport), turfs_affected), windup)
+	addtimer(CALLBACK(src, PROC_REF(do_teleport), turfs_affected, target_turf), windup)
 	playsound(src, 'sound/magic/lightning_chargeup.ogg', 75) //tele charge sound
 	charges --
 
@@ -122,26 +127,23 @@
 	visible_message(span_danger("You feel a vibration build in the air as the teleporter array comes to life."))
 
 ///does the actual teleport
-/obj/structure/teleporter_array/proc/do_teleport(list/turfs_affected)
-	if(teleporter_status == TELEPORTER_ARRAY_INOPERABLE || teleporter_status == TELEPORTER_ARRAY_INACTIVE)
+/obj/structure/teleporter_array/proc/do_teleport(list/turfs_affected, turf/destination)
+	if(teleporter_status != TELEPORTER_ARRAY_IN_USE || !destination || destination.z != targetted_zlevel)
 		return cleanup(turfs_affected)
 
 	teleporter_status = TELEPORTER_ARRAY_READY
 	cleanup(turfs_affected)
-	if(!target_turf)
-		return
-
-	var/list/destination_mobs = cheap_get_living_near(target_turf, 9)
+	var/list/destination_mobs = cheap_get_living_near(destination, 9)
 	for(var/mob/living/victim AS in destination_mobs)
 		victim.adjust_stagger(3 SECONDS)
 		victim.add_slowdown(3)
 		to_chat(victim, span_warning("You feel nauseous as reality warps around you!"))
 
-	playsound(target_turf, 'sound/magic/lightningbolt.ogg', 75, 0)
+	playsound(destination, 'sound/magic/lightningbolt.ogg', 75, 0)
 	playsound(src, 'sound/magic/lightningbolt.ogg', 75, 0)
-	new /obj/effect/temp_visual/teleporter_array(target_turf)
+	new /obj/effect/temp_visual/teleporter_array(destination)
 
-	var/list/exit_turfs = RANGE_TURFS(range, target_turf)
+	var/list/exit_turfs = RANGE_TURFS(range, destination)
 	for(var/turf/affected_turf AS in turfs_affected)
 		for(var/atom/movable/AM AS in affected_turf)
 			if(AM.anchored)
@@ -176,42 +178,38 @@
 	name = "Set teleportation target"
 	action_icon = 'icons/mob/actions/actions_mecha.dmi'
 	action_icon_state = "mech_zoom_on"
-	///Locks activating this action again while choosing to prevent signal shenanigan runtimes.
-	var/choosing = FALSE
+	///Map currently polling the operator for a destination.
+	var/atom/movable/screen/minimap/selection_map
 
 /datum/action/innate/set_teleport_target/can_use_action(silent, override_flags, selecting)
-	if(choosing)
+	if(selection_map)
 		return FALSE
 	return ..()
 
 /datum/action/innate/set_teleport_target/Activate()
 	. = ..()
 	var/obj/structure/teleporter_array/teleporter = target
-	if(!teleporter.targetted_zlevel)
+	var/selected_z = teleporter.targetted_zlevel
+	if(!SSminimaps.minimaps_by_z["[selected_z]"]?.hud_image)
 		to_chat(owner, span_danger("No active combat zone detected."))
 		return
-	var/atom/movable/screen/minimap/map = SSminimaps.fetch_minimap_object(teleporter.targetted_zlevel, GLOB.faction_to_minimap_flag[owner.faction])
-	owner.client.screen += map
-	choosing = TRUE
-	var/list/polled_coords = map.get_coords_from_click(owner)
-	if(!polled_coords)
-		owner?.client?.screen -= map
-		choosing = FALSE
+	var/mob/operator = owner
+	selection_map = SSminimaps.fetch_minimap_object(selected_z, GLOB.faction_to_minimap_flag[operator.faction])
+	operator.client.screen += selection_map
+	var/list/polled_coords = selection_map.get_coords_from_click(operator)
+	operator.client?.screen -= selection_map
+	selection_map = null
+	if(!polled_coords || owner != operator || QDELETED(teleporter) || teleporter.targetted_zlevel != selected_z)
 		return
-	var/turf/chosen_turf = locate(polled_coords[1], polled_coords[2], teleporter.targetted_zlevel)
-	if(chosen_turf.density || isspaceturf(chosen_turf))
+	var/turf/chosen_turf = locate(polled_coords[1], polled_coords[2], selected_z)
+	if(!chosen_turf || chosen_turf.density || isspaceturf(chosen_turf))
 		to_chat(owner, "Invalid location selected")
 	else
 		teleporter.target_turf = chosen_turf
 		to_chat(owner, span_danger("Target location locked in at: [chosen_turf.loc]"))
-	owner.client?.screen -= map
-	choosing = FALSE
 
 /datum/action/innate/set_teleport_target/remove_action(mob/M)
-	if(choosing)
-		var/obj/structure/teleporter_array/teleporter = target
-		var/atom/movable/screen/minimap/map = SSminimaps.fetch_minimap_object(teleporter.targetted_zlevel, GLOB.faction_to_minimap_flag[owner.faction])
-		owner?.client?.screen -= map
-		map.UnregisterSignal(owner, COMSIG_MOB_CLICKON)
-		choosing = FALSE
+	if(selection_map && owner)
+		owner.client?.screen -= selection_map
+		selection_map.stop_polling[owner] = TRUE
 	return ..()

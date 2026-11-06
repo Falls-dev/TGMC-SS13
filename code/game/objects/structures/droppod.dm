@@ -49,10 +49,14 @@ GLOBAL_LIST_INIT(blocked_droppod_tiles, typecacheof(list(/turf/open/space/transi
 	interaction_actions = list()
 	interaction_actions += new /datum/action/innate/set_drop_target(src)
 	interaction_actions += new /datum/action/innate/launch_droppod(src)
-	RegisterSignals(SSdcs, list(COMSIG_GLOB_DROPSHIP_HIJACKED, COMSIG_GLOB_CAMPAIGN_MISSION_ENDED, COMSIG_GLOB_CAMPAIGN_DISABLE_DROPPODS), PROC_REF(disable_launching))
+	RegisterSignals(SSdcs, list(COMSIG_GLOB_DROPSHIP_HIJACKED, COMSIG_GLOB_CAMPAIGN_DISABLE_DROPPODS), PROC_REF(disable_launching))
+	RegisterSignal(SSdcs, COMSIG_GLOB_CAMPAIGN_MISSION_ENDED, PROC_REF(on_campaign_mission_ended))
 	RegisterSignal(SSdcs, COMSIG_GLOB_CAMPAIGN_ENABLE_DROPPODS, PROC_REF(allow_drop))
 	RegisterSignal(SSdcs, COMSIG_GLOB_CAMPAIGN_MISSION_LOADED, PROC_REF(change_targeted_z))
 	RegisterSignals(SSdcs, list(COMSIG_GLOB_OPEN_TIMED_SHUTTERS_LATE, COMSIG_GLOB_OPEN_SHUTTERS_EARLY, COMSIG_GLOB_TADPOLE_LANDED_OUT_LZ), PROC_REF(allow_drop))
+	var/datum/game_mode/hvh/campaign/campaign = SSticker?.mode
+	if(istype(campaign))
+		target_z = campaign.current_mission?.mission_state != MISSION_STATE_FINISHED ? campaign.current_mission?.mission_z_level?.z_value : null
 	GLOB.droppod_list += src
 	update_icon()
 	if((!locate(/obj/structure/drop_pod_launcher) in get_turf(src)) && mapload)
@@ -150,6 +154,8 @@ GLOBAL_LIST_INIT(blocked_droppod_tiles, typecacheof(list(/turf/open/space/transi
 ///returns boolean if the currently set target/optionally passed turf are valid to drop to
 /obj/structure/droppod/proc/checklanding(mob/user, optional_turf)
 	var/turf/target = optional_turf ? optional_turf : locate(target_x, target_y, target_z)
+	if(!target)
+		return FALSE
 	if(target.density)
 		if(user)
 			balloon_alert(user, "Dense area")
@@ -239,7 +245,7 @@ GLOBAL_LIST_INIT(blocked_droppod_tiles, typecacheof(list(/turf/open/space/transi
 	addtimer(CALLBACK(src, PROC_REF(finish_drop), user), DROPPOD_TRANSIT_TIME)
 	forceMove(pick(reserved_area.reserved_turfs))
 	new /area/arrival(loc)	//adds a safezone so we dont suffocate on the way down, cleaned up with reserved turfs
-	var/turf/target = locate(target_x, target_y, 2)
+	var/turf/target = locate(target_x, target_y, target_z)
 	var/obj/effect/overlay/blinking_laser/marine/pod_warning/laserpod = new /obj/effect/overlay/blinking_laser/marine/pod_warning(target)
 	laserpod.dir = target
 	QDEL_IN(laserpod, DROPPOD_TRANSIT_TIME + 1)
@@ -519,38 +525,39 @@ GLOBAL_LIST_INIT(blocked_droppod_tiles, typecacheof(list(/turf/open/space/transi
 	name = "Set drop pod target"
 	action_icon = 'icons/mecha/actions_mecha.dmi'
 	action_icon_state = "mech_zoom_on"
-	///Locks activating this action again while choosing to prevent signal shenanigan runtimes.
-	var/choosing = FALSE
+	///Map currently polling the occupant for a destination.
+	var/atom/movable/screen/minimap/selection_map
 
 /datum/action/innate/set_drop_target/can_use_action()
-	if(choosing)
+	if(selection_map)
 		return FALSE
 	return ..()
 
 /datum/action/innate/set_drop_target/Activate()
 	. = ..()
 	var/obj/structure/droppod/pod = target
-	if(!pod.target_z)
+	var/selected_z = pod.target_z
+	if(!SSminimaps.minimaps_by_z["[selected_z]"]?.hud_image)
 		to_chat(owner, span_danger("No active combat zone detected."))
 		return
-	var/atom/movable/screen/minimap/map = SSminimaps.fetch_minimap_object(pod.target_z, MINIMAP_FLAG_MARINE)
-	owner.client.screen += map
-	choosing = TRUE
-	var/list/polled_coords = map.get_coords_from_click(owner)
-	owner?.client?.screen -= map
-	choosing = FALSE
-	if(!polled_coords)
+	var/mob/operator = owner
+	selection_map = SSminimaps.fetch_minimap_object(selected_z, MINIMAP_FLAG_MARINE)
+	operator.client.screen += selection_map
+	var/list/polled_coords = selection_map.get_coords_from_click(operator)
+	operator.client?.screen -= selection_map
+	selection_map = null
+	if(!polled_coords || owner != operator || QDELETED(pod) || pod.target_z != selected_z)
 		return
 	pod.set_target(polled_coords[1], polled_coords[2])
 
 /datum/action/innate/set_drop_target/remove_action(mob/M)
-	if(choosing)
-		var/obj/structure/droppod/pod = target
-		var/atom/movable/screen/minimap/map = SSminimaps.fetch_minimap_object(pod.target_z, MINIMAP_FLAG_MARINE)
-		owner?.client?.screen -= map
-		map.UnregisterSignal(owner, COMSIG_MOB_CLICKON)
-		choosing = FALSE
+	cancel_selection()
 	return ..()
+
+/datum/action/innate/set_drop_target/proc/cancel_selection()
+	if(selection_map && owner)
+		owner.client?.screen -= selection_map
+		selection_map.stop_polling[owner] = TRUE
 
 /obj/structure/drop_pod_launcher
 	name = "Zeus pod launch bay"
@@ -611,10 +618,19 @@ GLOBAL_LIST_INIT(blocked_droppod_tiles, typecacheof(list(/turf/open/space/transi
 
 /obj/structure/droppod/proc/change_targeted_z(datum/source, new_z)
 	SIGNAL_HANDLER
+	if(drop_state != DROPPOD_READY)
+		return
+	for(var/datum/action/innate/set_drop_target/selector in interaction_actions)
+		selector.cancel_selection()
 	for(var/mob/dropper AS in buckled_mobs)
 		unbuckle_mob(dropper)
 	target_z = new_z
 	target_x = 1
 	target_y = 1
+
+/obj/structure/droppod/proc/on_campaign_mission_ended(datum/source)
+	SIGNAL_HANDLER
+	disable_launching()
+	change_targeted_z(source, null)
 
 ///returns boolean if the currently set target/optionally passed turf are valid to drop to

@@ -8,7 +8,14 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	RADIO_CHANNEL_ALPHA = RADIO_TOKEN_ALPHA,
 	RADIO_CHANNEL_BRAVO = RADIO_TOKEN_BRAVO,
 	RADIO_CHANNEL_CHARLIE = RADIO_TOKEN_CHARLIE,
-	RADIO_CHANNEL_DELTA = RADIO_TOKEN_DELTA
+	RADIO_CHANNEL_DELTA = RADIO_TOKEN_DELTA,
+	RADIO_CHANNEL_COMMAND_SOM = RADIO_TOKEN_COMMAND,
+	RADIO_CHANNEL_MEDICAL_SOM = RADIO_TOKEN_MEDICAL,
+	RADIO_CHANNEL_ENGINEERING_SOM = RADIO_TOKEN_ENGINEERING,
+	RADIO_CHANNEL_ZULU = RADIO_TOKEN_ALPHA,
+	RADIO_CHANNEL_YANKEE = RADIO_TOKEN_BRAVO,
+	RADIO_CHANNEL_XRAY = RADIO_TOKEN_CHARLIE,
+	RADIO_CHANNEL_WHISKEY = RADIO_TOKEN_DELTA,
 ))
 
 /obj/item/radio/headset
@@ -101,7 +108,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 						avail_chans += "use [MODE_TOKEN_DEPARTMENT] or [GLOB.channel_tokens[channels[i]]] for [lowertext(channels[i])]"
 					else
 						avail_chans += "use [MODE_TOKEN_DEPARTMENT] for [lowertext(channels[i])]"
-				else
+				else if(GLOB.channel_tokens[channels[i]])
 					avail_chans += "use [GLOB.channel_tokens[channels[i]]] for [lowertext(channels[i])]"
 		. += span_notice("A small screen on the headset displays the following available frequencies:\n[english_list(avail_chans)].")
 
