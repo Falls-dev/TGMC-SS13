@@ -8,6 +8,9 @@
 "c" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship,
 /obj/machinery/camera/autoname/mainship/dropship_two,
+/mob/living/simple_animal/pig/mini{
+	name = "Victor Barinov"
+	},
 /turf/open/floor/iron/white/textured_half,
 /area/shuttle/minidropship)
 "d" = (

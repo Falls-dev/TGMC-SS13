@@ -293,6 +293,9 @@
 /obj/structure/bed/chair/dropship/pilot{
 	dir = 1
 	},
+/mob/living/simple_animal/pig/mini{
+	name = "Basia Dreiphus"
+	},
 /turf/open/floor/carpet,
 /area/shuttle/minidropship)
 "U" = (

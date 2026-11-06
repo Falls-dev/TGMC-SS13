@@ -156,6 +156,9 @@
 /obj/structure/bed/chair/dropship/pilot{
 	dir = 1
 	},
+/mob/living/simple_animal/pig/mini{
+	name = "Alexander"
+	},
 /turf/open/floor/plating/plating_catwalk,
 /area/shuttle/minidropship)
 "L" = (

@@ -239,6 +239,12 @@
 	},
 /turf/open/floor/mainship/mono,
 /area/shuttle/minidropship)
+"Vh" = (
+/mob/living/simple_animal/pig/mini{
+	name = "MEL"
+	},
+/turf/open/floor/mainship/mono,
+/area/shuttle/minidropship)
 
 (1,1,1) = {"
 aw
@@ -300,7 +306,7 @@ aQ
 bJ
 rN
 aH
-aY
+Vh
 aC
 aY
 aa

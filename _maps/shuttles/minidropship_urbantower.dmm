@@ -18,6 +18,12 @@
 	},
 /turf/template_noop,
 /area/shuttle/minidropship)
+"i" = (
+/mob/living/simple_animal/pig/mini{
+	name = "Yadot"
+	},
+/turf/open/floor/plating/plating_catwalk,
+/area/shuttle/minidropship)
 "k" = (
 /obj/machinery/door/poddoor/shutters/transit/nonsmoothing,
 /obj/machinery/door/poddoor/mainship/open{
@@ -256,7 +262,7 @@ M
 G
 Y
 m
-D
+i
 R
 D
 D

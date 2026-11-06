@@ -101,6 +101,12 @@
 /obj/effect/attach_point/crew_weapon/minidropship,
 /turf/open/floor/plating/plating_catwalk,
 /area/shuttle/minidropship)
+"w" = (
+/mob/living/simple_animal/pig/mini{
+	name = "Ivan"
+	},
+/turf/open/floor/plating/plating_catwalk,
+/area/shuttle/minidropship)
 "x" = (
 /obj/structure/window/framed/mainship/canterbury/dropship/reinforced,
 /obj/structure/dropship_piece/tadpole/tadpole_nose{
@@ -278,7 +284,7 @@ F
 x
 G
 Z
-q
+w
 v
 q
 q

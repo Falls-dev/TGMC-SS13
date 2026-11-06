@@ -115,6 +115,9 @@
 /area/shuttle/minidropship)
 "J" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship,
+/mob/living/simple_animal/pig/mini{
+	name = "Gary Anderson"
+	},
 /turf/open/floor/plating/plating_catwalk,
 /area/shuttle/minidropship)
 "P" = (

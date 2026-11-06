@@ -137,6 +137,9 @@
 /area/shuttle/minidropship)
 "N" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship,
+/mob/living/simple_animal/pig/mini{
+	name = "Nikita Peresmeshnikov"
+	},
 /turf/open/floor/mainship/mono,
 /area/shuttle/minidropship)
 "O" = (

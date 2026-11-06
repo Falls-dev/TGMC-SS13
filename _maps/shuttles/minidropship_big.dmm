@@ -106,6 +106,9 @@
 /area/shuttle/minidropship)
 "y" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship,
+/mob/living/simple_animal/pig/mini{
+	name = "Victor Petrovich"
+	},
 /turf/open/floor/plating/plating_catwalk,
 /area/shuttle/minidropship)
 "A" = (
