@@ -348,6 +348,195 @@
 		/obj/item/assembly/igniter = 6,
 	)
 
+/obj/machinery/vending/nanoammo
+	name = "\improper NanoAmmo"
+	desc = "Wall-mounted ammunition dispenser.  Can't hold infinite ammo, but it holds more than you need."
+	slogan_delay = 5 MINUTES
+	product_slogans = "Get you some!;\
+	More ammo than you'll ever need.;\
+	I'm small but my firepower isn't!;\
+	I dispense ammo, you dispense pain.;\
+	Give 'em hell!"
+	icon = 'icons/obj/machines/nanoammo.dmi'
+	icon_state = "nanoammo"
+	icon_deny = "nanoammo-deny"
+	icon_vend = "nanoammo-vend"
+	density = FALSE
+	wrenchable = FALSE
+	layer = ABOVE_OBJ_LAYER
+	resistance_flags = XENO_DAMAGEABLE
+	products = list(
+		"Rifles" = list(
+			/obj/item/ammo_magazine/rifle/ar12 = 30,
+			/obj/item/ammo_magazine/rifle/ar18 = 30,
+			/obj/item/ammo_magazine/rifle/ar21 = 30,
+			/obj/item/ammo_magazine/rifle/tx11 = 30,
+			/obj/item/ammo_magazine/packet/p4570 = 16,
+		),
+		"SMGs" = list(
+			/obj/item/ammo_magazine/smg/smg90 = 40,
+			/obj/item/ammo_magazine/smg/mp19 = 40,
+			/obj/item/ammo_magazine/smg/t45 = 40,
+			/obj/item/ammo_magazine/smg/t45/squashhead = 40,
+		),
+		"Marksman" = list(
+			/obj/item/ammo_magazine/rifle/dmr37 = 30,
+			/obj/item/ammo_magazine/rifle/br64 = 30,
+			/obj/item/ammo_magazine/rifle/sr127 = 30,
+			/obj/item/ammo_magazine/rifle/boltclip = 30,
+			/obj/item/ammo_magazine/rifle/bolt = 16,
+			/obj/item/ammo_magazine/rifle/martini = 16,
+		),
+		"Shotgun" = list(
+			/obj/item/ammo_magazine/shotgun = 16,
+			/obj/item/ammo_magazine/shotgun/buckshot = 16,
+			/obj/item/ammo_magazine/shotgun/flechette = 16,
+			/obj/item/ammo_magazine/shotgun/tracker = 16,
+			/obj/item/ammo_magazine/rifle/sh15_flechette = 30,
+			/obj/item/ammo_magazine/rifle/sh15_slug = 30,
+		),
+		"Machinegun" = list(
+			/obj/item/ammo_magazine/mg42 = 30,
+			/obj/item/ammo_magazine/mg60 = 30,
+			/obj/item/ammo_magazine/mg27 = 30,
+		),
+		"Sidearm" = list(
+			/obj/item/ammo_magazine/pistol/p14 = 40,
+			/obj/item/ammo_magazine/pistol/p23 = 40,
+			/obj/item/ammo_magazine/revolver/r44 = 40,
+			/obj/item/ammo_magazine/pistol/p17 = 40,
+			/obj/item/ammo_magazine/pistol/vp70 = 40,
+			/obj/item/ammo_magazine/pistol/plasma_pistol = 40,
+			/obj/item/ammo_magazine/revolver/standard_magnum = 40,
+		),
+		"Specialized" = list(
+			/obj/item/ammo_magazine/rifle/pepperball = 10,
+			/obj/item/ammo_magazine/flamer_tank/water = 10,
+			/obj/item/ammo_magazine/flamer_tank/mini = 16,
+			/obj/item/ammo_magazine/rifle/pepperball/pepperball_mini = 16,
+		),
+		"Seasonal" = list(
+			/obj/item/ammo_magazine/revolver/small = 0,
+			/obj/item/ammo_magazine/revolver = 0,
+			/obj/item/ammo_magazine/revolver/judge = 0,
+			/obj/item/ammo_magazine/revolver/judge/buckshot = 0,
+			/obj/item/ammo_magazine/revolver/upp = 0,
+			/obj/item/ammo_magazine/rifle/mpi_km/plum = 0,
+			/obj/item/ammo_magazine/rifle/m16 = 0,
+			/obj/item/ammo_magazine/rifle/mkh = 0,
+			/obj/item/ammo_magazine/smg/ppsh = 0,
+			/obj/item/ammo_magazine/smg/ppsh/extended = 0,
+			/obj/item/ammo_magazine/rifle/garand = 0,
+			/obj/item/ammo_magazine/pistol/m1911 = 0,
+			/obj/item/ammo_magazine/rifle = 0,
+			/obj/item/ammo_magazine/rifle/m41a = 0,
+			/obj/item/ammo_magazine/rifle/type71 = 0,
+			/obj/item/ammo_magazine/rifle/alf_machinecarbine = 0,
+			/obj/item/ammo_magazine/smg/uzi = 0,
+			/obj/item/ammo_magazine/smg/m25 = 0,
+			/obj/item/ammo_magazine/smg/mp7 = 0,
+			/obj/item/ammo_magazine/smg/skorpion = 0,
+			/obj/item/ammo_magazine/revolver/cmb = 0,
+			/obj/item/ammo_magazine/shotgun/mbx900 = 0,
+			/obj/item/ammo_magazine/shotgun/mbx900/buckshot = 0,
+			/obj/item/ammo_magazine/shotgun/mbx900/tracking = 0,
+		)
+	)
+	max_capacities = list(
+		/obj/item/ammo_magazine/rifle/ar12 = 60,
+		/obj/item/ammo_magazine/rifle/ar18 = 60,
+		/obj/item/ammo_magazine/rifle/ar21 = 60,
+		/obj/item/ammo_magazine/rifle/tx11 = 60,
+		/obj/item/ammo_magazine/packet/p4570 = 32,
+		/obj/item/ammo_magazine/smg/smg90 = 80,
+		/obj/item/ammo_magazine/smg/mp19 = 80,
+		/obj/item/ammo_magazine/smg/t45 = 80,
+		/obj/item/ammo_magazine/smg/t45/squashhead = 80,
+		/obj/item/ammo_magazine/rifle/dmr37 = 60,
+		/obj/item/ammo_magazine/rifle/br64 = 60,
+		/obj/item/ammo_magazine/rifle/sr127 = 60,
+		/obj/item/ammo_magazine/rifle/boltclip = 60,
+		/obj/item/ammo_magazine/rifle/bolt = 32,
+		/obj/item/ammo_magazine/rifle/martini = 32,
+		/obj/item/ammo_magazine/shotgun = 32,
+		/obj/item/ammo_magazine/shotgun/buckshot = 32,
+		/obj/item/ammo_magazine/shotgun/flechette = 32,
+		/obj/item/ammo_magazine/shotgun/tracker = 32,
+		/obj/item/ammo_magazine/rifle/sh15_flechette = 60,
+		/obj/item/ammo_magazine/rifle/sh15_slug = 60,
+		/obj/item/ammo_magazine/mg42 = 60,
+		/obj/item/ammo_magazine/mg60 = 60,
+		/obj/item/ammo_magazine/mg27 = 60,
+		/obj/item/ammo_magazine/pistol/p14 = 80,
+		/obj/item/ammo_magazine/pistol/p23 = 80,
+		/obj/item/ammo_magazine/revolver/r44 = 80,
+		/obj/item/ammo_magazine/pistol/p17 = 80,
+		/obj/item/ammo_magazine/pistol/vp70 = 80,
+		/obj/item/ammo_magazine/pistol/plasma_pistol = 80,
+		/obj/item/ammo_magazine/revolver/small = 80,
+		/obj/item/ammo_magazine/revolver = 80,
+		/obj/item/ammo_magazine/revolver/judge = 80,
+		/obj/item/ammo_magazine/revolver/judge/buckshot = 80,
+		/obj/item/ammo_magazine/revolver/standard_magnum = 80,
+		/obj/item/ammo_magazine/revolver/upp = 80,
+		/obj/item/ammo_magazine/rifle/mpi_km/plum = 60,
+		/obj/item/ammo_magazine/rifle/m16 = 60,
+		/obj/item/ammo_magazine/rifle/mkh = 60,
+		/obj/item/ammo_magazine/smg/ppsh = 80,
+		/obj/item/ammo_magazine/smg/ppsh/extended = 80,
+		/obj/item/ammo_magazine/rifle/garand = 60,
+		/obj/item/ammo_magazine/pistol/m1911 = 80,
+		/obj/item/ammo_magazine/rifle = 60,
+		/obj/item/ammo_magazine/rifle/m41a = 60,
+		/obj/item/ammo_magazine/rifle/type71 = 60,
+		/obj/item/ammo_magazine/rifle/alf_machinecarbine = 60,
+		/obj/item/ammo_magazine/smg/uzi = 80,
+		/obj/item/ammo_magazine/smg/m25 = 80,
+		/obj/item/ammo_magazine/smg/mp7 = 80,
+		/obj/item/ammo_magazine/smg/skorpion = 80,
+		/obj/item/ammo_magazine/revolver/cmb = 80,
+		/obj/item/ammo_magazine/shotgun/mbx900 = 32,
+		/obj/item/ammo_magazine/shotgun/mbx900/buckshot = 32,
+		/obj/item/ammo_magazine/shotgun/mbx900/tracking = 32,
+		/obj/item/ammo_magazine/rifle/pepperball = 20,
+		/obj/item/ammo_magazine/flamer_tank/water = 20,
+		/obj/item/ammo_magazine/flamer_tank/mini = 32,
+		/obj/item/ammo_magazine/rifle/pepperball/pepperball_mini = 32,
+	)
+	mouse_over_pointer = MOUSE_HAND_POINTER
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vending/nanoammo, (-26))
+
+/obj/machinery/vending/nanoammo/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/storage/box/visual/magazine))
+		var/obj/item/storage/box/visual/magazine/ammo_box = I
+		for(var/mag in ammo_box.contents)
+			stock(mag, user, FALSE)
+		user?.balloon_alert(user, "contents organized")
+		return
+
+	return ..()
+
+/obj/machinery/vending/nanoammo/get_acid_delay()
+	return 10 SECONDS	// Acid application time is 1 second without this, way too short for a tadpole item
+
+/obj/machinery/vending/nanoammo/malfunction()
+	// Randomizes which product is deleted (not dispensed, to avoid client lag) and does not break on malfunction
+	var/random_product = rand(1, product_records.len)
+	for(var/i in product_records)	// i is unused, this just ensures we don't have an infinite loop on an empty vendor
+		var/datum/vending_product/record = product_records[random_product]
+		if(record.amount > 0)
+			record.amount = 0
+			src.visible_message(span_danger("All of the [record.product_name] get lost in the malfunction!"))
+			break
+		random_product = (random_product % product_records.len) + 1
+
+/obj/machinery/vending/nanoammo/attack_alien(mob/living/carbon/xenomorph/xeno_attacker, damage_amount = xeno_attacker.xeno_caste.melee_damage, damage_type = BRUTE, damage_flag = MELEE, effects = TRUE, armor_penetration = xeno_attacker.xeno_caste.melee_ap, isrightclick = FALSE)
+	. = ..()
+	if (.)	// The parent proc does not allow vending machines to take integrity damage from slashes due to not calling the grandparent proc
+		attack_generic(xeno_attacker, damage_amount, damage_type, damage_flag, FALSE, armor_penetration)
+		return TRUE
+
 /obj/machinery/vending/nanomed
 	name = "\improper NanoMed"
 	desc = "Wall-mounted Medical Equipment dispenser."

@@ -107,6 +107,13 @@
 	},
 /turf/open/space/basic,
 /area/shuttle/minidropship)
+"H" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/vending/nanoammo/directional/west,
+/turf/open/floor/plating/plating_catwalk,
+/area/shuttle/minidropship)
 "I" = (
 /obj/machinery/light{
 	dir = 8
@@ -137,6 +144,9 @@
 /area/shuttle/minidropship)
 "N" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship,
+/mob/living/simple_animal/pig/mini{
+	name = "Nikita Peresmeshnikov"
+	},
 /turf/open/floor/mainship/mono,
 /area/shuttle/minidropship)
 "O" = (
@@ -274,7 +284,7 @@ V
 W
 X
 W
-f
+H
 S
 j
 f

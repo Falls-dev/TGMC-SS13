@@ -11,6 +11,12 @@
 	},
 /turf/closed/interior/apc/two,
 /area/interior/apc)
+"d" = (
+/obj/machinery/vending/nanoammo/directional/south,
+/obj/structure/bed/chair/dropship/doublewide/left,
+/obj/structure/bed/chair/dropship/doublewide/right,
+/turf/open/interior/apc/nine,
+/area/interior/apc)
 "f" = (
 /turf/closed/interior/apc/twentyfour,
 /area/interior/apc)
@@ -123,7 +129,7 @@ x
 "}
 (3,1,1) = {"
 y
-r
+d
 T
 J
 x
