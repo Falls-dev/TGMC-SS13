@@ -452,8 +452,10 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 				newmob = M.change_mob_type(/mob/living/carbon/human, location, null, delmob)
 			if("synthetic")
 				newmob = M.change_mob_type(/mob/living/carbon/human/species/synthetic, location, null, delmob)
-			if("early_synth")
-				newmob = M.change_mob_type(/mob/living/carbon/human/species/synthetic/early, location, null, delmob)
+			if("engineer_synth")
+				newmob = M.change_mob_type(/mob/living/carbon/human/species/synthetic/engineer, location, null, delmob)
+			if("medical_synth")
+				newmob = M.change_mob_type(/mob/living/carbon/human/species/synthetic/medical, location, null, delmob)
 			if("sectoid")
 				newmob = M.change_mob_type(/mob/living/carbon/human/species/sectoid, location, null, delmob)
 			if("vatborn")
@@ -466,6 +468,8 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 				newmob = M.change_mob_type(/mob/living/carbon/human/species/skeleton, location, null, delmob)
 			if("monkey")
 				newmob = M.change_mob_type(/mob/living/carbon/human/species/monkey, location, null, delmob, "Monkey") //todo doublecheck this
+			if("prototype_supersoldier")
+				newmob = M.change_mob_type(/mob/living/carbon/human/species/prototype_supersoldier, location, null, delmob) //todo doublecheck this
 			if("moth")
 				newmob = M.change_mob_type(/mob/living/carbon/human/species/moth, location, null, delmob, "Moth")
 			if("zombie")
