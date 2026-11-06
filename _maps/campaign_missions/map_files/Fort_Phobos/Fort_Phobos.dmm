@@ -1,4 +1,8 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/machinery/campaign_tank_fabricator/som,
+/turf/open/floor/plating/ground/concrete,
+/area/mainship/patrol_base/som/equipment_bay)
 "ac" = (
 /turf/open/floor/mainship/red/corner{
 	dir = 4
@@ -9542,7 +9546,7 @@ FA
 FA
 FA
 FA
-FA
+aa
 FA
 FA
 FA

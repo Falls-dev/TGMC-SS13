@@ -14,8 +14,9 @@
 	armored_flags = ARMORED_HAS_PRIMARY_WEAPON|ARMORED_HAS_SECONDARY_WEAPON|ARMORED_HAS_HEADLIGHTS|ARMORED_WRECKABLE
 	pass_flags = PASS_LOW_STRUCTURE|PASS_DEFENSIVE_STRUCTURE|PASS_FIRE
 	crushes_weeds = FALSE
-	pixel_w = -65
-	pixel_z = -80
+	//The rectangle hitbox sets root.pixel_x/pixel_y per direction. These stay 0 or the offsets stack and the sprite is shifted.
+	pixel_w = 0
+	pixel_z = 0
 	max_integrity = 1200
 	soft_armor = list(MELEE = 90, BULLET = 95 , LASER = 95, ENERGY = 95, BOMB = 85, BIO = 100, FIRE = 100, ACID = 70)
 	hard_armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 10, BOMB = 30, BIO = 100, FIRE = 0, ACID = 0)

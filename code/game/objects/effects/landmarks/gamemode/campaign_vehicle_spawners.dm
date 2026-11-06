@@ -5,8 +5,8 @@
 	var/vehicle_type
 
 
-///Creates and sets up the vehicle
-/obj/effect/landmark/campaign/vehicle_spawner/proc/spawn_vehicle()
+///Creates and sets up the vehicle. spawn_primary is only used by tank spawners
+/obj/effect/landmark/campaign/vehicle_spawner/proc/spawn_vehicle(spawn_primary = TRUE)
 	if(!ispath(vehicle_type))
 		return
 	. = new vehicle_type(loc)
@@ -85,6 +85,11 @@
 		/obj/item/ammo_magazine/tank/ltb_cannon/canister/incendiary = 5,
 		/obj/item/ammo_magazine/tank/secondary_cupola = 10,
 	)
+	///Gear spawned when the primary weapon is left out (the weapon comes from a tank weapon fabricator instead)
+	var/list/secondary_equipment_list = list(
+		/obj/item/armored_weapon/secondary_weapon = 1,
+		/obj/item/ammo_magazine/tank/secondary_cupola = 10,
+	)
 
 /obj/effect/landmark/campaign/vehicle_spawner/tank/Initialize(mapload)
 	. = ..()
@@ -94,21 +99,22 @@
 	GLOB.campaign_tank_spawners[faction] -= src
 	return ..()
 
-/obj/effect/landmark/campaign/vehicle_spawner/tank/spawn_vehicle()
+/obj/effect/landmark/campaign/vehicle_spawner/tank/spawn_vehicle(spawn_primary = TRUE)
 	. = ..()
 	if(!.)
 		return
 	var/obj/vehicle/spawned_vehicle = .
 	spawned_vehicle.setDir(dir)
-	spawn_equipment()
+	spawn_equipment(spawn_primary)
 
-///Spawns all required gear for the tank
-/obj/effect/landmark/campaign/vehicle_spawner/tank/proc/spawn_equipment()
+///Spawns all required gear for the tank. Without spawn_primary only the secondary gun, its ammo and the crew pamphlets spawn
+/obj/effect/landmark/campaign/vehicle_spawner/tank/proc/spawn_equipment(spawn_primary = TRUE)
 	var/turf/gun_turf = get_ranged_target_turf(src, REVERSE_DIR(dir), 3)
 	var/ammo_turf = get_step(gun_turf, (turn(dir, 90)))
 	var/pamphlet_turf = get_step(gun_turf, turn(dir, -90))
-	for(var/obj/typepath AS in equipment_list)
-		for(var/num = 1 to equipment_list[typepath])
+	var/list/gear_list = spawn_primary ? equipment_list : secondary_equipment_list
+	for(var/obj/typepath AS in gear_list)
+		for(var/num = 1 to gear_list[typepath])
 			var/obj/new_item = new typepath(ammo_turf)
 			if(!istype(new_item, /obj/item/armored_weapon))
 				continue
@@ -133,6 +139,10 @@
 		/obj/item/armored_weapon/coilgun = 1,
 		/obj/item/armored_weapon/secondary_mlrs = 1,
 		/obj/item/ammo_magazine/tank/coilgun = 40,
+		/obj/item/ammo_magazine/tank/secondary_mlrs = 8,
+	)
+	secondary_equipment_list = list(
+		/obj/item/armored_weapon/secondary_mlrs = 1,
 		/obj/item/ammo_magazine/tank/secondary_mlrs = 8,
 	)
 

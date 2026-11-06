@@ -1,4 +1,8 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/machinery/campaign_tank_fabricator,
+/turf/open/floor/mainship/research,
+/area/mainship/patrol_base)
 "ab" = (
 /turf/closed/wall/mainship/outer/reinforced,
 /area/mainship/patrol_base/hanger)
@@ -31510,7 +31514,7 @@ EJ
 fV
 vd
 SG
-vd
+aa
 fV
 bE
 hs

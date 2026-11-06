@@ -41,6 +41,10 @@
 	var/winning_faction
 	///specific mission outcome
 	var/outcome
+	///If TRUE, tanks spawn without a primary weapon, and the primary weapon kits come from the faction's tank weapon fabricator
+	var/tank_fabricator_enabled = FALSE
+	///Tank weapon kits still available from the fabricators, by faction
+	var/list/tank_kits_remaining
 	///The current gamemode. Var as its referred to often
 	var/datum/game_mode/hvh/campaign/mode
 	///The victory conditions for this mission for the starting faction, for display purposes
@@ -600,9 +604,15 @@
 		if(!remaining_count)
 			break
 		remaining_count --
-		var/new_tank = tank_spawner.spawn_vehicle()
+		var/new_tank = tank_spawner.spawn_vehicle(!tank_fabricator_enabled)
 		GLOB.campaign_structures += new_tank
 		RegisterSignal(new_tank, COMSIG_QDELETING, TYPE_PROC_REF(/datum/campaign_mission, remove_mission_object))
+
+	if(tank_fabricator_enabled)
+		var/spawned_tanks = quantity - remaining_count
+		LAZYSET(tank_kits_remaining, tank_faction, spawned_tanks)
+		if(!override_message)
+			override_message = "[spawned_tanks] tanks have been deployed for this mission. Choose a primary weapon for each at the tank weapon fabricator."
 
 	map_text_broadcast(tank_faction, override_message ? override_message : "[quantity] mechs have been deployed for this mission.", "Mechs available")
 
