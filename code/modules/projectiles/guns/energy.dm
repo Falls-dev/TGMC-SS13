@@ -1337,10 +1337,9 @@
 /datum/ammo/energy/lasgun/marine/weakening/pocket
 	plasma_drain = 80
 
-// E-50 laser emitter
-/obj/item/weapon/gun/energy/lasgun/lasrifle/e50
-	name = "\improper E-50 laser emitter"
-	desc = "A heavy laser emitter cannon. Devastating at range and liable to set the ground ablaze, but each shot drains a TerraGov power cell dry in short order."
+/obj/item/weapon/gun/energy/beam_cannon
+	name = "\improper Light Beam Cannon"
+	desc = "A heavy cannon that fires an intense laser after charging. Uses standard Terra Experimental power cells."
 	icon = 'icons/obj/items/gun/energy64.dmi'
 	icon_state = "e50"
 	worn_icon_state = "e50"
@@ -1350,19 +1349,136 @@
 		slot_l_hand_str = 'icons/mob/inhands/gun/energy_lefthand_64.dmi',
 		slot_r_hand_str = 'icons/mob/inhands/gun/energy_righthand_64.dmi',
 	)
-	reload_sound = 'sound/weapons/guns/interact/standard_laser_rifle_reload.ogg'
-	fire_sound = 'sound/weapons/guns/fire/laser3.ogg'
-	ammo_datum_type = /datum/ammo/energy/emitter/e50
-	default_ammo_type = /obj/item/cell/lasgun/lasrifle
-	allowed_ammo_types = list(/obj/item/cell/lasgun/lasrifle, /obj/item/cell/lasgun/lasrifle/recharger)
-	rounds_per_shot = 150
+	muzzleflash_iconstate = "muzzle_flash_laser"
+	muzzle_flash_color = COLOR_LASER_RED
+	fire_sound = 'sound/weapons/guns/fire/laser_blast.wav'
+	dry_fire_sound = 'sound/weapons/guns/fire/energy_dry_fire.wav'
+	windup_sound = 'sound/weapons/guns/fire/energy_charge_up.wav'
+	reload_sound = 'sound/weapons/guns/interact/plasma_reload_3.ogg'
+	unload_sound = 'sound/weapons/guns/interact/volkite_unload.ogg'
+	overheat_sound = 'sound/weapons/guns/interact/heavy_gun_overheat.wav'
+	w_class = WEIGHT_CLASS_HUGE
 	equip_slot_flags = ITEM_SLOT_BACK
-	w_class = WEIGHT_CLASS_BULKY
-	gun_features_flags = GUN_WIELDED_FIRING_ONLY|GUN_ENERGY|GUN_AMMO_COUNTER|GUN_AMMO_COUNT_BY_SHOTS_REMAINING|GUN_NO_PITCH_SHIFT_NEAR_EMPTY|GUN_SHOWS_AMMO_REMAINING
-	muzzle_flash_color = COLOR_VIBRANT_LIME
+	gun_skill_category = SKILL_HEAVY_WEAPONS
+	gun_features_flags = GUN_ENERGY|GUN_AMMO_COUNTER|GUN_AMMO_COUNT_BY_PERCENTAGE|GUN_NO_PITCH_SHIFT_NEAR_EMPTY|GUN_WIELDED_STABLE_FIRING_ONLY|GUN_SHOWS_AMMO_REMAINING
+	reciever_flags = AMMO_RECIEVER_MAGAZINES|AMMO_RECIEVER_CYCLE_ONLY_BEFORE_FIRE|AMMO_RECIEVER_DO_NOT_EJECT_HANDFULS
+	load_method = CELL
+	ammo_datum_type = /datum/ammo/energy/laser_blast
+	default_ammo_type = /obj/item/cell/lasgun/lasrifle
+	allowed_ammo_types = list(/obj/item/cell/lasgun/lasrifle)
+	rounds_per_shot = 150
 	max_shots = 4
-	fire_delay = 4 SECONDS
-	wield_delay = 0.7 SECONDS
-	scatter_unwielded = 20
+	force = 40
+	fire_delay = 0
+	wield_delay = 0.2 SECONDS
+	aim_slowdown = 2
+	scatter = 0
+	scatter_unwielded = 0
+	akimbo_scatter_mod = 0
+	accuracy_mult = 2
 	accuracy_mult_unwielded = 0.5
-	damage_falloff_mult = 0.1
+	damage_falloff_mult = 0
+	movement_acc_penalty_mult = 0
+	heat_per_fire = 50
+	cool_amount = 5
+	turret_range = 12
+	attachable_allowed = list(/obj/item/attachable/buildasentry)
+	attachable_offset = list("rail_x" = 7, "rail_y" = 28)
+	/// Time the trigger must be held before the beam fires.
+	var/charge_delay = 4 SECONDS
+	/// Keeps a second firing request from entering while the first is charging.
+	var/charging_shot = FALSE
+	/// Reserved channel for the current charge sound.
+	var/charge_sound_channel
+	/// Beam warning players where the cannon is aimed.
+	var/datum/beam/beam_cannon/charge_beam
+
+/obj/item/weapon/gun/energy/beam_cannon/Destroy()
+	clear_charge_effects()
+	return ..()
+
+/obj/item/weapon/gun/energy/beam_cannon/get_worn_icon_state(slot_name, inhands)
+	if(slot_name == slot_back_str)
+		return rounds ? "e50_100" : "e50_0"
+	return ..()
+
+/obj/item/weapon/gun/energy/beam_cannon/gun_on_cooldown(mob/user)
+	return charging_shot || overheat_timer || ..()
+
+/obj/item/weapon/gun/energy/beam_cannon/reset_fire()
+	clear_charge_effects()
+	return ..()
+
+/obj/item/weapon/gun/energy/beam_cannon/unique_action(mob/user, special_treatment = FALSE)
+	// Only firing should cycle the cannon and draw power from the cell.
+	return
+
+/obj/item/weapon/gun/energy/beam_cannon/Fire()
+	if(charging_shot || overheat_timer || !target)
+		return NONE
+
+	var/mob/operator = gun_user
+	var/deployed = CHECK_BITFIELD(deploy_flags, IS_DEPLOYED)
+	if(!deployed && !able_to_fire(operator))
+		return NONE
+	var/obj/item/cell/cell = locate(/obj/item/cell/lasgun/lasrifle) in chamber_items
+	if(!cell || cell.charge < rounds_per_shot)
+		playsound(src, dry_fire_sound, 25, TRUE, 5)
+		return NONE
+
+	charging_shot = TRUE
+	charge_sound_channel = SSsounds.reserve_sound_channel(src)
+	playsound(src, windup_sound, 50, channel = charge_sound_channel)
+	var/charged = check_charge(operator)
+	if(charged && operator)
+		charged = do_after(operator, charge_delay, IGNORE_LOC_CHANGE, src, BUSY_ICON_DANGER, BUSY_ICON_DANGER, extra_checks = CALLBACK(src, PROC_REF(check_charge), operator))
+	else if(charged)
+		var/ready_at = world.time + charge_delay
+		while(charged && world.time < ready_at)
+			stoplag(1)
+			charged = check_charge(null)
+	if(QDELETED(src))
+		return NONE
+	clear_charge_effects()
+	charging_shot = FALSE
+	if(!charged || !target || operator != gun_user || (deployed && !(deploy_flags & IS_DEPLOYED)))
+		return NONE
+	if(QDELETED(cell) || cell.loc != src || cell.charge < rounds_per_shot)
+		return NONE
+	return ..()
+
+/// Check that the shot is still held and update the warning beam as the aim moves.
+/obj/item/weapon/gun/energy/beam_cannon/proc/check_charge(mob/operator)
+	if(QDELETED(src) || !target || operator != gun_user || HAS_TRAIT(src, TRAIT_GUN_SAFETY))
+		return FALSE
+	if(!operator && !(issentry(loc) && (turret_flags & TURRET_ON)))
+		return FALSE
+	var/turf/origin = get_turf(src)
+	var/turf/aim = get_turf(target)
+	if(!origin || !aim || origin.z != aim.z)
+		return FALSE
+	var/range = initial(ammo_datum_type.max_range)
+	var/aim_distance = get_dist(origin, aim)
+	if(!aim_distance)
+		QDEL_NULL(charge_beam)
+		return TRUE
+	var/end_x = clamp(round(origin.x + (aim.x - origin.x) * range / aim_distance), 1, world.maxx)
+	var/end_y = clamp(round(origin.y + (aim.y - origin.y) * range / aim_distance), 1, world.maxy)
+	var/turf/endpoint = check_path(origin, locate(end_x, end_y, origin.z), PASS_GLASS|PASS_PROJECTILE)
+	if(!QDELETED(charge_beam) && charge_beam.origin == origin && charge_beam.target == endpoint)
+		return TRUE
+	QDEL_NULL(charge_beam)
+	if(endpoint != origin)
+		charge_beam = new(origin, endpoint, beam_icon_state = "sat_beam")
+		INVOKE_ASYNC(charge_beam, TYPE_PROC_REF(/datum/beam, Start))
+	return TRUE
+
+/// Remove the warning and silence the charge on completion or cancellation.
+/obj/item/weapon/gun/energy/beam_cannon/proc/clear_charge_effects()
+	QDEL_NULL(charge_beam)
+	if(!charge_sound_channel)
+		return
+	for(var/mob/listener AS in GLOB.player_list|GLOB.aiEyes)
+		listener.stop_sound_channel(charge_sound_channel)
+	SSsounds.free_sound_channel(charge_sound_channel)
+	charge_sound_channel = null

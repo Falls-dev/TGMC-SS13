@@ -44,6 +44,13 @@
 		ui = new(user, src, "CommunicationsConsole", name)
 		ui.open()
 
+/// Revalidate access after a prompt, including when a captain is connected from a tablet.
+/obj/machinery/computer/communications/proc/can_finish_prompt(mob/user, datum/tgui/ui, require_adjacent = FALSE)
+	if(istype(ui?.src_object, /obj/item/command_tablet))
+		var/obj/item/command_tablet/tablet = ui.src_object
+		return !ui.closing && tablet.linked_console == src && tablet.ui_status(user, ui.state) == UI_INTERACTIVE
+	return require_adjacent ? user.Adjacent(src) : (user in view(1, src))
+
 /obj/machinery/computer/communications/ui_static_data(mob/user)
 	. = list()
 	.["cooldown_request"] = COOLDOWN_COMM_REQUEST
@@ -260,7 +267,7 @@
 				return FALSE
 
 			var/input = tgui_input_text(user, "Please write a message to announce to the station crew.", "Priority Announcement", "", multiline = TRUE, encode = FALSE, max_length = 100)
-			if(!input || !(user in view(1, src)) || authenticated != 2 || world.time < cooldown_message + COOLDOWN_COMM_MESSAGE)
+			if(!input || !can_finish_prompt(user, ui) || authenticated != 2 || world.time < cooldown_message + COOLDOWN_COMM_MESSAGE)
 				return FALSE
 
 			var/filter_result = CAN_BYPASS_FILTER(user) ? null : is_ic_filtered(input)
@@ -308,7 +315,7 @@
 				return FALSE
 
 			var/msg = tgui_input_text(user, "Please choose a message to transmit to the TGMC High Command.  Please be aware that this process is very expensive, and abuse will lead to termination.  Transmission does not guarantee a response. There is a small delay before you may send another message. Be clear and concise.", "To abort, send an empty message.", "", encode = FALSE)
-			if(!msg || !user.Adjacent(src) || authenticated != 2 || world.time < cooldown_central + COOLDOWN_COMM_CENTRAL)
+			if(!msg || !can_finish_prompt(user, ui, require_adjacent = TRUE) || authenticated != 2 || world.time < cooldown_central + COOLDOWN_COMM_CENTRAL)
 				return FALSE
 
 			tgmc_message(msg, user)
