@@ -1338,7 +1338,7 @@
 	plasma_drain = 80
 
 /obj/item/weapon/gun/energy/beam_cannon
-	name = "\improper Light Beam Cannon"
+	name = "\improper E-50 Beam Cannon"
 	desc = "A heavy cannon that fires an intense laser after charging. Uses standard Terra Experimental power cells."
 	icon = 'icons/obj/items/gun/energy64.dmi'
 	icon_state = "e50"
@@ -1365,10 +1365,10 @@
 	load_method = CELL
 	ammo_datum_type = /datum/ammo/energy/laser_blast
 	default_ammo_type = /obj/item/cell/lasgun/lasrifle
-	allowed_ammo_types = list(/obj/item/cell/lasgun/lasrifle)
+	allowed_ammo_types = list(/obj/item/cell/lasgun/lasrifle, /obj/item/cell/lasgun/lasrifle/recharger)
 	rounds_per_shot = 150
 	max_shots = 4
-	force = 40
+	force = 10
 	fire_delay = 0
 	wield_delay = 0.2 SECONDS
 	aim_slowdown = 2

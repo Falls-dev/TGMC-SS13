@@ -12,9 +12,9 @@
 	output = list(/obj/item/weapon/gun/energy/lasgun/lasrifle/tesla = 1) // 600 points
 
 /datum/assembly_craft/weapons/beam_cannon
-	name = "Light Beam Cannon"
+	name = "E-50 Beam Cannon"
 	craft_time = 40 SECONDS
-	input = list(/obj/item/stack/sheet/plasteel = 15, /obj/item/stack/sheet/mineral/osmium = 30, /obj/item/stack/sheet/mineral/silver = 10) // 120 + 180 + 80 = 380 points
+	input = list(/obj/item/stack/sheet/plasteel = 25, /obj/item/stack/sheet/mineral/osmium = 30, /obj/item/stack/sheet/mineral/silver = 10) // 120 + 180 + 80 = 380 points
 	output = list(/obj/item/weapon/gun/energy/beam_cannon = 1) // 400 points
 
 /datum/assembly_craft/weapons/rechargemag

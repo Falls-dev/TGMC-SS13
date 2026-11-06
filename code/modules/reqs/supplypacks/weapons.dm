@@ -8,14 +8,14 @@
 	cost = 600
 
 /datum/supply_packs/weapons/beam_cannon
-	name = "Light Beam Cannon"
+	name = "E-50 Beam Cannon"
 	contains = list(/obj/item/weapon/gun/energy/beam_cannon)
 	cost = 400
 
 /datum/supply_packs/weapons/brassback
 	name = "MG-27U rotary machine gun"
 	contains = list(/obj/item/weapon/gun/minigun/brassback, /obj/item/ammo_magazine/mg27, /obj/item/ammo_magazine/mg27)
-	cost = 200
+	cost = 350
 
 /datum/supply_packs/weapons/tx55
 	name = "AR-55 OICW rifle"
