@@ -7,6 +7,11 @@
 	contains = list(/obj/item/storage/backpack/lightpack)
 	cost = 150
 
+/datum/supply_packs/clothing/tk5_gauntlets
+	name = "TK-5 telekinesis gauntlets"
+	contains = list(/obj/item/clothing/gloves/kinesis/ds13)
+	cost = 125
+
 /datum/supply_packs/clothing/dispenser
 	name = "Dispenser"
 	contains = list(/obj/item/storage/backpack/dispenser)
