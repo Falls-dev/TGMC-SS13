@@ -417,6 +417,16 @@ GLOBAL_LIST_INIT(strain_list, init_glob_strain_list())
 	/// References our currently held Earth Pillar.
 	var/obj/structure/xeno/earth_pillar/held_pillar
 
+	// *** Conqueror vars *** //
+	/// If Endurance is currently active.
+	var/endurance_active = FALSE
+	/// The amount of remaining health that Endurance has.
+	var/endurance_health = 1
+	/// The maximum amount of health that Endurance can have.
+	var/endurance_health_max = 1
+	/// Whether our Endurance has been broken, due to losing all of its health.
+	var/endurance_broken = FALSE
+
 	// *** Bull vars *** //
 	var/bull_charging = FALSE
 

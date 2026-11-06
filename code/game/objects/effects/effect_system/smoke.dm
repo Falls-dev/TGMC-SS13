@@ -381,6 +381,9 @@
 	opacity = FALSE
 	smoke_traits = SMOKE_XENO|SMOKE_XENO_ACID|SMOKE_GASP|SMOKE_COUGH
 
+/obj/effect/particle_effect/smoke/xeno/burn/fast
+	lifetime = 1
+
 //Xeno neurotox smoke.
 /obj/effect/particle_effect/smoke/xeno/neuro
 	color = "#ffbf58" //Mustard orange?
@@ -484,6 +487,9 @@
 
 /datum/effect_system/smoke_spread/xeno/acid/opaque
 	smoke_type = /obj/effect/particle_effect/smoke/xeno/burn/opaque
+
+/datum/effect_system/smoke_spread/xeno/acid/fast
+	smoke_type = /obj/effect/particle_effect/smoke/xeno/burn/fast
 
 /datum/effect_system/smoke_spread/xeno/neuro
 	smoke_type = /obj/effect/particle_effect/smoke/xeno/neuro
