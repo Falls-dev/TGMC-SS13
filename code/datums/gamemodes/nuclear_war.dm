@@ -1,9 +1,15 @@
 /datum/game_mode/infestation/nuclear_war
 	name = "Nuclear War"
 	config_tag = "Nuclear War"
-	silo_scaling = 1.5
-	round_type_flags = MODE_INFESTATION|MODE_LATE_OPENING_SHUTTER_TIMER|MODE_XENO_RULER|MODE_PSY_POINTS|MODE_PSY_POINTS_ADVANCED|MODE_DEAD_GRAB_FORBIDDEN|MODE_HIJACK_POSSIBLE|MODE_SILO_RESPAWN|MODE_SILOS_SPAWN_MINIONS|MODE_ALLOW_XENO_QUICKBUILD|MODE_HAS_EXCAVATION|MODE_HAS_MINERS
-	xeno_abilities_flags = ABILITY_DISTRESS
+	human_dnr_ticks = TIME_BEFORE_DNR * 3 // 15 minutes at 2 seconds per human life tick.
+	xenorespawn_time = 30 SECONDS
+	silo_scaling = 0 //just in case
+	max_silo_ammount = 0
+	/// How often the marine/xeno population balance is checked.
+	var/larva_check_interval = 30 SECONDS
+	var/last_larva_check = 0
+	round_type_flags = MODE_INFESTATION|MODE_XENO_SPAWN_PROTECT|MODE_LATE_OPENING_SHUTTER_TIMER|MODE_PSY_POINTS|MODE_PSY_POINTS_ADVANCED|MODE_DEAD_GRAB_FORBIDDEN|MODE_HIJACK_POSSIBLE|MODE_SILO_RESPAWN|MODE_SILO_NO_LARVA|MODE_ALLOW_XENO_QUICKBUILD|MODE_HAS_EXCAVATION|MODE_HAS_MINERS
+	xeno_abilities_flags = ABILITY_CRASH //no larva from psydrains, no silo.
 	valid_job_types = list(
 		/datum/job/terragov/command/captain = 1,
 		/datum/job/terragov/command/fieldcommander = 1,
@@ -39,10 +45,17 @@
 		/datum/job/xenomorph = NUCLEAR_WAR_LARVA_POINTS_NEEDED,
 	)
 
+/datum/game_mode/infestation/nuclear_war/pre_setup()
+	// Spawn silos at their map landmarks; clear the fog boundary before parent setup.
+	for(var/turf/spawn_turf AS in GLOB.xeno_resin_silo_turfs)
+		new /obj/structure/xeno/silo/nuclear_war(spawn_turf)
+	GLOB.xeno_spawn_protection_locations.Cut()
+	return ..()
+
 /datum/game_mode/infestation/nuclear_war/post_setup()
 	. = ..()
 
-	SSpoints.add_psy_points(XENO_HIVE_NORMAL, 1400)
+	SSpoints.add_psy_points(XENO_HIVE_NORMAL, 600)
 
 	for(var/obj/effect/landmark/corpsespawner/corpse AS in GLOB.corpse_landmarks_list)
 		corpse.create_mob()
@@ -58,17 +71,46 @@
 	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DIFFUSED, PROC_REF(on_nuclear_diffuse))
 	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_START, PROC_REF(on_nuke_started))
 
-/datum/game_mode/infestation/nuclear_war/orphan_hivemind_collapse()
+/datum/game_mode/infestation/nuclear_war/process()
+	. = ..()
 	if(round_finished)
 		return
-	if(round_stage == INFESTATION_MARINE_CRASHING)
-		round_finished = MODE_INFESTATION_M_MINOR
-		return
-	round_finished = MODE_INFESTATION_M_MAJOR
+	if(world.time > last_larva_check + larva_check_interval)
+		last_larva_check = world.time
+		balance_scales()
 
-/datum/game_mode/infestation/nuclear_war/get_hivemind_collapse_countdown()
-	var/eta = timeleft(orphan_hive_timer) MILLISECONDS
-	return !isnull(eta) ? round(eta) : 0
+/// Adds more xeno job slots if needed.
+/datum/game_mode/infestation/nuclear_war/proc/balance_scales()
+	var/datum/hive_status/normal/xeno_hive = GLOB.hive_datums[XENO_HIVE_NORMAL]
+	var/datum/job/xeno_job = SSjob.GetJobType(/datum/job/xenomorph)
+	// Spawn more xenos to help maintain the ratio.
+	var/xenomorphs_below_ratio = trunc(get_jobpoint_difference() / xeno_job.job_points_needed)
+	if(xenomorphs_below_ratio >= 1)
+		xeno_job.add_job_positions(xenomorphs_below_ratio)
+		xeno_hive.update_tier_limits()
+		return
+	if(xeno_hive.total_xenos_for_evolving() <= 0)
+		xeno_job.add_job_positions(2)
+		xeno_hive.update_tier_limits()
+
+/// Gets the difference of job points between humans and xenos. Negative means too many xenos. Positive means too many humans.
+/datum/game_mode/infestation/nuclear_war/proc/get_jobpoint_difference()
+	var/datum/hive_status/normal/xeno_hive = GLOB.hive_datums[XENO_HIVE_NORMAL]
+	var/datum/job/xeno_job = SSjob.GetJobType(/datum/job/xenomorph)
+	return get_total_joblarvaworth(count_flags = COUNT_IGNORE_HUMAN_SSD) - (xeno_hive.total_xenos_for_evolving() * xeno_job.job_points_needed)
+
+/datum/game_mode/infestation/nuclear_war/get_adjusted_jobworth_list(list/jobworth_list)
+	var/list/adjusted_jobworth_list = deep_copy_list(jobworth_list)
+	var/jobpoint_difference = get_jobpoint_difference()
+	for(var/index in jobworth_list)
+		var/datum/job/scaled_job = SSjob.GetJobType(index)
+		if(!(index in SSticker.mode.valid_job_types))
+			continue
+		if(!isxenosjob(scaled_job))
+			continue
+		var/amount = jobworth_list[index]
+		adjusted_jobworth_list[index] = clamp(jobpoint_difference + amount, 0, amount)
+	return adjusted_jobworth_list
 
 /datum/game_mode/infestation/nuclear_war/check_finished()
 	if(round_finished)

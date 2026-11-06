@@ -32,6 +32,7 @@
 		/datum/job/xenomorph/queen = 1,
 		/datum/job/survivor/rambo = 1,
 	)
+	human_dnr_ticks = TIME_BEFORE_DNR * 2 // 10 minutes at 2 seconds per human life tick.
 	var/siloless_hive_timer
 
 /datum/game_mode/infestation/distress/post_setup()
@@ -51,7 +52,7 @@
 	if(!.)
 		return
 	var/datum/job/scaled_job = SSjob.GetJobType(/datum/job/xenomorph) //Xenos
-	scaled_job.job_points_needed = NUCLEAR_WAR_LARVA_POINTS_NEEDED //actaully DISTRESS_LARVA_POINTS_NEEDED
+	scaled_job.job_points_needed = DISTRESS_LARVA_POINTS_NEEDED //actaully DISTRESS_LARVA_POINTS_NEEDED
 
 
 /datum/game_mode/infestation/distress/orphan_hivemind_collapse()
