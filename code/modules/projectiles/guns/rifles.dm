@@ -3361,6 +3361,16 @@
 	pending_lock_target = null
 	return projectile
 
+/obj/item/weapon/gun/rifle/lok/set_target(atom/object)
+	active_attachable?.set_target(object)
+	if(object == target || (gun_user && object == gun_user))
+		return
+	if(target)
+		UnregisterSignal(target, COMSIG_QDELETING)
+	target = object
+	if(target)
+		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(clean_target), override = TRUE)
+
 /obj/item/weapon/gun/rifle/lok/start_fire(datum/source, atom/object, turf/location, control, params, bypass_checks = FALSE)
 	var/list/modifiers = params2list(params)
 	if(!modifiers["right"])
