@@ -53,7 +53,7 @@
 	icon_state = "tesla"
 	hud_state = "taser"
 	hud_state_empty = "battery_empty"
-	ammo_behavior_flags = AMMO_ENERGY|AMMO_SPECIAL_PROCESS
+	ammo_behavior_flags = AMMO_ENERGY|AMMO_SPECIAL_PROCESS|AMMO_BLOCKED_BY_GLASS
 	shell_speed = 0.1
 	damage = 20
 	penetration = 20
@@ -63,7 +63,7 @@
 	zap_beam(proj, 4, damage)
 
 /datum/ammo/energy/tesla/focused
-	ammo_behavior_flags = AMMO_ENERGY|AMMO_SPECIAL_PROCESS|AMMO_IFF
+	ammo_behavior_flags = AMMO_ENERGY|AMMO_SPECIAL_PROCESS|AMMO_IFF|AMMO_BLOCKED_BY_GLASS
 	shell_speed = 0.1
 	damage = 10
 	penetration = 10
