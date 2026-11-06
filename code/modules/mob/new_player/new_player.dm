@@ -189,9 +189,7 @@
 
 /// Shows the normal hive roster from the lobby.
 /mob/new_player/proc/view_xeno_manifest()
-	var/datum/browser/popup = new(src, "xenomanifest", "<div align='center'>Xeno Manifest</div>", 400, 420)
-	popup.set_content(GLOB.datacore.get_xeno_manifest())
-	popup.open(FALSE)
+	GLOB.xeno_manifest.ui_interact(src)
 
 /mob/new_player/proc/view_lore()
 	var/output = "<div align='center'>"

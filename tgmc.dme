@@ -427,6 +427,7 @@
 #include "code\datums\chatmessage.dm"
 #include "code\datums\cinematic.dm"
 #include "code\datums\crew_manifest.dm"
+#include "code\datums\xeno_manifest.dm"
 #include "code\datums\custom_emotes.dm"
 #include "code\datums\datacore.dm"
 #include "code\datums\datum.dm"
