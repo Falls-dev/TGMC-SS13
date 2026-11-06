@@ -20,17 +20,19 @@
 	max_range = 10
 	bullet_color = COLOR_VIBRANT_LIME
 
-/datum/ammo/energy/emitter/e50
-	name = "heavy emitter bolt"
-	ammo_behavior_flags = AMMO_ENERGY|AMMO_HITSCAN|AMMO_INCENDIARY|AMMO_SNIPER
+/datum/ammo/energy/laser_blast
+	name = "laser blast"
+	icon_state = "heavylaser"
+	hud_state = "laser_sniper"
 	hitscan_effect_icon = "beam_heavy"
-	bullet_color = COLOR_VIBRANT_LIME
+	sound_hit = 'sound/bullets/laser_blast_impact.wav'
 	armor_type = LASER
-	damage = 60
-	penetration = 30
-	max_range = 25
-	accurate_range_min = 0
-	incendiary_strength = 18
+	ammo_behavior_flags = AMMO_ENERGY|AMMO_HITSCAN|AMMO_INCENDIARY
+	damage = 80
+	penetration = 40
+	sundering = 10
+	max_range = 12
+	accurate_range = 12
 
 /datum/ammo/energy/taser
 	name = "taser bolt"

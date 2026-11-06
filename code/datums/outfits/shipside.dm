@@ -7,7 +7,7 @@
 	w_uniform = /obj/item/clothing/under/marine/officer/command
 	shoes = /obj/item/clothing/shoes/marinechief/captain
 	gloves = /obj/item/clothing/gloves/marine/techofficer/captain
-	r_pocket = /obj/item/storage/pouch/general/large/command
+	r_pocket = /obj/item/storage/pouch/general/large/command/captain
 	l_pocket = /obj/item/hud_tablet/leadership
 	belt = /obj/item/storage/holster/blade/officer/sabre/full
 	glasses = /obj/item/clothing/glasses/sunglasses/aviator/yellow

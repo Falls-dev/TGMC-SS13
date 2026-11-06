@@ -69,6 +69,11 @@
 	new /obj/item/megaphone(src)
 	new /obj/item/pinpointer(src)
 
+/obj/item/storage/pouch/general/large/command/captain/PopulateContents()
+	new /obj/item/binoculars/tactical(src)
+	new /obj/item/pinpointer(src)
+	new /obj/item/command_tablet(src)
+
 /obj/item/storage/pouch/general/som
 	name = "mining general pouch"
 	desc = "A general purpose pouch used to carry small items used during mining."

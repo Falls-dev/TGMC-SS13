@@ -283,6 +283,8 @@
 	var/cool_amount = 5
 	///tracks overheat timer ref
 	var/overheat_timer
+	/// Sound played when the gun overheats.
+	var/overheat_sound = 'sound/weapons/guns/interact/gun_overheat.ogg'
 	///multiplier on cool amount to determine overheat time
 	var/overheat_multiplier = 1.1
 	///image we create to keep track of heat
@@ -869,7 +871,7 @@
 	if(heat_amount >= 100)
 		STOP_PROCESSING(SSprocessing, src)
 		var/obj/effect/abstract/particle_holder/overheat_smoke = new(src, /particles/overheat_smoke)
-		playsound(src, 'sound/weapons/guns/interact/gun_overheat.ogg', 25, 1, 5)
+		playsound(src, overheat_sound, 25, 1, 5)
 		//overheat gives either you a bonus or penalty depending on gun, by default it is +10% time.
 		var/overheat_time = (heat_amount / cool_amount * overheat_multiplier) SECONDS
 		overheat_timer = addtimer(CALLBACK(src, PROC_REF(complete_overheat), overheat_smoke), overheat_time, TIMER_STOPPABLE)

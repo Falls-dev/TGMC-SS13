@@ -207,7 +207,11 @@ A good representation is: 'byond applies a volume reduction to the sound every X
 	switch(soundin)
 		// General effects
 		if(SFX_SHATTER)
-			soundin = pick('sound/effects/glassbr1.ogg','sound/effects/glassbr2.ogg','sound/effects/glassbr3.ogg')
+			soundin = pick(
+				'sound/effects/glassbr1.ogg', 'sound/effects/glassbr2.ogg', 'sound/effects/glassbr3.ogg',
+				'sound/effects/archive/glass_1.ogg', 'sound/effects/archive/glass_2.ogg', 'sound/effects/archive/glass_3.ogg',
+				'sound/effects/archive/glass_4.ogg', 'sound/effects/archive/glass_5.ogg',
+			)
 		if(SFX_EXPLOSION_LARGE)
 			soundin = pick('sound/effects/explosion/large1.ogg','sound/effects/explosion/large2.ogg','sound/effects/explosion/large3.ogg','sound/effects/explosion/large4.ogg','sound/effects/explosion/large5.ogg','sound/effects/explosion/large6.ogg')
 		if(SFX_EXPLOSION_MICRO)
@@ -260,7 +264,13 @@ A good representation is: 'byond applies a volume reduction to the sound every X
 		if(SFX_BALLISTIC_MISS)
 			soundin = pick('sound/bullets/bullet_miss1.ogg','sound/bullets/bullet_miss2.ogg','sound/bullets/bullet_miss3.ogg','sound/bullets/bullet_miss4.ogg')
 		if(SFX_BALLISTIC_BOUNCE)
-			soundin = pick('sound/bullets/bullet_ricochet1.ogg','sound/bullets/bullet_ricochet2.ogg','sound/bullets/bullet_ricochet3.ogg','sound/bullets/bullet_ricochet4.ogg','sound/bullets/bullet_ricochet5.ogg','sound/bullets/bullet_ricochet6.ogg','sound/bullets/bullet_ricochet7.ogg','sound/bullets/bullet_ricochet8.ogg')
+			soundin = pick(
+				'sound/bullets/bullet_ricochet1.ogg', 'sound/bullets/bullet_ricochet2.ogg', 'sound/bullets/bullet_ricochet3.ogg',
+				'sound/bullets/bullet_ricochet4.ogg', 'sound/bullets/bullet_ricochet5.ogg', 'sound/bullets/bullet_ricochet6.ogg',
+				'sound/bullets/bullet_ricochet7.ogg', 'sound/bullets/bullet_ricochet8.ogg', 'sound/effects/archive/ricochet_1.ogg',
+				'sound/effects/archive/ricochet_2.ogg', 'sound/effects/archive/ricochet_3.ogg', 'sound/effects/archive/ricochet_4.ogg',
+				'sound/effects/archive/ricochet_5.ogg',
+			)
 		if(SFX_ROCKET_BOUNCE)
 			soundin = pick('sound/bullets/rocket_ricochet1.ogg','sound/bullets/rocket_ricochet2.ogg','sound/bullets/rocket_ricochet3.ogg')
 		if(SFX_ENERGY_HIT)

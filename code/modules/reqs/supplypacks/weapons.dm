@@ -7,10 +7,15 @@
 	contains = list(/obj/item/weapon/gun/energy/lasgun/lasrifle/tesla)
 	cost = 600
 
-/datum/supply_packs/weapons/e50
-	name = "E-50 laser emitter"
-	contains = list(/obj/item/weapon/gun/energy/lasgun/lasrifle/e50)
+/datum/supply_packs/weapons/beam_cannon
+	name = "E-50 Beam Cannon"
+	contains = list(/obj/item/weapon/gun/energy/beam_cannon)
 	cost = 400
+
+/datum/supply_packs/weapons/brassback
+	name = "MG-27U rotary machine gun"
+	contains = list(/obj/item/weapon/gun/minigun/brassback, /obj/item/ammo_magazine/mg27, /obj/item/ammo_magazine/mg27)
+	cost = 350
 
 /datum/supply_packs/weapons/tx55
 	name = "AR-55 OICW rifle"
