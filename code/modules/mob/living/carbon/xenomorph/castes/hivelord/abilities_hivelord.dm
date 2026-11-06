@@ -89,6 +89,14 @@
 	action_type = ACTION_TOGGLE
 	var/speed_activated = FALSE
 	var/speed_bonus_active = FALSE
+	/// Should the owner be able to regenerate plasma while the ability is active?
+	var/can_plasma_regenerate = TRUE
+	/// How much armor should be given while the ability is active?
+	var/armor_amount = 0
+	/// The attached armor that been given, if any.
+	var/datum/armor/attached_armor
+	/// Should weeds be created as they move? If so, how much plasma to consume?
+	var/weeding_cost = 0
 
 /datum/action/ability/xeno_action/toggle_speed/remove_action()
 	resinwalk_off(TRUE) // Ensure we remove the movespeed
@@ -113,6 +121,11 @@
 	if(xeno_owner.loc_weeds_type)
 		speed_bonus_active = TRUE
 		xeno_owner.add_movespeed_modifier(type, TRUE, 0, NONE, TRUE, -1.5)
+	if(!can_plasma_regenerate)
+		ADD_TRAIT(xeno_owner, TRAIT_NOPLASMAREGEN, HIVELORD_ABILITY_TRAIT)
+	if(armor_amount)
+		attached_armor = getArmor(armor_amount, armor_amount, armor_amount, armor_amount, armor_amount, armor_amount, armor_amount, armor_amount)
+		xeno_owner.soft_armor = xeno_owner.soft_armor.attachArmor(attached_armor)
 	set_toggle(TRUE)
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(resinwalk_on_moved))
 
@@ -123,6 +136,11 @@
 		xeno_owner.remove_movespeed_modifier(type)
 		speed_bonus_active = FALSE
 	speed_activated = FALSE
+	if(!can_plasma_regenerate)
+		REMOVE_TRAIT(xeno_owner, TRAIT_NOPLASMAREGEN, HIVELORD_ABILITY_TRAIT)
+	if(attached_armor)
+		xeno_owner.soft_armor = xeno_owner.soft_armor.detachArmor(attached_armor)
+		attached_armor = null
 	set_toggle(FALSE)
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 
@@ -132,6 +150,11 @@
 		owner.balloon_alert(owner, "Resin walk ended, no plasma")
 		resinwalk_off(TRUE)
 		return
+	if(!xeno_owner.loc_weeds_type && weeding_cost > 0 && xeno_owner.plasma_stored >= weeding_cost)
+		var/obj/alien/weeds/created_weeds = new(xeno_owner.loc)
+		SSweeds_decay.decaying_list += created_weeds // Check if it should go away (no nearby node) or stick around (nearby node).
+		xeno_owner.handle_weeds_on_movement() // loc_weeds_type is changed here.
+		xeno_owner.use_plasma(weeding_cost)
 	if(xeno_owner.loc_weeds_type)
 		if(!speed_bonus_active)
 			speed_bonus_active = TRUE
@@ -142,6 +165,34 @@
 		return
 	speed_bonus_active = FALSE
 	xeno_owner.remove_movespeed_modifier(type)
+
+/// Sets the `can_plasma_regenerate` variable and handles plasma regeneration accordingly.
+/datum/action/ability/xeno_action/toggle_speed/proc/set_plasma(new_plasma_regeneration)
+	if(can_plasma_regenerate == new_plasma_regeneration)
+		return
+	if(speed_activated)
+		if(can_plasma_regenerate && !new_plasma_regeneration)
+			ADD_TRAIT(xeno_owner, TRAIT_NOPLASMAREGEN, HIVELORD_ABILITY_TRAIT)
+		if(!can_plasma_regenerate && new_plasma_regeneration)
+			REMOVE_TRAIT(xeno_owner, TRAIT_NOPLASMAREGEN, HIVELORD_ABILITY_TRAIT)
+	can_plasma_regenerate = new_plasma_regeneration
+
+/// Sets the `armor_amount` variable and changes attached armor accordingly.
+/datum/action/ability/xeno_action/toggle_speed/proc/set_armor(new_armor_amount)
+	if(armor_amount == new_armor_amount)
+		return
+	if(speed_activated)
+		if(armor_amount && !new_armor_amount)
+			xeno_owner.soft_armor = xeno_owner.soft_armor.detachArmor(attached_armor)
+			attached_armor = null
+		else if(!armor_amount && new_armor_amount)
+			attached_armor = getArmor(new_armor_amount, new_armor_amount, new_armor_amount, new_armor_amount, new_armor_amount, new_armor_amount, new_armor_amount, new_armor_amount)
+			xeno_owner.soft_armor = xeno_owner.soft_armor.attachArmor(attached_armor)
+		else
+			var/diff = new_armor_amount - armor_amount
+			xeno_owner.soft_armor = xeno_owner.soft_armor.modifyAllRatings(diff)
+			attached_armor = attached_armor.modifyAllRatings(diff)
+	armor_amount = new_armor_amount
 
 // ***************************************
 // *********** Tunnel
@@ -314,6 +365,12 @@
 	use_state_flags = ABILITY_USE_LYING
 	target_flags = ABILITY_MOB_TARGET
 	var/heal_range = HIVELORD_HEAL_RANGE
+	/// Should the Resin Jelly Coating status effect also be applied (it lasts for its own default duration)?
+	var/apply_resin_jelly = FALSE
+	/// Should the Healing Infusion status effect also give the TRAIT_INNATE_HEALING trait?
+	var/innate_healing = FALSE
+	/// The amount to multiply the duration, including the amount of healing ticks, of Healing Infusion status effect by. Intervals of 0.1 only to keep duration as a whole number.
+	var/status_multiplier = 1
 
 /datum/action/ability/activable/xeno/healing_infusion/can_use_ability(atom/target, silent = FALSE, override_flags)
 	. = ..()
@@ -370,7 +427,9 @@
 
 	var/mob/living/carbon/xenomorph/patient = target
 
-	patient.apply_status_effect(/datum/status_effect/healing_infusion, HIVELORD_HEALING_INFUSION_DURATION, HIVELORD_HEALING_INFUSION_TICKS) //per debuffs.dm
+	patient.apply_status_effect(/datum/status_effect/healing_infusion, round(HIVELORD_HEALING_INFUSION_DURATION * status_multiplier), max(1, round(HIVELORD_HEALING_INFUSION_TICKS * status_multiplier)), innate_healing) //per debuffs.dm
+	if(apply_resin_jelly)
+		patient.apply_status_effect(STATUS_EFFECT_RESIN_JELLY_COATING)
 
 	succeed_activate()
 	add_cooldown()

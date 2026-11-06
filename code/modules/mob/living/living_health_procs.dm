@@ -381,6 +381,7 @@
 	set_plasma(xeno_caste.plasma_max)
 	sunder = 0
 	hud_update_primo()
+	reapply_mutation_effects() // /mob/living/revive() removes every status effect, including the purchased mutations.
 
 ///Revive the human up to X health points
 /mob/living/carbon/human/proc/revive_to_crit(should_offer_to_ghost = FALSE, should_zombify = FALSE)
