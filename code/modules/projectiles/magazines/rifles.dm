@@ -331,6 +331,35 @@
 	bonus_overlay = "tx15_slug"
 
 //-------------------------------------------------------
+// TYPE 12-ASH AUTOMATIC SHOTGUN
+
+/obj/item/ammo_magazine/rifle/tash12
+	name = "Type 12-ASH buckshot magazine"
+	icon = 'icons/obj/items/ammo/tash12.dmi'
+	desc = "25 A buckshot magazine."
+	icon_state = "tash12b"
+	caliber = CALIBER_12G
+	bonus_overlay = "tash12_b"
+	default_ammo = /datum/ammo/bullet/shotgun/buckshot
+	max_rounds = 25
+	scatter_mod = 2
+	wield_delay_mod = 0.5 SECONDS
+
+/obj/item/ammo_magazine/rifle/tash12/slug
+	name = "Type 12-ASH slug magazine"
+	desc = "25 A slug magazine."
+	icon_state = "tash12s"
+	bonus_overlay = "tash12_s"
+	default_ammo = /datum/ammo/bullet/shotgun/slug
+
+/obj/item/ammo_magazine/rifle/tash12/flechette
+	name = "Type 12-ASH flechette magazine"
+	desc = "25 A flechette magazine."
+	icon_state = "tash12f"
+	bonus_overlay = "tash12_f"
+	default_ammo = /datum/ammo/bullet/shotgun/flechette
+
+//-------------------------------------------------------
 //SMARTMACHINEGUN AMMUNITION
 
 /obj/item/ammo_magazine/sg29
