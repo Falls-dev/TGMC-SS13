@@ -415,6 +415,5 @@
 	caliber = CALIBER_GUIDE_ROUNDS
 	icon_state = "lok_box"
 	default_ammo = /datum/ammo/bullet/rifle/lok_smart
-	w_class = WEIGHT_CLASS_SMALL
 	current_rounds = 144
 	max_rounds = 144

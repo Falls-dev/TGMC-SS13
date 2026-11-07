@@ -3302,8 +3302,8 @@
 	icon = 'icons/obj/items/gun/rifle64.dmi'
 	icon_state = "lok"
 	worn_icon_list = list(
-		slot_l_hand_str = 'icons/mob/inhands/gun/rifle_lefthand_64.dmi',
-		slot_r_hand_str = 'icons/mob/inhands/gun/rifle_righthand_64.dmi',
+		slot_l_hand_str = 'icons/mob/inhands/gun/rifle_lefthand_1.dmi',
+		slot_r_hand_str = 'icons/mob/inhands/gun/rifle_righthand_1.dmi',
 	)
 	fire_sound = 'sound/weapons/guns/fire/tgmc/kinetic/gun_lok.ogg'
 	dry_fire_sound = 'sound/weapons/guns/fire/lok_empty.ogg'
