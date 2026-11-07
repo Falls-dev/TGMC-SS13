@@ -3576,13 +3576,30 @@
 
 	return ..()
 
+/obj/item/weapon/gun/rifle/lok/proc/cancel_locking_state()
+	lock_burst_generation++
+	is_locking = FALSE
+	is_firing_locked_burst = FALSE
+	is_right_click_locking = FALSE
+	pending_lock_target = null
+	locked_targets.Cut()
+	total_current_locks = 0
+	clear_lock_visuals()
+
+/obj/item/weapon/gun/rifle/lok/proc/can_continue_locked_burst(burst_generation)
+	if(QDELETED(src) || burst_generation != lock_burst_generation)
+		return FALSE
+	if(!gun_user || loc != gun_user || !(item_flags & WIELDED))
+		return FALSE
+	return TRUE
+
 /obj/item/weapon/gun/rifle/lok/proc/execute_locked_burst(list/targets_to_fire, burst_generation)
+	var/should_finish = TRUE
 	for(var/mob/living/L as anything in targets_to_fire)
 		var/shots = targets_to_fire[L]
 		for(var/i in 1 to shots)
-			if(QDELETED(src) || burst_generation != lock_burst_generation || !gun_user)
-				return
-			if(!rounds)
+			if(!can_continue_locked_burst(burst_generation) || !rounds)
+				should_finish = FALSE
 				break
 			if(QDELETED(L) || L.stat == DEAD)
 				break
@@ -3592,10 +3609,14 @@
 			Fire()
 			pending_lock_target = null
 
+			if(!can_continue_locked_burst(burst_generation))
+				should_finish = FALSE
+				break
+
 			if(i < shots)
 				sleep(burst_delay)
 
-		if(!rounds)
+		if(!should_finish || !rounds)
 			break
 
 	if(burst_generation == lock_burst_generation)
@@ -3604,16 +3625,10 @@
 		is_firing_locked_burst = FALSE
 		pending_lock_target = null
 
-/obj/item/weapon/gun/rifle/lok/clean_gun_user()
-	is_right_click_locking = FALSE
-	lock_burst_generation++
-	is_firing_locked_burst = FALSE
-	if(is_locking)
-		is_locking = FALSE
-		playsound(src, 'sound/machines/lok_lock_off.ogg', 25, TRUE)
+/obj/item/weapon/gun/rifle/lok/dropped(mob/user)
+	cancel_locking_state()
+	return ..()
 
-	clear_lock_visuals()
-	locked_targets.Cut()
-	total_current_locks = 0
-	pending_lock_target = null
+/obj/item/weapon/gun/rifle/lok/clean_gun_user()
+	cancel_locking_state()
 	return ..()
