@@ -32,6 +32,16 @@
 	contains = list(/obj/item/attachable/b15_scope)
 	cost = 100
 
+/datum/supply_packs/weapons/lok_ammo
+	name = "Lok-0.5 Smart Rifle magazine"
+	contains = list(/obj/item/ammo_magazine/rifle/lok)
+	cost = 50
+
+/datum/supply_packs/weapons/lok_ammo_box
+	name = "Lok-0.5 Smart Rifle Ammo Box"
+	contains = list(/obj/item/ammo_magazine/packet/lok_guide_rounds)
+	cost = 75
+
 /datum/supply_packs/weapons/railgun
 	name = "SR-220 railgun"
 	contains = list(/obj/item/weapon/gun/rifle/railgun)

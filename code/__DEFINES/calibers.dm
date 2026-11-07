@@ -49,6 +49,7 @@
 #define CALIBER_10X27_INCENDIARY_CASELESS "10x27mm incendiary caseless"
 #define CALIBER_10X26_CASELESS "10x26mm caseless" //MG-60 and SG
 #define CALIBER_ALIEN "alien alloy"
+#define CALIBER_GUIDE_ROUNDS "guide rounds"
 
 // --- Shotguns ---
 #define CALIBER_12G "12 gauge"
