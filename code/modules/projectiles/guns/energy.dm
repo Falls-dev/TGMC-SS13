@@ -1368,7 +1368,7 @@
 	allowed_ammo_types = list(/obj/item/cell/lasgun/lasrifle, /obj/item/cell/lasgun/lasrifle/recharger)
 	rounds_per_shot = 150
 	max_shots = 4
-	force = 10
+	force = 40
 	fire_delay = 0
 	wield_delay = 0.2 SECONDS
 	aim_slowdown = 2
