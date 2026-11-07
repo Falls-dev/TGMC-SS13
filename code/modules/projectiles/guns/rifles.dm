@@ -3519,7 +3519,7 @@
 	var/image/lock_img = image(loc = L)
 	lock_img.appearance_flags = RESET_COLOR | RESET_TRANSFORM | KEEP_APART
 	lock_img.layer = ABOVE_MOB_LAYER
-	lock_img.plane = GAME_PLANE
+	lock_img.plane = L.plane
 	lock_img.pixel_y = 20
 	lock_img.maptext = MAPTEXT("<span style='color: [marker_color]; font-size: 11pt; font-weight: bold; text-align: center; -dm-text-outline: 1.5px black;'>[locks_count]</span>")
 	lock_img.maptext_width = 32
