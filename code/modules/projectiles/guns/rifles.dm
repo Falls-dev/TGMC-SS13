@@ -3319,6 +3319,7 @@
 		/obj/item/attachable/flashlight,
 		/obj/item/attachable/motiondetector,
 	)
+	attachable_offset = list("rail_x" = 15, "rail_y" = 21)
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES|GUN_WIELDED_FIRING_ONLY
 	gun_skill_category = SKILL_ENGINEER
 	fire_delay = 0.5 SECONDS
