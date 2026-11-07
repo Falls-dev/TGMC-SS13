@@ -513,10 +513,6 @@ You can serve your Division in a variety of roles, so choose carefully."})
 	job_desc = "Перевозите и поддерживайте отряды на передовой."
 	minimap_icon = "transport_crew"
 
-/datum/job/terragov/command/transport_crewman/radio_help_message(mob/M)
-	. = ..()
-	to_chat(M, {"You are a Transport Crewman. You operate the TGMC's transport vehciles to ensure that marines and equipment gets to the front in a timely and safe manner."})
-
 /datum/job/terragov/command/transport_crewman/after_spawn(mob/living/carbon/new_mob, mob/user, latejoin = FALSE)
 	. = ..()
 	if(!ishuman(new_mob))
@@ -1155,3 +1151,26 @@ If you require any help, use <b>mentorhelp</b> to ask mentors about what you're 
 	. = ..()
 	to_chat(M, {"Your primary job is to uphold the law, order, peace and stability aboard the ship. Marines can get rowdy after a few weeks of cryosleep!
 	In addition, you are tasked with the security of high-ranking personnel, including the command staff. Keep them safe!"})
+
+/datum/job/terragov/command/captain/campaign
+	outfit = /datum/outfit/job/command/captain_campaign
+	multiple_outfits = FALSE
+
+
+//Field Commander
+/datum/job/terragov/command/fieldcommander/campaign
+	outfit = /datum/outfit/job/command/fieldcommander_campaign
+	multiple_outfits = FALSE
+
+
+//Staff Officer
+/datum/job/terragov/command/staffofficer/campaign
+	outfit = /datum/outfit/job/command/staffofficer_campaign
+	multiple_outfits = FALSE
+
+
+//Transport Officer
+
+/datum/job/terragov/command/transport_crewman/radio_help_message(mob/M)
+	. = ..()
+	to_chat(M, {"You are a Transport Crewman. You operate the TGMC's transport vehciles to ensure that marines and equipment gets to the front in a timely and safe manner."})

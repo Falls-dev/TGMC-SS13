@@ -11,14 +11,17 @@
 #define RADIO_TOKEN_REQUISITIONS ":u"
 
 #define RADIO_CHANNEL_ENGINEERING "Engineering"
+#define RADIO_CHANNEL_ENGINEERING_SOM "Engineering SOM"
 #define RADIO_KEY_ENGINEERING "e"
 #define RADIO_TOKEN_ENGINEERING ":e"
 
 #define RADIO_CHANNEL_MEDICAL "Medical"
+#define RADIO_CHANNEL_MEDICAL_SOM "Medical SOM"
 #define RADIO_KEY_MEDICAL "m"
 #define RADIO_TOKEN_MEDICAL ":m"
 
 #define RADIO_CHANNEL_COMMAND "Command"
+#define RADIO_CHANNEL_COMMAND_SOM "Command SOM"
 #define RADIO_KEY_COMMAND "v"
 #define RADIO_TOKEN_COMMAND ":v"
 
@@ -27,18 +30,22 @@
 #define RADIO_TOKEN_CAS ":s" //s for support
 
 #define RADIO_CHANNEL_ALPHA "Alpha"
+#define RADIO_CHANNEL_ZULU "Zulu"
 #define RADIO_KEY_ALPHA "q"
 #define RADIO_TOKEN_ALPHA ":q"
 
 #define RADIO_CHANNEL_BRAVO "Bravo"
+#define RADIO_CHANNEL_YANKEE "Yankee"
 #define RADIO_KEY_BRAVO "b"
 #define RADIO_TOKEN_BRAVO ":b"
 
 #define RADIO_CHANNEL_CHARLIE "Charlie"
+#define RADIO_CHANNEL_XRAY "Xray"
 #define RADIO_KEY_CHARLIE "c"
 #define RADIO_TOKEN_CHARLIE ":c"
 
 #define RADIO_CHANNEL_DELTA "Delta"
+#define RADIO_CHANNEL_WHISKEY "Whiskey"
 #define RADIO_KEY_DELTA "d"
 #define RADIO_TOKEN_DELTA ":d"
 

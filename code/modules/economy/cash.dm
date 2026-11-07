@@ -125,3 +125,33 @@
 	. = ..()
 	if(user == loc)
 		. += span_notice("Charge card's owner: [owner_name]. Rubles remaining: [worth].")
+
+/obj/item/spacecash/c500
+	name = "500 dollars"
+	icon_state = "spacecash500"
+	desc = "Five US Government minted hundred dollar bills. All of them have pictures of Ben Franklin on them. They all eagarly glare at you, making you feel as if you owe them something. "
+	worth = 500
+
+/obj/item/spacecash/c100
+	name = "100 dollar bill"
+	icon_state = "spacecash100"
+	desc = "A single US Government minted hundred dollar bill. It has a picture of Ben Franklin, lightning kite extraordinaire. You could probably pay for an entire day of shore leave activities with this, provided you aren't careless. (which you are)"
+	worth = 100
+
+/obj/item/spacecash/c50
+	name = "50 dollar bill"
+	icon_state = "spacecash50"
+	desc = "A single US Government minted fifty dollar bill. It has a picture of Ulysses S. Grant, a man known for expendable troop tactics in the civil war, and probable distant relative of Bill Carson. You could probably buy the whole bar a beer with this, assuming there are 4 other people in the bar."
+	worth = 50
+
+/obj/item/spacecash/c1
+	name = "1 dollar bill"
+	icon_state = "spacecash1"
+	desc = "A single US Government minted one dollar bill. It has a picture of George Washington printed on it. Makes most people of english origin cry, but isn't worth very much. Could probably get you half a hot-dog in some systems. "
+	worth = 1
+
+/obj/item/spacecash/c10
+	name = "10 dollar bill"
+	icon_state = "spacecash10"
+	desc = "A single US Government minted ten dollar bill. It has a picture of Alexander Hamilton on it, federal bank enthusiast, and victim of a terrible griefing incident. Could probably pay for a meal at a cheap restaurant, before tax and tip."
+	worth = 10

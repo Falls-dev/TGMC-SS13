@@ -26,3 +26,42 @@
 		#endif
 	#endif
 #endif
+
+#ifdef CAMPAIGN_MAP_AUDIT
+#include "campaign_missions\modularmaps\jungle_outpost\joutpostwtower1.dmm"
+#include "campaign_missions\modularmaps\jungle_outpost\joutpostwtower2.dmm"
+#include "campaign_missions\modularmaps\jungle_outpost\joutpostwtower3.dmm"
+#include "campaign_missions\modularmaps\jungle_outpost\joutpostwtower4.dmm"
+#include "campaign_missions\modularmaps\jungle_outpost\joutpostscrates1.dmm"
+#include "campaign_missions\modularmaps\jungle_outpost\joutpostscrates2.dmm"
+#include "campaign_missions\modularmaps\jungle_outpost\joutpostscrates3.dmm"
+#include "campaign_missions\modularmaps\jungle_outpost\joutpostscrates4.dmm"
+#include "campaign_missions\modularmaps\jungle_outpost\joutposthydro1.dmm"
+#include "campaign_missions\modularmaps\jungle_outpost\joutposthydro2.dmm"
+#include "campaign_missions\modularmaps\jungle_outpost\joutposthydro3.dmm"
+#include "campaign_missions\modularmaps\jungle_outpost\joutpostmedbay1.dmm"
+#include "campaign_missions\modularmaps\jungle_outpost\joutpostmedbay2.dmm"
+#include "campaign_missions\modularmaps\jungle_outpost\joutpostmedbay3.dmm"
+#include "campaign_missions\modularmaps\jungle_outpost\joutpostengi1.dmm"
+#include "campaign_missions\modularmaps\jungle_outpost\joutpostengi2.dmm"
+#include "campaign_missions\modularmaps\jungle_outpost\joutpostengi3.dmm"
+#include "campaign_missions\map_files\BigRed_v2\BigRed_v2.dmm"
+#include "campaign_missions\map_files\Campaign maps\jungle_outpost\jungle_outpost.dmm"
+#include "campaign_missions\map_files\Campaign maps\nt_base\nt_base.dmm"
+#include "campaign_missions\map_files\Campaign maps\orion_2\orionoutpost_2.dmm"
+#include "campaign_missions\map_files\Campaign maps\patricks_rest\patricks_rest.dmm"
+#include "campaign_missions\map_files\Campaign maps\som_base\sombase.dmm"
+#include "campaign_missions\map_files\Campaign maps\som_raid_base\som_raiding_base.dmm"
+#include "campaign_missions\map_files\Campaign maps\tgmc_airfield\tgmc_airfield.dmm"
+#include "campaign_missions\map_files\Campaign maps\tgmc_raid_base\tgmc_raiding_base.dmm"
+#include "campaign_missions\map_files\desparity\desparity.dmm"
+#include "campaign_missions\map_files\Fort_Phobos\Fort_Phobos.dmm"
+#include "campaign_missions\map_files\icy_caves\icy_caves.dmm"
+#include "campaign_missions\map_files\Iteron\Iteron.dmm"
+#include "campaign_missions\map_files\Lawanka_Outpost\LawankaOutpost.dmm"
+#include "campaign_missions\map_files\Orion_Military_Outpost\orionoutpost.dmm"
+#endif
+
+#ifdef CAMPAIGN_MAP_AUDIT
+#include "templates\capsule_1.dmm"
+#endif

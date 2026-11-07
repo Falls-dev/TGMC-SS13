@@ -84,12 +84,11 @@
 		return
 	if(target == src)
 		return
-	var/hud_type
-	switch(faction)
-		if(FACTION_TERRAGOV)
-			hud_type = DATA_HUD_SQUAD_TERRAGOV
-		else
-			return
+	if(src.faction != faction)
+		return
+	var/hud_type = GLOB.faction_to_data_hud[faction]
+	if(!hud_type)
+		return
 	var/datum/atom_hud/squad/squad_hud = GLOB.huds[hud_type]
 	if(!squad_hud.hudusers[src])
 		return

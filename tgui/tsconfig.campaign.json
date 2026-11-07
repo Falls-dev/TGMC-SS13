@@ -1,0 +1,4 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["./global.d.ts", "./packages/tgui/interfaces/CampaignMenu/**/*", "./packages/tgui/interfaces/CampaignAdminPanel.tsx", "./packages/tgui/interfaces/IndividualStats/**/*"]
+}

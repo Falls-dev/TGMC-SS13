@@ -377,3 +377,22 @@
 	new_hud_list.icon = 'icons/effects/lases.dmi'
 	new_hud_list.icon_state = icon_state_on
 	hud_list[SQUAD_HUD_TERRAGOV] = new_hud_list
+
+/obj/effect/overlay/blinking_laser/monarch
+	icon_state = "monarch_target"
+
+/obj/effect/overlay/blinking_laser/swansong
+	icon_state = "swansong_target"
+
+// Bombs, then bomblets
+
+/obj/effect/overlay/blinking_laser/bomblet
+	icon_state = "bomblet_target"
+
+//Marine-only visuals. Prediction HUD, etc. Does not show without marine headset
+
+/obj/effect/overlay/blinking_laser/bomb
+	icon_state = "bomb_target"
+
+/obj/effect/overlay/blinking_laser/bomb_fat
+	icon_state = "fat_bomb_target"

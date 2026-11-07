@@ -96,6 +96,8 @@ GLOBAL_PROTECT(roles_allowed_minimap_draw)
 
 ///Setter for the offsets of the x and y of drawing based on the input z, and the drawn_image
 /atom/movable/screen/minimap_tool/proc/set_zlevel(zlevel, minimap_flag)
+	src.zlevel = zlevel
+	src.minimap_flag = minimap_flag
 	x_offset = SSminimaps.minimaps_by_z["[zlevel]"].x_offset
 	y_offset = SSminimaps.minimaps_by_z["[zlevel]"].y_offset
 	drawn_image = SSminimaps.get_drawing_image(zlevel, minimap_flag)
@@ -151,6 +153,12 @@ GLOBAL_PROTECT(roles_allowed_minimap_draw)
 		draw_line(arglist(last_drawn))
 		last_drawn = null
 		log_minimap_drawing("[key_name(usr)] undid the last [color] line")
+
+/atom/movable/screen/minimap_tool/draw_tool/set_zlevel(zlevel, minimap_flag)
+	if(src.zlevel != zlevel)
+		starting_coords = null
+		last_drawn = null
+	return ..()
 
 /atom/movable/screen/minimap_tool/draw_tool/on_mousedown(mob/source, atom/object, location, control, params)
 	. = ..()
@@ -275,6 +283,11 @@ GLOBAL_PROTECT(roles_allowed_minimap_draw)
 	/// List of turfs that have labels attached to them. kept around so it can be cleared
 	var/list/turf/labelled_turfs = list()
 
+/atom/movable/screen/minimap_tool/label/set_zlevel(zlevel, minimap_flag)
+	if(src.zlevel != zlevel)
+		labelled_turfs.Cut()
+	return ..()
+
 /atom/movable/screen/minimap_tool/label/Click(location, control, params)
 	. = ..()
 	var/list/modifiers = params2list(params)
@@ -319,6 +332,8 @@ GLOBAL_PROTECT(roles_allowed_minimap_draw)
 			SSminimaps.remove_marker(nearest)
 		return
 	var/label_text = MAPTEXT(tgui_input_text(source, title = "Label Name", max_length = 35))
+	if(!target || target.z != zlevel)
+		return
 	var/filter_result = CAN_BYPASS_FILTER(user) ? null : is_ic_filtered(label_text)
 	if(filter_result)
 		to_chat(source, span_warning("That label contained a word prohibited in IC chat! Consider reviewing the server rules.\n<span replaceRegex='show_filtered_ic_chat'>\"[label_text]\"</span>"))

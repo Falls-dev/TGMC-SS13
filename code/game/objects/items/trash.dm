@@ -173,3 +173,13 @@
 	name = "\improper crumbled SOM MFR"
 	desc = "It has done its part for the SOM. Have you?"
 	icon_state = "som_mealpackempty"
+
+/obj/item/trash/trashbag
+	name = "trash bag"
+	desc = "It's the heavy-duty black polymer kind. Time to take out the trash!"
+	icon_state = "ztrashbag"
+	w_class = WEIGHT_CLASS_TINY
+	throwforce = 1
+
+/obj/item/trash/crushed_bottle/boda
+	icon_state = "boda_crushed"

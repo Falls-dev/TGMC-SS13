@@ -218,7 +218,7 @@
 	if(!.)
 		return
 	toggle_item_bump_attack(user, TRUE)
-	if(user.skills.getRating(SKILL_MELEE_WEAPONS) > SKILL_MELEE_DEFAULT)
+	if(user.skills.getRating(SKILL_MELEE_WEAPONS) > SKILL_MELEE_DEFAULT || HAS_TRAIT(user, TRAIT_AXE_EXPERT))
 		special_attack.give_action(user)
 
 /obj/item/weapon/twohanded/fireaxe/som/unwield(mob/user)

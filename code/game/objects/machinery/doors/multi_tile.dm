@@ -390,3 +390,9 @@
 	openspeed = 17
 	no_panel = TRUE
 	opacity = TRUE
+
+/obj/machinery/door/airlock/multi_tile/urban/generic_solid
+	icon = 'icons/obj/doors/hybrisa/hybrisa_2x1generic_solid.dmi'
+	req_one_access = list(ACCESS_CIVILIAN_PUBLIC)
+
+// Medical

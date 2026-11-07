@@ -42,6 +42,8 @@
 	AddElement(/datum/element/connect_loc, connections)
 	if(user)
 		faction = user.faction
+		if(HAS_TRAIT(user, TRAIT_SUPERIOR_BUILDER) && (istype(src, /obj/structure/barricade/solid) || istype(src, /obj/structure/barricade/folding)))
+			modify_max_integrity(max_integrity + 75)
 
 /obj/structure/barricade/handle_barrier_chance(mob/living/M)
 	if(istype(M, /mob/living/carbon/xenomorph))

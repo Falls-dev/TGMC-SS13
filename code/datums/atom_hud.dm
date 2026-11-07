@@ -5,7 +5,7 @@ GLOBAL_LIST_EMPTY(all_huds)
 GLOBAL_LIST_INIT_TYPED(huds, /datum/atom_hud, _init_global_huds())
 
 /proc/_init_global_huds()
-	var/list/L = new /list(15)
+	var/list/L = new /list(DATA_HUD_SQUAD_SOM)
 
 	L[DATA_HUD_BASIC] = new /datum/atom_hud/simple
 	L[DATA_HUD_MEDICAL_BASIC] = new /datum/atom_hud/medical/basic
@@ -22,6 +22,7 @@ GLOBAL_LIST_INIT_TYPED(huds, /datum/atom_hud, _init_global_huds())
 	L[DATA_HUD_XENO_HEART] = new /datum/atom_hud/xeno_heart
 	L[DATA_HUD_HUNTER] = new /datum/atom_hud/hunter_hud
 	L[DATA_HUD_HUNTER_CLAN] = new /datum/atom_hud/hunter_clan
+	L[DATA_HUD_SQUAD_SOM] = new /datum/atom_hud/squad/som
 
 	return L
 

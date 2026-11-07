@@ -329,3 +329,19 @@ GLOBAL_LIST_INIT(traits_to_pass_flags, list(
 	TRAIT_PASS_WALKOVER = PASS_WALKOVER,
 	TRAIT_PASS_TANK = PASS_TANK,
 ))
+
+#define TRAIT_AXE_EXPERT "axe_expert"
+
+#define TRAIT_SWORD_EXPERT "sword_expert"
+
+#define TRAIT_SUPERIOR_BUILDER "superior_builder"
+
+#define BIGBIKE_TRAIT "bigbike_trait"
+
+#define TRAIT_INNATE_HEALING "innate_healing"
+
+#define TRAIT_WARPED_INVISIBLE "warped_invisible"
+
+#define TRAIT_TURRET_HIDDEN "turret_hidden" //target gets passed over by turrets choosing a victim
+
+#define STEALTH_TRAIT "stealth" //From hunter stealth

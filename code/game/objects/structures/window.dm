@@ -759,3 +759,7 @@
 /obj/structure/window/phoronreinforced/pred
 	icon_state = "phoronrwindow"
 	resistance_flags = INDESTRUCTIBLE
+
+/obj/structure/window/framed/urban/reinforced
+
+/obj/structure/window/framed/urban/colony/engineering/hull

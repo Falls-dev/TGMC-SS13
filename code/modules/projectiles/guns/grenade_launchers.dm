@@ -338,3 +338,10 @@
 	name = "M30E2 flare gun"
 	desc = "A very tiny flaregun that fires flares equipped with long range irons, the mass amounts of markings on the back and barrel denote it as owned by the TGMC."
 	icon_state = "marine_flaregun"
+
+/obj/item/weapon/gun/grenade_launcher/underslung/battle_rifle
+	name = "\improper BR-64 underslung grenade launcher"
+	desc = "A weapon-mounted, reloadable, two-shot grenade launcher designed to fit the BR-64."
+	icon_state = "t64_grenade"
+	pixel_shift_x = 21
+	pixel_shift_y = 15

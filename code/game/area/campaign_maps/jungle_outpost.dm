@@ -185,3 +185,7 @@
 	name = "\improper Hermit's home"
 	icon_state = "green"
 	always_unpowered = TRUE
+
+/area/campaign/jungle_outpost/outpost/bar
+	name = "\improper Bar"
+	icon_state = "bar"

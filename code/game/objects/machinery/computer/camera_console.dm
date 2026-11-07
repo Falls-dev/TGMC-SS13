@@ -256,3 +256,5 @@
 	name = "\improper 'Triump' camera controls"
 	network = list("dropship3")
 
+/obj/machinery/computer/security/som_mainship
+	network = list("sommainship")

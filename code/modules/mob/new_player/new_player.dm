@@ -181,6 +181,12 @@
 	return "\nYou will have to wait at least [SSticker.mode?.respawn_time * 0.1 / 60] minutes before being able to respawn as a marine!"
 
 /mob/new_player/proc/late_choices()
+	if(SSticker.mode?.round_type_flags & MODE_TWO_HUMAN_FACTIONS)
+		if(!(faction in SSticker.mode.get_joinable_factions(FALSE)))
+			var/selected_faction = tgui_input_list(src, "What faction do you want to join?", "Faction choice", SSticker.mode.get_joinable_factions(TRUE))
+			if(!selected_faction)
+				return
+			faction = selected_faction
 	GLOB.latejoin_menu.ui_interact(src)
 
 
@@ -306,7 +312,7 @@
 		return FALSE
 	if(!job_datum)
 		return FALSE
-	if(!isxenosjob(job_datum) && (SSmonitor.gamestate == SHUTTERS_CLOSED || (SSmonitor.gamestate == GROUNDSIDE && SSmonitor.current_state <= XENOS_LOSING)))
+	if(!(SSticker.mode.round_type_flags & MODE_TWO_HUMAN_FACTIONS) && !isxenosjob(job_datum) && (SSmonitor.gamestate == SHUTTERS_CLOSED || (SSmonitor.gamestate == GROUNDSIDE && SSmonitor.current_state <= XENOS_LOSING)))
 		var/datum/job/xeno_job = SSjob.GetJobType(/datum/job/xenomorph)
 		if((xeno_job.total_positions - xeno_job.current_positions) > length(GLOB.alive_xeno_list_hive[XENO_HIVE_NORMAL]) * TOO_MUCH_BURROWED_PROPORTION)
 			if(tgui_alert(src, "There is a lack of xeno players on this round, unbalanced rounds are unfun for everyone. Are you sure you want to play as a marine? ", "Warning : the game is unbalanced", list("Yes", "No")) != "Yes")
@@ -321,6 +327,10 @@
 	return TRUE
 
 /mob/new_player/proc/IsJobAvailable(datum/job/job, latejoin = FALSE, list/reasons)
+	if(latejoin && job && SSticker.mode?.round_type_flags & MODE_TWO_HUMAN_FACTIONS && job.faction != faction)
+		if(reasons)
+			reasons += "This position belongs to the other faction."
+		return FALSE
 	if(!job)
 		if(reasons)
 			reasons += "Invalid job."

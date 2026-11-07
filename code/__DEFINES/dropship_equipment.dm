@@ -24,3 +24,5 @@
 #define CAS_AMMO_EXPLOSIVE 1//Uses explosive ammo. Missiles/bombs, etc.
 #define CAS_AMMO_INCENDIARY 2 //Uses incendiary ammo. Napalm rocket, etc.
 #define CAS_AMMO_HARMLESS 3 //Ammo is absolutely harmless
+
+#define CAS_BOMBLET 6

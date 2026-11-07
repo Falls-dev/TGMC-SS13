@@ -400,3 +400,5 @@
 #define COMSIG_XENOABILITY_UNLEASHPUPPETS "xenoability_unleashpuppets"
 #define COMSIG_XENOABILITY_RECALLPUPPETS "xenoability_recallpuppets"
 #define COMSIG_XENOABILITY_BESTOWBLESSINGS "xenoability_giveblessings"
+
+#define COMSIG_XENOABILITY_TOGGLE_DISGUISE "xenoability_toggle_disguise"

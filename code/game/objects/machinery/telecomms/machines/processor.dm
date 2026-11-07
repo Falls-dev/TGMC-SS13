@@ -54,3 +54,47 @@
 /obj/machinery/telecomms/processor/preset/four/cicbackup
 	on = FALSE
 	id = "Backup Processor 4"
+
+/obj/machinery/telecomms/processor/preset_four
+	id = "Processor 4"
+	network = "tcommsat"
+	autolinkers = list("processor4")
+
+//proper backup server for CIC
+
+/obj/machinery/telecomms/processor/preset_four/cicbackup
+	on = 0
+	id = "Backup Processor 4"
+	network = "tcommsat"
+	autolinkers = list("processor4")
+
+/obj/machinery/telecomms/processor/preset_four/som
+	id = "Processor 4 som"
+	autolinkers = list("processor4_som")
+
+/obj/machinery/telecomms/processor/preset_two
+	id = "Processor 2"
+	network = "tcommsat"
+	autolinkers = list("processor2")
+
+/obj/machinery/telecomms/processor/preset_two/som
+	id = "Processor 2 som"
+	autolinkers = list("processor2_som")
+
+/obj/machinery/telecomms/processor/preset_one
+	id = "Processor 1"
+	network = "tcommsat"
+	autolinkers = list("processor1") // processors are sort of isolated; they don't need backward links
+
+/obj/machinery/telecomms/processor/preset_one/som
+	id = "Processor 1 som"
+	autolinkers = list("processor1_som")
+
+/obj/machinery/telecomms/processor/preset_three
+	id = "Processor 3"
+	network = "tcommsat"
+	autolinkers = list("processor3")
+
+/obj/machinery/telecomms/processor/preset_three/som
+	id = "Processor 3 som"
+	autolinkers = list("processor3_som")

@@ -86,3 +86,16 @@ GLOBAL_VAR_INIT(message_delay, 0) // To make sure restarting the recentmessages 
 /obj/machinery/telecomms/broadcaster/preset/right/cicbackup
 	id = "Backup Broadcaster B"
 	autolinkers = list("broadcasterB")
+
+/obj/machinery/telecomms/broadcaster/preset_left
+	id = "Broadcaster A"
+	network = "tcommsat"
+	autolinkers = list("broadcasterA")
+
+/obj/machinery/telecomms/broadcaster/preset_left/som
+	id = "Broadcaster A som"
+	network = "tcommsat"
+	autolinkers = list("broadcasterA_som")
+
+
+//--PRESET RIGHT--//

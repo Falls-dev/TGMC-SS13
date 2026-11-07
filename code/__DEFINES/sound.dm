@@ -168,3 +168,11 @@
 #define SFX_CLAN_SWORD_HIT "clan_sword_hit"
 #define SFX_CHAIN_SWING "chain_swing"
 #define SFX_REVOLVER_SPIN "revolver_spin"
+
+#define MEDIUM_SOUND_RANGE 12
+
+#define LOUD_SOUND_RANGE 24
+
+#define SHORT_SOUND_RANGE 8
+
+#define SUPER_SHORT_SOUND_RANGE 5

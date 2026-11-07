@@ -330,6 +330,9 @@
 	network = list("marine")
 	resistance_flags = RESIST_ALL //If the containing headset is not destroyed, neither should this be.
 
+/obj/machinery/camera/headset/som
+	network = list(SOM_CAMERA_NETWORK)
+
 //used by the laser camera dropship equipment
 /obj/machinery/camera/laser_cam
 	name = "laser camera"
@@ -399,3 +402,8 @@
 	network = list("miner")
 	status = FALSE // by default miners are inactive
 	internal_light = FALSE
+
+/obj/machinery/camera/autoname/mainship/somship
+	network = list(SOM_CAMERA_NETWORK)
+
+//cameras installed inside the dropships, accessible via both cockpit monitor and ship camera computers

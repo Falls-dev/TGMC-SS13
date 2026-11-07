@@ -279,8 +279,10 @@
 		var/datum/personal_statistics/personal_statistics = GLOB.personal_statistics_list[blame_mob.ckey]
 		if(faction == blame_mob.faction)
 			personal_statistics.mechs_destroyed -- //bruh
+			personal_statistics.mission_mechs_destroyed --
 		else
 			personal_statistics.mechs_destroyed ++
+			personal_statistics.mission_mechs_destroyed ++
 
 	spark_system?.start()
 

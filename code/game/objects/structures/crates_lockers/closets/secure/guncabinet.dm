@@ -149,3 +149,9 @@
 	new /obj/item/clothing/suit/armor/riot(src)
 	new /obj/item/clothing/suit/armor/riot(src)
 	new /obj/item/storage/box/flashbangs(src)
+
+/obj/structure/closet/secure_closet/guncabinet/lmg/PopulateContents()
+	new /obj/item/weapon/gun/rifle/standard_lmg(src)
+	new /obj/item/ammo_magazine/standard_lmg(src)
+	new /obj/item/weapon/gun/rifle/standard_lmg(src)
+	new /obj/item/ammo_magazine/standard_lmg(src)

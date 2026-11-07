@@ -131,3 +131,15 @@
 	anchored = TRUE
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "smashed_pie"
+
+/obj/effect/decal/cleanable/dirt/grime1
+	icon_state = "grime1"
+
+/obj/effect/decal/cleanable/dirt/grime3
+	icon_state = "grime3"
+
+/obj/effect/decal/cleanable/dirt/grime2
+	icon_state = "grime2"
+
+/obj/effect/decal/cleanable/dirt/grime4
+	icon_state = "grime4"

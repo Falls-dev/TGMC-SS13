@@ -157,3 +157,8 @@
 /obj/item/clothing/tie/holobadge/attack(mob/living/carbon/human/M, mob/living/user)
 	if(isliving(user))
 		user.visible_message(span_warning("[user] invades [M]'s personal space, thrusting [src] into [M.p_their()] face insistently."), span_warning("You invade [M]'s personal space, thrusting [src] into [M.p_their()] face insistently. You are the law."))
+
+/obj/item/clothing/tie/armband/science
+	name = "science armband"
+	desc = "An armband, worn by the crew to display which department they're assigned to. This one is purple."
+	icon_state = "rnd"

@@ -405,3 +405,10 @@
 		/obj/structure/ore_box = 10,
 		/obj/effect/spawner/random/engineering/mineral = 1,
 	)
+
+/obj/effect/spawner/random/engineering/toolbox/mechanicalweighted
+	loot = list(
+		/obj/item/storage/toolbox/mechanical = 10,
+		/obj/item/storage/toolbox/electrical = 1,
+		/obj/item/storage/toolbox/emergency = 1,
+	)

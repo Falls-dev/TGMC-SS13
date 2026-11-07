@@ -168,3 +168,17 @@ GLOBAL_LIST_INIT(do_not_preserve_empty, typecacheof(list(
 	/obj/item/storage/backpack/marine/corpsman/satchel,
 	/obj/item/storage/backpack/marine/satchel/tech,
 	/obj/item/storage/backpack/marine/standard), only_root_path = TRUE))
+
+GLOBAL_LIST_EMPTY(patrol_point_list)
+
+GLOBAL_LIST_EMPTY(campaign_objectives)
+
+GLOBAL_LIST_EMPTY(campaign_structures)
+
+GLOBAL_LIST_EMPTY(campaign_mech_spawners)
+
+GLOBAL_LIST_EMPTY(campaign_tank_spawners)
+
+GLOBAL_LIST_EMPTY(campaign_reward_spawners)
+
+GLOBAL_LIST_EMPTY(teleporter_arrays)
