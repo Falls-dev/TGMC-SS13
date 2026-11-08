@@ -45,7 +45,6 @@
 
   // Expose inlined metadata
   Byond.windowId = parseMetaTag('tgui:windowId');
-  Byond.storageCdn = parseMetaTag('tgui:storagecdn');
 
   // Backwards compatibility
   window.__windowId__ = Byond.windowId;
