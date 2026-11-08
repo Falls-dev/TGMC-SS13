@@ -404,6 +404,7 @@
 	max_range = 30
 	damage_falloff = 0.1
 	bullet_color = COLOR_PULSE_BLUE
+	matter_cost = 0
 
 /atom/movable/projectile/lok
 	name = "guide rounds"

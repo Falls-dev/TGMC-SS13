@@ -3332,6 +3332,7 @@
 	var/max_locks = 24
 
 	var/list/image/lock_visual_images = list()
+	var/client/lock_visual_client
 	var/image/lock_area_image
 	var/turf/lock_area_anchor
 
@@ -3430,6 +3431,7 @@
 /obj/item/weapon/gun/rifle/lok/proc/update_lock_area_visual(turf/T)
 	if(!gun_user?.client || !T)
 		return
+	lock_visual_client = gun_user.client
 
 	if(!lock_area_image || QDELETED(lock_area_image) || !lock_area_anchor || lock_area_anchor.z != T.z)
 		if(lock_area_image)
@@ -3459,7 +3461,11 @@
 		update_target_visuals(L)
 
 /obj/item/weapon/gun/rifle/lok/proc/process_locking_loop()
-	while(is_locking && gun_user && !QDELETED(src))
+	while(is_locking && !QDELETED(src))
+		if(!gun_user || loc != gun_user || !(item_flags & WIELDED))
+			cancel_locking_state()
+			return
+
 		for(var/mob/living/L as anything in locked_targets)
 			if(!is_valid_locked_target(L))
 				total_current_locks -= locked_targets[L]
@@ -3506,6 +3512,7 @@
 /obj/item/weapon/gun/rifle/lok/proc/update_target_visuals(mob/living/L)
 	if(!gun_user?.client || !L || QDELETED(L))
 		return
+	lock_visual_client = gun_user.client
 
 	var/locks_count = locked_targets[L]
 	if(isnull(locks_count) || !locks_count)
@@ -3536,24 +3543,27 @@
 		return
 
 	if(lock_visual_images[L])
-		if(gun_user?.client)
-			gun_user.client.images -= lock_visual_images[L]
+		var/client/visual_client = lock_visual_client || gun_user?.client
+		if(visual_client)
+			visual_client.images -= lock_visual_images[L]
 		qdel(lock_visual_images[L])
 		lock_visual_images -= L
 
 /obj/item/weapon/gun/rifle/lok/proc/clear_lock_visuals()
+	var/client/visual_client = lock_visual_client || gun_user?.client
 	for(var/mob/living/L as anything in lock_visual_images)
-		if(gun_user?.client)
-			gun_user.client.images -= lock_visual_images[L]
+		if(visual_client)
+			visual_client.images -= lock_visual_images[L]
 		qdel(lock_visual_images[L])
 	lock_visual_images.Cut()
 
 	if(lock_area_image)
-		if(gun_user?.client)
-			gun_user.client.images -= lock_area_image
+		if(visual_client)
+			visual_client.images -= lock_area_image
 		qdel(lock_area_image)
 		lock_area_image = null
 	lock_area_anchor = null
+	lock_visual_client = null
 
 /obj/item/weapon/gun/rifle/lok/stop_fire()
 	if(!is_right_click_locking)
