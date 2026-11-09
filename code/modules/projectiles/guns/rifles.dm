@@ -3296,6 +3296,8 @@
 /obj/item/weapon/gun/rifle/vsd_rifle/medic
 	starting_attachment_types = list(/obj/item/attachable/magnetic_harness, /obj/item/attachable/verticalgrip, /obj/item/attachable/suppressor)
 
+// Lok
+
 /obj/item/weapon/gun/rifle/lok
 	name = "\improper Lok-0.5 Smart Rifle"
 	desc = "A high-end PDW fitted with a semi-intelligent AI core and several sophisticated tracking systems. Hold right-click to lock targets, release to fire guided rounds."
