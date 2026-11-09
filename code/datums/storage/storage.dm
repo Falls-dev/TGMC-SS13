@@ -564,14 +564,13 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 ///Hides our inventory from user, sets active_storage to null and removes user from content_watchers
 /datum/storage/proc/hide_from(mob/user)
-	if(!user.client)
-		return
-	user.client.screen -= boxes
-	user.client.screen -= storage_start
-	user.client.screen -= storage_continue
-	user.client.screen -= storage_end
-	user.client.screen -= closer
-	user.client.screen -= parent.contents
+	if(user.client)
+		user.client.screen -= boxes
+		user.client.screen -= storage_start
+		user.client.screen -= storage_continue
+		user.client.screen -= storage_end
+		user.client.screen -= closer
+		user.client.screen -= parent.contents
 	if(user.active_storage == src)
 		user.active_storage = null
 	content_watchers -= user
