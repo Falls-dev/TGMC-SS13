@@ -77,7 +77,6 @@ Registers signals, handles the pathfinding element addition/removal alongside ma
 /datum/ai_behavior/Destroy(force, ...)
 	SSadvanced_pathfinding.tile_pathfinding_to_do -= src
 	SSadvanced_pathfinding.node_pathfinding_to_do -= src
-	deltimer(next_move_timer)
 	current_node = null
 	goal_node = null
 	escorted_atom = null
