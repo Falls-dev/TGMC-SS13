@@ -914,12 +914,11 @@
 	return TRUE
 
 
-/mob/living/carbon/human/do_camera_update(oldloc, obj/item/radio/headset/mainship/H)
-	if(QDELETED(H?.camera) || oldloc == get_turf(src))
+/mob/living/carbon/human/do_camera_update(obj/item/radio/headset/mainship/headset)
+	if(wear_ear != headset || QDELETED(headset?.camera))
 		return
 
-	var/datum/cameranet/net = H.camera.parent_cameranet
-	net.updatePortableCamera(H.camera)
+	headset.camera.parent_cameranet.updatePortableCamera(headset.camera)
 
 
 /mob/living/carbon/human/update_camera_location(oldloc)
@@ -933,7 +932,7 @@
 	if(QDELETED(H.camera))
 		return
 
-	addtimer(CALLBACK(src, PROC_REF(do_camera_update), oldloc, H), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(do_camera_update), H), 1 SECONDS, TIMER_UNIQUE)
 
 
 /mob/living/carbon/human/get_language_holder()
