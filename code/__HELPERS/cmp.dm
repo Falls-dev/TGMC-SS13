@@ -114,3 +114,22 @@
 /// Sorts scanner advice by priority
 /proc/cmp_scanner_advice_priority(datum/scanner_advice/a, datum/scanner_advice/b)
 	return a::priority - b::priority
+
+/proc/cmp_limb_brute_dsc(datum/limb/A, datum/limb/B)
+	var/lhs
+	var/rhs
+
+	lhs = A.brute_dam
+	rhs = B.brute_dam
+
+	return rhs - lhs
+
+/proc/cmp_limb_burn_dsc(datum/limb/A, datum/limb/B)
+	var/lhs
+	var/rhs
+
+	lhs = A.burn_dam
+	rhs = B.burn_dam
+
+	return rhs - lhs
+
