@@ -8525,7 +8525,7 @@
 /turf/open/floor/tile/blue,
 /area/campaign/tgmc_airfield/base/armory_workshop)
 "PF" = (
-/obj/machinery/telecomms/relay/preset/telecomms,
+/obj/machinery/telecomms/relay/preset/telecomms/campaign,
 /turf/closed/mineral/smooth/desertdamrockwall/indestructible,
 /area/campaign/tgmc_airfield/outside/desert/south)
 "PG" = (
