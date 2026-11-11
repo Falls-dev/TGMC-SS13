@@ -285,3 +285,99 @@
 /obj/item/clothing/head/modular/m10x/mk1
 	name = "\improper M10X1 pattern marine helmet"
 	greyscale_config = /datum/greyscale_config/xenonaut/helm/mk1
+
+/obj/item/clothing/suit/modular/xenonauten/light/shield_overclocked
+	starting_attachments = list(
+		/obj/item/armor_module/module/eshield/overclocked,
+		/obj/item/armor_module/storage/medical,
+	)
+
+/obj/item/clothing/suit/modular/xenonauten/light/shield_overclocked/medic
+	starting_attachments = list(
+		/obj/item/armor_module/module/eshield/overclocked,
+		/obj/item/armor_module/storage/general,
+	)
+
+/obj/item/clothing/suit/modular/xenonauten/light/shield_overclocked/engineer
+	starting_attachments = list(
+		/obj/item/armor_module/module/eshield/overclocked,
+		/obj/item/armor_module/storage/engineering,
+	)
+
+/obj/item/clothing/head/modular/m10x/medium
+	name = "\improper Knight Class Helmet"
+	soft_armor = MARINE_ARMOR_HEAVY
+
+/obj/item/clothing/suit/modular/xenonauten/shield_overclocked
+	starting_attachments = list(
+		/obj/item/armor_module/module/eshield/overclocked,
+		/obj/item/armor_module/storage/medical,
+	)
+
+/obj/item/clothing/suit/modular/xenonauten/shield_overclocked/medic
+	starting_attachments = list(
+		/obj/item/armor_module/module/eshield/overclocked,
+		/obj/item/armor_module/storage/general,
+	)
+
+/obj/item/clothing/suit/modular/xenonauten/shield_overclocked/engineer
+	starting_attachments = list(
+		/obj/item/armor_module/module/eshield/overclocked,
+		/obj/item/armor_module/storage/engineering,
+	)
+
+/obj/item/clothing/suit/modular/xenonauten/heavy/shield_overclocked
+	starting_attachments = list(
+		/obj/item/armor_module/module/eshield/overclocked,
+		/obj/item/armor_module/storage/medical,
+	)
+
+/obj/item/clothing/head/modular/m10x/leader/fcdr
+	name = "\improper King Class Helmet"
+
+/obj/item/clothing/head/modular/m10x/pyro
+	name = "\improper Jester Class Helmet"
+	desc = "A bulky helmet with an integrated gas mask and a 'Surt' armor module for fireproofing, fielded to TDF flamethrower operators."
+	soft_armor = list(MELEE = 45, BULLET = 65, LASER = 60, ENERGY = 60, BOMB = 50, BIO = 50, FIRE = 100, ACID = 50)
+
+/obj/item/clothing/head/modular/m10x/sg
+	name = "\improper Spade Class Helmet"
+	desc = "A helmet loaded with sensors and targeting computers to assist the smartgun at shooting things."
+
+/obj/item/clothing/head/modular/m10x/sg/tyr
+	soft_armor = list(MELEE = 60, BULLET = 80, LASER = 80, ENERGY = 75, BOMB = 60, BIO = 60, FIRE = 55, ACID = 75)
+
+/obj/item/clothing/head/modular/m10x/heavy/tyr
+	soft_armor = list(MELEE = 60, BULLET = 80, LASER = 80, ENERGY = 75, BOMB = 60, BIO = 60, FIRE = 55, ACID = 75)
+
+/obj/item/clothing/suit/modular/xenonauten/heavy/tyr_two/corpsman
+	starting_attachments = list(
+		/obj/item/armor_module/module/tyr_extra_armor,
+		/obj/item/armor_module/storage/general,
+	)
+
+/obj/item/clothing/suit/modular/xenonauten/heavy/tyr_two/engineer
+	starting_attachments = list(
+		/obj/item/armor_module/module/tyr_extra_armor,
+		/obj/item/armor_module/storage/engineering,
+	)
+
+/obj/item/clothing/head/modular/m10x/medic
+	name = "\improper Heart Class Helmet"
+	desc = "A distinct helmet paired with the 'Mimir' armor module for additional protection against biological attacks, helps indicate your a medic and also helps indicate you as a priority target."
+	soft_armor = list(MELEE = 45, BULLET = 65, LASER = 60, ENERGY = 60, BOMB = 50, BIO = 75, FIRE = 50, ACID = 70)
+
+/obj/item/clothing/head/modular/m10x/engi/welding
+	starting_attachments = list(/obj/item/armor_module/storage/helmet, /obj/item/armor_module/module/welding)
+
+/obj/item/clothing/suit/modular/xenonauten/heavy/leader/shield_overclocked
+	starting_attachments = list(
+		/obj/item/armor_module/module/eshield/overclocked,
+		/obj/item/armor_module/storage/medical,
+	)
+
+/obj/item/clothing/suit/modular/xenonauten/heavy/leader/shield
+	starting_attachments = list(
+		/obj/item/armor_module/module/eshield,
+		/obj/item/armor_module/storage/medical,
+	)

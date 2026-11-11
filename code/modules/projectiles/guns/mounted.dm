@@ -727,3 +727,10 @@
 	soft_armor = list(MELEE = 0, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 100, FIRE = 0, ACID = 20)
 
 	allowed_ammo_types = list(/obj/item/ammo_magazine/kord)
+
+/obj/item/weapon/gun/standard_mmg/machinegunner
+	starting_attachment_types = list(/obj/item/attachable/stock/t27, /obj/item/attachable/scope/unremovable/mg27)
+
+/obj/item/weapon/gun/standard_mmg/machinegunner/Initialize(mapload, spawn_empty)
+	attachable_allowed = attachable_allowed | /obj/item/attachable/stock/t27
+	return ..()

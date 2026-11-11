@@ -146,3 +146,26 @@
 	caliber = CALIBER_12X7
 	icon_state = "t76"
 	icon_state_mini = "mag_revolver_red"
+
+/obj/item/ammo_magazine/revolver/single_action/m44
+	name = "\improper R-44 SAA magnum speed loader (.44)"
+	desc = "A R-44 SAA revolver speed loader."
+	default_ammo = /datum/ammo/bullet/revolver
+	equip_slot_flags = NONE
+	caliber = CALIBER_44
+	icon_state = "m44"
+	icon = 'icons/obj/items/ammo/revolver.dmi'
+	icon_state_mini = "mag_revolver_bronze"
+	w_class = WEIGHT_CLASS_SMALL
+	max_rounds = 6
+
+/obj/item/ammo_magazine/revolver/standard_revolver
+	name = "\improper R-44 magnum speed loader (.44)"
+	desc = "A revolver speed loader."
+	default_ammo = /datum/ammo/bullet/revolver/tp44
+	equip_slot_flags = NONE
+	caliber = CALIBER_44
+	icon_state = "tp44"
+	icon_state_mini = "mag_revolver"
+	w_class = WEIGHT_CLASS_SMALL
+	max_rounds = 7

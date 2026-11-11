@@ -541,3 +541,16 @@
 	icon_state = "vsd_juggernaut_two"
 	worn_icon_state = "vsd_juggernaut_two"
 	soft_armor = list(MELEE = 50, BULLET = 60, LASER = 10, ENERGY = 10, BOMB = 60, BIO = 10, FIRE = 20, ACID = 30)
+
+/obj/item/clothing/head/helmet/marine/specialist/tdf
+	name = "\improper Ace Class Hardsuit Helmet"
+	desc = "The helmet that pairs with the Ace hardsuit, heavily armored and reinforced."
+	icon = 'icons/mob/modular/tdf_helmets.dmi'
+	worn_icon_list = list(
+		slot_head_str = 'icons/mob/modular/tdf_helmets.dmi',
+		slot_l_hand_str = 'icons/mob/inhands/clothing/hats_left.dmi',
+		slot_r_hand_str = 'icons/mob/inhands/clothing/hats_right.dmi',
+	)
+	icon_state = "tdf_helmet_hardsuit"
+	worn_icon_state = "tdf_helmet_hardsuit"
+	item_map_variant_flags = NONE

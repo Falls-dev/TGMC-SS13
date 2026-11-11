@@ -786,3 +786,101 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	default_ammo = /datum/ammo/bullet/rifle
 	max_rounds = 30
+
+/obj/item/ammo_magazine/standard_gpmg/big
+	name = "\improper MG-60 GPMG quadruple box magazine (10x26mm)"
+	desc = "A series of 4 belt boxes linked together for the MG-60 general purpose machinegun, incredibly impractical to use undeployed."
+	icon_state = "t60b"
+	w_class = WEIGHT_CLASS_BULKY
+	reload_delay = 8 SECONDS
+	max_rounds = 800
+	scatter_mod = 15
+	wield_delay_mod = 6 SECONDS
+
+//-------------------------------------------------------
+//PR-412L1 HEAVY PULSE RIFLE
+
+/obj/item/ammo_magazine/rifle/standard_spottingrifle/incendiary
+	name = "\improper SG-153 incendiary magazine (12.7mm Smart Magnum)"
+	desc = "A magazine filled with 12.7mm incendiary smart rounds, these rounds will set alight anything they hit."
+	icon_state = "sg153_ic"
+	icon_state_mini = "mag_rifle_orange"
+	default_ammo = /datum/ammo/bullet/spottingrifle/incendiary
+
+/obj/item/ammo_magazine/rifle/standard_spottingrifle/tungsten
+	name = "\improper SG-153 tungsten magazine (12.7mm Smart Magnum)"
+	desc = "A magazine filled with 12.7mm tungsten smart rounds, these rounds will massively knock back any target it hits."
+	icon_state = "sg153_tg"
+	icon_state_mini = "mag_rifle_green"
+	default_ammo = /datum/ammo/bullet/spottingrifle/tungsten
+
+/obj/item/ammo_magazine/rifle/standard_spottingrifle/highimpact
+	name = "\improper SG-153 high impact magazine (12.7mm Smart Magnum)"
+	desc = "A magazine filled with 12.7mm high impact smart rounds, these will likely stagger and slow anything they hit."
+	icon_state = "sg153_hi"
+	icon_state_mini = "mag_rifle_blue"
+	default_ammo = /datum/ammo/bullet/spottingrifle/highimpact
+
+/obj/item/ammo_magazine/rifle/tx15_flechette
+	name = "\improper SH-15 flechette magazine (16 gauge)"
+	desc = "A magazine of 16 gauge flechette rounds, for the SH-15."
+	caliber = CALIBER_16G
+	icon_state = "tx15_flechette"
+	icon_state_mini = "mag_tx15_flechette"
+	default_ammo = /datum/ammo/bullet/shotgun/tx15_flechette
+	max_rounds = 12
+	bonus_overlay = "tx15_flech"
+
+/obj/item/ammo_magazine/rifle/standard_carbine/ap
+	name = "\improper AR-18 AP magazine (10x24mm)"
+	desc = "A 10mm assault carbine magazine, loaded with light armor piercing rounds."
+	icon_state = "t18_ap"
+	icon_state_mini = "mag_rifle_big_green"
+	default_ammo = /datum/ammo/bullet/rifle/hv
+	bonus_overlay = "t18_ap"
+
+//-------------------------------------------------------
+//T12 Assault Rifle
+
+/obj/item/ammo_magazine/rifle/standard_assaultrifle/ap
+	name = "\improper AR-12 AP magazine (10x24mm)"
+	desc = "A 10mm assault rifle magazine, loaded with light armor piercing rounds."
+	icon_state = "t12_ap"
+	icon_state_mini = "mag_rifle_big_green"
+	default_ammo = /datum/ammo/bullet/rifle/hv
+	bonus_overlay = "t12_ap"
+
+//-------------------------------------------------------
+//T37 DMR
+
+/obj/item/ammo_magazine/rifle/tx54/smoke/acid
+	name = "\improper 20mm acid smoke grenade magazine"
+	desc = "A 20mm magazine loaded with acid grenades. For use with the GL-54 or AR-55."
+	default_ammo = /datum/ammo/tx54/smoke/acid
+	icon_state = "tx54_airburst"
+	icon_state_mini = "mag_sniper_green"
+	greyscale_colors = COLOR_AMMO_ACID
+
+/obj/item/ammo_magazine/rifle/standard_spottingrifle/heavyrubber
+	name = "\improper SG-153 heavy rubber magazine (12.7mm Smart Magnum)"
+	desc = "A magazine filled with 12.7mm heavy rubber smart rounds, these will likely stun and displace anything they hit."
+	icon_state = "sg153_hr"
+	icon_state_mini = "mag_rifle_red"
+	default_ammo = /datum/ammo/bullet/spottingrifle/heavyrubber
+
+/obj/item/ammo_magazine/rifle/standard_spottingrifle/plasmaloss
+	name = "\improper SG-153 tanglefoot magazine (12.7mm Smart Magnum)"
+	desc = "A magazine filled with 12.7mm smart rounds tipped with 'Tanglefoot' poison, these rounds will drain the energy out of targets they hit."
+	icon_state = "sg153_pl"
+	icon_state_mini = "mag_rifle_purple"
+	default_ammo = /datum/ammo/bullet/spottingrifle/plasmaloss
+
+/obj/item/ammo_magazine/rifle/standard_spottingrifle/flak
+	name = "\improper SG-153 flak magazine (12.7mm Smart Magnum)"
+	desc = "A magazine filled with 12.7mm flak smart rounds, these rounds will airburst on contact with an organic target, causing damage in a small area near the target."
+	icon_state = "sg153_fl"
+	icon_state_mini = "mag_rifle_cyan"
+	default_ammo = /datum/ammo/bullet/spottingrifle/flak
+
+//-------------------------------------------------------
+//SMARTRIFLE AMMUNITION
