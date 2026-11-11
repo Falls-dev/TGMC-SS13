@@ -7,6 +7,8 @@
 /datum/xeno_mutation/defender
 	category = "Enhancement"
 	caste_restrictions = list("defender")
+	// Steel Crest is a strain of Defender: it must not buy its parent's mutations.
+	caste_type_exclusions = list(/datum/xeno_caste/defender/steel_crest)
 
 /datum/status_effect/defender
 	duration = -1

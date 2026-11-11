@@ -860,6 +860,10 @@
 
 ///mob/living signals
 #define COMSIG_HUMAN_DEATH_STAGE_CHANGE "human_death_stage_change"
+///from /mob/living/carbon/xenomorph/update_health(): ()
+#define COMSIG_LIVING_UPDATE_HEALTH "living_update_health"
+#define COMSIG_HUMAN_BRUTE_DAMAGE "human_brute_damage" // from [/mob/living/carbon/human/adjust_brute_loss] (amount, amount_mod)
+#define COMSIG_HUMAN_BURN_DAMAGE "human_burn_damage" // from [/mob/living/carbon/human/adjust_fire_loss] (amount, amount_mod)
 
 #define COMSIG_LIVING_HEALTH_STEALTH "living_health_stealth"
 	#define COMPONENT_HIDE_HEALTH (1<<0)

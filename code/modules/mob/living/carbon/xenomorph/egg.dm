@@ -88,9 +88,15 @@
 	trigger_size = 2
 	///What type of hugger are produced here
 	var/hugger_type = /obj/item/clothing/mask/facehugger
+	///The amount to multiply the hand attach time of the created hugger by.
+	var/hand_attach_time_multiplier = 1
 
-/obj/alien/egg/facehugger/Initialize(mapload, hivenumber)
+/obj/alien/egg/facehugger/Initialize(mapload, hivenumber, new_hugger_type, new_hand_attach_time_multiplier)
 	. = ..()
+	if(new_hugger_type)
+		hugger_type = new_hugger_type
+	if(new_hand_attach_time_multiplier)
+		hand_attach_time_multiplier = new_hand_attach_time_multiplier
 	GLOB.xeno_egg_hugger += src
 
 /obj/alien/egg/facehugger/Destroy()
@@ -169,6 +175,7 @@
 /obj/alien/egg/facehugger/proc/spawn_hugger()
 	var/obj/item/clothing/mask/facehugger/hugger = new hugger_type(get_turf(src), hivenumber)
 	hugger_type = null
+	hugger.hand_attach_time = initial(hugger.hand_attach_time) * hand_attach_time_multiplier
 	hugger.go_active()
 
 /obj/alien/egg/facehugger/attack_alien(mob/living/carbon/xenomorph/xenomorph, damage_amount = xenomorph.xeno_caste.melee_damage, damage_type = BRUTE, damage_flag = MELEE, effects = TRUE, armor_penetration = 0, isrightclick = FALSE)

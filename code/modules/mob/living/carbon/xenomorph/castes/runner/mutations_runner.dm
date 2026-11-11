@@ -6,6 +6,8 @@
 /datum/xeno_mutation/runner
 	category = "Enhancement"
 	caste_restrictions = list("runner")
+	// Melter is a strain of Runner: it must not buy its parent's mutations.
+	caste_type_exclusions = list(/datum/xeno_caste/runner/melter)
 
 /datum/status_effect/runner
 	duration = -1

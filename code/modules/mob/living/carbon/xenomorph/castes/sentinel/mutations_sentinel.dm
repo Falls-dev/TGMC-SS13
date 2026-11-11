@@ -8,6 +8,8 @@
 /datum/xeno_mutation/sentinel
 	category = "Enhancement"
 	caste_restrictions = list("sentinel")
+	// Retrograde is a strain of Sentinel: it must not buy its parent's mutations.
+	caste_type_exclusions = list(/datum/xeno_caste/sentinel/retrograde)
 
 /datum/status_effect/sentinel
 	duration = -1
