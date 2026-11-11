@@ -5,6 +5,12 @@
 "b" = (
 /turf/closed/interior/tank/door,
 /area/interior/apc)
+"c" = (
+/obj/machinery/vending/nanoammo/directional/south,
+/obj/structure/bed/chair/dropship/doublewide/left,
+/obj/structure/bed/chair/dropship/doublewide/right,
+/turf/open/interior/apc/nine,
+/area/interior/apc)
 "e" = (
 /turf/closed/interior/apc/seventeen,
 /area/interior/apc)
@@ -127,7 +133,7 @@ k
 "}
 (3,1,1) = {"
 F
-E
+c
 M
 V
 k
