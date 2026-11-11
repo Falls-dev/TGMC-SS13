@@ -418,3 +418,7 @@
 /mob/living/carbon/human/proc/amputate_limb(limb_zone)
 	var/datum/limb/limb_to_drop = get_limb(limb_zone)
 	limb_to_drop?.drop_limb(TRUE, TRUE)
+
+/// Corpse expiry in life ticks; each human life tick runs once every four mob subsystem ticks.
+/mob/living/carbon/human/proc/get_dnr_limit()
+	return SSticker.mode ? SSticker.mode.human_dnr_ticks : TIME_BEFORE_DNR
