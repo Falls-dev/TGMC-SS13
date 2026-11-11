@@ -8,6 +8,7 @@
 	turret_icon = 'icons/obj/armored/3x4/som_tank_gun.dmi'
 	damage_icon_path = 'icons/obj/armored/3x4/tank_damage.dmi'
 	icon_state = "tank"
+	minimap_flags = MINIMAP_FLAG_MARINE_SOM
 	hitbox = /obj/hitbox/rectangle/som_tank
 	interior = /datum/interior/armored/som
 	minimap_icon_state = "som_tank"

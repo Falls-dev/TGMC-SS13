@@ -34,7 +34,7 @@
 		network -= i
 		network += lowertext(i)
 
-	parent_cameranet = GLOB.cameranet
+	parent_cameranet = (SOM_CAMERA_NETWORK in network) ? GLOB.som_cameranet : GLOB.cameranet
 
 	parent_cameranet.cameras += src
 	parent_cameranet.addCamera(src)

@@ -68,6 +68,7 @@ GLOBAL_LIST_EMPTY(active_cas_targets)
 	. = ..()
 	cic_mini = new(null, map_flags, map_flags)
 	GLOB.main_overwatch_consoles += src
+	RegisterSignal(SSdcs, COMSIG_GLOB_CAMPAIGN_MISSION_ENDED, PROC_REF(reset_after_mission))
 
 /obj/machinery/computer/camera_advanced/overwatch/Destroy()
 	QDEL_NULL(cic_mini)
@@ -264,6 +265,45 @@ GLOBAL_LIST_EMPTY(active_cas_targets)
 			jump_to_target(cam_target)
 			. = TRUE
 
+/obj/machinery/computer/camera_advanced/overwatch/proc/reset_after_mission()
+	SIGNAL_HANDLER
+	if(current_user)
+		remove_eye_control(current_user)
+	tracking_target = null
+	cameraticks = 0
+	stop_processing()
+	do_logout()
+	SStgui.close_uis(src)
+	cic_mini.clear_locator_override()
+	cic_mini.map = null
+	QDEL_NULL(eyeobj)
+
+/// In Campaign, ships and the active mission are the only Overwatch locations.
+/obj/machinery/computer/camera_advanced/overwatch/proc/can_watch_level(level)
+	if(!iscampaigngamemode(SSticker.mode) || is_mainship_level(level))
+		return TRUE
+	var/datum/campaign_mission/mission = get_current_mission()
+	return mission && mission.mission_state != MISSION_STATE_FINISHED && mission.mission_z_level?.z_value == level
+
+/obj/machinery/computer/camera_advanced/overwatch/can_select_camera(obj/machinery/camera/camera)
+	if(!..())
+		return FALSE
+	var/turf/camera_turf = get_turf(camera)
+	return can_watch_level(camera_turf?.z)
+
+/obj/machinery/computer/camera_advanced/overwatch/track(mob/living/target)
+	var/turf/target_turf = get_turf(target)
+	if(iscampaigngamemode(SSticker.mode) && (target?.faction != faction || !can_watch_level(target_turf?.z)))
+		return
+	return ..()
+
+/obj/machinery/computer/camera_advanced/overwatch/process()
+	var/turf/target_turf = get_turf(tracking_target)
+	if(iscampaigngamemode(SSticker.mode) && (tracking_target?.faction != faction || !can_watch_level(target_turf?.z)))
+		tracking_target = null
+		return PROCESS_KILL
+	return ..()
+
 ///Logs the operator out of overwatch
 /obj/machinery/computer/camera_advanced/overwatch/proc/do_logout()
 	if(operator)
@@ -280,13 +320,19 @@ GLOBAL_LIST_EMPTY(active_cas_targets)
 
 ///Jumps the overwatch camera / AI eye to a target
 /obj/machinery/computer/camera_advanced/overwatch/proc/jump_to_target(atom/cam_target)
-	if(!cam_target)
+	if(!cam_target || !operator)
 		return
+	if(iscampaigngamemode(SSticker.mode) && isliving(cam_target))
+		var/mob/living/target = cam_target
+		if(target.faction != faction)
+			return
 	var/turf/cam_target_turf = get_turf(cam_target)
-	if(!cam_target_turf)
+	if(!cam_target_turf || !can_watch_level(cam_target_turf.z))
 		return
 	if(!isAI(operator))
 		open_prompt(operator)
+		if(!eyeobj || current_user != operator)
+			return
 		eyeobj.setLoc(cam_target_turf)
 		if(isliving(cam_target))
 			track(cam_target)
@@ -319,9 +365,11 @@ GLOBAL_LIST_EMPTY(active_cas_targets)
 
 	for(var/mob/living/carbon/human/marine in current_squad.get_all_members())
 		var/turf/marine_turf = get_turf(marine)
+		if(iscampaigngamemode(SSticker.mode) && marine.faction != faction)
+			continue
 		switch(z_hidden)
 			if(HIDE_ON_GROUND)
-				if(is_ground_level(marine_turf?.z))
+				if(is_ground_level(marine_turf?.z) || (iscampaigngamemode(SSticker.mode) && is_away_level(marine_turf?.z)))
 					continue
 			if(HIDE_ON_SHIP)
 				if(is_mainship_level(marine_turf?.z))
@@ -342,7 +390,7 @@ GLOBAL_LIST_EMPTY(active_cas_targets)
 		if(current_squad.squad_leader)
 			if(marine == current_squad.squad_leader)
 				dist = "N/A"
-				if(!ismarineleaderjob(marine.job))
+				if(!ismarineleaderjob(marine.job) && !issommarineleaderjob(marine.job))
 					acting_sl = TRUE
 			else if(marine_turf && SL_z && marine_turf.z == SL_z)
 				dist = "[get_dist(marine, current_squad.squad_leader)] ([dir2text_short(get_dir(current_squad.squad_leader, marine))])"

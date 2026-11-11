@@ -135,9 +135,5 @@
 		var/datum/loadout_item/thing_to_check = equipped_things["[slot]"]
 		if(!thing_to_check)
 			continue
-		if(thing_to_check.quantity == 0)
-			return FALSE
-		if(length(thing_to_check.item_whitelist) && !thing_to_check.whitelist_check(src))
-			return FALSE
-		if(length(thing_to_check.item_blacklist) && !thing_to_check.blacklist_check(src))
+		if(!thing_to_check.quantity || !thing_to_check.item_checks(src))
 			return FALSE

@@ -197,6 +197,7 @@
 	var/list/outfit_cost_list = list()
 	outfit_cost_list["job"] = selected_job
 	outfit_cost_list["outfit_cost"] = outfit.loadout_cost
+	outfit_cost_list["valid_outfit"] = outfit.check_full_loadout()
 	outfit_cost_data += list(outfit_cost_list)
 
 	for(var/slot in outfit.equipped_things)
@@ -340,14 +341,13 @@
 			var/equipped_item_job = params["selected_job"]
 			if(!(equipped_item_job in valid_jobs) || !loadouts[equipped_item_job])
 				return
-			for(var/datum/loadout_item/item AS in GLOB.campaign_loadout_items_by_role[equipped_item_job])
-				if(!istype(item, equipped_item_type))
-					continue
-				var/datum/outfit_holder/outfit = loadouts[equipped_item_job]
-				if(!(item in outfit.available_list["[item.item_slot]"]) || !outfit.attempt_equip_loadout_item(item))
-					return
-				user.playsound_local(user, 'sound/effects/menu_click.ogg', 50)
-				return TRUE
+			var/datum/loadout_item/item = GLOB.campaign_loadout_item_type_list[equipped_item_type]
+			var/datum/outfit_holder/outfit = loadouts[equipped_item_job]
+			if(!item || !item.quantity || !(item in outfit.available_list["[item.item_slot]"]))
+				return
+			outfit.equip_loadout_item(item)
+			user.playsound_local(user, 'sound/effects/menu_click.ogg', 50)
+			return TRUE
 		if("unlock_item")
 			var/equipped_item_type = text2path(params["unlocked_item"])
 			if(!equipped_item_type)

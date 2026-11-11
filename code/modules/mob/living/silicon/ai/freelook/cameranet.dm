@@ -57,7 +57,7 @@ GLOBAL_DATUM_INIT(som_cameranet, /datum/cameranet, new)
 	var/key = "[x],[y],[lowest.z]"
 	. = chunks[key]
 	if(!.)
-		chunks[key] = . = new /datum/camerachunk(x, y, lowest.z)
+		chunks[key] = . = new /datum/camerachunk(x, y, lowest.z, src)
 
 /// Updates what the camera eye can see. It is recommended you use this when a camera eye moves or its location is set.
 /datum/cameranet/proc/visibility(list/moved_eyes)

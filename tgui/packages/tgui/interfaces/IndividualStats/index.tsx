@@ -45,6 +45,7 @@ export type IndividualData = {
 export type OutfitCostData = {
   job: string;
   outfit_cost: number;
+  valid_outfit: boolean;
 };
 
 export type EquippedItemData = {

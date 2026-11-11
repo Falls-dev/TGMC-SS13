@@ -494,6 +494,8 @@
 		to_chat(source, "[icon2html(src, source)] [span_warning("[target] is KIA!")]")
 		return
 	var/datum/squad/target_squad = target.assigned_squad
+	if(!target_squad || target_squad.faction != faction || target.faction != faction)
+		return
 	if(target == target_squad.squad_leader)
 		to_chat(source, "[icon2html(src, source)] [span_warning("[target] is already the Squad Leader!")]")
 		return
@@ -512,7 +514,7 @@
 			to_chat(source, span_boldnotice("[target.real_name] is the new Squad Leader of squad '[target_squad]'! Logging to enlistment file."))
 		visible_message(span_boldnotice("[target.real_name] is the new Squad Leader of squad '[target_squad]'! Logging to enlistment file."))
 
-	to_chat(target, "[icon2html(src, target)] <font size='3' color='blue'><B>\[Overwatch\]: You've been promoted to \'[ismarineleaderjob(target.job) ? "SQUAD LEADER" : "ACTING SQUAD LEADER"]\' for [target_squad.name]. Your headset has access to the command channel (:v).</B></font>")
+	to_chat(target, "[icon2html(src, target)] <font size='3' color='blue'><B>\[Overwatch\]: You've been promoted to \'[(ismarineleaderjob(target.job) || issommarineleaderjob(target.job)) ? "SQUAD LEADER" : "ACTING SQUAD LEADER"]\' for [target_squad.name]. Your headset has access to your faction's command channel.</B></font>")
 	to_chat(source, "[icon2html(src, source)] [target.real_name] is [target_squad]'s new leader!")
 	target_squad.promote_leader(target)
 
@@ -520,9 +522,6 @@
 /obj/machinery/computer/camera_advanced/overwatch/military/proc/transfer_squad(datum/source, mob/living/carbon/human/transfer_marine, datum/squad/new_squad)
 	if(!source || source != operator)
 		return
-
-	if(!transfer_marine.job)
-		CRASH("[transfer_marine] selected for transfer without a job.")
 
 	if(!istype(transfer_marine)) //gibbed
 		to_chat(source, "[icon2html(src, source)] [span_warning("[transfer_marine] is KIA.")]")
@@ -532,7 +531,7 @@
 		to_chat(source, "[icon2html(src, source)] [span_warning("Transfer aborted. [transfer_marine] isn't wearing an ID.")]")
 		return
 
-	if(!new_squad)
+	if(!transfer_marine.job || !new_squad || new_squad.faction != faction || transfer_marine.faction != faction)
 		return
 
 	if(ismarineleaderjob(transfer_marine.job) && new_squad.current_positions[transfer_marine.job.type] >= SQUAD_MAX_POSITIONS(transfer_marine.job.total_positions))
@@ -559,8 +558,8 @@
 	ID.assigned_fireteam = 0 //reset fireteam assignment
 
 	//Changes headset frequency to match new squad
-	var/obj/item/radio/headset/mainship/marine/headset = transfer_marine.wear_ear
-	if(istype(headset, /obj/item/radio/headset/mainship/marine))
+	var/obj/item/radio/headset/mainship/headset = transfer_marine.wear_ear
+	if(istype(headset) && headset.faction == faction)
 		headset.set_frequency(new_squad.radio_freq)
 
 	transfer_marine.hud_set_job(faction)

@@ -322,6 +322,11 @@ GLOBAL_LIST_INIT(campaign_mission_pool, list(
 
 ///Deletes a faction member and preps them for respawn
 /datum/faction_stats/proc/respawn_member(mob/living/carbon/human/faction_member)
+	var/mob/camera/aiEye/remote/hud/overwatch/camera_eye = faction_member.remote_control
+	if(istype(camera_eye))
+		var/obj/machinery/computer/camera_advanced/overwatch/console = camera_eye.origin
+		if(istype(console))
+			console.reset_after_mission()
 	var/mob/dead/observer/ghost = faction_member.ghostize()
 	if(faction_member.job.job_cost) //We don't refund ally roles
 		faction_member.job.add_job_positions(1)

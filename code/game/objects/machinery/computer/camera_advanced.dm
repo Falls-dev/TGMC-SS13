@@ -26,7 +26,7 @@
 	for(var/i in networks)
 		networks -= i
 		networks += lowertext(i)
-	parent_cameranet = GLOB.cameranet
+	parent_cameranet = (SOM_CAMERA_NETWORK in networks) ? GLOB.som_cameranet : GLOB.cameranet
 	off_action = new
 	jump_action = new(null, parent_cameranet)
 	if(lock_override)
@@ -88,7 +88,7 @@
 
 	current_user = null
 	user.unset_interaction()
-	user.client.view_size.unsupress()
+	user.client?.view_size.unsupress()
 	playsound(src, 'sound/machines/terminal_off.ogg', 25, 0)
 
 
@@ -190,7 +190,7 @@
 	if(!istype(target))
 		return
 
-	if(!target.can_track(current_user))
+	if(!target.can_track(current_user, parent_cameranet))
 		to_chat(current_user, span_warning("Target is not near any active cameras."))
 		tracking_target = null
 		return
@@ -206,7 +206,7 @@
 	if(QDELETED(eyeobj))
 		return PROCESS_KILL
 
-	if(!tracking_target.can_track(current_user))
+	if(!tracking_target.can_track(current_user, parent_cameranet))
 		if(!cameraticks)
 			to_chat(current_user, span_warning("Target is not near any active cameras. Attempting to reacquire..."))
 		cameraticks++
@@ -389,6 +389,12 @@
 	. = ..()
 	parent_cameranet = cameranet ? cameranet : GLOB.cameranet
 
+/obj/machinery/computer/camera_advanced/proc/can_select_camera(obj/machinery/camera/camera)
+	if(QDELETED(camera) || camera.parent_cameranet != parent_cameranet)
+		return FALSE
+	var/turf/camera_turf = get_turf(camera)
+	return camera_turf && (!length(z_lock) || (camera_turf.z in z_lock)) && length(camera.network & networks)
+
 /datum/action/innate/camera_jump/Activate()
 	if(!isliving(target))
 		return
@@ -400,9 +406,8 @@
 
 	for(var/i in parent_cameranet.cameras)
 		var/obj/machinery/camera/C = i
-		if(length(origin.z_lock) && !(C.z in origin.z_lock))
-			continue
-		valid_cams += C
+		if(origin.can_select_camera(C))
+			valid_cams += C
 
 	camera_sort(valid_cams)
 
@@ -410,16 +415,16 @@
 
 	for(var/i in valid_cams)
 		var/obj/machinery/camera/C = i
-		var/list/tempnetwork = C.network & origin.networks
-		if(length(tempnetwork))
-			T["[C.c_tag][C.can_use() ? "" : " (Deactivated)"]"] = C
+		T["[C.c_tag][C.can_use() ? "" : " (Deactivated)"]"] = C
 
 	playsound(origin, 'sound/machines/terminal_prompt.ogg', 25, 0)
 	var/camera = tgui_input_list(owner, "Choose which camera you want to view?", "Cameras", T)
 	var/obj/machinery/camera/C = T[camera]
 	playsound(src, SFX_TERMINAL_TYPE, 25, 0)
 
-	if(!C)
+	if(QDELETED(origin) || QDELETED(remote_eye) || L.remote_control != remote_eye)
+		return
+	if(!origin.can_select_camera(C))
 		playsound(origin, 'sound/machines/terminal_prompt_deny.ogg', 25, 0)
 		return
 

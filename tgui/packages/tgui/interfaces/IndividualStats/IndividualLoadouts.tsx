@@ -46,11 +46,16 @@ export const IndividualLoadouts = (props) => {
               mt={'10px'}
               mb={'18px'}
               tooltip={
-                selectedOutfitCostData.outfit_cost > data.currency
-                  ? 'Insufficient credits'
-                  : 'Equip Loadout'
+                !selectedOutfitCostData?.valid_outfit
+                  ? 'Resolve incompatible equipment'
+                  : selectedOutfitCostData.outfit_cost > data.currency
+                    ? 'Insufficient credits'
+                    : 'Equip Loadout'
               }
-              disabled={selectedOutfitCostData.outfit_cost > data.currency}
+              disabled={
+                !selectedOutfitCostData?.valid_outfit ||
+                selectedOutfitCostData.outfit_cost > data.currency
+              }
               onClick={() => setEquippedOutfit(selectedOutfitCostData)}
             >
               Equip outfit
@@ -63,13 +68,7 @@ export const IndividualLoadouts = (props) => {
                   (equippeditem) => equippeditem.item_type.job === selectedJob,
                 )
                 .map((equippeditem) => (
-                  <Stack.Item
-                    key={
-                      equippeditem.item_type
-                        ? equippeditem.item_type.name
-                        : 'null'
-                    }
-                  >
+                  <Stack.Item key={equippeditem.slot}>
                     <Button
                       width={'260px'}
                       mt="5px"
@@ -81,8 +80,7 @@ export const IndividualLoadouts = (props) => {
                         setselectedPossibleItem(equippeditem.item_type);
                       }}
                       color={
-                        selectedLoadoutItem.item_type.name ===
-                        equippeditem.item_type.name
+                        selectedLoadoutItem?.slot === equippeditem.slot
                           ? 'green'
                           : equippeditem.item_type.quantity === 0
                             ? 'grey'
@@ -100,8 +98,7 @@ export const IndividualLoadouts = (props) => {
                             width={'32px'}
                             className={classes([
                               'campaign_loadout_items32x32',
-                              selectedLoadoutItem.item_type.name ===
-                              equippeditem.item_type.name
+                              selectedLoadoutItem?.slot === equippeditem.slot
                                 ? equippeditem.item_type.icon + '_green'
                                 : equippeditem.item_type.quantity === 0
                                   ? equippeditem.item_type.icon + '_grey'
@@ -143,22 +140,23 @@ export const IndividualLoadouts = (props) => {
                 .filter((potentialitem) => potentialitem.job === selectedJob)
                 .filter(
                   (potentialitem) =>
-                    potentialitem.slot === selectedLoadoutItem.item_type.slot,
+                    potentialitem.slot === selectedLoadoutItem?.item_type.slot,
                 )
                 .map((potentialitem) => (
-                  <Stack.Item ml={0.1} mr={1.5} mb={1} key={potentialitem.name}>
+                  <Stack.Item ml={0.1} mr={1.5} mb={1} key={potentialitem.type}>
                     <Button
                       width={'100px'}
                       onClick={() => {
                         setselectedPossibleItem(potentialitem);
                         potentialitem.unlocked &&
+                          potentialitem.quantity !== 0 &&
                           act('equip_item', {
                             selected_item: potentialitem.type,
                             selected_job: potentialitem.job,
                           });
                       }}
                       color={
-                        selectedPossibleItem.name === potentialitem.name
+                        selectedPossibleItem?.type === potentialitem.type
                           ? 'green'
                           : !potentialitem.unlocked ||
                               potentialitem.quantity === 0
@@ -175,7 +173,7 @@ export const IndividualLoadouts = (props) => {
                           <Stack.Item
                             className={classes([
                               'campaign_loadout_items64x64',
-                              selectedPossibleItem.name === potentialitem.name
+                              selectedPossibleItem?.type === potentialitem.type
                                 ? potentialitem.icon + '_green' + '_big'
                                 : !potentialitem.unlocked ||
                                     potentialitem.quantity === 0
@@ -201,12 +199,12 @@ export const IndividualLoadouts = (props) => {
         <Section
           title={selectedJob + ' loadout'}
           textColor={
-            selectedOutfitCostData.outfit_cost <= data.currency
+            (selectedOutfitCostData?.outfit_cost ?? 0) <= data.currency
               ? 'white'
               : 'red'
           }
         >
-          Equip cost: {selectedOutfitCostData.outfit_cost}
+          Equip cost: {selectedOutfitCostData?.outfit_cost ?? 0}
         </Section>
         <Section
           title={
@@ -250,19 +248,19 @@ export const IndividualLoadouts = (props) => {
             <LabeledList.Item label="Equip cost">
               {selectedPossibleItem?.purchase_cost}
             </LabeledList.Item>
-            {selectedPossibleItem.unlocked === 0 && (
+            {selectedPossibleItem?.unlocked === 0 && (
               <LabeledList.Item label="Unlock cost">
                 {selectedPossibleItem.unlock_cost}
               </LabeledList.Item>
             )}
-            {selectedPossibleItem.quantity !== -1 && (
+            {selectedPossibleItem?.quantity !== -1 && (
               <LabeledList.Item label="Quantity">
                 {selectedPossibleItem.quantity === 0
                   ? 'None currently available'
                   : selectedPossibleItem.quantity}
               </LabeledList.Item>
             )}
-            {selectedPossibleItem.requirements && (
+            {selectedPossibleItem?.requirements && (
               <LabeledList.Item label="Requirements">
                 {selectedPossibleItem.requirements}
               </LabeledList.Item>

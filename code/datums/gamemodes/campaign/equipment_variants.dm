@@ -392,6 +392,7 @@
 	desc = "A paired set of volkite weapons mounted into light vehicles such as SOM hover bikes. While they lack the raw power of some other volkite weapons, they make up for this through sheer volume of fire and integrate recharging power source."
 	icon = 'icons/obj/vehicles/hover_bike.dmi'
 	icon_state = "bike_volkite"
+	attachment_layer = TANK_DECORATION_LAYER + 0.01
 	should_use_obj_appeareance = FALSE
 	mounted_gun = /obj/item/weapon/gun/energy/lasgun/lasrifle/volkite/demi_culverin
 
@@ -402,6 +403,7 @@
 	desc = "A pair of triple barreled 'light' gatling guns designed to be mounted in light vehicles such as SOM hover bikes. A smaller calibre round is used for optimal internal magazine capacity, but makes up for this with a ferocious rate of fire."
 	icon = 'icons/obj/vehicles/hover_bike.dmi'
 	icon_state = "bike_minigun"
+	attachment_layer = TANK_DECORATION_LAYER + 0.01
 	should_use_obj_appeareance = FALSE
 	mounted_gun = /obj/item/weapon/gun/bike_minigun
 
