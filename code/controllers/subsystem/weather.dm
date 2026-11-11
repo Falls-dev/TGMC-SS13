@@ -96,3 +96,8 @@ SUBSYSTEM_DEF(weather)
 			A = W
 			break
 	return A
+
+/datum/controller/subsystem/weather/proc/remove_eligible(z)
+	eligible_zlevels -= "[z]"
+	deltimer(next_hit_by_zlevel["[z]"])
+	next_hit_by_zlevel -= "[z]"

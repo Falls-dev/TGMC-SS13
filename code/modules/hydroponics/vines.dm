@@ -217,9 +217,6 @@
 	if(prob(30))
 		age++
 
-/obj/effect/plantsegment/fire_act(burn_level, flame_color)
-	qdel(src)
-
 /obj/effect/plant_controller
 
 	//What this does is that instead of having the grow minimum of 1, required to start growing, the minimum will be 0,

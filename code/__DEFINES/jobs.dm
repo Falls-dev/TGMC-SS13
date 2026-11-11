@@ -227,3 +227,39 @@ GLOBAL_LIST_INIT(jobs_fallen_marine, typecacheof(list(/datum/job/fallen/marine),
 #define SILO_ORIGIN "xenos from silo generation"
 
 #define SQUAD_MAX_POSITIONS(total_positions) CEILING(total_positions / length(SSjob.active_squads), 1)
+
+#define SOM_COMMANDER "SOM Commander"
+
+#define SOM_FIELD_COMMANDER "SOM Field Commander"
+
+#define SOM_STAFF_OFFICER "SOM Staff Officer"
+
+#define SOM_PILOT_OFFICER "SOM Pilot Officer"
+
+#define SOM_MECH_PILOT "SOM Mech Pilot"
+
+#define SOM_CHIEF_ENGINEER "SOM Chief Engineer"
+
+#define SOM_TECH "SOM Technician"
+
+#define SOM_REQUISITIONS_OFFICER "SOM Requisitions Officer"
+
+#define SOM_CHIEF_MEDICAL_OFFICER "SOM Chief Medical Officer"
+
+#define SOM_MEDICAL_DOCTOR "SOM Medical Doctor"
+
+#define SOM_CHEF "SOM chef"
+
+#define SOM_SQUAD_LEADER "SOM Squad Leader"
+
+#define SOM_SQUAD_VETERAN "SOM Squad Veteran"
+
+#define SOM_SQUAD_ENGINEER "SOM Squad Engineer"
+
+#define SOM_SQUAD_CORPSMAN "SOM Squad Medic"
+
+#define SOM_SQUAD_MARINE "SOM Squad Standard"
+
+#define JOB_DISPLAY_ORDER_CHIEF_ENGINEER 13
+
+#define CHIEF_SHIP_ENGINEER "Chief Ship Engineer"

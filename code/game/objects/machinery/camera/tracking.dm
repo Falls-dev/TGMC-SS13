@@ -130,14 +130,14 @@
 
 		sleep(1 SECONDS)
 
-/proc/near_camera(mob/living/M)
+/proc/near_camera(mob/living/M, datum/cameranet/camera_network = GLOB.cameranet)
 	if(!isturf(M.loc))
 		return FALSE
 	if(issilicon(M))
 		var/mob/living/silicon/S = M
-		if((QDELETED(S.builtInCamera) || !S.builtInCamera.can_use()) && !GLOB.cameranet.checkCameraVis(M))
+		if((QDELETED(S.builtInCamera) || !S.builtInCamera.can_use()) && !camera_network.checkCameraVis(M))
 			return FALSE
-	else if(!GLOB.cameranet.checkCameraVis(M))
+	else if(!camera_network.checkCameraVis(M))
 		return FALSE
 	return TRUE
 

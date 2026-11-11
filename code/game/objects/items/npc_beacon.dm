@@ -8,10 +8,11 @@
 	base_icon_state = "beacon"
 	var/deployable_type
 	var/deploy_time = 2 SECONDS
+	var/undeploy_time = 0
 
 /obj/item/campaign_beacon/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/deployable_item, deployable_type, deploy_time, 0)
+	AddComponent(/datum/component/deployable_item, deployable_type, deploy_time, undeploy_time, CALLBACK(src, PROC_REF(can_deploy)))
 
 //the holdable item
 /obj/item/campaign_beacon/npc_beacon
@@ -165,3 +166,6 @@
 		/datum/job/som/ert/specialist = 20,
 		/datum/job/som/ert/leader = 60,
 	))
+
+/obj/item/campaign_beacon/proc/can_deploy(mob/user, turf/location)
+	return TRUE

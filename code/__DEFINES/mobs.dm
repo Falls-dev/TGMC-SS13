@@ -1082,3 +1082,27 @@ GLOBAL_LIST_INIT(ai_damtype_to_heal_list, list(
 #define DRAGON_BREATH_MELTING "Melting"
 #define DRAGON_BREATH_SHATTERING "Shattering"
 #define DRAGON_BREATH_MELTING_ACID "Melting Acid"
+
+#define ZULU_SQUAD "zulu_squad"
+
+#define YANKEE_SQUAD "yankee_squad"
+
+#define XRAY_SQUAD "xray_squad"
+
+#define WHISKEY_SQUAD "whiskey_squad"
+
+#define HUNTER_SILENCE_COOLDOWN 30 SECONDS //Silence's cooldown
+
+#define HUNTER_SILENCE_MULTIPLIER 1.5 //Multiplier of stacks vs Hunter's Mark targets
+
+#define HUNTER_SILENCE_RANGE 5 //Range in tiles of the Hunter's Silence.
+
+#define HUNTER_SILENCE_AOE 2 //AoE size of Silence in tiles
+
+#define HUNTER_SILENCE_STAGGER_DURATION 1 SECONDS //Silence imposes this much stagger
+
+#define HUNTER_SILENCE_SENSORY_STACKS 7 //Silence imposes this many eyeblur and deafen stacks.
+
+#define HUNTER_SILENCE_MUTE_DURATION 10 SECONDS //Silence imposes this many seconds of the mute status effect.
+
+#define HUNTER_SILENCE_WHIFF_COOLDOWN 3 SECONDS //If we fail to target anyone with Silence, partial cooldown to prevent spam.

@@ -74,11 +74,11 @@ GLOBAL_VAR(common_report) //Contains common part of roundend report
 	///If the gamemode has a whitelist of valid ship maps. Whitelist overrides the blacklist
 	var/list/whitelist_ship_maps
 	///If the gamemode has a blacklist of disallowed ship maps
-	var/list/blacklist_ship_maps
+	var/list/blacklist_ship_maps = list(MAP_ITERON)
 	///If the gamemode has a whitelist of valid ground maps. Whitelist overrides the blacklist
 	var/list/whitelist_ground_maps
 	///If the gamemode has a blacklist of disallowed ground maps
-	var/list/blacklist_ground_maps = list(MAP_DELTA_STATION, MAP_WHISKEY_OUTPOST, MAP_OSCAR_OUTPOST, MAP_LAST_STAND)
+	var/list/blacklist_ground_maps = list(MAP_DELTA_STATION, MAP_WHISKEY_OUTPOST, MAP_OSCAR_OUTPOST, MAP_LAST_STAND, MAP_FORT_PHOBOS)
 	///if fun tads are enabled by default
 	var/enable_fun_tads = FALSE
 
@@ -127,7 +127,7 @@ GLOBAL_VAR(common_report) //Contains common part of roundend report
 	create_characters()
 	spawn_characters()
 	transfer_characters()
-	SSpoints.prepare_supply_packs_list(iscrashgamemode(src))
+	SSpoints.prepare_supply_packs_list(iscrashgamemode(src) || CHECK_BITFIELD(round_type_flags, MODE_HUMAN_ONLY))
 	SSreqtorio.prepare_assembly_crafts_list()
 	SSpoints.dropship_points = 0
 	SSpoints.supply_points[FACTION_TERRAGOV] = 0
@@ -195,6 +195,7 @@ GLOBAL_VAR(common_report) //Contains common part of roundend report
 		qdel(player)
 		living.client.init_verbs()
 		living.notransform = TRUE
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PLAYER_ROUNDSTART_SPAWNED, living)
 		log_manifest(living.ckey, living.mind, living)
 		livings += living
 
@@ -641,6 +642,7 @@ GLOBAL_LIST_INIT(bioscan_locations, list(
 	log_manifest(player.new_character.ckey, player.new_character.mind, player.new_character, latejoin = TRUE)
 	var/datum/job/job = player.assigned_role
 	job.on_late_spawn(player.new_character)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PLAYER_LATE_SPAWNED, player.new_character)
 	player.new_character.client?.init_verbs()
 	var/area/A = get_area(player.new_character)
 	deadchat_broadcast(span_game("has woken at [span_name("[A?.name]")]."), span_game("[span_name("[player.new_character.real_name]")] ([job.title])"), follow_target = player.new_character, message_type = DEADCHAT_ARRIVALRATTLE)
@@ -1160,3 +1162,15 @@ GLOBAL_LIST_INIT(bioscan_locations, list(
 
 /datum/game_mode/proc/can_hunt()
 	return FALSE
+
+/datum/game_mode/proc/get_joinable_factions(should_look_balance)
+	return
+
+/datum/game_mode/proc/ghost_verbs(mob/dead/observer/observer)
+	return
+
+///Returns the armor color variant applicable for this mode
+/datum/game_mode/proc/get_map_color_variant()
+	return SSmapping.configs[GROUND_MAP].armor_style
+
+/// Adjusts the inputted jobworth list.

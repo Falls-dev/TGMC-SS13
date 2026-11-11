@@ -759,3 +759,17 @@
 /obj/structure/window/phoronreinforced/pred
 	icon_state = "phoronrwindow"
 	resistance_flags = INDESTRUCTIBLE
+
+/obj/structure/window/framed/urban
+	name = "window"
+	icon = 'icons/obj/smooth_objects/urban_window.dmi'
+	icon_state = "chigusa_wall-0"
+	base_icon_state = "chigusa_wall"
+	max_integrity = 100
+	reinf = TRUE
+	dir = 5
+	window_frame = /obj/structure/window_frame/urban
+
+/obj/structure/window/framed/urban/reinforced
+
+/obj/structure/window/framed/urban/colony/engineering/hull

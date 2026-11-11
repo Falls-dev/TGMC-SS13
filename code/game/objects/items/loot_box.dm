@@ -582,3 +582,50 @@
 	new /obj/item/weapon/gun/launcher/rocket/sadar(src)
 	new /obj/item/storage/backpack/marine/satchel/scout_cloak(src)
 	new /obj/item/ammo_magazine/rocket/sadar/ap(src)
+
+/obj/effect/supply_drop/mmg/Initialize(mapload)
+	. = ..()
+	new /obj/item/weapon/gun/standard_mmg/machinegunner(loc)
+	new /obj/item/ammo_magazine/standard_mmg(loc)
+	new /obj/item/ammo_magazine/standard_mmg(loc)
+	new /obj/item/ammo_magazine/standard_mmg(loc)
+	new /obj/item/stack/sandbags/large_stack(loc)
+	new /obj/item/stack/barbed_wire/full(loc)
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/supply_drop/standard_carbine/Initialize(mapload)
+	. = ..()
+	new /obj/item/weapon/gun/rifle/standard_carbine/scout(loc)
+	new /obj/item/storage/belt/marine/t18(loc)
+	new /obj/item/explosive/grenade(loc)
+	new /obj/item/explosive/grenade(loc)
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/supply_drop/standard_rifle/Initialize(mapload)
+	. = ..()
+	new /obj/item/weapon/gun/rifle/standard_assaultrifle/rifleman(loc)
+	new /obj/item/storage/belt/marine/t12(loc)
+	new /obj/item/explosive/grenade(loc)
+	new /obj/item/explosive/grenade(loc)
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/supply_drop/combat_rifle/Initialize(mapload)
+	. = ..()
+	new /obj/item/weapon/gun/rifle/tx11/standard(loc)
+	new /obj/item/storage/belt/marine/combat_rifle(loc)
+	return INITIALIZE_HINT_QDEL
+
+/obj/item/storage/box/crate/loot/thermobaric_pack
+	icon_state = "rocket_case"
+
+/obj/item/storage/box/crate/loot/recoilless_pack
+	icon_state = "rocket_case"
+
+/obj/item/storage/box/crate/loot/scoutrifle_pack
+	icon_state = "sniper_case"
+
+/obj/item/storage/box/crate/loot/sentry_pack
+	icon_state = "sentry_case"
+
+/obj/item/storage/box/crate/loot/sadarclassic_pack
+	icon_state = "rocket_case"

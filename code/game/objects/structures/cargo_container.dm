@@ -66,5 +66,5 @@
 	density = TRUE
 	opacity = TRUE
 
-
-
+/obj/structure/cargo_container/nt
+	icon_state = "NT"

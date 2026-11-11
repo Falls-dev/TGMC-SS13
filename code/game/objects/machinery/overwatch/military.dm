@@ -78,7 +78,8 @@
 	RegisterSignal(user, COMSIG_MOB_CLICK_SHIFT, PROC_REF(send_order))
 	RegisterSignal(user, COMSIG_ORDER_SELECTED, PROC_REF(set_order))
 	RegisterSignal(user, COMSIG_MOB_MIDDLE_CLICK, PROC_REF(attempt_radial))
-	RegisterSignal(SSdcs, COMSIG_GLOB_OB_LASER_CREATED, PROC_REF(alert_lase))
+	if(faction == FACTION_TERRAGOV)
+		RegisterSignal(SSdcs, COMSIG_GLOB_OB_LASER_CREATED, PROC_REF(alert_lase))
 
 
 /obj/machinery/computer/camera_advanced/overwatch/military/remove_eye_control(mob/living/user)
@@ -90,9 +91,16 @@
 	selected_target = null
 	return ..()
 
+/obj/machinery/computer/camera_advanced/overwatch/military/can_interact(mob/user)
+	if((SSticker.mode?.round_type_flags & MODE_TWO_HUMAN_FACTIONS) && user.faction != faction)
+		return FALSE
+	return ..()
+
 /obj/machinery/computer/camera_advanced/overwatch/military/ui_data(mob/user)
 	. = ..()
-	.["firesupport"] = get_firesupport_data()
+	.["is_som"] = faction == FACTION_SOM
+	if(faction == FACTION_TERRAGOV)
+		.["firesupport"] = get_firesupport_data()
 
 /obj/machinery/computer/camera_advanced/overwatch/military/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -192,6 +200,8 @@
 			. = TRUE
 
 		if("select_target")
+			if(faction != FACTION_TERRAGOV)
+				return FALSE
 			var/atom/new_target = locate(params["target"])
 			if(!new_target)
 				return FALSE
@@ -200,10 +210,14 @@
 			. = TRUE
 
 		if("dropbomb")
+			if(faction != FACTION_TERRAGOV)
+				return FALSE
 			handle_bombard()
 			. = TRUE
 
 		if("shootrailgun")
+			if(faction != FACTION_TERRAGOV)
+				return FALSE
 			if(operator.interactee != src)
 				to_chat(operator, "[icon2html(src, operator)] [span_warning("You're busy doing something else, and press the wrong button!")]")
 				return FALSE
@@ -284,9 +298,13 @@
 	var/choice
 	if(ishuman(A))
 		human_target = A
+		if(human_target.faction != faction)
+			return
 		choice = show_radial_menu(source, human_target, human_radial_options, null, 48, null, FALSE, TRUE)
 
 	else if(istype(A, /obj/effect/overlay/temp/laser_target/ob))
+		if(faction != FACTION_TERRAGOV)
+			return
 		laser_target = A
 		choice = show_radial_menu(source, laser_target, bombardment_radial_options, null, 48, null, FALSE, TRUE)
 	else
@@ -347,7 +365,7 @@
 						TIMER_COOLDOWN_START(operator, COOLDOWN_HUD_ORDER, CIC_ORDER_COOLDOWN)
 				if(SWITCH_SQUAD_NEAR)
 					for(var/mob/living/carbon/human/target in GLOB.human_mob_list)
-						if(!target.faction == faction || get_dist(target, turf_target) > 9)
+						if(target.faction != faction || get_dist(target, turf_target) > 9)
 							continue
 						transfer_squad(source, target, chosen_squad)
 
@@ -406,7 +424,7 @@
 
 ///Checks and warnings before OB starts to fire
 /obj/machinery/computer/camera_advanced/overwatch/military/proc/handle_bombard()
-	if(!operator)
+	if(!operator || faction != FACTION_TERRAGOV)
 		return
 	if(overwatch_flags & OVERWATCH_BUSY)
 		to_chat(operator, "[icon2html(src, operator)] [span_warning("The [name] is busy processing another action!")]")
@@ -476,6 +494,8 @@
 		to_chat(source, "[icon2html(src, source)] [span_warning("[target] is KIA!")]")
 		return
 	var/datum/squad/target_squad = target.assigned_squad
+	if(!target_squad || target_squad.faction != faction || target.faction != faction)
+		return
 	if(target == target_squad.squad_leader)
 		to_chat(source, "[icon2html(src, source)] [span_warning("[target] is already the Squad Leader!")]")
 		return
@@ -494,7 +514,7 @@
 			to_chat(source, span_boldnotice("[target.real_name] is the new Squad Leader of squad '[target_squad]'! Logging to enlistment file."))
 		visible_message(span_boldnotice("[target.real_name] is the new Squad Leader of squad '[target_squad]'! Logging to enlistment file."))
 
-	to_chat(target, "[icon2html(src, target)] <font size='3' color='blue'><B>\[Overwatch\]: You've been promoted to \'[ismarineleaderjob(target.job) ? "SQUAD LEADER" : "ACTING SQUAD LEADER"]\' for [target_squad.name]. Your headset has access to the command channel (:v).</B></font>")
+	to_chat(target, "[icon2html(src, target)] <font size='3' color='blue'><B>\[Overwatch\]: You've been promoted to \'[(ismarineleaderjob(target.job) || issommarineleaderjob(target.job)) ? "SQUAD LEADER" : "ACTING SQUAD LEADER"]\' for [target_squad.name]. Your headset has access to your faction's command channel.</B></font>")
 	to_chat(source, "[icon2html(src, source)] [target.real_name] is [target_squad]'s new leader!")
 	target_squad.promote_leader(target)
 
@@ -502,9 +522,6 @@
 /obj/machinery/computer/camera_advanced/overwatch/military/proc/transfer_squad(datum/source, mob/living/carbon/human/transfer_marine, datum/squad/new_squad)
 	if(!source || source != operator)
 		return
-
-	if(!transfer_marine.job)
-		CRASH("[transfer_marine] selected for transfer without a job.")
 
 	if(!istype(transfer_marine)) //gibbed
 		to_chat(source, "[icon2html(src, source)] [span_warning("[transfer_marine] is KIA.")]")
@@ -514,7 +531,7 @@
 		to_chat(source, "[icon2html(src, source)] [span_warning("Transfer aborted. [transfer_marine] isn't wearing an ID.")]")
 		return
 
-	if(!new_squad)
+	if(!transfer_marine.job || !new_squad || new_squad.faction != faction || transfer_marine.faction != faction)
 		return
 
 	if(ismarineleaderjob(transfer_marine.job) && new_squad.current_positions[transfer_marine.job.type] >= SQUAD_MAX_POSITIONS(transfer_marine.job.total_positions))
@@ -541,11 +558,11 @@
 	ID.assigned_fireteam = 0 //reset fireteam assignment
 
 	//Changes headset frequency to match new squad
-	var/obj/item/radio/headset/mainship/marine/headset = transfer_marine.wear_ear
-	if(istype(headset, /obj/item/radio/headset/mainship/marine))
+	var/obj/item/radio/headset/mainship/headset = transfer_marine.wear_ear
+	if(istype(headset) && headset.faction == faction)
 		headset.set_frequency(new_squad.radio_freq)
 
-	transfer_marine.hud_set_job()
+	transfer_marine.hud_set_job(faction)
 	if(issilicon(source))
 		to_chat(source, span_boldnotice("[transfer_marine] has been transfered from squad '[old_squad]' to squad '[new_squad]'. Logging to enlistment file."))
 	visible_message(span_boldnotice("[transfer_marine] has been transfered from squad '[old_squad]' to squad '[new_squad]'. Logging to enlistment file."))
@@ -553,7 +570,7 @@
 
 ///Messages a specific individual
 /obj/machinery/computer/camera_advanced/overwatch/military/proc/message_member(mob/living/target, message, mob/living/carbon/human/sender)
-	if(!target.client)
+	if(!target?.client || target.faction != faction || !message)
 		return
 	. = TRUE
 

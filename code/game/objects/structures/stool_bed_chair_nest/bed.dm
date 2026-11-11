@@ -770,3 +770,18 @@ GLOBAL_LIST_EMPTY(activated_medevac_stretchers)
 		linked_beds_deployed -= stretcherbed
 		return TRUE
 	return FALSE
+
+/obj/structure/bed/roller/hospital_empty/bigrollerempty2
+	icon_state = "bigrollerempty2_down"
+	buckling_y = 2
+	base_bed_icon = "bigrollerempty2"
+
+/obj/structure/bed/roller/hospital
+	name = "hospital bed"
+	icon = 'icons/obj/rollerbed.dmi'
+	icon_state = "bigrollerempty_up"
+	foldabletype = null
+	base_bed_icon = "bigrollerempty"
+
+/obj/structure/bed/roller/hospital/bloody
+	base_bed_icon = "bigrollerbloodempty"

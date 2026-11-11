@@ -463,3 +463,8 @@
 	fire_sound = list('sound/weapons/guns/fire/pea_1.ogg', 'sound/weapons/guns/fire/pea_2.ogg')
 	reload_sound = 'sound/weapons/guns/fire/pea_1.ogg'
 	empty_sound = 'sound/weapons/guns/fire/pea_2.ogg'
+
+/obj/item/weapon/gun/sentry/big_sentry/premade/radial
+	turret_range = 9
+	turret_flags = TURRET_HAS_CAMERA|TURRET_ALERTS|TURRET_RADIAL
+	deploy_flags = IS_DEPLOYABLE|DEPLOY_ON_INITIALIZE|DEPLOYED_NO_PICKUP

@@ -62,6 +62,9 @@
 /datum/atom_hud/squad
 	hud_icons = list(SQUAD_HUD_TERRAGOV, MACHINE_HEALTH_HUD, MACHINE_AMMO_HUD)
 
+/datum/atom_hud/squad/som
+	hud_icons = list(SQUAD_HUD_SOM, MACHINE_HEALTH_HUD, MACHINE_AMMO_HUD)
+
 /datum/atom_hud/order
 	hud_icons = list(ORDER_HUD)
 

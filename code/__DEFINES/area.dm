@@ -13,3 +13,5 @@
 #define ALWAYS_RADIO (1<<5)
 ///When present, prevents construction in this area
 #define NO_CONSTRUCTION (1<<6)
+
+#define CANNOT_NUKE (1<<7)

@@ -35,3 +35,6 @@
 	if(r_hand)
 		qdel(equipping_human.r_hand)
 	return ..()
+
+/datum/outfit/quick
+	var/secondary_weapon

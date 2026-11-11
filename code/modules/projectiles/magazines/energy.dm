@@ -240,3 +240,7 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human = loc
 		human.update_inv_back()
+
+/obj/item/cell/lasgun/volkite/turret/hover_bike
+	maxcharge = 1500
+	charge_amount = 100

@@ -636,3 +636,15 @@
 		/obj/structure/window/reinforced/west = 35,
 		/obj/effect/spawner/random/misc/shard = 1,
 	)
+
+/obj/effect/spawner/random/misc/structure/supplycrate/secure_supplies
+	name = "secure supplies spawner"
+	icon_state = "random_securecrate"
+	loot = list(
+		/obj/structure/largecrate/supply/supplies/mre = 55,
+		/obj/structure/largecrate/supply/supplies/water = 50,
+		/obj/structure/largecrate/supply/supplies/tables_racks = 40,
+		/obj/structure/largecrate/supply/supplies/coifs = 25,
+		/obj/structure/largecrate/supply/medicine/iv = 10,
+		/obj/structure/largecrate/supply/medicine/blood = 5,
+	)

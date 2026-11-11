@@ -425,3 +425,18 @@
 	C.loc = get_step(T, EAST)
 	E.connected = C
 	C.connected = E
+
+/obj/structure/largecrate/supply/weapons/standard_smg
+	name = "\improper SMG-90 sub machinegun weapons chest (x8)"
+	desc = "A weapons chest containing eight SMG-90 submachine guns."
+	supplies = list(/obj/item/weapon/gun/smg/smg90 = 8)
+
+/obj/structure/largecrate/supply/ammo/m41a_box
+	name = "\improper PR-412 ammunition box case (x4)"
+	desc = "An ammunition case containing four PR-412 600 round boxes of ammunition."
+	supplies = list(/obj/item/ammo_magazine/rifle/m41a = 4)
+
+/obj/structure/largecrate/supply/weapons/standard_carbine
+	name = "\improper AR-18 Carbine weapons chest (x10)"
+	desc = "A weapons chest containing ten AR-18 Carbines."
+	supplies = list(/obj/item/weapon/gun/rifle/standard_carbine = 10)

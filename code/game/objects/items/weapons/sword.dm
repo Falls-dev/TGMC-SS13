@@ -27,7 +27,7 @@
 /obj/item/weapon/sword/equipped(mob/user, slot)
 	. = ..()
 	toggle_item_bump_attack(user, TRUE)
-	if(user.skills.getRating(SKILL_MELEE_WEAPONS) > SKILL_MELEE_DEFAULT)
+	if(user.skills.getRating(SKILL_MELEE_WEAPONS) > SKILL_MELEE_DEFAULT || HAS_TRAIT(user, TRAIT_SWORD_EXPERT))
 		special_attack.give_action(user)
 
 /obj/item/weapon/sword/dropped(mob/user)

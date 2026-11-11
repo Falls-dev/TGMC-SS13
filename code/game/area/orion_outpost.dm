@@ -264,3 +264,10 @@
 	name = "Breakroom Building"
 	icon_state = "dark160"
 	minimap_color = MINIMAP_AREA_LIVING
+
+/area/orion_outpost/ground/rock
+	name = "Enclosed Area"
+	icon_state = "transparent"
+	ceiling = CEILING_DEEP_UNDERGROUND
+	outside = FALSE
+	area_flags = CANNOT_NUKE

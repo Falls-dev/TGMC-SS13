@@ -55,6 +55,7 @@
 
 	var/list/humans = list()
 	var/list/marines = list()
+	var/list/som = list()
 	var/list/survivors = list()
 	var/list/xenos = list()
 	var/list/yautja = list()
@@ -136,14 +137,16 @@
 				yautja += list(serialized)
 				continue
 
-			if(ismarinejob(human.job))
+			if(ismarinejob(job) || human.faction == FACTION_SOM)
+				serialized["icon"] = job?.minimap_icon
+				serialized["job"] = job?.title
 				if(human.assigned_squad)
-					serialized["icon"] = lowertext(human.assigned_squad.name) + "_" + job.minimap_icon
-					serialized["job"] = human.assigned_squad.name + " " + job.title
+					serialized["icon"] = "[lowertext(human.assigned_squad.name)]_[job?.minimap_icon]"
+					serialized["job"] = "[human.assigned_squad.name] [job?.title]"
+				if(human.faction == FACTION_SOM)
+					som += list(serialized)
 				else
-					serialized["icon"] = job.minimap_icon
-					serialized["job"] = job.title
-				marines += list(serialized)
+					marines += list(serialized)
 				continue
 
 			if(job)
@@ -172,6 +175,7 @@
 	data["misc"] = misc
 	data["npcs"] = npcs
 	data["marines"] = marines
+	data["som"] = som
 	data["yautja"] = yautja
 	data["survivors"] = survivors
 	data["xenos"] = xenos

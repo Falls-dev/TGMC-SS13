@@ -8,6 +8,7 @@ export type OrbitData = {
   humans: Observable[];
   icons?: string[];
   marines: Observable[];
+  som: Observable[];
   misc: Observable[];
   npcs: Observable[];
   yautja: Observable[];

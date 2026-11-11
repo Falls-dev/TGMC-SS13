@@ -276,7 +276,12 @@
 				return FALSE
 
 			var/mob/living/carbon/human/sender = user
-			priority_announce(input, subtitle = "Sent by [sender.get_paygrade(0) ? sender.get_paygrade(0) : sender.job.title] [sender.real_name]", type = ANNOUNCEMENT_COMMAND)
+			var/subtitle = "Sent by [sender.get_paygrade(0) ? sender.get_paygrade(0) : sender.job.title] [sender.real_name]"
+			if(SSticker.mode?.round_type_flags & MODE_TWO_HUMAN_FACTIONS)
+				var/list/team = GLOB.alive_human_list_faction[sender.faction]
+				priority_announce(input, subtitle = subtitle, type = ANNOUNCEMENT_COMMAND, receivers = ((team || list()) + GLOB.observer_list))
+			else
+				priority_announce(input, subtitle = subtitle, type = ANNOUNCEMENT_COMMAND)
 			message_admins("[ADMIN_TPMONTY(user)] has just sent a command announcement")
 			log_game("[key_name(user)] has just sent a command announcement.")
 			TIMER_COOLDOWN_START(user, COOLDOWN_HUD_ORDER, CIC_ORDER_COOLDOWN)

@@ -68,6 +68,15 @@
 	. = ..()
 	GLOB.ground_telecomms_relay -= src
 
+/// Self-powered relay for maps without a powered telecomms room.
+/obj/machinery/telecomms/relay/preset/telecomms/campaign
+	use_power = NO_POWER_USE
+	invisibility = INVISIBILITY_MAXIMUM
+	density = FALSE
+
+/obj/machinery/telecomms/relay/preset/telecomms/campaign/power_change()
+	return
+
 //proper cicbackup relay
 /obj/machinery/telecomms/relay/preset/telecomms/cicbackup
 	on = 0

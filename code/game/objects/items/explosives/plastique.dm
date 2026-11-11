@@ -9,6 +9,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	/// whether the plastic explosive is armed or not
 	var/armed = FALSE
+	var/datum/weakref/planter_ref
 	/// the time it takes for the c4 to detonate
 	var/timer = 10
 	/// the plastic explosive has not detonated yet
@@ -45,7 +46,7 @@
 		return FALSE
 	if(istype(target, /obj/item))
 		return FALSE
-	if(target.resistance_flags & INDESTRUCTIBLE)
+	if(!target.can_plastique(user, src))
 		return FALSE
 
 	if(istype(target, /obj/structure/window))
@@ -96,6 +97,7 @@
 	user.visible_message(span_warning("[user] plants [name] on [target]!"),
 	span_warning("You plant [name] on [target]! Timer counting down from [timer]."))
 
+	planter_ref = WEAKREF(user)
 	plant_target = target
 	if(ismovableatom(plant_target))
 		var/atom/movable/mover = plant_target
@@ -157,7 +159,7 @@
 	var/datum/effect_system/smoke_spread/smoke = new smoketype()
 	smoke.set_up(smokeradius, plant_target, 2)
 	smoke.start()
-	plant_target.plastique_act()
+	plant_target.plastique_act(planter_ref?.resolve())
 	qdel(src)
 
 ///Triggers a warning beep prior to the actual detonation, while also setting the actual detonation timer
@@ -170,7 +172,7 @@
 	update_icon()
 
 ///Handles the effect of c4 on the atom - overridden as needed
-/atom/proc/plastique_act()
+/atom/proc/plastique_act(mob/living/plastique_user)
 	ex_act(EXPLODE_DEVASTATE)
 
 /obj/item/explosive/plastique/genghis_charge
@@ -312,3 +314,6 @@
 	var/turf/closed/T = plant_target
 	T.ChangeTurf(T.open_turf_type) //🐽🐽🐽
 	qdel(src)
+
+/atom/proc/can_plastique(mob/user, obj/plastique)
+	return !(resistance_flags & INDESTRUCTIBLE)

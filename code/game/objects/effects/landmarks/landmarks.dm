@@ -599,3 +599,23 @@
 	. = ..()
 	GLOB.miner_platinum_locs += loc
 	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/xeno_spawner_spawn
+	name = "xeno spawner spawn landmark"
+	icon = 'icons/Xeno/3x3building.dmi'
+	icon_state = "spawner"
+
+/obj/effect/landmark/xeno_spawner_spawn/Initialize(mapload)
+	// This landmark belongs to an upstream AI mode; Campaign uses its own asset spawners.
+	..()
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/zombie_spawner
+	name = "zombie tunnel spawn landmark"
+	icon = 'icons/Xeno/Effects.dmi'
+	icon_state = "hole"
+
+/obj/effect/landmark/zombie_spawner/Initialize(mapload)
+	// Campaign does not spawn ambient zombies from map landmarks.
+	..()
+	return INITIALIZE_HINT_QDEL

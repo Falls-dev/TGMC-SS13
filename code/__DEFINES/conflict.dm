@@ -290,3 +290,5 @@
 #define CADE_TYPE_BOMB "concussive armor"
 #define CADE_TYPE_MELEE "ballistic armor"
 #define CADE_TYPE_ACID "caustic armor"
+
+#define CLICK_CD_THROWING 4

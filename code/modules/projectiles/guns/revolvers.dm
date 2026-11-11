@@ -615,3 +615,44 @@
 	if(user.skills.getRating(SKILL_MEDICAL) < SKILL_MEDICAL_PRACTICED)
 		to_chat(user, span_warning("You don't seem to know how to use [src]..."))
 		return FALSE
+
+/obj/item/weapon/gun/revolver/standard_revolver
+	name = "\improper R-44 combat revolver"
+	desc = "The R-44 standard combat revolver, produced by Terran Armories. A sturdy and hard hitting firearm that loads .44 Magnum rounds. Holds 7 rounds in the cylinder. Due to an error in the cylinder rotation system the fire rate of the gun is much faster than intended, it ended up being billed as a feature of the system."
+	icon_state = "tp44"
+	worn_icon_state = "tp44"
+	fire_sound = 'sound/weapons/guns/fire/tgmc/kinetic/gun_r44.ogg'
+	caliber = CALIBER_44 //codex
+	max_chamber_items = 7 //codex
+	default_ammo_type = /obj/item/ammo_magazine/revolver/standard_revolver
+	allowed_ammo_types = list(/obj/item/ammo_magazine/revolver/standard_revolver)
+	force = 8
+	attachable_allowed = list(
+		/obj/item/attachable/bayonet/converted,
+		/obj/item/attachable/reddot,
+		/obj/item/attachable/flashlight,
+		/obj/item/attachable/heavy_barrel,
+		/obj/item/attachable/gyro,
+		/obj/item/attachable/extended_barrel,
+		/obj/item/attachable/compensator,
+		/obj/item/attachable/lasersight,
+		/obj/item/attachable/lace,
+		/obj/item/attachable/buildasentry,
+	)
+	attachable_offset = list("muzzle_x" = 33, "muzzle_y" = 19,"rail_x" = 13, "rail_y" = 23, "under_x" = 22, "under_y" = 14, "stock_x" = 22, "stock_y" = 19)
+	fire_delay = 0.15 SECONDS
+	akimbo_additional_delay = 0.6 // Ends up as 0.249, so it'll get moved up to 0.25.
+	accuracy_mult_unwielded = 0.85
+	accuracy_mult = 1
+	scatter = -1
+	recoil_unwielded = 0.75
+
+/obj/item/weapon/gun/revolver/standard_revolver/Initialize(mapload, spawn_empty)
+	. = ..()
+	if(round(rand(1, 10), 1) != 1)
+		return
+	base_gun_icon = "tp44cool"
+	update_icon()
+
+//-------------------------------------------------------
+//RUSSIAN REVOLVER //Based on the 7.62mm Russian revolvers.

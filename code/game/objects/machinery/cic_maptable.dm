@@ -159,11 +159,33 @@
 	bound_width = 64
 
 /obj/machinery/cic_maptable/drawable/big/Initialize(mapload)
+	var/datum/game_mode/hvh/campaign/campaign = SSticker?.mode
+	if(istype(campaign) && campaign.current_mission?.mission_z_level)
+		targetted_zlevel = campaign.current_mission.mission_z_level.z_value
 	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_CAMPAIGN_MISSION_LOADED, PROC_REF(change_mission_map))
 	var/static/list/connections = list(
 		COMSIG_OBJ_TRY_ALLOW_THROUGH = PROC_REF(can_climb_over),
 	)
 	AddElement(/datum/element/connect_loc, connections)
+
+/obj/machinery/cic_maptable/drawable/big/proc/change_mission_map(datum/source, new_z)
+	SIGNAL_HANDLER
+	if(new_z == targetted_zlevel || !SSminimaps.minimaps_by_z["[new_z]"]?.hud_image)
+		return
+	for(var/mob/user AS in interactees)
+		user.client?.screen -= map
+		user.client?.mouse_pointer_icon = null
+		for(var/atom/movable/screen/minimap_tool/tool AS in drawing_tools)
+			tool.UnregisterSignal(user, list(COMSIG_MOB_MOUSEDOWN, COMSIG_MOB_MOUSEUP))
+	targetted_zlevel = new_z
+	map = null
+	for(var/atom/movable/screen/minimap_tool/tool AS in drawing_tools)
+		tool.set_zlevel(new_z, minimap_flag)
+	if(length(interactees))
+		map = SSminimaps.fetch_minimap_object(new_z, minimap_flag)
+		for(var/mob/user AS in interactees)
+			user.client?.screen += map
 
 /obj/machinery/cic_maptable/yautja
 	name = "hunter globe"
@@ -173,3 +195,15 @@
 	screen_overlay = ""
 
 	minimap_flag = MINIMAP_FLAG_XENO|MINIMAP_FLAG_MARINE|MINIMAP_FLAG_EXCAVATION_ZONE|MINIMAP_FLAG_YAUTJA
+
+/obj/machinery/cic_maptable/drawable/big/som
+	minimap_flag = MINIMAP_FLAG_MARINE_SOM
+	screen_overlay = "som_maptable_screen"
+	light_color = LIGHT_COLOR_FLARE
+	light_range = 3
+
+/obj/machinery/cic_maptable/som_maptable
+	icon_state = "som_console"
+	screen_overlay = "som_maptable_screen"
+	minimap_flag = MINIMAP_FLAG_MARINE_SOM
+	light_color = LIGHT_COLOR_FLARE

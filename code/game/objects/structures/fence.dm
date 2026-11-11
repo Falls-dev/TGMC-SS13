@@ -133,3 +133,6 @@
 
 /obj/structure/fence/broken
 	chance_to_break = 100
+
+/obj/structure/fence/dark/quality
+	chance_to_break = 15

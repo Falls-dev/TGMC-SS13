@@ -73,6 +73,7 @@ type FireSupportData = {
 
 type Data = {
   console_type: 'basic' | 'military' | 'main';
+  is_som?: BooleanLike;
   operator?: string;
   can_interact: BooleanLike;
   on_monitor: BooleanLike;
@@ -106,7 +107,11 @@ export const OverwatchConsole = () => {
   const { operator, on_monitor, console_type } = data;
 
   return (
-    <Window width={640} height={780} title="Overwatch Console">
+    <Window
+      width={640}
+      height={780}
+      title={data.is_som ? 'SOM Overwatch Console' : 'Overwatch Console'}
+    >
       <Window.Content scrollable>
         {!operator && <LoginPanel />}
         {!!operator && on_monitor && <MonitorPanel />}

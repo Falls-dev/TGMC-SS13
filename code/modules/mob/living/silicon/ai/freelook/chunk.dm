@@ -129,7 +129,8 @@
 		client.images += active_static_images
 
 /// Create a new camera chunk, since the chunks are made as they are needed.
-/datum/camerachunk/New(x, y, lower_z)
+/datum/camerachunk/New(x, y, lower_z, datum/cameranet/network)
+	parent_cameranet = network
 	x = GET_CHUNK_COORD(x)
 	y = GET_CHUNK_COORD(y)
 
@@ -141,17 +142,15 @@
 
 	for(var/z_level in lower_z to upper_z)
 		var/list/local_cameras = list()
-		for(var/obj/machinery/camera/camera in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE * 0.5), y + (CHUNK_SIZE * 0.5), z_level)))
-			if(camera.can_use())
+		var/turf/chunk_center = locate(x + (CHUNK_SIZE * 0.5), y + (CHUNK_SIZE * 0.5), z_level)
+		for(var/obj/machinery/camera/camera AS in parent_cameranet.cameras)
+			var/turf/camera_turf = get_turf(camera)
+			if(camera_turf?.z == z_level && get_dist(camera_turf, chunk_center) <= CHUNK_SIZE && camera.can_use())
 				local_cameras += camera
-
-		for(var/mob/living/silicon/sillycone in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE * 0.5), y + (CHUNK_SIZE * 0.5), z_level)))
-			if(sillycone.builtInCamera?.can_use())
-				local_cameras += sillycone.builtInCamera
 
 		cameras["[z_level]"] = local_cameras
 
-		var/image/mirror_from = GLOB.cameranet.obscured_images[GET_Z_PLANE_OFFSET(z_level) + 1]
+		var/image/mirror_from = parent_cameranet.obscured_images[GET_Z_PLANE_OFFSET(z_level) + 1]
 		var/turf/chunk_corner = locate(x, y, z_level)
 		for(var/turf/lad as anything in CORNER_BLOCK(chunk_corner, CHUNK_SIZE, CHUNK_SIZE)) //we use CHUNK_SIZE for width and height here as it handles subtracting 1 from those two parameters by itself
 			var/image/our_image = new /image(mirror_from)

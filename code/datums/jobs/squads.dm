@@ -120,10 +120,10 @@
 
 	current_positions[new_squaddie.job.title]++
 
-	if(ismarineleaderjob(new_squaddie.job) && !squad_leader)
+	if((ismarineleaderjob(new_squaddie.job) || issommarineleaderjob(new_squaddie.job)) && !squad_leader)
 		squad_leader = new_squaddie
 		SSdirection.set_leader(tracking_id, new_squaddie)
-		SSdirection.start_tracking(TRACKING_ID_MARINE_COMMANDER, new_squaddie)
+		SSdirection.start_tracking(faction == FACTION_SOM ? TRACKING_ID_SOM_COMMANDER : TRACKING_ID_MARINE_COMMANDER, new_squaddie)
 
 	var/obj/item/radio/headset/mainship/headset = new_squaddie.wear_ear
 	if(give_radio && !istype(headset))
@@ -210,18 +210,18 @@
 		CRASH("attempted to remove squad leader from squad [name] while not having one set")
 
 	SSdirection.clear_leader(tracking_id)
-	SSdirection.stop_tracking(TRACKING_ID_MARINE_COMMANDER, squad_leader)
+	SSdirection.stop_tracking(faction == FACTION_SOM ? TRACKING_ID_SOM_COMMANDER : TRACKING_ID_MARINE_COMMANDER, squad_leader)
 
 	//Handle aSL skill level and radio
-	if(!ismarineleaderjob(squad_leader.job))
+	if(!ismarineleaderjob(squad_leader.job) && !issommarineleaderjob(squad_leader.job))
 		squad_leader.set_skills(squad_leader.skills.setRating(leadership = SKILL_LEAD_NOVICE))
 		if(squad_leader.mind)
 			var/datum/job/J = squad_leader.job
 			squad_leader.comm_title = J.comm_title
-		if(istype(squad_leader.wear_ear, /obj/item/radio/headset/mainship/marine))
-			var/obj/item/radio/headset/mainship/marine/R = squad_leader.wear_ear
-			R.recalculateChannels()
-			R.use_command = FALSE
+		if(istype(squad_leader.wear_ear, /obj/item/radio/headset/mainship))
+			var/obj/item/radio/headset/mainship/radio = squad_leader.wear_ear
+			radio.recalculateChannels()
+			radio.use_command = initial(radio.use_command)
 		var/obj/item/card/id/ID = squad_leader.get_idcard()
 		if(istype(ID))
 			ID.access -= list(ACCESS_MARINE_LEADER, ACCESS_MARINE_DROPSHIP, ACCESS_MARINE_TADPOLE)
@@ -242,21 +242,23 @@
 
 	squad_leader = H
 	SSdirection.set_leader(tracking_id, H)
-	SSdirection.start_tracking(TRACKING_ID_MARINE_COMMANDER, H)
+	SSdirection.start_tracking(faction == FACTION_SOM ? TRACKING_ID_SOM_COMMANDER : TRACKING_ID_MARINE_COMMANDER, H)
 
 	//Handle aSL skill level and radio
-	if(!ismarineleaderjob(squad_leader.job))
+	if(!ismarineleaderjob(squad_leader.job) && !issommarineleaderjob(squad_leader.job))
 		squad_leader.set_skills(squad_leader.skills.setRating(leadership = SKILL_LEAD_TRAINED))
 		squad_leader.comm_title = "aSL"
 		var/obj/item/card/id/ID = squad_leader.get_idcard()
 		if(istype(ID))
 			ID.access += list(ACCESS_MARINE_LEADER, ACCESS_MARINE_DROPSHIP, ACCESS_MARINE_TADPOLE)
 
-	if(istype(squad_leader.wear_ear, /obj/item/radio/headset/mainship/marine))
-		var/obj/item/radio/headset/mainship/marine/R = squad_leader.wear_ear
-		R.channels[RADIO_CHANNEL_COMMAND] = TRUE
-		R.secure_radio_connections[RADIO_CHANNEL_COMMAND] = add_radio(R, GLOB.radiochannels[RADIO_CHANNEL_COMMAND])
-		R.use_command = TRUE
+	if(istype(squad_leader.wear_ear, /obj/item/radio/headset/mainship))
+		var/obj/item/radio/headset/mainship/radio = squad_leader.wear_ear
+		var/command_channel = faction == FACTION_SOM ? RADIO_CHANNEL_COMMAND_SOM : RADIO_CHANNEL_COMMAND
+		if(!(command_channel in radio.channels))
+			radio.channels[command_channel] = TRUE
+			radio.secure_radio_connections[command_channel] = add_radio(radio, GLOB.radiochannels[command_channel])
+		radio.use_command = TRUE
 
 	squad_leader.hud_set_job(faction)
 	squad_leader.update_inv_head()
@@ -402,3 +404,79 @@ GLOBAL_LIST_INIT(custom_squad_colors, list(
 	COLOR_NAVY = "deltaradio",
 	COLOR_PURPLE = "sciradio",
 ))
+
+/datum/squad/zulu
+	name = "Zulu"
+	id = ZULU_SQUAD
+	color = COLOR_SQUAD_ZULU
+	access = list(ACCESS_MARINE_ALPHA) //No unique SOM access yet
+	radio_freq = FREQ_ZULU
+	faction = FACTION_SOM
+	current_positions = list(
+		SOM_SQUAD_MARINE = 0,
+		SOM_SQUAD_VETERAN = 0,
+		SOM_SQUAD_CORPSMAN = 0,
+		SOM_SQUAD_ENGINEER = 0,
+		SOM_SQUAD_LEADER = 0,
+)
+	max_positions = list(
+		SOM_SQUAD_MARINE = -1,
+		SOM_SQUAD_LEADER = 1,
+)
+
+/datum/squad/yankee
+	name = "Yankee"
+	id = YANKEE_SQUAD
+	color = COLOR_SQUAD_YANKEE
+	access = list(ACCESS_MARINE_BRAVO)
+	radio_freq = FREQ_YANKEE
+	faction = FACTION_SOM
+	current_positions = list(
+		SOM_SQUAD_MARINE = 0,
+		SOM_SQUAD_VETERAN = 0,
+		SOM_SQUAD_CORPSMAN = 0,
+		SOM_SQUAD_ENGINEER = 0,
+		SOM_SQUAD_LEADER = 0,
+)
+	max_positions = list(
+		SOM_SQUAD_MARINE = -1,
+		SOM_SQUAD_LEADER = 1,
+)
+
+/datum/squad/xray
+	name = "Xray"
+	id = XRAY_SQUAD
+	color = COLOR_SQUAD_XRAY
+	access = list(ACCESS_MARINE_CHARLIE)
+	radio_freq = FREQ_XRAY
+	faction = FACTION_SOM
+	current_positions = list(
+		SOM_SQUAD_MARINE = 0,
+		SOM_SQUAD_VETERAN = 0,
+		SOM_SQUAD_CORPSMAN = 0,
+		SOM_SQUAD_ENGINEER = 0,
+		SOM_SQUAD_LEADER = 0,
+)
+	max_positions = list(
+		SOM_SQUAD_MARINE = -1,
+		SOM_SQUAD_LEADER = 1,
+)
+
+/datum/squad/whiskey
+	name = "Whiskey"
+	id = WHISKEY_SQUAD
+	color = COLOR_SQUAD_WHISKEY
+	access = list(ACCESS_MARINE_DELTA)
+	radio_freq = FREQ_WHISKEY
+	faction = FACTION_SOM
+	current_positions = list(
+		SOM_SQUAD_MARINE = 0,
+		SOM_SQUAD_VETERAN = 0,
+		SOM_SQUAD_CORPSMAN = 0,
+		SOM_SQUAD_ENGINEER = 0,
+		SOM_SQUAD_LEADER = 0,
+)
+	max_positions = list(
+		SOM_SQUAD_MARINE = -1,
+		SOM_SQUAD_LEADER = 1,
+)

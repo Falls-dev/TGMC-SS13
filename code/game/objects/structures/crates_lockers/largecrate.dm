@@ -286,3 +286,17 @@
 		/obj/item/weapon/gun/rifle/famas = /obj/item/ammo_magazine/rifle/famas,
 		/obj/item/weapon/gun/rifle/m16 = /obj/item/ammo_magazine/rifle/m16
 	)
+
+/obj/structure/largecrate/random/mini/ammo
+	desc = "A small metal crate. Here, Freeman ammo!"
+	name = "small ammocase"
+	icon_state = "mini_ammo"
+	stuff = list(
+		/obj/item/ammo_magazine/pistol,
+		/obj/item/ammo_magazine/revolver,
+		/obj/item/ammo_magazine/rifle,
+		/obj/item/ammo_magazine/rifle/extended,
+		/obj/item/ammo_magazine/shotgun,
+		/obj/item/ammo_magazine/shotgun/buckshot,
+		/obj/item/ammo_magazine/shotgun/flechette,
+	)

@@ -8,17 +8,28 @@
  * picked (TGUI, DM fallback prompt, or the legacy href).
  */
 GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
+GLOBAL_DATUM_INIT(campaign_respawn_menu, /datum/latejoin_menu/campaign_respawn, new)
+GLOBAL_DATUM_INIT(campaign_respawn_state, /datum/ui_state/campaign_respawn, new)
 
 /datum/latejoin_menu
+	var/is_respawn = FALSE
 
-/datum/latejoin_menu/ui_interact(mob/new_player/user, datum/tgui/ui)
+/datum/latejoin_menu/campaign_respawn
+	is_respawn = TRUE
+
+/datum/ui_state/campaign_respawn/can_use_topic(src_object, mob/user)
+	if(!istype(SSticker.mode, /datum/game_mode/hvh/campaign))
+		return UI_CLOSE
+	return (isobserver(user) || (isliving(user) && user.stat == DEAD)) ? UI_INTERACTIVE : UI_CLOSE
+
+/datum/latejoin_menu/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "JobSelection", "Choose Occupation")
+		ui = new(user, src, "JobSelection", is_respawn ? "Choose Respawn Role" : "Choose Occupation")
 		ui.open()
 
 /datum/latejoin_menu/ui_state(mob/user)
-	return GLOB.new_player_state
+	return is_respawn ? GLOB.campaign_respawn_state : GLOB.new_player_state
 
 /// Department name -> TGUI display color overrides. Only affects this UI; does not touch /datum/job/selection_color.
 GLOBAL_LIST_INIT(latejoin_menu_department_colors, list(
@@ -45,6 +56,8 @@ GLOBAL_LIST_INIT(latejoin_menu_department_colors, list(
 		for(var/datum/job/job_datum as anything in category)
 			if(!(job_datum.job_flags & JOB_FLAG_LATEJOINABLE))
 				continue
+			if(SSticker.mode?.round_type_flags & MODE_TWO_HUMAN_FACTIONS && job_datum.faction != user.faction)
+				continue
 			department_jobs[job_datum.title] = list(
 				"command" = !!(job_datum.job_flags & JOB_FLAG_BOLD_NAME_ON_SELECTION),
 				"duty" = job_datum.job_desc,
@@ -55,6 +68,7 @@ GLOBAL_LIST_INIT(latejoin_menu_department_colors, list(
 /// Per-round, per-user info (open slots, availability). Refreshed whenever the UI updates.
 /datum/latejoin_menu/ui_data(mob/user)
 	var/mob/new_player/owner = user
+	var/datum/game_mode/hvh/campaign/campaign = SSticker.mode
 	var/list/departments = list()
 	var/list/data = list(
 		"round_duration" = DisplayTimeText(world.time - SSticker.round_start_time, round_seconds_to = 1),
@@ -74,8 +88,14 @@ GLOBAL_LIST_INIT(latejoin_menu_department_colors, list(
 		for(var/datum/job/job_datum as anything in category)
 			if(!(job_datum.job_flags & JOB_FLAG_LATEJOINABLE))
 				continue
+			if(SSticker.mode?.round_type_flags & MODE_TWO_HUMAN_FACTIONS && job_datum.faction != user.faction)
+				continue
 			var/list/reasons = list()
-			var/available = istype(owner) && owner.IsJobAvailable(job_datum, TRUE, reasons)
+			var/available
+			if(is_respawn)
+				available = istype(campaign) && campaign.IsJobAvailable(user, job_datum, user.faction)
+			else
+				available = istype(owner) && owner.IsJobAvailable(job_datum, TRUE, reasons)
 
 			var/position_label
 			if(job_datum.job_flags & JOB_FLAG_HIDE_CURRENT_POSITIONS)
@@ -98,15 +118,19 @@ GLOBAL_LIST_INIT(latejoin_menu_department_colors, list(
 	if(.)
 		return
 
-	if(!ui.user.client || !isnewplayer(ui.user))
+	if(!ui.user.client || (!is_respawn && !isnewplayer(ui.user)))
 		return TRUE
-
-	var/mob/new_player/owner = ui.user
 
 	switch(action)
 		if("select_job")
 			var/datum/job/job_datum = locate(params["job"]) in SSjob.active_joinable_occupations
 			if(!istype(job_datum))
 				return TRUE
-			owner.attempt_select_job(job_datum)
+			if(is_respawn)
+				var/datum/game_mode/hvh/campaign/campaign = SSticker.mode
+				if(istype(campaign))
+					campaign.select_respawn_job(ui.user, job_datum)
+			else
+				var/mob/new_player/owner = ui.user
+				owner.attempt_select_job(job_datum)
 			return TRUE

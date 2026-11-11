@@ -640,7 +640,7 @@
 		set_invis_see(SEE_INVISIBLE_OBSERVER)
 	return ..()
 
-/mob/living/proc/can_track(mob/living/user)
+/mob/living/proc/can_track(mob/living/user, datum/cameranet/camera_network = GLOB.cameranet)
 	//basic fast checks go first. When overriding this proc, I recommend calling ..() at the end.
 	var/turf/T = get_turf(src)
 	if(!T)
@@ -653,7 +653,7 @@
 		return FALSE
 
 	// Now, are they viewable by a camera? (This is last because it's the most intensive check)
-	if(!near_camera(src))
+	if(!near_camera(src, camera_network))
 		return FALSE
 
 	return TRUE

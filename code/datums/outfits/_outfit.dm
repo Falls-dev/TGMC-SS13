@@ -90,6 +90,7 @@
 
 /datum/outfit/New()
 	. = ..()
+	update_contents()
 	container_list["slot_in_back"] = backpack_contents
 	container_list["slot_in_belt"] = belt_contents
 	container_list["slot_in_boot"] = shoe_contents
@@ -313,3 +314,6 @@
 		if(!check_rights(NONE))
 			return
 		usr.client.open_outfit_editor(src)
+
+/datum/outfit/proc/update_contents()
+	return

@@ -39,3 +39,7 @@
 #define PROJECTILE_HIT (1<<1)
 ///This projectile will ignore non targetted mobs
 #define PROJECTILE_PRECISE_TARGET (1<<2)
+
+#define BLOCK_Z_OUT_DOWN (1<<8)  // Should this object block z falling from loc?
+
+#define BLOCK_Z_IN_UP (1<<11) // Should this object block z uprise from below?

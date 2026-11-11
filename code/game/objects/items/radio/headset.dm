@@ -8,7 +8,14 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	RADIO_CHANNEL_ALPHA = RADIO_TOKEN_ALPHA,
 	RADIO_CHANNEL_BRAVO = RADIO_TOKEN_BRAVO,
 	RADIO_CHANNEL_CHARLIE = RADIO_TOKEN_CHARLIE,
-	RADIO_CHANNEL_DELTA = RADIO_TOKEN_DELTA
+	RADIO_CHANNEL_DELTA = RADIO_TOKEN_DELTA,
+	RADIO_CHANNEL_COMMAND_SOM = RADIO_TOKEN_COMMAND,
+	RADIO_CHANNEL_MEDICAL_SOM = RADIO_TOKEN_MEDICAL,
+	RADIO_CHANNEL_ENGINEERING_SOM = RADIO_TOKEN_ENGINEERING,
+	RADIO_CHANNEL_ZULU = RADIO_TOKEN_ALPHA,
+	RADIO_CHANNEL_YANKEE = RADIO_TOKEN_BRAVO,
+	RADIO_CHANNEL_XRAY = RADIO_TOKEN_CHARLIE,
+	RADIO_CHANNEL_WHISKEY = RADIO_TOKEN_DELTA,
 ))
 
 /obj/item/radio/headset
@@ -101,7 +108,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 						avail_chans += "use [MODE_TOKEN_DEPARTMENT] or [GLOB.channel_tokens[channels[i]]] for [lowertext(channels[i])]"
 					else
 						avail_chans += "use [MODE_TOKEN_DEPARTMENT] for [lowertext(channels[i])]"
-				else
+				else if(GLOB.channel_tokens[channels[i]])
 					avail_chans += "use [GLOB.channel_tokens[channels[i]]] for [lowertext(channels[i])]"
 		. += span_notice("A small screen on the headset displays the following available frequencies:\n[english_list(avail_chans)].")
 
@@ -175,7 +182,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/mainship/Initialize(mapload)
 	. = ..()
-	camera = new /obj/machinery/camera/headset(src)
+	var/camera_type = faction == FACTION_SOM ? /obj/machinery/camera/headset/som : /obj/machinery/camera/headset
+	camera = new camera_type(src)
 
 /obj/item/radio/headset/mainship/equipped(mob/living/carbon/human/user, slot)
 	if(slot == SLOT_EARS)
@@ -701,3 +709,115 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	name = "prankster headset"
 	keyslot = /obj/item/encryptionkey/erp
 	frequency = FREQ_ERP
+
+/obj/item/radio/headset/mainship/som
+	frequency = FREQ_SOM
+	keyslot = /obj/item/encryptionkey/general/som
+	faction = FACTION_SOM
+	minimap_type = /datum/action/minimap/som
+
+/obj/item/radio/headset/mainship/som/Initialize(mapload, datum/squad/squad, rank)
+	if(!squad)
+		return ..()
+	icon_state = "headset_marine_[lowertext(squad.name)]"
+	var/dat = "marine [lowertext(squad.name)]"
+	frequency = squad.radio_freq
+	if(ispath(rank, /datum/job/som/squad/leader))
+		dat += " leader"
+		keyslot2 = /obj/item/encryptionkey/squadlead/som
+		use_command = TRUE
+		command = TRUE
+	else if(ispath(rank, /datum/job/som/squad/engineer))
+		dat += " engineer"
+		keyslot2 = /obj/item/encryptionkey/engi/som
+	else if(ispath(rank, /datum/job/som/squad/medic))
+		dat += " corpsman"
+		keyslot2 = /obj/item/encryptionkey/med/som
+	name = dat + " radio headset"
+	return ..()
+
+/obj/item/radio/headset/mainship/som/command
+	name = "SOM command radio headset"
+	icon_state = "com_headset_alt"
+	keyslot = /obj/item/encryptionkey/mcom/som
+	use_command = TRUE
+	command = TRUE
+
+/obj/item/radio/headset/mainship/som/zulu
+	name = "SOM zulu radio headset"
+	icon_state = "headset_marine_zulu"
+	frequency = FREQ_ZULU
+
+/obj/item/radio/headset/mainship/som/zulu/lead
+	name = "SOM zulu leader radio headset"
+	keyslot2 = /obj/item/encryptionkey/squadlead/som
+	use_command = TRUE
+	command = TRUE
+
+/obj/item/radio/headset/mainship/som/zulu/engi
+	name = "SOM zulu engineer radio headset"
+	keyslot2 = /obj/item/encryptionkey/engi/som
+
+/obj/item/radio/headset/mainship/som/zulu/med
+	name = "SOM zulu corpsman radio headset"
+	keyslot2 = /obj/item/encryptionkey/med/som
+
+/obj/item/radio/headset/mainship/som/yankee
+	name = "SOM yankee radio headset"
+	icon_state = "headset_marine_yankee"
+	frequency = FREQ_YANKEE
+
+/obj/item/radio/headset/mainship/som/yankee/lead
+	name = "SOM yankee leader radio headset"
+	keyslot2 = /obj/item/encryptionkey/squadlead/som
+	use_command = TRUE
+	command = TRUE
+
+/obj/item/radio/headset/mainship/som/yankee/engi
+	name = "SOM yankee engineer radio headset"
+	keyslot2 = /obj/item/encryptionkey/engi/som
+
+/obj/item/radio/headset/mainship/som/yankee/med
+	name = "SOM yankee corpsman radio headset"
+	keyslot2 = /obj/item/encryptionkey/med/som
+
+/obj/item/radio/headset/mainship/som/xray
+	name = "SOM xray radio headset"
+	icon_state = "headset_marine_xray"
+	frequency = FREQ_XRAY
+
+/obj/item/radio/headset/mainship/som/xray/lead
+	name = "SOM xray leader radio headset"
+	keyslot2 = /obj/item/encryptionkey/squadlead/som
+	use_command = TRUE
+	command = TRUE
+
+/obj/item/radio/headset/mainship/som/xray/engi
+	name = "SOM xray engineer radio headset"
+	keyslot2 = /obj/item/encryptionkey/engi/som
+
+/obj/item/radio/headset/mainship/som/xray/med
+	name = "SOM xray corpsman radio headset"
+	keyslot2 = /obj/item/encryptionkey/med/som
+
+/obj/item/radio/headset/mainship/som/whiskey
+	name = "SOM whiskey radio headset"
+	icon_state = "headset_marine_whiskey"
+	frequency = FREQ_WHISKEY
+
+/obj/item/radio/headset/mainship/som/whiskey/lead
+	name = "SOM whiskey leader radio headset"
+	keyslot2 = /obj/item/encryptionkey/squadlead/som
+	use_command = TRUE
+	command = TRUE
+
+/obj/item/radio/headset/mainship/som/whiskey/engi
+	name = "SOM whiskey engineer radio headset"
+	keyslot2 = /obj/item/encryptionkey/engi/som
+
+/obj/item/radio/headset/mainship/som/whiskey/med
+	name = "SOM whiskey corpsman radio headset"
+	keyslot2 = /obj/item/encryptionkey/med/som
+
+
+//spatial agent headset

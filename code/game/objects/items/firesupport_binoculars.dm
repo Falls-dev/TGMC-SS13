@@ -95,17 +95,21 @@
 		return TRUE
 
 	var/list/radial_options = list()
+	var/list/support_by_label = list()
 	for(var/fire_support_type in mode_list)
-		if(!mode_list[fire_support_type].uses || !(mode_list[fire_support_type].fire_support_flags & FIRESUPPORT_AVAILABLE))
+		var/datum/fire_support/support = mode_list[fire_support_type]
+		if(!support.uses || !(support.fire_support_flags & FIRESUPPORT_AVAILABLE))
 			continue
-		radial_options[mode_list[fire_support_type].name] = image(icon = 'icons/mob/radial.dmi', icon_state = mode_list[fire_support_type].icon_state)
+		var/label = "[support.name] ([support.uses < 0 ? "unlimited" : support.uses])"
+		radial_options[label] = image(icon = 'icons/mob/radial.dmi', icon_state = support.icon_state)
+		support_by_label[label] = support
 
-	var/mode_selected = show_radial_menu(user, src, radial_options, null, 48, null, TRUE, TRUE)
-	for(var/option in mode_list)
-		if(mode_list[option].name != mode_selected)
-			continue
-		mode = mode_list[option]
-		user.balloon_alert(user, "[mode_selected] mode")
+	var/selected_label = show_radial_menu(user, src, radial_options, null, 48, null, TRUE, TRUE)
+	var/datum/fire_support/selected_support = support_by_label[selected_label]
+	if(QDELETED(selected_support) || !selected_support.uses || !(selected_support.fire_support_flags & FIRESUPPORT_AVAILABLE))
+		return
+	mode = selected_support
+	user.balloon_alert(user, "[mode.name] mode")
 	update_icon()
 
 ///lases a target and calls fire support on it
@@ -218,6 +222,7 @@
 		FIRESUPPORT_TYPE_INCENDIARY_MORTAR_SOM,
 		FIRESUPPORT_TYPE_SATRAPINE_SMOKE_MORTAR,
 		FIRESUPPORT_TYPE_SMOKE_MORTAR_SOM,
+		FIRESUPPORT_TYPE_TELE_COPE,
 	)
 
 ///Sets a laser overlay for fire support binos
