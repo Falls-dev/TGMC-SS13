@@ -44,6 +44,7 @@
 		/obj/item/weapon/karambit/case_hardened,
 	)
 	rare_list = list(
+		/mob/living/simple_animal/pig,
 		/obj/vehicle/unmanned,
 		/obj/item/weapon/gun/rifle/sniper/antimaterial,
 		/obj/item/weapon/gun/rifle/tx8,

@@ -533,7 +533,12 @@ GLOBAL_LIST_INIT(sentry_ignore_List, set_sentry_ignore_List())
 				continue
 			if(AM.type in GLOB.sentry_ignore_List) //todo:accurately populate GLOB.sentry_ignore_List
 				continue
-			if(AM.allow_pass_flags & (gun.ammo_datum_type::ammo_behavior_flags  & AMMO_ENERGY ? (PASS_GLASS|PASS_PROJECTILE) : PASS_PROJECTILE))
+			if(AM.allow_pass_flags & PASS_GLASS)
+				if(gun.ammo_datum_type::ammo_behavior_flags & AMMO_BLOCKED_BY_GLASS)
+					return FALSE
+				if(gun.ammo_datum_type::ammo_behavior_flags & AMMO_ENERGY)
+					continue
+			if(AM.allow_pass_flags & PASS_PROJECTILE)
 				continue
 			return FALSE
 

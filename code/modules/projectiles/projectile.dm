@@ -653,8 +653,11 @@ So if we are on the 32th absolute pixel coordinate we are on tile 1, but if we a
 		return FALSE
 	if(src == proj.original_target) //clicking on the structure itself hits the structure
 		return TRUE
-	if((allow_pass_flags & PASS_GLASS) && (proj.ammo.ammo_behavior_flags & AMMO_ENERGY))
-		return FALSE
+	if(allow_pass_flags & PASS_GLASS)
+		if(proj.ammo.ammo_behavior_flags & AMMO_BLOCKED_BY_GLASS)
+			return TRUE
+		if(proj.ammo.ammo_behavior_flags & AMMO_ENERGY)
+			return FALSE
 	if(!(allow_pass_flags & PASS_PROJECTILE))
 		return TRUE
 	if(proj.distance_travelled <= proj.ammo.barricade_clear_distance)
