@@ -49,7 +49,7 @@
 
 	if(!powered() && (!kit.cell || kit.cell.charge < TELEPORTING_COST))
 		to_chat(user, span_warning("A red light flashes on \the [src]. It seems it doesn't have enough power."))
-		playsound(loc,'sound/machines/buzz-two.ogg', 25, FALSE)
+		playsound(loc,'sound/machines/buzz-two.ogg', 25, FALSE, MEDIUM_SOUND_RANGE)
 		return
 
 	if(!COOLDOWN_FINISHED(kit, teleport_cooldown))
@@ -126,7 +126,7 @@
 		return
 	if(!do_after(user, 2 SECONDS, NONE, src))
 		return FALSE
-	playsound(loc, 'sound/items/crowbar.ogg', 25, 1)
+	playsound(loc, 'sound/items/crowbar.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	to_chat(user , span_notice("You remove [kit.cell] from \the [src]."))
 	user.put_in_hands(kit.cell)
 	kit.cell = null
@@ -159,7 +159,7 @@
 	user.temporarilyRemoveItemFromInventory(I)
 	I.forceMove(kit)
 	kit.cell = I
-	playsound(loc, 'sound/items/deconstruct.ogg', 25, 1)
+	playsound(loc, 'sound/items/deconstruct.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	update_icon()
 
 /obj/machinery/deployable/teleporter/update_icon_state()

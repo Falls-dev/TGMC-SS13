@@ -201,10 +201,10 @@
 	if(xeno_attacker.status_flags & INCORPOREAL || xeno_attacker.do_actions)
 		return
 	visible_message(span_warning("[xeno_attacker] begins to pry the [src]'s cover!"), 3)
-	playsound(src,'sound/effects/metal_creaking.ogg', 25, 1)
+	playsound(src,'sound/effects/metal_creaking.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	if(!do_after(xeno_attacker, 2 SECONDS))
 		return
-	playsound(loc, 'sound/effects/metal_creaking.ogg', 25, 1)
+	playsound(loc, 'sound/effects/metal_creaking.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	go_out()
 
 #define LIMB_SURGERY 1
@@ -496,7 +496,7 @@
 
 						if(stored_matter < LIMB_MATTER_AMOUNT)
 							say("Biomass reserves depleted.")
-							playsound(loc, 'sound/machines/buzz-two.ogg', 15, TRUE)
+							playsound(loc, 'sound/machines/buzz-two.ogg', 15, TRUE, SHORT_SOUND_RANGE)
 							surgery_todo_list -= S
 							continue // next surgery
 
@@ -504,7 +504,7 @@
 
 						if(S.limb_ref.parent.limb_status & LIMB_DESTROYED) // there's nothing to attach to
 							say("Limb attachment failed.")
-							playsound(loc, 'sound/machines/buzz-two.ogg', 15, TRUE)
+							playsound(loc, 'sound/machines/buzz-two.ogg', 15, TRUE, SHORT_SOUND_RANGE)
 							surgery_todo_list -= S
 							continue
 
@@ -659,7 +659,7 @@
 	final_record.fields["autodoc_data"] = generate_autodoc_surgery_list(patient)
 	use_power(active_power_usage)
 	visible_message(span_notice("\The [src] pings as it stores the scan report of [patient.real_name]."))
-	playsound(loc, 'sound/machines/ping.ogg', 25, 1)
+	playsound(loc, 'sound/machines/ping.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 
 /obj/machinery/autodoc/proc/open_incision(mob/living/carbon/human/target, datum/limb/L)
 	if(target && L && L.surgery_open_stage < 2)
@@ -715,7 +715,7 @@
 		return // nooooooooooo
 	if(locked && !allowed(usr)) //Check access if locked.
 		to_chat(usr, span_warning("Access denied."))
-		playsound(loc,'sound/machines/buzz-two.ogg', 25, 1)
+		playsound(loc,'sound/machines/buzz-two.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 		return
 	do_eject()
 
@@ -1133,7 +1133,7 @@
 				connected.locked = !connected.locked
 			else
 				to_chat(user, span_warning("Access denied."))
-				playsound(loc, 'sound/machines/buzz-two.ogg', 25, 1)
+				playsound(loc, 'sound/machines/buzz-two.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			. = TRUE
 
 		if("noticetoggle")
@@ -1141,7 +1141,7 @@
 				release_notice = !release_notice
 			else
 				to_chat(user, span_warning("Access denied."))
-				playsound(loc, 'sound/machines/buzz-two.ogg', 25, 1)
+				playsound(loc, 'sound/machines/buzz-two.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			. = TRUE
 
 		if("automatictoggle")

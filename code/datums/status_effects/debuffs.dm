@@ -1025,7 +1025,7 @@
 	. = ..()
 	if(!owner)
 		return
-	playsound(owner.loc, "sound/bullets/acid_impact1.ogg", 4)
+	playsound(owner.loc, "sound/bullets/acid_impact1.ogg", 4, FALSE, ADJACENT_SOUND_RANGE)
 	particle_holder.particles.spawning = 1 + round(stacks / 2)
 	particle_holder.pixel_x = -2
 	particle_holder.pixel_y = 0

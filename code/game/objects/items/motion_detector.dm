@@ -145,7 +145,7 @@
 	for(var/mob/illusion/nearby_illusion AS in cheap_get_illusions_near(operator, range))
 		prepare_blip(nearby_illusion, MOTION_DETECTOR_HOSTILE)
 	if(hostile_detected)
-		playsound(loc, 'sound/items/tick.ogg', 100, 0, 7, 2)
+		playsound(loc, 'sound/items/tick.ogg', 100, 0, SHORT_SOUND_RANGE, 2)
 	addtimer(CALLBACK(src, PROC_REF(clean_blips)), 1 SECONDS)
 
 ///Clean all blips from operator screen

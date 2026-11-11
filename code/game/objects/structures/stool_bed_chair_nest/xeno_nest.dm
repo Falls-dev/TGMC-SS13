@@ -36,7 +36,7 @@
 	xeno_attacker.do_attack_animation(src, ATTACK_EFFECT_CLAW)
 	xeno_attacker.visible_message(span_xenonotice("\The [xeno_attacker] tears down \the [src]!"), \
 	span_xenonotice("We tear down \the [src]."))
-	playsound(src, SFX_ALIEN_RESIN_BREAK, 25)
+	playsound(src, SFX_ALIEN_RESIN_BREAK, 25, FALSE, MEDIUM_SOUND_RANGE)
 	take_damage(max_integrity) // Ensure its destroyed
 
 /obj/structure/bed/nest/user_buckle_mob(mob/living/buckling_mob, mob/user, check_loc = TRUE, silent)

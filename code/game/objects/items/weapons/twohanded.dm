@@ -101,7 +101,7 @@
 	toggle_active(TRUE)
 
 	if(wieldsound)
-		playsound(user, wieldsound, 15, 1)
+		playsound(user, wieldsound, 15, 1, SHORT_SOUND_RANGE)
 
 	force = force_activated
 
@@ -112,7 +112,7 @@
 	toggle_active(FALSE)
 
 	if(unwieldsound)
-		playsound(user, unwieldsound, 15, 1)
+		playsound(user, unwieldsound, 15, 1, SHORT_SOUND_RANGE)
 
 	force = initial(force)
 
@@ -253,7 +253,7 @@
 	carbon_owner.Move(get_step(carbon_owner, angle_to_dir(Get_Angle(carbon_owner, A))), get_dir(carbon_owner, A))
 	carbon_owner.face_atom(A)
 	activate_particles(owner.dir)
-	playsound(owner, 'sound/effects/alien/tail_swipe3.ogg', 50, 0, 5)
+	playsound(owner, 'sound/effects/alien/tail_swipe3.ogg', 50, FALSE, SUPER_SHORT_SOUND_RANGE)
 	owner.visible_message(span_danger("[owner] Swing their weapon in a deadly arc!"))
 
 	var/list/atom/movable/atoms_to_ravage = get_step(owner, owner.dir).contents.Copy()
@@ -273,7 +273,7 @@
 		human_victim.apply_damage(damage, BRUTE, BODY_ZONE_CHEST, MELEE, TRUE, TRUE, TRUE, penetration)
 		human_victim.knockback(owner, 1, 2, knockback_force = MOVE_FORCE_VERY_STRONG)
 		human_victim.adjust_stagger(1 SECONDS)
-		playsound(human_victim, 'sound/weapons/wristblades_hit.ogg', 25, 0, 5)
+		playsound(human_victim, "sound/weapons/wristblades_hit.ogg", 25, FALSE, SUPER_SHORT_SOUND_RANGE)
 		shake_camera(human_victim, 2, 1)
 
 /// Handles the activation and deactivation of particles, as well as their appearance.
@@ -458,7 +458,7 @@
 /obj/item/weapon/twohanded/sledgehammer/rocketsledge/wield(mob/user)
 	. = ..()
 	if((reagents.get_reagent_amount(/datum/reagent/fuel) < fuel_used))
-		playsound(loc, 'sound/items/weldingtool_off.ogg', 25)
+		playsound(loc, 'sound/items/weldingtool_off.ogg', 25, FALSE, MEDIUM_SOUND_RANGE)
 		return
 	update_icon()
 
@@ -496,14 +496,14 @@
 		paralyze = crush_paralyze_amount
 		knockback = 0
 		balloon_alert(user, "Selected mode: CRUSH.")
-		playsound(loc, 'sound/machines/switch.ogg', 25)
+		playsound(loc, 'sound/machines/switch.ogg', 25, FALSE, MEDIUM_SOUND_RANGE)
 		return
 
 	stun = knockback_stun_amount
 	paralyze = knockback_paralyze_amount
 	knockback = 1
 	balloon_alert(user, "Selected mode: KNOCKBACK.")
-	playsound(loc, 'sound/machines/switch.ogg', 25)
+	playsound(loc, 'sound/machines/switch.ogg', 25, FALSE, MEDIUM_SOUND_RANGE)
 
 /obj/item/weapon/twohanded/sledgehammer/rocketsledge/attack(mob/living/carbon/M, mob/living/carbon/user as mob)
 	if(!CHECK_BITFIELD(item_flags, WIELDED))
@@ -761,6 +761,6 @@
 	. = ..()
 	if(CHECK_BITFIELD(item_flags, WIELDED))
 		return
-	playsound(loc, 'sound/machines/switch.ogg', 25)
+	playsound(loc, 'sound/machines/switch.ogg', 25, FALSE, MEDIUM_SOUND_RANGE)
 	toggle_active()
 	toggle_motor(user)

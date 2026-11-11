@@ -72,7 +72,7 @@
 			connected.loc = src
 			return
 	morgue_open = !morgue_open
-	playsound(loc, 'sound/items/deconstruct.ogg', 25, 1)
+	playsound(loc, 'sound/items/deconstruct.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	update_icon()
 
 /obj/structure/morgue/attackby(obj/item/I, mob/user, params)
@@ -200,7 +200,7 @@
 		sleep(3 SECONDS)
 		cremating = 0
 		update_icon()
-		playsound(src.loc, 'sound/machines/ding.ogg', 25, 1)
+		playsound(src.loc, 'sound/machines/ding.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 
 /*
 * Crematorium tray

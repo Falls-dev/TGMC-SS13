@@ -118,7 +118,7 @@
 		balloon_alert(user, "It's melting!")
 		return TRUE
 
-	playsound(loc, 'sound/effects/barbed_wire_movement.ogg', 25, 1)
+	playsound(loc, 'sound/effects/barbed_wire_movement.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 
 	B.use(1)
 	wire()
@@ -139,7 +139,7 @@
 	if(!do_after(user, 2 SECONDS, NONE, src, BUSY_ICON_BUILD))
 		return TRUE
 
-	playsound(loc, 'sound/items/wirecutter.ogg', 25, TRUE)
+	playsound(loc, 'sound/items/wirecutter.ogg', 25, TRUE, MEDIUM_SOUND_RANGE)
 	balloon_alert_to_viewers("Removes the barbed wire")
 	modify_max_integrity(max_integrity - 50)
 	can_wire = TRUE

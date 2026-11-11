@@ -56,12 +56,12 @@
 
 			if(!H.melee_damage)
 				H.do_attack_animation(src)
-				playsound(loc, attack.miss_sound, 25, TRUE)
+				playsound(loc, attack.miss_sound, 25, TRUE, MEDIUM_SOUND_RANGE)
 				visible_message(span_danger("[H] tried to [pick(attack.attack_verb)] [src]!"), null, null, 5)
 				return FALSE
 
 			H.do_attack_animation(src, ATTACK_EFFECT_YELLOWPUNCH)
-			playsound(loc, attack.attack_sound, 25, TRUE)
+			playsound(loc, attack.attack_sound, 25, TRUE, MEDIUM_SOUND_RANGE)
 			visible_message(span_danger("[H] [pick(attack.attack_verb)] [src]!"), null, null, 5)
 			apply_damage(melee_damage + attack.damage, BRUTE, blocked = MELEE, updating_health = TRUE)
 
@@ -78,7 +78,7 @@
 		if(INTENT_HELP)
 			if(on_fire)
 				fire_stacks = max(fire_stacks - 1, 0)
-				playsound(loc, 'sound/weapons/thudswoosh.ogg', 25, 1, 7)
+				playsound(loc, 'sound/weapons/thudswoosh.ogg', 25, TRUE, SHORT_SOUND_RANGE)
 				xeno_attacker.visible_message(span_danger("[xeno_attacker] tries to put out the fire on [src]!"), \
 					span_warning("We try to put out the fire on [src]!"), null, 5)
 				if(fire_stacks <= 0)
@@ -92,7 +92,7 @@
 
 		if(INTENT_DISARM)
 			xeno_attacker.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 25, 1, 7)
+			playsound(loc, 'sound/weapons/thudswoosh.ogg', 25, TRUE, SHORT_SOUND_RANGE)
 			if(!issamexenohive(xeno_attacker))
 				return FALSE
 

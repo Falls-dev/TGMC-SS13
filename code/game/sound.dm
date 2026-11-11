@@ -42,48 +42,87 @@
  * * source: what played the sound.
  * * soundin: the .ogg to use.
  * * vol: the initial volume of the sound, 0 is no sound at all, 75 is loud queen screech.
- * * vary: to make the frequency var of the sound vary (mostly unused).
+ * * vary: to make the frequency var of the sound vary.
  * * sound_range: the maximum theoretical range (in tiles) of the sound, by default is equal to the volume.
  * * falloff: how the sound's volume decreases with distance, low is fast decrease and high is slow decrease. \
 A good representation is: 'byond applies a volume reduction to the sound every X tiles', where X is falloff.
  */
-/proc/playsound(atom/source, soundin, vol, vary, sound_range, falloff, is_global, frequency, channel = 0, ambient_sound = FALSE)
+/proc/playsound(atom/source, soundin, vol as num, vary = FALSE, sound_range = DEFAULT_SOUND_RANGE, falloff, is_global, frequency, channel = 0, ambient_sound = FALSE, ignore_walls = TRUE)
+	if(isarea(source))
+		CRASH("playsound(): source is an area")
+
+	if(islist(soundin))
+		CRASH("playsound(): soundin attempted to pass a list! Consider using pick()")
+
+	if(vol < SOUND_AUDIBLE_VOLUME_MIN) // never let sound go below SOUND_AUDIBLE_VOLUME_MIN or bad things will happen
+		CRASH("playsound(): volume below SOUND_AUDIBLE_VOLUME_MIN. [vol] < [SOUND_AUDIBLE_VOLUME_MIN]")
+
 	var/turf/turf_source = get_turf(source)
 
-	if(!turf_source || !soundin || !vol)
+	if (!turf_source)
 		return
 
 	//allocate a channel if necessary now so its the same for everyone
 	channel = channel || SSsounds.random_available_channel()
 
-	if(!sound_range)
-		sound_range = round(0.5 * vol) //if no specific range, the max range is equal to half the volume.
-
 	if(!frequency)
 		frequency = GET_RANDOM_FREQ
 	var/sound/S = isdatum(soundin) ? soundin : sound(get_sfx(soundin))
+	var/source_z = turf_source.z
 
-	var/list/listeners = SSmobs.clients_by_zlevel[turf_source.z].Copy()
+	var/list/listeners
+
+	var/turf/above_turf = GET_TURF_ABOVE(turf_source)
+	var/turf/below_turf = GET_TURF_BELOW(turf_source)
+
+	if(ignore_walls)
+		listeners = get_hearers_in_range(sound_range, turf_source, RECURSIVE_CONTENTS_CLIENT_MOBS)
+		if(below_turf)
+			listeners += get_hearers_in_range(sound_range, above_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
+
+		if(below_turf)
+			listeners += get_hearers_in_range(sound_range, below_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
+
+	else //these sounds don't carry through walls
+		listeners = get_hearers_in_view(sound_range, turf_source, RECURSIVE_CONTENTS_CLIENT_MOBS)
+
+		if(below_turf)
+			listeners += get_hearers_in_view(sound_range, above_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
+
+		if(below_turf)
+			listeners += get_hearers_in_view(sound_range, below_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
+		for(var/mob/listening_ghost as anything in SSmobs.dead_players_by_zlevel[source_z])
+			if(get_dist(listening_ghost, turf_source) <= sound_range)
+				listeners += listening_ghost
+
+	// snowflake, ai eyes dont have a client
+	// this also ignores walls cus I cant be assed rn
 	for(var/mob/ai_eye AS in GLOB.aiEyes)
 		var/turf/eye_turf = get_turf(ai_eye)
 		if(!eye_turf || eye_turf.z != turf_source.z)
 			continue
-		listeners += ai_eye
+		if(get_dist(eye_turf, turf_source) <= sound_range)
+			listeners += ai_eye
 
-	for(var/mob/listener AS in listeners|SSmobs.dead_players_by_zlevel[turf_source.z])
-		if(get_dist(listener, turf_source) > sound_range)
+
+	for(var/mob/listener AS in listeners)
+		if(ambient_sound && !(listener.client?.prefs?.volume_ambience = 0)) //todo: kill this. this seems fucking horrible
 			continue
-		if(ambient_sound)
-			if(listener.client?.prefs?.volume_ambience)
-				listener.playsound_local(turf_source, soundin, vol * (listener.client.prefs.volume_ambience / 100), vary, frequency, falloff, is_global, channel, S)
+		var/turf/mob_turf = get_turf(listener)
+		if(!mob_turf)
+			continue
+		if(get_dist_euclidean(mob_turf, turf_source) > sound_range)
 			continue
 		listener.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, is_global, channel, S)
 
 	//We do tanks separately, since they are not actually on the source z, and we need some other stuff to get accurate directional sound
+	//todo stop ignoring walls
 	for(var/obj/vehicle/sealed/armored/armor AS in GLOB.tank_list)
-		if(!armor.interior || armor.z != turf_source.z || get_dist(armor.loc, turf_source) > sound_range)
+		var/is_same_z = (armor.z == source_z) || (armor.z == above_turf?.z) || (armor.z == below_turf?.z)
+		if(!armor.interior || !is_same_z || get_dist_euclidean(armor.loc, turf_source) > sound_range)
 			continue
-		if(armor == source) // sounds vehicles with interiors make must be played inside the tank, see /obj/vehicle/sealed/armored/proc/play_interior_sound(...)
+		// sounds vehicles with interiors make must be played inside the tank, see /obj/vehicle/sealed/armored/proc/play_interior_sound(...)
+		if(armor == source)
 			continue
 		if(!length(armor.interior.occupants))
 			continue
@@ -105,7 +144,7 @@ A good representation is: 'byond applies a volume reduction to the sound every X
  * * turf_source - The turf our sound originates from
  * * soundin - the .ogg or SFX of our sound
  * * vol - Changes the volume of our sound, relevant when measuring falloff
- * * vary - to make the frequency var of the sound vary (mostly unused).
+ * * vary - to make the frequency var of the sound vary.
  * * frequency - Optional: if vary is set, this is how much we vary by (or a random amount if not given any value)
  * * falloff - Optional: Calculates falloff if not passed a value
  * * is_global - if false, sets our environment to SOUND_ENVIRONMENT_ROOM
@@ -128,19 +167,14 @@ A good representation is: 'byond applies a volume reduction to the sound every X
 
 	if(isturf(turf_source))
 		// 3D sounds, the technology is here!
-		var/turf/T = get_turf(src)
+		var/turf/turf_loc = get_turf(src)
 
-		//sound volume falloff with distance
-		var/distance = get_dist(T, turf_source)
+		if(sound_to_use.volume < SOUND_AUDIBLE_VOLUME_MIN)
+			return //Too quiet to be audible
 
-		distance *= distance_multiplier
-
-		if(sound_to_use.volume <= 2*distance)
-			return FALSE //no volume or too far away to hear such a volume level.
-
-		var/dx = turf_source.x - T.x // Hearing from the right/left
+		var/dx = turf_source.x - turf_loc.x // Hearing from the right/left
 		sound_to_use.x = dx * distance_multiplier
-		var/dz = turf_source.y - T.y // Hearing from infront/behind
+		var/dz = turf_source.y - turf_loc.y // Hearing from infront/behind
 		sound_to_use.z = dz * distance_multiplier
 		//The y value is for above your head, but there is no ceiling in 2d spessmens.
 		sound_to_use.y = 1

@@ -101,7 +101,7 @@
 		span_xenonotice("We regurgitate a pulsating node and plant it on the ground!"), null, 5)
 	new weed_type(T)
 	last_weeded_turf = T
-	playsound(T, SFX_ALIEN_RESIN_BUILD, 25)
+	playsound(T, SFX_ALIEN_RESIN_BUILD, 25, FALSE, MEDIUM_SOUND_RANGE)
 	GLOB.round_statistics.weeds_planted++
 	SSblackbox.record_feedback(FEEDBACK_TALLY, "round_statistics", 1, "weeds_planted")
 	if(owner.client)
@@ -468,7 +468,7 @@
 	var/atom/AM = xeno_owner.selected_resin
 	xeno_owner.visible_message(span_xenowarning("\The [xeno_owner] regurgitates a thick substance and shapes it into \a [initial(AM.name)]!"), \
 	span_xenonotice("We regurgitate some resin and shape it into \a [initial(AM.name)]."), null, 5)
-	playsound(owner.loc, SFX_ALIEN_RESIN_BUILD, 25)
+	playsound(owner.loc, SFX_ALIEN_RESIN_BUILD, 25, FALSE, MEDIUM_SOUND_RANGE)
 	var/atom/new_resin
 	if(ispath(xeno_owner.selected_resin, /turf)) // We should change turfs, not spawn them in directly
 		var/list/baseturfs = islist(T.baseturfs) ? T.baseturfs : list(T.baseturfs)
@@ -505,7 +505,7 @@
 	QDEL_NULL(xeno_owner.current_aura)
 	xeno_owner.current_aura = SSaura.add_emitter(xeno_owner, phero_choice, 6 + xeno_owner.xeno_caste.aura_strength * 2, xeno_owner.xeno_caste.aura_strength, -1, xeno_owner.faction, xeno_owner.hivenumber)
 	xeno_owner.balloon_alert(xeno_owner, "[phero_choice]")
-	playsound(xeno_owner.loc, SFX_ALIEN_DROOL, 25)
+	playsound(xeno_owner.loc, SFX_ALIEN_DROOL, 25, FALSE, MEDIUM_SOUND_RANGE)
 
 	if(xeno_owner.hive?.living_xeno_ruler == xeno_owner)
 		xeno_owner.hive?.update_leader_pheromones()
@@ -594,7 +594,7 @@
 	to_chat(xeno_owner, span_notice("We start focusing our plasma towards [target]."))
 	new /obj/effect/temp_visual/transfer_plasma(get_turf(xeno_owner)) //Cool SFX that confirms our source and our target
 	new /obj/effect/temp_visual/transfer_plasma(get_turf(target)) //Cool SFX that confirms our source and our target
-	playsound(xeno_owner, SFX_ALIEN_DROOL, 25)
+	playsound(xeno_owner, SFX_ALIEN_DROOL, 25, FALSE, MEDIUM_SOUND_RANGE)
 
 	xeno_owner.face_atom(target) //Face our target so we don't look silly
 
@@ -619,7 +619,7 @@
 	target.gain_plasma(amount)
 	to_chat(target, span_xenodanger("[xeno_owner] has transfered [amount] units of plasma to us. We now have [target.plasma_stored]/[target.xeno_caste.plasma_max]."))
 	to_chat(xeno_owner, span_xenodanger("We have transferred [amount] units of plasma to [target]. We now have [xeno_owner.plasma_stored]/[xeno_owner.xeno_caste.plasma_max]."))
-	playsound(xeno_owner, SFX_ALIEN_DROOL, 25)
+	playsound(xeno_owner, SFX_ALIEN_DROOL, 25, FALSE, MEDIUM_SOUND_RANGE)
 
 
 // ***************************************
@@ -703,7 +703,7 @@
 		log_combat(xeno_owner, A, "spat on", addition="with corrosive acid")
 	xeno_owner.visible_message(span_xenowarning("\The [xeno_owner] vomits globs of vile stuff all over \the [A]. It begins to sizzle and melt under the bubbling mess of acid!"), \
 	span_xenowarning("We vomit globs of vile stuff all over \the [A]. It begins to sizzle and melt under the bubbling mess of acid!"), null, 5)
-	playsound(xeno_owner.loc, 'sound/bullets/acid_impact1.ogg', 25)
+	playsound(xeno_owner.loc, 'sound/bullets/acid_impact1.ogg', 25, FALSE, MEDIUM_SOUND_RANGE)
 
 // ***************************************
 // *********** Super strong acid
@@ -846,7 +846,7 @@
 /datum/action/ability/activable/xeno/xeno_spit/proc/fire()
 	var/turf/current_turf = get_turf(owner)
 	var/sound_to_play = pick(1, 2) == 1 ? 'sound/voice/alien/spitacid.ogg' : 'sound/voice/alien/spitacid2.ogg'
-	playsound(xeno_owner.loc, sound_to_play, 25, 1)
+	playsound(xeno_owner.loc, sound_to_play, 25, 1, MEDIUM_SOUND_RANGE)
 
 	var/atom/movable/projectile/newspit = new /atom/movable/projectile(current_turf)
 	ability_cost = xeno_owner.ammo.spit_cost
@@ -1109,7 +1109,7 @@
 		return fail_activate()
 
 	new /obj/alien/egg/facehugger(current_turf, xeno_owner.hivenumber)
-	playsound(current_turf, 'sound/effects/splat.ogg', 15, 1)
+	playsound(current_turf, 'sound/effects/splat.ogg', 15, 1, SHORT_SOUND_RANGE)
 
 	succeed_activate()
 	add_cooldown()

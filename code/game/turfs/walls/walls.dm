@@ -414,7 +414,7 @@
 		if(3)
 			user.visible_message(span_notice("[user] struggles to pry off the cover."),
 			span_notice("You struggle to pry off the cover."))
-			playsound(src, 'sound/items/crowbar.ogg', 25, 1)
+			playsound(src, 'sound/items/crowbar.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 
 			if(!do_after(user, 6 SECONDS, NONE, src, BUSY_ICON_BUILD))
 				return
@@ -428,7 +428,7 @@
 		if(6)
 			user.visible_message(span_notice("[user] struggles to pry off the inner sheath."),
 			span_notice("You struggle to pry off the inner sheath."))
-			playsound(src, 'sound/items/crowbar.ogg', 25, 1)
+			playsound(src, 'sound/items/crowbar.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 
 			if(!do_after(user, 6 SECONDS, NONE, src, BUSY_ICON_BUILD))
 				return
@@ -452,7 +452,7 @@
 		return
 	user.visible_message(span_notice("[user] starts loosening the anchoring bolts securing the support rods."),
 	span_notice("You start loosening the anchoring bolts securing the support rods."))
-	playsound(src, 'sound/items/ratchet.ogg', 25, 1)
+	playsound(src, 'sound/items/ratchet.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 
 	if(!do_after(user, 6 SECONDS, NONE, src, BUSY_ICON_BUILD))
 		return

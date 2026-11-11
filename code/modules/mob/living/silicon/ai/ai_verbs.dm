@@ -236,7 +236,7 @@
 		move_resist = MOVE_RESIST_DEFAULT
 	else
 		move_resist = initial(move_resist)
-	playsound(loc,'sound/mecha/mechanical_toggle.ogg', 20)
+	playsound(loc,'sound/mecha/mechanical_toggle.ogg', 20, FALSE, MEDIUM_SOUND_RANGE)
 
 	to_chat(src, span_notice("<b>You are now [anchored ? "" : "un"]anchored.</b>"))
 

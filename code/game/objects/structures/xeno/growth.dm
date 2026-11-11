@@ -22,11 +22,11 @@
 	SIGNAL_HANDLER
 	if(!ismob(O) || isxeno(O))
 		return
-	playsound(src, SFX_ALIEN_RESIN_BREAK, 25)
+	playsound(src, SFX_ALIEN_RESIN_BREAK, 25, FALSE, MEDIUM_SOUND_RANGE)
 	deconstruct(TRUE)
 
 /obj/alien/resin/resin_growth/proc/on_growth()
-	playsound(src, SFX_ALIEN_RESIN_BUILD, 25)
+	playsound(src, SFX_ALIEN_RESIN_BUILD, 25, FALSE, MEDIUM_SOUND_RANGE)
 	var/turf/T = get_turf(src)
 	switch(structure)
 		if("wall")

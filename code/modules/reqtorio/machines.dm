@@ -40,7 +40,7 @@
 /obj/machinery/assembler/wrench_act(mob/living/user, obj/item/I)
 	anchored = !anchored
 	balloon_alert(user, "[anchored ? "" : "un"]anchored")
-	playsound(loc, 'sound/items/ratchet.ogg', 25, 1)
+	playsound(loc, 'sound/items/ratchet.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 
 /obj/machinery/assembler/screwdriver_act(mob/living/user, obj/item/I)
 	setDir(turn(dir, 90))
@@ -183,7 +183,7 @@
 		STOP_PROCESSING(SSslowprocess, src)
 	faction = user.faction
 	balloon_alert(user, "[anchored ? "" : "un"]anchored")
-	playsound(loc, 'sound/items/ratchet.ogg', 25, 1)
+	playsound(loc, 'sound/items/ratchet.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 
 /obj/machinery/fabricator/screwdriver_act(mob/living/user, obj/item/I)
 	setDir(turn(dir, 90))
@@ -250,7 +250,7 @@
 	anchored = !anchored
 	icon_state = anchored ? processiconstate : initial(icon_state)
 	balloon_alert(user, "[anchored ? "" : "un"]anchored")
-	playsound(loc, 'sound/items/ratchet.ogg', 25, 1)
+	playsound(loc, 'sound/items/ratchet.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 
 /obj/machinery/splitter/screwdriver_act(mob/living/user, obj/item/I)
 	setDir(turn(dir, 90))

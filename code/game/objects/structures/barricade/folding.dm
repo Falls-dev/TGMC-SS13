@@ -79,7 +79,7 @@
 				return
 
 			balloon_alert_to_viewers("bolt protection panel removed")
-			playsound(loc, 'sound/items/screwdriver.ogg', 25, 1)
+			playsound(loc, 'sound/items/screwdriver.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			build_state = BARRICADE_PLASTEEL_ANCHORED
 		if(BARRICADE_PLASTEEL_ANCHORED) //Protection panel removed step. Screwdriver to put the panel back, wrench to unsecure the anchor bolts
 			if(!MARINE_QUICKBUILD_ALLOWED && user.skills.getRating(SKILL_ENGINEER) < SKILL_ENGINEER_PLASTEEL)
@@ -87,7 +87,7 @@
 				if(!do_after(user, fumbling_time, NONE, src, BUSY_ICON_UNSKILLED))
 					return
 			balloon_alert_to_viewers("bolt protection panel replaced")
-			playsound(loc, 'sound/items/screwdriver.ogg', 25, 1)
+			playsound(loc, 'sound/items/screwdriver.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			build_state = BARRICADE_PLASTEEL_FIRM
 
 /obj/structure/barricade/folding/crowbar_act(mob/living/user, obj/item/I)
@@ -113,7 +113,7 @@
 				if(!do_after(user, fumbling_time, NONE, src, BUSY_ICON_UNSKILLED))
 					return
 			balloon_alert_to_viewers("disassembling")
-			playsound(loc, 'sound/items/crowbar.ogg', 25, 1)
+			playsound(loc, 'sound/items/crowbar.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			busy = TRUE
 
 			if(!do_after(user, 50, NONE, src, BUSY_ICON_BUILD))
@@ -123,7 +123,7 @@
 			busy = FALSE
 			user.visible_message(span_notice("[user] takes [src]'s panels apart."),
 			span_notice("You take [src]'s panels apart."))
-			playsound(loc, 'sound/items/deconstruct.ogg', 25, 1)
+			playsound(loc, 'sound/items/deconstruct.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			deconstruct(!get_self_acid())
 
 /obj/structure/barricade/folding/wrench_act(mob/living/user, obj/item/I)
@@ -142,7 +142,7 @@
 				if(!do_after(user, fumbling_time, NONE, src, BUSY_ICON_UNSKILLED))
 					return
 			balloon_alert_to_viewers("anchor bolts loosened")
-			playsound(loc, 'sound/items/ratchet.ogg', 25, 1)
+			playsound(loc, 'sound/items/ratchet.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			anchored = FALSE
 			modify_max_integrity(initial(max_integrity) * 0.5)
 			build_state = BARRICADE_PLASTEEL_LOOSE
@@ -163,7 +163,7 @@
 				if(!do_after(user, fumbling_time, NONE, src, BUSY_ICON_UNSKILLED))
 					return
 			balloon_alert_to_viewers("secured bolts")
-			playsound(loc, 'sound/items/ratchet.ogg', 25, 1)
+			playsound(loc, 'sound/items/ratchet.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			anchored = TRUE
 			modify_max_integrity(initial(max_integrity))
 			build_state = BARRICADE_PLASTEEL_ANCHORED
@@ -224,7 +224,7 @@
 /obj/structure/barricade/folding/proc/toggle_open(state, atom/user)
 	if(state == closed)
 		return
-	playsound(loc, 'sound/items/ratchet.ogg', 25, 1)
+	playsound(loc, 'sound/items/ratchet.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	closed = !closed
 	density = !density
 

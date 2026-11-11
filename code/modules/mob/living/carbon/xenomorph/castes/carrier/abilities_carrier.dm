@@ -138,7 +138,7 @@ GLOBAL_LIST_INIT(hugger_images_list,  list(
 
 	succeed_activate()
 
-	playsound(T, SFX_ALIEN_RESIN_BUILD, 25)
+	playsound(T, SFX_ALIEN_RESIN_BUILD, 25, FALSE, MEDIUM_SOUND_RANGE)
 	GLOB.round_statistics.trap_holes++
 	SSblackbox.record_feedback(FEEDBACK_TALLY, "round_statistics", 1, "carrier_traps")
 	owner.record_traps_created()
@@ -498,6 +498,6 @@ GLOBAL_LIST_INIT(hugger_images_list,  list(
 		return FALSE
 
 	new /obj/structure/bed/nest(T)
-	playsound(T, SFX_ALIEN_RESIN_BUILD, 25)
+	playsound(T, SFX_ALIEN_RESIN_BUILD, 25, FALSE, MEDIUM_SOUND_RANGE)
 	succeed_activate()
 	add_cooldown()

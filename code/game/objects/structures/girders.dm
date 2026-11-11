@@ -131,7 +131,7 @@
 				return TRUE
 			if(!welder.remove_fuel(1, user))
 				return TRUE
-			playsound(loc, 'sound/items/welder2.ogg', 25, 1)
+			playsound(loc, 'sound/items/welder2.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			to_chat(user, span_notice("You weld the [girder_state == GIRDER_BROKEN_PATCHED ? "girder together" : "metal to the girder"]!"))
 			change_state(girder_state + 1, user)
 			return TRUE
@@ -142,7 +142,7 @@
 		return FALSE
 	switch(girder_state)
 		if(GIRDER_BROKEN)
-			playsound(loc, 'sound/items/ratchet.ogg', 25, 1)
+			playsound(loc, 'sound/items/ratchet.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			to_chat(user, span_notice("Now unbolting the remaining girder base."))
 			if(!do_after(user, 1.5 SECONDS, NONE, src, BUSY_ICON_BUILD))
 				return TRUE
@@ -159,7 +159,7 @@
 			if(!isfloorturf(T) && !isbasalt(T) && !isopengroundturf(T))
 				to_chat(usr, span_warning("The girder must be secured on the floor!"))
 				return FALSE
-			playsound(loc, 'sound/items/ratchet.ogg', 25, 1)
+			playsound(loc, 'sound/items/ratchet.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			to_chat(user, span_notice("Now securing the girder"))
 			if(!do_after(user, 4 SECONDS, NONE, src, BUSY_ICON_BUILD))
 				return TRUE
@@ -179,7 +179,7 @@
 		if(GIRDER_NORMAL)
 			if(!anchored)
 				return FALSE
-			playsound(loc, 'sound/items/crowbar.ogg', 25, 1)
+			playsound(loc, 'sound/items/crowbar.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			to_chat(user, span_notice("Now dislodging the girder..."))
 			if(!do_after(user, 4 SECONDS, NONE, src, BUSY_ICON_BUILD))
 				return TRUE
@@ -199,7 +199,7 @@
 				return TRUE
 			if(girder_state != old_girder_state)
 				return TRUE
-			playsound(loc, 'sound/items/crowbar.ogg', 25, 1)
+			playsound(loc, 'sound/items/crowbar.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			to_chat(user, span_notice("You pry the external reinforcement layer out of the girder!"))
 			new reinforcement(loc) //This should come before change_state() as the var may get nulled there.
 			change_state(girder_state - 1)
@@ -213,7 +213,7 @@
 		if(GIRDER_NORMAL)
 			if(anchored)
 				return FALSE
-			playsound(loc, 'sound/items/screwdriver.ogg', 25, 1)
+			playsound(loc, 'sound/items/screwdriver.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			to_chat(user, span_notice("Now dissassembling the girder"))
 			if(!do_after(user, 4 SECONDS, NONE, src, BUSY_ICON_BUILD))
 				return TRUE
@@ -233,7 +233,7 @@
 				return TRUE
 			if(girder_state != old_girder_state)
 				return TRUE
-			playsound(loc, 'sound/items/screwdriver.ogg', 25, 1)
+			playsound(loc, 'sound/items/screwdriver.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			to_chat(user, span_notice("You secured the support struts!"))
 			change_state(girder_state + 1)
 			return TRUE
@@ -247,7 +247,7 @@
 				return TRUE
 			if(girder_state != old_girder_state)
 				return TRUE
-			playsound(loc, 'sound/items/crowbar.ogg', 25, 1)
+			playsound(loc, 'sound/items/crowbar.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			to_chat(user, span_notice("You unsecured the support struts!"))
 			change_state(girder_state - 1)
 			return TRUE
@@ -258,7 +258,7 @@
 		return FALSE
 	switch(girder_state)
 		if(GIRDER_BROKEN_PATCHED)
-			playsound(loc, 'sound/items/wirecutter.ogg', 25, 1)
+			playsound(loc, 'sound/items/wirecutter.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			to_chat(user, span_notice("Now cutting the metal plate..."))
 			if(!do_after(user, 4 SECONDS, NONE, src, BUSY_ICON_BUILD))
 				return TRUE
@@ -275,7 +275,7 @@
 				return
 			if(girder_state != old_girder_state)
 				return TRUE
-			playsound(loc, 'sound/items/wirecutter.ogg', 25, 1)
+			playsound(loc, 'sound/items/wirecutter.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			to_chat(user, span_notice("You've cut the support struts!"))
 			change_state(girder_state - 1)
 	return FALSE

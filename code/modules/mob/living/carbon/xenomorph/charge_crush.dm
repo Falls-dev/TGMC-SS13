@@ -248,7 +248,7 @@
 
 	if(isliving(crushed))
 		var/mob/living/crushed_living = crushed
-		playsound(crushed_living.loc, crush_sound, 25, 1)
+		playsound(crushed_living.loc, crush_sound, 25, 1, MEDIUM_SOUND_RANGE)
 		if(crushed_living.buckled)
 			crushed_living.buckled.unbuckle_mob(crushed_living)
 		animation_flash_color(crushed_living)
@@ -268,7 +268,7 @@
 		var/obj/crushed_obj = crushed
 		if(istype(crushed_obj, /obj/structure/xeno/silo) || istype(crushed_obj, /obj/structure/xeno/turret))
 			return precrush2signal(crushed_obj.post_crush_act(xeno_owner, src))
-		playsound(crushed_obj.loc, "punch", 25, 1)
+		playsound(crushed_obj.loc, "punch", 25, 1, MEDIUM_SOUND_RANGE)
 		var/crushed_behavior = crushed_obj.crushed_special_behavior()
 		var/obj_damage_mult = 1
 		if(isarmoredvehicle(crushed) || ishitbox(crushed))

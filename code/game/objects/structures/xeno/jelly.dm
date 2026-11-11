@@ -110,7 +110,7 @@
 	for(var/mob/living/carbon/human/human_victim AS in cheap_get_humans_near(src,1))
 		human_victim.apply_damage(acid_damage/2, BURN, BODY_ZONE_L_LEG, ACID,  penetration = 30)
 		human_victim.apply_damage(acid_damage/2, BURN, BODY_ZONE_R_LEG, ACID,  penetration = 30)
-		playsound(src, "sound/bullets/acid_impact1.ogg", 10)
+		playsound(src, "sound/bullets/acid_impact1.ogg", 10, FALSE, SUPER_SHORT_SOUND_RANGE)
 	qdel(src)
 
 /obj/structure/xeno/acid_mine/gas_mine
