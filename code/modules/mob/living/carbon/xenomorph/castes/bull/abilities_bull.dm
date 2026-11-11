@@ -50,8 +50,10 @@
 	xeno_owner.emote("hiss")
 	xeno_owner.set_canmove(TRUE)
 	xeno_owner.bull_charging = TRUE
-	xeno_owner.add_movespeed_modifier(MOVESPEED_ID_BULL_ACID_CHARGE, TRUE, 0, NONE, TRUE, xeno_owner.xeno_caste.speed * 1.2)
-	charge_duration = addtimer(CALLBACK(src, PROC_REF(acid_charge_deactivate)), 2 SECONDS,  TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_OVERRIDE)
+	xeno_owner.add_movespeed_modifier(MOVESPEED_ID_BULL_ACID_CHARGE, TRUE, 0, NONE, TRUE, xeno_owner.xeno_caste.speed * 1.2 - xeno_owner.charge_speed_bonus)
+	var/real_duration = xeno_owner.get_charge_duration(2 SECONDS)
+	xeno_owner.on_charge_start(real_duration)
+	charge_duration = addtimer(CALLBACK(src, PROC_REF(acid_charge_deactivate)), real_duration,  TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_OVERRIDE)
 	RegisterSignals(xeno_owner, list(COMSIG_LIVING_STATUS_PARALYZE, COMSIG_LIVING_STATUS_STAGGER), PROC_REF(acid_charge_deactivate))
 	RegisterSignal(xeno_owner, COMSIG_MOVABLE_MOVED, PROC_REF(acid_puddle))
 	xeno_owner.icon_state = "[xeno_owner.xeno_caste.caste_name] Charging"
@@ -64,6 +66,7 @@
 	xeno_owner.remove_movespeed_modifier(MOVESPEED_ID_BULL_ACID_CHARGE)
 	xeno_owner.update_icons()
 	xeno_owner.bull_charging = FALSE
+	xeno_owner.on_charge_end()
 
 	UnregisterSignal(owner, list(
 		COMSIG_MOVABLE_MOVED,
@@ -107,8 +110,10 @@
 	xeno_owner.emote("roar")
 	xeno_owner.set_canmove(TRUE)
 	xeno_owner.bull_charging = TRUE
-	xeno_owner.add_movespeed_modifier(MOVESPEED_ID_BULL_HEADBUTT_CHARGE, TRUE, 0, NONE, TRUE, xeno_owner.xeno_caste.speed * 1.2)
-	charge_duration = addtimer(CALLBACK(src, PROC_REF(headbutt_charge_deactivate)), 3 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_OVERRIDE)
+	xeno_owner.add_movespeed_modifier(MOVESPEED_ID_BULL_HEADBUTT_CHARGE, TRUE, 0, NONE, TRUE, xeno_owner.xeno_caste.speed * 1.2 - xeno_owner.charge_speed_bonus)
+	var/real_duration = xeno_owner.get_charge_duration(3 SECONDS)
+	xeno_owner.on_charge_start(real_duration)
+	charge_duration = addtimer(CALLBACK(src, PROC_REF(headbutt_charge_deactivate)), real_duration, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_OVERRIDE)
 	RegisterSignals(xeno_owner, list(COMSIG_LIVING_STATUS_PARALYZE, COMSIG_LIVING_STATUS_STAGGER), PROC_REF(headbutt_charge_deactivate))
 	RegisterSignal(xeno_owner, COMSIG_XENOMORPH_ATTACK_LIVING, PROC_REF(bull_charge_slash))
 	RegisterSignal(xeno_owner, COMSIG_MOVABLE_MOVED, PROC_REF(afterimage))
@@ -135,6 +140,7 @@
 	xeno_owner.remove_movespeed_modifier(MOVESPEED_ID_BULL_HEADBUTT_CHARGE)
 	xeno_owner.update_icons()
 	xeno_owner.bull_charging = FALSE
+	xeno_owner.on_charge_end()
 
 	UnregisterSignal(owner, list(
 		COMSIG_MOVABLE_MOVED,
@@ -171,8 +177,10 @@
 	xeno_owner.emote("roar")
 	xeno_owner.set_canmove(TRUE)
 	xeno_owner.bull_charging = TRUE
-	xeno_owner.add_movespeed_modifier(MOVESPEED_ID_BULL_GORE_CHARGE, TRUE, 0, NONE, TRUE, xeno_owner.xeno_caste.speed * 1.2)
-	charge_duration = addtimer(CALLBACK(src, PROC_REF(gore_charge_deactivate)), 2 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_OVERRIDE)
+	xeno_owner.add_movespeed_modifier(MOVESPEED_ID_BULL_GORE_CHARGE, TRUE, 0, NONE, TRUE, xeno_owner.xeno_caste.speed * 1.2 - xeno_owner.charge_speed_bonus)
+	var/real_duration = xeno_owner.get_charge_duration(2 SECONDS)
+	xeno_owner.on_charge_start(real_duration)
+	charge_duration = addtimer(CALLBACK(src, PROC_REF(gore_charge_deactivate)), real_duration, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_OVERRIDE)
 	RegisterSignals(xeno_owner, list(COMSIG_LIVING_STATUS_PARALYZE, COMSIG_LIVING_STATUS_STAGGER), PROC_REF(gore_charge_deactivate))
 	RegisterSignal(xeno_owner, COMSIG_XENOMORPH_ATTACK_LIVING, PROC_REF(bull_charge_slash))
 	RegisterSignal(xeno_owner, COMSIG_MOVABLE_MOVED, PROC_REF(afterimage))
@@ -198,6 +206,7 @@
 	xeno_owner.remove_movespeed_modifier(MOVESPEED_ID_BULL_GORE_CHARGE)
 	xeno_owner.update_icons()
 	xeno_owner.bull_charging = FALSE
+	xeno_owner.on_charge_end()
 
 	UnregisterSignal(owner, list(
 		COMSIG_MOVABLE_MOVED,

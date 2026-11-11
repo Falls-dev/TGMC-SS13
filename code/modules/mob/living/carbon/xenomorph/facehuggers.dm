@@ -62,6 +62,12 @@
 	var/about_to_jump = FALSE
 	///Time to become active after moving into the facehugger's space.
 	var/proximity_time = 0.75 SECONDS
+	///How long it takes to plant this hugger on a human by hand.
+	var/hand_attach_time = 1 SECONDS
+	///Is this hugger immune to fire?
+	var/fire_immune = FALSE
+	///How far this hugger can leap at a target.
+	var/leap_range = 4
 	var/trap_type = TRAP_HUGGER_LARVAL
 
 /obj/item/clothing/mask/facehugger/Initialize(mapload, input_hivenumber, input_source)
@@ -161,7 +167,7 @@
 		return ..()
 	user.visible_message(span_warning("\ [user] attempts to plant [src] on [M]'s face!"), \
 	span_warning("We attempt to plant [src] on [M]'s face!"))
-	if(!do_after(user, 1 SECONDS, NONE, M, BUSY_ICON_DANGER))
+	if(!do_after(user, hand_attach_time, NONE, M, BUSY_ICON_DANGER))
 		return
 	if(!try_attach(M))
 		go_idle()
@@ -272,7 +278,7 @@
 	if(chosen_target)
 		visible_message(span_warning("\The scuttling [src] leaps at [chosen_target]!"), null, null, 4)
 		leaping = TRUE
-		throw_at(chosen_target, 4, 1)
+		throw_at(chosen_target, leap_range, 1)
 		return
 
 	remove_danger_overlay() //Remove the danger overlay
@@ -608,7 +614,17 @@
 		dropped(target)
 
 /// Kills the hugger, should be self explanatory
+/// Sets whether this hugger is immune to fire, with a visible outline.
+/obj/item/clothing/mask/facehugger/proc/set_fire_immunity(new_fire_immunity)
+	if(!fire_immune && new_fire_immunity)
+		add_filter("facehugger_fire_immunity_outline", 2, outline_filter(1, COLOR_TAN_ORANGE))
+	if(fire_immune && !new_fire_immunity)
+		remove_filter("facehugger_fire_immunity_outline")
+	fire_immune = new_fire_immunity
+
 /obj/item/clothing/mask/facehugger/proc/kill_hugger(melt_timer = 1 MINUTES)
+	if(fire_immune)
+		set_fire_immunity(FALSE)
 	reset_attach_status()
 
 	if(stat == DEAD)
@@ -648,7 +664,7 @@
 //  DAMAGE STUFF
 ///////////////////////////////
 /obj/item/clothing/mask/facehugger/fire_act(burn_level, flame_color)
-	if(leaping || throwing) // no dying because of jumping over fire
+	if(leaping || throwing || fire_immune) // no dying because of jumping over fire
 		return
 	kill_hugger()
 
@@ -881,6 +897,19 @@
 		if(hivenumber == X.hive.hivenumber) //No friendly fire
 			return FALSE
 	return TRUE
+
+/// A fake hugger thrown together with a real one (Fake Huggers). It never attaches, but looks and acts like a hugger.
+/obj/item/clothing/mask/facehugger/combat/harmless
+	name = "harmless hugger"
+	color = COLOR_BROWN
+
+/obj/item/clothing/mask/facehugger/combat/harmless/try_attach(mob/M, mob/user)
+	if(!combat_hugger_check_target(M))
+		return FALSE
+	return TRUE
+
+/obj/item/clothing/mask/facehugger/combat/harmless/attack_self(mob/user)
+	return
 
 #undef FACEHUGGER_DEATH
 #undef IMPREGNATION_TIME

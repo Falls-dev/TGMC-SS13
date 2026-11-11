@@ -43,6 +43,14 @@ GLOBAL_LIST_INIT(hugger_images_list,  list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_THROW_HUGGER,
 	)
 	cooldown_duration = 2 SECONDS
+	/// If the owner has the Resin Jelly Coating status effect, how much deciseconds should its duration be decreased by to grant thrown huggers fire immunity?
+	var/fire_immunity_transfer = 0 SECONDS
+	/// The multiplier to modify the Facehugger's impact_time, activate_time, and proximity_time by.
+	var/activation_time_multiplier = 1
+	/// The range in which the Facehugger can leap.
+	var/leapping_range = 4
+	/// Should a fake facehugger be created as well? If so, what percentage should be used for the gradient between the fake facehugger's color and the thrown facehugger's color?
+	var/fake_hugger_gradiant_percentage = 0
 
 /datum/action/ability/activable/xeno/throw_hugger/get_cooldown()
 	return xeno_owner.xeno_caste.hugger_delay
@@ -84,7 +92,30 @@ GLOBAL_LIST_INIT(hugger_images_list,  list(
 		F.stat = CONSCIOUS //Hugger is conscious
 		F.leaping = FALSE //Hugger is not leaping
 		F.facehugger_register_source(xeno_owner) //Set us as the source
+		if(fire_immunity_transfer > 0)
+			var/datum/status_effect/resin_jelly_coating/fire_immunity_effect = xeno_owner.has_status_effect(STATUS_EFFECT_RESIN_JELLY_COATING)
+			if(fire_immunity_effect)
+				fire_immunity_effect.duration -= fire_immunity_transfer
+				F.set_fire_immunity(TRUE)
+				if(fire_immunity_effect.duration <= world.time)
+					xeno_owner.remove_status_effect(STATUS_EFFECT_RESIN_JELLY_COATING)
+		F.impact_time = max(0.5 SECONDS, initial(F.impact_time) * activation_time_multiplier)
+		F.activate_time = max(0.5 SECONDS, initial(F.activate_time) * activation_time_multiplier)
+		F.proximity_time = max(0.5 SECONDS, initial(F.proximity_time) * activation_time_multiplier)
+		F.leap_range = leapping_range
 		F.throw_at(A, CARRIER_HUGGER_THROW_DISTANCE, CARRIER_HUGGER_THROW_SPEED)
+		if(fake_hugger_gradiant_percentage > 0 && !istype(F, /obj/item/clothing/mask/facehugger/combat/harmless))
+			var/obj/item/clothing/mask/facehugger/combat/harmless/fake = new(get_turf(xeno_owner), xeno_owner.hivenumber, xeno_owner)
+			fake.set_fire_immunity(F.fire_immune)
+			fake.impact_time = F.impact_time
+			fake.activate_time = F.activate_time
+			fake.proximity_time = F.proximity_time
+			fake.leap_range = F.leap_range
+			fake.stat = F.stat
+			fake.leaping = F.leaping
+			fake.facehugger_register_source(xeno_owner)
+			fake.throw_at(get_step(A, pick(CARDINAL_ALL_DIRS)), CARRIER_HUGGER_THROW_DISTANCE, CARRIER_HUGGER_THROW_SPEED)
+			fake.color = gradient(initial(fake.color), initial(F.color), fake_hugger_gradiant_percentage)
 		xeno_owner.visible_message(span_xenowarning("\The [xeno_owner] throws something towards \the [A]!"), \
 		span_xenowarning("We throw a facehugger towards \the [A]!"))
 		add_cooldown()
@@ -159,6 +190,8 @@ GLOBAL_LIST_INIT(hugger_images_list,  list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_SPAWN_HUGGER,
 	)
 	use_state_flags = ABILITY_USE_LYING
+	/// The amount of damage dealt to the owner for using the ability.
+	var/health_cost = 0
 
 /datum/action/ability/xeno_action/spawn_hugger/on_cooldown_finish()
 	to_chat(owner, span_xenodanger("We can now spawn another facehugger."))
@@ -175,6 +208,8 @@ GLOBAL_LIST_INIT(hugger_images_list,  list(
 		return FALSE
 
 /datum/action/ability/xeno_action/spawn_hugger/action_activate()
+	if(health_cost)
+		xeno_owner.adjust_brute_loss(health_cost, TRUE)
 	xeno_owner.huggers++
 	to_chat(xeno_owner, span_xenowarning("We spawn a facehugger via the miracle of asexual internal reproduction, adding it to our stores. Now sheltering: [xeno_owner.huggers] / [xeno_owner.xeno_caste.huggers_max]."))
 	playsound(xeno_owner, 'sound/voice/alien/drool2.ogg', 50, 0, 1)
@@ -222,6 +257,8 @@ GLOBAL_LIST_INIT(hugger_images_list,  list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_DROP_ALL_HUGGER,
 	)
 	use_state_flags = ABILITY_USE_LYING
+	/// What fraction of the owner's maximum plasma should be consumed? 1 = all of the remaining plasma.
+	var/succeed_cost = 1
 
 /datum/action/ability/xeno_action/carrier_panic/give_action(mob/living/L)
 	. = ..()
@@ -259,7 +296,7 @@ GLOBAL_LIST_INIT(hugger_images_list,  list(
 		step_away(new_hugger, xeno_owner, 1)
 		addtimer(CALLBACK(new_hugger, TYPE_PROC_REF(/obj/item/clothing/mask/facehugger, go_active), TRUE), new_hugger.jump_cooldown)
 		xeno_owner.huggers--
-	succeed_activate(INFINITY) //Consume all remaining plasma
+	succeed_activate(succeed_cost >= 1 ? INFINITY : succeed_cost * xeno_owner.xeno_caste.plasma_max) //Consume the plasma
 	add_cooldown()
 
 // ***************************************

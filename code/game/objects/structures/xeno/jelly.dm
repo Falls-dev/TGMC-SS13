@@ -7,6 +7,8 @@
 	var/immune_time = 15 SECONDS
 	///Holder to ensure only one user per resin jelly.
 	var/current_user
+	/// If thrown, should it create a 3x3 when it lands? If so, how long in deciseconds does it stagger a human it impacts?
+	var/combustive_duration = 0 SECONDS
 
 /obj/item/resin_jelly/attack_alien(mob/living/carbon/xenomorph/xeno_attacker, damage_amount = xeno_attacker.xeno_caste.melee_damage, damage_type = BRUTE, damage_flag = MELEE, effects = TRUE, armor_penetration = xeno_attacker.xeno_caste.melee_ap, isrightclick = FALSE)
 	if(xeno_attacker.status_flags & INCORPOREAL)
@@ -52,12 +54,32 @@
 
 /obj/item/resin_jelly/throw_at(atom/target, range, speed, thrower, spin, flying = FALSE, targetted_throw = TRUE)
 	if(isxenohivelord(thrower))
+		var/mob/living/carbon/xenomorph/hivelord_thrower = thrower
+		combustive_duration = hivelord_thrower.jelly_combustive_stagger
 		RegisterSignal(src, COMSIG_MOVABLE_IMPACT, PROC_REF(jelly_throw_hit))
+		RegisterSignal(src, COMSIG_MOVABLE_POST_THROW, PROC_REF(jelly_throw_ended))
 	. = ..()
+
+/// Creates temporary thin sticky resin in a 3x3 around the given turf.
+/obj/item/resin_jelly/proc/create_combustive_resin(turf/center)
+	for(var/turf/sticky_tile AS in RANGE_TURFS(1, center))
+		if(!locate(/obj/alien/resin/sticky/thin) in sticky_tile.contents)
+			var/obj/alien/resin/sticky/thin/temporary_resin = new(sticky_tile)
+			QDEL_IN(temporary_resin, 15 SECONDS)
+	playsound(center, SFX_ALIEN_RESIN_BUILD, 50, 1)
 
 /obj/item/resin_jelly/proc/jelly_throw_hit(datum/source, atom/hit_atom)
 	SIGNAL_HANDLER
-	UnregisterSignal(source, COMSIG_MOVABLE_IMPACT)
+	if(!isliving(hit_atom))
+		return
+	UnregisterSignal(source, list(COMSIG_MOVABLE_IMPACT, COMSIG_MOVABLE_POST_THROW))
+	if(combustive_duration)
+		var/mob/living/hit_living = hit_atom
+		create_combustive_resin(get_turf(hit_living))
+		if(!hit_living.issamexenohive(thrower))
+			hit_living.adjust_stagger(combustive_duration)
+		qdel(src)
+		return
 	if(!isxeno(hit_atom))
 		return
 	var/mob/living/carbon/xenomorph/xenomorph_target = hit_atom
@@ -65,6 +87,19 @@
 		return
 	xenomorph_target.visible_message(span_notice("[xenomorph_target] is splattered with jelly!"))
 	INVOKE_ASYNC(src, PROC_REF(activate_jelly), xenomorph_target)
+
+/// Possibly explode into sticky resin upon finishing the throw.
+/obj/item/resin_jelly/proc/jelly_throw_ended(datum/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(source, list(COMSIG_MOVABLE_IMPACT, COMSIG_MOVABLE_POST_THROW))
+	if(!combustive_duration)
+		return
+	var/turf/landing_turf = get_turf(src)
+	create_combustive_resin(landing_turf)
+	// Items often do not count as a hit on humans (no impact signal), so anyone standing where the jelly landed is staggered here.
+	for(var/mob/living/carbon/human/hit_human in landing_turf)
+		hit_human.adjust_stagger(combustive_duration)
+	qdel(src)
 
 ///////////////////////
 /// Globadier Mines ///
