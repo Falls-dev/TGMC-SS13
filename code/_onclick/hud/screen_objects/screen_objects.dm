@@ -42,6 +42,43 @@
 	*/
 	var/default_click = FALSE
 
+///The TK-5 gauntlets' reserve, drawn under the health bar. Same principle as human_health.dm -
+///an image whose icon_state is worked out from a number - except that the states are the four
+///quarters rather than the fourteen pixel lines of the health bar, because the reserve is only
+///ever spent in steps that large and finer detail would be a picture re-sent on every throw.
+///
+///Added to the screen by the gauntlets themselves rather than through the role HUD config, so
+///it appears for anyone wearing a pair and only while the field is running. A config slot would
+///have given every marine a permanent element that then had to be hidden whenever it did not
+///apply.
+/atom/movable/screen/kinesis_charge
+	name = "kinesis charge"
+	icon = 'icons/mob/hud/kinesis.dmi'
+	screen_loc = ui_kinesis_charge
+	///What was last drawn, so a call only re-sends when it really moved.
+	var/last_shown = ""
+	///Quarter state for a reserve, named from the icon's own four states. The bar is already
+	///coloured per level, so a printed number under it would be redundant.
+	///Returns TRUE when the screen object is still to be added, so the caller can size it first.
+/atom/movable/screen/kinesis_charge/proc/set_charge(amount, max_amount)
+	if(max_amount <= 0)
+		return
+	var/percentage = round(100 * amount / max_amount)
+	//Even quarters, one state each. The first cut ran at 75 and 25, which left the middle band
+	//spanning half the whole reserve - 500 points - while the outer bands were 250. A reserve of
+	//1000 then needed five separate grabs of something small before the bar moved at all, and that
+	//reads as a bar that does not work.
+	var/state = "0"
+	if(percentage > 75)
+		state = "100"
+	else if(percentage > 50)
+		state = "50"
+	else if(percentage > 25)
+		state = "25"
+	if(state == last_shown)
+		return
+	last_shown = state
+	icon_state = state
 /atom/movable/screen/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	if(isnull(hud_owner)) //some screens set their hud owners on /new, this prevents overriding them with null post atoms init
