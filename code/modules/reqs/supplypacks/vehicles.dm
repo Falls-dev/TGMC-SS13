@@ -73,6 +73,12 @@
 	contains = list(/obj/vehicle/ridden/motorbike)
 	containertype = null
 
+/datum/supply_packs/vehicles/assault_motorbike
+	name = "TerraGov assault motorbike"
+	cost = 800
+	contains = list(/obj/vehicle/ridden/big_bike)
+	containertype = null
+
 /datum/supply_packs/vehicles/sidecar
 	name = "Sidecar motorbike upgrade"
 	cost = 200
