@@ -405,3 +405,242 @@
 	penetration = 15
 	damage = 32.5
 	sundering = 1.25
+
+/obj/item/weapon/gun/rifle/tx55/freelancer_custom/combat_patrol
+	starting_attachment_types = list(
+		/obj/item/weapon/gun/rifle/tx54/mini,
+		/obj/item/attachable/motiondetector,
+		/obj/item/attachable/extended_barrel,
+		/obj/item/attachable/verticalgrip,
+	)
+
+//-------------------------------------------------------
+//A true classic, the Garand. Ping.
+
+/obj/item/weapon/gun/rifle/standard_gpmg/machinegunner
+	starting_attachment_types = list(/obj/item/attachable/stock/t60stock, /obj/item/attachable/foldable/bipod, /obj/item/attachable/magnetic_harness, /obj/item/attachable/extended_barrel)
+
+/obj/item/weapon/gun/rifle/standard_smarttargetrifle/motion
+	starting_attachment_types = list(/obj/item/weapon/gun/rifle/sg153, /obj/item/attachable/stock/strstock, /obj/item/attachable/motiondetector)
+
+/obj/item/weapon/gun/rifle/standard_autoshotgun/engineer
+	starting_attachment_types = list(/obj/item/attachable/stock/sh15, /obj/item/attachable/magnetic_harness, /obj/item/weapon/gun/grenade_launcher/underslung)
+
+/obj/item/weapon/gun/rifle/standard_skirmishrifle/standard
+	starting_attachment_types = list(
+		/obj/item/attachable/reddot,
+		/obj/item/attachable/extended_barrel,
+		/obj/item/weapon/gun/grenade_launcher/underslung,
+	)
+
+//-------------------------------------------------------
+//AF-51B MACHINEcarbine
+
+/obj/item/weapon/gun/rifle/standard_carbine/standard
+	starting_attachment_types = list(/obj/item/attachable/stock/ar18stock, /obj/item/weapon/gun/grenade_launcher/underslung, /obj/item/attachable/reddot, /obj/item/attachable/extended_barrel)
+
+/obj/item/weapon/gun/rifle/standard_assaultrifle/medic
+	starting_attachment_types = list(/obj/item/attachable/stock/ar12stock, /obj/item/attachable/magnetic_harness, /obj/item/attachable/extended_barrel, /obj/item/weapon/gun/grenade_launcher/underslung)
+
+//-------------------------------------------------------
+//DMR-37 DMR
+
+/obj/item/weapon/gun/rifle/standard_carbine/engineer
+	starting_attachment_types = list(/obj/item/attachable/stock/ar18stock, /obj/item/attachable/magnetic_harness, /obj/item/attachable/verticalgrip, /obj/item/attachable/extended_barrel)
+
+/obj/item/weapon/gun/rifle/standard_assaultrifle/engineer
+	starting_attachment_types = list(/obj/item/attachable/stock/ar12stock, /obj/item/attachable/magnetic_harness, /obj/item/attachable/extended_barrel, /obj/item/weapon/gun/flamer/mini_flamer)
+
+/obj/item/weapon/gun/rifle/m41a/field_commander
+	starting_attachment_types = list(
+		/obj/item/attachable/stock/m41a,
+		/obj/item/weapon/gun/grenade_launcher/underslung/invisible,
+		/obj/item/attachable/reddot,
+		/obj/item/attachable/extended_barrel,
+	)
+
+/obj/item/weapon/gun/rifle/standard_assaultrifle/rifleman
+	starting_attachment_types = list(/obj/item/attachable/stock/ar12stock, /obj/item/attachable/reddot, /obj/item/attachable/extended_barrel, /obj/item/weapon/gun/grenade_launcher/underslung)
+
+/obj/item/weapon/gun/rifle/standard_carbine/plasma_pistol
+	starting_attachment_types = list(/obj/item/attachable/stock/ar18stock, /obj/item/weapon/gun/pistol/plasma_pistol, /obj/item/attachable/motiondetector, /obj/item/attachable/compensator)
+
+/obj/item/weapon/gun/rifle/standard_br/standard
+	starting_attachment_types = list(/obj/item/attachable/stock/br64stock, /obj/item/weapon/gun/grenade_launcher/underslung/br64, /obj/item/attachable/reddot, /obj/item/attachable/extended_barrel)
+
+//-------------------------------------------------------
+//PR-412 Pulse Rifle
+
+/obj/item/weapon/gun/rifle/standard_autoshotgun/standard
+	starting_attachment_types = list(/obj/item/attachable/stock/sh15, /obj/item/attachable/magnetic_harness, /obj/item/attachable/bayonet, /obj/item/weapon/gun/grenade_launcher/underslung)
+
+/obj/item/weapon/gun/rifle/standard_carbine/scout
+	starting_attachment_types = list(/obj/item/attachable/stock/ar18stock, /obj/item/weapon/gun/grenade_launcher/underslung, /obj/item/attachable/motiondetector, /obj/item/attachable/extended_barrel)
+
+/obj/item/weapon/gun/rifle/standard_carbine/suppressed
+	starting_attachment_types = list(/obj/item/attachable/stock/ar18stock, /obj/item/weapon/gun/grenade_launcher/underslung, /obj/item/attachable/reddot, /obj/item/attachable/suppressor)
+
+/obj/item/weapon/gun/rifle/tx54/motion_sensor
+	starting_attachment_types = list(/obj/item/attachable/motiondetector)
+	default_ammo_type = /obj/item/ammo_magazine/rifle/tx54
+
+//-------------------------------------------------------
+// AR-55 built in grenade launcher
+
+/obj/item/weapon/gun/rifle/standard_autoshotgun/plasma_pistol
+	starting_attachment_types = list(/obj/item/attachable/stock/sh15, /obj/item/attachable/motiondetector, /obj/item/attachable/extended_barrel, /obj/item/weapon/gun/pistol/plasma_pistol)
+
+//-------------------------------------------------------
+//SG-29 Smart Machine Gun (It's more of a rifle than the SG.)
+
+/obj/item/weapon/gun/rifle/som/suppressed
+	starting_attachment_types = list(
+		/obj/item/weapon/gun/shotgun/micro_grenade,
+		/obj/item/attachable/verticalgrip,
+		/obj/item/attachable/suppressor,
+		/obj/item/attachable/magnetic_harness,
+	)
+
+/obj/item/weapon/gun/rifle/standard_spottingrifle
+	name = "SG-153 spotting rifle"
+	desc = "An underslung spotting rifle, generally found ontop of another gun."
+	icon_state = "sg153"
+	icon = 'icons/obj/items/guns/marksman64.dmi'
+	fire_sound =  'sound/weapons/guns/fire/spottingrifle.ogg'
+	caliber = CALIBER_12X7
+	slot = ATTACHMENT_SLOT_UNDER
+	gun_skill_category = SKILL_SMARTGUN
+	max_shells = 5
+	default_ammo_type =/obj/item/ammo_magazine/rifle/standard_spottingrifle
+	allowed_ammo_types = list(
+		/obj/item/ammo_magazine/rifle/standard_spottingrifle,
+		/obj/item/ammo_magazine/rifle/standard_spottingrifle/highimpact,
+		/obj/item/ammo_magazine/rifle/standard_spottingrifle/heavyrubber,
+		/obj/item/ammo_magazine/rifle/standard_spottingrifle/plasmaloss,
+		/obj/item/ammo_magazine/rifle/standard_spottingrifle/tungsten,
+		/obj/item/ammo_magazine/rifle/standard_spottingrifle/incendiary,
+		/obj/item/ammo_magazine/rifle/standard_spottingrifle/flak,
+	)
+	force = 5
+	attachable_allowed = list()
+	actions_types = list()
+	gun_firemode_list = list(GUN_FIREMODE_SEMIAUTO)
+	gun_features_flags = GUN_IS_ATTACHMENT|GUN_WIELDED_FIRING_ONLY|GUN_ATTACHMENT_FIRE_ONLY|GUN_AMMO_COUNTER|GUN_IFF|GUN_SMOKE_PARTICLES
+	attach_features_flags = NONE
+	fire_delay = 1 SECONDS
+	accuracy_mult = 1.25
+	pixel_shift_x = 18
+	pixel_shift_y = 16
+
+//-------------------------------------------------------
+//SG-25 Smart Rifle (Added back spefically for NT PMC ert, do not expect it to return in marine roster)
+
+/obj/item/weapon/gun/rifle/standard_lmg/autorifleman
+	starting_attachment_types = list(/obj/item/attachable/verticalgrip, /obj/item/attachable/reddot)
+
+/obj/item/weapon/gun/rifle/standard_lmg/beginner
+	starting_attachment_types = list(/obj/item/attachable/extended_barrel, /obj/item/attachable/reddot, /obj/item/attachable/verticalgrip)
+
+//-------------------------------------------------------
+//MG-60 General Purpose Machine Gun
+
+/obj/item/ammo_magazine/standard_gpmg/big
+	name = "\improper MG-60 GPMG quadruple box magazine (10x26mm)"
+	desc = "A series of 4 belt boxes linked together for the MG-60 general purpose machinegun, incredibly impractical to use undeployed."
+	icon = 'icons/obj/items/ammo/campaign_magazines.dmi'
+	icon_state = "t60b"
+	w_class = WEIGHT_CLASS_BULKY
+	reload_delay = 8 SECONDS
+	max_rounds = 800
+	scatter_mod = 15
+	wield_delay_mod = 6 SECONDS
+
+//-------------------------------------------------------
+//PR-412L1 HEAVY PULSE RIFLE
+
+/obj/item/ammo_magazine/rifle/standard_spottingrifle/incendiary
+	name = "\improper SG-153 incendiary magazine (12.7mm Smart Magnum)"
+	desc = "A magazine filled with 12.7mm incendiary smart rounds, these rounds will set alight anything they hit."
+	icon_state = "sg153_ic"
+	icon_state_mini = "mag_rifle_orange"
+	default_ammo = /datum/ammo/bullet/spottingrifle/incendiary
+
+/obj/item/ammo_magazine/rifle/standard_spottingrifle/tungsten
+	name = "\improper SG-153 tungsten magazine (12.7mm Smart Magnum)"
+	desc = "A magazine filled with 12.7mm tungsten smart rounds, these rounds will massively knock back any target it hits."
+	icon_state = "sg153_tg"
+	icon_state_mini = "mag_rifle_green"
+	default_ammo = /datum/ammo/bullet/spottingrifle/tungsten
+
+/obj/item/ammo_magazine/rifle/standard_spottingrifle/highimpact
+	name = "\improper SG-153 high impact magazine (12.7mm Smart Magnum)"
+	desc = "A magazine filled with 12.7mm high impact smart rounds, these will likely stagger and slow anything they hit."
+	icon_state = "sg153_hi"
+	icon_state_mini = "mag_rifle_blue"
+	default_ammo = /datum/ammo/bullet/spottingrifle/highimpact
+
+/obj/item/ammo_magazine/rifle/tx15_flechette
+	name = "\improper SH-15 flechette magazine (16 gauge)"
+	desc = "A magazine of 16 gauge flechette rounds, for the SH-15."
+	caliber = CALIBER_16G
+	icon_state = "tx15_flechette"
+	icon_state_mini = "mag_tx15_flechette"
+	default_ammo = /datum/ammo/bullet/shotgun/tx15_flechette
+	max_rounds = 12
+	bonus_overlay = "tx15_flech"
+
+/obj/item/ammo_magazine/rifle/standard_carbine/ap
+	name = "\improper AR-18 AP magazine (10x24mm)"
+	desc = "A 10mm assault carbine magazine, loaded with light armor piercing rounds."
+	icon = 'icons/obj/items/ammo/campaign_magazines.dmi'
+	icon_state = "t18_ap"
+	icon_state_mini = "mag_rifle_big_green"
+	default_ammo = /datum/ammo/bullet/rifle/hv
+	bonus_overlay = "t18_ap"
+
+//-------------------------------------------------------
+//T12 Assault Rifle
+
+/obj/item/ammo_magazine/rifle/standard_assaultrifle/ap
+	name = "\improper AR-12 AP magazine (10x24mm)"
+	desc = "A 10mm assault rifle magazine, loaded with light armor piercing rounds."
+	icon = 'icons/obj/items/ammo/campaign_magazines.dmi'
+	icon_state = "t12_ap"
+	icon_state_mini = "mag_rifle_big_green"
+	default_ammo = /datum/ammo/bullet/rifle/hv
+	bonus_overlay = "t12_ap"
+
+//-------------------------------------------------------
+//T37 DMR
+
+/obj/item/ammo_magazine/rifle/tx54/smoke/acid
+	name = "\improper 20mm acid smoke grenade magazine"
+	desc = "A 20mm magazine loaded with acid grenades. For use with the GL-54 or AR-55."
+	default_ammo = /datum/ammo/tx54/smoke/acid
+	icon_state = "tx54_airburst"
+	icon_state_mini = "mag_sniper_green"
+	greyscale_colors = COLOR_AMMO_ACID
+
+/obj/item/ammo_magazine/rifle/standard_spottingrifle/heavyrubber
+	name = "\improper SG-153 heavy rubber magazine (12.7mm Smart Magnum)"
+	desc = "A magazine filled with 12.7mm heavy rubber smart rounds, these will likely stun and displace anything they hit."
+	icon_state = "sg153_hr"
+	icon_state_mini = "mag_rifle_red"
+	default_ammo = /datum/ammo/bullet/spottingrifle/heavyrubber
+
+/obj/item/ammo_magazine/rifle/standard_spottingrifle/plasmaloss
+	name = "\improper SG-153 tanglefoot magazine (12.7mm Smart Magnum)"
+	desc = "A magazine filled with 12.7mm smart rounds tipped with 'Tanglefoot' poison, these rounds will drain the energy out of targets they hit."
+	icon_state = "sg153_pl"
+	icon_state_mini = "mag_rifle_purple"
+	default_ammo = /datum/ammo/bullet/spottingrifle/plasmaloss
+
+/obj/item/ammo_magazine/rifle/standard_spottingrifle/flak
+	name = "\improper SG-153 flak magazine (12.7mm Smart Magnum)"
+	desc = "A magazine filled with 12.7mm flak smart rounds, these rounds will airburst on contact with an organic target, causing damage in a small area near the target."
+	icon_state = "sg153_fl"
+	icon_state_mini = "mag_rifle_cyan"
+	default_ammo = /datum/ammo/bullet/spottingrifle/flak
+
+//-------------------------------------------------------
+//SMARTRIFLE AMMUNITION
