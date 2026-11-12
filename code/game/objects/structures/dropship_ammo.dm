@@ -208,9 +208,10 @@
 /obj/structure/ship_ammo/cas/heavygun/examine(mob/user)
 	. = ..()
 	. += "It has [ammo_count] round\s."
+	. += "This will be enough for [ammo_count / ammo_used_per_firing] shot\s."
 
 /obj/structure/ship_ammo/cas/heavygun/show_loaded_desc(mob/user)
-	return "It's loaded with \a [src] containing [ammo_count] round\s."
+	return "It's loaded with \a [src] containing [ammo_count] round\s.<br>This will be enough for [ammo_count / ammo_used_per_firing] shot\s."
 
 /obj/structure/ship_ammo/cas/heavygun/get_turfs_to_impact(turf/impact, attackdir = NORTH)
 	var/turf/beginning = impact
@@ -563,10 +564,10 @@
 	fire_range = 4
 	prediction_type = CAS_AMMO_INCENDIARY
 	cas_effect = /obj/effect/overlay/blinking_laser/phosphorus // Enemies must know that something serious is coming at them
-	var/datum/effect_system/smoke_spread/phosphorus/smoke
 
 /obj/structure/ship_ammo/cas/minirocket/phosphorus/detonate_on(turf/impact, attackdir = NORTH)
-	. = ..()
+	impact.ceiling_debris_check(2)
+	var/datum/effect_system/smoke_spread/phosphorus/smoke = new
 	playsound(loc, 'sound/effects/smoke.ogg', 25, 1, 4)
 	smoke.set_up(6, impact, 7)
 	smoke.start()

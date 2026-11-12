@@ -19,9 +19,9 @@
 	var/prediction_type_string = "ERROR"
 	switch(prediction_type)
 		if(CAS_AMMO_EXPLOSIVE)
-			prediction_type_string = "high-explosive rocket."
+			prediction_type_string = "high-explosive rocket.<br>"
 		if(CAS_AMMO_INCENDIARY)
-			prediction_type_string = "incendiary rocket. Radius of fire  = [fire_range] tiles."
+			prediction_type_string = "incendiary rocket. Radius of fire  = [fire_range] tiles.<br>"
 		if(CAS_AMMO_HARMLESS)
-			prediction_type_string = "harmless rocket. It doesn't deal any damage."
+			prediction_type_string = "harmless rocket. It doesn't deal any damage.<br>"
 	. += "Ammo type: [prediction_type_string]<br>"
