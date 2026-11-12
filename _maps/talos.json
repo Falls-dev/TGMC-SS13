@@ -3,5 +3,5 @@
     "map_path": "map_files/Talos",
     "map_file": "TGS_Talos.dmm",
     "traits": [{"Marine Main Ship": true}],
-    "starting_dropship_points": 4355
+    "starting_dropship_points": 4000
 }
