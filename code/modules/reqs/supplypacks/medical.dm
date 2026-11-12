@@ -105,6 +105,15 @@
 	containertype = /obj/structure/closet/crate/secure/surgery
 	access = ACCESS_MARINE_MEDBAY
 
+/datum/supply_packs/medical/heal_grenades
+	name = "Pack of EMS-02 Healing Foam Grenades"
+	notes = "Contains 3 EMS-02 Healing Foam Grenades."
+	contains = list(
+		/obj/item/explosive/grenade/chem_grenade/healing_foam,
+		/obj/item/explosive/grenade/chem_grenade/healing_foam,
+		/obj/item/explosive/grenade/chem_grenade/healing_foam)
+	cost = 75
+
 /datum/supply_packs/medical/medvac
 	name = "MEDEVAC system"
 	contains = list(
