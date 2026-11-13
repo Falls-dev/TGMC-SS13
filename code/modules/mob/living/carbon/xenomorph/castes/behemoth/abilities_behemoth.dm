@@ -116,9 +116,13 @@
 	var/static/list/connections = list(
 		COMSIG_OBJ_TRY_ALLOW_THROUGH = PROC_REF(can_climb_over),
 		COMSIG_FIND_FOOTSTEP_SOUND = TYPE_PROC_REF(/atom/movable, footstep_override),
-		COMSIG_TURF_CHECK_COVERED = TYPE_PROC_REF(/atom/movable, turf_cover_check),
+		COMSIG_TURF_CHECK_COVERED = PROC_REF(earth_pillar_cover_check),
 	)
 	AddElement(/datum/element/connect_loc, connections)
+
+/obj/structure/xeno/earth_pillar/proc/earth_pillar_cover_check(atom/movable/source)
+	SIGNAL_HANDLER
+	return !current_holder
 
 /// Prepares this object to be thrown.
 /obj/structure/xeno/earth_pillar/proc/pre_throw(datum/source)
@@ -187,7 +191,16 @@
 /// Whenever the current holder moves, this object will follow.
 /obj/structure/xeno/earth_pillar/proc/holder_moved(datum/source, atom/old_loc, movement_dir, forced, list/old_locs)
 	SIGNAL_HANDLER
-	forceMove(current_holder.loc)
+	var/turf/old_turf = get_turf(src)
+	var/turf/new_turf = get_turf(current_holder)
+	forceMove(new_turf)
+	set_submerge_level(
+		new_turf,
+		old_turf,
+		'icons/turf/alpha_64.dmi',
+		"liquid_alpha",
+		current_holder.cached_multiplicative_slowdown + current_holder.next_move_slowdown
+	)
 
 /// When the dummy item is used to attack a turf, this object will be dropped on it.
 /obj/structure/xeno/earth_pillar/proc/dummy_attack(datum/source, turf/attacked_turf, atom/user)
@@ -326,6 +339,7 @@
 /datum/action/ability/activable/xeno/behemoth_seize/proc/post_throw(datum/source)
 	SIGNAL_HANDLER
 	UnregisterSignal(xeno_owner, list(COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_POST_THROW))
+	xeno_owner.remove_pass_flags(SEIZE_PASS_FLAGS, XENO_TRAIT)
 
 // ***************************************
 // *********** Earth Riser

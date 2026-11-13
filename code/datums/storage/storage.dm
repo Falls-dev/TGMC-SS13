@@ -793,24 +793,21 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 				to_chat(user, span_notice("\The [item_to_insert] is too long for this [parent.name]."))
 			return FALSE
 
-		var/obj/item/stack/stack = item_to_insert
-		var/max_fit = max_stack_merging(null, stack)
-		if(max_fit <= 0)
+		var/obj/item/stack/insert_stack = item_to_insert
+		var/insert_max_fit = max_stack_merging(null, insert_stack)
+		if(insert_max_fit <= 0)
 			if(warning)
 				to_chat(user, span_notice("\The [item_to_insert] is too long for this [parent.name]."))
 			return FALSE
-	var/sum_storage_cost = 0
-	if(!is_type_in_typecache(item_to_insert, typecacheof(storage_type_limits)))
-		sum_storage_cost = item_to_insert.w_class
-		if(istype(item_to_insert, /obj/item/stack) && item_to_insert.w_class > max_w_class)
-			var/obj/item/stack/stack = item_to_insert
-			var/max_fit = max_stack_merging(null, stack)
-			if(max_fit > 0)
-				sum_storage_cost = max_w_class
+	var/sum_storage_cost = item_to_insert.w_class
+	if(istype(item_to_insert, /obj/item/stack) && item_to_insert.w_class > max_w_class)
+		var/obj/item/stack/insert_stack = item_to_insert
+		var/insert_max_fit = max_stack_merging(null, insert_stack)
+		if(insert_max_fit > 0)
+			sum_storage_cost = max_w_class
 
 	for(var/obj/item/item in parent.contents)
-		if(!is_type_in_typecache(item, typecacheof(storage_type_limits)))
-			sum_storage_cost += item.w_class
+		sum_storage_cost += item.w_class
 
 	if(sum_storage_cost > max_storage_space)
 		if(warning)
