@@ -752,6 +752,8 @@
 		/obj/item/attachable/bayonet,
 		/obj/item/attachable/bayonetknife,
 		/obj/item/attachable/bayonetknife/som,
+		/obj/item/attachable/compensator,
+		/obj/item/attachable/extended_barrel,
 		/obj/item/attachable/flashlight,
 		/obj/item/attachable/magnetic_harness,
 		/obj/item/attachable/buildasentry,
@@ -771,7 +773,6 @@
 	burst_delay = 0.3 SECONDS
 	burst_amount = 3
 	movement_acc_penalty_mult = 3
-	damage_falloff_mult = 0.6
 	force = 20
 
 
