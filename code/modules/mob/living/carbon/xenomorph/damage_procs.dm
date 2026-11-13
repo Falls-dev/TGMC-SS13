@@ -93,6 +93,9 @@
 	PRIVATE_PROC(TRUE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
+	if(QDELETED(src))
+		return
+
 	SEND_SIGNAL(src, COMSIG_XENOMORPH_TAKING_DAMAGE, damage)
 
 	if(stat == DEAD)
@@ -160,6 +163,9 @@
 
 ///Splashes living mob in 1 tile radius with acid, spawns
 /mob/living/carbon/xenomorph/proc/check_blood_splash(damage = 0, damtype = BRUTE, chancemod = 0, sharp = FALSE, edge = FALSE)
+	if(QDELETED(src))
+		return FALSE
+
 	if(!damage)
 		return FALSE
 
