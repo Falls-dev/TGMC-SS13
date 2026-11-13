@@ -572,7 +572,6 @@
 	smoke.set_up(6, impact, 7)
 	smoke.start()
 	flame_radius(fire_range,impact)
-	flame_radius(1, impact, burn_intensity = 75, burn_duration = 45, burn_damage = 15, fire_stacks = 75, colour = "blue")
 
 /obj/structure/ship_ammo/cas/minirocket/smoke
 	name = "MGA-108C smoke"
