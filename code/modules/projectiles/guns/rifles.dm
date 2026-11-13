@@ -768,7 +768,7 @@
 	attachable_offset = list("muzzle_x" = 40, "muzzle_y" = 16, "rail_x" = 6, "rail_y" = 19, "under_x" = 20, "under_y" = 13, "stock_x" = 5, "stock_y" = 12)
 	starting_attachment_types = list(/obj/item/attachable/stock/type63)
 	fire_delay = 0.5 SECONDS
-	damage_mult = 0.5
+	damage_falloff_mult = 0.6
 	scatter = 3
 	burst_delay = 0.3 SECONDS
 	burst_amount = 3
