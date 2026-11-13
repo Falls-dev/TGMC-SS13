@@ -733,7 +733,7 @@
 	aim_slowdown = 0.5
 	load_method = MAGAZINE
 	reciever_flags = AMMO_RECIEVER_HYBRID
-	fire_sound = 'sound/weapons/guns/fire/tgmc/kinetic/gun_mosin.ogg'
+	fire_sound = 'sound/weapons/guns/fire/autorifle-1.ogg'
 	unload_sound = 'sound/weapons/guns/interact/ak47_unload.ogg'
 	reload_sound = 'sound/weapons/guns/interact/ak47_reload.ogg'
 	cocked_sound = 'sound/weapons/guns/interact/ak47_cocked.ogg'
@@ -790,7 +790,7 @@
 	max_shells = 24
 	wield_delay = 0.3 SECONDS
 	aim_slowdown = 0.5
-	fire_sound = 'sound/weapons/guns/fire/tgmc/kinetic/gun_mosin.ogg'
+	fire_sound = 'sound/weapons/guns/fire/autorifle-2.ogg'
 	unload_sound = 'sound/weapons/guns/interact/ak47_unload.ogg'
 	reload_sound = 'sound/weapons/guns/interact/ak47_reload.ogg'
 	cocked_sound = 'sound/weapons/guns/interact/ak47_cocked.ogg'
