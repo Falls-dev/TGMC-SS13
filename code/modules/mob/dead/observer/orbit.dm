@@ -6,7 +6,12 @@
 /datum/orbit_menu/New(mob/dead/observer/new_owner)
 	if(!istype(new_owner))
 		qdel(src)
+		return
 	owner = new_owner
+
+/datum/orbit_menu/Destroy(force)
+	owner = null
+	return ..()
 
 /datum/orbit_menu/ui_state(mob/user)
 	return GLOB.observer_state

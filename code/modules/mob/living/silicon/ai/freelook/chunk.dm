@@ -29,10 +29,10 @@
 
 /// Add a camera eye to the chunk, then update if changed.
 /datum/camerachunk/proc/add(mob/camera/eye)
-	eye.visibleCameraChunks += src
-	seenby += eye
 	if(changed)
 		update()
+	eye.visibleCameraChunks += src
+	seenby += eye
 
 	var/client/client = eye.GetViewerClient()
 	if(client && eye.use_static)
@@ -91,19 +91,14 @@
 	///turfs that we could see last update but cant see now
 	var/list/newly_obscured_turfs = visibleTurfs - updated_visible_turfs
 
-	for(var/mob/camera/client_eye as anything in seenby)
-		var/client/client = client_eye.GetViewerClient()
-		if(!client)
-			continue
-
-		client.images -= active_static_images
-
+	var/list/removed_static = list()
+	var/list/added_static = list()
 	for(var/turf/visible_turf as anything in newly_visible_turfs)
 		var/image/static_image = obscuredTurfs[visible_turf]
 		if(!static_image)
 			continue
 
-		active_static_images -= static_image
+		removed_static += static_image
 		obscuredTurfs -= visible_turf
 
 	for(var/turf/obscured_turf as anything in newly_obscured_turfs)
@@ -116,17 +111,23 @@
 			break
 
 		obscuredTurfs[obscured_turf] = static_image
-		active_static_images += static_image
+		added_static += static_image
+	active_static_images -= removed_static
+	active_static_images += added_static
 	visibleTurfs = updated_visible_turfs
 
 	changed = FALSE
+	if(!length(added_static) && !length(removed_static))
+		return
 
 	for(var/mob/camera/client_eye as anything in seenby)
 		var/client/client = client_eye.GetViewerClient()
 		if(!client)
 			continue
 
-		client.images += active_static_images
+		client.images -= removed_static
+		if(client_eye.use_static)
+			client.images += added_static
 
 /// Create a new camera chunk, since the chunks are made as they are needed.
 /datum/camerachunk/New(x, y, lower_z)

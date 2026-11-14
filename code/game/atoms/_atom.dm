@@ -135,6 +135,7 @@ directive is properly returned.
 	orbiters = null // The component is attached to us normaly and will be deleted elsewhere
 
 	LAZYCLEARLIST(overlays)
+	managed_overlays = null
 
 	QDEL_NULL(light)
 
