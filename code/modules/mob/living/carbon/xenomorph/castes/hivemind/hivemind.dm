@@ -317,6 +317,9 @@
 	var/list/modifiers = params2list(params)
 	if(modifiers["middle"] || modifiers["ctrl"] || modifiers["alt"])
 		return ..()
+	A = rts_resolve_click_target(A, params)
+	if(!A)
+		return
 	if(modifiers["right"])
 		issue_rts_order(A)
 		return
@@ -418,11 +421,51 @@
 	return rts_mode_active
 
 /mob/living/carbon/xenomorph/hivemind/proc/ensure_rts_active()
-	if(rts_mode_active)
+	set_rts_mode(TRUE)
+
+/// RTS mode is independent from selected_ability, so switching abilities never drops selection or HUD.
+/mob/living/carbon/xenomorph/hivemind/proc/set_rts_mode(enabled)
+	if(rts_mode_active == enabled)
 		return
-	var/datum/action/ability/activable/xeno/rts_minion_control/rts_action = locate(/datum/action/ability/activable/xeno/rts_minion_control) in actions
-	if(rts_action)
-		rts_action.action_activate()
+	rts_mode_active = enabled
+	var/datum/action/ability/xeno_action/rts_minion_control/rts_action = locate() in actions
+	rts_action?.set_toggle(enabled)
+	if(!enabled)
+		clear_rts_drag_state()
+		clear_minion_selection()
+	update_rts_hud()
+	balloon_alert(src, enabled ? "RTS-режим включён" : "RTS-режим выключен")
+
+/// Dark tiles are clicked through the clickcatcher; resolve it to the real turf.
+/mob/living/carbon/xenomorph/hivemind/proc/rts_resolve_click_target(atom/A, params)
+	if(!A)
+		return null
+	if(A.plane == CLICKCATCHER_PLANE && client)
+		var/list/modifiers = params2list(params)
+		return params2turf(modifiers["screen-loc"], get_turf(client.eye), client)
+	return A
+
+/// Controllable minions inside the client's viewport rectangle (ignores line of sight/darkness).
+/mob/living/carbon/xenomorph/hivemind/proc/get_minions_in_view()
+	var/list/result = list()
+	var/turf/center = get_turf(client ? client.eye : src)
+	if(!center)
+		return result
+	var/list/size = getviewsize(client ? client.view : WORLD_VIEW)
+	var/half_x = round(size[1] * 0.5)
+	var/half_y = round(size[2] * 0.5)
+	var/off_x = client ? round(client.pixel_x / 32) : 0
+	var/off_y = client ? round(client.pixel_y / 32) : 0
+	var/min_x = center.x - half_x + off_x
+	var/max_x = center.x + half_x + off_x
+	var/min_y = center.y - half_y + off_y
+	var/max_y = center.y + half_y + off_y
+	for(var/mob/living/carbon/xenomorph/minion in GLOB.alive_xeno_list_hive[hivenumber])
+		if(minion.z != center.z || !ISINRANGE(minion.x, min_x, max_x) || !ISINRANGE(minion.y, min_y, max_y))
+			continue
+		if(can_control_minion(minion))
+			result += minion
+	return result
 
 /// Only AI-controlled minion castes belonging to our hive are eligible.
 /mob/living/carbon/xenomorph/hivemind/proc/can_control_minion(mob/living/carbon/xenomorph/target)
@@ -496,7 +539,7 @@
 	balloon_alert(src, length(group) ? "Отряд [group_idx] сохранён ([length(group)])" : "Отряд [group_idx] очищен")
 	return TRUE
 
-/mob/living/carbon/xenomorph/hivemind/proc/select_control_group(group_idx)
+/mob/living/carbon/xenomorph/hivemind/proc/select_control_group(group_idx, force_jump = FALSE)
 	if(group_idx < 1 || group_idx > HIVEMIND_RTS_GROUP_COUNT)
 		return
 	ensure_rts_active()
@@ -520,7 +563,7 @@
 	clear_minion_selection()
 	for(var/mob/living/carbon/xenomorph/minion in valid_minions)
 		select_minion(minion, FALSE)
-	if(is_double_tap)
+	if(is_double_tap || force_jump)
 		jump(valid_minions[1])
 	update_rts_hud()
 
@@ -545,6 +588,7 @@
 	return 0
 
 /mob/living/carbon/xenomorph/hivemind/proc/get_minion_behavior(mob/living/carbon/xenomorph/minion)
+	RETURN_TYPE(/datum/ai_behavior/xeno)
 	var/datum/component/ai_controller/controller = minion.GetComponent(/datum/component/ai_controller)
 	return controller?.ai_behavior
 
@@ -649,7 +693,7 @@
 	var/list/modifiers = params2list(params)
 	if(modifiers[BUTTON] != LEFT_CLICK)
 		return
-	rts_drag_start_turf = get_turf(object)
+	rts_drag_start_turf = get_turf(rts_resolve_click_target(object, params))
 	rts_drag_active = !!rts_drag_start_turf
 	rts_drag_additive = !!modifiers["shift"]
 
@@ -659,7 +703,7 @@
 	if(!rts_mode_active || !rts_drag_active || !rts_drag_start_turf)
 		clear_rts_drag_state()
 		return
-	var/turf/end_turf = get_turf(object)
+	var/turf/end_turf = get_turf(rts_resolve_click_target(object, params))
 	var/turf/start_turf = rts_drag_start_turf
 	var/additive = rts_drag_additive
 	clear_rts_drag_state()
@@ -742,47 +786,47 @@
 /mob/living/carbon/xenomorph/hivemind/proc/update_rts_hud()
 	if(!client)
 		return
-	if(!rts_mode_active)
-		clear_rts_hud()
-		return
 	for(var/atom/movable/screen/hivemind_rts_unit_card/card in rts_unit_cards)
 		client.screen -= card
 		qdel(card)
 	rts_unit_cards.Cut()
-	var/visible_cards = min(length(selected_minions), HIVEMIND_RTS_MAX_SELECTION_CARDS)
-	if(!visible_cards)
-		update_rts_group_hud()
-		return
-	var/start_offset = -round((visible_cards - 1) / 2)
-	for(var/i in 1 to visible_cards)
-		var/mob/living/carbon/xenomorph/minion = selected_minions[i]
-		if(!can_control_minion(minion))
-			continue
-		var/offset = start_offset + i - 1
-		var/offset_text = offset >= 0 ? "+[offset]" : "[offset]"
-		var/atom/movable/screen/hivemind_rts_unit_card/card = new(null, minion, src, "CENTER[offset_text]:0,SOUTH:[HIVEMIND_RTS_UNIT_HUD_Y]")
-		rts_unit_cards += card
-		client.screen += card
+	var/total = length(selected_minions)
+	if(rts_mode_active && total)
+		var/visible_cards = min(total, HIVEMIND_RTS_MAX_SELECTION_CARDS)
+		var/start_offset = -round((visible_cards - 1) / 2)
+		for(var/i in 1 to visible_cards)
+			var/mob/living/carbon/xenomorph/minion = selected_minions[i]
+			if(!can_control_minion(minion))
+				continue
+			var/offset = start_offset + i - 1
+			var/atom/movable/screen/hivemind_rts_unit_card/card = new(null, null, minion, src, "CENTER[offset >= 0 ? "+" : ""][offset]:0,SOUTH:[HIVEMIND_RTS_UNIT_HUD_Y]")
+			rts_unit_cards += card
+			client.screen += card
 	update_rts_group_hud()
 
+/// Group + order buttons stay on screen regardless of the selected ability.
 /mob/living/carbon/xenomorph/hivemind/proc/update_rts_group_hud()
 	if(!client)
 		return
 	if(!length(rts_group_buttons))
 		for(var/group_idx in 1 to HIVEMIND_RTS_GROUP_COUNT)
-			var/atom/movable/screen/hivemind_rts_group_button/button = new(null, group_idx, src, "CENTER,SOUTH:[HIVEMIND_RTS_GROUP_HUD_Y]")
-			rts_group_buttons += button
-			client.screen += button
-	for(var/atom/movable/screen/hivemind_rts_group_button/button in rts_group_buttons)
+			rts_group_buttons += new /atom/movable/screen/hivemind_rts_group_button(null, null, group_idx, src, "CENTER,SOUTH:[HIVEMIND_RTS_GROUP_HUD_Y]")
+		var/order_idx = HIVEMIND_RTS_GROUP_COUNT
+		for(var/order in list(RTS_ORDER_SELECT_ALL, RTS_ORDER_STOP, RTS_ORDER_CLEAR))
+			order_idx++
+			rts_group_buttons += new /atom/movable/screen/hivemind_rts_order_button(null, null, order, order_idx, src, "CENTER,SOUTH:[HIVEMIND_RTS_GROUP_HUD_Y]")
+	for(var/atom/movable/screen/button in rts_group_buttons)
 		if(!(button in client.screen))
 			client.screen += button
-		button.update_button()
+		if(istype(button, /atom/movable/screen/hivemind_rts_group_button))
+			var/atom/movable/screen/hivemind_rts_group_button/group_button = button
+			group_button.update_button()
 
 /mob/living/carbon/xenomorph/hivemind/proc/clear_rts_hud()
 	if(client)
 		for(var/atom/movable/screen/hivemind_rts_unit_card/card in rts_unit_cards)
 			client.screen -= card
-		for(var/atom/movable/screen/hivemind_rts_group_button/button in rts_group_buttons)
+		for(var/atom/movable/screen/button in rts_group_buttons)
 			client.screen -= button
 	QDEL_LIST(rts_unit_cards)
 	QDEL_LIST(rts_group_buttons)
@@ -800,8 +844,8 @@
 	var/datum/weakref/minion_ref
 	var/mob/living/carbon/xenomorph/hivemind/hivemind_owner
 
-/atom/movable/screen/hivemind_rts_unit_card/Initialize(mapload, mob/living/carbon/xenomorph/minion, mob/living/carbon/xenomorph/hivemind/H, position)
-	. = ..()
+/atom/movable/screen/hivemind_rts_unit_card/Initialize(mapload, datum/hud/hud_owner, mob/living/carbon/xenomorph/minion, mob/living/carbon/xenomorph/hivemind/H, position)
+	. = ..(mapload, hud_owner)
 	minion_ref = WEAKREF(minion)
 	hivemind_owner = H
 	screen_loc = position
@@ -861,8 +905,8 @@
 	var/group_idx = 1
 	var/mob/living/carbon/xenomorph/hivemind/hivemind_owner
 
-/atom/movable/screen/hivemind_rts_group_button/Initialize(mapload, group_number, mob/living/carbon/xenomorph/hivemind/H, position)
-	. = ..()
+/atom/movable/screen/hivemind_rts_group_button/Initialize(mapload, datum/hud/hud_owner, group_number, mob/living/carbon/xenomorph/hivemind/H, position)
+	. = ..(mapload, hud_owner)
 	group_idx = group_number
 	hivemind_owner = H
 	screen_loc = position
@@ -913,18 +957,79 @@
 	count_label.maptext_width = 28
 	count_label.maptext_height = 12
 	add_overlay(count_label)
-	name = "Отряд [group_idx]: [count] (Click - выбрать, Ctrl - сохранить, Shift - добавить)"
+	name = "Отряд [group_idx]: [count] (ЛКМ - выбрать, ПКМ - выбрать и перейти, Ctrl - сохранить, Shift - добавить)"
 
 /atom/movable/screen/hivemind_rts_group_button/Click(location, control, params)
 	if(!hivemind_owner)
 		return
 	var/list/modifiers = params2list(params)
-	if(modifiers["ctrl"])
+	if(modifiers["right"])
+		hivemind_owner.select_control_group(group_idx, TRUE)
+	else if(modifiers["ctrl"])
 		hivemind_owner.assign_control_group(group_idx)
 	else if(modifiers["shift"])
 		hivemind_owner.add_to_control_group(group_idx)
 	else
 		hivemind_owner.select_control_group(group_idx)
+
+/// Order buttons next to the group row: select all in view, stop, clear selection.
+/atom/movable/screen/hivemind_rts_order_button
+	name = "Order"
+	icon = 'icons/Xeno/actions/general.dmi'
+	icon_state = "rally_minions"
+	plane = ABOVE_HUD_PLANE
+	layer = 80
+	mouse_opacity = MOUSE_OPACITY_ICON
+	appearance_flags = APPEARANCE_UI
+	var/order
+	var/mob/living/carbon/xenomorph/hivemind/hivemind_owner
+
+/atom/movable/screen/hivemind_rts_order_button/Initialize(mapload, datum/hud/hud_owner, order_type, slot, mob/living/carbon/xenomorph/hivemind/H, position)
+	. = ..(mapload, hud_owner)
+	order = order_type
+	hivemind_owner = H
+	screen_loc = position
+	pixel_x = (slot - HIVEMIND_RTS_GROUP_CENTER_INDEX) * HIVEMIND_RTS_GROUP_BUTTON_SPACING
+	switch(order)
+		if(RTS_ORDER_SELECT_ALL)
+			name = "Выбрать всех миньонов в поле зрения"
+			icon_state = "rally_minions"
+		if(RTS_ORDER_STOP)
+			name = "Стоп (выбранные, иначе все в поле зрения)"
+			icon_state = "minion_passive"
+		if(RTS_ORDER_CLEAR)
+			name = "Снять выделение"
+			icon_state = "minion_agressive"
+
+/atom/movable/screen/hivemind_rts_order_button/Destroy()
+	hivemind_owner = null
+	return ..()
+
+/atom/movable/screen/hivemind_rts_order_button/Click(location, control, params)
+	if(!hivemind_owner)
+		return
+	switch(order)
+		if(RTS_ORDER_SELECT_ALL)
+			hivemind_owner.select_all_in_view()
+		if(RTS_ORDER_STOP)
+			hivemind_owner.stop_selected_or_visible()
+		if(RTS_ORDER_CLEAR)
+			hivemind_owner.clear_minion_selection()
+
+/mob/living/carbon/xenomorph/hivemind/proc/select_all_in_view()
+	ensure_rts_active()
+	clear_minion_selection()
+	var/count = 0
+	for(var/mob/living/carbon/xenomorph/minion in get_minions_in_view())
+		if(select_minion(minion, FALSE))
+			count++
+	balloon_alert(src, count ? "Выбрано миньонов: [count]" : "Нет доступных миньонов в поле зрения")
+
+/mob/living/carbon/xenomorph/hivemind/proc/stop_selected_or_visible()
+	var/list/targets = length(selected_minions) ? selected_minions.Copy() : get_minions_in_view()
+	for(var/mob/living/carbon/xenomorph/minion in targets)
+		stop_minion(minion)
+	balloon_alert(src, "Миньоны остановлены")
 
 /obj/effect/temp_visual/rts_order
 	name = "order marker"

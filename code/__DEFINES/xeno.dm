@@ -233,6 +233,9 @@ GLOBAL_LIST_INIT(xeno_ai_spawnable, list(
 
 // Hivemind RTS and minion balance tuning.
 #define HIVEMIND_RTS_GROUP_COUNT 5
+#define RTS_ORDER_SELECT_ALL "select_all"
+#define RTS_ORDER_STOP "stop"
+#define RTS_ORDER_CLEAR "clear"
 #define HIVEMIND_RTS_MAX_SELECTION_CARDS 10
 #define HIVEMIND_RTS_DOUBLETAP_WINDOW 4
 #define HIVEMIND_RTS_MINION_SELECTION_SCALE 0.38

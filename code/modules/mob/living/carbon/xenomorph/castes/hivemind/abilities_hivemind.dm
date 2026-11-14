@@ -222,45 +222,20 @@ GLOBAL_LIST_INIT(hivemind_resin_images_list, list(
 // Hivemind RTS minion management
 // ==========================================
 
-/datum/action/ability/activable/xeno/rts_minion_control
+/datum/action/ability/xeno_action/rts_minion_control
 	name = "RTS Minion Control"
-	desc = "Toggle direct control of AI minions. Left-click selects; drag selects groups; right-click issues move, attack, or escort orders. Player-controlled xenomorphs are never controllable."
+	desc = "Toggle direct control of AI minions. Left-click selects; drag selects groups; right-click issues move, attack, or escort orders. Stays on while other abilities are selected (use them with middle click)."
 	action_icon_state = "minion_agressive"
 	action_icon = 'icons/Xeno/actions/general.dmi'
-	action_type = ACTION_SELECT
+	action_type = ACTION_TOGGLE
 	keybinding_signals = list(KEYBINDING_NORMAL = COMSIG_XENOABILITY_RTS_MINION_CONTROL)
 	use_state_flags = ABILITY_USE_CLOSEDTURF|ABILITY_USE_LYING|ABILITY_USE_BUCKLED
 
-/datum/action/ability/activable/xeno/rts_minion_control/action_activate()
+/datum/action/ability/xeno_action/rts_minion_control/action_activate()
 	if(!isxenohivemind(xeno_owner))
 		return
 	var/mob/living/carbon/xenomorph/hivemind/hive_owner = xeno_owner
-	if(hive_owner.rts_mode_active)
-		deselect()
-		hive_owner.balloon_alert(hive_owner, "RTS-режим выключен")
-		return
-	..()
-	if(hive_owner.selected_ability == src)
-		hive_owner.rts_mode_active = TRUE
-		hive_owner.update_rts_hud()
-		hive_owner.balloon_alert(hive_owner, "RTS-режим включён")
-
-/datum/action/ability/activable/xeno/rts_minion_control/on_deselection()
-	. = ..()
-	if(isxenohivemind(owner))
-		var/mob/living/carbon/xenomorph/hivemind/H = owner
-		H.rts_mode_active = FALSE
-		H.clear_rts_drag_state()
-		H.clear_minion_selection()
-
-/datum/action/ability/activable/xeno/rts_minion_control/use_ability(atom/target)
-	if(!isxenohivemind(xeno_owner))
-		return
-	var/mob/living/carbon/xenomorph/hivemind/hive_owner = xeno_owner
-	if(!hive_owner.rts_mode_active)
-		return
-	if(isxeno(target))
-		hive_owner.select_minion(target, TRUE)
+	hive_owner.set_rts_mode(!hive_owner.rts_mode_active)
 
 /datum/action/ability/xeno_action/select_all_minions
 	name = "Select All Minions"
@@ -274,13 +249,7 @@ GLOBAL_LIST_INIT(hivemind_resin_images_list, list(
 	if(!isxenohivemind(owner))
 		return
 	var/mob/living/carbon/xenomorph/hivemind/H = owner
-	H.ensure_rts_active()
-	H.clear_minion_selection()
-	var/selected_count = 0
-	for(var/mob/living/carbon/xenomorph/minion in view(world.view, H))
-		if(H.can_control_minion(minion) && H.select_minion(minion, FALSE))
-			selected_count++
-	H.balloon_alert(H, selected_count ? "Выбрано миньонов: [selected_count]" : "Нет доступных миньонов в поле зрения")
+	H.select_all_in_view()
 
 /datum/action/ability/xeno_action/stop_minions
 	name = "Stop Minions"
@@ -294,14 +263,7 @@ GLOBAL_LIST_INIT(hivemind_resin_images_list, list(
 	if(!isxenohivemind(owner))
 		return
 	var/mob/living/carbon/xenomorph/hivemind/H = owner
-	var/list/targets = length(H.selected_minions) ? H.selected_minions.Copy() : list()
-	if(!length(targets))
-		for(var/mob/living/carbon/xenomorph/minion in view(world.view, H))
-			if(H.can_control_minion(minion))
-				targets += minion
-	for(var/mob/living/carbon/xenomorph/minion in targets)
-		H.stop_minion(minion)
-	H.balloon_alert(H, "Миньоны остановлены")
+	H.stop_selected_or_visible()
 
 // The five groups use digit keys; Ctrl+digit assigns, Shift+digit adds.
 /datum/keybinding/xeno/rts_minion_control
