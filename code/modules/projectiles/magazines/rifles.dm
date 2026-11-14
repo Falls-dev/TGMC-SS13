@@ -786,3 +786,15 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	default_ammo = /datum/ammo/bullet/rifle
 	max_rounds = 30
+
+// Lok
+
+/obj/item/ammo_magazine/rifle/lok
+	name = "\improper Lok-0.5 Smart Rifle magazine"
+	desc = "Magazine from the smart rifle Lok-0.5"
+	caliber = CALIBER_GUIDE_ROUNDS
+	icon_state = "lok"
+	icon_state_mini = "mag_lok"
+	w_class = WEIGHT_CLASS_NORMAL
+	default_ammo = /datum/ammo/bullet/rifle/lok_smart
+	max_rounds = 36

@@ -408,3 +408,12 @@
 	w_class = WEIGHT_CLASS_SMALL
 	current_rounds = 165
 	max_rounds = 165
+
+/obj/item/ammo_magazine/packet/lok_guide_rounds
+	name = "Lok-0.5 Smart Rifle Ammo Box"
+	desc = "A box containing 144 rounds of lok guide rounds."
+	caliber = CALIBER_GUIDE_ROUNDS
+	icon_state = "lok_box"
+	default_ammo = /datum/ammo/bullet/rifle/lok_smart
+	current_rounds = 144
+	max_rounds = 144
