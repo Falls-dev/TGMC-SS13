@@ -58,6 +58,7 @@
 			/obj/item/weapon/gun/rifle/tash12 = -1,
 			/obj/item/ammo_magazine/rifle/tash12/flechette = -1,
 			/obj/item/ammo_magazine/rifle/tash12/slug = -1,
+			/obj/item/ammo_magazine/rifle/tash12/incendiary = -1,
 			/obj/item/ammo_magazine/rifle/tash12 = -1,
 		),
 		"Mounted" = list(

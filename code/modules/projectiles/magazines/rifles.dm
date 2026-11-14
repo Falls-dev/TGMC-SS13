@@ -359,6 +359,13 @@
 	bonus_overlay = "tash12_f"
 	default_ammo = /datum/ammo/bullet/shotgun/flechette
 
+/obj/item/ammo_magazine/rifle/tash12/incendiary
+	name = "Type 12-ASH incendiary magazine"
+	desc = "25 A incendiary magazine."
+	icon_state = "tash12i"
+	bonus_overlay = "tash12_i"
+	default_ammo = /datum/ammo/bullet/shotgun/incendiary
+
 //-------------------------------------------------------
 //SMARTMACHINEGUN AMMUNITION
 

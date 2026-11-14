@@ -1568,6 +1568,7 @@
 		/obj/item/ammo_magazine/rifle/tash12,
 		/obj/item/ammo_magazine/rifle/tash12/slug,
 		/obj/item/ammo_magazine/rifle/tash12/flechette,
+		/obj/item/ammo_magazine/rifle/tash12/incendiary,
 	)
 	attachable_allowed = list(
 		/obj/item/attachable/scope/marine,
@@ -1586,13 +1587,13 @@
 	attachable_offset = list("muzzle_x" = 57, "muzzle_y" = 23,"rail_x" = 22, "rail_y" = 26, "under_x" = 23, "under_y" = 17, "stock_x" = 28, "stock_y" = 17)
 
 	fire_delay = 0.55 SECONDS
-	burst_delay = 0.35 SECONDS
+	burst_delay = 0.25 SECONDS
 	accuracy_mult_unwielded = 0.9
 	scatter = 3
 	scatter_unwielded = -2
 	accuracy_mult = 1.15
-	aim_slowdown = 1.5
-	damage_falloff_mult = 8
+	aim_slowdown = 0.7
+	damage_falloff_mult = 5
 	recoil = 0.5
 	movement_acc_penalty_mult = 4
 
