@@ -20,6 +20,9 @@
 
 #define TRANSPARENT_FLOOR_PLANE -10
 
+/// Ground rendered under the stationary Tadpole transit interior.
+#define TADPOLE_GROUND_PLANE -7
+
 #define FLOOR_PLANE -6
 
 #define WALL_PLANE -5
