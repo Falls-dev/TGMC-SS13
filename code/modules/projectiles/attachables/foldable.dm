@@ -184,3 +184,15 @@
 	INVOKE_ASYNC(src, PROC_REF(activate), (istype(user) ? user : source), TRUE)
 	deploy_time = initial(deploy_time)
 	to_chat(user, span_warning("Losing support, the bipod retracts!"))
+
+/obj/item/attachable/foldable/type53_bayonet
+	name = "Type-53 folding bayonet"
+	desc = "An integral folding bayonet for the Type-53 carbine."
+	icon = 'icons/obj/items/attachments/attachments.dmi'
+	icon_state = "type53_bayonet"
+	slot = ATTACHMENT_SLOT_MUZZLE
+	attach_features_flags = ATTACH_ACTIVATION
+	deploy_time = 0
+	melee_mod = 25
+	pixel_shift_x = 0
+	pixel_shift_y = 0

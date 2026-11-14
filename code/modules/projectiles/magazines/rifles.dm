@@ -786,3 +786,36 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	default_ammo = /datum/ammo/bullet/rifle
 	max_rounds = 30
+
+// SKS Chine marin
+/obj/item/ammo_magazine/rifle/type81
+	name = "\improper Type-81 drum magazine (6.02x41)"
+	desc = "A 75 round 6.02x41mm drum."
+	caliber = CALIBER_602X41
+	icon_state = "type81"
+	icon_state_mini = "mag_drum_big"
+	bonus_overlay = "type81_mag"
+	default_ammo = /datum/ammo/bullet/rifle/type16
+	w_class = WEIGHT_CLASS_NORMAL
+	max_rounds = 75
+	scatter_mod = 3
+	wield_delay_mod = 1.5 SECONDS
+
+/obj/item/ammo_magazine/rifle/type63clip
+	name = "Type-63 clip"
+	desc = "An en-bloc clip filled with (6.02x41) rifle rounds for the Type-63."
+	caliber = CALIBER_602X41
+	icon_state = "type63clip"
+	icon_state_mini = "mag_dmr"
+	default_ammo = /datum/ammo/bullet/rifle/type16
+	max_rounds = 12
+
+/obj/item/ammo_magazine/rifle/type53clip
+	name = "Type-53 clip"
+	desc = "An en-bloc clip filled with (6.02x41) rifle rounds for the Type-53 or Type-63."
+	caliber = CALIBER_602X41
+	w_class = WEIGHT_CLASS_SMALL
+	icon_state = "type53"
+	icon_state_mini = "mag_dmr"
+	default_ammo = /datum/ammo/bullet/rifle/type16
+	max_rounds = 4
