@@ -114,3 +114,4 @@
 /// Sorts scanner advice by priority
 /proc/cmp_scanner_advice_priority(datum/scanner_advice/a, datum/scanner_advice/b)
 	return a::priority - b::priority
+
