@@ -242,6 +242,7 @@ GLOBAL_LIST_INIT(hivemind_resin_images_list, list(
 	..()
 	if(hive_owner.selected_ability == src)
 		hive_owner.rts_mode_active = TRUE
+		hive_owner.update_rts_hud()
 		hive_owner.balloon_alert(hive_owner, "RTS-режим включён")
 
 /datum/action/ability/activable/xeno/rts_minion_control/on_deselection()

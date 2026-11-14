@@ -6,6 +6,77 @@
 	is_offered_on_creation = TRUE
 	///If the mob parent can heal itself and so should flee
 	var/can_heal = TRUE
+	///Hivemind order: stand still until a new order arrives
+	var/hivemind_rts_hold_position = FALSE
+	///Hivemind order: walk to atom_to_walk_to (a turf) ignoring hostiles until arrival
+	var/hivemind_rts_direct_move = FALSE
+
+/// Instant hivemind orders; every proc resets the previous order.
+/datum/ai_behavior/xeno/proc/rts_reset()
+	hivemind_rts_hold_position = FALSE
+	hivemind_rts_direct_move = FALSE
+	clean_escorted_atom()
+	set_combat_target(null)
+
+/datum/ai_behavior/xeno/proc/rts_move(turf/destination)
+	rts_reset()
+	hivemind_rts_direct_move = TRUE
+	change_action(MOVING_TO_ATOM, destination)
+	if(!registered_for_move)
+		INVOKE_ASYNC(src, PROC_REF(scheduled_move))
+
+/datum/ai_behavior/xeno/proc/rts_attack(atom/target)
+	rts_reset()
+	set_combat_target(target)
+	change_action(MOVING_TO_ATOM, target)
+	if(!registered_for_move)
+		INVOKE_ASYNC(src, PROC_REF(scheduled_move))
+
+/datum/ai_behavior/xeno/proc/rts_guard(atom/target, datum/source)
+	rts_reset()
+	set_escorted_atom(source, target)
+	change_action(ESCORTING_ATOM, target)
+	if(!registered_for_move)
+		INVOKE_ASYNC(src, PROC_REF(scheduled_move))
+
+/datum/ai_behavior/xeno/proc/rts_stop()
+	rts_reset()
+	hivemind_rts_hold_position = TRUE
+	set_atom_to_walk_to(null)
+	change_action(IDLE)
+
+/// Arrived, or the spot is taken/blocked and we are adjacent to it.
+/datum/ai_behavior/xeno/proc/rts_arrived()
+	if(!isturf(atom_to_walk_to))
+		return TRUE
+	var/dist = get_dist(mob_parent, atom_to_walk_to)
+	if(dist <= 0)
+		return TRUE
+	if(dist > 1)
+		return FALSE
+	var/turf/T = atom_to_walk_to
+	if(T.density)
+		return TRUE
+	for(var/mob/living/L in T)
+		if(L != mob_parent && L.density)
+			return TRUE
+	return FALSE
+
+/datum/ai_behavior/xeno/proc/rts_finish_move()
+	hivemind_rts_direct_move = FALSE
+	if(atom_to_walk_to)
+		do_unset_target(atom_to_walk_to, need_new_state = FALSE, need_new_escort = FALSE)
+	atom_to_walk_to = null
+	change_action(IDLE)
+
+/datum/ai_behavior/xeno/should_hold()
+	return hivemind_rts_hold_position || ..()
+
+/datum/ai_behavior/xeno/ai_do_move()
+	if(hivemind_rts_direct_move && rts_arrived())
+		rts_finish_move()
+		return
+	return ..()
 
 /datum/ai_behavior/xeno/start_ai()
 	if(has_living_hivemind())
@@ -115,7 +186,17 @@
 
 /datum/ai_behavior/xeno/look_for_new_state(atom/next_target)
 	if(has_living_hivemind())
-		// React to a visible hostile even while carrying out a move order.
+		if(hivemind_rts_direct_move)
+			if(rts_arrived())
+				rts_finish_move()
+			return
+		if(escorted_atom)
+			if(next_target && get_dist(escorted_atom, next_target) > HIVEMIND_RTS_GUARD_LEASH)
+				next_target = null
+			if(combat_target && get_dist(escorted_atom, combat_target) > HIVEMIND_RTS_GUARD_LEASH)
+				do_unset_target(combat_target, need_new_state = FALSE)
+				change_action(ESCORTING_ATOM, escorted_atom)
+				return
 		if(need_new_combat_target())
 			if(combat_target)
 				do_unset_target(combat_target, need_new_state = FALSE)
@@ -125,29 +206,13 @@
 					change_action(MOVING_TO_ATOM, next_target)
 				return
 
-		// Direct move orders target a turf and should not be replaced by random node/escort goals.
-		if(current_action == MOVING_TO_ATOM && isturf(atom_to_walk_to) && !combat_target)
-			if(get_dist(mob_parent, atom_to_walk_to) == 0)
-				if(atom_to_walk_to)
-					do_unset_target(atom_to_walk_to, need_new_state = FALSE, need_new_escort = FALSE)
-					atom_to_walk_to = null
-				cleanup_current_action()
-				change_action(IDLE)
-				return
-			if(get_dist(mob_parent, atom_to_walk_to) <= 1)
-				var/turf/T = atom_to_walk_to
-				if(T.density)
-					do_unset_target(atom_to_walk_to, need_new_state = FALSE, need_new_escort = FALSE)
-					atom_to_walk_to = null
-					cleanup_current_action()
-					change_action(IDLE)
-					return
-			return
-
 		if(current_action == MOVING_TO_ATOM)
 			if(!combat_target)
 				if(escorted_atom)
 					change_action(ESCORTING_ATOM, escorted_atom)
+					return
+				if(!atom_to_walk_to)
+					change_action(IDLE)
 					return
 				if(atom_to_walk_to && get_dist(mob_parent, atom_to_walk_to) <= 1)
 					do_unset_target(atom_to_walk_to, need_new_state = FALSE, need_new_escort = FALSE)
@@ -257,7 +322,7 @@
 ///Called each time the ai takes damage; if we are below a certain health threshold, try to retreat
 /datum/ai_behavior/xeno/proc/check_for_critical_health(datum/source, damage, mob/living/attacker)
 	SIGNAL_HANDLER
-	if(!can_heal || mob_parent.health - damage > minimum_health * mob_parent.maxHealth)
+	if(!can_heal || hivemind_rts_direct_move || hivemind_rts_hold_position || mob_parent.health - damage > minimum_health * mob_parent.maxHealth)
 		return
 	var/atom/next_target = get_nearest_target(mob_parent, target_distance, TARGET_HOSTILE, mob_parent.faction, mob_parent.get_xeno_hivenumber())
 	if(!next_target)

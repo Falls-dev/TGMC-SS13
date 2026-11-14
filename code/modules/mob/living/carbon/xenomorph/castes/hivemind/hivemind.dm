@@ -311,20 +311,27 @@
 /mob/living/carbon/xenomorph/hivemind/update_icons()
 	return
 
-/mob/living/carbon/xenomorph/hivemind/ClickOn(atom/A, params)
+/mob/living/carbon/xenomorph/hivemind/ClickOn(atom/A, location, params)
+	if(!rts_mode_active)
+		return ..()
 	var/list/modifiers = params2list(params)
-	if(rts_mode_active)
-		if(modifiers["right"])
-			issue_rts_order(A)
-			return TRUE
-		if(isxeno(A))
-			var/mob/living/carbon/xenomorph/target = A
-			if(modifiers["shift"])
-				select_minion(target, FALSE)
-			else
-				select_minion(target, TRUE)
-			return TRUE
-	return ..()
+	if(modifiers["middle"] || modifiers["ctrl"] || modifiers["alt"])
+		return ..()
+	if(modifiers["right"])
+		issue_rts_order(A)
+		return
+	var/additive = !!modifiers["shift"]
+	if(isxeno(A) && A != src)
+		var/mob/living/carbon/xenomorph/clicked = A
+		if(additive && (clicked in selected_minions))
+			deselect_minion(clicked)
+			return
+		if(!additive)
+			clear_minion_selection()
+		select_minion(clicked, FALSE)
+		return
+	if(!additive)
+		clear_minion_selection()
 
 /mob/living/carbon/xenomorph/hivemind/DblClickOn(atom/A, params)
 	if(rts_mode_active)
@@ -440,15 +447,13 @@
 	if(minion in selected_minions)
 		return TRUE
 	selected_minions += minion
-	var/image/selection = image('icons/effects/xeno_target.dmi', minion, "all")
+	var/image/selection = image('icons/effects/alphacolors.dmi', minion, "white")
 	selection.color = HIVEMIND_RTS_MINION_SELECTION_COLOR
-	selection.layer = MOB_LAYER + HIVEMIND_RTS_SELECTION_LAYER_OFFSET
+	selection.alpha = 70
+	selection.layer = MOB_LAYER - HIVEMIND_RTS_SELECTION_LAYER_OFFSET
 	SET_PLANE_EXPLICIT(selection, GAME_PLANE, minion)
-	var/matrix/selection_matrix = matrix()
-	selection_matrix.Scale(HIVEMIND_RTS_MINION_SELECTION_SCALE, HIVEMIND_RTS_MINION_SELECTION_SCALE)
-	selection.transform = selection_matrix
-	selection.pixel_x = -HIVEMIND_RTS_SELECTION_PIXEL_OFFSET
-	selection.pixel_y = -HIVEMIND_RTS_SELECTION_PIXEL_OFFSET
+	selection.appearance_flags = RESET_COLOR|RESET_ALPHA|KEEP_APART
+	selection.filters = filter(type = "outline", size = 1, color = "[HIVEMIND_RTS_MINION_SELECTION_COLOR]FF")
 	selection_images[minion] = selection
 	if(client)
 		client.images += selection
@@ -539,8 +544,46 @@
 				return group_idx
 	return 0
 
+/mob/living/carbon/xenomorph/hivemind/proc/get_minion_behavior(mob/living/carbon/xenomorph/minion)
+	var/datum/component/ai_controller/controller = minion.GetComponent(/datum/component/ai_controller)
+	return controller?.ai_behavior
+
+/// Enemy = living non-hive mob, or a non-hive structure/machine/vehicle.
+/mob/living/carbon/xenomorph/hivemind/proc/is_rts_enemy(atom/A)
+	if(isliving(A))
+		var/mob/living/L = A
+		return L.stat != DEAD && L.get_xeno_hivenumber() != hivenumber
+	if(istype(A, /obj/structure) || istype(A, /obj/machinery) || istype(A, /obj/vehicle))
+		return A.get_xeno_hivenumber() != hivenumber && !istype(A, /obj/structure/xeno/hivemindcore)
+	return FALSE
+
+/mob/living/carbon/xenomorph/hivemind/proc/is_rts_friend(atom/A)
+	if(istype(A, /obj/structure/xeno/hivemindcore))
+		return TRUE
+	if(!isxeno(A) || A == src)
+		return FALSE
+	var/mob/living/carbon/xenomorph/xeno_target = A
+	return xeno_target.hivenumber == hivenumber && xeno_target.stat != DEAD
+
+/// Closest free turfs around center, nearest first.
+/mob/living/carbon/xenomorph/hivemind/proc/get_rts_formation_turfs(turf/center, count)
+	var/list/spots = list()
+	for(var/radius in 0 to HIVEMIND_RTS_FORMATION_RADIUS)
+		for(var/turf/T in (radius ? orange(radius, center) : list(center)))
+			if(radius && get_dist(T, center) != radius)
+				continue
+			if(T.density || (T.atom_flags & AI_BLOCKED))
+				continue
+			spots += T
+			if(length(spots) >= count)
+				return spots
+	if(!length(spots))
+		spots += center
+	return spots
+
+/// Orders apply instantly: ground = formation move, enemy = attack, friendly = guard.
 /mob/living/carbon/xenomorph/hivemind/proc/issue_rts_order(atom/target)
-	if(!length(selected_minions))
+	if(!length(selected_minions) || QDELETED(target))
 		return FALSE
 	var/turf/target_turf = get_turf(target)
 	if(!target_turf || target_turf.z != z)
@@ -548,63 +591,48 @@
 	var/atom/actual_target = target
 	if(isturf(target))
 		for(var/mob/living/L in target_turf)
-			if(L.stat != DEAD && L.get_xeno_hivenumber() != hivenumber)
+			if(is_rts_enemy(L))
 				actual_target = L
 				break
 		if(actual_target == target)
-			for(var/obj/structure/S in target_turf)
-				if(S.get_xeno_hivenumber() != hivenumber && !istype(S, /obj/structure/xeno/hivemindcore))
-					actual_target = S
+			for(var/obj/O in target_turf)
+				if(is_rts_enemy(O) || is_rts_friend(O))
+					actual_target = O
 					break
-	var/is_enemy = FALSE
-	if(isliving(actual_target))
-		var/mob/living/L = actual_target
-		is_enemy = L.stat != DEAD && L.get_xeno_hivenumber() != hivenumber
-	else if(istype(actual_target, /obj/structure) || istype(actual_target, /obj/machinery) || istype(actual_target, /obj/vehicle))
-		is_enemy = actual_target.get_xeno_hivenumber() != hivenumber && !istype(actual_target, /obj/structure/xeno/hivemindcore)
-	if(is_enemy)
-		for(var/mob/living/carbon/xenomorph/minion in selected_minions.Copy())
-			if(!can_control_minion(minion))
-				deselect_minion(minion)
-				continue
-			var/datum/component/ai_controller/controller = minion.GetComponent(/datum/component/ai_controller)
-			var/datum/ai_behavior/xeno/behavior = controller?.ai_behavior
-			if(!behavior)
-				continue
-			behavior.hivemind_rts_hold_position = FALSE
-			behavior.hivemind_rts_direct_move = FALSE
-			behavior.clean_escorted_atom()
-			behavior.set_combat_target(actual_target)
-			behavior.set_atom_to_walk_to(actual_target)
-			behavior.change_action(MOVING_TO_ATOM, actual_target)
-		new /obj/effect/temp_visual/rts_order/attack(target_turf)
-		return TRUE
-	var/mob/living/carbon/xenomorph/xeno_target = isxeno(target) ? target : null
-	if((xeno_target && xeno_target != src && xeno_target.hivenumber == hivenumber && xeno_target.stat != DEAD) || istype(target, /obj/structure/xeno/hivemindcore))
-		for(var/mob/living/carbon/xenomorph/minion in selected_minions)
-			var/datum/component/ai_controller/controller = minion.GetComponent(/datum/component/ai_controller)
-			var/datum/ai_behavior/xeno/behavior = controller?.ai_behavior
-			if(behavior && minion != target)
-				behavior.hivemind_rts_hold_position = FALSE
-				behavior.hivemind_rts_direct_move = FALSE
-				behavior.set_escorted_atom(src, target)
-				behavior.change_action(ESCORTING_ATOM, target)
-		new /obj/effect/temp_visual/rts_order/escort(target_turf)
-		return TRUE
+	var/list/units = list()
 	for(var/mob/living/carbon/xenomorph/minion in selected_minions.Copy())
 		if(!can_control_minion(minion))
 			deselect_minion(minion)
 			continue
-		var/datum/component/ai_controller/controller = minion.GetComponent(/datum/component/ai_controller)
-		var/datum/ai_behavior/xeno/behavior = controller?.ai_behavior
-		if(!behavior)
-			continue
-		behavior.hivemind_rts_hold_position = FALSE
-		behavior.hivemind_rts_direct_move = TRUE
-		behavior.clean_escorted_atom()
-		behavior.set_combat_target(null)
-		behavior.set_atom_to_walk_to(target_turf)
-		behavior.change_action(MOVING_TO_ATOM, target_turf)
+		units += minion
+	if(!length(units))
+		return FALSE
+	if(is_rts_enemy(actual_target))
+		for(var/mob/living/carbon/xenomorph/minion in units)
+			get_minion_behavior(minion)?.rts_attack(actual_target)
+		new /obj/effect/temp_visual/rts_order/attack(target_turf)
+		return TRUE
+	if(is_rts_friend(actual_target))
+		for(var/mob/living/carbon/xenomorph/minion in units)
+			if(minion != actual_target)
+				get_minion_behavior(minion)?.rts_guard(actual_target, src)
+		new /obj/effect/temp_visual/rts_order/escort(target_turf)
+		return TRUE
+	var/list/remaining = units.Copy()
+	for(var/turf/spot in get_rts_formation_turfs(target_turf, length(units)))
+		var/mob/living/carbon/xenomorph/best
+		var/best_dist = INFINITY
+		for(var/mob/living/carbon/xenomorph/minion in remaining)
+			var/dist = get_dist(minion, spot)
+			if(dist < best_dist)
+				best = minion
+				best_dist = dist
+		if(!best)
+			break
+		remaining -= best
+		get_minion_behavior(best)?.rts_move(spot)
+	for(var/mob/living/carbon/xenomorph/minion in remaining)
+		get_minion_behavior(minion)?.rts_move(target_turf)
 	new /obj/effect/temp_visual/rts_order/move(target_turf)
 	return TRUE
 
@@ -612,16 +640,7 @@
 	if(!can_control_minion(minion))
 		deselect_minion(minion)
 		return
-	var/datum/component/ai_controller/controller = minion.GetComponent(/datum/component/ai_controller)
-	var/datum/ai_behavior/xeno/behavior = controller?.ai_behavior
-	if(!behavior)
-		return
-	behavior.hivemind_rts_hold_position = TRUE
-	behavior.hivemind_rts_direct_move = FALSE
-	behavior.clean_escorted_atom()
-	behavior.set_combat_target(null)
-	behavior.set_atom_to_walk_to(null)
-	behavior.change_action(IDLE)
+	get_minion_behavior(minion)?.rts_stop()
 
 /mob/living/carbon/xenomorph/hivemind/proc/on_rts_mousedown(mob/source, atom/object, turf/location, control, params)
 	SIGNAL_HANDLER
@@ -630,21 +649,22 @@
 	var/list/modifiers = params2list(params)
 	if(modifiers[BUTTON] != LEFT_CLICK)
 		return
-	rts_drag_start_turf = get_turf(object) || location
+	rts_drag_start_turf = get_turf(object)
 	rts_drag_active = !!rts_drag_start_turf
 	rts_drag_additive = !!modifiers["shift"]
 
+/// Box select only; plain clicks are handled in ClickOn.
 /mob/living/carbon/xenomorph/hivemind/proc/on_rts_mouseup(mob/source, atom/object, turf/location, control, params)
 	SIGNAL_HANDLER
 	if(!rts_mode_active || !rts_drag_active || !rts_drag_start_turf)
 		clear_rts_drag_state()
 		return
-	var/turf/end_turf = get_turf(object) || location
+	var/turf/end_turf = get_turf(object)
 	var/turf/start_turf = rts_drag_start_turf
 	var/additive = rts_drag_additive
 	clear_rts_drag_state()
-	if(!end_turf || start_turf.z != end_turf.z)
-		return COMSIG_MOB_CLICK_CANCELED
+	if(!end_turf || end_turf == start_turf || end_turf.z != start_turf.z)
+		return
 	if(!additive)
 		clear_minion_selection()
 	for(var/turf/T in block(locate(min(start_turf.x, end_turf.x), min(start_turf.y, end_turf.y), start_turf.z), locate(max(start_turf.x, end_turf.x), max(start_turf.y, end_turf.y), start_turf.z)))
@@ -722,6 +742,9 @@
 /mob/living/carbon/xenomorph/hivemind/proc/update_rts_hud()
 	if(!client)
 		return
+	if(!rts_mode_active)
+		clear_rts_hud()
+		return
 	for(var/atom/movable/screen/hivemind_rts_unit_card/card in rts_unit_cards)
 		client.screen -= card
 		qdel(card)
@@ -747,9 +770,7 @@
 		return
 	if(!length(rts_group_buttons))
 		for(var/group_idx in 1 to HIVEMIND_RTS_GROUP_COUNT)
-			var/offset = group_idx - HIVEMIND_RTS_GROUP_CENTER_INDEX
-			var/offset_text = offset >= 0 ? "+[offset]" : "[offset]"
-			var/atom/movable/screen/hivemind_rts_group_button/button = new(null, group_idx, src, "CENTER[offset_text]:0,SOUTH:[HIVEMIND_RTS_GROUP_HUD_Y]")
+			var/atom/movable/screen/hivemind_rts_group_button/button = new(null, group_idx, src, "CENTER,SOUTH:[HIVEMIND_RTS_GROUP_HUD_Y]")
 			rts_group_buttons += button
 			client.screen += button
 	for(var/atom/movable/screen/hivemind_rts_group_button/button in rts_group_buttons)
@@ -831,7 +852,7 @@
 
 /atom/movable/screen/hivemind_rts_group_button
 	name = "Control Group"
-	icon = 'icons/effects/effects.dmi'
+	icon = 'icons/effects/alphacolors.dmi'
 	icon_state = "white"
 	plane = ABOVE_HUD_PLANE
 	layer = 80
@@ -845,27 +866,54 @@
 	group_idx = group_number
 	hivemind_owner = H
 	screen_loc = position
+	pixel_x = (group_idx - HIVEMIND_RTS_GROUP_CENTER_INDEX) * HIVEMIND_RTS_GROUP_BUTTON_SPACING
 	update_button()
 
+/atom/movable/screen/hivemind_rts_group_button/Destroy()
+	hivemind_owner = null
+	return ..()
+
+/// Border = state (selected / filled / empty), dark plate inside, index top-left, unit count bottom-right.
 /atom/movable/screen/hivemind_rts_group_button/proc/update_button()
 	if(!hivemind_owner)
 		return
 	var/count = 0
+	var/selected_count = 0
 	for(var/datum/weakref/ref in hivemind_owner.control_groups[group_idx])
 		var/mob/living/carbon/xenomorph/minion = ref.resolve()
-		if(hivemind_owner.can_control_minion(minion))
-			count++
+		if(!hivemind_owner.can_control_minion(minion))
+			continue
+		count++
+		if(minion in hivemind_owner.selected_minions)
+			selected_count++
+	var/is_selected = count && selected_count == count
+	color = is_selected ? "#00FF66" : (count ? "#56705f" : "#2a2f2c")
 	cut_overlays()
-	var/mutable_appearance/background = mutable_appearance('icons/effects/effects.dmi', "white", layer = 81)
-	background.color = "#101814"
-	background.alpha = 220
-	add_overlay(background)
-	maptext = "<div style='text-align:center;font-size:7pt;font-weight:bold;color:#FFFFFF;-dm-text-outline:1px black;'>G[group_idx]<br>[count]</div>"
-	maptext_x = 0
-	maptext_y = 0
-	maptext_width = HIVEMIND_RTS_GROUP_CARD_WIDTH
-	maptext_height = HIVEMIND_RTS_GROUP_CARD_HEIGHT
-	name = "Control group [group_idx]: [count] minions. Click to select, Ctrl-click to save, Shift-click to add."
+	var/mutable_appearance/plate = mutable_appearance('icons/effects/alphacolors.dmi', "white", layer = 81)
+	plate.color = is_selected ? "#0f2e1c" : "#0b100d"
+	plate.alpha = 235
+	plate.appearance_flags = RESET_COLOR|RESET_ALPHA|APPEARANCE_UI
+	var/matrix/inset = matrix()
+	inset.Scale(0.875, 0.875)
+	plate.transform = inset
+	add_overlay(plate)
+	var/mutable_appearance/index_label = mutable_appearance(null, null, layer = 82)
+	index_label.appearance_flags = RESET_COLOR|RESET_ALPHA|APPEARANCE_UI
+	index_label.maptext = "<span style='font-size:10pt;font-weight:bold;color:[is_selected ? "#7dffb0" : "#e6efe9"];-dm-text-outline:1px black;'>[group_idx]</span>"
+	index_label.maptext_x = 5
+	index_label.maptext_y = 16
+	index_label.maptext_width = 20
+	index_label.maptext_height = 14
+	add_overlay(index_label)
+	var/mutable_appearance/count_label = mutable_appearance(null, null, layer = 82)
+	count_label.appearance_flags = RESET_COLOR|RESET_ALPHA|APPEARANCE_UI
+	count_label.maptext = "<div style='text-align:right;font-size:7pt;font-weight:bold;color:[count ? "#c8ffd9" : "#6b736e"];-dm-text-outline:1px black;'>[count ? count : "-"]</div>"
+	count_label.maptext_x = 2
+	count_label.maptext_y = 3
+	count_label.maptext_width = 28
+	count_label.maptext_height = 12
+	add_overlay(count_label)
+	name = "Отряд [group_idx]: [count] (Click - выбрать, Ctrl - сохранить, Shift - добавить)"
 
 /atom/movable/screen/hivemind_rts_group_button/Click(location, control, params)
 	if(!hivemind_owner)
@@ -897,12 +945,6 @@
 /obj/effect/temp_visual/rts_order/escort
 	icon_state = "rally"
 	color = "#00FFFF"
-
-// Add an explicit hold flag to the existing AI behavior datum. The matching
-// process guard is provided in RTS_AI_INTEGRATION.patch for the global AI file.
-/datum/ai_behavior
-	var/hivemind_rts_hold_position = FALSE
-	var/hivemind_rts_direct_move = FALSE
 
 // =================
 // hivemind core
