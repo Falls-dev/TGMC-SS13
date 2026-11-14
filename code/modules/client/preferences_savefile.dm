@@ -4,7 +4,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX 46
+#define SAVEFILE_VERSION_MAX 47
 
 /datum/preferences/proc/savefile_needs_update(savefile/S)
 	var/savefile_version
@@ -46,6 +46,7 @@
 				key_bindings[key] += list(kb_path)
 
 		to_chat(parent, span_userdanger("Forced keybindings for say (T), me (M), ooc (O), looc (L) have been applied."))
+
 
 //handles converting savefiles to new formats
 //MAKE SURE YOU KEEP THIS UP TO DATE!
@@ -166,6 +167,7 @@
 	READ_FILE(S["key_bindings"], key_bindings)
 	READ_FILE(S["slot_draw_order"], slot_draw_order_pref)
 	READ_FILE(S["custom_emotes"], custom_emotes)
+	ensure_hivemind_group_keybindings()
 	READ_FILE(S["chem_macros"], chem_macros)
 	READ_FILE(S["status_toggle_flags"], status_toggle_flags)
 
@@ -424,6 +426,47 @@
 	WRITE_FILE(S["show_ooc_country_flag"], show_ooc_country_flag)
 
 	return TRUE
+
+/// Adds missing Hivemind control-group defaults without overwriting a player's custom bindings.
+/datum/preferences/proc/ensure_hivemind_group_keybindings()
+	if(!islist(key_bindings))
+		key_bindings = deep_copy_list(GLOB.hotkey_keybinding_list_by_key)
+	var/list/default_group_keybinds = list(
+		"1" = "control_group_1",
+		"2" = "control_group_2",
+		"3" = "control_group_3",
+		"4" = "control_group_4",
+		"5" = "control_group_5",
+		"Ctrl1" = "create_group_1",
+		"Ctrl2" = "create_group_2",
+		"Ctrl3" = "create_group_3",
+		"Ctrl4" = "create_group_4",
+		"Ctrl5" = "create_group_5",
+		"Shift1" = "add_group_1",
+		"Shift2" = "add_group_2",
+		"Shift3" = "add_group_3",
+		"Shift4" = "add_group_4",
+		"Shift5" = "add_group_5",
+	)
+	var/changed = FALSE
+	for(var/default_key in default_group_keybinds)
+		var/keybind_name = default_group_keybinds[default_key]
+		var/already_bound = FALSE
+		for(var/existing_key in key_bindings)
+			var/list/existing_bindings = key_bindings[existing_key]
+			if(islist(existing_bindings) && (keybind_name in existing_bindings))
+				already_bound = TRUE
+				break
+		if(already_bound)
+			continue
+		if(!islist(key_bindings[default_key]))
+			key_bindings[default_key] = list()
+		key_bindings[default_key] += list(keybind_name)
+		changed = TRUE
+	if(changed)
+		save_keybinds()
+		parent?.set_macros()
+	return changed
 
 /datum/preferences/proc/save_keybinds()
 	if(!path)

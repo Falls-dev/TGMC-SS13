@@ -19,6 +19,7 @@ GLOBAL_LIST_INIT(hivemind_resin_images_list, list(
 	desc = "Teleport back to your core."
 	action_icon_state = "lay_hivemind"
 	action_icon = 'icons/Xeno/actions/hivemind.dmi'
+	keybinding_signals = list(KEYBINDING_NORMAL = COMSIG_XENOABILITY_RETURN_TO_CORE)
 	use_state_flags = ABILITY_USE_CLOSEDTURF
 
 /datum/action/ability/xeno_action/return_to_core/action_activate()
@@ -206,6 +207,7 @@ GLOBAL_LIST_INIT(hivemind_resin_images_list, list(
 	desc = "Gives your hive 100 psy points, if marines are on the ground."
 	action_icon_state = "psy_gain"
 	action_icon = 'icons/Xeno/actions/hivemind.dmi'
+	keybinding_signals = list(KEYBINDING_NORMAL = COMSIG_XENOABILITY_PSY_GAIN)
 	cooldown_duration = 200 SECONDS
 
 /datum/action/ability/xeno_action/psy_gain/hivemind/action_activate()
@@ -214,3 +216,51 @@ GLOBAL_LIST_INIT(hivemind_resin_images_list, list(
 		GLOB.round_statistics.psypoints_from_hivemind += 100
 	succeed_activate()
 	add_cooldown()
+
+
+// ==========================================
+// Hivemind RTS minion management
+// ==========================================
+
+/datum/action/ability/xeno_action/rts_minion_control
+	name = "RTS Minion Control"
+	desc = "Toggle direct control of AI minions. Left-click selects; drag selects groups; right-click issues move, attack, or escort orders. Stays on while other abilities are selected (use them with middle click)."
+	action_icon_state = "minion_agressive"
+	action_icon = 'icons/Xeno/actions/general.dmi'
+	action_type = ACTION_TOGGLE
+	keybinding_signals = list(KEYBINDING_NORMAL = COMSIG_XENOABILITY_RTS_MINION_CONTROL)
+	use_state_flags = ABILITY_USE_CLOSEDTURF|ABILITY_USE_LYING|ABILITY_USE_BUCKLED
+
+/datum/action/ability/xeno_action/rts_minion_control/action_activate()
+	if(!isxenohivemind(xeno_owner))
+		return
+	var/mob/living/carbon/xenomorph/hivemind/hive_owner = xeno_owner
+	hive_owner.set_rts_mode(!hive_owner.rts_mode_active)
+
+/datum/action/ability/xeno_action/select_all_minions
+	name = "Select All Minions"
+	desc = "Select all controllable AI minions in your view."
+	action_icon_state = "rally_minions"
+	action_icon = 'icons/Xeno/actions/general.dmi'
+	keybinding_signals = list(KEYBINDING_NORMAL = COMSIG_XENOABILITY_SELECT_ALL_MINIONS)
+	use_state_flags = ABILITY_USE_CLOSEDTURF|ABILITY_USE_LYING|ABILITY_USE_BUCKLED
+
+/datum/action/ability/xeno_action/select_all_minions/action_activate()
+	if(!isxenohivemind(owner))
+		return
+	var/mob/living/carbon/xenomorph/hivemind/H = owner
+	H.select_all_in_view()
+
+/datum/action/ability/xeno_action/stop_minions
+	name = "Stop Minions"
+	desc = "Stop the selected minions. If none are selected, stop all controllable minions in view."
+	action_icon_state = "minion_passive"
+	action_icon = 'icons/Xeno/actions/general.dmi'
+	keybinding_signals = list(KEYBINDING_NORMAL = COMSIG_XENOABILITY_STOP_MINIONS)
+	use_state_flags = ABILITY_USE_CLOSEDTURF|ABILITY_USE_LYING|ABILITY_USE_BUCKLED
+
+/datum/action/ability/xeno_action/stop_minions/action_activate()
+	if(!isxenohivemind(owner))
+		return
+	var/mob/living/carbon/xenomorph/hivemind/H = owner
+	H.stop_selected_or_visible()

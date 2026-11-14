@@ -36,6 +36,34 @@
 	var/incorporeal_pass_flags = PASS_LOW_STRUCTURE|PASS_THROW|PASS_PROJECTILE|PASS_AIR|PASS_FIRE
 	///pass_flags given when manifested
 	var/manifest_pass_flags = PASS_LOW_STRUCTURE|PASS_MOB|PASS_XENO
+	/// Whether direct RTS selection/commands are currently enabled.
+	var/rts_mode_active = FALSE
+	/// Currently selected AI minions.
+	var/list/mob/living/carbon/xenomorph/selected_minions = list()
+	/// Client-only outline overlays, keyed by minion.
+	var/list/selection_images = list()
+	/// Five groups containing direct minion references; invalid entries are pruned on use.
+	var/list/list/control_groups = list(list(), list(), list(), list(), list())
+	/// Currently active control group. Zero means a free-form selection.
+	var/active_control_group = 0
+	/// Prevent group membership from changing while restoring a saved group.
+	var/suspend_group_selection_sync = FALSE
+	/// World-time of the last group selection for double-tap camera centering.
+	var/list/last_group_select_time = list(0, 0, 0, 0, 0)
+	/// Current RTS group buttons.
+	var/list/rts_group_buttons = list()
+	/// Drag-selection state.
+	var/turf/rts_drag_start_turf
+	var/rts_drag_start_screen_x = 0
+	var/rts_drag_start_screen_y = 0
+	var/rts_drag_active = FALSE
+	var/rts_drag_additive = FALSE
+	/// Visible drag-selection box, rendered on the client's HUD plane.
+	var/atom/movable/screen/hivemind_rts_drag_box/rts_drag_fill
+	var/atom/movable/screen/hivemind_rts_drag_box/rts_drag_border_top
+	var/atom/movable/screen/hivemind_rts_drag_box/rts_drag_border_bottom
+	var/atom/movable/screen/hivemind_rts_drag_box/rts_drag_border_left
+	var/atom/movable/screen/hivemind_rts_drag_box/rts_drag_border_right
 
 /mob/living/carbon/xenomorph/hivemind/Initialize(mapload)
 	var/obj/structure/xeno/hivemindcore/new_core = new /obj/structure/xeno/hivemindcore(loc, hivenumber)
@@ -44,6 +72,25 @@
 	new_core.parent = WEAKREF(src)
 	RegisterSignal(src, COMSIG_XENOMORPH_CORE_RETURN, PROC_REF(return_to_core))
 	RegisterSignal(src, COMSIG_XENOMORPH_HIVEMIND_CHANGE_FORM, PROC_REF(change_form))
+	RegisterSignal(src, COMSIG_MOB_MOUSEDOWN, PROC_REF(on_rts_mousedown))
+	RegisterSignal(src, COMSIG_MOB_MOUSEDRAG, PROC_REF(on_rts_mousedrag))
+	RegisterSignal(src, COMSIG_MOB_MOUSEUP, PROC_REF(on_rts_mouseup))
+	RegisterSignal(src, COMSIG_MOB_HUD_REFRESHED, PROC_REF(on_rts_hud_refreshed))
+	RegisterSignal(src, COMSIG_XENOABILITY_CONTROL_GROUP_1, PROC_REF(on_kb_select_group_1))
+	RegisterSignal(src, COMSIG_XENOABILITY_CREATE_GROUP_1, PROC_REF(on_kb_create_group_1))
+	RegisterSignal(src, COMSIG_XENOABILITY_ADD_GROUP_1, PROC_REF(on_kb_add_group_1))
+	RegisterSignal(src, COMSIG_XENOABILITY_CONTROL_GROUP_2, PROC_REF(on_kb_select_group_2))
+	RegisterSignal(src, COMSIG_XENOABILITY_CREATE_GROUP_2, PROC_REF(on_kb_create_group_2))
+	RegisterSignal(src, COMSIG_XENOABILITY_ADD_GROUP_2, PROC_REF(on_kb_add_group_2))
+	RegisterSignal(src, COMSIG_XENOABILITY_CONTROL_GROUP_3, PROC_REF(on_kb_select_group_3))
+	RegisterSignal(src, COMSIG_XENOABILITY_CREATE_GROUP_3, PROC_REF(on_kb_create_group_3))
+	RegisterSignal(src, COMSIG_XENOABILITY_ADD_GROUP_3, PROC_REF(on_kb_add_group_3))
+	RegisterSignal(src, COMSIG_XENOABILITY_CONTROL_GROUP_4, PROC_REF(on_kb_select_group_4))
+	RegisterSignal(src, COMSIG_XENOABILITY_CREATE_GROUP_4, PROC_REF(on_kb_create_group_4))
+	RegisterSignal(src, COMSIG_XENOABILITY_ADD_GROUP_4, PROC_REF(on_kb_add_group_4))
+	RegisterSignal(src, COMSIG_XENOABILITY_CONTROL_GROUP_5, PROC_REF(on_kb_select_group_5))
+	RegisterSignal(src, COMSIG_XENOABILITY_CREATE_GROUP_5, PROC_REF(on_kb_create_group_5))
+	RegisterSignal(src, COMSIG_XENOABILITY_ADD_GROUP_5, PROC_REF(on_kb_add_group_5))
 	add_pass_flags(incorporeal_pass_flags, INNATE_TRAIT)
 	update_action_buttons()
 
@@ -93,7 +140,31 @@
 	heal_wounds(XENO_RESTING_HEAL)
 	update_health()
 
+/mob/living/carbon/xenomorph/hivemind/Login()
+	. = ..()
+	if(client)
+		for(var/mob/living/carbon/xenomorph/minion in selected_minions)
+			var/image/selection = selection_images[minion]
+			if(selection)
+				client.images += selection
+		update_rts_hud()
+
+/mob/living/carbon/xenomorph/hivemind/Logout()
+	clear_rts_drag_state()
+	if(client)
+		save_active_control_group()
+		for(var/mob/living/carbon/xenomorph/minion in selected_minions)
+			var/image/selection = selection_images[minion]
+			if(selection)
+				client.images -= selection
+		for(var/atom/movable/screen/screen_object in rts_group_buttons)
+			client.screen -= screen_object
+	return ..()
+
 /mob/living/carbon/xenomorph/hivemind/Destroy()
+	clear_rts_drag_state()
+	clear_minion_selection()
+	clear_rts_hud()
 	var/obj/structure/xeno/hivemindcore/hive_core = get_core()
 	if(hive_core)
 		qdel(hive_core)
@@ -251,7 +322,34 @@
 /mob/living/carbon/xenomorph/hivemind/update_icons()
 	return
 
+/mob/living/carbon/xenomorph/hivemind/ClickOn(atom/A, location, params)
+	if(!rts_mode_active)
+		return ..()
+	var/list/modifiers = params2list(params)
+	if(modifiers["middle"] || modifiers["ctrl"] || modifiers["alt"])
+		return ..()
+	A = rts_resolve_click_target(A, params)
+	if(!A)
+		return
+	if(modifiers["right"])
+		issue_rts_order(A)
+		return
+	var/additive = !!modifiers["shift"]
+	if(isxeno(A) && A != src)
+		var/mob/living/carbon/xenomorph/clicked = A
+		if(additive && (clicked in selected_minions))
+			deselect_minion(clicked)
+			return
+		if(!additive)
+			clear_minion_selection()
+		select_minion(clicked, FALSE)
+		return
+	if(!additive)
+		clear_minion_selection()
+
 /mob/living/carbon/xenomorph/hivemind/DblClickOn(atom/A, params)
+	if(rts_mode_active)
+		return
 	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_HIVEMIND_MANIFESTATION))
 		return
 	var/list/modifiers = params2list(params)
@@ -281,6 +379,40 @@
 
 /mob/living/carbon/xenomorph/hivemind/update_progression()
 	return
+
+
+/obj/structure/xeno/spawner/melee
+	name = "melee minion spawner"
+	desc = "Produces Mantis, Beetle, and Baneling assault minions."
+	spawn_interval = HIVEMIND_MINION_MELEE_SPAWN_INTERVAL
+
+/obj/structure/xeno/spawner/melee/Initialize(mapload, _hivenumber)
+	minion_spawn_types = list(
+		/mob/living/carbon/xenomorph/mantis/ai = HIVEMIND_MINION_MANTIS_SPAWN_WEIGHT,
+		/mob/living/carbon/xenomorph/beetle/ai = HIVEMIND_MINION_DEFAULT_SPAWN_WEIGHT,
+		/mob/living/carbon/xenomorph/baneling/ai = HIVEMIND_MINION_DEFAULT_SPAWN_WEIGHT,
+	)
+	. = ..()
+
+/obj/structure/xeno/spawner/ranged
+	name = "ranged minion spawner"
+	desc = "Produces Scorpion acid-support minions."
+	spawn_interval = HIVEMIND_MINION_RANGED_SPAWN_INTERVAL
+	max_active_minions = HIVEMIND_MINION_RANGED_SPAWNER_CAP
+
+/obj/structure/xeno/spawner/ranged/Initialize(mapload, _hivenumber)
+	minion_spawn_types = list(/mob/living/carbon/xenomorph/scorpion/ai = HIVEMIND_MINION_DEFAULT_SPAWN_WEIGHT)
+	. = ..()
+
+/obj/structure/xeno/spawner/builder
+	name = "builder minion spawner"
+	desc = "Produces Nymph construction minions."
+	spawn_interval = HIVEMIND_MINION_BUILDER_SPAWN_INTERVAL
+	max_active_minions = HIVEMIND_MINION_BUILDER_SPAWNER_CAP
+
+/obj/structure/xeno/spawner/builder/Initialize(mapload, _hivenumber)
+	minion_spawn_types = list(/mob/living/carbon/xenomorph/nymph/ai = HIVEMIND_MINION_DEFAULT_SPAWN_WEIGHT)
+	. = ..()
 
 /obj/fire/flamer/CanAllowThrough(atom/movable/mover, turf/target)
 	if(isxenohivemind(mover))
