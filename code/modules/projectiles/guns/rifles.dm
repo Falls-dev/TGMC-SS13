@@ -1571,9 +1571,13 @@
 	)
 	attachable_allowed = list(
 		/obj/item/attachable/scope/marine,
+		/obj/item/attachable/reddot,
 		/obj/item/attachable/flashlight,
 		/obj/item/attachable/magnetic_harness,
+		/obj/item/attachable/angledgrip,
+		/obj/item/attachable/verticalgrip,
 		/obj/item/attachable/scope,
+		/obj/item/weapon/gun/flamer/hydro_cannon,
 	)
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES|GUN_WIELDED_FIRING_ONLY
@@ -1588,9 +1592,9 @@
 	scatter_unwielded = -2
 	accuracy_mult = 1.15
 	aim_slowdown = 1.5
-	damage_falloff_mult = 10
+	damage_falloff_mult = 8
 	recoil = 0.5
-	movement_acc_penalty_mult = 5
+	movement_acc_penalty_mult = 4
 
 //-------------------------------------------------------
 //SG-29 Smart Machine Gun (It's more of a rifle than the SG.)
