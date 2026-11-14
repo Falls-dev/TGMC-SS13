@@ -23,23 +23,23 @@
 	helm.flight_heading = 0
 	helm.flight_turn_velocity = 0
 	helm.advance_flight(0.2, NORTH)
-	TEST_ASSERT(helm.flight_y > start.y && helm.flight_y < start.y + 1, "Initial thrust must move a fraction of a tile")
+	TEST_ASSERT(helm.flight_y < start.y && helm.flight_y > start.y - 1, "W must move a fraction of a tile toward the nose, opposite the docking heading")
 	var/first_speed = helm.flight_velocity_y
 	helm.advance_flight(0.2, NORTH)
-	TEST_ASSERT(helm.flight_velocity_y > first_speed, "Holding thrust must accelerate")
+	TEST_ASSERT(helm.flight_velocity_y < first_speed, "Holding thrust must accelerate")
 	var/previous_y = helm.flight_y
 	var/previous_speed = helm.flight_velocity_y
 	helm.advance_flight(0.2, NONE)
-	TEST_ASSERT(helm.flight_y > previous_y, "Aircraft must coast after key release")
-	TEST_ASSERT(helm.flight_velocity_y > 0 && helm.flight_velocity_y < previous_speed, "Drag must slow the aircraft gradually")
+	TEST_ASSERT(helm.flight_y < previous_y, "Aircraft must coast after key release")
+	TEST_ASSERT(helm.flight_velocity_y < 0 && helm.flight_velocity_y > previous_speed, "Drag must slow the aircraft gradually")
 	previous_speed = helm.flight_velocity_y
 	helm.advance_flight(0.2, SOUTH)
-	TEST_ASSERT(helm.flight_velocity_y < previous_speed, "Reverse thrust must brake forward motion")
+	TEST_ASSERT(helm.flight_velocity_y > previous_speed, "Reverse thrust must brake forward motion")
 	helm.flight_velocity_x = 0
 	helm.flight_velocity_y = 0
 	helm.flight_heading = 90
 	helm.advance_flight(0.2, NORTH)
-	TEST_ASSERT(helm.flight_x > start.x, "Thrust must follow the continuous heading")
+	TEST_ASSERT(helm.flight_x < start.x, "Thrust must follow the continuous heading")
 	var/previous_heading = helm.flight_heading
 	helm.advance_flight(0.2, WEST)
 	TEST_ASSERT(helm.flight_heading < previous_heading, "A must turn counterclockwise")

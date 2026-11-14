@@ -865,7 +865,8 @@
 	if(fly_state != SHUTTLE_IN_ATMOSPHERE || shuttle_port?.mode != SHUTTLE_IDLE || isnull(flight_x))
 		return
 	dt = clamp(dt, 0, 0.5)
-	var/thrust = ((input & NORTH) ? 1 : 0) - ((input & SOUTH) ? 1 : 0)
+	// The docking-port heading points aft; forward thrust follows the nose.
+	var/thrust = ((input & SOUTH) ? 1 : 0) - ((input & NORTH) ? 1 : 0)
 	var/steering = ((input & EAST) ? 1 : 0) - ((input & WEST) ? 1 : 0)
 	flight_turn_velocity = clamp(flight_turn_velocity + steering * 100 * dt, -55, 55)
 	flight_turn_velocity *= 0.18 ** dt
