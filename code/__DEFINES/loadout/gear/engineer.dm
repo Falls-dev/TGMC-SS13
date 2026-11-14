@@ -46,7 +46,7 @@ GLOBAL_LIST_INIT(engineer_gear_listed_products, list(
 	/obj/item/minerupgrade/overclock = list(CAT_ENGSUP, "Mining well overclock upgrade", 5, "blue"),
 	/obj/item/minerupgrade/reinforcement = list(CAT_ENGSUP, "Mining well reinforcement upgrade", 5, "blue"),
 	/obj/item/minerupgrade/automatic = list(CAT_ENGSUP, "Mining well automation upgrade", 5, "blue"),
-	/obj/item/storage/pouch/explosive/razorburn = list(CAT_ENGSUP, "Pack of Razorburn grenades", 8, "orange3"),
+	/obj/item/storage/pouch/explosive/razorburn = list(CAT_ENGSUP, "Pack of Razorburn grenades", 7, "orange3"),
 	/obj/item/explosive/grenade/chem_grenade/razorburn_large = list(CAT_ENGSUP, "Razorburn canister", 4, "orange3"),
 	/obj/item/explosive/grenade/chem_grenade/razorburn_small = list(CAT_ENGSUP, "Razorburn grenade", 1, "orange3"),
 	/obj/item/mortal_shell/he = list(CAT_ENGSUP, "HE Mortar shell", 1, "orange2"),
