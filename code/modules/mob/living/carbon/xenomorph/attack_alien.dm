@@ -80,6 +80,9 @@
 	for(var/i in damage_mod)
 		damage += i
 
+	if(X.is_hivemind_ai_minion())
+		damage *= HIVEMIND_MINION_MELEE_DAMAGE_MULTIPLIER
+
 	var/armor_pen = X.xeno_caste.melee_ap
 	for(var/i in armor_mod)
 		armor_pen += i

@@ -214,3 +214,210 @@ GLOBAL_LIST_INIT(hivemind_resin_images_list, list(
 		GLOB.round_statistics.psypoints_from_hivemind += 100
 	succeed_activate()
 	add_cooldown()
+
+
+// ==========================================
+// Hivemind RTS minion management
+// ==========================================
+
+/datum/action/ability/activable/xeno/rts_minion_control
+	name = "RTS Minion Control"
+	desc = "Toggle direct control of AI minions. Left-click selects; drag selects groups; right-click issues move, attack, or escort orders. Player-controlled xenomorphs are never controllable."
+	action_icon_state = "minion_agressive"
+	action_icon = 'icons/Xeno/actions/general.dmi'
+	action_type = ACTION_SELECT
+	keybinding_signals = list(KEYBINDING_NORMAL = COMSIG_XENOABILITY_RTS_MINION_CONTROL)
+	use_state_flags = ABILITY_USE_CLOSEDTURF|ABILITY_USE_LYING|ABILITY_USE_BUCKLED
+
+/datum/action/ability/activable/xeno/rts_minion_control/action_activate()
+	if(xeno_owner.rts_mode_active)
+		deselect()
+		xeno_owner.balloon_alert(xeno_owner, "RTS-режим выключен")
+		return
+	..()
+	if(xeno_owner.selected_ability == src)
+		xeno_owner.rts_mode_active = TRUE
+		xeno_owner.balloon_alert(xeno_owner, "RTS-режим включён")
+
+/datum/action/ability/activable/xeno/rts_minion_control/on_deselection()
+	. = ..()
+	if(isxenohivemind(owner))
+		var/mob/living/carbon/xenomorph/hivemind/H = owner
+		H.rts_mode_active = FALSE
+		H.clear_rts_drag_state()
+		H.clear_minion_selection()
+
+/datum/action/ability/activable/xeno/rts_minion_control/use_ability(atom/target)
+	if(!isxenohivemind(xeno_owner) || !xeno_owner.rts_mode_active)
+		return
+	if(isxeno(target))
+		xeno_owner.select_minion(target, TRUE)
+
+/datum/action/ability/xeno_action/select_all_minions
+	name = "Select All Minions"
+	desc = "Select all controllable AI minions in your view."
+	action_icon_state = "rally_minions"
+	action_icon = 'icons/Xeno/actions/general.dmi'
+	keybinding_signals = list(KEYBINDING_NORMAL = COMSIG_XENOABILITY_SELECT_ALL_MINIONS)
+	use_state_flags = ABILITY_USE_CLOSEDTURF|ABILITY_USE_LYING|ABILITY_USE_BUCKLED
+
+/datum/action/ability/xeno_action/select_all_minions/action_activate()
+	if(!isxenohivemind(owner))
+		return
+	var/mob/living/carbon/xenomorph/hivemind/H = owner
+	H.ensure_rts_active()
+	H.clear_minion_selection()
+	var/selected_count = 0
+	for(var/mob/living/carbon/xenomorph/minion in view(world.view, H))
+		if(H.can_control_minion(minion) && H.select_minion(minion, FALSE))
+			selected_count++
+	H.balloon_alert(H, selected_count ? "Выбрано миньонов: [selected_count]" : "Нет доступных миньонов в поле зрения")
+
+/datum/action/ability/xeno_action/stop_minions
+	name = "Stop Minions"
+	desc = "Stop the selected minions. If none are selected, stop all controllable minions in view."
+	action_icon_state = "minion_passive"
+	action_icon = 'icons/Xeno/actions/general.dmi'
+	keybinding_signals = list(KEYBINDING_NORMAL = COMSIG_XENOABILITY_STOP_MINIONS)
+	use_state_flags = ABILITY_USE_CLOSEDTURF|ABILITY_USE_LYING|ABILITY_USE_BUCKLED
+
+/datum/action/ability/xeno_action/stop_minions/action_activate()
+	if(!isxenohivemind(owner))
+		return
+	var/mob/living/carbon/xenomorph/hivemind/H = owner
+	var/list/targets = length(H.selected_minions) ? H.selected_minions.Copy() : list()
+	if(!length(targets))
+		for(var/mob/living/carbon/xenomorph/minion in view(world.view, H))
+			if(H.can_control_minion(minion))
+				targets += minion
+	for(var/mob/living/carbon/xenomorph/minion in targets)
+		H.stop_minion(minion)
+	H.balloon_alert(H, "Миньоны остановлены")
+
+// The five groups use digit keys; Ctrl+digit assigns, Shift+digit adds.
+/datum/keybinding/xeno/rts_minion_control
+	name = "rts_minion_control"
+	full_name = "Hivemind: RTS Minion Control"
+	description = "Toggle direct minion selection and command mode."
+	keybind_signal = COMSIG_XENOABILITY_RTS_MINION_CONTROL
+	hotkey_keys = list("G")
+
+/datum/keybinding/xeno/select_all_minions
+	name = "select_all_minions"
+	full_name = "Hivemind: Select All Minions"
+	description = "Selects all nearby controllable minions."
+	keybind_signal = COMSIG_XENOABILITY_SELECT_ALL_MINIONS
+	hotkey_keys = list("ShiftQ")
+
+/datum/keybinding/xeno/stop_minions
+	name = "stop_minions"
+	full_name = "Hivemind: Stop Minions"
+	description = "Stops the currently selected minions."
+	keybind_signal = COMSIG_XENOABILITY_STOP_MINIONS
+	hotkey_keys = list("S")
+
+/datum/keybinding/xeno/control_group_1
+	name = "control_group_1"
+	full_name = "Hivemind: Select Group 1"
+	description = "Selects minion control group 1. Double-tap to jump camera."
+	keybind_signal = COMSIG_XENOABILITY_CONTROL_GROUP_1
+	hotkey_keys = list("1")
+
+/datum/keybinding/xeno/control_group_2
+	name = "control_group_2"
+	full_name = "Hivemind: Select Group 2"
+	description = "Selects minion control group 2. Double-tap to jump camera."
+	keybind_signal = COMSIG_XENOABILITY_CONTROL_GROUP_2
+	hotkey_keys = list("2")
+
+/datum/keybinding/xeno/control_group_3
+	name = "control_group_3"
+	full_name = "Hivemind: Select Group 3"
+	description = "Selects minion control group 3. Double-tap to jump camera."
+	keybind_signal = COMSIG_XENOABILITY_CONTROL_GROUP_3
+	hotkey_keys = list("3")
+
+/datum/keybinding/xeno/control_group_4
+	name = "control_group_4"
+	full_name = "Hivemind: Select Group 4"
+	description = "Selects minion control group 4. Double-tap to jump camera."
+	keybind_signal = COMSIG_XENOABILITY_CONTROL_GROUP_4
+	hotkey_keys = list("4")
+
+/datum/keybinding/xeno/control_group_5
+	name = "control_group_5"
+	full_name = "Hivemind: Select Group 5"
+	description = "Selects minion control group 5. Double-tap to jump camera."
+	keybind_signal = COMSIG_XENOABILITY_CONTROL_GROUP_5
+	hotkey_keys = list("5")
+
+/datum/keybinding/xeno/create_group_1
+	name = "create_group_1"
+	full_name = "Hivemind: Set Group 1"
+	description = "Assigns selected minions to control group 1."
+	keybind_signal = COMSIG_XENOABILITY_CREATE_GROUP_1
+	hotkey_keys = list("Ctrl1")
+
+/datum/keybinding/xeno/create_group_2
+	name = "create_group_2"
+	full_name = "Hivemind: Set Group 2"
+	description = "Assigns selected minions to control group 2."
+	keybind_signal = COMSIG_XENOABILITY_CREATE_GROUP_2
+	hotkey_keys = list("Ctrl2")
+
+/datum/keybinding/xeno/create_group_3
+	name = "create_group_3"
+	full_name = "Hivemind: Set Group 3"
+	description = "Assigns selected minions to control group 3."
+	keybind_signal = COMSIG_XENOABILITY_CREATE_GROUP_3
+	hotkey_keys = list("Ctrl3")
+
+/datum/keybinding/xeno/create_group_4
+	name = "create_group_4"
+	full_name = "Hivemind: Set Group 4"
+	description = "Assigns selected minions to control group 4."
+	keybind_signal = COMSIG_XENOABILITY_CREATE_GROUP_4
+	hotkey_keys = list("Ctrl4")
+
+/datum/keybinding/xeno/create_group_5
+	name = "create_group_5"
+	full_name = "Hivemind: Set Group 5"
+	description = "Assigns selected minions to control group 5."
+	keybind_signal = COMSIG_XENOABILITY_CREATE_GROUP_5
+	hotkey_keys = list("Ctrl5")
+
+/datum/keybinding/xeno/add_group_1
+	name = "add_group_1"
+	full_name = "Hivemind: Add Group 1"
+	description = "Adds control group 1 to the current selection."
+	keybind_signal = COMSIG_XENOABILITY_ADD_GROUP_1
+	hotkey_keys = list("Shift1")
+
+/datum/keybinding/xeno/add_group_2
+	name = "add_group_2"
+	full_name = "Hivemind: Add Group 2"
+	description = "Adds control group 2 to the current selection."
+	keybind_signal = COMSIG_XENOABILITY_ADD_GROUP_2
+	hotkey_keys = list("Shift2")
+
+/datum/keybinding/xeno/add_group_3
+	name = "add_group_3"
+	full_name = "Hivemind: Add Group 3"
+	description = "Adds control group 3 to the current selection."
+	keybind_signal = COMSIG_XENOABILITY_ADD_GROUP_3
+	hotkey_keys = list("Shift3")
+
+/datum/keybinding/xeno/add_group_4
+	name = "add_group_4"
+	full_name = "Hivemind: Add Group 4"
+	description = "Adds control group 4 to the current selection."
+	keybind_signal = COMSIG_XENOABILITY_ADD_GROUP_4
+	hotkey_keys = list("Shift4")
+
+/datum/keybinding/xeno/add_group_5
+	name = "add_group_5"
+	full_name = "Hivemind: Add Group 5"
+	description = "Adds control group 5 to the current selection."
+	keybind_signal = COMSIG_XENOABILITY_ADD_GROUP_5
+	hotkey_keys = list("Shift5")
+

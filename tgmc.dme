@@ -176,6 +176,7 @@
 #include "code\__DEFINES\dcs\signals\signals_reagent.dm"
 #include "code\__DEFINES\dcs\signals\signals_subsystem.dm"
 #include "code\__DEFINES\dcs\signals\signals_tgui.dm"
+#include "code\__DEFINES\dcs\signals\signals_xeno.dm"
 #include "code\__DEFINES\dcs\signals\signals_atom\signals_atom_mouse.dm"
 #include "code\__DEFINES\dcs\signals\signals_atom\signals_atom_x_act.dm"
 #include "code\__DEFINES\loadout\loadout.dm"

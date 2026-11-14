@@ -320,3 +320,23 @@ GLOBAL_LIST_EMPTY(blood_particles)
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "extinguish"
 	duration = 0.5 SECONDS
+
+/obj/effect/temp_visual/rts_order
+	name = "order marker"
+	icon = 'icons/effects/blips.dmi'
+	icon_state = "attack"
+	duration = 0.8 SECONDS
+	layer = ABOVE_NORMAL_TURF_LAYER
+	plane = GAME_PLANE
+
+/obj/effect/temp_visual/rts_order/move
+	icon_state = "defend"
+	color = "#00FF00"
+
+/obj/effect/temp_visual/rts_order/attack
+	icon_state = "attack"
+	color = "#FF0000"
+
+/obj/effect/temp_visual/rts_order/escort
+	icon_state = "rally"
+	color = "#00FFFF"

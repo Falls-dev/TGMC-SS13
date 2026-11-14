@@ -867,7 +867,10 @@
 
 	var/atom/movable/projectile/newspit = new /atom/movable/projectile(current_turf)
 	ability_cost = xeno_owner.ammo.spit_cost
-	newspit.generate_bullet(xeno_owner.ammo, xeno_owner.ammo.damage * SPIT_UPGRADE_BONUS(xeno_owner))
+	var/spit_damage = xeno_owner.ammo.damage * SPIT_UPGRADE_BONUS(xeno_owner)
+	if(xeno_owner.is_hivemind_ai_minion())
+		spit_damage *= HIVEMIND_MINION_RANGED_DAMAGE_MULTIPLIER
+	newspit.generate_bullet(xeno_owner.ammo, spit_damage)
 	newspit.def_zone = xeno_owner.get_limbzone_target()
 	newspit.fire_at(current_target, xeno_owner, xeno_owner, xeno_owner.ammo.max_range, xeno_owner.ammo.shell_speed)
 
