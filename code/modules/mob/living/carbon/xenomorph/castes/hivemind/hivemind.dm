@@ -428,6 +428,22 @@
 	return core?.resolve()
 
 
+/// Creates a solid white icon with exact pixel dimensions. Do not scale 32x32 UI icons with a pixel-sized matrix.
+/proc/hivemind_rts_solid_icon(icon_width, icon_height)
+	var/icon/solid_icon = icon('icons/effects/alphacolors.dmi', "white")
+	solid_icon.Scale(max(1, round(icon_width)), max(1, round(icon_height)))
+	return solid_icon
+
+/// Builds a correctly sized flat-color overlay for RTS HUD cards.
+/proc/hivemind_rts_panel_overlay(icon_width, icon_height, overlay_color, overlay_layer, overlay_alpha = 255, offset_x = 0, offset_y = 0)
+	var/mutable_appearance/panel = mutable_appearance(icon = hivemind_rts_solid_icon(icon_width, icon_height), icon_state = "white", layer = overlay_layer)
+	panel.color = overlay_color
+	panel.alpha = overlay_alpha
+	panel.pixel_x = offset_x
+	panel.pixel_y = offset_y
+	panel.appearance_flags = APPEARANCE_UI|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
+	return panel
+
 /atom/movable/screen/hivemind_rts_drag_box
 	name = "RTS selection box"
 	icon = 'icons/effects/alphacolors.dmi'
@@ -851,55 +867,69 @@
 	var/box_width = max(1, max_x - min_x + 1)
 	var/box_height = max(1, max_y - min_y + 1)
 	var/base_screen_loc = rts_pixel_to_screen_loc(min_x, min_y)
-	var/static/icon/one_pixel = icon('icons/effects/alphacolors.dmi', "white")
+
 	if(!rts_drag_fill)
 		rts_drag_fill = new /atom/movable/screen/hivemind_rts_drag_box(null)
-		rts_drag_fill.icon = one_pixel
-		rts_drag_fill.color = "#18FF68"
-		rts_drag_fill.alpha = 56
 		client.screen += rts_drag_fill
 	if(!rts_drag_border_top)
 		rts_drag_border_top = new /atom/movable/screen/hivemind_rts_drag_box(null)
-		rts_drag_border_top.icon = one_pixel
-		rts_drag_border_top.color = "#35FF80"
 		client.screen += rts_drag_border_top
 	if(!rts_drag_border_bottom)
 		rts_drag_border_bottom = new /atom/movable/screen/hivemind_rts_drag_box(null)
-		rts_drag_border_bottom.icon = one_pixel
-		rts_drag_border_bottom.color = "#35FF80"
 		client.screen += rts_drag_border_bottom
 	if(!rts_drag_border_left)
 		rts_drag_border_left = new /atom/movable/screen/hivemind_rts_drag_box(null)
-		rts_drag_border_left.icon = one_pixel
-		rts_drag_border_left.color = "#35FF80"
 		client.screen += rts_drag_border_left
 	if(!rts_drag_border_right)
 		rts_drag_border_right = new /atom/movable/screen/hivemind_rts_drag_box(null)
-		rts_drag_border_right.icon = one_pixel
-		rts_drag_border_right.color = "#35FF80"
 		client.screen += rts_drag_border_right
-	for(var/atom/movable/screen/hivemind_rts_drag_box/box_part in list(rts_drag_fill, rts_drag_border_top, rts_drag_border_bottom, rts_drag_border_left, rts_drag_border_right))
-		box_part.screen_loc = base_screen_loc
-	var/matrix/fill_transform = matrix()
-	fill_transform.Scale(box_width, box_height)
-	fill_transform.Translate((box_width - 1) * 0.5, (box_height - 1) * 0.5)
-	rts_drag_fill.transform = fill_transform
-	var/matrix/top_transform = matrix()
-	top_transform.Scale(box_width, 2)
-	top_transform.Translate((box_width - 1) * 0.5, box_height - 1.5)
-	rts_drag_border_top.transform = top_transform
-	var/matrix/bottom_transform = matrix()
-	bottom_transform.Scale(box_width, 2)
-	bottom_transform.Translate((box_width - 1) * 0.5, 0.5)
-	rts_drag_border_bottom.transform = bottom_transform
-	var/matrix/left_transform = matrix()
-	left_transform.Scale(2, box_height)
-	left_transform.Translate(0.5, (box_height - 1) * 0.5)
-	rts_drag_border_left.transform = left_transform
-	var/matrix/right_transform = matrix()
-	right_transform.Scale(2, box_height)
-	right_transform.Translate(box_width - 1.5, (box_height - 1) * 0.5)
-	rts_drag_border_right.transform = right_transform
+
+	// Scale the bitmap itself to the target pixel size. Matrix scaling a 32x32 DMI state
+	// by a screen-pixel width expands it by another factor of 32 and covers the viewport.
+	rts_drag_fill.icon = hivemind_rts_solid_icon(box_width, box_height)
+	rts_drag_fill.icon_state = "white"
+	rts_drag_fill.color = "#18FF68"
+	rts_drag_fill.alpha = 56
+	rts_drag_fill.screen_loc = base_screen_loc
+	rts_drag_fill.pixel_x = 0
+	rts_drag_fill.pixel_y = 0
+	rts_drag_fill.transform = null
+
+	rts_drag_border_top.icon = hivemind_rts_solid_icon(box_width, 2)
+	rts_drag_border_top.icon_state = "white"
+	rts_drag_border_top.color = "#35FF80"
+	rts_drag_border_top.alpha = 255
+	rts_drag_border_top.screen_loc = base_screen_loc
+	rts_drag_border_top.pixel_x = 0
+	rts_drag_border_top.pixel_y = box_height - 2
+	rts_drag_border_top.transform = null
+
+	rts_drag_border_bottom.icon = hivemind_rts_solid_icon(box_width, 2)
+	rts_drag_border_bottom.icon_state = "white"
+	rts_drag_border_bottom.color = "#35FF80"
+	rts_drag_border_bottom.alpha = 255
+	rts_drag_border_bottom.screen_loc = base_screen_loc
+	rts_drag_border_bottom.pixel_x = 0
+	rts_drag_border_bottom.pixel_y = 0
+	rts_drag_border_bottom.transform = null
+
+	rts_drag_border_left.icon = hivemind_rts_solid_icon(2, box_height)
+	rts_drag_border_left.icon_state = "white"
+	rts_drag_border_left.color = "#35FF80"
+	rts_drag_border_left.alpha = 255
+	rts_drag_border_left.screen_loc = base_screen_loc
+	rts_drag_border_left.pixel_x = 0
+	rts_drag_border_left.pixel_y = 0
+	rts_drag_border_left.transform = null
+
+	rts_drag_border_right.icon = hivemind_rts_solid_icon(2, box_height)
+	rts_drag_border_right.icon_state = "white"
+	rts_drag_border_right.color = "#35FF80"
+	rts_drag_border_right.alpha = 255
+	rts_drag_border_right.screen_loc = base_screen_loc
+	rts_drag_border_right.pixel_x = box_width - 2
+	rts_drag_border_right.pixel_y = 0
+	rts_drag_border_right.transform = null
 
 /mob/living/carbon/xenomorph/hivemind/proc/clear_rts_drag_state()
 	if(client)
@@ -1158,25 +1188,9 @@
 	color = null
 	alpha = 255
 
-	// A visible frame exists for every group; the active group gets a bright green border.
-	var/mutable_appearance/frame = mutable_appearance('icons/effects/alphacolors.dmi', "white", layer = 82)
-	frame.color = is_active ? "#43FF86" : "#718078"
-	frame.appearance_flags = APPEARANCE_UI|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
-	var/matrix/frame_transform = matrix()
-	frame_transform.Scale(HIVEMIND_RTS_GROUP_CARD_WIDTH, HIVEMIND_RTS_GROUP_CARD_HEIGHT)
-	frame_transform.Translate((HIVEMIND_RTS_GROUP_CARD_WIDTH - 1) * 0.5, (HIVEMIND_RTS_GROUP_CARD_HEIGHT - 1) * 0.5)
-	frame.transform = frame_transform
-	add_overlay(frame)
-
-	var/mutable_appearance/plate = mutable_appearance('icons/effects/alphacolors.dmi', "white", layer = 83)
-	plate.color = "#111A15"
-	plate.alpha = 250
-	plate.appearance_flags = APPEARANCE_UI|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
-	var/matrix/plate_transform = matrix()
-	plate_transform.Scale(HIVEMIND_RTS_GROUP_CARD_WIDTH - 4, HIVEMIND_RTS_GROUP_CARD_HEIGHT - 4)
-	plate_transform.Translate(2, 2)
-	plate.transform = plate_transform
-	add_overlay(plate)
+	// The DMI source is 32x32. Resize the bitmap, not the object transform, to keep the card local.
+	add_overlay(hivemind_rts_panel_overlay(HIVEMIND_RTS_GROUP_CARD_WIDTH, HIVEMIND_RTS_GROUP_CARD_HEIGHT, is_active ? "#43FF86" : "#718078", 82))
+	add_overlay(hivemind_rts_panel_overlay(HIVEMIND_RTS_GROUP_CARD_WIDTH - 4, HIVEMIND_RTS_GROUP_CARD_HEIGHT - 4, "#111A15", 83, 250, 2, 2))
 
 	if(representative)
 		var/mutable_appearance/portrait = new /mutable_appearance(representative)
@@ -1189,15 +1203,7 @@
 		portrait.transform = portrait_transform
 		add_overlay(portrait)
 
-	var/mutable_appearance/count_backing = mutable_appearance('icons/effects/alphacolors.dmi', "white", layer = 85)
-	count_backing.color = "#07100B"
-	count_backing.alpha = 235
-	count_backing.appearance_flags = APPEARANCE_UI|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
-	var/matrix/count_backing_transform = matrix()
-	count_backing_transform.Scale(HIVEMIND_RTS_GROUP_CARD_WIDTH - 4, 9)
-	count_backing_transform.Translate(2, 2)
-	count_backing.transform = count_backing_transform
-	add_overlay(count_backing)
+	add_overlay(hivemind_rts_panel_overlay(HIVEMIND_RTS_GROUP_CARD_WIDTH - 4, 9, "#07100B", 85, 235, 2, 2))
 
 	var/mutable_appearance/index_label = mutable_appearance(icon = null, icon_state = null, layer = 86)
 	index_label.appearance_flags = APPEARANCE_UI|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
@@ -1270,23 +1276,8 @@
 		if(!representative)
 			representative = minion
 	cut_overlays()
-	var/mutable_appearance/frame = mutable_appearance('icons/effects/alphacolors.dmi', "white", layer = 91)
-	frame.color = "#39FF83"
-	frame.appearance_flags = APPEARANCE_UI|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
-	var/matrix/frame_transform = matrix()
-	frame_transform.Scale(HIVEMIND_RTS_GROUP_CARD_WIDTH, HIVEMIND_RTS_GROUP_CARD_HEIGHT - 10)
-	frame_transform.Translate((HIVEMIND_RTS_GROUP_CARD_WIDTH - 1) * 0.5, (HIVEMIND_RTS_GROUP_CARD_HEIGHT - 11) * 0.5)
-	frame.transform = frame_transform
-	add_overlay(frame)
-	var/mutable_appearance/plate = mutable_appearance('icons/effects/alphacolors.dmi', "white", layer = 92)
-	plate.color = "#111A15"
-	plate.alpha = 250
-	plate.appearance_flags = APPEARANCE_UI|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
-	var/matrix/plate_transform = matrix()
-	plate_transform.Scale(HIVEMIND_RTS_GROUP_CARD_WIDTH - 4, HIVEMIND_RTS_GROUP_CARD_HEIGHT - 14)
-	plate_transform.Translate(2, 2)
-	plate.transform = plate_transform
-	add_overlay(plate)
+	add_overlay(hivemind_rts_panel_overlay(HIVEMIND_RTS_GROUP_CARD_WIDTH, HIVEMIND_RTS_GROUP_CARD_HEIGHT - 10, "#39FF83", 91))
+	add_overlay(hivemind_rts_panel_overlay(HIVEMIND_RTS_GROUP_CARD_WIDTH - 4, HIVEMIND_RTS_GROUP_CARD_HEIGHT - 14, "#111A15", 92, 250, 2, 2))
 	if(representative)
 		var/mutable_appearance/portrait = new /mutable_appearance(representative)
 		portrait.layer = 93
