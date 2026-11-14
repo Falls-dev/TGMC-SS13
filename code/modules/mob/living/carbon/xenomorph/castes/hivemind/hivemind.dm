@@ -52,6 +52,8 @@
 	var/list/atom/movable/screen/hivemind_rts_unit_card/rts_unit_cards = list()
 	/// Drag-selection state.
 	var/turf/rts_drag_start_turf
+	var/rts_drag_start_screen_x = 0
+	var/rts_drag_start_screen_y = 0
 	var/rts_drag_active = FALSE
 	var/rts_drag_additive = FALSE
 
@@ -63,6 +65,7 @@
 	RegisterSignal(src, COMSIG_XENOMORPH_CORE_RETURN, PROC_REF(return_to_core))
 	RegisterSignal(src, COMSIG_XENOMORPH_HIVEMIND_CHANGE_FORM, PROC_REF(change_form))
 	RegisterSignal(src, COMSIG_MOB_MOUSEDOWN, PROC_REF(on_rts_mousedown))
+	RegisterSignal(src, COMSIG_MOB_MOUSEDRAG, PROC_REF(on_rts_mousedrag))
 	RegisterSignal(src, COMSIG_MOB_MOUSEUP, PROC_REF(on_rts_mouseup))
 	RegisterSignal(src, COMSIG_XENOABILITY_CONTROL_GROUP_1, PROC_REF(on_kb_select_group_1))
 	RegisterSignal(src, COMSIG_XENOABILITY_CREATE_GROUP_1, PROC_REF(on_kb_create_group_1))
@@ -440,29 +443,14 @@
 /mob/living/carbon/xenomorph/hivemind/proc/rts_resolve_click_target(atom/A, params)
 	if(!A)
 		return null
-	if(A.plane == CLICKCATCHER_PLANE && client)
-		var/list/modifiers = params2list(params)
-		return params2turf(modifiers["screen-loc"], get_turf(client.eye), client)
-	return A
+	return get_turf_on_clickcatcher(A, src, params)
 
-/// Controllable minions inside the client's viewport rectangle (ignores line of sight/darkness).
+/// Controllable minions currently visible to the client's camera.
 /mob/living/carbon/xenomorph/hivemind/proc/get_minions_in_view()
 	var/list/result = list()
-	var/turf/center = get_turf(client ? client.eye : src)
-	if(!center)
-		return result
-	var/list/size = getviewsize(client ? client.view : WORLD_VIEW)
-	var/half_x = round(size[1] * 0.5)
-	var/half_y = round(size[2] * 0.5)
-	var/off_x = client ? round(client.pixel_x / 32) : 0
-	var/off_y = client ? round(client.pixel_y / 32) : 0
-	var/min_x = center.x - half_x + off_x
-	var/max_x = center.x + half_x + off_x
-	var/min_y = center.y - half_y + off_y
-	var/max_y = center.y + half_y + off_y
-	for(var/mob/living/carbon/xenomorph/minion in GLOB.alive_xeno_list_hive[hivenumber])
-		if(minion.z != center.z || !ISINRANGE(minion.x, min_x, max_x) || !ISINRANGE(minion.y, min_y, max_y))
-			continue
+	var/atom/viewer = client && client.eye ? client.eye : src
+	var/view_size = client ? client.view : world.view
+	for(var/mob/living/carbon/xenomorph/minion in view(view_size, viewer))
 		if(can_control_minion(minion))
 			result += minion
 	return result
@@ -471,14 +459,25 @@
 /mob/living/carbon/xenomorph/hivemind/proc/can_control_minion(mob/living/carbon/xenomorph/target)
 	if(!istype(target) || target == src || QDELETED(target) || target.stat == DEAD)
 		return FALSE
-	if(target.hivenumber != hivenumber || !target.xeno_caste || !(target.xeno_caste.caste_flags & CASTE_IS_A_MINION))
-		return FALSE
-	if(target.client || target.ckey || target.key || (target.mind && target.mind.active))
+	if(target.hivenumber != hivenumber || !target.is_hivemind_ai_minion())
 		return FALSE
 	if(istype(target, /mob/living/carbon/xenomorph/spiderling) || istype(target, /mob/living/carbon/xenomorph/puppet))
 		return FALSE
+
+	// Keep AI behavior compatible with the minion's caste even if it was spawned without a controller.
 	var/datum/component/ai_controller/controller = target.GetComponent(/datum/component/ai_controller)
-	return !!controller
+	var/desired_ai_type = /datum/ai_behavior/xeno
+	if(istype(target, /mob/living/carbon/xenomorph/scorpion) || istype(target, /mob/living/carbon/xenomorph/sentinel) || istype(target, /mob/living/carbon/xenomorph/spitter) || istype(target, /mob/living/carbon/xenomorph/praetorian))
+		desired_ai_type = /datum/ai_behavior/xeno/ranged
+	else if(istype(target, /mob/living/carbon/xenomorph/baneling) || istype(target, /mob/living/carbon/xenomorph/beetle) || istype(target, /mob/living/carbon/xenomorph/mantis))
+		desired_ai_type = /datum/ai_behavior/xeno/suicidal
+
+	if(!controller)
+		target.AddComponent(/datum/component/ai_controller, desired_ai_type)
+	else if(!istype(controller.ai_behavior, desired_ai_type))
+		qdel(controller)
+		target.AddComponent(/datum/component/ai_controller, desired_ai_type)
+	return TRUE
 
 /mob/living/carbon/xenomorph/hivemind/proc/select_minion(mob/living/carbon/xenomorph/minion, clear_previous = TRUE)
 	if(clear_previous)
@@ -490,8 +489,7 @@
 	if(minion in selected_minions)
 		return TRUE
 	selected_minions += minion
-	var/image/selection = image('icons/effects/alphacolors.dmi', minion, "white")
-	selection.color = HIVEMIND_RTS_MINION_SELECTION_COLOR
+	var/image/selection = image('icons/effects/alphacolors.dmi', minion, "green")
 	selection.alpha = 70
 	selection.layer = MOB_LAYER - HIVEMIND_RTS_SELECTION_LAYER_OFFSET
 	SET_PLANE_EXPLICIT(selection, GAME_PLANE, minion)
@@ -688,14 +686,45 @@
 
 /mob/living/carbon/xenomorph/hivemind/proc/on_rts_mousedown(mob/source, atom/object, turf/location, control, params)
 	SIGNAL_HANDLER
-	if(!rts_mode_active)
+	if(!client || !rts_mode_active)
 		return
 	var/list/modifiers = params2list(params)
-	if(modifiers[BUTTON] != LEFT_CLICK)
+	if(modifiers[BUTTON] != LEFT_CLICK || modifiers["right"] || modifiers["middle"])
 		return
-	rts_drag_start_turf = get_turf(rts_resolve_click_target(object, params))
-	rts_drag_active = !!rts_drag_start_turf
+	// HUD elements must keep their own clicks; the map click-catcher is selectable.
+	if(istype(object, /atom/movable/screen) && !istype(object, /atom/movable/screen/click_catcher))
+		return
+	if(!modifiers["screen-loc"])
+		return
+	var/list/start_coords = params2screenpixel(modifiers["screen-loc"])
+	if(!start_coords || !length(start_coords))
+		return
+	rts_drag_start_screen_x = start_coords[1]
+	rts_drag_start_screen_y = start_coords[2]
+	var/atom/start_target = get_turf_on_clickcatcher(object, src, params)
+	if(!start_target)
+		start_target = location
+	rts_drag_start_turf = get_turf(start_target)
+	if(!rts_drag_start_turf && modifiers["screen-loc"])
+		var/atom/viewer = client.eye ? client.eye : src
+		rts_drag_start_turf = params2turf(modifiers["screen-loc"], get_turf(viewer), client)
+	rts_drag_active = FALSE
 	rts_drag_additive = !!modifiers["shift"]
+
+/// Mark a drag only after the cursor has moved far enough to distinguish it from a click.
+/mob/living/carbon/xenomorph/hivemind/proc/on_rts_mousedrag(mob/source, atom/src_object, atom/over_object, turf/src_location, turf/over_location, src_control, over_control, params)
+	SIGNAL_HANDLER
+	if(!client || !rts_mode_active || !rts_drag_start_turf)
+		return
+	var/list/modifiers = params2list(params)
+	if(!modifiers["screen-loc"])
+		return
+	var/list/current_coords = params2screenpixel(modifiers["screen-loc"])
+	if(!current_coords || !length(current_coords))
+		return
+	if(!rts_drag_active && abs(current_coords[1] - rts_drag_start_screen_x) < 6 && abs(current_coords[2] - rts_drag_start_screen_y) < 6)
+		return
+	rts_drag_active = TRUE
 
 /// Box select only; plain clicks are handled in ClickOn.
 /mob/living/carbon/xenomorph/hivemind/proc/on_rts_mouseup(mob/source, atom/object, turf/location, control, params)
@@ -703,12 +732,21 @@
 	if(!rts_mode_active || !rts_drag_active || !rts_drag_start_turf)
 		clear_rts_drag_state()
 		return
-	var/turf/end_turf = get_turf(rts_resolve_click_target(object, params))
+	var/list/modifiers = params2list(params)
+	var/atom/end_target = get_turf_on_clickcatcher(object, src, params)
+	if(!end_target)
+		end_target = location
+	var/turf/end_turf = get_turf(end_target)
+	if(!end_turf && modifiers["screen-loc"] && client)
+		var/atom/viewer = client.eye ? client.eye : src
+		end_turf = params2turf(modifiers["screen-loc"], get_turf(viewer), client)
 	var/turf/start_turf = rts_drag_start_turf
-	var/additive = rts_drag_additive
+	var/additive = rts_drag_additive || !!modifiers["shift"]
 	clear_rts_drag_state()
-	if(!end_turf || end_turf == start_turf || end_turf.z != start_turf.z)
-		return
+	if(client)
+		client.click_intercepted = world.time
+	if(!start_turf || !end_turf || end_turf.z != start_turf.z)
+		return COMSIG_MOB_CLICK_CANCELED
 	if(!additive)
 		clear_minion_selection()
 	for(var/turf/T in block(locate(min(start_turf.x, end_turf.x), min(start_turf.y, end_turf.y), start_turf.z), locate(max(start_turf.x, end_turf.x), max(start_turf.y, end_turf.y), start_turf.z)))
@@ -719,6 +757,8 @@
 
 /mob/living/carbon/xenomorph/hivemind/proc/clear_rts_drag_state()
 	rts_drag_start_turf = null
+	rts_drag_start_screen_x = 0
+	rts_drag_start_screen_y = 0
 	rts_drag_active = FALSE
 	rts_drag_additive = FALSE
 
@@ -897,7 +937,7 @@
 /atom/movable/screen/hivemind_rts_group_button
 	name = "Control Group"
 	icon = 'icons/effects/alphacolors.dmi'
-	icon_state = "white"
+	icon_state = "green"
 	plane = ABOVE_HUD_PLANE
 	layer = 80
 	mouse_opacity = MOUSE_OPACITY_ICON
