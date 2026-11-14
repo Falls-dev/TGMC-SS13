@@ -347,6 +347,10 @@ A good representation is: 'byond applies a volume reduction to the sound every X
 			soundin = pick('sound/voice/alien/queen/command.ogg','sound/voice/alien/queen/command2.ogg','sound/voice/alien/queen/command3.ogg')
 		if(SFX_ALIEN_VENTPASS)
 			soundin = pick('sound/effects/alien/ventpass1.ogg', 'sound/effects/alien/ventpass2.ogg')
+		if(SFX_CONQUEROR_WILL_HOOK)
+			soundin = pick('sound/effects/alien/conqueror/will_hook_1.ogg', 'sound/effects/alien/conqueror/will_hook_2.ogg', 'sound/effects/alien/conqueror/will_hook_3.ogg')
+		if(SFX_CONQUEROR_WILL_EXTRA)
+			soundin = pick('sound/effects/alien/conqueror/will_extra_1.ogg', 'sound/effects/alien/conqueror/will_extra_2.ogg')
 		if(SFX_BEHEMOTH_EARTH_PILLAR_HIT)
 			soundin = pick('sound/effects/alien/behemoth/earth_pillar_hit_1.ogg', 'sound/effects/alien/behemoth/earth_pillar_hit_2.ogg', 'sound/effects/alien/behemoth/earth_pillar_hit_3.ogg', 'sound/effects/alien/behemoth/earth_pillar_hit_4.ogg', 'sound/effects/alien/behemoth/earth_pillar_hit_5.ogg', 'sound/effects/alien/behemoth/earth_pillar_hit_6.ogg')
 
