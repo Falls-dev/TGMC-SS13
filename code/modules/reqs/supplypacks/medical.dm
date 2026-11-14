@@ -371,6 +371,12 @@
 	)
 	cost = 250
 
+/datum/supply_packs/medical/russian_red_injector
+	name ="Russian red autoinjector"
+	notes = "contains one russian red injector"
+	contains = list(/obj/item/reagent_containers/hypospray/autoinjector/russian_red)
+	cost = 50
+
 /datum/supply_packs/medical/neuraline_kit_injector
 	name ="Neuraline autoinjector"
 	notes = "contains one neuraline injector"
