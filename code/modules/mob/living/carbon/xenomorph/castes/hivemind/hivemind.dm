@@ -40,10 +40,14 @@
 	var/rts_mode_active = FALSE
 	/// Currently selected AI minions.
 	var/list/mob/living/carbon/xenomorph/selected_minions = list()
-	/// Selection ring images, keyed by minion.
+	/// Client-only outline overlays, keyed by minion.
 	var/list/selection_images = list()
 	/// Five groups containing weak references so removed mobs are not retained.
 	var/list/list/control_groups = list(list(), list(), list(), list(), list())
+	/// Currently active control group. Zero means a free-form selection.
+	var/active_control_group = 0
+	/// Prevent group membership from changing while restoring a saved group.
+	var/suspend_group_selection_sync = FALSE
 	/// World-time of the last group selection for double-tap camera centering.
 	var/list/last_group_select_time = list(0, 0, 0, 0, 0)
 	/// Current RTS group buttons.
@@ -56,6 +60,12 @@
 	var/rts_drag_start_screen_y = 0
 	var/rts_drag_active = FALSE
 	var/rts_drag_additive = FALSE
+	/// Visible drag-selection box, rendered on the client's HUD plane.
+	var/atom/movable/screen/hivemind_rts_drag_box/rts_drag_fill
+	var/atom/movable/screen/hivemind_rts_drag_box/rts_drag_border_top
+	var/atom/movable/screen/hivemind_rts_drag_box/rts_drag_border_bottom
+	var/atom/movable/screen/hivemind_rts_drag_box/rts_drag_border_left
+	var/atom/movable/screen/hivemind_rts_drag_box/rts_drag_border_right
 
 /mob/living/carbon/xenomorph/hivemind/Initialize(mapload)
 	var/obj/structure/xeno/hivemindcore/new_core = new /obj/structure/xeno/hivemindcore(loc, hivenumber)
@@ -144,6 +154,7 @@
 /mob/living/carbon/xenomorph/hivemind/Logout()
 	clear_rts_drag_state()
 	if(client)
+		save_active_control_group()
 		for(var/mob/living/carbon/xenomorph/minion in selected_minions)
 			var/image/selection = selection_images[minion]
 			if(selection)
@@ -417,6 +428,15 @@
 	return core?.resolve()
 
 
+/atom/movable/screen/hivemind_rts_drag_box
+	name = "RTS selection box"
+	icon = 'icons/effects/alphacolors.dmi'
+	icon_state = "white"
+	plane = ABOVE_HUD_PLANE
+	layer = 120
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	appearance_flags = APPEARANCE_UI
+
 // ==========================================
 // Hivemind RTS selection and command logic
 // ==========================================
@@ -436,7 +456,11 @@
 	rts_action?.set_toggle(enabled)
 	if(!enabled)
 		clear_rts_drag_state()
+		save_active_control_group()
+		suspend_group_selection_sync = TRUE
 		clear_minion_selection()
+		suspend_group_selection_sync = FALSE
+		active_control_group = 0
 	update_rts_hud()
 	balloon_alert(src, enabled ? "RTS-режим включён" : "RTS-режим выключен")
 
@@ -490,17 +514,12 @@
 	if(minion in selected_minions)
 		return TRUE
 	selected_minions += minion
-	var/image/selection = image('icons/effects/alphacolors.dmi', minion, "white")
-	selection.color = HIVEMIND_RTS_MINION_SELECTION_COLOR
-	selection.alpha = 70
-	selection.layer = MOB_LAYER - HIVEMIND_RTS_SELECTION_LAYER_OFFSET
-	SET_PLANE_EXPLICIT(selection, GAME_PLANE, minion)
-	selection.appearance_flags = RESET_COLOR|RESET_ALPHA|KEEP_APART
-	selection.filters = filter(type = "outline", size = 1, color = "[HIVEMIND_RTS_MINION_SELECTION_COLOR]FF")
-	selection_images[minion] = selection
-	if(client)
-		client.images += selection
+	update_minion_selection_overlay(minion)
 	RegisterSignals(minion, list(COMSIG_MOB_DEATH, COMSIG_QDELETING, COMSIG_MOB_LOGIN), PROC_REF(on_selected_minion_lost))
+	RegisterSignal(minion, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_selected_minion_dir_changed))
+	RegisterSignal(minion, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_selected_minion_icon_updated))
+	if(active_control_group && !suspend_group_selection_sync)
+		save_active_control_group()
 	update_rts_hud()
 	return TRUE
 
@@ -508,24 +527,70 @@
 	if(!(minion in selected_minions))
 		return
 	UnregisterSignal(minion, list(COMSIG_MOB_DEATH, COMSIG_QDELETING, COMSIG_MOB_LOGIN))
-	if(client && selection_images[minion])
-		client.images -= selection_images[minion]
+	UnregisterSignal(minion, COMSIG_ATOM_DIR_CHANGE)
+	UnregisterSignal(minion, COMSIG_ATOM_UPDATED_ICON)
+	var/image/selection = selection_images[minion]
+	if(client && selection)
+		client.images -= selection
 	selected_minions -= minion
 	selection_images -= minion
+	if(active_control_group && !suspend_group_selection_sync)
+		save_active_control_group()
 	update_rts_hud()
 
 /mob/living/carbon/xenomorph/hivemind/proc/clear_minion_selection()
 	for(var/mob/living/carbon/xenomorph/minion in selected_minions.Copy())
 		UnregisterSignal(minion, list(COMSIG_MOB_DEATH, COMSIG_QDELETING, COMSIG_MOB_LOGIN))
-		if(client && selection_images[minion])
-			client.images -= selection_images[minion]
+		UnregisterSignal(minion, COMSIG_ATOM_DIR_CHANGE)
+		UnregisterSignal(minion, COMSIG_ATOM_UPDATED_ICON)
+		var/image/selection = selection_images[minion]
+		if(client && selection)
+			client.images -= selection
 	selected_minions.Cut()
 	selection_images.Cut()
+	if(active_control_group && !suspend_group_selection_sync)
+		save_active_control_group()
 	update_rts_hud()
+
+/mob/living/carbon/xenomorph/hivemind/proc/update_minion_selection_overlay(mob/living/carbon/xenomorph/minion, dir_override = null)
+	if(!minion || QDELETED(minion) || !(minion in selected_minions))
+		return
+	var/image/old_selection = selection_images[minion]
+	if(client && old_selection)
+		client.images -= old_selection
+	var/mutable_appearance/selection_appearance = new /mutable_appearance(minion)
+	if(dir_override)
+		selection_appearance.dir = dir_override
+	selection_appearance.filters += filter(type = "outline", size = 3, color = HIVEMIND_RTS_MINION_SELECTION_COLOR)
+	selection_appearance.appearance_flags = RESET_COLOR|RESET_ALPHA|KEEP_APART
+	var/image/selection = image(selection_appearance)
+	selection.loc = minion
+	selection.layer = MOB_LAYER + HIVEMIND_RTS_SELECTION_LAYER_OFFSET
+	SET_PLANE_EXPLICIT(selection, GAME_PLANE, minion)
+	selection_images[minion] = selection
+	if(client)
+		client.images += selection
+
+/mob/living/carbon/xenomorph/hivemind/proc/on_selected_minion_dir_changed(mob/living/carbon/xenomorph/minion, old_dir, new_dir)
+	SIGNAL_HANDLER
+	update_minion_selection_overlay(minion, new_dir)
+
+/mob/living/carbon/xenomorph/hivemind/proc/on_selected_minion_icon_updated(mob/living/carbon/xenomorph/minion, updates, did_anything)
+	SIGNAL_HANDLER
+	update_minion_selection_overlay(minion)
 
 /mob/living/carbon/xenomorph/hivemind/proc/on_selected_minion_lost(mob/living/carbon/xenomorph/minion)
 	SIGNAL_HANDLER
 	deselect_minion(minion)
+
+/mob/living/carbon/xenomorph/hivemind/proc/save_active_control_group()
+	if(!active_control_group || suspend_group_selection_sync)
+		return
+	var/list/group = control_groups[active_control_group]
+	group.Cut()
+	for(var/mob/living/carbon/xenomorph/minion in selected_minions)
+		if(can_control_minion(minion))
+			group += WEAKREF(minion)
 
 /mob/living/carbon/xenomorph/hivemind/proc/assign_control_group(group_idx)
 	if(group_idx < 1 || group_idx > HIVEMIND_RTS_GROUP_COUNT)
@@ -535,14 +600,17 @@
 	for(var/mob/living/carbon/xenomorph/minion in selected_minions)
 		if(can_control_minion(minion))
 			group += WEAKREF(minion)
+	active_control_group = group_idx
 	update_rts_hud()
 	balloon_alert(src, length(group) ? "Отряд [group_idx] сохранён ([length(group)])" : "Отряд [group_idx] очищен")
 	return TRUE
 
 /mob/living/carbon/xenomorph/hivemind/proc/select_control_group(group_idx, force_jump = FALSE)
 	if(group_idx < 1 || group_idx > HIVEMIND_RTS_GROUP_COUNT)
-		return
+		return FALSE
 	ensure_rts_active()
+	if(active_control_group && active_control_group != group_idx)
+		save_active_control_group()
 	var/list/group = control_groups[group_idx]
 	var/list/valid_minions = list()
 	var/list/stale_refs = list()
@@ -556,21 +624,27 @@
 		group -= ref
 	var/is_double_tap = last_group_select_time[group_idx] && (world.time - last_group_select_time[group_idx]) <= HIVEMIND_RTS_DOUBLETAP_WINDOW
 	last_group_select_time[group_idx] = world.time
+	active_control_group = group_idx
+	suspend_group_selection_sync = TRUE
 	clear_minion_selection()
-	if(!length(valid_minions))
-		balloon_alert(src, "Отряд [group_idx] пуст")
-		update_rts_hud()
-		return
 	for(var/mob/living/carbon/xenomorph/minion in valid_minions)
 		select_minion(minion, FALSE)
+	suspend_group_selection_sync = FALSE
 	if(is_double_tap || force_jump)
-		jump(valid_minions[1])
+		if(length(valid_minions))
+			jump(valid_minions[1])
+	if(!length(valid_minions))
+		balloon_alert(src, "Отряд [group_idx] пуст")
 	update_rts_hud()
+	return TRUE
 
 /mob/living/carbon/xenomorph/hivemind/proc/add_to_control_group(group_idx)
 	if(group_idx < 1 || group_idx > HIVEMIND_RTS_GROUP_COUNT)
 		return
 	ensure_rts_active()
+	if(active_control_group)
+		save_active_control_group()
+	active_control_group = 0
 	var/list/group = control_groups[group_idx]
 	for(var/datum/weakref/ref in group.Copy())
 		var/mob/living/carbon/xenomorph/minion = ref.resolve()
@@ -712,6 +786,8 @@
 		rts_drag_start_turf = params2turf(modifiers["screen-loc"], get_turf(viewer), client)
 	rts_drag_active = FALSE
 	rts_drag_additive = !!modifiers["shift"]
+	// Show a small visible preview immediately; plain clicks remove it on MouseUp.
+	update_rts_drag_box(rts_drag_start_screen_x, rts_drag_start_screen_y, rts_drag_start_screen_x + 2, rts_drag_start_screen_y + 2)
 
 /// Mark a drag only after the cursor has moved far enough to distinguish it from a click.
 /mob/living/carbon/xenomorph/hivemind/proc/on_rts_mousedrag(mob/source, atom/src_object, atom/over_object, turf/src_location, turf/over_location, src_control, over_control, params)
@@ -727,6 +803,7 @@
 	if(!rts_drag_active && abs(current_coords[1] - rts_drag_start_screen_x) < 6 && abs(current_coords[2] - rts_drag_start_screen_y) < 6)
 		return
 	rts_drag_active = TRUE
+	update_rts_drag_box(rts_drag_start_screen_x, rts_drag_start_screen_y, current_coords[1], current_coords[2])
 
 /// Box select only; plain clicks are handled in ClickOn.
 /mob/living/carbon/xenomorph/hivemind/proc/on_rts_mouseup(mob/source, atom/object, turf/location, control, params)
@@ -757,7 +834,83 @@
 				select_minion(minion, FALSE)
 	return COMSIG_MOB_CLICK_CANCELED
 
+/mob/living/carbon/xenomorph/hivemind/proc/rts_pixel_to_screen_loc(pixel_x, pixel_y)
+	var/x_tile = FLOOR((pixel_x - 1) / 32, 1) + 1
+	var/y_tile = FLOOR((pixel_y - 1) / 32, 1) + 1
+	var/x_offset = ((pixel_x - 1) % 32) + 1
+	var/y_offset = ((pixel_y - 1) % 32) + 1
+	return "[x_tile]:[x_offset],[y_tile]:[y_offset]"
+
+/mob/living/carbon/xenomorph/hivemind/proc/update_rts_drag_box(start_x, start_y, end_x, end_y)
+	if(!client)
+		return
+	var/min_x = min(start_x, end_x)
+	var/max_x = max(start_x, end_x)
+	var/min_y = min(start_y, end_y)
+	var/max_y = max(start_y, end_y)
+	var/box_width = max(1, max_x - min_x + 1)
+	var/box_height = max(1, max_y - min_y + 1)
+	var/base_screen_loc = rts_pixel_to_screen_loc(min_x, min_y)
+	var/static/icon/one_pixel = icon('icons/effects/alphacolors.dmi', "white")
+	if(!rts_drag_fill)
+		rts_drag_fill = new /atom/movable/screen/hivemind_rts_drag_box(null)
+		rts_drag_fill.icon = one_pixel
+		rts_drag_fill.color = "#18FF68"
+		rts_drag_fill.alpha = 56
+		client.screen += rts_drag_fill
+	if(!rts_drag_border_top)
+		rts_drag_border_top = new /atom/movable/screen/hivemind_rts_drag_box(null)
+		rts_drag_border_top.icon = one_pixel
+		rts_drag_border_top.color = "#35FF80"
+		client.screen += rts_drag_border_top
+	if(!rts_drag_border_bottom)
+		rts_drag_border_bottom = new /atom/movable/screen/hivemind_rts_drag_box(null)
+		rts_drag_border_bottom.icon = one_pixel
+		rts_drag_border_bottom.color = "#35FF80"
+		client.screen += rts_drag_border_bottom
+	if(!rts_drag_border_left)
+		rts_drag_border_left = new /atom/movable/screen/hivemind_rts_drag_box(null)
+		rts_drag_border_left.icon = one_pixel
+		rts_drag_border_left.color = "#35FF80"
+		client.screen += rts_drag_border_left
+	if(!rts_drag_border_right)
+		rts_drag_border_right = new /atom/movable/screen/hivemind_rts_drag_box(null)
+		rts_drag_border_right.icon = one_pixel
+		rts_drag_border_right.color = "#35FF80"
+		client.screen += rts_drag_border_right
+	for(var/atom/movable/screen/hivemind_rts_drag_box/box_part in list(rts_drag_fill, rts_drag_border_top, rts_drag_border_bottom, rts_drag_border_left, rts_drag_border_right))
+		box_part.screen_loc = base_screen_loc
+	var/matrix/fill_transform = matrix()
+	fill_transform.Scale(box_width, box_height)
+	fill_transform.Translate((box_width - 1) * 0.5, (box_height - 1) * 0.5)
+	rts_drag_fill.transform = fill_transform
+	var/matrix/top_transform = matrix()
+	top_transform.Scale(box_width, 2)
+	top_transform.Translate((box_width - 1) * 0.5, box_height - 1.5)
+	rts_drag_border_top.transform = top_transform
+	var/matrix/bottom_transform = matrix()
+	bottom_transform.Scale(box_width, 2)
+	bottom_transform.Translate((box_width - 1) * 0.5, 0.5)
+	rts_drag_border_bottom.transform = bottom_transform
+	var/matrix/left_transform = matrix()
+	left_transform.Scale(2, box_height)
+	left_transform.Translate(0.5, (box_height - 1) * 0.5)
+	rts_drag_border_left.transform = left_transform
+	var/matrix/right_transform = matrix()
+	right_transform.Scale(2, box_height)
+	right_transform.Translate(box_width - 1.5, (box_height - 1) * 0.5)
+	rts_drag_border_right.transform = right_transform
+
 /mob/living/carbon/xenomorph/hivemind/proc/clear_rts_drag_state()
+	if(client)
+		for(var/atom/movable/screen/hivemind_rts_drag_box/box_part in list(rts_drag_fill, rts_drag_border_top, rts_drag_border_bottom, rts_drag_border_left, rts_drag_border_right))
+			if(box_part)
+				client.screen -= box_part
+	QDEL_NULL(rts_drag_fill)
+	QDEL_NULL(rts_drag_border_top)
+	QDEL_NULL(rts_drag_border_bottom)
+	QDEL_NULL(rts_drag_border_left)
+	QDEL_NULL(rts_drag_border_right)
 	rts_drag_start_turf = null
 	rts_drag_start_screen_x = 0
 	rts_drag_start_screen_y = 0
@@ -850,7 +1003,7 @@
 /mob/living/carbon/xenomorph/hivemind/proc/update_rts_group_hud()
 	if(!client)
 		return
-	var/needs_rebuild = length(rts_group_buttons) != HIVEMIND_RTS_GROUP_COUNT + 3
+	var/needs_rebuild = length(rts_group_buttons) != HIVEMIND_RTS_GROUP_COUNT + 4
 	for(var/atom/movable/screen/screen_object in rts_group_buttons)
 		if(QDELETED(screen_object))
 			needs_rebuild = TRUE
@@ -866,7 +1019,17 @@
 		for(var/order in list(RTS_ORDER_SELECT_ALL, RTS_ORDER_STOP, RTS_ORDER_CLEAR))
 			order_idx++
 			rts_group_buttons += new /atom/movable/screen/hivemind_rts_order_button(null, null, order, order_idx, src, "CENTER,SOUTH:[HIVEMIND_RTS_GROUP_HUD_Y]")
+		rts_group_buttons += new /atom/movable/screen/hivemind_rts_group_summary(null, null, src, "CENTER,SOUTH:[HIVEMIND_RTS_GROUP_SUMMARY_HUD_Y]")
 	for(var/atom/movable/screen/screen_object in rts_group_buttons)
+		if(istype(screen_object, /atom/movable/screen/hivemind_rts_group_summary))
+			var/atom/movable/screen/hivemind_rts_group_summary/group_summary = screen_object
+			group_summary.update_summary()
+			if(active_control_group)
+				if(!(group_summary in client.screen))
+					client.screen += group_summary
+			else
+				client.screen -= group_summary
+			continue
 		if(!(screen_object in client.screen))
 			client.screen += screen_object
 		if(istype(screen_object, /atom/movable/screen/hivemind_rts_group_button))
@@ -952,11 +1115,11 @@
 
 /atom/movable/screen/hivemind_rts_group_button
 	name = "Control Group"
-	icon = 'icons/effects/alphacolors.dmi'
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "white"
 	plane = ABOVE_HUD_PLANE
 	layer = 80
-	mouse_opacity = MOUSE_OPACITY_ICON
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	appearance_flags = APPEARANCE_UI
 	var/group_idx = 1
 	var/mob/living/carbon/xenomorph/hivemind/hivemind_owner
@@ -965,55 +1128,95 @@
 	. = ..(mapload, hud_owner)
 	group_idx = group_number
 	hivemind_owner = H
-	screen_loc = position
-	pixel_x = (group_idx - HIVEMIND_RTS_GROUP_CENTER_INDEX) * HIVEMIND_RTS_GROUP_BUTTON_SPACING
+	var/x_offset = group_idx - HIVEMIND_RTS_GROUP_CENTER_INDEX
+	var/x_position = x_offset ? "CENTER[x_offset > 0 ? "+" : ""][x_offset]" : "CENTER"
+	screen_loc = "[x_position],SOUTH:[HIVEMIND_RTS_GROUP_HUD_Y]"
+	pixel_x = 0
 	update_button()
 
 /atom/movable/screen/hivemind_rts_group_button/Destroy()
 	hivemind_owner = null
 	return ..()
 
-/// Border = state (selected / filled / empty), dark plate inside, index top-left, unit count bottom-right.
+/// Every slot remains visible. The selected slot has a bright border; each slot shows a caste portrait and its saved unit count.
 /atom/movable/screen/hivemind_rts_group_button/proc/update_button()
 	if(!hivemind_owner)
 		return
+	var/list/group = hivemind_owner.control_groups[group_idx]
 	var/count = 0
-	var/selected_count = 0
-	for(var/datum/weakref/ref in hivemind_owner.control_groups[group_idx])
+	var/mob/living/carbon/xenomorph/representative
+	for(var/datum/weakref/ref in group.Copy())
 		var/mob/living/carbon/xenomorph/minion = ref.resolve()
 		if(!hivemind_owner.can_control_minion(minion))
+			group -= ref
 			continue
 		count++
-		if(minion in hivemind_owner.selected_minions)
-			selected_count++
-	var/is_selected = count && selected_count == count
-	color = is_selected ? "#00FF66" : (count ? "#56705f" : "#2a2f2c")
+		if(!representative)
+			representative = minion
+	var/is_active = hivemind_owner.active_control_group == group_idx
 	cut_overlays()
-	var/mutable_appearance/plate = mutable_appearance('icons/effects/alphacolors.dmi', "white", layer = 81)
-	plate.color = is_selected ? "#0f2e1c" : "#0b100d"
-	plate.alpha = 235
-	plate.appearance_flags = RESET_COLOR|RESET_ALPHA|APPEARANCE_UI
-	var/matrix/inset = matrix()
-	inset.Scale(0.875, 0.875)
-	plate.transform = inset
+	color = null
+	alpha = 255
+
+	// A visible frame exists for every group; the active group gets a bright green border.
+	var/mutable_appearance/frame = mutable_appearance('icons/effects/alphacolors.dmi', "white", layer = 82)
+	frame.color = is_active ? "#43FF86" : "#718078"
+	frame.appearance_flags = APPEARANCE_UI|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
+	var/matrix/frame_transform = matrix()
+	frame_transform.Scale(HIVEMIND_RTS_GROUP_CARD_WIDTH, HIVEMIND_RTS_GROUP_CARD_HEIGHT)
+	frame_transform.Translate((HIVEMIND_RTS_GROUP_CARD_WIDTH - 1) * 0.5, (HIVEMIND_RTS_GROUP_CARD_HEIGHT - 1) * 0.5)
+	frame.transform = frame_transform
+	add_overlay(frame)
+
+	var/mutable_appearance/plate = mutable_appearance('icons/effects/alphacolors.dmi', "white", layer = 83)
+	plate.color = "#111A15"
+	plate.alpha = 250
+	plate.appearance_flags = APPEARANCE_UI|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
+	var/matrix/plate_transform = matrix()
+	plate_transform.Scale(HIVEMIND_RTS_GROUP_CARD_WIDTH - 4, HIVEMIND_RTS_GROUP_CARD_HEIGHT - 4)
+	plate_transform.Translate(2, 2)
+	plate.transform = plate_transform
 	add_overlay(plate)
-	var/mutable_appearance/index_label = mutable_appearance(null, null, layer = 82)
-	index_label.appearance_flags = RESET_COLOR|RESET_ALPHA|APPEARANCE_UI
-	index_label.maptext = "<span style='font-size:10pt;font-weight:bold;color:[is_selected ? "#7dffb0" : "#e6efe9"];-dm-text-outline:1px black;'>[group_idx]</span>"
-	index_label.maptext_x = 5
-	index_label.maptext_y = 16
-	index_label.maptext_width = 20
-	index_label.maptext_height = 14
+
+	if(representative)
+		var/mutable_appearance/portrait = new /mutable_appearance(representative)
+		portrait.layer = 84
+		portrait.plane = ABOVE_HUD_PLANE
+		portrait.appearance_flags = APPEARANCE_UI|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
+		var/matrix/portrait_transform = matrix()
+		portrait_transform.Scale(0.68, 0.68)
+		portrait_transform.Translate(5, 7)
+		portrait.transform = portrait_transform
+		add_overlay(portrait)
+
+	var/mutable_appearance/count_backing = mutable_appearance('icons/effects/alphacolors.dmi', "white", layer = 85)
+	count_backing.color = "#07100B"
+	count_backing.alpha = 235
+	count_backing.appearance_flags = APPEARANCE_UI|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
+	var/matrix/count_backing_transform = matrix()
+	count_backing_transform.Scale(HIVEMIND_RTS_GROUP_CARD_WIDTH - 4, 9)
+	count_backing_transform.Translate(2, 2)
+	count_backing.transform = count_backing_transform
+	add_overlay(count_backing)
+
+	var/mutable_appearance/index_label = mutable_appearance(icon = null, icon_state = null, layer = 86)
+	index_label.appearance_flags = APPEARANCE_UI|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
+	index_label.maptext = "<span style='font-size:8pt;font-weight:bold;color:#FFFFFF;-dm-text-outline:1px black;'>[group_idx]</span>"
+	index_label.maptext_x = 2
+	index_label.maptext_y = 21
+	index_label.maptext_width = 10
+	index_label.maptext_height = 10
 	add_overlay(index_label)
-	var/mutable_appearance/count_label = mutable_appearance(null, null, layer = 82)
-	count_label.appearance_flags = RESET_COLOR|RESET_ALPHA|APPEARANCE_UI
-	count_label.maptext = "<div style='text-align:right;font-size:7pt;font-weight:bold;color:[count ? "#c8ffd9" : "#6b736e"];-dm-text-outline:1px black;'>[count ? count : "-"]</div>"
-	count_label.maptext_x = 2
-	count_label.maptext_y = 3
-	count_label.maptext_width = 28
-	count_label.maptext_height = 12
+
+	var/mutable_appearance/count_label = mutable_appearance(icon = null, icon_state = null, layer = 87)
+	count_label.appearance_flags = APPEARANCE_UI|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
+	count_label.maptext = "<div style='text-align:center;font-size:7pt;font-weight:bold;color:#FFFFFF;-dm-text-outline:1px black;'>[count]</div>"
+	count_label.maptext_x = 0
+	count_label.maptext_y = 1
+	count_label.maptext_width = HIVEMIND_RTS_GROUP_CARD_WIDTH
+	count_label.maptext_height = 9
 	add_overlay(count_label)
-	name = "Отряд [group_idx]: [count] (ЛКМ - выбрать, ПКМ - выбрать и перейти, Ctrl - сохранить, Shift - добавить)"
+	name = "Отряд [group_idx]: [count] миньонов ([is_active ? "активный" : "не выбран"]); ЛКМ - выбрать, ПКМ - выбрать и перейти, Ctrl - сохранить, Shift - добавить"
 
 /atom/movable/screen/hivemind_rts_group_button/Click(location, control, params)
 	if(!hivemind_owner)
@@ -1027,6 +1230,90 @@
 		hivemind_owner.add_to_control_group(group_idx)
 	else
 		hivemind_owner.select_control_group(group_idx)
+
+/// Small composition card placed directly beneath the currently active control group.
+/atom/movable/screen/hivemind_rts_group_summary
+	name = "Active group composition"
+	icon = null
+	icon_state = ""
+	plane = ABOVE_HUD_PLANE
+	layer = 90
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	appearance_flags = APPEARANCE_UI
+	var/mob/living/carbon/xenomorph/hivemind/hivemind_owner
+
+/atom/movable/screen/hivemind_rts_group_summary/Initialize(mapload, datum/hud/hud_owner, mob/living/carbon/xenomorph/hivemind/H, position)
+	. = ..(mapload, hud_owner)
+	hivemind_owner = H
+	update_summary()
+
+/atom/movable/screen/hivemind_rts_group_summary/Destroy()
+	hivemind_owner = null
+	return ..()
+
+/atom/movable/screen/hivemind_rts_group_summary/proc/update_summary()
+	if(!hivemind_owner || !hivemind_owner.active_control_group)
+		return
+	var/group_idx = hivemind_owner.active_control_group
+	var/x_offset = group_idx - HIVEMIND_RTS_GROUP_CENTER_INDEX
+	var/x_position = x_offset ? "CENTER[x_offset > 0 ? "+" : ""][x_offset]" : "CENTER"
+	screen_loc = "[x_position],SOUTH:[HIVEMIND_RTS_GROUP_SUMMARY_HUD_Y]"
+	var/list/group = hivemind_owner.control_groups[group_idx]
+	var/count = 0
+	var/mob/living/carbon/xenomorph/representative
+	for(var/datum/weakref/ref in group.Copy())
+		var/mob/living/carbon/xenomorph/minion = ref.resolve()
+		if(!hivemind_owner.can_control_minion(minion))
+			group -= ref
+			continue
+		count++
+		if(!representative)
+			representative = minion
+	cut_overlays()
+	var/mutable_appearance/frame = mutable_appearance('icons/effects/alphacolors.dmi', "white", layer = 91)
+	frame.color = "#39FF83"
+	frame.appearance_flags = APPEARANCE_UI|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
+	var/matrix/frame_transform = matrix()
+	frame_transform.Scale(HIVEMIND_RTS_GROUP_CARD_WIDTH, HIVEMIND_RTS_GROUP_CARD_HEIGHT - 10)
+	frame_transform.Translate((HIVEMIND_RTS_GROUP_CARD_WIDTH - 1) * 0.5, (HIVEMIND_RTS_GROUP_CARD_HEIGHT - 11) * 0.5)
+	frame.transform = frame_transform
+	add_overlay(frame)
+	var/mutable_appearance/plate = mutable_appearance('icons/effects/alphacolors.dmi', "white", layer = 92)
+	plate.color = "#111A15"
+	plate.alpha = 250
+	plate.appearance_flags = APPEARANCE_UI|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
+	var/matrix/plate_transform = matrix()
+	plate_transform.Scale(HIVEMIND_RTS_GROUP_CARD_WIDTH - 4, HIVEMIND_RTS_GROUP_CARD_HEIGHT - 14)
+	plate_transform.Translate(2, 2)
+	plate.transform = plate_transform
+	add_overlay(plate)
+	if(representative)
+		var/mutable_appearance/portrait = new /mutable_appearance(representative)
+		portrait.layer = 93
+		portrait.plane = ABOVE_HUD_PLANE
+		portrait.appearance_flags = APPEARANCE_UI|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
+		var/matrix/portrait_transform = matrix()
+		portrait_transform.Scale(0.48, 0.48)
+		portrait_transform.Translate(2, 3)
+		portrait.transform = portrait_transform
+		add_overlay(portrait)
+	var/mutable_appearance/group_label = mutable_appearance(icon = null, icon_state = null, layer = 94)
+	group_label.appearance_flags = APPEARANCE_UI|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
+	group_label.maptext = "<div style='font-size:7pt;font-weight:bold;color:#FFFFFF;-dm-text-outline:1px black;'>G[group_idx]</div>"
+	group_label.maptext_x = 17
+	group_label.maptext_y = 11
+	group_label.maptext_width = 15
+	group_label.maptext_height = 9
+	add_overlay(group_label)
+	var/mutable_appearance/count_label = mutable_appearance(icon = null, icon_state = null, layer = 95)
+	count_label.appearance_flags = APPEARANCE_UI|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
+	count_label.maptext = "<div style='font-size:8pt;font-weight:bold;color:#FFFFFF;-dm-text-outline:1px black;'>[count]</div>"
+	count_label.maptext_x = 18
+	count_label.maptext_y = 1
+	count_label.maptext_width = 13
+	count_label.maptext_height = 10
+	add_overlay(count_label)
+	name = "Состав отряда [group_idx]: [count] миньонов"
 
 /// Order buttons next to the group row: select all in view, stop, clear selection.
 /atom/movable/screen/hivemind_rts_order_button
@@ -1044,8 +1331,10 @@
 	. = ..(mapload, hud_owner)
 	order = order_type
 	hivemind_owner = H
-	screen_loc = position
-	pixel_x = (slot - HIVEMIND_RTS_GROUP_CENTER_INDEX) * HIVEMIND_RTS_GROUP_BUTTON_SPACING
+	var/x_offset = slot - HIVEMIND_RTS_GROUP_CENTER_INDEX
+	var/x_position = x_offset ? "CENTER[x_offset > 0 ? "+" : ""][x_offset]" : "CENTER"
+	screen_loc = "[x_position],SOUTH:[HIVEMIND_RTS_GROUP_HUD_Y]"
+	pixel_x = 0
 	switch(order)
 		if(RTS_ORDER_SELECT_ALL)
 			name = "Выбрать всех миньонов в поле зрения"
