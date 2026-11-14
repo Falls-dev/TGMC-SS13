@@ -1,6 +1,8 @@
 #define COMSIG_XENOABILITY_RTS_MINION_CONTROL "xenoability_rts_minion_control"
 #define COMSIG_XENOABILITY_SELECT_ALL_MINIONS "xenoability_select_all_minions"
 #define COMSIG_XENOABILITY_STOP_MINIONS "xenoability_stop_minions"
+#define COMSIG_XENOABILITY_RETURN_TO_CORE "xenoability_return_to_core"
+#define COMSIG_XENOABILITY_PSY_GAIN "xenoability_psy_gain"
 #define COMSIG_XENOABILITY_CONTROL_GROUP_1 "xenoability_control_group_1"
 #define COMSIG_XENOABILITY_CONTROL_GROUP_2 "xenoability_control_group_2"
 #define COMSIG_XENOABILITY_CONTROL_GROUP_3 "xenoability_control_group_3"

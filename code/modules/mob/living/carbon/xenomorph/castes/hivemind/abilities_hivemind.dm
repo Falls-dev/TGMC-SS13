@@ -19,6 +19,7 @@ GLOBAL_LIST_INIT(hivemind_resin_images_list, list(
 	desc = "Teleport back to your core."
 	action_icon_state = "lay_hivemind"
 	action_icon = 'icons/Xeno/actions/hivemind.dmi'
+	keybinding_signals = list(KEYBINDING_NORMAL = COMSIG_XENOABILITY_RETURN_TO_CORE)
 	use_state_flags = ABILITY_USE_CLOSEDTURF
 
 /datum/action/ability/xeno_action/return_to_core/action_activate()
@@ -206,6 +207,7 @@ GLOBAL_LIST_INIT(hivemind_resin_images_list, list(
 	desc = "Gives your hive 100 psy points, if marines are on the ground."
 	action_icon_state = "psy_gain"
 	action_icon = 'icons/Xeno/actions/hivemind.dmi'
+	keybinding_signals = list(KEYBINDING_NORMAL = COMSIG_XENOABILITY_PSY_GAIN)
 	cooldown_duration = 200 SECONDS
 
 /datum/action/ability/xeno_action/psy_gain/hivemind/action_activate()
@@ -230,14 +232,17 @@ GLOBAL_LIST_INIT(hivemind_resin_images_list, list(
 	use_state_flags = ABILITY_USE_CLOSEDTURF|ABILITY_USE_LYING|ABILITY_USE_BUCKLED
 
 /datum/action/ability/activable/xeno/rts_minion_control/action_activate()
-	if(xeno_owner.rts_mode_active)
+	if(!isxenohivemind(xeno_owner))
+		return
+	var/mob/living/carbon/xenomorph/hivemind/hive_owner = xeno_owner
+	if(hive_owner.rts_mode_active)
 		deselect()
-		xeno_owner.balloon_alert(xeno_owner, "RTS-режим выключен")
+		hive_owner.balloon_alert(hive_owner, "RTS-режим выключен")
 		return
 	..()
-	if(xeno_owner.selected_ability == src)
-		xeno_owner.rts_mode_active = TRUE
-		xeno_owner.balloon_alert(xeno_owner, "RTS-режим включён")
+	if(hive_owner.selected_ability == src)
+		hive_owner.rts_mode_active = TRUE
+		hive_owner.balloon_alert(hive_owner, "RTS-режим включён")
 
 /datum/action/ability/activable/xeno/rts_minion_control/on_deselection()
 	. = ..()
@@ -248,10 +253,13 @@ GLOBAL_LIST_INIT(hivemind_resin_images_list, list(
 		H.clear_minion_selection()
 
 /datum/action/ability/activable/xeno/rts_minion_control/use_ability(atom/target)
-	if(!isxenohivemind(xeno_owner) || !xeno_owner.rts_mode_active)
+	if(!isxenohivemind(xeno_owner))
+		return
+	var/mob/living/carbon/xenomorph/hivemind/hive_owner = xeno_owner
+	if(!hive_owner.rts_mode_active)
 		return
 	if(isxeno(target))
-		xeno_owner.select_minion(target, TRUE)
+		hive_owner.select_minion(target, TRUE)
 
 /datum/action/ability/xeno_action/select_all_minions
 	name = "Select All Minions"

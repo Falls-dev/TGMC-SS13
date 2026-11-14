@@ -13,13 +13,22 @@
 	resistance_flags = UNACIDABLE | DROPSHIP_IMMUNE
 	xeno_structure_flags = IGNORE_WEED_REMOVAL|CRITICAL_STRUCTURE|XENO_STRUCT_WARNING_RADIUS|XENO_STRUCT_DAMAGE_ALERT
 	var/linked_minions = list()
+	///Time between spawns in deciseconds; null = scale with player count
+	var/spawn_interval
+	///Max simultaneously alive minions; null = scale with player count
+	var/max_active_minions
+	///Weighted list of minion types; null = GLOB.xeno_ai_spawnable
+	var/list/minion_spawn_types
 
 /obj/structure/xeno/spawner/Initialize(mapload, _hivenumber)
 	. = ..()
 	LAZYADDASSOC(GLOB.xeno_spawners_by_hive, hivenumber, src)
-	SSspawning.registerspawner(src, INFINITY, GLOB.xeno_ai_spawnable, 0, 1, CALLBACK(src, PROC_REF(on_spawn)), list(COMSIG_QDELETING, COMSIG_MOB_DEATH))
-	SSspawning.spawnerdata[src].required_increment = max(45 SECONDS, 3 MINUTES - SSmonitor.maximum_connected_players_count * SPAWN_RATE_PER_PLAYER)/SSspawning.wait
-	SSspawning.spawnerdata[src].max_allowed_mobs = max(2, MAX_SPAWNABLE_MOB_PER_PLAYER * SSmonitor.maximum_connected_players_count)
+	SSspawning.registerspawner(src, INFINITY, length(minion_spawn_types) ? minion_spawn_types : GLOB.xeno_ai_spawnable, 0, 1, CALLBACK(src, PROC_REF(on_spawn)), list(COMSIG_QDELETING, COMSIG_MOB_DEATH))
+	if(spawn_interval)
+		SSspawning.spawnerdata[src].required_increment = max(HIVEMIND_MINION_MIN_SPAWN_INTERVAL, spawn_interval)/SSspawning.wait
+	else
+		SSspawning.spawnerdata[src].required_increment = max(45 SECONDS, 3 MINUTES - SSmonitor.maximum_connected_players_count * SPAWN_RATE_PER_PLAYER)/SSspawning.wait
+	SSspawning.spawnerdata[src].max_allowed_mobs = max_active_minions || max(2, MAX_SPAWNABLE_MOB_PER_PLAYER * SSmonitor.maximum_connected_players_count)
 	set_light(2, 2, LIGHT_COLOR_GREEN)
 	update_minimap_icon()
 

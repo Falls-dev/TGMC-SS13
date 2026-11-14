@@ -579,7 +579,8 @@
 			behavior.change_action(MOVING_TO_ATOM, actual_target)
 		new /obj/effect/temp_visual/rts_order/attack(target_turf)
 		return TRUE
-	if((isxeno(target) && target != src && target.hivenumber == hivenumber && target.stat != DEAD) || istype(target, /obj/structure/xeno/hivemindcore))
+	var/mob/living/carbon/xenomorph/xeno_target = isxeno(target) ? target : null
+	if((xeno_target && xeno_target != src && xeno_target.hivenumber == hivenumber && xeno_target.stat != DEAD) || istype(target, /obj/structure/xeno/hivemindcore))
 		for(var/mob/living/carbon/xenomorph/minion in selected_minions)
 			var/datum/component/ai_controller/controller = minion.GetComponent(/datum/component/ai_controller)
 			var/datum/ai_behavior/xeno/behavior = controller?.ai_behavior
