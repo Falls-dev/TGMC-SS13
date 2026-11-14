@@ -49,7 +49,6 @@
 		/datum/action/ability/xeno_action/psychic_whisper,
 		/datum/action/ability/xeno_action/teleport,
 		/datum/action/ability/xeno_action/rally_hive/hivemind,
-		/datum/action/ability/activable/xeno/command_minions,
 		/datum/action/ability/xeno_action/rts_minion_control,
 		/datum/action/ability/xeno_action/select_all_minions,
 		/datum/action/ability/xeno_action/stop_minions,

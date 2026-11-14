@@ -871,6 +871,8 @@
 	if(xeno_owner.is_hivemind_ai_minion())
 		spit_damage *= HIVEMIND_MINION_RANGED_DAMAGE_MULTIPLIER
 	newspit.generate_bullet(xeno_owner.ammo, spit_damage)
+	if(xeno_owner.is_hivemind_ai_minion() && ishuman(current_target))
+		newspit.accuracy = max(5, newspit.accuracy - HIVEMIND_MINION_RANGED_ACCURACY_PENALTY)
 	newspit.def_zone = xeno_owner.get_limbzone_target()
 	newspit.fire_at(current_target, xeno_owner, xeno_owner, xeno_owner.ammo.max_range, xeno_owner.ammo.shell_speed)
 

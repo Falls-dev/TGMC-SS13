@@ -1682,3 +1682,80 @@
 	description = "While flying, blast a line of fire in a direction."
 	keybind_signal = COMSIG_XENOABILITY_SCORCHED_LAND
 	hotkey_keys = list("G")
+
+
+// Group hotkeys are exclusive to Hivemind; regular xenomorphs keep their normal key layout.
+/datum/keybinding/xeno/control_group_1/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/control_group_2/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/control_group_3/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/control_group_4/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/control_group_5/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/create_group_1/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/create_group_2/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/create_group_3/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/create_group_4/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/create_group_5/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/add_group_1/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/add_group_2/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/add_group_3/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/add_group_4/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/add_group_5/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()

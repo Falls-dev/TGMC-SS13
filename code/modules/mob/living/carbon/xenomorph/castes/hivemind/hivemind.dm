@@ -47,7 +47,7 @@
 	/// World-time of the last group selection for double-tap camera centering.
 	var/list/last_group_select_time = list(0, 0, 0, 0, 0)
 	/// Current RTS group buttons.
-	var/list/atom/movable/screen/hivemind_rts_group_button/rts_group_buttons = list()
+	var/list/rts_group_buttons = list()
 	/// Current RTS unit cards.
 	var/list/atom/movable/screen/hivemind_rts_unit_card/rts_unit_cards = list()
 	/// Drag-selection state.
@@ -67,6 +67,7 @@
 	RegisterSignal(src, COMSIG_MOB_MOUSEDOWN, PROC_REF(on_rts_mousedown))
 	RegisterSignal(src, COMSIG_MOB_MOUSEDRAG, PROC_REF(on_rts_mousedrag))
 	RegisterSignal(src, COMSIG_MOB_MOUSEUP, PROC_REF(on_rts_mouseup))
+	RegisterSignal(src, COMSIG_MOB_HUD_REFRESHED, PROC_REF(on_rts_hud_refreshed))
 	RegisterSignal(src, COMSIG_XENOABILITY_CONTROL_GROUP_1, PROC_REF(on_kb_select_group_1))
 	RegisterSignal(src, COMSIG_XENOABILITY_CREATE_GROUP_1, PROC_REF(on_kb_create_group_1))
 	RegisterSignal(src, COMSIG_XENOABILITY_ADD_GROUP_1, PROC_REF(on_kb_add_group_1))
@@ -149,8 +150,8 @@
 				client.images -= selection
 		for(var/atom/movable/screen/hivemind_rts_unit_card/card in rts_unit_cards)
 			client.screen -= card
-		for(var/atom/movable/screen/hivemind_rts_group_button/button in rts_group_buttons)
-			client.screen -= button
+		for(var/atom/movable/screen/screen_object in rts_group_buttons)
+			client.screen -= screen_object
 	return ..()
 
 /mob/living/carbon/xenomorph/hivemind/Destroy()
@@ -489,7 +490,8 @@
 	if(minion in selected_minions)
 		return TRUE
 	selected_minions += minion
-	var/image/selection = image('icons/effects/alphacolors.dmi', minion, "green")
+	var/image/selection = image('icons/effects/alphacolors.dmi', minion, "white")
+	selection.color = HIVEMIND_RTS_MINION_SELECTION_COLOR
 	selection.alpha = 70
 	selection.layer = MOB_LAYER - HIVEMIND_RTS_SELECTION_LAYER_OFFSET
 	SET_PLANE_EXPLICIT(selection, GAME_PLANE, minion)
@@ -552,13 +554,13 @@
 			valid_minions += minion
 	for(var/datum/weakref/ref in stale_refs)
 		group -= ref
+	var/is_double_tap = last_group_select_time[group_idx] && (world.time - last_group_select_time[group_idx]) <= HIVEMIND_RTS_DOUBLETAP_WINDOW
+	last_group_select_time[group_idx] = world.time
+	clear_minion_selection()
 	if(!length(valid_minions))
 		balloon_alert(src, "Отряд [group_idx] пуст")
 		update_rts_hud()
 		return
-	var/is_double_tap = last_group_select_time[group_idx] && (world.time - last_group_select_time[group_idx]) <= HIVEMIND_RTS_DOUBLETAP_WINDOW
-	last_group_select_time[group_idx] = world.time
-	clear_minion_selection()
 	for(var/mob/living/carbon/xenomorph/minion in valid_minions)
 		select_minion(minion, FALSE)
 	if(is_double_tap || force_jump)
@@ -848,26 +850,40 @@
 /mob/living/carbon/xenomorph/hivemind/proc/update_rts_group_hud()
 	if(!client)
 		return
-	if(!length(rts_group_buttons))
+	var/needs_rebuild = length(rts_group_buttons) != HIVEMIND_RTS_GROUP_COUNT + 3
+	for(var/atom/movable/screen/screen_object in rts_group_buttons)
+		if(QDELETED(screen_object))
+			needs_rebuild = TRUE
+			break
+	if(needs_rebuild)
+		for(var/atom/movable/screen/old_button in rts_group_buttons)
+			client.screen -= old_button
+		QDEL_LIST(rts_group_buttons)
+		rts_group_buttons = list()
 		for(var/group_idx in 1 to HIVEMIND_RTS_GROUP_COUNT)
 			rts_group_buttons += new /atom/movable/screen/hivemind_rts_group_button(null, null, group_idx, src, "CENTER,SOUTH:[HIVEMIND_RTS_GROUP_HUD_Y]")
 		var/order_idx = HIVEMIND_RTS_GROUP_COUNT
 		for(var/order in list(RTS_ORDER_SELECT_ALL, RTS_ORDER_STOP, RTS_ORDER_CLEAR))
 			order_idx++
 			rts_group_buttons += new /atom/movable/screen/hivemind_rts_order_button(null, null, order, order_idx, src, "CENTER,SOUTH:[HIVEMIND_RTS_GROUP_HUD_Y]")
-	for(var/atom/movable/screen/button in rts_group_buttons)
-		if(!(button in client.screen))
-			client.screen += button
-		if(istype(button, /atom/movable/screen/hivemind_rts_group_button))
-			var/atom/movable/screen/hivemind_rts_group_button/group_button = button
+	for(var/atom/movable/screen/screen_object in rts_group_buttons)
+		if(!(screen_object in client.screen))
+			client.screen += screen_object
+		if(istype(screen_object, /atom/movable/screen/hivemind_rts_group_button))
+			var/atom/movable/screen/hivemind_rts_group_button/group_button = screen_object
 			group_button.update_button()
+
+/// The normal HUD rebuild replaces client.screen, so restore the RTS controls afterwards.
+/mob/living/carbon/xenomorph/hivemind/proc/on_rts_hud_refreshed(datum/source, datum/hud/refreshed_hud)
+	SIGNAL_HANDLER
+	update_rts_hud()
 
 /mob/living/carbon/xenomorph/hivemind/proc/clear_rts_hud()
 	if(client)
 		for(var/atom/movable/screen/hivemind_rts_unit_card/card in rts_unit_cards)
 			client.screen -= card
-		for(var/atom/movable/screen/button in rts_group_buttons)
-			client.screen -= button
+		for(var/atom/movable/screen/screen_object in rts_group_buttons)
+			client.screen -= screen_object
 	QDEL_LIST(rts_unit_cards)
 	QDEL_LIST(rts_group_buttons)
 	rts_unit_cards = list()
@@ -937,7 +953,7 @@
 /atom/movable/screen/hivemind_rts_group_button
 	name = "Control Group"
 	icon = 'icons/effects/alphacolors.dmi'
-	icon_state = "green"
+	icon_state = "white"
 	plane = ABOVE_HUD_PLANE
 	layer = 80
 	mouse_opacity = MOUSE_OPACITY_ICON
