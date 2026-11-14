@@ -10,57 +10,102 @@
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT
 	resistance_flags = UNACIDABLE
-	///Which hive it belongs too
+	/// Which hive do we belong to?
 	var/hivenumber
-	///What is inside the cocoon
+	/// Who is inside the cocoon?
 	var/mob/living/victim
-	///How much time the cocoon takes to deplete the life force of the marine
+	/// The amount of deciseconds the victim will be in the cocoon.
 	var/cocoon_life_time = 5 MINUTES
-	///Standard busy check
+	/// The timer ID for the proc that calls when the cocoon's time has elapsed.
+	var/cocoon_timer_id
+	/// Is someone interacting with us right now?
 	var/busy = FALSE
-	///How much larva points it gives at the end of its life time (8 points for one larva in distress)
+	/// How much larva points does it reward the owner hive after [cocoon_life_time] amount of time elapsed?
 	var/larva_point_reward = 1.5
-
 
 /obj/structure/cocoon/Initialize(mapload, _hivenumber, mob/living/_victim)
 	. = ..()
-	if(!_hivenumber)
+	if(!_hivenumber || !_victim)
 		return
 	hivenumber = _hivenumber
 	victim = _victim
 	victim.forceMove(src)
 	START_PROCESSING(SSslowprocess, src)
-	addtimer(CALLBACK(src, PROC_REF(life_draining_over), null, TRUE), cocoon_life_time)
-	RegisterSignal(SSdcs, COMSIG_GLOB_DROPSHIP_HIJACKED, PROC_REF(life_draining_over))
+	cocoon_timer_id = addtimer(CALLBACK(src, PROC_REF(life_draining_over), null, TRUE), cocoon_life_time, TIMER_UNIQUE|TIMER_STOPPABLE)
+	RegisterSignal(SSdcs, COMSIG_GLOB_DROPSHIP_HIJACKED, PROC_REF(on_hijack))
 	RegisterSignal(src, COMSIG_MOVABLE_SHUTTLE_CRUSH, PROC_REF(on_shuttle_crush))
 
-/obj/structure/cocoon/examine(mob/user, distance, infix, suffix)
+/obj/structure/cocoon/Destroy()
+	if(victim)
+		release_victim() // Handles timer deletion too.
+	return ..()
+
+/obj/structure/cocoon/examine(mob/user)
 	. = ..()
-	if(anchored && victim && ishuman(user))
+	if(victim && ishuman(user))
 		. += span_notice("There seems to be someone inside it. You think you can open it with a sharp object.")
 
-/obj/structure/cocoon/process()
+/obj/structure/cocoon/process(seconds_per_tick)
+	if(!QDELETED(victim))
+		// Each second gives 0.1 clone loss. 5 minutes = 30 cloneloss.
+		victim.adjust_clone_loss(0.1 * seconds_per_tick)
+		// No "lifeforce" to drain = no points.
+		if(iszombie(victim))
+			return
 	SSpoints.add_psy_points(hivenumber, COCOON_PSY_POINTS_REWARD)
 	GLOB.round_statistics.psypoints_from_cocoon += COCOON_PSY_POINTS_REWARD
-	//Gives marine cloneloss for a total of 30.
-	victim.adjust_clone_loss(0.5)
+
+/obj/structure/cocoon/update_icon_state()
+	. = ..()
+	if(anchored)
+		icon_state = "xeno_cocoon"
+		return
+	if(victim)
+		icon_state = "xeno_cocoon_unnested"
+		return
+	icon_state = "xeno_cocoon_open"
+
+/obj/structure/cocoon/attacked_by(obj/item/attacking_item, mob/living/user, def_zone)
+	if(anchored || !victim)
+		return ..()
+	if(busy)
+		return FALSE
+	if(!attacking_item.sharp)
+		return FALSE
+	busy = TRUE
+	var/channel = SSsounds.random_available_channel()
+	playsound(user, "sound/effects/cutting_cocoon.ogg", 30, channel = channel)
+	if(!do_after(user, 8 SECONDS, NONE, src))
+		busy = FALSE
+		user.stop_sound_channel(channel)
+		return
+	busy = FALSE
+	release_victim()
+	update_icon()
+	return FALSE
+
+/obj/structure/cocoon/can_be_pulled(user, force)
+	if(isxeno(user) && victim)
+		return FALSE
+	return ..()
 
 /obj/structure/cocoon/take_damage(damage_amount, damage_type, damage_flag = null, effects, attack_dir, armour_penetration, mob/living/blame_mob)
 	. = ..()
 	if(anchored && obj_integrity < max_integrity * 0.5)
 		unanchor_from_nest()
 
-///Allow the cocoon to be opened and dragged
+/// Allows the cocoon to be opened and dragged.
 /obj/structure/cocoon/proc/unanchor_from_nest()
 	new /obj/structure/bed/nest(loc)
 	anchored = FALSE
 	update_icon()
 	playsound(loc, SFX_ALIEN_RESIN_MOVE, 35)
 
-///Stop producing points and release the victim if needed
+/// Stop producing points and release the victim if needed.
 /obj/structure/cocoon/proc/life_draining_over(datum/source, must_release_victim = FALSE)
 	SIGNAL_HANDLER
 	STOP_PROCESSING(SSslowprocess, src)
+	UnregisterSignal(SSdcs, COMSIG_GLOB_DROPSHIP_HIJACKED)
 	if(anchored)
 		unanchor_from_nest()
 	if(must_release_victim)
@@ -73,61 +118,41 @@
 		release_victim()
 	update_icon()
 
-/obj/structure/cocoon/Destroy()
-	if(victim)
-		release_victim()
-	return ..()
+/// On hijack, stops psychic point generation and changes larva point reward
+/// as we don't want to carry over any points from groundside -> shipside.
+/obj/structure/cocoon/proc/on_hijack(datum/source)
+	SIGNAL_HANDLER
+	if(is_ground_level(z))
+		larva_point_reward = 0 // We'll still time out as usual, but there is no reward at the end.
+	life_draining_over(source)
 
-/// Signal proc, makes sure the victim gets gibbed if a shuttle lands on the cocoon
+/// Releases and gibs the victim if we get shuttle crushed.
 /obj/structure/cocoon/proc/on_shuttle_crush(datum/source, obj/docking_port/mobile/shuttle)
 	SIGNAL_HANDLER
 	release_victim(TRUE)
 
-///Open the cocoon and move the victim out
+/// Open the cocoon and move the victim out.
 /obj/structure/cocoon/proc/release_victim(gib = FALSE)
-	REMOVE_TRAIT(victim, TRAIT_STASIS, TRAIT_STASIS)
-	playsound(loc, SFX_ALIEN_RESIN_MOVE, 35)
-	victim.forceMove(loc)
-	victim.setDir(NORTH)
-	victim.med_hud_set_status()
-	if(gib)
-		victim.gib()
-	victim = null
 	STOP_PROCESSING(SSslowprocess, src)
-
-/obj/structure/cocoon/attacked_by(obj/item/I, mob/living/user, def_zone)
-	if(!anchored && victim)
-		if(busy)
-			return
-		if(!I.sharp)
-			return
-		busy = TRUE
-		var/channel = SSsounds.random_available_channel()
-		playsound(user, 'sound/effects/cutting_cocoon.ogg', 30, channel = channel)
-		if(!do_after(user, 8 SECONDS, NONE, src))
-			busy = FALSE
-			user.stop_sound_channel(channel)
-			return
-		release_victim()
-		update_icon()
-		busy = FALSE
-		return
-	return ..()
-
-/obj/structure/cocoon/update_icon_state()
-	. = ..()
-	if(anchored)
-		icon_state = "xeno_cocoon"
-		return
-	if(victim)
-		icon_state = "xeno_cocoon_unnested"
-		return
-	icon_state = "xeno_cocoon_open"
+	UnregisterSignal(SSdcs, COMSIG_GLOB_DROPSHIP_HIJACKED)
+	UnregisterSignal(src, COMSIG_MOVABLE_SHUTTLE_CRUSH)
+	if(cocoon_timer_id)
+		deltimer(cocoon_timer_id)
+		cocoon_timer_id = null
+	playsound(loc, SFX_ALIEN_RESIN_MOVE, 35)
+	if(!QDELETED(victim)) // Since zombies can be cocooned, odds are that they're deleted.
+		REMOVE_TRAIT(victim, TRAIT_STASIS, TRAIT_STASIS)
+		victim.forceMove(loc)
+		victim.setDir(NORTH)
+		victim.med_hud_set_status()
+		if(gib)
+			victim.gib()
+	victim = null
 
 /obj/structure/cocoon/opened_cocoon
 	icon_state = "xeno_cocoon_open"
 	anchored = FALSE
 
-/obj/structure/cocoon/opened_cocoon/Initialize(mapload)
+/obj/structure/cocoon/opened_cocoon/Initialize(mapload, _hivenumber, mob/living/_victim)
 	. = ..()
 	new /obj/structure/bed/nest(loc)
