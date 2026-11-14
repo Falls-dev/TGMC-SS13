@@ -252,3 +252,17 @@
 	force = 60
 	attack_speed = 12
 	w_class = WEIGHT_CLASS_BULKY
+
+/obj/item/weapon/sword/officersword
+	name = "officers sword"
+	desc = "This appears to be a rather old blade that has been well taken care of, it is probably a family heirloom. Oddly despite its probable non-combat purpose it is sharpened and not blunt."
+	icon_state = "officer_sword"
+	worn_icon_state = "officer_sword"
+	force = 75
+	attack_speed = 11
+	penetration = 15
+	w_class = WEIGHT_CLASS_BULKY
+
+/obj/item/weapon/sword/officersword/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/strappable)

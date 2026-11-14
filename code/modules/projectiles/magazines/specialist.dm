@@ -489,3 +489,33 @@
 	max_rounds = 5
 	reload_delay = 10
 	icon_state_mini = "mag_dmr"
+
+/obj/item/ammo_magazine/rocket/oneuse/anti_tank
+	default_ammo = /datum/ammo/rocket/recoilless/heat/mech
+
+//-------------------------------------------------------
+//M5 RPG'S MEAN FUCKING COUSIN
+
+/obj/item/ammo_magazine/bike_autocannon
+	name = "mounted AC-32 autocannon ammo rack"
+	desc = "A case filled to the brim with ammunition. Appears custom made to be slotted into a feeding system."
+	icon = 'icons/obj/items/ammo/misc.dmi'
+	icon_state = "minigun"
+	w_class = WEIGHT_CLASS_HUGE
+	default_ammo = /datum/ammo/bullet/bike_autocannon
+	current_rounds = 150
+	max_rounds = 150
+	reload_delay = 0.75 SECONDS
+
+// ICC coilgun
+
+/obj/item/ammo_magazine/bike_minigun
+	name = "mounted V-44 gatling gun ammo rack"
+	desc = "A case filled to the brim with ammunition. Appears custom made to be slotted into a feeding system."
+	icon = 'icons/obj/items/ammo/misc.dmi'
+	icon_state = "minigun"
+	w_class = WEIGHT_CLASS_HUGE
+	default_ammo = /datum/ammo/bullet/minigun_light
+	current_rounds = 750
+	max_rounds = 750
+	reload_delay = 0.75 SECONDS

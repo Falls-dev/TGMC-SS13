@@ -170,6 +170,12 @@
 	current_rounds = 280
 	reload_delay = 0 SECONDS
 
+/obj/item/ammo_magazine/flamer_tank/large/X/som
+	desc = "A large fuel tank of ultra thick napthal Fuel type X, a sticky combustable liquid chemical, for use in the V-62 flamethrower."
+	icon_state = "flametank_som_x"
+	icon_mini = 'icons/obj/items/campaign_items_mini.dmi'
+	icon_state_mini = "tank_red_blue"
+
 /obj/item/ammo_magazine/flamer_tank/internal/proc/empty_fuel(mob/user)
 	if(current_rounds <= 0)
 		if(user)
@@ -226,4 +232,3 @@
 	current_rounds += liquid_transfer_amount
 	playsound(user, 'sound/effects/refill.ogg', 25, 1, 3)
 	to_chat(user, span_notice("You refill [src] with [lowertext(caliber)]."))
-

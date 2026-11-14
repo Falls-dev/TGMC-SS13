@@ -143,6 +143,13 @@
 	owner = null
 	return ..()
 
+/datum/beam/beam_cannon/Start()
+	if(QDELETED(src))
+		return
+	. = ..()
+	if(!QDELETED(src))
+		visuals.particles = new /particles/energy_beam_particles
+
 
 /**
  * This is what you use to start a beam. Example: origin.Beam(target, args). **Store the return of this proc if you don't set maxdist or time, you need it to delete the beam.**

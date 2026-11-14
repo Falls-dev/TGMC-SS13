@@ -74,6 +74,7 @@
 		/obj/item/armor_module/module/ballistic_armor,
 		/obj/item/armor_module/module/chemsystem,
 		/obj/item/armor_module/module/eshield,
+		/obj/item/armor_module/module/eshield/overclocked,
 		/obj/item/armor_module/module/mirage,
 		/obj/item/armor_module/module/armorlock,
 

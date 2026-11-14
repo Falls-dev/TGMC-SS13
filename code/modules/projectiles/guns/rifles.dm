@@ -2216,6 +2216,7 @@
 		/obj/item/ammo_magazine/rifle/tx54/smoke,
 		/obj/item/ammo_magazine/rifle/tx54/smoke/dense,
 		/obj/item/ammo_magazine/rifle/tx54/smoke/tangle,
+		/obj/item/ammo_magazine/rifle/tx54/smoke/acid,
 		/obj/item/ammo_magazine/rifle/tx54/razor,
 	)
 	gun_firemode_list = list(GUN_FIREMODE_SEMIAUTO)

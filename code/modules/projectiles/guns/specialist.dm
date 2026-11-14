@@ -437,6 +437,41 @@ Note that this means that snipers will have a slowdown of 3, due to the scope
 /obj/item/weapon/gun/minigun/magharness
 	starting_attachment_types = list(/obj/item/attachable/magnetic_harness)
 
+/obj/item/weapon/gun/minigun/brassback
+	name = "\improper MG-27U rotary machine gun"
+	desc = "A heavy rotary gun with a low cyclic rate, long spin-up and high-impact shots. Uses standard MG-27 caseless ammunition boxes."
+	icon = 'icons/obj/items/gun/brassback.dmi'
+	icon_state = "brassback"
+	worn_icon_state = "brassback"
+	worn_icon_state_worn = TRUE
+	worn_icon_list = list(
+		slot_l_hand_str = 'icons/mob/inhands/gun/brassback_left.dmi',
+		slot_r_hand_str = 'icons/mob/inhands/gun/brassback_right.dmi',
+		slot_back_str = 'icons/mob/inhands/gun/brassback_back.dmi',
+	)
+	equip_slot_flags = ITEM_SLOT_BACK
+	caliber = CALIBER_10X27_CASELESS
+	type_of_casings = null
+	max_shells = 150
+	default_ammo_type = /obj/item/ammo_magazine/mg27
+	allowed_ammo_types = list(/obj/item/ammo_magazine/mg27)
+	fire_sound = 'sound/effects/archive/brassback_fire.ogg'
+	reload_sound = 'sound/weapons/guns/machineguns/MG-27/MG27_boxin.ogg'
+	unload_sound = 'sound/weapons/guns/machineguns/MG-27/MG27_boxout.ogg'
+	fire_animation = null
+	gun_features_flags = GUN_WIELDED_STABLE_FIRING_ONLY|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
+	item_flags = TWOHANDED
+	attachable_allowed = list()
+	fire_delay = 0.2 SECONDS
+	windup_delay = 0.9 SECONDS
+	wield_delay = 1.6 SECONDS
+	aim_slowdown = 1.35
+	damage_mult = 1.35
+	aim_fire_delay = 0
+	aim_speed_modifier = 0
+	scatter = 7
+	recoil = 1.5
+
 /obj/item/weapon/gun/minigun/valhalla
 	item_flags = TWOHANDED
 
@@ -1110,3 +1145,10 @@ Note that this means that snipers will have a slowdown of 3, due to the scope
 	accuracy_mult = 2
 	scatter = 0
 	movement_acc_penalty_mult = 6
+
+/obj/item/weapon/gun/launcher/rocket/oneuse/anti_tank
+	desc = "This is the premier disposable rocket launcher used throughout the galaxy, it cannot be reloaded or unloaded on the field. This one fires an 84mm AT rocket. Spacebar to shorten or extend it to make it storeable or fireable, respectively."
+	default_ammo_type = /obj/item/ammo_magazine/rocket/oneuse/anti_tank
+	allowed_ammo_types = list(/obj/item/ammo_magazine/rocket/oneuse/anti_tank)
+
+//SOM RPG

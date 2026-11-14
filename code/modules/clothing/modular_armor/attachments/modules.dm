@@ -1044,3 +1044,23 @@
 	var/datum/component/health_stealth/health_stealth = parent?.GetComponent(/datum/component/health_stealth)
 	health_stealth?.RemoveComponent()
 	return ..()
+
+/obj/item/armor_module/module/eshield/overclocked
+	max_shield_health = 75
+	damaged_shield_cooldown = 5 SECONDS
+	shield_color_low = COLOR_MAROON
+	shield_color_mid = LIGHT_COLOR_RED_ORANGE
+	shield_color_full = LIGHT_COLOR_ELECTRIC_CYAN
+
+//original Martian design, donutsteel
+
+/obj/item/armor_module/module/eshield/som/overclocked
+	max_shield_health = 75
+	damaged_shield_cooldown = 5 SECONDS
+	shield_color_low = COLOR_MAROON
+	shield_color_mid = LIGHT_COLOR_RED_ORANGE
+	shield_color_full = LIGHT_COLOR_ELECTRIC_CYAN
+
+/*
+	Loki illusion projection
+*/

@@ -142,3 +142,9 @@
 	. = ..()
 	if(groundhit_sound_is_playable)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, pick(groundhit_sound), 20, 1, 9), 0.1 SECONDS)
+
+/obj/item/explosive/grenade/smokebomb/cloak/som
+	name = "\improper S30-C smoke grenade"
+	desc = "A sophisticated version of the S30-S with a slighty improved smoke screen payload. It's set to detonate in 2 seconds."
+	icon_state = "grenade_cloak_som"
+	worn_icon_state = "grenade_cloak_som"

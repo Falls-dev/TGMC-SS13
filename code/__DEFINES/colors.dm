@@ -321,3 +321,6 @@ Important note: colors can end up significantly different from the basic html pi
 #define CHAT_COLOR_DARKENED_SQUAD_CHARLIE "#c85abd"
 #define CHAT_COLOR_SQUAD_DELTA "#787ddd"
 #define CHAT_COLOR_DARKENED_SQUAD_DELTA "#5a60c8"
+
+#define COLOR_AMMO_ACID "#25dc1f"
+#define LIGHT_COLOR_RED_ORANGE "#ff2802"

@@ -625,3 +625,36 @@
 
 /obj/structure/ship_ammo/cas/minirocket/illumination/proc/drop_cas_flare(turf/impact)
 	new /obj/effect/temp_visual/above_flare(impact)
+
+/obj/structure/ship_ammo/cas/bomblet
+	name = "\improper AOE-50lb 'Dandelions' stack"
+	desc = "A rack of 50-pound explosive bomblets for the bomblet pod."
+	icon = 'icons/obj/structures/ship_bomblet_ammo.dmi'
+	icon_state = "bomb_50"
+	equipment_type = /obj/structure/dropship_equipment/cas/weapon/bomblet_pod
+	ammo_count = 40
+	max_ammo_count = 40
+	ammo_name = "bomblets"
+	travelling_time = 10 SECONDS
+	transferable_ammo = TRUE
+	point_cost = 150
+	ammo_type = CAS_BOMBLET
+	explosion_power = 80
+	explosion_falloff = 40
+	prediction_type = CAS_AMMO_EXPLOSIVE
+
+/obj/structure/ship_ammo/cas/bomblet/detonate_on(turf/impact, attackdir = NORTH)
+	impact.ceiling_debris_check(2)
+	cell_explosion(impact, explosion_power, explosion_falloff, adminlog = FALSE)
+	if(!ammo_count)
+		QDEL_IN(src, travelling_time)
+
+/obj/structure/ship_ammo/cas/bomblet/medium
+	name = "\improper AOE-75lb 'Poppies' stack"
+	desc = "A rack of 75-pound explosive bomblets for the bomblet pod."
+	icon_state = "bomb_75"
+	ammo_count = 20
+	max_ammo_count = 20
+	travelling_time = 12 SECONDS
+	point_cost = 175
+	explosion_power = 120

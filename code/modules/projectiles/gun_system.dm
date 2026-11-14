@@ -283,6 +283,8 @@
 	var/cool_amount = 5
 	///tracks overheat timer ref
 	var/overheat_timer
+	/// Sound played when the gun overheats.
+	var/overheat_sound = 'sound/weapons/guns/interact/gun_overheat.ogg'
 	///multiplier on cool amount to determine overheat time
 	var/overheat_multiplier = 1.1
 	///image we create to keep track of heat
@@ -803,6 +805,8 @@
 
 ///Wrapper proc to complete the whole firing process.
 /obj/item/weapon/gun/proc/Fire()
+	if(gun_fire_angle && target && get_between_angles(Get_Angle(get_turf(src), target), dir2angle(loc.dir)) > gun_fire_angle / 2)
+		return NONE
 	if(!target || !(gun_user || issentry(loc)) || !(CHECK_BITFIELD(deploy_flags, IS_DEPLOYED) || able_to_fire(gun_user)) || windup_checked == WEAPON_WINDUP_CHECKING)
 		return NONE
 	if(windup_delay && windup_checked == WEAPON_WINDUP_NOT_CHECKED)
@@ -869,7 +873,7 @@
 	if(heat_amount >= 100)
 		STOP_PROCESSING(SSprocessing, src)
 		var/obj/effect/abstract/particle_holder/overheat_smoke = new(src, /particles/overheat_smoke)
-		playsound(src, 'sound/weapons/guns/interact/gun_overheat.ogg', 25, 1, 5)
+		playsound(src, overheat_sound, 25, 1, 5)
 		//overheat gives either you a bonus or penalty depending on gun, by default it is +10% time.
 		var/overheat_time = (heat_amount / cool_amount * overheat_multiplier) SECONDS
 		overheat_timer = addtimer(CALLBACK(src, PROC_REF(complete_overheat), overheat_smoke), overheat_time, TIMER_STOPPABLE)
@@ -1892,3 +1896,6 @@
 		return
 	magharn.reequip_component.active = FALSE
 	addtimer(VARSET_CALLBACK(magharn.reequip_component, active, TRUE), 2 SECONDS)
+
+/obj/item/weapon/gun
+	var/gun_fire_angle

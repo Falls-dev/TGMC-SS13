@@ -187,7 +187,7 @@
 			var/imagepixel_z = overlay_pixel_y + min(amt_vertical - WRAP(current_iteration - 1, 0, amt_vertical) - 1, total_overlays - current_iteration) * shift_y
 			var/obj/item/relateditem = obj_typepath
 
-			var/mutable_appearance/new_overlay = mutable_appearance('icons/obj/items/items_mini.dmi', initial(relateditem.icon_state_mini))
+			var/mutable_appearance/new_overlay = mutable_appearance(initial(relateditem.icon_mini), initial(relateditem.icon_state_mini))
 			new_overlay.pixel_w = imagepixel_w
 			new_overlay.pixel_z = imagepixel_z
 			. += new_overlay

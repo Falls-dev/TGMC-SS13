@@ -598,6 +598,32 @@
 
 	return do_stock(item_to_stock, user, show_feedback, record)
 
+/obj/machinery/vending/lasgun/stock(obj/item/item_to_stock, mob/user, show_feedback = TRUE)
+	if(!istype(item_to_stock, /obj/item/weapon/gun/energy/beam_cannon))
+		return ..()
+
+	var/obj/item/weapon/gun/energy/beam_cannon/cannon = item_to_stock
+	var/obj/item/cell/cell = locate(/obj/item/cell/lasgun/lasrifle) in cannon.chamber_items
+	if(tipped_level || (machine_stat & (BROKEN|MAINT|DISABLED)) || !cell)
+		return FALSE
+	if(cell.is_fully_charged())
+		display_message_and_visuals(user, show_feedback, "Battery is already fully charged!", VENDING_RESTOCK_DENY)
+		return FALSE
+	if(machine_current_charge <= 0)
+		display_message_and_visuals(user, show_feedback, "No power!", VENDING_RESTOCK_DENY)
+		return FALSE
+
+	var/transferred = cell.give(min(machine_current_charge, cell.maxcharge - cell.charge))
+	if(!transferred)
+		return FALSE
+	machine_current_charge -= transferred
+	cannon.update_ammo_count()
+	cannon.update_icon()
+	update_icon()
+	display_message_and_visuals(user, show_feedback, "Battery charged to [round(cell.percent())]%.", VENDING_RESTOCK_RECHARGE)
+	// The gun stays in the user's hands and is never stocked as a product.
+	return FALSE
+
 ///Actually does the restock. Overridden by lasgun vendor for snowflake behaviour
 /obj/machinery/vending/proc/do_stock(obj/item/item_to_stock, mob/user, show_feedback = TRUE, datum/vending_product/record)
 	if(!record.attempt_restock(item_to_stock, user, show_feedback))

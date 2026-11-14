@@ -110,3 +110,63 @@
 		playsound(src, 'sound/machines/chime.ogg', 30)
 	else
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30)
+
+/obj/item/deployable_vehicle/tiny/martian
+	name = "Seraphim's Eye Probe"
+	desc = "A ready to deploy probe, with the antennae folded in."
+	icon_state = "martian_uv_folded"
+	max_integrity = 100
+	deployable_item = /obj/vehicle/unmanned/deployable/tiny/martian
+
+/obj/vehicle/unmanned/deployable/tiny/martian
+	name = "Seraphim's Eye"
+	desc = "A fast martian probe, unarmed but perfect for scouting. Capable of cloaking when not in motion."
+	icon_state = "martian_uv"
+	layer = VEHICLE_LAYER
+	allow_pass_flags = HOVERING|PASSABLE|PASS_WALKOVER
+	pass_flags = HOVERING|PASS_GRILLE
+	faction = FACTION_SOM
+	iff_signal = SOM_IFF
+	///Whether the probe is cloaked or not
+	var/cloaked = FALSE
+	///Time it takes to activate cloak
+	var/cloak_time = 2 SECONDS
+	///Last world.time the probe moved and tried to uncloak.
+	var/last_uncloak_move = 0
+
+/obj/vehicle/unmanned/deployable/tiny/martian/Initialize(mapload, _internal_item, mob/deployer)
+	. = ..()
+	add_filter("shadow", 2, drop_shadow_filter(0, -8, 1))
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+	last_uncloak_move = world.time
+	START_PROCESSING(SSobj, src)
+
+///Cloaks the probe and stops processing until it moves again.
+
+/obj/vehicle/unmanned/deployable/tiny/martian/proc/begin_cloaking()
+	cloaked = TRUE
+	playsound(src, 'sound/effects/pred_cloakon.ogg', 10, TRUE, 5)
+	alpha = CLOAK_IMPLANT_ALPHA
+	ADD_TRAIT(src, TRAIT_STEALTH, TRAIT_STEALTH)
+	return PROCESS_KILL
+
+/obj/vehicle/unmanned/deployable/tiny/martian/process()
+	if(world.time - last_uncloak_move < cloak_time)
+		return
+	return begin_cloaking()
+
+///Moving will disable the cloak and reset the cloak timer.
+
+/obj/vehicle/unmanned/deployable/tiny/martian/proc/on_move()
+	SIGNAL_HANDLER
+	if(cloaked)
+		cloaked = FALSE
+		alpha = initial(alpha)
+		REMOVE_TRAIT(src, TRAIT_STEALTH, TRAIT_STEALTH)
+		playsound(src, 'sound/effects/pred_cloakoff.ogg', 30, TRUE)
+	last_uncloak_move = world.time
+	START_PROCESSING(SSobj, src)
+
+/obj/vehicle/unmanned/deployable/tiny/martian/disassemble(mob/user)
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+	return ..()
