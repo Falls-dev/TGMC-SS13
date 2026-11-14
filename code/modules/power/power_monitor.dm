@@ -127,7 +127,7 @@
 	. = ..()
 	if(!circuit)
 		return
-	playsound(loc, 'sound/items/screwdriver.ogg', 25, 1)
+	playsound(loc, 'sound/items/screwdriver.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	if(!do_after(user, 2 SECONDS, NONE, src, BUSY_ICON_BUILD))
 		return
 

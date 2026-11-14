@@ -972,7 +972,7 @@ directive is properly returned.
 ///What happens when with atom is melted by acid
 /atom/proc/do_acid_melt()
 	visible_message(span_xenodanger("[src] collapses under its own weight into a puddle of goop and undigested debris!"))
-	playsound(src, SFX_ACID_HIT, 25)
+	playsound(src, SFX_ACID_HIT, 25, FALSE, MEDIUM_SOUND_RANGE)
 
 ///Anything called here will have failed CanPass(), so it's likely dense.
 /atom/proc/pre_crush_act(mob/living/carbon/xenomorph/charger, datum/action/ability/xeno_action/ready_charge/charge_datum)

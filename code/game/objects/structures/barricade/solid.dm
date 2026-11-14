@@ -119,7 +119,7 @@
 				if(!do_after(user, fumbling_time, NONE, src, BUSY_ICON_UNSKILLED))
 					return TRUE
 
-			playsound(loc, 'sound/items/screwdriver.ogg', 25, TRUE)
+			playsound(loc, 'sound/items/screwdriver.ogg', 25, TRUE, MEDIUM_SOUND_RANGE)
 			if(!do_after(user, 1 SECONDS, NONE, src, BUSY_ICON_BUILD))
 				return TRUE
 
@@ -133,7 +133,7 @@
 				if(!do_after(user, fumbling_time, NONE, src, BUSY_ICON_UNSKILLED))
 					return TRUE
 
-			playsound(loc, 'sound/items/screwdriver.ogg', 25, TRUE)
+			playsound(loc, 'sound/items/screwdriver.ogg', 25, TRUE, MEDIUM_SOUND_RANGE)
 
 			if(!do_after(user, 1 SECONDS, NONE, src, BUSY_ICON_BUILD))
 				return TRUE
@@ -152,7 +152,7 @@
 				if(!do_after(user, fumbling_time, NONE, src, BUSY_ICON_UNSKILLED))
 					return TRUE
 
-			playsound(loc, 'sound/items/ratchet.ogg', 25, TRUE)
+			playsound(loc, 'sound/items/ratchet.ogg', 25, TRUE, MEDIUM_SOUND_RANGE)
 			if(!do_after(user, 1 SECONDS, NONE, src, BUSY_ICON_BUILD))
 				return TRUE
 
@@ -185,7 +185,7 @@
 					balloon_alert(user, "already barricade here")
 					return TRUE
 
-			playsound(loc, 'sound/items/ratchet.ogg', 25, TRUE)
+			playsound(loc, 'sound/items/ratchet.ogg', 25, TRUE, MEDIUM_SOUND_RANGE)
 			if(!do_after(user, 1 SECONDS, NONE, src, BUSY_ICON_BUILD))
 				return TRUE
 
@@ -208,13 +208,13 @@
 
 			balloon_alert_to_viewers("disassembling")
 
-			playsound(loc, 'sound/items/crowbar.ogg', 25, 1)
+			playsound(loc, 'sound/items/crowbar.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			if(!do_after(user, 5 SECONDS, NONE, src, BUSY_ICON_BUILD))
 				return TRUE
 
 			user.visible_message(span_notice("[user] takes [src]'s panels apart."),
 			span_notice("You take [src]'s panels apart."))
-			playsound(loc, 'sound/items/deconstruct.ogg', 25, 1)
+			playsound(loc, 'sound/items/deconstruct.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			deconstruct(!get_self_acid())
 			return TRUE
 		if(BARRICADE_METAL_FIRM)
@@ -230,12 +230,12 @@
 
 			balloon_alert_to_viewers("removing armor plates")
 
-			playsound(loc, 'sound/items/crowbar.ogg', 25, 1)
+			playsound(loc, 'sound/items/crowbar.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			if(!do_after(user, 5 SECONDS, NONE, src, BUSY_ICON_BUILD))
 				return TRUE
 
 			balloon_alert_to_viewers("removed armor plates")
-			playsound(loc, 'sound/items/deconstruct.ogg', 25, 1)
+			playsound(loc, 'sound/items/deconstruct.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 
 			switch(barricade_upgrade_type)
 				if(CADE_TYPE_BOMB)
@@ -305,7 +305,7 @@
 
 	balloon_alert_to_viewers("[choice] attached")
 
-	playsound(loc, 'sound/items/screwdriver.ogg', 25, TRUE)
+	playsound(loc, 'sound/items/screwdriver.ogg', 25, TRUE, MEDIUM_SOUND_RANGE)
 	update_icon()
 
 /obj/structure/barricade/solid/deployable

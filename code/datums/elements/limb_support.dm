@@ -44,17 +44,17 @@
 		if(dropped && (limb.limb_status & LIMB_STABILIZED))
 			limb.limb_status &= ~LIMB_STABILIZED
 			to_chat(injured_mob, span_danger("You feel the pressure from [worn_suit] about your [limb.display_name] release, leaving it unsupported."))
-			playsound(worn_suit, 'sound/machines/hiss.ogg', 15, 0, 1)
+			playsound(worn_suit, 'sound/machines/hiss.ogg', 15, FALSE, ADJACENT_SOUND_RANGE)
 			continue
 
 		if(!dropped && ((limb.limb_status & LIMB_BROKEN) && !(limb.limb_status & LIMB_STABILIZED)))
 			if(limb.body_part == CHEST || limb.body_part == GROIN || limb.body_part == HEAD)
-				playsound(worn_suit, 'sound/voice/b18/fracture.ogg', 15, 0, 1)
+				playsound(worn_suit, 'sound/voice/b18/fracture.ogg', 15, FALSE, ADJACENT_SOUND_RANGE)
 			else
 				playsound(worn_suit, 'sound/voice/b18/minor_fracture.ogg', 15, 0, 1)
 			limb.limb_status |= LIMB_STABILIZED
 			to_chat(injured_mob, span_notice("<b>You feel [worn_suit] constrict about your [limb.display_name], stabilizing it.</b>"))
-			playsound(worn_suit, 'sound/machines/hydraulics_1.ogg', 15, 0, 1)
+			playsound(worn_suit, 'sound/machines/hydraulics_1.ogg', 15, FALSE, ADJACENT_SOUND_RANGE)
 
 		if(!dropped && (limb.limb_status & LIMB_BLEEDING))
 			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), worn_suit, 'sound/voice/b18/ib_detected.ogg', 15, 0, 1), 2.2 SECONDS)

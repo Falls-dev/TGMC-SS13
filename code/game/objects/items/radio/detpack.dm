@@ -271,7 +271,7 @@
 
 	if(do_after(user, 3 SECONDS, NONE, target, BUSY_ICON_HOSTILE))
 		user.drop_held_item()
-		playsound(src.loc, 'sound/weapons/mine_armed.ogg', 25, 1)
+		playsound(src.loc, 'sound/weapons/mine_armed.ogg', 25, TRUE, SHORT_SOUND_RANGE)
 		var/location
 		location = target
 		forceMove(location)
@@ -302,11 +302,11 @@
 
 /obj/item/explosive/plastique/detpack/proc/do_play_sound_normal()
 	timer--
-	playsound(loc, 'sound/weapons/mine_tripped.ogg', 50, FALSE)
+	playsound(loc, 'sound/weapons/mine_tripped.ogg', 50, FALSE, MEDIUM_SOUND_RANGE, 0.3)
 
 /obj/item/explosive/plastique/detpack/proc/do_play_sound_loud()
 	timer--
-	playsound(loc, 'sound/weapons/mine_tripped.ogg', 160 + (timer-timer*2)*10, FALSE) //Gets louder as we count down to armaggedon
+	playsound(loc, 'sound/weapons/mine_tripped.ogg', 160 + (timer-timer*2)*10, FALSE, MEDIUM_SOUND_RANGE, 0.3) //Gets louder as we count down to armaggedon
 
 /obj/item/explosive/plastique/detpack/proc/disarm(turn_off = TRUE)
 	if(timer < DETPACK_TIMER_MIN) //reset to minimum 5 seconds; no 'cooking' with aborted detonations.
@@ -343,7 +343,7 @@
 		disarm()
 
 	//Time to go boom
-	playsound(src.loc, 'sound/weapons/ring.ogg', 200, FALSE)
+	playsound(src.loc, 'sound/weapons/ring.ogg', 200, FALSE, MEDIUM_SOUND_RANGE, 0.3)
 	boom = TRUE
 	if(det_mode == TRUE) //If we're on demolition mode, big boom.
 		cell_explosion(plant_target, 315, 55)

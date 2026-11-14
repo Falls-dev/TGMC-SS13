@@ -71,7 +71,7 @@
 /obj/machinery/pipedispenser/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(anchored)
-		playsound(loc, 'sound/items/ratchet.ogg', 25, 1)
+		playsound(loc, 'sound/items/ratchet.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 		to_chat(user, span_notice("You begin to unfasten \the [src] from the floor..."))
 		if(!do_after(user, 40, NONE, src, BUSY_ICON_BUILD))
 			return
@@ -83,7 +83,7 @@
 		if(user.interactee == src)
 			usr << browse(null, "window=pipedispenser")
 	else
-		playsound(loc, 'sound/items/ratchet.ogg', 25, 1)
+		playsound(loc, 'sound/items/ratchet.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 		to_chat(user, span_notice("You begin to fasten \the [src] to the floor..."))
 		if(!do_after(user, 20, NONE, src, BUSY_ICON_BUILD))
 			return

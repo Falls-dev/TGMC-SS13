@@ -248,7 +248,7 @@
 	span_xenonotice("We dig out a tunnel, connecting it to our network."), null, 5)
 	var/obj/structure/xeno/tunnel/newt = new(T, xeno_owner.get_xeno_hivenumber())
 
-	playsound(T, 'sound/weapons/pierce.ogg', 25, 1)
+	playsound(T, 'sound/weapons/pierce.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 
 	newt.creator = xeno_owner
 	newt.RegisterSignal(xeno_owner, COMSIG_QDELETING, TYPE_PROC_REF(/obj/structure/xeno/tunnel, clear_creator))
@@ -269,7 +269,7 @@
 		to_chat(xeno_owner, span_xenodanger("Having exceeding our tunnel limit, our oldest tunnel has collapsed."))
 
 	succeed_activate()
-	playsound(T, 'sound/weapons/pierce.ogg', 25, 1)
+	playsound(T, 'sound/weapons/pierce.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 
 // ***************************************
 // *********** plasma transfer
@@ -316,7 +316,7 @@
 
 	succeed_activate()
 
-	playsound(owner, SFX_ALIEN_RESIN_BUILD, 25)
+	playsound(owner, SFX_ALIEN_RESIN_BUILD, 25, FALSE, MEDIUM_SOUND_RANGE)
 	var/obj/structure/xeno/resin_jelly_pod/pod = new(T, owner.get_xeno_hivenumber())
 	to_chat(owner, span_xenonotice("We shape some resin into \a [pod]."))
 	add_cooldown()
@@ -418,8 +418,8 @@
 	owner.visible_message(span_xenodanger("\the [owner] infuses [target] with mysterious energy!"), \
 	span_xenodanger("We empower [target] with our [src]!"))
 
-	playsound(target, 'sound/effects/magic.ogg', 25) //Cool SFX
-	playsound(owner, 'sound/effects/magic.ogg', 25) //Cool SFX
+	playsound(target, 'sound/effects/magic.ogg', 25, FALSE, MEDIUM_SOUND_RANGE) //Cool SFX
+	playsound(owner, 'sound/effects/magic.ogg', 25, FALSE, MEDIUM_SOUND_RANGE) //Cool SFX
 	owner.beam(target, "medbeam", time = 1 SECONDS, maxdistance = 10)
 	new /obj/effect/temp_visual/telekinesis(get_turf(owner))
 	new /obj/effect/temp_visual/telekinesis(get_turf(target))
@@ -471,7 +471,7 @@
 	if(!xeno_owner.selected_plant)
 		return FALSE
 
-	playsound(src, SFX_ALIEN_RESIN_BUILD, 25)
+	playsound(src, SFX_ALIEN_RESIN_BUILD, 25, FALSE, MEDIUM_SOUND_RANGE)
 	new xeno_owner.selected_plant(get_turf(owner))
 	add_cooldown()
 	return succeed_activate()

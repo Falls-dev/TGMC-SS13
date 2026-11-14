@@ -168,7 +168,7 @@
 		playsound(loc, 'sound/effects/alien/egg_burst.ogg', 30)
 		flick("egg exploding", src)
 		return
-	playsound(src.loc, 'sound/effects/alien/egg_move.ogg', 25)
+	playsound(src.loc, 'sound/effects/alien/egg_move.ogg', 25, FALSE, MEDIUM_SOUND_RANGE)
 	flick("egg opening", src)
 	addtimer(CALLBACK(src, PROC_REF(spawn_hugger), loc), 1 SECONDS)
 
@@ -200,7 +200,7 @@
 		if(3, 4)
 			xenomorph.visible_message(span_xenonotice("\The [xenomorph] clears the hatched egg."), \
 			span_xenonotice("We clear the hatched egg."))
-			playsound(loc, SFX_ALIEN_RESIN_BREAK, 25)
+			playsound(loc, SFX_ALIEN_RESIN_BREAK, 25, FALSE, MEDIUM_SOUND_RANGE)
 			qdel(src)
 
 /obj/alien/egg/facehugger/attackby(obj/item/I, mob/user, params)
@@ -287,7 +287,7 @@
 		flick("egg gas exploding", src)
 		spread = EGG_GAS_KILL_SPREAD
 	else
-		playsound(src.loc, 'sound/effects/alien/egg_move.ogg', 25)
+		playsound(src.loc, 'sound/effects/alien/egg_move.ogg', 25, FALSE, MEDIUM_SOUND_RANGE)
 		flick("egg gas opening", src)
 	spread += gas_size_bonus
 
@@ -299,7 +299,7 @@
 	if(maturity_stage > stage_ready_to_burst)
 		xenomorph.visible_message(span_xenonotice("\The [xenomorph] clears the hatched egg."), \
 		span_xenonotice("We clear the broken egg."))
-		playsound(loc, SFX_ALIEN_RESIN_BREAK, 25)
+		playsound(loc, SFX_ALIEN_RESIN_BREAK, 25, FALSE, MEDIUM_SOUND_RANGE)
 		qdel(src)
 
 	if(!issamexenohive(xenomorph) || xenomorph.a_intent != INTENT_HELP)

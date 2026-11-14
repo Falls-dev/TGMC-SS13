@@ -745,9 +745,9 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// Bonus damage per fire stack
 #define PYROGEN_FIRECHARGE_DAMAGE_PER_STACK 3
 /// Bonus damage for directly hitting someone
-#define PYROGEN_FIREBALL_DIRECT_DAMAGE 20
+#define PYROGEN_FIREBALL_DIRECT_DAMAGE 15
 /// Damage in a 3x3 AOE when we hit anything
-#define PYROGEN_FIREBALL_AOE_DAMAGE 20
+#define PYROGEN_FIREBALL_AOE_DAMAGE 15
 /// Damage in a 3x3 AOE when we hit a vehicle
 #define PYROGEN_FIREBALL_VEHICLE_AOE_DAMAGE 10
 /// Fire stacks on FIREBALL burst in the 3x3 AOE

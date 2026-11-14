@@ -60,7 +60,7 @@
 		return TRUE
 
 	src.balloon_alert(xeno_attacker, "Destroying...")
-	playsound(src, SFX_ALIEN_RESIN_BREAK, 25)
+	playsound(src, SFX_ALIEN_RESIN_BREAK, 25, FALSE, MEDIUM_SOUND_RANGE)
 	if(do_after(xeno_attacker, 1 SECONDS, IGNORE_HELD_ITEM, src, BUSY_ICON_HOSTILE))
 		src.balloon_alert(xeno_attacker, "Destroyed")
 		qdel(src)

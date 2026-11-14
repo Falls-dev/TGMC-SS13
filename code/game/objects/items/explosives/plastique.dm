@@ -164,7 +164,7 @@
 /obj/item/explosive/plastique/proc/warning_sound()
 	if(!armed)
 		return
-	playsound(plant_target, 'sound/items/countdown.ogg', 20, TRUE, 5)
+	playsound(plant_target, 'sound/items/countdown.ogg', 20, TRUE, SUPER_SHORT_SOUND_RANGE)
 	detonation_pending = addtimer(CALLBACK(src, PROC_REF(detonate)), 27, TIMER_STOPPABLE)
 	alarm_sounded = TRUE
 	update_icon()
@@ -188,12 +188,12 @@
 /obj/item/explosive/plastique/genghis_charge/detonate()
 	var/turf/flame_target = get_turf(plant_target)
 	if(QDELETED(plant_target))
-		playsound(plant_target, 'sound/weapons/ring.ogg', 100, FALSE, 25)
+		playsound(plant_target, 'sound/weapons/ring.ogg', 100, FALSE, MEDIUM_SOUND_RANGE)
 		flame_target.ignite(10, 5)
 		qdel(src)
 		return
 	new /obj/fire/flamer/autospread(flame_target, 17, 31)
-	playsound(plant_target, SFX_EXPLOSION_SMALL, 100, FALSE, 25)
+	playsound(plant_target, SFX_EXPLOSION_SMALL, 100, FALSE, LOUD_SOUND_RANGE)
 	qdel(src)
 
 /obj/fire/flamer/autospread

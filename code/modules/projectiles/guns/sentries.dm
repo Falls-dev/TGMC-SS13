@@ -211,7 +211,7 @@
 
 	icon_state = initial(icon_state) + "_active"
 	active = TRUE
-	playsound(loc, arm_sound, 25, 1, 6)
+	playsound(loc, arm_sound, 25, 1, SHORT_SOUND_RANGE)
 	var/obj/item/card/id/user_id = user?.get_idcard(TRUE)
 	if(user_id)
 		sentry_iff_signal = user_id?.iff_signal

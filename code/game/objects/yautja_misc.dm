@@ -88,7 +88,7 @@
 		to_chat(usr, span_warning("[src.name] cannot be placed on this spot."))
 		return
 	to_chat(usr, "Attaching [src] to the wall.")
-	playsound(src.loc, 'sound/machines/click.ogg', 15, 1)
+	playsound(src.loc, 'sound/machines/click.ogg', 15, 1, SHORT_SOUND_RANGE)
 	var/constrdir = usr.dir
 	if(!do_after(usr, 30, TRUE, on_wall, BUSY_ICON_BUILD))
 		return

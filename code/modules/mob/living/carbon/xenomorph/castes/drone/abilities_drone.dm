@@ -131,7 +131,7 @@
 	var/heal_multiplier = 1
 	if(essence_link_action.existing_link?.link_target == target)
 		target.apply_status_effect(STATUS_EFFECT_XENO_SALVE_REGEN)
-	playsound(target, SFX_ALIEN_DROOL, 25)
+	playsound(target, SFX_ALIEN_DROOL, 25, FALSE, MEDIUM_SOUND_RANGE)
 	new /obj/effect/temp_visual/telekinesis(get_turf(target))
 	var/heal_amount = (DRONE_BASE_SALVE_HEAL + target.recovery_aura * target.maxHealth * 0.01) * heal_multiplier
 	var/leftover_healing = heal_amount

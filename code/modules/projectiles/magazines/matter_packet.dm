@@ -70,7 +70,7 @@
 	matter_amount -= matter_used
 	target.update_icon()
 	update_icon()
-	playsound(loc, 'sound/weapons/guns/interact/revolver_load.ogg', 25, 1)
+	playsound(loc, 'sound/weapons/guns/interact/revolver_load.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	to_chat(user, span_notice("You add [rounds_to_add] rounds to [target] using [src]."))
 	return TRUE
 
@@ -91,7 +91,7 @@
 	matter_amount += matter_gained
 	source.update_icon()
 	update_icon()
-	playsound(loc, 'sound/weapons/guns/interact/revolver_load.ogg', 25, 1)
+	playsound(loc, 'sound/weapons/guns/interact/revolver_load.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	to_chat(user, span_notice("You recover universal ammunition from [source]."))
 	if(source.current_rounds <= 0 && CHECK_BITFIELD(source.magazine_flags, MAGAZINE_HANDFUL))
 		user.temporarilyRemoveItemFromInventory(source)

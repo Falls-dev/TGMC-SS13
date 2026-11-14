@@ -136,7 +136,7 @@
 	damtype = BURN
 	update_icon()
 	set_light_on(TRUE)
-	playsound(src,'sound/items/flare.ogg', 15, 1)
+	playsound(src,'sound/items/flare.ogg', 15, 1, SHORT_SOUND_RANGE)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/explosive/grenade/flare/animation_spin(speed = 5, loop_amount = -1, clockwise = TRUE, sections = 3, anim_flags = NONE, angular_offset = 0, pixel_fuzz = 0)

@@ -105,6 +105,15 @@
 	containertype = /obj/structure/closet/crate/secure/surgery
 	access = ACCESS_MARINE_MEDBAY
 
+/datum/supply_packs/medical/heal_grenades
+	name = "Pack of EMS-02 Healing Foam Grenades"
+	notes = "Contains 3 EMS-02 Healing Foam Grenades."
+	contains = list(
+		/obj/item/explosive/grenade/chem_grenade/healing_foam,
+		/obj/item/explosive/grenade/chem_grenade/healing_foam,
+		/obj/item/explosive/grenade/chem_grenade/healing_foam)
+	cost = 75
+
 /datum/supply_packs/medical/medvac
 	name = "MEDEVAC system"
 	contains = list(
@@ -361,6 +370,12 @@
 		/obj/item/reagent_containers/hypospray/autoinjector/neuraline,
 	)
 	cost = 250
+
+/datum/supply_packs/medical/russian_red_injector
+	name ="Russian red autoinjector"
+	notes = "contains one russian red injector"
+	contains = list(/obj/item/reagent_containers/hypospray/autoinjector/russian_red)
+	cost = 50
 
 /datum/supply_packs/medical/neuraline_kit_injector
 	name ="Neuraline autoinjector"

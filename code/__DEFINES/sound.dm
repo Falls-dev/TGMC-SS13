@@ -14,13 +14,35 @@
 
 #define MAX_INSTRUMENT_CHANNELS (128 * 6)
 
-///Default range of a sound.
-#define SOUND_RANGE 17
-#define MEDIUM_RANGE_SOUND_EXTRARANGE -5
-///default extra range for sounds considered to be quieter
-#define SHORT_RANGE_SOUND_EXTRARANGE -9
-///The range deducted from sound range for things that are considered silent / sneaky
-#define SILENCED_SOUND_EXTRARANGE -11
+/// This is the lowest volume that can be used by playsound otherwise it gets ignored
+/// Most sounds around 10 volume can barely be heard. Almost all sounds at 5 volume or below are inaudible
+/// This is to prevent sound being spammed at really low volumes due to distance calculations
+/// Recommend setting this to anywhere from 10-3 (or 0 to disable any sound minimum volume restrictions)
+/// Ex. For a 70 volume sound, 17 tile range, 3 exponent, 2 falloff_distance:
+/// Setting SOUND_AUDIBLE_VOLUME_MIN to 0 for the above will result in 17x17 radius (289 turfs)
+/// Setting SOUND_AUDIBLE_VOLUME_MIN to 5 for the above will result in 14x14 radius (196 turfs)
+/// Setting SOUND_AUDIBLE_VOLUME_MIN to 10 for the above will result in 11x11 radius (121 turfs)
+#define SOUND_AUDIBLE_VOLUME_MIN 3
+
+///Extremely loud sounds
+#define VERY_LOUD_SOUND_RANGE 36
+///Loud sounds
+#define LOUD_SOUND_RANGE 24
+///Sound range of gunfire
+#define FIREARM_SOUND_RANGE 24
+///Default range of a sound
+#define DEFAULT_SOUND_RANGE 17
+///Moderate sound range
+#define MEDIUM_SOUND_RANGE 12
+///Nominal screen range sounds
+#define SHORT_SOUND_RANGE 8
+///Low sound range
+#define SUPER_SHORT_SOUND_RANGE 5
+///Very quiet/stealthy sounds
+#define SUPPRESSED_SOUND_RANGE 3
+///Adjacent only range
+#define ADJACENT_SOUND_RANGE 1
+
 ///Percentage of sound's range where no falloff is applied
 #define SOUND_DEFAULT_FALLOFF_DISTANCE 1 //For a normal sound this would be 1 tile of no falloff
 ///The default exponent of sound falloff

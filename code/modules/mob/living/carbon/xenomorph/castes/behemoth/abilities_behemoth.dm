@@ -116,9 +116,13 @@
 	var/static/list/connections = list(
 		COMSIG_OBJ_TRY_ALLOW_THROUGH = PROC_REF(can_climb_over),
 		COMSIG_FIND_FOOTSTEP_SOUND = TYPE_PROC_REF(/atom/movable, footstep_override),
-		COMSIG_TURF_CHECK_COVERED = TYPE_PROC_REF(/atom/movable, turf_cover_check),
+		COMSIG_TURF_CHECK_COVERED = PROC_REF(earth_pillar_cover_check),
 	)
 	AddElement(/datum/element/connect_loc, connections)
+
+/obj/structure/xeno/earth_pillar/proc/earth_pillar_cover_check(atom/movable/source)
+	SIGNAL_HANDLER
+	return !current_holder
 
 /// Prepares this object to be thrown.
 /obj/structure/xeno/earth_pillar/proc/pre_throw(datum/source)
@@ -187,7 +191,16 @@
 /// Whenever the current holder moves, this object will follow.
 /obj/structure/xeno/earth_pillar/proc/holder_moved(datum/source, atom/old_loc, movement_dir, forced, list/old_locs)
 	SIGNAL_HANDLER
-	forceMove(current_holder.loc)
+	var/turf/old_turf = get_turf(src)
+	var/turf/new_turf = get_turf(current_holder)
+	forceMove(new_turf)
+	set_submerge_level(
+		new_turf,
+		old_turf,
+		'icons/turf/alpha_64.dmi',
+		"liquid_alpha",
+		current_holder.cached_multiplicative_slowdown + current_holder.next_move_slowdown
+	)
 
 /// When the dummy item is used to attack a turf, this object will be dropped on it.
 /obj/structure/xeno/earth_pillar/proc/dummy_attack(datum/source, turf/attacked_turf, atom/user)
@@ -326,6 +339,7 @@
 /datum/action/ability/activable/xeno/behemoth_seize/proc/post_throw(datum/source)
 	SIGNAL_HANDLER
 	UnregisterSignal(xeno_owner, list(COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_POST_THROW))
+	xeno_owner.remove_pass_flags(SEIZE_PASS_FLAGS, XENO_TRAIT)
 
 // ***************************************
 // *********** Earth Riser
@@ -696,7 +710,7 @@
 		if(istype(movable_checked, /obj/structure/razorwire) && movable_checked.anchored) // Razorwire will stop our charge and entangle us. Effects partially mirrored from Crusher's charge.
 			end_charge()
 			var/obj/structure/razorwire/hit_razorwire = movable_checked
-			playsound(hit_razorwire.loc, 'sound/effects/barbed_wire_movement.ogg', 25, 1)
+			playsound(hit_razorwire.loc, 'sound/effects/barbed_wire_movement.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			var/razorwire_damage = xeno_owner.xeno_caste.melee_damage * xeno_owner.xeno_melee_damage_modifier
 			hit_razorwire.take_damage(razorwire_damage, xeno_owner.xeno_caste.melee_damage_type, xeno_owner.xeno_caste.melee_damage_armor, TRUE, get_dir(hit_razorwire, xeno_owner), xeno_owner.xeno_caste.melee_ap, xeno_owner)
 			var/datum/personal_statistics/xeno_stats = GLOB.personal_statistics_list[xeno_owner.ckey]
@@ -1004,7 +1018,7 @@
 	var/ability_damage = xeno_owner.xeno_caste.melee_damage * xeno_owner.xeno_melee_damage_modifier
 	// If we have a spur mutation, using this ability while we have a pillar will make us deal additional damage.
 	if(spur_mutation && xeno_owner.held_pillar)
-		playsound(target.loc, 'sound/effects/alien/behemoth/earth_pillar_destroyed.ogg', 25, TRUE)
+		playsound(target.loc, 'sound/effects/alien/behemoth/earth_pillar_destroyed.ogg', 25, TRUE, MEDIUM_SOUND_RANGE)
 		new /obj/effect/temp_visual/behemoth/earth_pillar/creation/destruction(target.loc)
 		xeno_owner.held_pillar.take_damage(xeno_owner.held_pillar.max_integrity * EARTH_MIGHT_PILLAR_DAMAGE, xeno_owner.xeno_caste.melee_damage_type, xeno_owner.xeno_caste.melee_damage_armor, TRUE, xeno_owner.dir, 100, xeno_owner)
 		xeno_owner.held_pillar.when_dropped(xeno_owner, target.loc)

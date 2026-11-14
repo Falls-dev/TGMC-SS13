@@ -75,9 +75,9 @@
 	var/cock_message_delay = 1 SECONDS
 
 	///Sound of cocking the gun.
-	var/cocked_sound = null
+	var/cocked_sound = 'sound/weapons/guns/interact/cocked.ogg'
 	///Sounds of opening the guns reciever. (DBs, Martinis opening.)
-	var/opened_sound = null
+	var/opened_sound = 'sound/weapons/guns/interact/shotgun_open.ogg'
 
 	///World.time of the last cock.
 	var/last_cocked
@@ -807,7 +807,7 @@
 		return NONE
 	if(windup_delay && windup_checked == WEAPON_WINDUP_NOT_CHECKED)
 		windup_checked = WEAPON_WINDUP_CHECKING
-		playsound(loc, windup_sound, 30, TRUE)
+		playsound(loc, windup_sound, 30, TRUE, MEDIUM_SOUND_RANGE)
 		if(!gun_user)
 			addtimer(CALLBACK(src, PROC_REF(fire_after_autonomous_windup)), windup_delay)
 			return NONE
@@ -823,7 +823,7 @@
 	//The gun should return the bullet that it already loaded from the end cycle of the last Fire().
 	var/atom/movable/projectile/projectile_to_fire = in_chamber //Load a bullet in or check for existing one.
 	if(!projectile_to_fire) //If there is nothing to fire, click.
-		playsound(src, dry_fire_sound, 25, 1, 5)
+		playsound(src, dry_fire_sound, 25, 1, SHORT_SOUND_RANGE)
 		if(CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_ROTATES_CHAMBER) && !CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_REQUIRES_UNIQUE_ACTION) && !CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_CYCLE_ONLY_BEFORE_FIRE))
 			cycle(gun_user, FALSE)
 		windup_checked = WEAPON_WINDUP_NOT_CHECKED
@@ -851,7 +851,7 @@
 		if(!(CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_REQUIRES_UNIQUE_ACTION) || CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_CYCLE_ONLY_BEFORE_FIRE)))
 			cycle(null)
 		if(length(chamber_items) && CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_AUTO_EJECT) && CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_MAGAZINES) && get_current_rounds(chamber_items[current_chamber_position]) < (!CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_REQUIRES_UNIQUE_ACTION) ? rounds_per_shot : 0))
-			playsound(src, empty_sound, 25, 1)
+			playsound(src, empty_sound, 25, 1, MEDIUM_SOUND_RANGE)
 			unload(after_fire = TRUE)
 	update_ammo_count()
 	gun_user?.hud_used?.update_ammo_hud(src, get_ammo_list(), get_display_ammo_count())
@@ -1079,7 +1079,7 @@
 		cycle(gun_user, FALSE) // fookin laser sights
 	var/atom/movable/projectile/projectile_to_fire = in_chamber
 	if(!projectile_to_fire) //We actually have a projectile, let's move on.
-		playsound(src, dry_fire_sound, 25, 1, 5)
+		playsound(src, dry_fire_sound, 25, 1, SUPER_SHORT_SOUND_RANGE)
 		cycle(user, FALSE)
 		ENABLE_BITFIELD(gun_features_flags, GUN_CAN_POINTBLANK)
 		return
@@ -1147,12 +1147,12 @@
 				return
 			if(cock_locked_message)
 				to_chat(user, span_warning(cock_locked_message))
-			playsound(user, 'sound/weapons/throwtap.ogg', 25, 1)
+			playsound(user, 'sound/weapons/throwtap.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			last_cock_message = world.time
 			return
 		cycle(user, FALSE)
 		update_icon()
-		playsound(src, cocked_sound, 25, 1)
+		playsound(src, cocked_sound, 25, 1, MEDIUM_SOUND_RANGE)
 		if(!CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_TOGGLES_OPEN) && casings_to_eject)
 			make_casing()
 			casings_to_eject = 0
@@ -1165,7 +1165,7 @@
 	if(!CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_TOGGLES_OPEN))
 		cycle(user, FALSE)
 		update_icon()
-		playsound(src, cocked_sound, 25, 1)
+		playsound(src, cocked_sound, 25, 1, MEDIUM_SOUND_RANGE)
 		return
 	if(CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_CLOSED)) //We want to open it.
 		unique_gun_open()
@@ -1176,7 +1176,7 @@
 
 /obj/item/weapon/gun/proc/unique_gun_open(mob/user)
 	DISABLE_BITFIELD(reciever_flags, AMMO_RECIEVER_CLOSED)
-	playsound(src, opened_sound, 25, 1)
+	playsound(src, opened_sound, 25, 1, MEDIUM_SOUND_RANGE)
 	if(shell_eject_animation)
 		flick("[shell_eject_animation]", src)
 	if(chamber_opened_message)
@@ -1228,7 +1228,7 @@
 
 /obj/item/weapon/gun/proc/unique_gun_close(mob/user)
 	ENABLE_BITFIELD(reciever_flags, AMMO_RECIEVER_CLOSED)
-	playsound(src, cocked_sound, 25, 1)
+	playsound(src, cocked_sound, 25, 1, MEDIUM_SOUND_RANGE)
 	if(chamber_closed_message)
 		to_chat(user, span_notice(chamber_closed_message))
 	cycle(user, FALSE)
@@ -1302,7 +1302,7 @@
 			chamber_items += new_mag
 		get_ammo()
 		if(user)
-			playsound(src, reload_sound, 25, 1)
+			playsound(src, reload_sound, 25, 1, MEDIUM_SOUND_RANGE)
 		if(!magazine_features_flags || (magazine_features_flags && !CHECK_BITFIELD(magazine_features_flags, MAGAZINE_WORN)))
 			new_mag.forceMove(src)
 			user?.temporarilyRemoveItemFromInventory(new_mag)
@@ -1336,7 +1336,7 @@
 					items_to_insert += mag.create_handful(null, 1)
 				else
 					items_to_insert += mag
-				playsound(src, hand_reload_sound, 25, 1)
+				playsound(src, hand_reload_sound, 25, 1, MEDIUM_SOUND_RANGE)
 			else
 				if((length(chamber_items) && !CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_ROTATES_CHAMBER)) || (CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_ROTATES_CHAMBER) && rounds))
 					to_chat(user, span_warning("[src] must be completely empty to use the [mag]!"))
@@ -1344,7 +1344,7 @@
 				var/rounds_to_fill = mag.current_rounds < max_chamber_items ? mag.current_rounds : max_chamber_items
 				for(var/i = 0, i < rounds_to_fill, i++)
 					items_to_insert += mag.create_handful(null, 1)
-				playsound(src, reload_sound, 25, 1)
+				playsound(src, reload_sound, 25, 1, MEDIUM_SOUND_RANGE)
 		else
 			items_to_insert += new_mag
 
@@ -1364,7 +1364,7 @@
 		obj_to_insert.forceMove(src)
 		user?.temporarilyRemoveItemFromInventory(obj_to_insert)
 	if(!CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_HANDFULS))
-		playsound(src, reload_sound, 25, 1)
+		playsound(src, reload_sound, 25, 1, MEDIUM_SOUND_RANGE)
 	if(!CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_REQUIRES_UNIQUE_ACTION) && !CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_TOGGLES_OPEN) && !in_chamber && max_chamber_items && !CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_CYCLE_ONLY_BEFORE_FIRE))
 		cycle(user, FALSE)
 	get_ammo()
@@ -1442,7 +1442,7 @@
 	var/obj/item/mag = chamber_items[current_chamber_position]
 	if(!mag)
 		return
-	playsound(src, unload_sound, 25, 1, 5)
+	playsound(src, unload_sound, 25, 1, SHORT_SOUND_RANGE)
 	user?.visible_message(span_notice("[user] unloads [mag] from [src]."),
 	span_notice("You unload [mag] from [src]."), null, 4)
 	if(drop && !(CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_MAGAZINES) && CHECK_BITFIELD(get_magazine_features_flags(mag), MAGAZINE_WORN)))
@@ -1486,7 +1486,7 @@
 		new_in_chamber = null
 	else if(CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_MAGAZINES))
 		if(!after_fire && in_chamber && !CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_DO_NOT_EJECT_HANDFULS))
-			playsound(src, cocked_sound, 25, 1)
+			playsound(src, cocked_sound, 25, 1, MEDIUM_SOUND_RANGE)
 			if(cocked_message)
 				to_chat(user, span_notice(cocked_message))
 			var/atom/movable/projectile/projectile_in_chamber = in_chamber
@@ -1532,7 +1532,7 @@
 	if(num_of_casings)
 		casing.current_casings += num_of_casings
 		casing.update_appearance()
-	playsound(current_turf, sound_to_play, 25, 1, 5)
+	playsound(current_turf, sound_to_play, 25, 1, SUPER_SHORT_SOUND_RANGE)
 
 ///Gets a projectile to fire from the magazines ammo type.
 /obj/item/weapon/gun/proc/get_ammo_object()
@@ -1750,12 +1750,12 @@
 	//Guns with low ammo have their firing sound
 	var/firing_sndfreq = CHECK_BITFIELD(gun_features_flags, GUN_NO_PITCH_SHIFT_NEAR_EMPTY) ? FALSE : ((max(rounds, 1) / (max_rounds ? max_rounds : max_shells ? max_shells : 1)) > 0.25) ? FALSE : 55000
 	if(HAS_TRAIT(src, TRAIT_GUN_SILENCED))
-		playsound(location, fire_sound, GUN_FIRE_SOUND_VOLUME * 0.5, firing_sndfreq ? TRUE : FALSE, frequency = firing_sndfreq)
+		playsound(location, fire_sound, GUN_FIRE_SOUND_VOLUME * 0.5, firing_sndfreq ? TRUE : FALSE, FIREARM_SOUND_RANGE, frequency = firing_sndfreq)
 		return
 	if(firing_sndfreq && fire_rattle)
-		playsound(location, fire_rattle, GUN_FIRE_SOUND_VOLUME, FALSE)
+		playsound(location, fire_rattle, GUN_FIRE_SOUND_VOLUME, FALSE, FIREARM_SOUND_RANGE)
 		return
-	playsound(location, fire_sound, GUN_FIRE_SOUND_VOLUME, firing_sndfreq ? TRUE : FALSE, frequency = firing_sndfreq)
+	playsound(location, fire_sound, GUN_FIRE_SOUND_VOLUME, firing_sndfreq ? TRUE : FALSE, FIREARM_SOUND_RANGE, frequency = firing_sndfreq)
 
 /obj/item/weapon/gun/proc/apply_gun_modifiers(atom/movable/projectile/projectile_to_fire, atom/target, firer)
 	projectile_to_fire.shot_from = src
@@ -1882,7 +1882,7 @@
 		if(!istype(lit_flashlight))
 			continue
 		lit_flashlight.turn_light(null, FALSE)
-	playsound(loc, SFX_ALIEN_CLAW_METAL, 25, 1)
+	playsound(loc, SFX_ALIEN_CLAW_METAL, 25, 1, MEDIUM_SOUND_RANGE)
 	xeno_attacker.do_attack_animation(src, ATTACK_EFFECT_CLAW)
 	to_chat(xeno_attacker, span_warning("We disable the metal thing's lights."))
 
