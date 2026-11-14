@@ -200,11 +200,10 @@
 	//Due to this being a hot proc this part here is inlined and set on a by-hitbox-size basis
 	/////////////////////////////
 	var/turf/centerturf = get_step(get_step(root, direction), direction)
-	var/list/enteringturfs = list(centerturf)
-	enteringturfs += get_step(centerturf, turn(direction, 90))
-	enteringturfs += get_step(centerturf, turn(direction, -90))
+	var/list/enteringturfs = get_bump_turfs(centerturf, direction)
 	/////////////////////////////
 	var/canstep = TRUE
+	//Это первая итерация попытки проезда. Тут просто тараним.
 	for(var/turf/T AS in enteringturfs)	//No break because we want to crush all the turfs before we start trying to move
 		if(!T.Enter(root, direction))	//Check if we can cross the turf first/bump the turf
 			canstep = FALSE
@@ -216,7 +215,27 @@
 				continue
 			root.Bump(AM) //manually call bump on everything
 			canstep = FALSE
+	//Если мы не смогли проехать - значит мы что-то протаранили. Нужно провести повторную проверку что в старых турфах.
+	if(!canstep) //Код ниже лишь узнаёт, можно ли повторно проехать. Если можно - оставляем тру, танк едет.
+		canstep = TRUE
+		centerturf = get_step(get_step(root, direction), direction)
+		enteringturfs = get_bump_turfs(centerturf, direction)
+		for(var/turf/T AS in enteringturfs)
+			if(!T.Enter(root, direction))
+				canstep = FALSE
+				break
+
 	return canstep ? NONE : COMPONENT_DRIVER_BLOCK_MOVE
+
+
+
+/obj/hitbox/proc/get_bump_turfs(turf/start_turf, direction)
+	var/list/turfs = list(start_turf)
+	LAZYADD(turfs, get_step(start_turf, turn(direction, 90)))
+	LAZYADD(turfs, get_step(start_turf, turn(direction, -90)))
+	return turfs
+
+
 
 /obj/hitbox/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
