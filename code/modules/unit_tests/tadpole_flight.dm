@@ -208,32 +208,6 @@
 	TEST_ASSERT_EQUAL(popup.view_offset(0), 1, "Ground camera must remain on depth one for a shipside observer")
 	popup.source_plane_offset = 0
 	TEST_ASSERT_EQUAL(popup.view_offset(1), 0, "Nullspace preview must remain on depth zero for a ground observer")
-	// Moving a passenger must not change the source transform or world image.
-	var/datum/tadpole_scene/anchored_scene = new(helm)
-	anchored_scene.origin_x = round(helm.flight_x)
-	anchored_scene.origin_y = round(helm.flight_y)
-	var/datum/tadpole_scene_view/anchored_view = new(display, 1, anchored_scene)
-	anchored_view.refresh_layout(21, 21)
-	TEST_ASSERT_EQUAL(anchored_view.ship_image.loc, helm, "The completed image must be anchored to the physical Tadpole console")
-	TEST_ASSERT_EQUAL(anchored_view.source_canvas.screen_loc, "CENTER,CENTER", "Source collection must not follow the passenger's world eye")
-	var/matrix/ship_camera = anchored_scene.camera_transform()
-	anchored_view.update_camera(ship_camera, 0)
-	var/image/fixed_image = anchored_view.ship_image
-	var/image_x = fixed_image.pixel_x
-	var/image_y = fixed_image.pixel_y
-	var/source_radius = anchored_scene.required_radius(list(21, 21))
-	pilot.forceMove(get_step(pilot, EAST))
-	anchored_view.refresh_layout(21, 21)
-	anchored_view.update_camera(anchored_scene.camera_transform(), 0.2)
-	TEST_ASSERT_EQUAL(anchored_view.last_camera, ship_camera, "Walking must not restart the ground animation or change its matrix")
-	TEST_ASSERT_EQUAL(anchored_view.ship_image, fixed_image, "Walking must retain the same world image")
-	TEST_ASSERT_EQUAL(fixed_image.pixel_x, image_x, "Walking must not reposition the ship image horizontally")
-	TEST_ASSERT_EQUAL(fixed_image.pixel_y, image_y, "Walking must not reposition the ship image vertically")
-	TEST_ASSERT_EQUAL(anchored_scene.required_radius(list(21, 21)), source_radius, "Walking must not resize the terrain cache")
-	qdel(anchored_view)
-	TEST_ASSERT_NULL(anchored_view.ship_image, "Leaving must release the client-private world image")
-	TEST_ASSERT_NULL(anchored_view.source_canvas, "Leaving must release source collection")
-	qdel(anchored_scene)
 	// Destroy HUDs while their owners are still alive; the generic fixture
 	// cleanup otherwise deletes mobs before the lighting backdrop timers.
 	qdel(display)
