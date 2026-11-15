@@ -142,8 +142,8 @@
 		selection.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
 		selection.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		SET_PLANE_EXPLICIT(selection, GAME_PLANE, minion)
-		if(minion.tier == XENO_TIER_THREE || minion.tier == XENO_TIER_FOUR)
-			selection.transform = matrix().Scale(1.5)
+		selection.pixel_x = -minion.pixel_x
+		selection.pixel_y = -minion.pixel_y
 		selection_images[minion] = selection
 	if(client)
 		client.images |= selection

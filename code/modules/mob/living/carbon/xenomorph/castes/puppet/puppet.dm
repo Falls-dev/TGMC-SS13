@@ -25,6 +25,8 @@
 	. = ..()
 	master_puppeter = mother
 	if(master_puppeter)
+		// Puppets are personal to their Puppeteer: no minion call, no Hivemind RTS control.
+		widow_personal_minion = TRUE
 		AddComponent(/datum/component/ai_controller, /datum/ai_behavior/puppet, master_puppeter)
 		transfer_to_hive(master_puppeter.get_xeno_hivenumber())
 	else

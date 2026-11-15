@@ -16,6 +16,25 @@
 	panel.appearance_flags = APPEARANCE_UI|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
 	return panel
 
+/// Returns the most numerous caste of a group as representative; prunes invalid minions. list(count, representative_typepath, sample_minion)
+/mob/living/carbon/xenomorph/hivemind/proc/get_group_summary(list/group)
+	var/count = 0
+	var/list/type_counts = list()
+	var/list/samples = list()
+	for(var/mob/living/carbon/xenomorph/minion in group.Copy())
+		if(!can_control_minion(minion))
+			group -= minion
+			continue
+		count++
+		type_counts[minion.type]++
+		if(!samples[minion.type])
+			samples[minion.type] = minion
+	var/best_type
+	for(var/minion_type in type_counts)
+		if(!best_type || type_counts[minion_type] > type_counts[best_type])
+			best_type = minion_type
+	return list(count, best_type, best_type ? samples[best_type] : null)
+
 /mob/living/carbon/xenomorph/hivemind/proc/update_rts_hud()
 	if(!client)
 		return
@@ -100,15 +119,9 @@
 	if(!hivemind_owner)
 		return
 	var/list/group = hivemind_owner.control_groups[group_idx]
-	var/count = 0
-	var/mob/living/carbon/xenomorph/representative
-	for(var/mob/living/carbon/xenomorph/minion in group.Copy())
-		if(!hivemind_owner.can_control_minion(minion))
-			group -= minion
-			continue
-		count++
-		if(!representative)
-			representative = minion
+	var/list/summary = hivemind_owner.get_group_summary(group)
+	var/count = summary[1]
+	var/mob/living/carbon/xenomorph/representative = summary[3]
 	var/is_active = hivemind_owner.active_control_group == group_idx
 	cut_overlays()
 	maptext = null
@@ -120,26 +133,14 @@
 	add_overlay(hivemind_rts_panel_overlay(HIVEMIND_RTS_GROUP_CARD_WIDTH - 4, HIVEMIND_RTS_GROUP_CARD_HEIGHT - 4, "#111A15", 83, 250, 2, 2))
 
 	if(representative)
-		var/mutable_appearance/portrait = new /mutable_appearance(representative)
-		portrait.layer = 84
+		var/mutable_appearance/portrait = mutable_appearance(get_xeno_portrait_icon(representative.icon, representative.icon_state, HIVEMIND_RTS_GROUP_CARD_WIDTH - 4), layer = 84)
 		portrait.plane = ABOVE_HUD_PLANE
+		portrait.pixel_x = 2
+		portrait.pixel_y = 2
 		portrait.appearance_flags = APPEARANCE_UI|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
-		var/matrix/portrait_transform = matrix()
-		portrait_transform.Scale(0.68, 0.68)
-		portrait_transform.Translate(5, 7)
-		portrait.transform = portrait_transform
 		add_overlay(portrait)
 
 	add_overlay(hivemind_rts_panel_overlay(HIVEMIND_RTS_GROUP_CARD_WIDTH - 4, 9, "#07100B", 85, 235, 2, 2))
-
-	var/mutable_appearance/index_label = mutable_appearance(icon = null, icon_state = null, layer = 86)
-	index_label.appearance_flags = APPEARANCE_UI|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
-	index_label.maptext = "<span style='font-size:8pt;font-weight:bold;color:#FFFFFF;-dm-text-outline:1px black;'>[group_idx]</span>"
-	index_label.maptext_x = 2
-	index_label.maptext_y = 21
-	index_label.maptext_width = 10
-	index_label.maptext_height = 10
-	add_overlay(index_label)
 
 	var/mutable_appearance/count_label = mutable_appearance(icon = null, icon_state = null, layer = 90)
 	count_label.appearance_flags = APPEARANCE_UI|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
@@ -192,36 +193,19 @@
 	var/x_position = x_offset ? "CENTER[x_offset > 0 ? "+" : ""][x_offset]" : "CENTER"
 	screen_loc = "[x_position],SOUTH:[HIVEMIND_RTS_GROUP_SUMMARY_HUD_Y]"
 	var/list/group = hivemind_owner.control_groups[group_idx]
-	var/count = 0
-	var/mob/living/carbon/xenomorph/representative
-	for(var/mob/living/carbon/xenomorph/minion in group.Copy())
-		if(!hivemind_owner.can_control_minion(minion))
-			group -= minion
-			continue
-		count++
-		if(!representative)
-			representative = minion
+	var/list/summary = hivemind_owner.get_group_summary(group)
+	var/count = summary[1]
+	var/mob/living/carbon/xenomorph/representative = summary[3]
 	cut_overlays()
 	add_overlay(hivemind_rts_panel_overlay(HIVEMIND_RTS_GROUP_CARD_WIDTH, HIVEMIND_RTS_GROUP_CARD_HEIGHT - 10, "#39FF83", 91))
 	add_overlay(hivemind_rts_panel_overlay(HIVEMIND_RTS_GROUP_CARD_WIDTH - 4, HIVEMIND_RTS_GROUP_CARD_HEIGHT - 14, "#111A15", 92, 250, 2, 2))
 	if(representative)
-		var/mutable_appearance/portrait = new /mutable_appearance(representative)
-		portrait.layer = 93
+		var/mutable_appearance/portrait = mutable_appearance(get_xeno_portrait_icon(representative.icon, representative.icon_state, 16), layer = 93)
 		portrait.plane = ABOVE_HUD_PLANE
+		portrait.pixel_x = 2
+		portrait.pixel_y = 3
 		portrait.appearance_flags = APPEARANCE_UI|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
-		var/matrix/portrait_transform = matrix()
-		portrait_transform.Scale(0.48, 0.48)
-		portrait_transform.Translate(2, 3)
-		portrait.transform = portrait_transform
 		add_overlay(portrait)
-	var/mutable_appearance/group_label = mutable_appearance(icon = null, icon_state = null, layer = 94)
-	group_label.appearance_flags = APPEARANCE_UI|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
-	group_label.maptext = "<div style='font-size:7pt;font-weight:bold;color:#FFFFFF;-dm-text-outline:1px black;'>G[group_idx]</div>"
-	group_label.maptext_x = 17
-	group_label.maptext_y = 11
-	group_label.maptext_width = 15
-	group_label.maptext_height = 9
-	add_overlay(group_label)
 	var/mutable_appearance/count_label = mutable_appearance(icon = null, icon_state = null, layer = 96)
 	count_label.appearance_flags = APPEARANCE_UI|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
 	count_label.maptext = "<div style='font-size:10pt;font-weight:bold;color:#FFFFFF;-dm-text-outline:1px black;'>[count]</div>"

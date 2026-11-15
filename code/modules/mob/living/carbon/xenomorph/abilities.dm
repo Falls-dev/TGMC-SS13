@@ -1323,15 +1323,15 @@
 /// Images used by the minion-caste radial selector.
 GLOBAL_LIST_INIT(minion_call_images, list(
 	"All castes" = image('icons/Xeno/actions/general.dmi', icon_state = "minion_agressive"),
-	"Beetle" = image('icons/Xeno/castes/beetle/basic.dmi', icon_state = "Beetle Walking"),
-	"Mantis" = image('icons/Xeno/castes/mantis/basic.dmi', icon_state = "Mantis Walking"),
-	"Scorpion" = image('icons/Xeno/castes/scorpion/basic.dmi', icon_state = "Scorpion Walking"),
-	"Nymph" = image('icons/Xeno/castes/nymph/basic.dmi', icon_state = "Nymph Walking"),
-	"Baneling" = image('icons/Xeno/castes/baneling/basic.dmi', icon_state = "Baneling Walking")
+	"Beetle" = get_xeno_type_portrait(/mob/living/carbon/xenomorph/beetle, "Beetle Walking"),
+	"Mantis" = get_xeno_type_portrait(/mob/living/carbon/xenomorph/mantis, "Mantis Walking"),
+	"Scorpion" = get_xeno_type_portrait(/mob/living/carbon/xenomorph/scorpion, "Scorpion Walking"),
+	"Nymph" = get_xeno_type_portrait(/mob/living/carbon/xenomorph/nymph, "Nymph Walking"),
+	"Baneling" = get_xeno_type_portrait(/mob/living/carbon/xenomorph/baneling, "Baneling Walking")
 ))
 
 GLOBAL_LIST_INIT(minion_call_drone_images, list(
-	"Nymph" = image('icons/Xeno/castes/nymph/basic.dmi', icon_state = "Nymph Walking")
+	"Nymph" = get_xeno_type_portrait(/mob/living/carbon/xenomorph/nymph, "Nymph Walking")
 ))
 
 #define MINION_CALL_RADIUS 9
