@@ -257,6 +257,10 @@
 	var/list/atom/holograms = list()
 	var/cleanup_timer
 	var/cleanup_time = 4 SECONDS
+	var/turf/hologram_anchor
+	var/turf/hologram_origin
+	var/hologram_type
+	var/hologram_refreshed = 0
 	/// History is only enabled while the TGUI construction mode is open.
 	var/ui_mode_active = FALSE
 	var/list/undo_stack = list()
@@ -540,28 +544,46 @@
 	INVOKE_ASYNC(src, PROC_REF(show_hologram), target)
 
 /datum/action/ability/activable/xeno/secrete_resin/proc/show_hologram(atom/target)
-	var/list/target_turfs = get_target_turfs(target)
+	var/turf/anchor = get_turf(target)
+	var/datum/xeno_build_entry/entry = demolish_mode ? null : get_selected_entry()
+	if(!anchor || (!demolish_mode && !entry))
+		cleanup_holograms()
+		return
+	var/shown = demolish_mode ? /turf/closed/wall/resin/regenerating : entry.path
+	var/turf/origin = get_turf(xeno_owner)
+	if(length(holograms) && anchor == hologram_anchor && origin == hologram_origin && shown == hologram_type)
+		if(world.time - hologram_refreshed > 1 SECONDS)
+			refresh_hologram_timer()
+		return
+	var/list/target_turfs = get_target_turfs(anchor)
 	if(!length(target_turfs))
 		cleanup_holograms()
 		return
-	var/datum/xeno_build_entry/entry = demolish_mode ? null : get_selected_entry()
-	if(!demolish_mode && !entry)
+	if(shown != hologram_type)
 		cleanup_holograms()
-		return
-	var/create_new = length(holograms) != length(target_turfs)
-	if(create_new)
-		cleanup_holograms()
-	var/index = 1
+	while(length(holograms) > length(target_turfs))
+		var/atom/surplus = holograms[length(holograms)]
+		holograms.len--
+		qdel(surplus)
+	var/index = 0
 	for(var/turf/target_turf AS in target_turfs)
-		if(create_new)
+		index++
+		if(index > length(holograms))
 			create_hologram(target_turf)
 		else
 			var/obj/effect/hologram = holograms[index]
-			hologram.abstract_move(target_turf)
+			if(hologram.loc != target_turf)
+				hologram.abstract_move(target_turf)
 		tint_hologram(holograms[index], target_turf, entry)
-		index++
+	hologram_anchor = anchor
+	hologram_origin = origin
+	hologram_type = shown
+	refresh_hologram_timer()
+
+/datum/action/ability/activable/xeno/secrete_resin/proc/refresh_hologram_timer()
 	delete_timer()
 	cleanup_timer = addtimer(CALLBACK(src, PROC_REF(cleanup_holograms)), cleanup_time, TIMER_STOPPABLE)
+	hologram_refreshed = world.time
 
 /datum/action/ability/activable/xeno/secrete_resin/proc/tint_hologram(obj/effect/hologram, turf/target_turf, datum/xeno_build_entry/entry)
 	hologram.remove_filter("state_filter")
@@ -583,8 +605,8 @@
 	var/obj/effect/build_hologram/hologram = new(target_turf, selected, FALSE, xeno_owner)
 	hologram.alpha = 0
 	hologram.layer = initial(selected.layer) + 1
-	hologram.step_size = 4 * ICON_SIZE_ALL
-	animate(hologram, 1 SECONDS, alpha = initial(hologram.alpha))
+	hologram.animate_movement = NO_STEPS
+	animate(hologram, 0.2 SECONDS, alpha = initial(hologram.alpha))
 	holograms += hologram
 
 /datum/action/ability/activable/xeno/secrete_resin/proc/delete_timer()
@@ -594,6 +616,9 @@
 /datum/action/ability/activable/xeno/secrete_resin/proc/cleanup_holograms()
 	delete_timer()
 	QDEL_LIST(holograms)
+	hologram_anchor = null
+	hologram_origin = null
+	hologram_type = null
 
 /// Left click places the selected pattern. This signal handler itself never sleeps.
 /datum/action/ability/activable/xeno/secrete_resin/proc/handle_click(datum/source, atom/target, params)
