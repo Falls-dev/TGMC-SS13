@@ -30,12 +30,10 @@ GLOBAL_LIST_INIT(hivemind_resin_images_list, list(
 	// The Hivemind's eye may place blueprints while incorporeal.
 	return ..()
 
-/datum/action/ability/activable/xeno/secrete_resin/hivemind/New(Target)
-	. = ..()
-	ghost_mode = TRUE
-
 /datum/action/ability/activable/xeno/secrete_resin/hivemind/can_build_directly()
-	return FALSE
+	if(xeno_owner.status_flags & INCORPOREAL)
+		return FALSE // the eye only places blueprints; the physical form builds like any other xeno
+	return ..()
 
 /datum/action/ability/xeno_action/sow/hivemind/can_use_action(silent = FALSE, override_flags, selecting = FALSE)
 	if(owner.status_flags & INCORPOREAL)

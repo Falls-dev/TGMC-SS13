@@ -684,7 +684,7 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 				release_job()
 				return
 			else if(err == NO_ERROR && !build_would_trap(T, bp.entry))
-				var/build_wait = xeno_quickbuild_active() ? 0 : NYMPH_BUILD_TIME * bp.entry.wait_mult
+				var/build_wait = X.uses_quickbuild(bp.entry) ? 0 : NYMPH_BUILD_TIME * bp.entry.wait_mult
 				X.face_atom(T)
 				if(build_wait <= 0 || do_after(X, build_wait, NONE, T, BUSY_ICON_BUILD))
 					ok = !QDELETED(bp) && bp.entry.check_turf(T) == NO_ERROR && !build_would_trap(T, bp.entry) && X.try_build_blueprint(bp)

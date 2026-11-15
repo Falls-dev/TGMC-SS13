@@ -1,6 +1,9 @@
 #define XENO_BLUEPRINT_HUD "xeno_blueprint_hud"
 
 /// Whether free building is active before shutters open
+/// Build range while quick-building: whole patterns fit around the cursor
+#define QUICKBUILD_BUILD_RANGE 4
+
 /proc/xeno_quickbuild_active()
 	return SSmonitor.gamestate == SHUTTERS_CLOSED && CHECK_BITFIELD(SSticker.mode?.round_type_flags, MODE_ALLOW_XENO_QUICKBUILD) && SSresinshaping.active
 
@@ -119,7 +122,7 @@
 		cost = ability ? ability.ability_cost / cost_div : NONBUILDER_WALL_COST
 		if(SSmonitor.gamestate == SHUTTERS_CLOSED)
 			cost *= 0.5
-	var/free = xeno_quickbuild_active() && kind == BUILD_KIND_RESIN
+	var/free = X.uses_quickbuild(src)
 	return list("cost" = free ? 0 : round(cost), "unit" = "plasma", "cooldown" = cooldown, "ok" = free || (X.plasma_stored >= cost && !cooldown))
 
 // --- Walls
@@ -528,9 +531,13 @@ GLOBAL_LIST_EMPTY(xeno_blueprint_huds)
 /mob/living/carbon/xenomorph/proc/get_build_range()
 	return max(1, xeno_caste.resin_max_range)
 
-/// Only the Hivemind can place blueprints directly outside of quick-build mode.
+/// Quick-build points belong to player ckeys, so only clients (not AI) build instantly.
+/mob/living/carbon/xenomorph/proc/uses_quickbuild(datum/xeno_build_entry/entry)
+	return client && xeno_quickbuild_active() && (!entry || entry.kind == BUILD_KIND_RESIN)
+
+/// Quick-building and the Hivemind's eye can place whole patterns.
 /mob/living/carbon/xenomorph/proc/can_pattern_build()
-	return xeno_quickbuild_active() || istype(src, /mob/living/carbon/xenomorph/hivemind)
+	return uses_quickbuild() || (istype(src, /mob/living/carbon/xenomorph/hivemind) && (status_flags & INCORPOREAL))
 
 /// The current and adjacent tiles are always reachable (without a visibility check, which would break construction next to walls and wall demolition).
 /mob/living/carbon/xenomorph/proc/in_build_reach(turf/T)
@@ -539,6 +546,8 @@ GLOBAL_LIST_EMPTY(xeno_blueprint_huds)
 		return FALSE
 	var/dist = get_dist(own, T)
 	var/range = get_build_range()
+	if(uses_quickbuild())
+		return dist <= max(range, QUICKBUILD_BUILD_RANGE)
 	if(dist > range)
 		return FALSE
 	if(dist <= 1)
@@ -584,8 +593,10 @@ GLOBAL_LIST_EMPTY(xeno_blueprint_huds)
 
 /// Builds or demolishes the structure marked by a blueprint. Runs asynchronously and uses do_after.
 /mob/living/carbon/xenomorph/hivemind/try_build_blueprint(obj/effect/xeno_blueprint/bp)
-	balloon_alert(src, "blueprints only")
-	return FALSE
+	if(status_flags & INCORPOREAL)
+		balloon_alert(src, "blueprints only")
+		return FALSE
+	return ..()
 
 /mob/living/carbon/xenomorph/proc/try_build_blueprint(obj/effect/xeno_blueprint/bp)
 	var/turf/T = get_turf(bp)
@@ -631,7 +642,7 @@ GLOBAL_LIST_EMPTY(xeno_blueprint_huds)
 /mob/living/carbon/xenomorph/proc/build_standard(obj/effect/xeno_blueprint/bp, datum/xeno_build_entry/entry, turf/T)
 	var/datum/action/ability/ability
 	var/cost = 0
-	var/quick = xeno_quickbuild_active() && entry.kind == BUILD_KIND_RESIN
+	var/quick = uses_quickbuild(entry)
 	if(entry.kind == BUILD_KIND_WELL)
 		ability = locate(entry.ability_type) in actions
 		cost = ability.ability_cost
@@ -738,8 +749,8 @@ GLOBAL_LIST_EMPTY(xeno_blueprint_huds)
 	if(modifiers[BUTTON] == RIGHT_CLICK)
 		qdel(bp)
 		return COMSIG_MOB_CLICK_CANCELED
-	if(istype(src, /mob/living/carbon/xenomorph/hivemind))
-		return COMSIG_MOB_CLICK_CANCELED // Hivemind can place/cancel blueprints, never execute them.
+	if(istype(src, /mob/living/carbon/xenomorph/hivemind) && (status_flags & INCORPOREAL))
+		return COMSIG_MOB_CLICK_CANCELED // The Hivemind's eye can place/cancel blueprints, never execute them.
 	if(a_intent == INTENT_HARM)
 		return
 	INVOKE_ASYNC(src, PROC_REF(try_build_blueprint), bp)

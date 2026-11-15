@@ -39,7 +39,7 @@
 			continue
 		states[key] = entry.get_state_data(xeno_owner)
 	.["states"] = states
-	.["ghost_mode"] = ghost_mode
+	.["ghost_mode"] = !can_build_directly()
 	.["demolish_mode"] = demolish_mode
 	.["auto_rebuild"] = auto_rebuild_mode
 	.["pattern"] = selected_pattern.id
@@ -67,7 +67,8 @@
 			return TRUE
 		if("toggle_ghost")
 			ui_mode_active = TRUE
-			ghost_mode = istype(xeno_owner, /mob/living/carbon/xenomorph/hivemind) ? TRUE : !ghost_mode
+			if(!istype(xeno_owner, /mob/living/carbon/xenomorph/hivemind)) // the Hivemind's mode follows its form
+				ghost_mode = !ghost_mode
 			ensure_selected()
 			return TRUE
 		if("toggle_auto_rebuild")

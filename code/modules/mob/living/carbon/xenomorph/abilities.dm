@@ -471,7 +471,7 @@
 
 /// Handles one click, expanding it to the selected pattern.
 /datum/action/ability/activable/xeno/secrete_resin/proc/can_build_directly()
-	return !ghost_mode
+	return xeno_owner.uses_quickbuild() || !ghost_mode
 
 /datum/action/ability/activable/xeno/secrete_resin/proc/act_on_turf(turf/T)
 	if(!T || !xeno_owner)
@@ -600,7 +600,7 @@
 	else
 		switch(xeno_owner.get_blueprint_state(target_turf, entry))
 			if(BP_STATE_FREE)
-				color = ghost_mode ? rgb(74, 168, 255) : rgb(60, 220, 60)
+				color = can_build_directly() ? rgb(60, 220, 60) : rgb(74, 168, 255)
 			if(BP_STATE_GHOST)
 				color = rgb(74, 168, 255)
 			else
