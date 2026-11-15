@@ -224,6 +224,10 @@
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_SECRETE_RESIN,
 		KEYBINDING_ALTERNATE = COMSIG_XENOABILITY_SECRETE_RESIN_UNDO,
 		KEYBINDING_SECONDARY = COMSIG_XENOABILITY_SECRETE_RESIN_REDO,
+		"pattern_previous" = COMSIG_XENOABILITY_SECRETE_RESIN_PATTERN_PREVIOUS,
+		"pattern_next" = COMSIG_XENOABILITY_SECRETE_RESIN_PATTERN_NEXT,
+		"toggle_auto_rebuild" = COMSIG_XENOABILITY_SECRETE_RESIN_TOGGLE_AUTO_REBUILD,
+		"toggle_demolish" = COMSIG_XENOABILITY_SECRETE_RESIN_TOGGLE_DEMOLISH,
 	)
 	/// Minimum time to build a resin structure.
 	var/base_wait = 0.5 SECONDS
@@ -259,6 +263,11 @@
 	var/list/redo_stack = list()
 	var/max_history = 50
 
+
+/// Nymphs are dedicated builders, so their per-structure start time is lower.
+/datum/action/ability/activable/xeno/secrete_resin/nymph
+	base_wait = 0.2 SECONDS
+	scaling_wait = 0.8 SECONDS
 
 /// Extra handling for adding the action for quickbuild counter.
 /datum/action/ability/activable/xeno/secrete_resin/give_action(mob/living/L)
@@ -335,9 +344,63 @@
 /// The base action only knows normal/alternate bindings; route this action's third binding here.
 /datum/action/ability/activable/xeno/secrete_resin/keybind_trigger(mob/source, datum/keybinding/kb_type)
 	SIGNAL_HANDLER_DOES_SLEEP
-	if(kb_type?.keybind_signal == keybinding_signals[KEYBINDING_SECONDARY])
+	var/signal = kb_type?.keybind_signal
+	if(signal == keybinding_signals[KEYBINDING_SECONDARY])
 		return secondary_action_activate()
+	if(signal == keybinding_signals["pattern_previous"])
+		return cycle_pattern(-1)
+	if(signal == keybinding_signals["pattern_next"])
+		return cycle_pattern(1)
+	if(signal == keybinding_signals["toggle_auto_rebuild"])
+		return toggle_auto_rebuild_from_keybind()
+	if(signal == keybinding_signals["toggle_demolish"])
+		return toggle_demolish_from_keybind()
 	return ..()
+
+/// Cycle through the same placement pattern order used by the construction catalog.
+/datum/action/ability/activable/xeno/secrete_resin/proc/cycle_pattern(direction)
+	if(!ui_mode_active || !xeno_owner)
+		return COMSIG_KB_NOT_ACTIVATED
+	var/list/pattern_ids = list()
+	var/list/available_patterns = get_xeno_build_patterns()
+	for(var/pattern_id in available_patterns)
+		pattern_ids += pattern_id
+	var/current_index = pattern_ids.Find(selected_pattern?.id)
+	if(!current_index)
+		current_index = 1
+	current_index += direction
+	if(current_index < 1)
+		current_index = length(pattern_ids)
+	else if(current_index > length(pattern_ids))
+		current_index = 1
+	var/datum/buildingpattern/new_pattern = get_xeno_build_patterns()[pattern_ids[current_index]]
+	if(!new_pattern)
+		return COMSIG_KB_ACTIVATED
+	selected_pattern = new_pattern
+	ensure_selected()
+	cleanup_holograms()
+	xeno_owner.balloon_alert(xeno_owner, new_pattern.overheadmsg)
+	SStgui.update_uis(src)
+	return COMSIG_KB_ACTIVATED
+
+/datum/action/ability/activable/xeno/secrete_resin/proc/toggle_auto_rebuild_from_keybind()
+	if(!ui_mode_active || !xeno_owner)
+		return COMSIG_KB_NOT_ACTIVATED
+	auto_rebuild_mode = !auto_rebuild_mode
+	ensure_selected()
+	xeno_owner.balloon_alert(xeno_owner, auto_rebuild_mode ? "Auto-rebuild enabled" : "Auto-rebuild disabled")
+	SStgui.update_uis(src)
+	return COMSIG_KB_ACTIVATED
+
+/datum/action/ability/activable/xeno/secrete_resin/proc/toggle_demolish_from_keybind()
+	if(!ui_mode_active || !xeno_owner)
+		return COMSIG_KB_NOT_ACTIVATED
+	demolish_mode = !demolish_mode
+	ensure_selected()
+	cleanup_holograms()
+	xeno_owner.balloon_alert(xeno_owner, demolish_mode ? "Demolition mode" : "Construction mode")
+	SStgui.update_uis(src)
+	return COMSIG_KB_ACTIVATED
 
 /datum/action/ability/activable/xeno/secrete_resin/proc/select_entry(datum/xeno_build_entry/entry)
 	if(!entry)

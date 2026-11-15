@@ -46,6 +46,7 @@
 	full_name = "Secrete Resin"
 	description = "Builds whatever you've selected with (choose resin structure) on your tile."
 	keybind_signal = COMSIG_XENOABILITY_SECRETE_RESIN
+	build_mode_priority = TRUE
 	hotkey_keys = list("R")
 
 /datum/keybinding/xeno/secrete_resin_undo
@@ -53,6 +54,7 @@
 	full_name = "Undo Resin Construction"
 	description = "Undo the last resin construction edit while the construction UI is open."
 	keybind_signal = COMSIG_XENOABILITY_SECRETE_RESIN_UNDO
+	build_mode_priority = TRUE
 	hotkey_keys = list("CtrlZ")
 
 /datum/keybinding/xeno/secrete_resin_redo
@@ -60,7 +62,40 @@
 	full_name = "Redo Resin Construction"
 	description = "Redo the last undone resin construction edit while the construction UI is open."
 	keybind_signal = COMSIG_XENOABILITY_SECRETE_RESIN_REDO
+	build_mode_priority = TRUE
 	hotkey_keys = list("CtrlY")
+
+/datum/keybinding/xeno/secrete_resin_pattern_previous
+	name = "secrete_resin_pattern_previous"
+	full_name = "Previous Construction Pattern"
+	description = "Selects the previous blueprint placement pattern while the construction UI is open."
+	keybind_signal = COMSIG_XENOABILITY_SECRETE_RESIN_PATTERN_PREVIOUS
+	build_mode_priority = TRUE
+	hotkey_keys = list("AltQ")
+
+/datum/keybinding/xeno/secrete_resin_pattern_next
+	name = "secrete_resin_pattern_next"
+	full_name = "Next Construction Pattern"
+	description = "Selects the next blueprint placement pattern while the construction UI is open."
+	keybind_signal = COMSIG_XENOABILITY_SECRETE_RESIN_PATTERN_NEXT
+	build_mode_priority = TRUE
+	hotkey_keys = list("AltE")
+
+/datum/keybinding/xeno/secrete_resin_toggle_auto_rebuild
+	name = "secrete_resin_toggle_auto_rebuild"
+	full_name = "Toggle Construction Auto-Rebuild"
+	description = "Toggles auto-rebuild for placed blueprints while the construction UI is open."
+	keybind_signal = COMSIG_XENOABILITY_SECRETE_RESIN_TOGGLE_AUTO_REBUILD
+	build_mode_priority = TRUE
+	hotkey_keys = list("AltV")
+
+/datum/keybinding/xeno/secrete_resin_toggle_demolish
+	name = "secrete_resin_toggle_demolish"
+	full_name = "Toggle Construction Demolition Mode"
+	description = "Toggles demolition blueprint placement while the construction UI is open."
+	keybind_signal = COMSIG_XENOABILITY_SECRETE_RESIN_TOGGLE_DEMOLISH
+	build_mode_priority = TRUE
+	hotkey_keys = list("AltC")
 
 /datum/keybinding/xeno/recycle
 	name = "Recycle"
@@ -645,7 +680,7 @@
 	full_name = "Hivemind: Minion RTS Control"
 	description = "Toggle RTS Minion Direct Selection & Control mode."
 	keybind_signal = COMSIG_XENOABILITY_RTS_MINION_CONTROL
-	hotkey_keys = list("G")
+	hotkey_keys = list("AltG")
 
 /datum/keybinding/xeno/select_all_minions
 	name = "select_all_minions"
@@ -659,7 +694,7 @@
 	full_name = "Hivemind: Stop Minions"
 	description = "Orders selected minions to halt and clear commands."
 	keybind_signal = COMSIG_XENOABILITY_STOP_MINIONS
-	hotkey_keys = list("S")
+	hotkey_keys = list("AltB")
 
 /datum/keybinding/xeno/return_to_core
 	name = "return_to_core"
@@ -673,7 +708,7 @@
 	full_name = "Hivemind: Psychic Focus"
 	description = "Generates psychic energy passively or bursts focus."
 	keybind_signal = COMSIG_XENOABILITY_PSY_GAIN
-	hotkey_keys = list("R")
+	hotkey_keys = list("AltR")
 
 //
 // Hivemind Control Groups (1..5)
@@ -683,35 +718,35 @@
 	full_name = "Hivemind: Select Group 1"
 	description = "Selects unit control group 1. Double tap to jump camera."
 	keybind_signal = COMSIG_XENOABILITY_CONTROL_GROUP_1
-	hotkey_keys = list("1")
+	hotkey_keys = list("Alt1")
 
 /datum/keybinding/xeno/control_group_2
 	name = "control_group_2"
 	full_name = "Hivemind: Select Group 2"
 	description = "Selects unit control group 2. Double tap to jump camera."
 	keybind_signal = COMSIG_XENOABILITY_CONTROL_GROUP_2
-	hotkey_keys = list("2")
+	hotkey_keys = list("Alt2")
 
 /datum/keybinding/xeno/control_group_3
 	name = "control_group_3"
 	full_name = "Hivemind: Select Group 3"
 	description = "Selects unit control group 3. Double tap to jump camera."
 	keybind_signal = COMSIG_XENOABILITY_CONTROL_GROUP_3
-	hotkey_keys = list("3")
+	hotkey_keys = list("Alt3")
 
 /datum/keybinding/xeno/control_group_4
 	name = "control_group_4"
 	full_name = "Hivemind: Select Group 4"
 	description = "Selects unit control group 4. Double tap to jump camera."
 	keybind_signal = COMSIG_XENOABILITY_CONTROL_GROUP_4
-	hotkey_keys = list("4")
+	hotkey_keys = list("Alt4")
 
 /datum/keybinding/xeno/control_group_5
 	name = "control_group_5"
 	full_name = "Hivemind: Select Group 5"
 	description = "Selects unit control group 5. Double tap to jump camera."
 	keybind_signal = COMSIG_XENOABILITY_CONTROL_GROUP_5
-	hotkey_keys = list("5")
+	hotkey_keys = list("Alt5")
 
 // Create Group (Ctrl+1..5)
 /datum/keybinding/xeno/create_group_1

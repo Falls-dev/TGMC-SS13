@@ -5,7 +5,7 @@
 #define NYMPH_BLUEPRINT_RADIUS 25
 #define NYMPH_WEED_RADIUS 5
 #define NYMPH_RECHARGE_RADIUS 22
-#define NYMPH_THINK_COOLDOWN 1 SECONDS
+#define NYMPH_THINK_COOLDOWN 0.5 SECONDS
 #define NYMPH_BLACKLIST_TIME 20 SECONDS
 #define NYMPH_STUCK_TIMEOUT 6 SECONDS
 #define NYMPH_RECHARGE_RETRY 5 SECONDS
@@ -17,6 +17,7 @@
 #define NYMPH_JOB_FILL 3
 #define NYMPH_JOB_SUPPORT 4
 #define NYMPH_FLEE_RADIUS 6
+#define NYMPH_ROUTE_SMOOTH_RANGE 6
 
 /// Job target => nymph that claimed it
 GLOBAL_LIST_EMPTY(nymph_job_claims)
@@ -151,10 +152,12 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 	return ..()
 
 /datum/ai_behavior/xeno/nymph/proc/nymph_think()
+	var/mob/living/carbon/xenomorph/X = mob_parent
+	if(QDELETED(X) || X.stat != CONSCIOUS || X.notransform || X.do_actions || !X.canmove)
+		return
 	if(!COOLDOWN_FINISHED(src, think_cooldown))
 		return
 	COOLDOWN_START(src, think_cooldown, NYMPH_THINK_COOLDOWN)
-	var/mob/living/carbon/xenomorph/X = mob_parent
 	var/turf/current_turf = get_turf(X)
 	if(X.loc_weeds_type)
 		last_resin_turf = current_turf
@@ -188,8 +191,8 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 		return
 	if(!is_free())
 		return
-	// Autonomous routes are advanced one A* tile at a time. Do not issue a new goal
-	// while following a route, otherwise the old direct-vector movement can oscillate.
+	// Autonomous A* routes use smoothed, verified waypoints. Do not issue a new goal
+	// while following a route, otherwise direct-vector movement can oscillate.
 	if(nymph_moving)
 		if(job_target && !job_valid())
 			halt_job()
@@ -324,12 +327,37 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 	nymph_route_destination = destination
 	route_is_recharge = recharge
 	nymph_moving = TRUE
-	var/turf/next_step = nymph_path[length(nymph_path)]
-	nymph_path.len--
+	var/turf/next_step = pop_next_nymph_waypoint()
+	if(!next_step)
+		clear_nymph_route()
+		return FALSE
 	route_last_progress_time = world.time
 	route_last_distance = get_dist(mob_parent, next_step)
 	change_action(MOVING_TO_ATOM, next_step)
 	return TRUE
+
+/// Remove the next verified A* waypoint, skipping straight, unobstructed tiles.
+/datum/ai_behavior/xeno/nymph/proc/pop_next_nymph_waypoint()
+	if(!length(nymph_path))
+		return null
+	var/turf/start = get_turf(mob_parent)
+	var/next_path_index = length(nymph_path)
+	var/turf/next_step = nymph_path[next_path_index]
+	if(start)
+		// Collapse consecutive A* tiles into the furthest point reachable by a
+		// shortest direct route. Walls and blocked corners keep their own waypoints.
+		for(var/i = next_path_index - 1, i >= 1, i--)
+			var/turf/candidate = nymph_path[i]
+			var/distance = get_dist(start, candidate)
+			if(distance > NYMPH_ROUTE_SMOOTH_RANGE || !line_of_sight(start, candidate, NYMPH_ROUTE_SMOOTH_RANGE))
+				break
+			var/list/direct_path = get_path(start, candidate, TILE_PATHING)
+			if(isnull(direct_path) || length(direct_path) != distance)
+				break
+			next_path_index = i
+			next_step = candidate
+	nymph_path.Cut(next_path_index)
+	return next_step
 
 /// Called by the movement state when the current path tile is reached.
 /datum/ai_behavior/xeno/nymph/proc/finished_nymph_path_step()
@@ -337,12 +365,12 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 	if(!nymph_moving)
 		return COMSIG_MAINTAIN_POSITION
 	if(length(nymph_path))
-		var/turf/next_step = nymph_path[length(nymph_path)]
-		nymph_path.len--
-		set_atom_to_walk_to(next_step)
-		route_last_progress_time = world.time
-		route_last_distance = get_dist(mob_parent, next_step)
-		return COMSIG_MAINTAIN_POSITION
+		var/turf/next_step = pop_next_nymph_waypoint()
+		if(next_step)
+			set_atom_to_walk_to(next_step)
+			route_last_progress_time = world.time
+			route_last_distance = get_dist(mob_parent, next_step)
+			return COMSIG_MAINTAIN_POSITION
 	nymph_moving = FALSE
 	nymph_route_destination = null
 	route_is_recharge = FALSE
@@ -678,12 +706,18 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 				ok = plant_weeds_at(T) // no weeds under the blueprint: plant them first, build on the next pass
 				if(ok)
 					release_job()
+					COOLDOWN_RESET(src, think_cooldown)
+					INVOKE_ASYNC(src, PROC_REF(nymph_think))
 					return
 			else if(err == NO_ERROR && !build_would_trap(T, bp.entry))
 				ok = X.try_build_blueprint(bp)
 	if(!ok)
 		blacklist[target] = world.time + NYMPH_BLACKLIST_TIME
 	release_job()
+	if(ok)
+		// Do not wait for the next one-second AI think cycle between adjacent builds.
+		COOLDOWN_RESET(src, think_cooldown)
+		INVOKE_ASYNC(src, PROC_REF(nymph_think))
 
 /datum/ai_behavior/xeno/nymph/proc/plant_weeds_at(turf/T)
 	var/mob/living/carbon/xenomorph/X = mob_parent
@@ -743,3 +777,4 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 #undef NYMPH_JOB_FILL
 #undef NYMPH_JOB_SUPPORT
 #undef NYMPH_FLEE_RADIUS
+#undef NYMPH_ROUTE_SMOOTH_RANGE
