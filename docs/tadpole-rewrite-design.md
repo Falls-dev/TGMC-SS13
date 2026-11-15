@@ -228,3 +228,40 @@ Validation: focused `tadpole_flight` PASS (1 second), no runtime errors and
 `Success!` at `data/logs/tadpole-direct-native-blocks/clean_run.lk`. Normal
 BYOND 516.1659 build: 0 errors, 0 warnings. The isolated test build reports
 the existing `loop_checks` warning.
+
+## Spatial blocks and walking update timing
+
+The next client capture still showed walking lag: 0.606137 seconds / 108
+SendMaps calls (5.61 ms per call), with 923,565 movables examined (about 8,552
+per call). This is not a matched same-scene benchmark against the earlier
+capture and cannot establish a percentage regression/improvement. Removing
+helper movables alone did not eliminate the reported symptom.
+
+Blocks now occupy their projected transit-world coordinates rather than all
+living on the helm turf with large pixel offsets. The total world-pixel
+position is conserved, including clamping near world edges. This lets world
+visibility operate on spatially distributed blocks. Relocation uses
+abstract_move to avoid Entered/airdrop hooks; NO_STEPS prevents a second glide
+animation when the chunk bucket rebases. Pixel offsets are retained only for
+world-edge clamping. No TILE_BOUND is applied to an 8x8 block, since its
+southwest tile alone does not represent visibility of the whole block.
+
+Previously passenger position was sampled only by the five-Hz flight loop,
+up to 0.2 seconds after the actual step. A scene view now subscribes to the
+current movable eye's movement signal. It updates that passenger's plate in
+the movement tick and uses the eye's glide duration; forced relocations snap.
+It does not discover players, poll source appearances or update chunks.
+Eye replacement and view deletion unregister the movement subscription.
+The original camera follows the character; client.eye and perspective are
+never changed by this system.
+
+Regression checks exercise the real mob Move signal before any flight update,
+glide timing, old-eye disconnection, spatial block distribution and conserved
+projection, world-edge placement and absence of Entered side effects. These
+are structural/behavioral checks; actual SendMaps cost, client frame time,
+black regions and rotated lighting still require in-client verification.
+
+Final validation: focused `tadpole_flight` PASS (1 second), no runtime errors,
+`Success!` at `data/logs/tadpole-spatial-walk-final/clean_run.lk`. Normal
+BYOND 516.1659 build: 0 errors, 0 warnings. The isolated test build has the
+existing `loop_checks` warning.

@@ -7,7 +7,23 @@
 	plane = HUD_PLANE
 	appearance_flags = PIXEL_SCALE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
+	// Bucket rebases are instantaneous; only the completed plate interpolates.
+	animate_movement = NO_STEPS
+	atom_flags = SHUTTLE_IMMUNE | PREVENT_CONTENTS_EXPLOSION
 	var/list/tiles = list()
+
+/// Use spatial positions instead of putting every oversized visual tree on
+/// the helm tile. Keep pixel offsets only for clipping at the world's edge.
+/obj/effect/abstract/tadpole_native_chunk/proc/place(tile_x, tile_y, transit_z)
+	var/turf/target = locate(clamp(tile_x, 1, world.maxx), clamp(tile_y, 1, world.maxy), transit_z)
+	if(!target)
+		return
+	if(loc != target)
+		// These are visual relays, not passengers: never trigger transit drops.
+		abstract_move(target)
+	pixel_x = (tile_x - target.x) * world.icon_size
+	pixel_y = (tile_y - target.y) * world.icon_size
 
 /obj/effect/abstract/tadpole_native_chunk/proc/build(base_x, base_y, ground_z)
 	var/turf/first = locate(max(1, base_x), max(1, base_y), ground_z)
@@ -51,9 +67,12 @@
 	var/list/forced_planes = list()
 	var/atom/movable/screen/plane_master/emissive_plate
 	var/had_emissive_relay = FALSE
+	var/datum/tadpole_scene/scene
+	var/atom/movable/tracked_eye
 
-/datum/tadpole_scene_view/New(datum/hud/display, depth)
+/datum/tadpole_scene_view/New(datum/hud/display, depth, datum/tadpole_scene/owner)
 	hud = display
+	scene = owner
 	source_offset = depth
 	plate = hud.get_plane_master(GET_NEW_PLANE(RENDER_PLANE_MASTER, depth))
 	if(!plate)
@@ -76,6 +95,8 @@
 		emissive_plate.remove_relay_from(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, depth - 1))
 
 /datum/tadpole_scene_view/Destroy()
+	track_eye(null)
+	scene = null
 	if(!QDELETED(plate))
 		animate(plate, transform = original_transform, time = 0)
 		plate.remove_relay_from(output_plane)
@@ -90,6 +111,32 @@
 	emissive_plate = null
 	forced_planes.Cut()
 	return ..()
+
+/datum/tadpole_scene_view/proc/track_eye(atom/new_eye)
+	if(!ismovable(new_eye))
+		new_eye = null
+	if(tracked_eye == new_eye)
+		return
+	if(tracked_eye)
+		UnregisterSignal(tracked_eye, COMSIG_MOVABLE_MOVED)
+	tracked_eye = new_eye
+	if(tracked_eye)
+		RegisterSignal(tracked_eye, COMSIG_MOVABLE_MOVED, PROC_REF(on_eye_move))
+
+/// React in the movement tick, not up to 0.2 seconds later in flight processing.
+/// This touches one plate only; no player discovery, source polling or chunks.
+/datum/tadpole_scene_view/proc/on_eye_move(atom/movable/source, atom/old_loc, direction, forced)
+	SIGNAL_HANDLER
+	var/turf/eye = get_turf(source)
+	if(!scene || !eye || !scene.helm.ground_tiles[eye])
+		return
+	var/duration = 0
+	if(!forced && isturf(old_loc) && old_loc.z == eye.z && get_dist(old_loc, eye) == 1)
+		var/dx = abs(eye.x - old_loc.x)
+		var/dy = abs(eye.y - old_loc.y)
+		var/distance = (source.appearance_flags & LONG_GLIDE) ? max(dx, dy) : sqrt(dx ** 2 + dy ** 2)
+		duration = distance * world.icon_size / max(source.glide_size, 1) * world.tick_lag / 10
+	scene.update_view(src, eye, duration)
 
 /datum/tadpole_scene_view/proc/update_camera(matrix/camera, animation_seconds)
 	if(QDELETED(plate))
@@ -182,8 +229,9 @@
 			qdel(view)
 			view = null
 		if(!view)
-			view = new(viewer.hud_used, depth)
+			view = new(viewer.hud_used, depth, src)
 			views[display] = view
+		view.track_eye(display.eye)
 		remaining -= display
 	for(var/client/departed as anything in remaining)
 		qdel(views[departed])
@@ -196,20 +244,22 @@
 	update_region(needed_radius, helm.eyeobj.z)
 	for(var/client/display as anything in views)
 		var/datum/tadpole_scene_view/view = views[display]
-		var/turf/eye = get_turf(display.eye)
-		if(!eye || QDELETED(view.plate))
-			continue
-		var/angle = helm.flight_heading - dir2angle(helm.shuttle_port.dir)
-		var/c = cos(angle)
-		var/s = sin(angle)
-		var/px = helm.shuttle_port.x - eye.x
-		var/py = helm.shuttle_port.y - eye.y
-		var/dx = origin_x - helm.flight_x
-		var/dy = origin_y - helm.flight_y
-		var/matrix/camera = matrix()
-		camera.Turn(-angle)
-		camera.Translate((px - (px * c - py * s) + dx * c - dy * s) * world.icon_size, (py - (py * c + px * s) + dy * c + dx * s) * world.icon_size)
-		view.update_camera(camera, animation_seconds)
+		update_view(view, get_turf(display.eye), animation_seconds)
+
+/datum/tadpole_scene/proc/update_view(datum/tadpole_scene_view/view, turf/eye, animation_seconds)
+	if(!eye || QDELETED(view.plate) || isnull(origin_x) || isnull(origin_y))
+		return
+	var/angle = helm.flight_heading - dir2angle(helm.shuttle_port.dir)
+	var/c = cos(angle)
+	var/s = sin(angle)
+	var/px = helm.shuttle_port.x - eye.x
+	var/py = helm.shuttle_port.y - eye.y
+	var/dx = origin_x - helm.flight_x
+	var/dy = origin_y - helm.flight_y
+	var/matrix/camera = matrix()
+	camera.Turn(-angle)
+	camera.Translate((px - (px * c - py * s) + dx * c - dy * s) * world.icon_size, (py - (py * c + px * s) + dy * c + dx * s) * world.icon_size)
+	view.update_camera(camera, animation_seconds)
 
 /// Discovery is separate from the five-Hz flight path. Existing viewers are
 /// still validated every step; new remote eyes can take up to one second.
@@ -258,13 +308,12 @@
 			var/key = "[x],[y],[source_z]"
 			var/obj/effect/abstract/tadpole_native_chunk/chunk = chunks[key]
 			if(!chunk)
-				chunk = new(get_turf(helm))
+				chunk = new
 				chunk.build(x, y, source_z)
 				chunks[key] = chunk
 			else
 				remaining -= key
-			chunk.pixel_x = (max(1, x) - origin_x + helm.shuttle_port.x - helm.x) * world.icon_size
-			chunk.pixel_y = (max(1, y) - origin_y + helm.shuttle_port.y - helm.y) * world.icon_size
+			chunk.place(max(1, x) - origin_x + helm.shuttle_port.x, max(1, y) - origin_y + helm.shuttle_port.y, helm.z)
 	for(var/key in remaining)
 		qdel(chunks[key])
 		chunks -= key

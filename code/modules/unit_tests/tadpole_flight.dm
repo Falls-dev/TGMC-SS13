@@ -1,5 +1,12 @@
 /// Continuous physics and the regression where lower-level explicit planes
 /// escaped KEEP_TOGETHER and covered the Tadpole's actual floor.
+/datum/unit_test/tadpole_flight
+	var/relay_entered = FALSE
+
+/datum/unit_test/tadpole_flight/proc/on_relay_entered()
+	SIGNAL_HANDLER
+	relay_entered = TRUE
+
 /datum/unit_test/tadpole_flight/Run()
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/flight_test/helm = allocate(/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/flight_test)
 	var/obj/docking_port/mobile/port = allocate(/obj/docking_port/mobile)
@@ -77,6 +84,16 @@
 	sleep(world.tick_lag)
 	TEST_ASSERT(start in chunk.vis_contents, "Replacing a turf must reconnect its native relay")
 	start.ChangeTurf(old_type)
+	var/turf/placement_target = locate(80, 80, start.z)
+	RegisterSignal(placement_target, COMSIG_ATOM_ENTERED, PROC_REF(on_relay_entered))
+	chunk.place(placement_target.x, placement_target.y, placement_target.z)
+	TEST_ASSERT_EQUAL(get_turf(chunk), placement_target, "Native blocks must occupy their displayed world position")
+	TEST_ASSERT(!relay_entered, "Placing a visual block must not invoke transit entry or airdrop hooks")
+	UnregisterSignal(placement_target, COMSIG_ATOM_ENTERED)
+	chunk.place(-3, -2, start.z)
+	TEST_ASSERT_EQUAL(chunk.x, 1, "World-edge relays must retain a valid spatial anchor")
+	TEST_ASSERT_EQUAL(chunk.x * world.icon_size + chunk.pixel_x, -3 * world.icon_size, "Clamping must preserve the displayed x coordinate")
+	TEST_ASSERT_EQUAL(chunk.y * world.icon_size + chunk.pixel_y, -2 * world.icon_size, "Clamping must preserve the displayed y coordinate")
 	qdel(chunk)
 	TEST_ASSERT_EQUAL(length(chunk.tiles), 0, "Scene deletion must release source subscriptions")
 	TEST_ASSERT_EQUAL(length(chunk.vis_contents), 0, "Scene deletion must release native visual links")
@@ -152,6 +169,11 @@
 	old_shutter_area.contents += shutter_tile
 	qdel(shutter_area)
 	TEST_ASSERT(open_preserved && closed_preserved, "Flight and landing must preserve the pilot-selected shutter state")
+	var/turf/old_helm_location = get_turf(helm)
+	var/turf/old_port_location = get_turf(port)
+	var/turf/relay_center = locate(180, 180, helm.z)
+	helm.abstract_move(relay_center)
+	port.abstract_move(relay_center)
 	var/datum/tadpole_scene/scene = new(helm)
 	scene.source_z = SSmapping.ground_start
 	scene.origin_x = 40
@@ -162,6 +184,15 @@
 	var/obj/effect/abstract/tadpole_native_chunk/edge_chunk = scene.chunks[key]
 	TEST_ASSERT_NOTNULL(edge_chunk, "Prefetch must cover the last cell of an eight-tile camera bucket")
 	var/count = length(scene.chunks)
+	var/nearby_blocks = 0
+	for(var/obj/effect/abstract/tadpole_native_chunk/nearby in range(13, helm))
+		nearby_blocks++
+	TEST_ASSERT(nearby_blocks > 0 && nearby_blocks < count / 2, "An eye near the helm must not have every cached block on its local turfs")
+	for(var/chunk_key in scene.chunks)
+		var/obj/effect/abstract/tadpole_native_chunk/spatial_block = scene.chunks[chunk_key]
+		var/turf/first_source = spatial_block.tiles[1]
+		TEST_ASSERT_EQUAL((spatial_block.x - port.x) * world.icon_size + spatial_block.pixel_x, (first_source.x - scene.origin_x) * world.icon_size, "Spatial placement must preserve source x projection")
+		TEST_ASSERT_EQUAL((spatial_block.y - port.y) * world.icon_size + spatial_block.pixel_y, (first_source.y - scene.origin_y) * world.icon_size, "Spatial placement must preserve source y projection")
 	scene.update_chunks()
 	TEST_ASSERT_EQUAL(scene.chunks[key], edge_chunk, "Unchanged scene cells must reuse native blocks")
 	TEST_ASSERT_EQUAL(length(scene.chunks), count, "Repeated membership checks must allocate no additional blocks")
@@ -200,15 +231,46 @@
 	port.height = old_height
 	qdel(scene)
 	TEST_ASSERT_EQUAL(length(scene.chunks), 0, "Scene deletion must release all native blocks")
+	helm.abstract_move(old_helm_location)
+	port.abstract_move(old_port_location)
 	// Flight-specific graph edits must be local to one HUD and reversible.
 	var/datum/hud/display = allocate(/datum/hud, pilot)
 	var/datum/hud/other_display = allocate(/datum/hud, allocate(/mob/living/carbon/human))
 	var/atom/movable/screen/plane_master/other_plate = other_display.get_plane_master(GET_NEW_PLANE(RENDER_PLANE_MASTER, 1))
 	var/list/original_targets = other_plate.render_relay_planes.Copy()
-	var/datum/tadpole_scene_view/native_view = new(display, 1)
+	var/datum/tadpole_scene/walking_scene = new(helm)
+	walking_scene.origin_x = FLOOR(helm.flight_x / 8, 1) * 8
+	walking_scene.origin_y = FLOOR(helm.flight_y / 8, 1) * 8
+	var/datum/tadpole_scene_view/native_view = new(display, 1, walking_scene)
 	TEST_ASSERT_NOTNULL(native_view.plate, "Ground must have a preallocated native lower render plate")
 	TEST_ASSERT(native_view.plate.get_relay_to(TADPOLE_GROUND_PLANE), "Passenger plate must relay below the physical craft")
 	TEST_ASSERT_EQUAL(other_plate.render_relay_planes.Join(","), original_targets.Join(","), "Another observer must retain their native graph")
+	// Exercise the real Move -> COMSIG_MOVABLE_MOVED path without calling
+	// the 0.2-second scene processor. Headless fixture has a HUD but no client.
+	var/turf/walking_start = get_turf(pilot)
+	var/turf/walking_end = get_step(walking_start, EAST)
+	var/list/old_ground_tiles = helm.ground_tiles
+	helm.ground_tiles = list()
+	helm.ground_tiles[walking_start] = TRUE
+	helm.ground_tiles[walking_end] = TRUE
+	var/walking_heading = helm.flight_heading
+	helm.flight_heading = dir2angle(port.dir) + 37
+	native_view.track_eye(pilot)
+	walking_scene.update_view(native_view, walking_start, 0)
+	var/old_camera_values = native_view.last_camera.tolist().Join(",")
+	pilot.set_glide_size(8)
+	TEST_ASSERT(pilot.Move(walking_end, EAST), "Walking camera fixture must move through the ordinary Move path")
+	TEST_ASSERT_NOTEQUAL(native_view.last_camera.tolist().Join(","), old_camera_values, "A passenger step must update projection before flight processing runs")
+	TEST_ASSERT_EQUAL(native_view.animation_started, world.time, "Walking projection must start in the movement tick")
+	TEST_ASSERT_EQUAL(native_view.animation_duration, world.icon_size / max(pilot.glide_size, 1) * world.tick_lag, "Walking interpolation must match eye glide instead of the flight interval")
+	TEST_ASSERT_EQUAL(length(walking_scene.chunks), 0, "Walking projection must not allocate or update terrain membership")
+	native_view.track_eye(eye)
+	old_camera_values = native_view.last_camera.tolist().Join(",")
+	pilot.forceMove(walking_start)
+	TEST_ASSERT_EQUAL(native_view.last_camera.tolist().Join(","), old_camera_values, "Changing the watched eye must unregister the old movement signal")
+	native_view.track_eye(null)
+	helm.flight_heading = walking_heading
+	helm.ground_tiles = old_ground_tiles
 	// Rebase halfway through an actual camera interpolation. Shifting the
 	// source grid and inverse-shifting the camera must preserve every pixel.
 	var/matrix/target = matrix()
@@ -226,6 +288,7 @@
 	TEST_ASSERT_EQUAL(native_view.animation_duration, 5, "Rebase must retain only the unfinished half of the animation")
 	var/atom/movable/screen/plane_master/passenger_plate = native_view.plate
 	qdel(native_view)
+	qdel(walking_scene)
 	TEST_ASSERT_NULL(passenger_plate.get_relay_to(TADPOLE_GROUND_PLANE), "Leaving the scene must remove the aircraft relay")
 	TEST_ASSERT(passenger_plate.get_relay_to(RENDER_PLANE_TRANSPARENT), "Leaving must restore native multiz routing")
 	var/turf/ground = locate(40,40,SSmapping.ground_start)
