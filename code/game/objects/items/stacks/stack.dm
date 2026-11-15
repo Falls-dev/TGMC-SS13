@@ -329,10 +329,12 @@
 /obj/item/stack/proc/merge(obj/item/stack/stackable) //Merge src into S, as much as possible
 	if(QDELETED(stackable) || QDELETED(src) || stackable == src) //amusingly this can cause a stack to consume itself, let's not allow that.
 		return
-	if(amount == max_amount) // don't do useless swapping
+	if(stackable.amount >= stackable.max_amount)
 		return
-	var/max_transfer = loc.max_stack_merging(stackable) //We don't want to bypass the max size the container allows.
+	var/max_transfer = stackable.loc.max_stack_merging(stackable) //We don't want to bypass the max size the container allows.
 	var/transfer = min(get_amount(), (max_transfer ? max_transfer : stackable.max_amount) - stackable.amount)
+	if(transfer <= 0)
+		return
 	stackable.add(transfer)
 	use(transfer)
 	return transfer
@@ -371,6 +373,10 @@
 /obj/item/stack/attackby(obj/item/I, mob/user)
 	if(istype(I, merge_type))
 		var/obj/item/stack/S = I
+		if((item_flags & IN_STORAGE) && !(S.item_flags & IN_STORAGE) && S.amount >= S.max_amount)
+			if(S.merge(src))
+				to_chat(user, span_notice("Your [name] stack now contains [get_amount()] [singular_name]\s."))
+			return
 		if(merge(S))
 			to_chat(user, span_notice("Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s."))
 		return

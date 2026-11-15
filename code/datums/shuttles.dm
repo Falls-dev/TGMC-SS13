@@ -208,6 +208,13 @@
 	max_personnel = 4
 	max_vehicles = 1
 
+/datum/map_template/shuttle/minidropship/panopticon
+	suffix = "_panopticon"
+	description = "Округлый 'Головастик' с панорамным остеклением для наблюдения за зоной посадки."
+	display_name = "Tadpole Panoptical Model"
+	max_personnel = 6
+	max_vehicles = 0
+
 /datum/map_template/shuttle/escape_pod
 	shuttle_id = SHUTTLE_ESCAPE_POD
 	name = "Escape Pod"

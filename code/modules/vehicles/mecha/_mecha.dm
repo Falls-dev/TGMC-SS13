@@ -1,3 +1,36 @@
+/particles/mech_land
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "smoke3"
+	width = 750
+	height = 750
+	count = 25
+	spawning = 25
+	lifespan = 10
+	fade = 25
+	gradient = list("#BA9F6D", "#808080", "#FFFFFF")
+	color = generator(GEN_NUM, 0, 0.25)
+	color_change = generator(GEN_NUM, 0.08, 0.07)
+	velocity = generator(GEN_CIRCLE, 5, 15)
+	rotation = generator(GEN_NUM, -45, 45)
+	scale = 0.1
+	grow = 0.02
+	friction = 0.25
+
+/particles/mech_land_water
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "smoke4"
+	width = 750
+	height = 750
+	count = 25
+	spawning = 25
+	lifespan = 10
+	fade = 25
+	velocity = generator(GEN_CIRCLE, 5, 15)
+	rotation = generator(GEN_NUM, -45, 45)
+	scale = 0.1
+	grow = 0.02
+	friction = 0.25
+
 /***************** WELCOME TO MECHA.DM, ENJOY YOUR STAY *****************/
 
 /**
@@ -130,6 +163,14 @@
 	var/leg_overload_coeff = 5
 	///stores value that we will add and remove from the mecha when toggling leg overload
 	var/speed_mod = 0
+	/// How much energy we use per mech dash
+	var/dash_power_consumption = 500
+	/// dash_range
+	var/dash_range = 1
+	///cooldown time between dashes on greyscale mechs
+	var/dash_cooldown = 10 SECONDS
+	///determines if the mech does the footstep particles
+	var/no_footstep_particle = FALSE
 
 	//Bool for zoom on/off
 	var/zoom_mode = FALSE
@@ -168,6 +209,8 @@
 	ui_view = new()
 	ui_view.generate_view("mech_view_[REF(src)]")
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(play_stepsound))
+	RegisterSignal(src, COMSIG_ELEMENT_JUMP_STARTED, PROC_REF(on_jump_start))
+	RegisterSignal(src, COMSIG_ELEMENT_JUMP_ENDED, PROC_REF(on_jump_land))
 
 	spark_system.set_up(2, 0, src)
 	spark_system.attach(src)
@@ -529,3 +572,23 @@
 
 /obj/vehicle/sealed/mecha/pre_crush_act(mob/living/carbon/xenomorph/charger, datum/action/ability/xeno_action/ready_charge/charge_datum)
 	return (CHARGE_SPEED(charge_datum) * 375)
+
+///Stuff that happens when a mech starts a jump
+/obj/vehicle/sealed/mecha/proc/on_jump_start()
+	SIGNAL_HANDLER
+	playsound(loc, 'sound/mecha/mechturn.ogg', 30, TRUE)
+	no_footstep_particle = TRUE
+
+///Stuff that happens when a mech finishes a jump
+/obj/vehicle/sealed/mecha/proc/on_jump_land()
+	SIGNAL_HANDLER
+	no_footstep_particle = FALSE
+	playsound(loc, 'sound/effects/alien/behemoth/stomp.ogg', 30, TRUE)
+	var/obj/effect/abstract/particle_holder/landing_particles
+	var/turf/current_turf = get_turf(src)
+	if(iswater(current_turf))
+		landing_particles = new(current_turf, /particles/mech_land_water)
+	else
+		landing_particles = new(current_turf, /particles/mech_land)
+	landing_particles.layer = layer - 0.01
+	QDEL_IN(landing_particles, 1 SECONDS)

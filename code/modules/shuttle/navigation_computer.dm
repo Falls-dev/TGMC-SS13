@@ -111,19 +111,24 @@
 	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
 	the_eye.setDir(shuttle_port.dir)
 	var/turf/origin = locate(shuttle_port.x + x_offset, shuttle_port.y + y_offset, shuttle_port.z)
-	for(var/area/shuttle_area as anything in shuttle_port.shuttle_areas)
-		for(var/list/zlevel_turfs as anything in shuttle_area.get_zlevel_turf_lists())
-			for(var/turf/shuttle_turf as anything in zlevel_turfs)
-				if(shuttle_turf.z != origin.z)
-					continue
-				var/image/I = image('icons/effects/alphacolors.dmi', origin, "red")
-				var/x_off = shuttle_turf.x - origin.x
-				var/y_off = shuttle_turf.y - origin.y
-				I.loc = locate(origin.x + x_off, origin.y + y_off, origin.z) //we have to set this after creating the image because it might be null, and images created in nullspace are immutable.
-				I.layer = ABOVE_NORMAL_TURF_LAYER
-				SET_PLANE(I, ABOVE_GAME_PLANE, shuttle_turf)
-				I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-				the_eye.placement_images[I] = list(x_off, y_off)
+	if(!origin)
+		return
+	var/list/bounds = shuttle_port.return_coords(shuttle_port.x, shuttle_port.y, shuttle_port.dir)
+	var/min_x = bounds[1]
+	var/min_y = bounds[2]
+	var/max_x = bounds[3]
+	var/max_y = bounds[4]
+	for(var/turf/T as anything in block(locate(min_x, min_y, origin.z), locate(max_x, max_y, origin.z)))
+		if(!shuttle_port.shuttle_areas[T.loc])
+			continue
+		var/image/I = image('icons/effects/alphacolors.dmi', origin, "red")
+		var/x_off = T.x - origin.x
+		var/y_off = T.y - origin.y
+		I.loc = locate(origin.x + x_off, origin.y + y_off, origin.z)
+		I.layer = ABOVE_NORMAL_TURF_LAYER
+		SET_PLANE(I, ABOVE_GAME_PLANE, T)
+		I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		the_eye.placement_images[I] = list(x_off, y_off)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/give_eye_control(mob/user)
 	. = ..()
@@ -204,13 +209,13 @@
 	if(current_user.client)
 		current_user.client.images -= the_eye.placed_images
 
-	QDEL_LIST(the_eye.placed_images)
+	LAZYCLEARLIST(the_eye.placed_images)
 
 	for(var/image/place_spots as anything in the_eye.placement_images)
 		var/image/newI = image('icons/effects/alphacolors.dmi', the_eye.loc, "blue")
 		newI.loc = place_spots.loc //It is highly unlikely that any landing spot including a null tile will get this far, but better safe than sorry.
-		newI.layer = ABOVE_OPEN_TURF_LAYER
-		SET_PLANE_EXPLICIT(newI, ABOVE_GAME_PLANE, place_spots)
+		newI.layer = NAVIGATION_EYE_LAYER
+		SET_PLANE_EXPLICIT(newI, ABOVE_GAME_PLANE, the_eye)
 		newI.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		the_eye.placed_images += newI
 
@@ -264,9 +269,10 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/checkLandingSpot()
 	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
 	var/turf/eyeturf = get_turf(the_eye)
-	if(!eyeturf)
-		return SHUTTLE_DOCKER_BLOCKED
-	if(!eyeturf.z || SSmapping.level_has_any_trait(eyeturf.z, locked_traits))
+	if(!eyeturf || !eyeturf.z || SSmapping.level_has_any_trait(eyeturf.z, locked_traits))
+		if(the_eye?.placement_images)
+			for(var/image/placement_image as anything in the_eye.placement_images)
+				placement_image.icon_state = "red"
 		return SHUTTLE_DOCKER_BLOCKED
 
 	. = SHUTTLE_DOCKER_LANDING_CLEAR
@@ -358,7 +364,7 @@
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/console = origin
 	if(console.check_hovering_spot(T) != nvg_vision_possible) //Cannot see in caves
 		nvg_vision_possible = !nvg_vision_possible
-		update_remote_sight(user)
+		user.update_sight()
 	if(T)
 		setLoc(T)
 
@@ -370,13 +376,13 @@
 /mob/camera/aiEye/remote/shuttle_docker/update_remote_sight(mob/living/user)
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/console = origin
 	if(nvg_vision_possible && console?.nvg_vision_mode)
-		user.set_sight(NONE)
-		user.lighting_cutoff = LIGHTING_CUTOFF_HIGH
+		user.set_sight(BLIND|SEE_TURFS)
+		// Pale blue, should look nice I think
+		user.lighting_color_cutoffs = list(30, 40, 50)
 		user.sync_lighting_plane_cutoff()
 		return TRUE
-	user.set_sight(BLIND|SEE_TURFS)
-	// Pale blue, should look nice I think
-	user.lighting_color_cutoffs = list(30, 40, 50)
+	user.set_sight(NONE)
+	user.lighting_color_cutoffs = null
 	user.sync_lighting_plane_cutoff()
 	return TRUE
 

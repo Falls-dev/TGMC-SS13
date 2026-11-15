@@ -7,7 +7,6 @@
 	h_style = random_hair_style(gender, species)
 	f_style = random_facial_hair_style(gender, species)
 	grad_style = pick(GLOB.hair_gradients_list)
-	good_eyesight = pick(list(FALSE, TRUE))
 	citizenship = pick(CITIZENSHIP_CHOICES)
 	religion = pick(RELIGION_CHOICES)
 	var/list/male_voices = list("Мужской 1", "Мужской 2")
@@ -166,9 +165,6 @@
 		new_name = character.species.random_name(gender)
 	else
 		new_name = character.species.prefs_name(src)
-
-	if(!good_eyesight)
-		ENABLE_BITFIELD(character.disabilities, NEARSIGHTED)
 
 	character.real_name = new_name
 	character.name = character.real_name

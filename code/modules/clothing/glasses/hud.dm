@@ -108,6 +108,31 @@
 		"Ratcher Combat Robot" = 'icons/mob/species/robot/glasses_deltad.dmi')
 	toggleable = TRUE
 	hud_type = DATA_HUD_MEDICAL_ADVANCED
+	/// То, какой глаз закрывает повязка (FALSE = левый, TRUE = правый)
+	var/right_eye = FALSE
+
+/obj/item/clothing/glasses/hud/medpatch/update_icon_state()
+	. = ..()
+	if(active)
+		icon_state = right_eye ? "medpatchhud_a" : "medpatchhud"
+	else
+		icon_state = right_eye ? "deactivated_patch_a" : "deactivated_patch"
+	worn_icon_state = icon_state
+
+/obj/item/clothing/glasses/hud/medpatch/verb/switcheye()
+	set name = "Switch Eyepatch Side"
+	set category = "IC.Clothing"
+	set src in usr
+
+	if(!isliving(usr) || usr.incapacitated())
+		return
+
+	right_eye = !right_eye
+	to_chat(usr, span_notice("You adjust the eyepatch to cover your [right_eye ? "right" : "left"] eye."))
+	update_icon()
+	if(ismob(loc))
+		var/mob/user = loc
+		user.update_inv_glasses()
 
 /obj/item/clothing/glasses/hud/medglasses
 	name = "\improper HealthMate regulation prescription glasses"

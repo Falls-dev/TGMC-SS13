@@ -1203,3 +1203,100 @@ ADMIN_VERB(cmd_admin_create_predator_report, R_ADMIN, "Report: Yautja AI", "Crea
 	yautja_announcement(span_yautjaboldbig(input))
 	message_admins("[key_name_admin(src)] has created a predator ship AI report")
 	log_admin("[key_name_admin(src)] predator ship AI report: [input]")
+
+/// Export the current appearance as transparent PNGs that can be imported into an image editor.
+ADMIN_VERB_ONLY_CONTEXT_MENU(export_appearance, R_ADMIN, "Export Appearance", atom/target)
+	var/direction_choice = tgui_alert(user, "Which directions should be exported?", "Export Appearance", list("Current", "All four", "Cancel"))
+	if(!direction_choice || direction_choice == "Cancel" || QDELETED(target))
+		return
+	var/layer_choice = tgui_alert(user, "Export a combined image or separate appearance layers? Separate PNGs share a canvas and can be stacked in filename order.", "Export Appearance", list("Combined", "Separate", "Cancel"))
+	if(!layer_choice || layer_choice == "Cancel" || QDELETED(target))
+		return
+
+	var/image/source = image(target.appearance)
+	var/list/directions = direction_choice == "All four" ? list(SOUTH, NORTH, EAST, WEST) : list(source.dir)
+	var/list/direction_names = list("[SOUTH]" = "south", "[NORTH]" = "north", "[EAST]" = "east", "[WEST]" = "west")
+	var/list/parts = list()
+	var/list/order = list()
+	// Sort top-level appearances using the same relative layer convention as getFlatIcon.
+	for(var/image/part as anything in source.underlays + source.overlays)
+		if(part.plane != FLOAT_PLANE && part.plane != source.plane)
+			continue
+		var/part_layer = part.layer
+		if(part_layer < 0)
+			if(part_layer <= -1000)
+				continue
+			part_layer = source.layer + part_layer / 1000 + (part in source.overlays ? 1 : 0)
+		var/insert_at = parts.len + 1
+		for(var/i in 1 to order.len)
+			if(part_layer < order[i])
+				insert_at = i
+				break
+		parts.Insert(insert_at, part)
+		order.Insert(insert_at, part_layer)
+	var/image/base = image(source)
+	base.overlays = null
+	base.underlays = null
+	var/base_index = parts.len + 1
+	for(var/i in 1 to order.len)
+		if(source.layer < order[i])
+			base_index = i
+			break
+	parts.Insert(base_index, base)
+
+	var/export_id = "[user.ckey]_[world.time]_[rand(1000, 9999)]"
+	for(var/direction in directions)
+		var/direction_name = direction_names["[direction]"] || "dir[direction]"
+		// Render first so every layer uses the same tightly fitted canvas.
+		var/list/rendered_parts = list()
+		var/min_x = 0
+		var/min_y = 0
+		var/max_x = 32
+		var/max_y = 32
+		for(var/image/part as anything in parts)
+			var/icon/rendered
+			var/offset_x = 0
+			var/offset_y = 0
+			if(part == base)
+				var/image/directed_base = image(base)
+				directed_base.dir = direction
+				rendered = getFlatIcon(directed_base, direction, no_anim = TRUE)
+			else
+				rendered = getFlatIcon(image(part), direction, source.icon, source.icon_state, source.blend_mode, FALSE, TRUE, source.color)
+				offset_x = part.pixel_x + part.pixel_w
+				offset_y = part.pixel_y + part.pixel_z
+			if(!rendered)
+				continue
+			rendered_parts += list(list("part" = part, "icon" = rendered, "x" = offset_x, "y" = offset_y))
+			min_x = min(min_x, offset_x)
+			min_y = min(min_y, offset_y)
+			max_x = max(max_x, offset_x + rendered.Width())
+			max_y = max(max_y, offset_y + rendered.Height())
+		var/canvas_width = max_x - min_x
+		var/canvas_height = max_y - min_y
+		var/icon/combined = icon('icons/blanks/32x32.dmi', "nothing")
+		combined.Scale(canvas_width, canvas_height)
+		var/part_number = 0
+		for(var/list/rendered_part as anything in rendered_parts)
+			part_number++
+			var/image/part = rendered_part["part"]
+			var/icon/rendered = rendered_part["icon"]
+			var/icon/canvas = icon('icons/blanks/32x32.dmi', "nothing")
+			canvas.Scale(canvas_width, canvas_height)
+			canvas.Blend(rendered, ICON_OVERLAY, 1 + rendered_part["x"] - min_x, 1 + rendered_part["y"] - min_y)
+			if(part != base && source.alpha < 255)
+				canvas.Blend(rgb(255, 255, 255, source.alpha), ICON_MULTIPLY)
+			if(layer_choice == "Separate")
+				var/filename = "appearance_[direction_name]_layer_[add_leading("[part_number]", 3, "0")].png"
+				var/path = "data/[export_id]_[direction_name]_[part_number].png"
+				fcopy(canvas, path)
+				DIRECT_OUTPUT(user, ftp(file(path), filename))
+				fdel(path)
+			else
+				combined.Blend(canvas, blendMode2iconMode(part.blend_mode))
+		if(layer_choice == "Combined")
+			var/path = "data/[export_id]_[direction_name].png"
+			fcopy(combined, path)
+			DIRECT_OUTPUT(user, ftp(file(path), "appearance_[direction_name].png"))
+			fdel(path)
+	to_chat(user, span_notice("Appearance export sent. Import the transparent PNGs into your image editor."))

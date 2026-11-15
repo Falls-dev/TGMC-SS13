@@ -752,6 +752,11 @@
 	dir = 10
 	},
 /area/shuttle/canterbury)
+"zc" = (
+/obj/effect/landmark/start/job/crash/squadmarine,
+/obj/machinery/vending/nanoammo/directional/south,
+/turf/open/floor/mainship/metal,
+/area/shuttle/canterbury)
 "zE" = (
 /obj/structure/cable,
 /obj/machinery/power/monitor{
@@ -1083,7 +1088,7 @@ ag
 aj
 as
 ab
-aL
+zc
 aJ
 aD
 aD

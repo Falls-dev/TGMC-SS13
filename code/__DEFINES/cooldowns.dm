@@ -58,6 +58,7 @@
 #define COOLDOWN_EVASION_ACTIVATION "cooldown_evasion_activation"
 #define COOLDOWN_TANK_SWIVEL "tank_turret_swivel"
 #define COOLDOWN_ARMORED_HORN "cooldown_armored_horn"
+#define COOLDOWN_ARMORED_MEGAPHONE "cooldown_armored_megaphone"
 #define COOLDOWN_MOB_EX_ACT "mob_ex_act"
 #define COOLDOWN_MOUNTED_GUN_ROTATE "mounted_gun_rotate"
 #define COOLDOWN_STAMINA "adrenaline_add_stamina"
@@ -74,6 +75,7 @@
 #define COOLDOWN_MECHA_ARMOR "mecha_armor"
 #define COOLDOWN_MECHA_MELEE_ATTACK "mecha_melee"
 #define COOLDOWN_MECHA_SMOKE "mecha_smoke"
+#define COOLDOWN_MECHA_DASH "mecha_dash"
 #define COOLDOWN_MECHA_SKYFALL "mecha_skyfall"
 #define COOLDOWN_MECHA_MISSILE_STRIKE "mecha_missile_strike"
 

@@ -38,6 +38,8 @@ type Data = {
   evac_eta?: string;
   time_message: number | BooleanLike;
   time_request: number | BooleanLike;
+  distress_pending: BooleanLike;
+  distress_recharging: BooleanLike;
   time_central: number | BooleanLike;
   stat_msg1?: string;
   stat_msg2?: string;
@@ -147,6 +149,8 @@ const MainPage = () => {
     time_message,
     time_central,
     time_request,
+    distress_pending,
+    distress_recharging,
     cooldown_message,
     cooldown_central,
     cooldown_request,
@@ -185,19 +189,19 @@ const MainPage = () => {
     evac_status === EVAC_STANDING_BY && alert_level >= SEC_LEVEL_RED;
   const canDistress =
     !!ert_allowed &&
-    alert_level >= SEC_LEVEL_RED &&
-    alert_level < SEC_LEVEL_DELTA &&
+    !distress_pending &&
+    !distress_recharging &&
     requestSecs <= 0;
 
   let distressReason = '';
   if (!ert_allowed) {
     distressReason = 'Distress beacon is disabled.';
-  } else if (alert_level >= SEC_LEVEL_DELTA) {
-    distressReason = 'Self-destruct in progress. Beacon disabled.';
-  } else if (alert_level < SEC_LEVEL_RED) {
-    distressReason = 'Ship is not under an active emergency.';
+  } else if (distress_pending) {
+    distressReason = 'A distress call is already pending.';
   } else if (requestSecs > 0) {
     distressReason = `Beacon is currently recharging. Time remaining: ${requestSecs} secs.`;
+  } else if (distress_recharging) {
+    distressReason = 'The distress beacon is currently recalibrating.';
   }
 
   return (

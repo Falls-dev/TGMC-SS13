@@ -98,14 +98,23 @@
 	SET_PLANE_IMPLICIT(new_desant, ABOVE_GAME_PLANE)
 	RegisterSignal(new_desant, COMSIG_QDELETING, PROC_REF(on_desant_del))
 	root.add_desant(new_desant)
+	if(isxeno(new_desant))
+		var/mob/living/carbon/xenomorph/X = new_desant
+		X.update_wounds()
 
 ///Removes a desant
 /obj/hitbox/proc/remove_desant(atom/movable/desant)
-	SET_PLANE_IMPLICIT(desant, LAZYACCESS(tank_desants, desant))
+	var/old_plane = LAZYACCESS(tank_desants, desant)
+	if(isnull(old_plane)) //not ours, or already removed. Never write a null plane, that makes the desant invisible
+		old_plane = GAME_PLANE
+	SET_PLANE_IMPLICIT(desant, old_plane)
 	desant.remove_traits(list(TRAIT_TANK_DESANT, TRAIT_NOSUBMERGE), VEHICLE_TRAIT)
 	LAZYREMOVE(tank_desants, desant)
 	UnregisterSignal(desant, COMSIG_QDELETING)
 	root.remove_desant(desant)
+	if(isxeno(desant))
+		var/mob/living/carbon/xenomorph/X = desant
+		X.update_wounds()
 
 ///signal handler when someone jumping lands on us
 /obj/hitbox/proc/on_jump_landed(datum/source, atom/movable/lander)
@@ -123,6 +132,8 @@
 /obj/hitbox/proc/on_exited(atom/source, atom/movable/AM, direction)
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(AM, TRAIT_TANK_DESANT))
+		return
+	if(!(AM in tank_desants)) //the trait is global, only the hitbox that owns this desant may remove it
 		return
 	if(AM.loc in locs)
 		return
@@ -189,11 +200,10 @@
 	//Due to this being a hot proc this part here is inlined and set on a by-hitbox-size basis
 	/////////////////////////////
 	var/turf/centerturf = get_step(get_step(root, direction), direction)
-	var/list/enteringturfs = list(centerturf)
-	enteringturfs += get_step(centerturf, turn(direction, 90))
-	enteringturfs += get_step(centerturf, turn(direction, -90))
+	var/list/enteringturfs = get_bump_turfs(centerturf, direction)
 	/////////////////////////////
 	var/canstep = TRUE
+	//Это первая итерация попытки проезда. Тут просто тараним.
 	for(var/turf/T AS in enteringturfs)	//No break because we want to crush all the turfs before we start trying to move
 		if(!T.Enter(root, direction))	//Check if we can cross the turf first/bump the turf
 			canstep = FALSE
@@ -205,7 +215,27 @@
 				continue
 			root.Bump(AM) //manually call bump on everything
 			canstep = FALSE
+	//Если мы не смогли проехать - значит мы что-то протаранили. Нужно провести повторную проверку что в старых турфах.
+	if(!canstep) //Код ниже лишь узнаёт, можно ли повторно проехать. Если можно - оставляем тру, танк едет.
+		canstep = TRUE
+		centerturf = get_step(get_step(root, direction), direction)
+		enteringturfs = get_bump_turfs(centerturf, direction)
+		for(var/turf/T AS in enteringturfs)
+			if(!T.Enter(root, direction))
+				canstep = FALSE
+				break
+
 	return canstep ? NONE : COMPONENT_DRIVER_BLOCK_MOVE
+
+
+
+/obj/hitbox/proc/get_bump_turfs(turf/start_turf, direction)
+	var/list/turfs = list(start_turf)
+	LAZYADD(turfs, get_step(start_turf, turn(direction, 90)))
+	LAZYADD(turfs, get_step(start_turf, turn(direction, -90)))
+	return turfs
+
+
 
 /obj/hitbox/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
@@ -486,6 +516,12 @@
 			bound_y = -32
 			root.pixel_x = -40
 			root.pixel_y = -32
+
+	//the bounds changed, anyone who is no longer under the hitbox must stop riding, otherwise they get dragged along while floating
+	for(var/atom/movable/desant AS in tank_desants.Copy())
+		if(desant.loc in locs)
+			continue
+		remove_desant(desant)
 
 	SEND_SIGNAL(src, COMSIG_MULTITILE_VEHICLE_ROTATED, loc, new_dir, null, old_locs)
 

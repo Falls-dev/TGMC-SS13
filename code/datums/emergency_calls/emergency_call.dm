@@ -56,6 +56,8 @@
 		var/weight = E.get_actualised_weight(normalised_monitor_state)
 		calls_weighted[E] = weight
 		total_weight += weight
+	if(total_weight <= 0)
+		return null
 	var/datum/emergency_call/chosen = pickweight(calls_weighted)
 	message_admins("[chosen.name] was randomly picked from all emergency calls possible with a probability of [(calls_weighted[chosen] / total_weight) * 100]")
 	return chosen
@@ -86,6 +88,9 @@
 	picked_call = chosen_call || get_random_call()
 
 	if(SSticker?.mode?.waiting_for_candidates) //It's already been activated
+		return FALSE
+
+	if(!picked_call)
 		return FALSE
 
 	picked_call.mob_max = rand(5, 15)
@@ -218,6 +223,7 @@
 	// begin loading the shuttle
 	if(!SSmapping.shuttle_templates[shuttle_id])
 		message_admins("Distress beacon: [name] couldn't find a valid shuttle template")
+		reset()
 		CRASH("ert called with invalid shuttle_id")
 	var/datum/map_template/shuttle/S = SSmapping.shuttle_templates[shuttle_id]
 
@@ -239,12 +245,14 @@
 		else
 			message_admins("ERROR: No picked candidates, aborting.")
 			shuttle.intoTheSunset() // delete
+			reset()
 			return
 
 	if(auto_shuttle_launch)
 		if(!shuttle.auto_launch())
 			shuttle.intoTheSunset()
 			message_admins("Distress beacon: [name] couldn't find a valid target to autolaunch")
+			reset()
 			CRASH("can't find a valid place to autolaunch ert shuttle towards")
 
 	message_admins("Distress beacon: [name] finished spawning.")

@@ -36,6 +36,7 @@
 		/obj/item/armored_weapon/secondary_flamer,
 		/obj/item/armored_weapon/tow,
 		/obj/item/armored_weapon/microrocket_pod,
+		/obj/item/armored_weapon/secondary_tesla
 	)
 	max_occupants = 4
 	move_delay = 0.75 SECONDS
@@ -254,4 +255,4 @@
 
 	for(var/turf/T in track_turfs)
 		for(var/obj/alien/weeds/W in T)
-			qdel(W)
+			W.take_damage(W.max_integrity, BRUTE, MELEE)

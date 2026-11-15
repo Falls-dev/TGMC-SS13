@@ -88,6 +88,7 @@
 	name = "\improper AGLS-37 SCDP smoke grenade"
 	desc = "A small tiny smart grenade, it is about to blow up in your face, unless you found it inert. Otherwise a pretty normal grenade, other than it is somehow in a primeable state."
 	icon_state = "agls_cloak"
+	dangerous = TRUE
 	smokeradius = 3
 	overlay_type = "green"
 
@@ -97,7 +98,6 @@
 	icon_state = "grenade_pgas"
 	worn_icon_state = "grenade_pgas"
 	hud_state = "grenade_drain"
-	dangerous = TRUE
 	det_time = 6 SECONDS
 	icon_state_mini = "grenade_purple"
 	smoketype = /datum/effect_system/smoke_spread/plasmaloss
@@ -111,7 +111,6 @@
 	hud_state = "grenade_antigas"
 	det_time = 3 SECONDS
 	icon_state_mini = "grenade_antigas"
-	dangerous = TRUE
 	smoketype = /datum/effect_system/smoke_spread/antigas
 	overlay_type = "white"
 
@@ -119,6 +118,7 @@
 	name = "\improper AGLS-T smoke grenade"
 	desc = "A small tiny smart grenade, it is about to blow up in your face, unless you found it inert. Otherwise a pretty normal grenade, other than it is somehow in a primeable state."
 	icon_state = "agls_pgas"
+	dangerous = TRUE
 	det_time = 1 SECONDS
 	smokeradius = 2
 
@@ -126,6 +126,7 @@
 	name = "tanglefoot emitting system pellet"
 	desc = "A small pellet dropped from the sky. Emits tanglefoot on a landing position."
 	icon_state = "pellet_pgas"
+	dangerous = TRUE
 	det_time = 2 SECONDS
 	smokeradius = 10
 	smoke_duration = 15

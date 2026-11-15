@@ -379,8 +379,6 @@
 	hive?.xeno_message("[src] has summoned down the metal bird to [port], gather to her now!")
 	priority_announce("Неизвестное вмешательство в управление десантным шаттлом. Выключение автопилота...", "Неисправность Шаттла", type = ANNOUNCEMENT_PRIORITY, color_override = "red", sound = 'sound/AI/dropship_wrong.ogg')
 
-#define ALIVE_HUMANS_FOR_CALLDOWN 0.1
-
 /datum/game_mode/proc/can_summon_dropship(mob/user)
 	if(user.do_actions)
 		user.balloon_alert(user, span_warning("Busy"))
@@ -443,7 +441,10 @@
 		to_chat(user, span_warning("Сознание птицы активно. Нужно подождать, пока она станет более уязвимым..."))
 		return FALSE
 	var/list/living_player_list = count_humans_and_xenos(SSmapping.levels_by_any_trait(list(ZTRAIT_GROUND)), COUNT_IGNORE_ALIVE_SSD)
-	if(length_char(GLOB.alive_human_list) && ((living_player_list[1] / length_char(GLOB.alive_human_list)) > ALIVE_HUMANS_FOR_CALLDOWN))
+	var/marines_on_ground = living_player_list[1]
+	var/xenos_on_ground = living_player_list[2]
+	var/marine_threshold = CEILING(xenos_on_ground / 2, 1)
+	if(marines_on_ground > marine_threshold)
 		to_chat(user, span_warning("Ещё много живой добычи на земле. Они мешают нашему психическому полю. Мы должны уничтожить их, прежде чем сможем это сделать."))
 		return FALSE
 	return TRUE

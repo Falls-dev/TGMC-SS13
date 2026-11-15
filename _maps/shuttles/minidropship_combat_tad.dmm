@@ -31,6 +31,9 @@
 "h" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship,
 /obj/machinery/camera/autoname/mainship,
+/mob/living/simple_animal/pig/mini{
+	name = "Podjhog Saraev"
+	},
 /turf/open/floor/mainship/mono,
 /area/shuttle/minidropship)
 "k" = (
