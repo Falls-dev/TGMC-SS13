@@ -91,20 +91,12 @@ appearance copies. Each block subscribes to turf replacement only. Membership
 covers an entire eight-cell camera bucket plus the rotation/view margin;
 it changes at bucket boundaries or when the viewers/source level change.
 
-One world-space root at the ship console contains all native blocks. Its
-transform depends only on the continuous flight position, heading and docking
-origin. Source coordinates use an immutable reference established at scene
-creation. Chunk buckets only change membership: retained blocks keep their
-pixel coordinates and there is no camera rebase or interpolation compensation.
-Matrix targets are cached so walking or idle flight cannot restart animation.
-
 Each passenger temporarily redirects the completed native lower master plate
-below the real interior. Passenger plates are never transformed by the scene;
-the engine's ordinary world camera moves the ship and its attached terrain
-together. Native child planes retain their geometry/light/emissive routing.
-The observer's original graph is restored on departure, HUD replacement,
-z change or scene destruction. The lower emissive relay cannot illuminate
-the upper interior. No client-private terrain canvas or world image is created.
+below the real interior and transforms that completed plate. The native
+geometry/light/emissive pipeline runs first. Matrix targets are cached so an
+idle aircraft does not restart an animation. The observer's original graph
+and transforms are restored on departure, HUD replacement, z change or scene
+destruction. The lower emissive relay cannot illuminate the upper interior.
 
 The original physics equations, controls, launch/landing constraints, real
 interior, shutter behavior, searchlight, transit drop and parachute paths are
@@ -123,7 +115,7 @@ Tradeoffs and remaining verification:
 
 - A reserved ground depth adds another plane cube to HUDs; this is map-load
   infrastructure and needs a full server restart, not a hot reload.
-- The native scene rotates the shared world-space terrain hierarchy;
+- The native scene rotates the actual final image, including native sprites;
   the old system's fabricated cardinal DMI/smoothing variants are removed.
 - Native viewport clipping/overscan during continuous rotation, lighting,
   multiple aircraft, and actual client frame time still require the user's
@@ -155,7 +147,7 @@ flight (especially 45-degree edges), NVG, pilot release/passenger movement,
 landing, return, and dropping with/without a parachute. Capture a fresh code
 and network profile after startup, then compare the same flight path.
 
-## Historical chunk seam correction (before the shared world root)
+## Chunk seam correction
 
 The first native implementation assumed bulk screen-map turf layout was
 suitable for individually shifted world-space blocks. Client testing showed
@@ -192,30 +184,11 @@ HUD planes to the shared terrain scene. A newly arriving eye can take up to
 one second to connect; existing viewers leaving the ship are detached on the
 next flight update.
 
-At this stage the render graph, lighting, and passenger-relative projection
-were unchanged. The reported black regions and visual walking jitter were
-not considered resolved by this allocation fix. The focused suite passes
+The render graph, lighting, and passenger-relative projection are unchanged.
+The reported black regions and visual walking jitter are not considered
+resolved by this allocation fix. The focused `tadpole_flight` suite passes
 with a `Success!` shutdown marker in
 `data/logs/tadpole-walk-radius-only/clean_run.lk`.
-
-## Shared ship transform
-
-The subsequent world-root change removes passenger-relative projection and
-all per-view camera animation/rebase code. Only the shared root is animated;
-membership changes add/remove individual chunks without cutting and rebuilding
-the whole attachment list. HUD adapters only connect/disconnect native plates.
-
-Regression coverage checks repeated passenger movement leaves the shared
-transform unchanged, eight-tile flight preserves retained chunk coordinates,
-the ground point below the aircraft maps to its docking origin during a turn,
-one attachment per chunk, and scene/HUD cleanup. Native RESET_TRANSFORM light
-appearances and client clipping during rotation still need visual verification;
-headless tests do not establish lighting correctness or client/server load.
-
-Validation: focused `tadpole_flight` PASS (1.7 seconds), no runtime errors and
-`Success!` in `data/logs/tadpole-shared-world-final/clean_run.lk`. Normal BYOND
-516.1659 build: 0 errors, 0 warnings. The isolated test build has only the
-existing `loop_checks` warning. In-client verification remains with the user.
 
 Regression checks cover adjacent cell positions, turf replacement through
 an anchor, and conservation of screen coordinates during a rebase halfway

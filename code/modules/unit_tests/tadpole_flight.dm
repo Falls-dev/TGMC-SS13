@@ -187,75 +187,41 @@
 	scene.update_chunks()
 	var/list/stable_blocks = scene.chunks.Copy()
 	var/turf/pilot_start = get_turf(pilot)
-	var/matrix/stationary = scene.scene_transform()
-	TEST_ASSERT(scene.root.update_transform(stationary, 0), "Initial aircraft transform must be installed on the shared world scene")
 	for(var/i in 1 to 4)
 		pilot.forceMove(i % 2 ? get_step(pilot_start, EAST) : pilot_start)
-		TEST_ASSERT(!scene.update_region(scene.source_radius(viewport), scene.source_z), "Passenger movement must not trigger a terrain rebuild")
-		TEST_ASSERT(!scene.root.update_transform(scene.scene_transform(), 0.2), "Walking must not restart or change the shared scene animation")
+		TEST_ASSERT(!scene.update_region(scene.source_radius(viewport), scene.source_z), "Passenger movement must not trigger a terrain rebuild or zero-shift camera rebase")
 	TEST_ASSERT_EQUAL(length(scene.chunks), length(stable_blocks), "Walking must retain the same block count")
 	for(var/chunk_key in stable_blocks)
 		TEST_ASSERT_EQUAL(scene.chunks[chunk_key], stable_blocks[chunk_key], "Walking must preserve every cached block identity")
-	// Moving the membership bucket must not reposition retained source blocks.
-	var/old_flight_x = helm.flight_x
-	var/old_flight_y = helm.flight_y
-	var/old_heading = helm.flight_heading
-	var/reference_x = scene.reference_x
-	var/reference_y = scene.reference_y
-	var/list/offsets = list()
-	for(var/chunk_key in stable_blocks)
-		var/obj/effect/abstract/tadpole_native_chunk/retained = stable_blocks[chunk_key]
-		offsets[chunk_key] = list(retained.pixel_x, retained.pixel_y)
-	helm.flight_x += 8
-	TEST_ASSERT(scene.update_region(scene.radius, scene.source_z), "Aircraft movement must update chunk membership")
-	for(var/chunk_key in stable_blocks)
-		var/obj/effect/abstract/tadpole_native_chunk/retained = scene.chunks[chunk_key]
-		if(!retained)
-			continue
-		var/list/offset = offsets[chunk_key]
-		TEST_ASSERT_EQUAL(retained, stable_blocks[chunk_key], "Crossing a bucket must reuse retained blocks")
-		TEST_ASSERT_EQUAL(retained.pixel_x, offset[1], "Crossing a bucket must not rebase block x")
-		TEST_ASSERT_EQUAL(retained.pixel_y, offset[2], "Crossing a bucket must not rebase block y")
-	TEST_ASSERT_EQUAL(scene.reference_x, reference_x, "Scene reference x must remain immutable")
-	TEST_ASSERT_EQUAL(scene.reference_y, reference_y, "Scene reference y must remain immutable")
-	// A ground point directly below the craft must map to its docking origin,
-	// independently of chunk membership, heading and passenger location.
-	helm.flight_heading = dir2angle(port.dir) + 37
-	var/matrix/turned = scene.scene_transform()
-	var/local_x = (helm.flight_x - reference_x) * world.icon_size
-	var/local_y = (helm.flight_y - reference_y) * world.icon_size
-	TEST_ASSERT(abs(turned.a * local_x + turned.b * local_y + turned.c - (port.x - helm.x) * world.icon_size) < 0.001, "Ground origin must stay attached to ship x during a turn")
-	TEST_ASSERT(abs(turned.d * local_x + turned.e * local_y + turned.f - (port.y - helm.y) * world.icon_size) < 0.001, "Ground origin must stay attached to ship y during a turn")
-	TEST_ASSERT_EQUAL(get_turf(scene.root), get_turf(helm), "One shared scene must live at the actual ship console")
-	TEST_ASSERT_EQUAL(length(scene.root.vis_contents), length(scene.chunks), "Each block must have exactly one shared world attachment")
-	helm.flight_x = old_flight_x
-	helm.flight_y = old_flight_y
-	helm.flight_heading = old_heading
 	pilot.forceMove(pilot_start)
 	port.width = old_width
 	port.height = old_height
-	var/obj/effect/abstract/tadpole_native_scene/world_scene = scene.root
 	qdel(scene)
-	TEST_ASSERT(QDELETED(world_scene), "Scene deletion must release the shared world root")
 	TEST_ASSERT_EQUAL(length(scene.chunks), 0, "Scene deletion must release all native blocks")
 	// Flight-specific graph edits must be local to one HUD and reversible.
 	var/datum/hud/display = allocate(/datum/hud, pilot)
 	var/datum/hud/other_display = allocate(/datum/hud, allocate(/mob/living/carbon/human))
 	var/atom/movable/screen/plane_master/other_plate = other_display.get_plane_master(GET_NEW_PLANE(RENDER_PLANE_MASTER, 1))
 	var/list/original_targets = other_plate.render_relay_planes.Copy()
-	var/atom/movable/screen/plane_master/first_plate = display.get_plane_master(GET_NEW_PLANE(RENDER_PLANE_MASTER, 1))
-	var/matrix/passenger_transform = first_plate.transform
-	var/matrix/other_transform = other_plate.transform
 	var/datum/tadpole_scene_view/native_view = new(display, 1)
 	TEST_ASSERT_NOTNULL(native_view.plate, "Ground must have a preallocated native lower render plate")
 	TEST_ASSERT(native_view.plate.get_relay_to(TADPOLE_GROUND_PLANE), "Passenger plate must relay below the physical craft")
 	TEST_ASSERT_EQUAL(other_plate.render_relay_planes.Join(","), original_targets.Join(","), "Another observer must retain their native graph")
-	var/datum/tadpole_scene_view/second_view = new(other_display, 1)
-	var/matrix/first_after = native_view.plate.transform
-	var/matrix/second_after = second_view.plate.transform
-	TEST_ASSERT_EQUAL(first_after.tolist().Join(","), passenger_transform.tolist().Join(","), "Attaching a passenger must leave the HUD transform untouched")
-	TEST_ASSERT_EQUAL(second_after.tolist().Join(","), other_transform.tolist().Join(","), "Passengers must use their native unmodified screen transforms")
-	qdel(second_view)
+	// Rebase halfway through an actual camera interpolation. Shifting the
+	// source grid and inverse-shifting the camera must preserve every pixel.
+	var/matrix/target = matrix()
+	target.Turn(-37)
+	target.Translate(14, -7)
+	native_view.update_camera(target, 1)
+	native_view.animation_started = world.time - 5
+	var/matrix/before_rebase = native_view.displayed_camera()
+	var/screen_x = before_rebase.a * 64 + before_rebase.b * 128 + before_rebase.c
+	var/screen_y = before_rebase.d * 64 + before_rebase.e * 128 + before_rebase.f
+	native_view.rebase_camera(256, -256)
+	var/matrix/after_rebase = native_view.displayed_camera()
+	TEST_ASSERT(abs(after_rebase.a * (64 - 256) + after_rebase.b * (128 + 256) + after_rebase.c - screen_x) < 0.001, "An eight-tile rebase must preserve displayed x during a turn")
+	TEST_ASSERT(abs(after_rebase.d * (64 - 256) + after_rebase.e * (128 + 256) + after_rebase.f - screen_y) < 0.001, "An eight-tile rebase must preserve displayed y during a turn")
+	TEST_ASSERT_EQUAL(native_view.animation_duration, 5, "Rebase must retain only the unfinished half of the animation")
 	var/atom/movable/screen/plane_master/passenger_plate = native_view.plate
 	qdel(native_view)
 	TEST_ASSERT_NULL(passenger_plate.get_relay_to(TADPOLE_GROUND_PLANE), "Leaving the scene must remove the aircraft relay")

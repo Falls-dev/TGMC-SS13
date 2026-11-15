@@ -1,26 +1,5 @@
 #define TADPOLE_CHUNK_SIZE 8
 
-/// One world-space transform shared by every passenger. Do not flatten the
-/// native child planes with KEEP_TOGETHER: their lighting graph is still used.
-/obj/effect/abstract/tadpole_native_scene
-	icon = null
-	plane = HUD_PLANE
-	appearance_flags = PIXEL_SCALE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	var/matrix/last_transform
-
-/obj/effect/abstract/tadpole_native_scene/proc/update_transform(matrix/target, animation_seconds)
-	if(last_transform && last_transform.a == target.a && last_transform.b == target.b && last_transform.c == target.c && last_transform.d == target.d && last_transform.e == target.e && last_transform.f == target.f)
-		return FALSE
-	last_transform = target
-	animate(src, transform = target, time = animation_seconds * 10, easing = LINEAR_EASING)
-	return TRUE
-
-/obj/effect/abstract/tadpole_native_scene/Destroy()
-	vis_contents.Cut()
-	last_transform = null
-	return ..()
-
 /// A world-space turf relay must have an explicit tile anchor. Bulk map_view
 /// layout is intended for screen maps, not separately shifted world blocks.
 /obj/effect/abstract/tadpole_native_tile
@@ -79,8 +58,13 @@
 /datum/tadpole_scene_view
 	var/datum/hud/hud
 	var/atom/movable/screen/plane_master/rendering_plate/master/plate
+	var/matrix/original_transform
 	var/source_offset
 	var/output_plane
+	var/matrix/last_camera
+	var/matrix/animation_from
+	var/animation_started = 0
+	var/animation_duration = 0
 	var/list/forced_planes = list()
 	var/atom/movable/screen/plane_master/emissive_plate
 	var/had_emissive_relay = FALSE
@@ -91,6 +75,7 @@
 	plate = hud.get_plane_master(GET_NEW_PLANE(RENDER_PLANE_MASTER, depth))
 	if(!plate)
 		return
+	original_transform = plate.transform
 	plate.remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_TRANSPARENT, depth - 1))
 	output_plane = GET_NEW_PLANE(TADPOLE_GROUND_PLANE, hud.current_plane_offset)
 	plate.add_relay_to(output_plane)
@@ -109,6 +94,7 @@
 
 /datum/tadpole_scene_view/Destroy()
 	if(!QDELETED(plate))
+		animate(plate, transform = original_transform, time = 0)
 		plate.remove_relay_from(output_plane)
 		plate.offset_change(hud.current_plane_offset)
 	if(had_emissive_relay && !QDELETED(emissive_plate))
@@ -122,12 +108,55 @@
 	forced_planes.Cut()
 	return ..()
 
+/datum/tadpole_scene_view/proc/update_camera(matrix/camera, animation_seconds)
+	if(QDELETED(plate))
+		return
+	if(last_camera && last_camera.a == camera.a && last_camera.b == camera.b && last_camera.c == camera.c && last_camera.d == camera.d && last_camera.e == camera.e && last_camera.f == camera.f)
+		return
+	animation_from = displayed_camera()
+	animation_started = world.time
+	animation_duration = animation_seconds * 10
+	last_camera = camera
+	animate(plate, transform = camera, time = animation_duration, easing = LINEAR_EASING)
+
+/// Match the LINEAR_EASING matrix interpolation currently visible to clients.
+/datum/tadpole_scene_view/proc/displayed_camera()
+	if(!last_camera)
+		return plate?.transform ? matrix(plate.transform) : matrix()
+	var/progress = animation_duration ? clamp((world.time - animation_started) / animation_duration, 0, 1) : 1
+	if(!animation_from || progress >= 1)
+		return matrix(last_camera)
+	var/matrix/result = matrix()
+	result.a = animation_from.a + (last_camera.a - animation_from.a) * progress
+	result.b = animation_from.b + (last_camera.b - animation_from.b) * progress
+	result.c = animation_from.c + (last_camera.c - animation_from.c) * progress
+	result.d = animation_from.d + (last_camera.d - animation_from.d) * progress
+	result.e = animation_from.e + (last_camera.e - animation_from.e) * progress
+	result.f = animation_from.f + (last_camera.f - animation_from.f) * progress
+	return result
+
+/// Blocks change coordinate frames instantly. Apply the inverse displacement
+/// to the displayed camera instantly, before animating the next physics step.
+/datum/tadpole_scene_view/proc/rebase_camera(shift_x, shift_y)
+	if(QDELETED(plate) || !last_camera)
+		return
+	var/matrix/current = displayed_camera()
+	var/remaining = max(0, animation_duration - (world.time - animation_started))
+	current.c += current.a * shift_x + current.b * shift_y
+	current.f += current.d * shift_x + current.e * shift_y
+	var/matrix/target = matrix(last_camera)
+	target.c += target.a * shift_x + target.b * shift_y
+	target.f += target.d * shift_x + target.e * shift_y
+	animation_from = current
+	last_camera = target
+	animation_started = world.time
+	animation_duration = remaining
+	animate(plate, transform = current, time = 0)
+	if(remaining)
+		animate(plate, transform = target, time = remaining, easing = LINEAR_EASING)
+
 /datum/tadpole_scene
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/helm
-	var/obj/effect/abstract/tadpole_native_scene/root
-	/// Immutable ground reference; chunk buckets below only control membership.
-	var/reference_x
-	var/reference_y
 	var/list/chunks = list()
 	var/list/views = list()
 	var/origin_x
@@ -139,13 +168,9 @@
 
 /datum/tadpole_scene/New(obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/owner)
 	helm = owner
-	root = new(get_turf(helm))
-	reference_x = helm.flight_x
-	reference_y = helm.flight_y
 
 /datum/tadpole_scene/Destroy()
 	QDEL_LIST_ASSOC_VAL(views)
-	QDEL_NULL(root)
 	QDEL_LIST_ASSOC_VAL(chunks)
 	viewer_candidates.Cut()
 	helm = null
@@ -182,25 +207,26 @@
 		views -= departed
 	if(!needed_radius)
 		if(length(chunks))
-			root.vis_contents.Cut()
 			QDEL_LIST_ASSOC_VAL(chunks)
 		radius = 0
 		return
 	update_region(needed_radius, helm.eyeobj.z)
-	root.update_transform(scene_transform(), animation_seconds)
-
-/// Ground and docking coordinates only. Walking is handled by the engine's
-/// ordinary world camera, just like the physical shuttle interior.
-/datum/tadpole_scene/proc/scene_transform()
-	var/angle = helm.flight_heading - dir2angle(helm.shuttle_port.dir)
-	var/c = cos(angle)
-	var/s = sin(angle)
-	var/dx = reference_x - helm.flight_x
-	var/dy = reference_y - helm.flight_y
-	var/matrix/result = matrix()
-	result.Turn(-angle)
-	result.Translate((dx * c - dy * s + helm.shuttle_port.x - helm.x) * world.icon_size, (dy * c + dx * s + helm.shuttle_port.y - helm.y) * world.icon_size)
-	return result
+	for(var/client/display as anything in views)
+		var/datum/tadpole_scene_view/view = views[display]
+		var/turf/eye = get_turf(display.eye)
+		if(!eye || QDELETED(view.plate))
+			continue
+		var/angle = helm.flight_heading - dir2angle(helm.shuttle_port.dir)
+		var/c = cos(angle)
+		var/s = sin(angle)
+		var/px = helm.shuttle_port.x - eye.x
+		var/py = helm.shuttle_port.y - eye.y
+		var/dx = origin_x - helm.flight_x
+		var/dy = origin_y - helm.flight_y
+		var/matrix/camera = matrix()
+		camera.Turn(-angle)
+		camera.Translate((px - (px * c - py * s) + dx * c - dy * s) * world.icon_size, (py - (py * c + px * s) + dy * c + dx * s) * world.icon_size)
+		view.update_camera(camera, animation_seconds)
 
 /// Discovery is separate from the five-Hz flight path. Existing viewers are
 /// still validated every step; new remote eyes can take up to one second.
@@ -224,6 +250,10 @@
 	var/new_x = FLOOR(helm.flight_x / TADPOLE_CHUNK_SIZE, 1) * TADPOLE_CHUNK_SIZE
 	var/new_y = FLOOR(helm.flight_y / TADPOLE_CHUNK_SIZE, 1) * TADPOLE_CHUNK_SIZE
 	if(origin_x != new_x || origin_y != new_y || source_z != ground_z || radius != needed_radius)
+		if(!isnull(origin_x) && !isnull(origin_y) && (new_x != origin_x || new_y != origin_y))
+			for(var/client/display as anything in views)
+				var/datum/tadpole_scene_view/view = views[display]
+				view.rebase_camera((new_x - origin_x) * world.icon_size, (new_y - origin_y) * world.icon_size)
 		origin_x = new_x
 		origin_y = new_y
 		source_z = ground_z
@@ -245,16 +275,14 @@
 			var/key = "[x],[y],[source_z]"
 			var/obj/effect/abstract/tadpole_native_chunk/chunk = chunks[key]
 			if(!chunk)
-				chunk = new
+				chunk = new(get_turf(helm))
 				chunk.build(x, y, source_z)
 				chunks[key] = chunk
-				chunk.pixel_x = (max(1, x) - reference_x) * world.icon_size
-				chunk.pixel_y = (max(1, y) - reference_y) * world.icon_size
-				root.vis_contents += chunk
 			else
 				remaining -= key
+			chunk.pixel_x = (max(1, x) - origin_x + helm.shuttle_port.x - helm.x) * world.icon_size
+			chunk.pixel_y = (max(1, y) - origin_y + helm.shuttle_port.y - helm.y) * world.icon_size
 	for(var/key in remaining)
-		root.vis_contents -= chunks[key]
 		qdel(chunks[key])
 		chunks -= key
 
