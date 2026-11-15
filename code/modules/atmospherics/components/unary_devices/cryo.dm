@@ -220,7 +220,7 @@
 	if(istype(I, /obj/item/reagent_containers/glass))
 
 		for(var/datum/reagent/X in I.reagents.reagent_list)
-			if(X.medbayblacklist)
+			if(X.medbayblacklist || X.cryoblacklist)
 				to_chat(user, span_warning("The cryo cell's automatic safety features beep softly, they must have detected a harmful substance in the beaker."))
 				return
 
