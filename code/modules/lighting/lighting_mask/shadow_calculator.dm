@@ -156,7 +156,7 @@
 			shadow.icon_state = "triangle"
 			shadow.color = "#000"
 			shadow.transform = triangle_matrix
-			shadow.render_target = SHADOW_RENDER_TARGET
+			shadow.render_target = OFFSET_RENDER_TARGET(SHADOW_RENDER_TARGET, GET_TURF_PLANE_OFFSET(our_turf))
 			shadow.blend_mode = BLEND_OVERLAY
 
 			LAZYADD(shadows, shadow)

@@ -195,6 +195,8 @@
 /// This is because it's annoying to get turfs to position inside it correctly
 /// If you wanna try someday feel free, but I can't manage it
 /datum/plane_master_group/popup
+	/// Popups display their source depth, independently of the viewer location.
+	var/source_plane_offset = 0
 
 /// Note do not use return ..() because it will cause client crush when screen gets deleted
 /// TOOD: Remove this entirely when 516 is stable
@@ -208,7 +210,16 @@
 	show_hud()
 
 /datum/plane_master_group/popup/build_planes_offset(datum/hud/source, new_offset, use_scale = TRUE)
-	return ..(source, new_offset, FALSE)
+	new_offset = source_plane_offset
+	. = ..(source, new_offset, FALSE)
+	for(var/key in plane_masters)
+		var/atom/movable/screen/plane_master/master = plane_masters[key]
+		if(istype(master, /atom/movable/screen/plane_master/rendering_plate/master))
+			var/atom/movable/screen/plane_master/rendering_plate/master/final_plate = master
+			final_plate.offset_change(new_offset)
+		else if(istype(master, /atom/movable/screen/plane_master/rendering_plate/lighting))
+			var/atom/movable/screen/plane_master/rendering_plate/lighting/light_plate = master
+			light_plate.offset_change(new_offset)
 
 /// Holds the main plane master
 /datum/plane_master_group/main
@@ -234,3 +245,9 @@
 /// This is mostly a proc so it can be overriden by popups, since they have unique behavior they want to do
 /datum/plane_master_group/hudless/show_plane(atom/movable/screen/plane_master/plane)
 	plane.show_to(our_mob)
+
+/datum/plane_master_group/proc/view_offset(viewer_offset)
+	return viewer_offset
+
+/datum/plane_master_group/popup/view_offset(viewer_offset)
+	return source_plane_offset

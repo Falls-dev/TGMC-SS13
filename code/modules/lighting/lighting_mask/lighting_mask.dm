@@ -25,6 +25,8 @@
 
 	///The current angle the item is pointing at
 	var/current_angle = 0
+	/// Cached depth for the nullspace mask; only rebuild its filter on z changes.
+	var/last_plane_offset
 
 	///The radius of illumination of the mask
 	var/radius = 0
@@ -151,3 +153,15 @@
 
 #undef LIGHTING_MASK_SPRITE_SIZE
 #undef LIGHTING_MASK_RADIUS
+
+/// The mask itself lives in nullspace; use the owner's turf for plane/target IDs.
+/atom/movable/lighting_mask/proc/sync_plane()
+	var/turf/position = get_turf(mask_holder)
+	if(!position)
+		return
+	var/new_offset = GET_TURF_PLANE_OFFSET(position)
+	if(!isnull(last_plane_offset) && last_plane_offset == new_offset)
+		return
+	last_plane_offset = new_offset
+	SET_PLANE(src, LIGHTING_PLANE, position)
+	add_filter("shadow_alpha_masking", 4, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(SHADOW_RENDER_TARGET, GET_TURF_PLANE_OFFSET(position)), flags = MASK_INVERSE))

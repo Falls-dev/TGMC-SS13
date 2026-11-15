@@ -126,6 +126,7 @@
 		var/size_y = bbox[4] - bbox[2] + 1
 
 		cam_screen.vis_contents = visible_turfs
+		cam_screen.refresh_source_planes()
 		cam_background.icon_state = "clear"
 		cam_background.fill_rect(1, 1, size_x, size_y)
 
@@ -146,6 +147,7 @@
 
 /obj/machinery/computer/camera/proc/show_camera_static()
 	cam_screen.vis_contents.Cut()
+	cam_screen.refresh_source_planes()
 	cam_background.icon_state = "scanline2"
 	cam_background.fill_rect(1, 1, DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
 
@@ -168,11 +170,13 @@
 
 /atom/movable/screen/map_view/camera/proc/show_camera(list/visible_turfs, size_x, size_y)
 	vis_contents = visible_turfs
+	refresh_source_planes()
 	cam_background.icon_state = "clear"
 	cam_background.fill_rect(1, 1, size_x, size_y)
 
 /atom/movable/screen/map_view/camera/proc/show_camera_static()
 	vis_contents.Cut()
+	refresh_source_planes()
 	cam_background.icon_state = "scanline2"
 	cam_background.fill_rect(1, 1, DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
 
