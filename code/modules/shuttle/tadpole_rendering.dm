@@ -69,6 +69,8 @@
 	var/had_emissive_relay = FALSE
 	var/datum/tadpole_scene/scene
 	var/atom/movable/tracked_eye
+	var/atom/movable/screen/plane_master/ship_plate
+	var/ship_mask_filter
 
 /datum/tadpole_scene_view/New(datum/hud/display, depth, datum/tadpole_scene/owner)
 	hud = display
@@ -81,6 +83,13 @@
 	plate.remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_TRANSPARENT, depth - 1))
 	output_plane = GET_NEW_PLANE(TADPOLE_GROUND_PLANE, hud.current_plane_offset)
 	plate.add_relay_to(output_plane)
+	// The ground is already lit by its source z level. Composite it beneath
+	// GAME's result, rather than feeding it back through transit lighting.
+	// GAME's darkness backdrop otherwise obscures that lower image, even
+	// outside the actual hull. Clip only the upper result to its own geometry.
+	ship_plate = hud.get_plane_master(GET_NEW_PLANE(RENDER_PLANE_GAME, hud.current_plane_offset))
+	ship_mask_filter = "tadpole_hull_[REF(src)]"
+	ship_plate?.add_filter(ship_mask_filter, 100, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(LIGHT_MASK_RENDER_TARGET, hud.current_plane_offset)))
 	var/datum/plane_master_group/group = hud.get_plane_group(PLANE_GROUP_MAIN)
 	for(var/key in group.plane_masters)
 		var/atom/movable/screen/plane_master/master = group.plane_masters[key]
@@ -97,6 +106,10 @@
 /datum/tadpole_scene_view/Destroy()
 	track_eye(null)
 	scene = null
+	if(!QDELETED(ship_plate))
+		ship_plate.remove_filter(ship_mask_filter)
+	ship_plate = null
+	ship_mask_filter = null
 	if(!QDELETED(plate))
 		animate(plate, transform = original_transform, time = 0)
 		plate.remove_relay_from(output_plane)

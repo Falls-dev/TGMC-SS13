@@ -245,6 +245,21 @@
 	TEST_ASSERT_NOTNULL(native_view.plate, "Ground must have a preallocated native lower render plate")
 	TEST_ASSERT(native_view.plate.get_relay_to(TADPOLE_GROUND_PLANE), "Passenger plate must relay below the physical craft")
 	TEST_ASSERT_EQUAL(other_plate.render_relay_planes.Join(","), original_targets.Join(","), "Another observer must retain their native graph")
+	var/atom/movable/screen/plane_master/ground_output = display.get_plane_master(TADPOLE_GROUND_PLANE)
+	var/atom/movable/render_plane_relay/ground_relay = ground_output.get_relay_to(RENDER_PLANE_MASTER)
+	TEST_ASSERT_NOTNULL(ground_relay, "Already-lit ground must composite directly into the final output")
+	TEST_ASSERT_NULL(ground_output.get_relay_to(RENDER_PLANE_GAME), "Ground must bypass the upper lighting pass")
+	TEST_ASSERT_NULL(ground_output.get_relay_to(LIGHT_MASK_PLANE), "Ground must not expand the upper interior's visibility mask")
+	var/atom/movable/render_plane_relay/ship_relay = native_view.ship_plate.get_relay_to(RENDER_PLANE_MASTER)
+	TEST_ASSERT_NOTNULL(ship_relay, "The completed interior must retain its native final output")
+	TEST_ASSERT(ground_relay.layer < ship_relay.layer, "Ground must remain behind the lit hull and its occupants")
+	var/list/ship_filter = native_view.ship_plate.filter_data[native_view.ship_mask_filter]
+	TEST_ASSERT_NOTNULL(ship_filter, "Upper darkness backdrop must be clipped to upper geometry")
+	TEST_ASSERT_EQUAL(ship_filter["render_source"], OFFSET_RENDER_TARGET(LIGHT_MASK_RENDER_TARGET, 0), "Hull cutout must use the unlit upper geometry mask, not passenger illumination")
+	var/atom/movable/screen/plane_master/other_ship_plate = other_display.get_plane_master(RENDER_PLANE_GAME)
+	TEST_ASSERT(!other_ship_plate.filter_data?[native_view.ship_mask_filter], "A passenger hull mask must not alter another HUD")
+	var/atom/movable/screen/plane_master/saved_ship_plate = native_view.ship_plate
+	var/saved_ship_filter = native_view.ship_mask_filter
 	// Exercise the real Move -> COMSIG_MOVABLE_MOVED path without calling
 	// the 0.2-second scene processor. Headless fixture has a HUD but no client.
 	var/turf/walking_start = get_turf(pilot)
@@ -288,6 +303,7 @@
 	TEST_ASSERT_EQUAL(native_view.animation_duration, 5, "Rebase must retain only the unfinished half of the animation")
 	var/atom/movable/screen/plane_master/passenger_plate = native_view.plate
 	qdel(native_view)
+	TEST_ASSERT(!saved_ship_plate.filter_data?[saved_ship_filter], "Leaving must remove only the temporary hull filter")
 	qdel(walking_scene)
 	TEST_ASSERT_NULL(passenger_plate.get_relay_to(TADPOLE_GROUND_PLANE), "Leaving the scene must remove the aircraft relay")
 	TEST_ASSERT(passenger_plate.get_relay_to(RENDER_PLANE_TRANSPARENT), "Leaving must restore native multiz routing")
