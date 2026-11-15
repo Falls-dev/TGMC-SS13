@@ -2,10 +2,16 @@
 // Does not attack on her own: flees from enemies. Attacks only on a direct hivemind order.
 
 #define NYMPH_WORK_RADIUS 7
+#define NYMPH_BLUEPRINT_RADIUS 25
 #define NYMPH_WEED_RADIUS 5
+#define NYMPH_RECHARGE_RADIUS 22
 #define NYMPH_THINK_COOLDOWN 1 SECONDS
-#define NYMPH_BLACKLIST_TIME 15 SECONDS
+#define NYMPH_BLACKLIST_TIME 20 SECONDS
+#define NYMPH_STUCK_TIMEOUT 6 SECONDS
+#define NYMPH_RECHARGE_RETRY 5 SECONDS
 #define NYMPH_PLASMA_RESERVE 100
+#define NYMPH_PLASMA_RECHARGE_START 0.65
+#define NYMPH_PLASMA_RECHARGE_TARGET 0.9
 #define NYMPH_JOB_BUILD 1
 #define NYMPH_JOB_WEED 2
 #define NYMPH_JOB_FILL 3
@@ -25,17 +31,32 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 	/// Attack on a direct hivemind order (otherwise the nymph attacks no one)
 	var/rts_attack_ordered = FALSE
 	var/list/blacklist = list()
+	/// Reversed A* path for the current autonomous move (next step is at the end).
+	var/list/nymph_path = list()
+	var/turf/nymph_route_destination
+	var/turf/last_resin_turf
+	var/route_last_progress_time = 0
+	var/route_last_distance = INFINITY
+	var/recharge_retry_at = 0
+	var/route_is_recharge = FALSE
+	/// Persist recharge intent after reaching resin so other idle chores do not interrupt regeneration.
+	var/recharging_plasma = FALSE
 	COOLDOWN_DECLARE(think_cooldown)
 
 /datum/ai_behavior/xeno/nymph/Destroy(force, ...)
+	UnregisterSignal(mob_parent, COMSIG_STATE_MAINTAINED_DISTANCE)
 	release_job()
+	clear_nymph_route()
+	recharging_plasma = FALSE
 	support_target = null
 	return ..()
 
 /datum/ai_behavior/xeno/nymph/rts_reset()
 	. = ..()
+	UnregisterSignal(mob_parent, COMSIG_STATE_MAINTAINED_DISTANCE)
 	release_job()
-	nymph_moving = FALSE
+	clear_nymph_route()
+	recharging_plasma = FALSE
 	support_target = null
 	rts_attack_ordered = FALSE
 
@@ -57,6 +78,13 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 	if(nymph_moving)
 		return
 	return ..(null) // do not pick combat targets ourselves
+
+/// Autonomous routes use the maintained-distance signal to advance A* tiles, not to attack the floor.
+/datum/ai_behavior/xeno/nymph/register_action_signals(action_type)
+	if(action_type == MOVING_TO_ATOM && nymph_moving)
+		RegisterSignal(mob_parent, COMSIG_STATE_MAINTAINED_DISTANCE, PROC_REF(finished_nymph_path_step))
+		return
+	return ..()
 
 /// Are we under a direct order (then we do not run)
 /datum/ai_behavior/xeno/nymph/proc/can_flee()
@@ -81,7 +109,8 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 	return nearest
 
 /datum/ai_behavior/xeno/nymph/proc/flee_from(atom/threat)
-	if(isxeno(threat) && mob_parent.issamexenohive(threat))
+	var/mob/living/carbon/xenomorph/X = mob_parent
+	if(isxeno(threat) && X.issamexenohive(threat))
 		return
 	halt_job()
 	if(current_action == MOVING_TO_SAFETY && combat_target == threat)
@@ -113,23 +142,30 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 	late_initialize()
 
 /datum/ai_behavior/xeno/nymph/process()
-	if(mob_parent && !QDELETED(mob_parent) && mob_parent.stat == CONSCIOUS && !mob_parent.notransform && !mob_parent.do_actions)
-		nymph_think()
+	if(mob_parent && !QDELETED(mob_parent))
+		if(nymph_moving && (mob_parent.stat != CONSCIOUS || mob_parent.notransform || mob_parent.do_actions || should_hold()))
+			// Do not count stuns, actions or ally-wrangling as pathfinding failure.
+			route_last_progress_time = world.time
+		else if(mob_parent.stat == CONSCIOUS && !mob_parent.notransform && !mob_parent.do_actions)
+			nymph_think()
 	return ..()
 
 /datum/ai_behavior/xeno/nymph/proc/nymph_think()
 	if(!COOLDOWN_FINISHED(src, think_cooldown))
 		return
 	COOLDOWN_START(src, think_cooldown, NYMPH_THINK_COOLDOWN)
-	// A direct well order takes precedence over autonomous threat avoidance; the base
-	// xeno processor owns the fill task and advances it exactly once per tick.
+	var/mob/living/carbon/xenomorph/X = mob_parent
+	var/turf/current_turf = get_turf(X)
+	if(X.loc_weeds_type)
+		last_resin_turf = current_turf
+	// A direct well order takes precedence over autonomous work and threat avoidance.
 	if(rts_well)
 		return
 	if(can_flee())
 		var/atom/threat = get_nearest_nymph_threat()
 		if(threat)
 			// A stale combat target must never make a nymph flee from a member of her own hive.
-			if(isxeno(threat) && mob_parent.issamexenohive(threat))
+			if(isxeno(threat) && X.issamexenohive(threat))
 				do_unset_target(threat, need_new_state = FALSE)
 			else
 				flee_from(threat)
@@ -137,8 +173,8 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 		if(current_action == MOVING_TO_SAFETY)
 			stop_fleeing()
 	if(support_target)
-		if(QDELETED(support_target) || support_target.stat == DEAD || support_target.z != mob_parent.z || \
-			(support_target.status_flags & INCORPOREAL) || support_target.hivenumber != mob_parent.get_xeno_hivenumber())
+		if(QDELETED(support_target) || support_target.stat == DEAD || support_target.z != X.z || \
+			(support_target.status_flags & INCORPOREAL) || support_target.hivenumber != X.get_xeno_hivenumber())
 			// Do not leave the nymph stuck escorting a deleted/dead target.
 			rts_reset()
 			if(has_living_hivemind())
@@ -152,29 +188,51 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 		return
 	if(!is_free())
 		return
+	// Autonomous routes are advanced one A* tile at a time. Do not issue a new goal
+	// while following a route, otherwise the old direct-vector movement can oscillate.
+	if(nymph_moving)
+		if(job_target && !job_valid())
+			halt_job()
+			return
+		if(route_is_recharge && (!nymph_route_destination || !(locate(/obj/alien/weeds) in nymph_route_destination)))
+			recharge_retry_at = world.time + NYMPH_RECHARGE_RETRY
+			recharging_plasma = FALSE
+			halt_job()
+			return
+		var/turf/next_step = get_turf(atom_to_walk_to)
+		var/distance_to_step = next_step ? get_dist(X, next_step) : INFINITY
+		if(distance_to_step < route_last_distance)
+			route_last_distance = distance_to_step
+			route_last_progress_time = world.time
+		else if(world.time >= route_last_progress_time + NYMPH_STUCK_TIMEOUT)
+			// No progress includes oscillating between two tiles at the same distance.
+			var/atom/failed_goal = job_target ? job_target : nymph_route_destination
+			if(failed_goal)
+				blacklist[failed_goal] = world.time + NYMPH_BLACKLIST_TIME
+			if(route_is_recharge)
+				recharge_retry_at = world.time + NYMPH_RECHARGE_RETRY
+				recharging_plasma = FALSE
+			halt_job()
+		return
 	if(job_target && !job_valid())
 		release_job()
 	if(!job_target)
 		find_job()
-	if(!job_target)
-		if(nymph_moving)
-			halt_job()
+	// Construction is evaluated before recharge. Once there is a reachable,
+	// affordable blueprint, the nymph leaves the resin and works on it.
+	if(nymph_moving)
 		return
-	if(job_type == NYMPH_JOB_BUILD)
-		var/obj/effect/xeno_blueprint/bp = job_target
-		if(bp && !bp.is_demolish && bp.entry && ispath(bp.entry.path, /turf/closed) && get_turf(mob_parent) == get_turf(bp))
-			var/turf/step_off = get_build_step_off_turf(get_turf(bp))
-			if(step_off)
-				go_to(step_off)
-			else
-				blacklist[job_target] = world.time + NYMPH_BLACKLIST_TIME
-				halt_job()
-			return
+	if(!job_target)
+		return
+	if(X.resting)
+		SEND_SIGNAL(X, COMSIG_XENOABILITY_REST)
 	if(job_in_reach())
 		halt_job(FALSE)
 		INVOKE_ASYNC(src, PROC_REF(do_job))
 		return
-	go_to(get_turf(job_target))
+	if(!go_to_job())
+		blacklist[job_target] = world.time + NYMPH_BLACKLIST_TIME
+		halt_job()
 
 /// Free for independent work: no order, combat, or escort
 /datum/ai_behavior/xeno/nymph/proc/is_free()
@@ -184,19 +242,21 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 		return FALSE
 	return TRUE
 
-/datum/ai_behavior/xeno/nymph/proc/go_to(turf/T)
-	if(nymph_moving && atom_to_walk_to == T)
-		return
-	nymph_moving = TRUE
-	hivemind_rts_direct_move = TRUE
-	change_action(MOVING_TO_ATOM, T)
-	if(!registered_for_move)
-		INVOKE_ASYNC(src, PROC_REF(scheduled_move))
+/datum/ai_behavior/xeno/nymph/proc/go_to_job()
+	var/list/route = get_route_to_job(job_target, job_type)
+	if(!route)
+		return FALSE
+	var/list/path = route["path"]
+	var/turf/destination = route["destination"]
+	if(!length(path))
+		return TRUE
+	return start_nymph_route(path, destination)
 
-/// Halt our own transition; drop_job = FALSE keeps the job claimed
+/// Halt our own transition; drop_job = FALSE keeps the job claimed.
 /datum/ai_behavior/xeno/nymph/proc/halt_job(drop_job = TRUE)
 	if(nymph_moving)
-		nymph_moving = FALSE
+		UnregisterSignal(mob_parent, COMSIG_STATE_MAINTAINED_DISTANCE)
+		clear_nymph_route()
 		rts_finish_move()
 	if(drop_job)
 		release_job()
@@ -211,6 +271,154 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 	job_target = target
 	job_type = job
 	GLOB.nymph_job_claims[target] = src
+
+/// Find the shortest reachable tile from which this job can be completed.
+/datum/ai_behavior/xeno/nymph/proc/get_route_to_job(atom/target, job)
+	var/turf/start = get_turf(mob_parent)
+	var/turf/goal = get_turf(target)
+	if(!start || !goal || start.z != goal.z)
+		return null
+	var/list/candidates = list()
+	if(job == NYMPH_JOB_WEED)
+		candidates += goal
+	else if(job == NYMPH_JOB_BUILD)
+		// Resin blueprints are built from a cardinally adjacent tile. This avoids
+		// choosing a diagonal tile that is technically close but trapped by corners.
+		for(var/direction in list(NORTH, SOUTH, EAST, WEST))
+			var/turf/candidate = get_step(goal, direction)
+			if(!candidate || candidate.density || (candidate.atom_flags & AI_BLOCKED) || is_blocked_turf(candidate))
+				continue
+			candidates += candidate
+	else
+		for(var/turf/candidate in orange(1, goal))
+			if(candidate.density || (candidate.atom_flags & AI_BLOCKED) || is_blocked_turf(candidate))
+				continue
+			candidates += candidate
+	var/turf/best_destination
+	var/list/best_path
+	var/best_length = INFINITY
+	for(var/turf/candidate in candidates)
+		var/list/path
+		if(candidate == start)
+			path = list()
+		else
+			path = get_path(start, candidate, TILE_PATHING)
+		if(isnull(path))
+			continue
+		if(length(path) < best_length)
+			best_length = length(path)
+			best_destination = candidate
+			best_path = path
+			if(!best_length)
+				break
+	if(!best_destination)
+		return null
+	return list("path" = best_path, "destination" = best_destination)
+
+/// Start following a reversed tile path. Path order is goal-to-start in get_path().
+/datum/ai_behavior/xeno/nymph/proc/start_nymph_route(list/path, turf/destination, recharge = FALSE)
+	if(!path || !length(path) || !destination)
+		return FALSE
+	clear_nymph_route()
+	nymph_path = path.Copy()
+	nymph_route_destination = destination
+	route_is_recharge = recharge
+	nymph_moving = TRUE
+	var/turf/next_step = nymph_path[length(nymph_path)]
+	nymph_path.len--
+	route_last_progress_time = world.time
+	route_last_distance = get_dist(mob_parent, next_step)
+	change_action(MOVING_TO_ATOM, next_step)
+	return TRUE
+
+/// Called by the movement state when the current path tile is reached.
+/datum/ai_behavior/xeno/nymph/proc/finished_nymph_path_step()
+	SIGNAL_HANDLER
+	if(!nymph_moving)
+		return COMSIG_MAINTAIN_POSITION
+	if(length(nymph_path))
+		var/turf/next_step = nymph_path[length(nymph_path)]
+		nymph_path.len--
+		set_atom_to_walk_to(next_step)
+		route_last_progress_time = world.time
+		route_last_distance = get_dist(mob_parent, next_step)
+		return COMSIG_MAINTAIN_POSITION
+	nymph_moving = FALSE
+	nymph_route_destination = null
+	route_is_recharge = FALSE
+	nymph_path = list()
+	rts_finish_move()
+	return COMSIG_MAINTAIN_POSITION
+
+/// Remove only nymph-owned route state. The caller decides whether to change the AI action.
+/datum/ai_behavior/xeno/nymph/proc/clear_nymph_route()
+	nymph_moving = FALSE
+	nymph_path = list()
+	nymph_route_destination = null
+	route_last_progress_time = 0
+	route_last_distance = INFINITY
+	route_is_recharge = FALSE
+
+/// Return to a resin tile when plasma is low, then rest until the reserve is replenished.
+/datum/ai_behavior/xeno/nymph/proc/seek_resin()
+	var/mob/living/carbon/xenomorph/X = mob_parent
+	if(X.loc_weeds_type)
+		recharging_plasma = TRUE
+		if(!X.resting)
+			SEND_SIGNAL(X, COMSIG_XENOABILITY_REST)
+		return TRUE
+	if(world.time < recharge_retry_at)
+		return FALSE
+	var/turf/start = get_turf(X)
+	if(!start)
+		return FALSE
+	var/turf/best_destination
+	var/list/best_path
+	var/best_length = INFINITY
+	var/checked_paths = 0
+	for(var/obj/alien/weeds/weed in range(NYMPH_RECHARGE_RADIUS, start))
+		var/turf/candidate = get_turf(weed)
+		if(!candidate || candidate.z != start.z || candidate.density || (candidate.atom_flags & AI_BLOCKED) || (candidate != start && is_blocked_turf(candidate)))
+			continue
+		var/distance = get_dist(start, candidate)
+		if(distance >= best_length || checked_paths >= 30 || in_blacklist(candidate))
+			continue
+		checked_paths++
+		var/list/path
+		if(candidate == start)
+			path = list()
+		else
+			path = get_path(start, candidate, TILE_PATHING)
+		if(isnull(path))
+			continue
+		if(length(path) < best_length)
+			best_length = length(path)
+			best_destination = candidate
+			best_path = path
+	if(last_resin_turf && !QDELETED(last_resin_turf) && last_resin_turf.z == start.z && (locate(/obj/alien/weeds) in last_resin_turf) && !is_blocked_turf(last_resin_turf) && !in_blacklist(last_resin_turf))
+		var/last_distance = get_dist(start, last_resin_turf)
+		if(last_distance < best_length && last_distance <= NYMPH_RECHARGE_RADIUS * 2)
+			var/list/last_path
+			if(last_resin_turf == start)
+				last_path = list()
+			else
+				last_path = get_path(start, last_resin_turf, TILE_PATHING)
+			if(!isnull(last_path) && length(last_path) < best_length)
+				best_length = length(last_path)
+				best_destination = last_resin_turf
+				best_path = last_path
+	if(!best_destination)
+		recharge_retry_at = world.time + NYMPH_RECHARGE_RETRY
+		return FALSE
+	if(!length(best_path))
+		if(X.loc_weeds_type || (locate(/obj/alien/weeds) in best_destination))
+			recharging_plasma = TRUE
+			if(!X.resting)
+				SEND_SIGNAL(X, COMSIG_XENOABILITY_REST)
+			return TRUE
+		return FALSE
+	recharging_plasma = TRUE
+	return start_nymph_route(best_path, best_destination, TRUE)
 
 /// Claimed by another nymph (stale entries are cleaned up)
 /datum/ai_behavior/xeno/nymph/proc/claimed_by_other(atom/target)
@@ -285,56 +493,98 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 	if(!own)
 		return
 	var/hive = X.hivenumber
+	var/plasma_capacity = X.xeno_caste.plasma_max * X.xeno_caste.plasma_regen_limit
 	var/best_score = INFINITY
 	var/obj/effect/xeno_blueprint/best
-	for(var/obj/effect/xeno_blueprint/bp in range(NYMPH_WORK_RADIUS, own))
-		if(bp.hivenumber != hive || QDELETED(bp) || claimed_by_other(bp) || in_blacklist(bp))
+	var/needs_build_plasma = FALSE
+	// Look across the whole nearby hive blueprint list, not just the immediate area.
+	// This lets the nymph head toward construction instead of aimlessly planting weeds.
+	for(var/obj/effect/xeno_blueprint/bp in GLOB.xeno_blueprints[hive])
+		if(QDELETED(bp) || bp.hivenumber != hive || bp.z != own.z || get_dist(own, bp) > NYMPH_BLUEPRINT_RADIUS || claimed_by_other(bp) || in_blacklist(bp))
 			continue
 		var/turf/T = get_turf(bp)
 		if(!bp.is_demolish)
 			if(!bp.entry || bp.entry.kind != BUILD_KIND_RESIN || bp.entry.unavailable_reason(X))
 				continue
-			if(X.plasma_stored < 60)
-				continue
-			if(bp.entry.check_turf(T) != NO_ERROR && bp.entry.check_turf(T) != ERROR_NO_WEED)
+			var/blueprint_error = bp.entry.check_turf(T)
+			if(blueprint_error != NO_ERROR && blueprint_error != ERROR_NO_WEED)
 				continue
 			if(build_would_trap(T, bp.entry) || other_claim_near(T))
 				continue
-		var/score = get_dist(own, T) + (bp.auto_rebuild ? -3 : 0) // repairing broken structures matters more
+			var/required_plasma = 0
+			if(blueprint_error == ERROR_NO_WEED)
+				var/datum/action/ability/activable/xeno/plant_weeds/weeds = X.actions_by_path[/datum/action/ability/activable/xeno/plant_weeds]
+				if(!weeds)
+					continue
+				required_plasma += weeds.ability_cost
+			var/list/build_state = bp.entry.get_state_data(X)
+			required_plasma += build_state["cost"]
+			// Do not wait forever on a blueprint whose combined planting/build cost
+			// exceeds the nymph's maximum plasma capacity.
+			if(required_plasma > plasma_capacity)
+				continue
+			if(X.plasma_stored < required_plasma)
+				needs_build_plasma = TRUE
+				continue
+		var/score = get_dist(own, T) + (bp.auto_rebuild ? -3 : 0)
 		if(score < best_score)
 			best_score = score
 			best = bp
 	if(best)
+		recharging_plasma = FALSE
 		claim(best, NYMPH_JOB_BUILD)
 		return
-	// No blueprints: heal and plasma-feed the wounded/hungry
-	var/mob/living/carbon/xenomorph/best_patient
-	best_score = INFINITY
-	for(var/mob/living/carbon/xenomorph/patient in range(NYMPH_WORK_RADIUS, own))
-		if(istype(patient, /mob/living/carbon/xenomorph/nymph) || claimed_by_other(patient) || in_blacklist(patient) || !support_need(patient))
-			continue
-		var/dist = get_dist(own, patient)
-		if(dist < best_score)
-			best_score = dist
-			best_patient = patient
-	if(best_patient)
-		claim(best_patient, NYMPH_JOB_SUPPORT)
+	// Keep resting on resin until the appropriate reserve is reached. If a blueprint
+	// is waiting, charge to the full capacity; otherwise keep a 90% passive reserve.
+	var/recharge_target = needs_build_plasma ? plasma_capacity : plasma_capacity * NYMPH_PLASMA_RECHARGE_TARGET
+	if(recharging_plasma && X.plasma_stored >= recharge_target)
+		recharging_plasma = FALSE
+		if(X.resting)
+			SEND_SIGNAL(X, COMSIG_XENOABILITY_REST)
+	if(recharging_plasma && X.loc_weeds_type && X.plasma_stored < recharge_target)
+		if(!X.resting)
+			SEND_SIGNAL(X, COMSIG_XENOABILITY_REST)
 		return
-	// Then wells
-	if(X.plasma_stored >= XENO_ACID_WELL_FILL_COST)
-		var/obj/structure/xeno/acidwell/best_well
+	// Construction comes before support and well filling. When a blueprint is waiting
+	// for plasma, reserve resources and head for resin before doing secondary work.
+	var/return_to_weed_jobs = FALSE
+	var/should_recharge = needs_build_plasma || (plasma_capacity > 0 && X.plasma_stored < plasma_capacity * NYMPH_PLASMA_RECHARGE_START)
+	if(should_recharge)
+		recharging_plasma = TRUE
+		if(seek_resin())
+			return
+		// No reachable resin nearby: allow planting weeds to create a future recharge
+		// point, but do not spend a low plasma reserve on support actions or acid wells.
+		return_to_weed_jobs = TRUE
+	// No blueprints and sufficient plasma: tend wounded/hungry allies.
+	if(!return_to_weed_jobs)
+		var/mob/living/carbon/xenomorph/best_patient
 		best_score = INFINITY
-		for(var/obj/structure/xeno/acidwell/well in range(NYMPH_WORK_RADIUS, own))
-			if(well.get_xeno_hivenumber() != hive || well.charges >= XENO_ACID_WELL_MAX_CHARGES || claimed_by_other(well) || in_blacklist(well))
+		for(var/mob/living/carbon/xenomorph/patient in range(NYMPH_WORK_RADIUS, own))
+			if(istype(patient, /mob/living/carbon/xenomorph/nymph) || claimed_by_other(patient) || in_blacklist(patient) || !support_need(patient))
 				continue
-			var/dist = get_dist(own, well)
+			var/dist = get_dist(own, patient)
 			if(dist < best_score)
 				best_score = dist
-				best_well = well
-		if(best_well)
-			claim(best_well, NYMPH_JOB_FILL)
+				best_patient = patient
+		if(best_patient)
+			claim(best_patient, NYMPH_JOB_SUPPORT)
 			return
-	// Otherwise seed the surroundings with weeds
+		// Then fill allied wells.
+		if(X.plasma_stored >= XENO_ACID_WELL_FILL_COST)
+			var/obj/structure/xeno/acidwell/best_well
+			best_score = INFINITY
+			for(var/obj/structure/xeno/acidwell/well in range(NYMPH_WORK_RADIUS, own))
+				if(well.get_xeno_hivenumber() != hive || well.charges >= XENO_ACID_WELL_MAX_CHARGES || claimed_by_other(well) || in_blacklist(well))
+					continue
+				var/dist = get_dist(own, well)
+				if(dist < best_score)
+					best_score = dist
+					best_well = well
+			if(best_well)
+				claim(best_well, NYMPH_JOB_FILL)
+				return
+	// Otherwise seed the surroundings with weeds.
 	var/datum/action/ability/activable/xeno/plant_weeds/weeds = X.actions_by_path[/datum/action/ability/activable/xeno/plant_weeds]
 	if(!weeds || !weeds.can_use_action(TRUE, ABILITY_IGNORE_SELECTED_ABILITY))
 		return
@@ -356,13 +606,33 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 		return
 
 /datum/ai_behavior/xeno/nymph/proc/job_valid()
+	var/mob/living/carbon/xenomorph/X = mob_parent
 	if(QDELETED(job_target) || claimed_by_other(job_target))
 		return FALSE
-	if(job_target.z != mob_parent.z || get_dist(mob_parent, job_target) > NYMPH_WORK_RADIUS + 3)
+	var/max_job_distance = job_type == NYMPH_JOB_BUILD ? NYMPH_BLUEPRINT_RADIUS + 3 : NYMPH_WORK_RADIUS + 3
+	if(job_target.z != X.z || get_dist(X, job_target) > max_job_distance)
 		return FALSE
 	if(in_blacklist(job_target))
 		return FALSE
 	switch(job_type)
+		if(NYMPH_JOB_BUILD)
+			var/obj/effect/xeno_blueprint/bp = job_target
+			if(bp.is_demolish)
+				return TRUE
+			if(!bp.entry || bp.entry.kind != BUILD_KIND_RESIN || bp.entry.unavailable_reason(X))
+				return FALSE
+			var/turf/build_turf = get_turf(bp)
+			var/build_error = bp.entry.check_turf(build_turf)
+			if(build_error != NO_ERROR && build_error != ERROR_NO_WEED)
+				return FALSE
+			var/list/build_state = bp.entry.get_state_data(X)
+			var/required_plasma = build_state["cost"]
+			if(build_error == ERROR_NO_WEED)
+				var/datum/action/ability/activable/xeno/plant_weeds/weeds = X.actions_by_path[/datum/action/ability/activable/xeno/plant_weeds]
+				if(!weeds)
+					return FALSE
+				required_plasma += weeds.ability_cost
+			return X.plasma_stored >= required_plasma
 		if(NYMPH_JOB_WEED)
 			return !(locate(/obj/alien/weeds) in get_turf(job_target))
 		if(NYMPH_JOB_FILL)
@@ -370,13 +640,15 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 			var/mob/living/carbon/xenomorph/xeno = mob_parent
 			return well.charges < XENO_ACID_WELL_MAX_CHARGES && xeno.plasma_stored >= XENO_ACID_WELL_FILL_COST
 		if(NYMPH_JOB_SUPPORT)
-			return !!support_need(job_target)
+			var/mob/living/carbon/xenomorph/patient = job_target
+			return !!support_need(patient)
 	return TRUE
 
 /datum/ai_behavior/xeno/nymph/proc/job_in_reach()
 	if(job_type == NYMPH_JOB_BUILD)
 		var/mob/living/carbon/xenomorph/X = mob_parent
-		return X.in_build_reach(get_turf(job_target))
+		var/turf/build_turf = get_turf(job_target)
+		return get_turf(X) != build_turf && X.in_build_reach(build_turf)
 	return get_dist(mob_parent, job_target) <= 1
 
 /datum/ai_behavior/xeno/nymph/proc/do_job()
@@ -394,7 +666,8 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 		var/obj/structure/xeno/acidwell/well = target
 		ok = well.fill_charge(X)
 	else if(job == NYMPH_JOB_SUPPORT)
-		ok = support_act(target, 0.5)
+		var/mob/living/carbon/xenomorph/patient = target
+		ok = support_act(patient, 0.5)
 	else
 		var/obj/effect/xeno_blueprint/bp = target
 		if(bp.is_demolish)
@@ -421,6 +694,9 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 		return TRUE
 	X.face_atom(T)
 	weeds.plant_weeds(T)
+	// Planting on our current turf does not emit a movement signal; refresh the
+	// resin-floor state explicitly so the nymph can start regenerating immediately.
+	X.handle_weeds_on_movement()
 	return !!(locate(/obj/alien/weeds) in T)
 
 /// What the patient needs: "heal" / "plasma" / null. plasma_ratio - plasma fraction threshold
@@ -452,10 +728,16 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 	return FALSE
 
 #undef NYMPH_WORK_RADIUS
+#undef NYMPH_BLUEPRINT_RADIUS
 #undef NYMPH_WEED_RADIUS
+#undef NYMPH_RECHARGE_RADIUS
 #undef NYMPH_THINK_COOLDOWN
 #undef NYMPH_BLACKLIST_TIME
+#undef NYMPH_STUCK_TIMEOUT
+#undef NYMPH_RECHARGE_RETRY
 #undef NYMPH_PLASMA_RESERVE
+#undef NYMPH_PLASMA_RECHARGE_START
+#undef NYMPH_PLASMA_RECHARGE_TARGET
 #undef NYMPH_JOB_BUILD
 #undef NYMPH_JOB_WEED
 #undef NYMPH_JOB_FILL
