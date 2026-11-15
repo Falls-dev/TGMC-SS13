@@ -59,25 +59,27 @@
 	var/original_plane = start.plane
 	chunk.build(start.x, start.y, start.z)
 	TEST_ASSERT_EQUAL(length(chunk.tiles), 64, "A native chunk must own exactly one 8x8 cell block")
-	TEST_ASSERT(start in chunk.anchors[start]:vis_contents, "Native scene must share the actual turf")
-	var/obj/effect/abstract/tadpole_native_tile/east_anchor = chunk.anchors[get_step(start, EAST)]
-	var/obj/effect/abstract/tadpole_native_tile/north_anchor = chunk.anchors[get_step(start, NORTH)]
-	TEST_ASSERT_EQUAL(east_anchor.pixel_x, world.icon_size, "Adjacent native cells must have explicit contiguous x offsets")
-	TEST_ASSERT_EQUAL(north_anchor.pixel_y, world.icon_size, "Adjacent native cells must have explicit contiguous y offsets")
+	TEST_ASSERT(start in chunk.vis_contents, "Native scene must share the actual turf")
+	TEST_ASSERT_EQUAL(length(chunk.vis_contents), 64, "The native block must contain all 64 turfs directly")
+	TEST_ASSERT(get_step(start, EAST) in chunk.vis_contents, "Native layout must include the adjacent east turf")
+	TEST_ASSERT(get_step(start, NORTH) in chunk.vis_contents, "Native layout must include the adjacent north turf")
+	for(var/atom/source as anything in chunk.vis_contents)
+		TEST_ASSERT(isturf(source), "A block must allocate no per-tile movable relays for SendMaps to traverse")
 	TEST_ASSERT_EQUAL(start.appearance, original_picture, "Native relay must not rewrite source geometry")
 	TEST_ASSERT_EQUAL(start.plane, original_plane, "Native relay must not modify source planes")
 	var/obj/item/item = allocate(/obj/item, start)
 	var/turf/destination = get_step(start, EAST)
 	item.forceMove(destination)
-	TEST_ASSERT(start in chunk.anchors[start]:vis_contents, "Object movement must not rebuild the terrain relay")
+	TEST_ASSERT(start in chunk.vis_contents, "Object movement must not rebuild the terrain relay")
 	TEST_ASSERT_EQUAL(length(chunk.tiles), 64, "Object movement must allocate no motion proxies")
 	var/old_type = start.type
 	start = start.ChangeTurf(/turf/open/floor/plating)
 	sleep(world.tick_lag)
-	TEST_ASSERT(start in chunk.anchors[start]:vis_contents, "Replacing a turf must reconnect its native relay")
+	TEST_ASSERT(start in chunk.vis_contents, "Replacing a turf must reconnect its native relay")
 	start.ChangeTurf(old_type)
 	qdel(chunk)
 	TEST_ASSERT_EQUAL(length(chunk.tiles), 0, "Scene deletion must release source subscriptions")
+	TEST_ASSERT_EQUAL(length(chunk.vis_contents), 0, "Scene deletion must release native visual links")
 	// Exercise the actual transit-enter signal and delayed fall callback.
 	var/turf/fall_floor = locate(110, 110, start.z)
 	var/old_floor_type = fall_floor.type
@@ -175,7 +177,7 @@
 		if(!before_step[chunk_key])
 			added_blocks++
 	TEST_ASSERT_EQUAL(added_blocks, 32, "The old one-tile walking threshold must reproduce its 32-block allocation burst")
-	world.log << "TADPOLE_WALK_REPRO: radius 24->25 adds [added_blocks] blocks / [added_blocks * 64] native anchors"
+	world.log << "TADPOLE_WALK_REPRO: radius 24->25 adds [added_blocks] blocks; old per-tile relays would add [added_blocks * 64] movables"
 	var/old_width = port.width
 	var/old_height = port.height
 	port.width = 7

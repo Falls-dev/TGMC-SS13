@@ -86,8 +86,9 @@ ground observers use their normal HUD offset. No source plane/appearance is
 mutated when a flight starts, moves or ends.
 
 A scene owns 8x8 blocks of real turfs in vis_contents (the same bulk-turf
-mechanism already used by map_view/camera). Each turf has an explicit positioning anchor; there are no per-actor
-appearance copies. Each block subscribes to turf replacement only. Membership
+mechanism already used by map_view/camera). Each block directly contains its
+64 turfs, using native relative turf layout; there are no per-tile movable
+anchors or per-actor appearance copies. Each block subscribes to turf replacement only. Membership
 covers an entire eight-cell camera bucket plus the rotation/view margin;
 it changes at bucket boundaries or when the viewers/source level change.
 
@@ -147,7 +148,7 @@ flight (especially 45-degree edges), NVG, pilot release/passenger movement,
 landing, return, and dropping with/without a parachute. Capture a fresh code
 and network profile after startup, then compare the same flight path.
 
-## Chunk seam correction
+## Historical chunk seam correction
 
 The first native implementation assumed bulk screen-map turf layout was
 suitable for individually shifted world-space blocks. Client testing showed
@@ -194,3 +195,36 @@ Regression checks cover adjacent cell positions, turf replacement through
 an anchor, and conservation of screen coordinates during a rebase halfway
 through a rotated camera interpolation. Client confirmation of the black
 blocks and continuous flight remains necessary.
+
+## SendMaps evidence and removal of per-tile relays
+
+The shared world-root transform experiment was rejected after client testing
+showed regular holes in rotated terrain and persistent walking lag. It was
+reverted in 231a19c0d34. Headless transform tests did not establish correct
+native rendering or performance; the passenger plate projection remains.
+
+The user's subsequent SendMaps capture reports 2.08907 seconds / 590 calls:
+1.91397 seconds looking for movable changes, including 1.68046 seconds looping
+through turfs in range; 2,626,029 movables examined (about 4,451 per call).
+These are accumulated totals, not the duration of an individual walking step.
+This identifies visibility traversal as a substantial part of that capture;
+it does not isolate the exact cost of this renderer from other visible objects.
+
+Remove the intermediate movable anchor previously created for every source
+turf. Blocks now directly expose the 64 real turfs through vis_contents, whose
+native relative layout is documented in the BYOND reference:
+https://www.byond.com/docs/ref/#/atom/var/vis_contents
+Each block removes 64 helper movables from the visual tree. Turf replacement
+refreshes just the affected block. Camera matrices, planes, membership margins
+and source appearances are unchanged by this patch.
+
+Regression coverage checks direct turf membership without movable children,
+native source immutability, turf replacement and cleanup, along with existing
+cache/physics/HUD regressions. Actual SendMaps reduction and visible black
+regions require comparison in the client; no performance or visual fix is
+claimed from the structural tests alone.
+
+Validation: focused `tadpole_flight` PASS (1 second), no runtime errors and
+`Success!` at `data/logs/tadpole-direct-native-blocks/clean_run.lk`. Normal
+BYOND 516.1659 build: 0 errors, 0 warnings. The isolated test build reports
+the existing `loop_checks` warning.

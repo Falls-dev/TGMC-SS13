@@ -1,24 +1,13 @@
 #define TADPOLE_CHUNK_SIZE 8
 
-/// A world-space turf relay must have an explicit tile anchor. Bulk map_view
-/// layout is intended for screen maps, not separately shifted world blocks.
-/obj/effect/abstract/tadpole_native_tile
-	icon = null
-	plane = HUD_PLANE
-	appearance_flags = PIXEL_SCALE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
-/obj/effect/abstract/tadpole_native_tile/Destroy()
-	vis_contents.Cut()
-	return ..()
-
+/// Native multi-turf visual contents provide their own relative coordinates.
+/// Keep one relay per block instead of adding a movable relay for every tile.
 /obj/effect/abstract/tadpole_native_chunk
 	icon = null
 	plane = HUD_PLANE
 	appearance_flags = PIXEL_SCALE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/list/tiles = list()
-	var/list/anchors = list()
 
 /obj/effect/abstract/tadpole_native_chunk/proc/build(base_x, base_y, ground_z)
 	var/turf/first = locate(max(1, base_x), max(1, base_y), ground_z)
@@ -26,13 +15,8 @@
 	if(!first || !last || base_x > world.maxx || base_y > world.maxy || base_x + TADPOLE_CHUNK_SIZE <= 1 || base_y + TADPOLE_CHUNK_SIZE <= 1)
 		return
 	tiles = block(first, last)
+	vis_contents = tiles.Copy()
 	for(var/turf/source as anything in tiles)
-		var/obj/effect/abstract/tadpole_native_tile/anchor = new
-		anchor.pixel_x = (source.x - first.x) * world.icon_size
-		anchor.pixel_y = (source.y - first.y) * world.icon_size
-		anchor.vis_contents += source
-		anchors[source] = anchor
-		vis_contents += anchor
 		RegisterSignal(source, COMSIG_TURF_CHANGE, PROC_REF(on_turf_change))
 
 /obj/effect/abstract/tadpole_native_chunk/proc/on_turf_change(datum/source, path, baseturfs, flags, list/callbacks)
@@ -42,15 +26,14 @@
 /obj/effect/abstract/tadpole_native_chunk/proc/reconnect(turf/replacement)
 	if(QDELETED(src))
 		return
-	var/obj/effect/abstract/tadpole_native_tile/anchor = anchors[replacement]
-	if(anchor)
-		anchor.vis_contents = list(replacement)
+	// ChangeTurf preserves references in tiles, but replaces the native visual
+	// link. Refresh only this block after the replacement has completed.
+	vis_contents = tiles.Copy()
 
 /obj/effect/abstract/tadpole_native_chunk/Destroy()
 	for(var/turf/source as anything in tiles)
 		UnregisterSignal(source, COMSIG_TURF_CHANGE)
 	vis_contents.Cut()
-	QDEL_LIST_ASSOC_VAL(anchors)
 	tiles.Cut()
 	return ..()
 
