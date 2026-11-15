@@ -325,7 +325,7 @@
 
 /obj/structure/bed/chair/dropship/passenger
 	name = "passenger seat"
-	resistance_flags = RESIST_ALL
+	max_integrity = 100
 	var/is_animating = 0
 
 /obj/structure/bed/chair/dropship/passenger/CanAllowThrough(atom/movable/mover, turf/target, height = 0, air_group = 0)

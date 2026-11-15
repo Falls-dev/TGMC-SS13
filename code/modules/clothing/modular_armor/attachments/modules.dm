@@ -198,12 +198,12 @@
 */
 /obj/item/armor_module/module/mimir_environment_protection
 	name = "\improper Mimir Mk.2 environmental resistance system"
-	desc = "Designed for mounting on modular armor. This newer model provides great resistance to acid, biological, and radiological attacks. Pairing this with a Mimir helmet module and mask will make the user impervious to any gas clouds. Will impact mobility."
+	desc = "Designed for mounting on modular armor. This newer model provides great resistance to acid, biological, and radiological attacks. Pairing this with a Mimir helmet module and mask will make the user impervious to xeno gas clouds. Will impact mobility."
 	icon = 'icons/mob/modular/modular_armor_modules.dmi'
 	icon_state = "mod_biohazard"
 	worn_icon_state = "mod_biohazard_a"
 	soft_armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 40, FIRE = 0, ACID = 30)
-	slowdown = 0.3
+	slowdown = 0.15
 	slot = ATTACHMENT_SLOT_MODULE
 	///siemens (electro resist) coefficient mod for gas protection.
 	var/siemens_coefficient_mod = -0.9
@@ -226,13 +226,11 @@
 
 /obj/item/armor_module/module/mimir_environment_protection/mark1
 	name = "\improper Mimir Mk.1 environmental resistance system"
-	desc = "Designed for mounting on modular armor. This older model provides minor resistance to acid, biological, and radiological attacks. Pairing this with a Mimir helmet module and mask will make the user almost impervious to any gas clouds. Will impact mobility."
+	desc = "Designed for mounting on modular armor. This older model provides minor resistance to acid, biological, and radiological attacks. Pairing this with a Mimir helmet module and mask will make the user impervious to xeno gas clouds. Will impact mobility."
 	icon_state = "mod_biohazard"
 	worn_icon_state = "mod_biohazard_a"
 	soft_armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 15, FIRE = 0, ACID = 15)
-	slowdown = 0.3
-	permeability_coefficient_mod = -0.5
-	gas_transfer_coefficient_mod = -0.5
+	slowdown = 0.15
 
 //SOM version
 /obj/item/armor_module/module/mimir_environment_protection/som
@@ -243,7 +241,7 @@
 
 /obj/item/armor_module/module/mimir_environment_protection/mimir_helmet
 	name = "\improper Mimir Mk.2 environmental resistance system helmet module"
-	desc = "Designed for mounting on a modular helmet. Provides good resistance to xeno gas clouds. This newer model provides great resistance to acid, biological, and even radiological attacks."
+	desc = "Designed for mounting on a modular helmet. Provides good resistance to xeno gas clouds."
 	icon = 'icons/mob/modular/modular_armor_modules.dmi'
 	icon_state = "mimir_head"
 	worn_icon_state = "mimir_head_a"

@@ -101,24 +101,51 @@
 	icon_state = "eyepatch"
 	worn_icon_state = "eyepatch"
 	armor_protection_flags = NONE
+	/// То, какой глаз закрывает повязка (FALSE = левый, TRUE = правый)
+	var/right_eye = FALSE
+
+/obj/item/clothing/glasses/eyepatch/update_icon_state()
+	. = ..()
+	icon_state = right_eye ? "eyepatch_a" : "eyepatch"
+	worn_icon_state = icon_state
+
+/obj/item/clothing/glasses/eyepatch/verb/switcheye()
+	set name = "Switch Eyepatch Side"
+	set category = "IC.Clothing"
+	set src in usr
+
+	if(!isliving(usr) || usr.incapacitated())
+		return
+
+	right_eye = !right_eye
+	to_chat(usr, span_notice("You adjust the eyepatch to cover your [right_eye ? "right" : "left"] eye."))
+	update_icon()
+	if(ismob(loc))
+		var/mob/user = loc
+		user.update_inv_glasses()
 
 /obj/item/clothing/glasses/eyepatch/attackby(obj/item/I, mob/user, params)
 	. = ..()
 	if(.)
 		return
-	var/obj/item/clothing/glasses/eyepatch
+
+	var/obj/item/clothing/glasses/new_eyepatch
 	if(istype(I, /obj/item/clothing/glasses/hud/health))
-		eyepatch = new /obj/item/clothing/glasses/hud/medpatch
+		new_eyepatch = new /obj/item/clothing/glasses/hud/medpatch
 		to_chat(user, span_notice("You fasten the medical hud projector to the inside of the eyepatch."))
 	else if(istype(I, /obj/item/clothing/glasses/meson))
-		eyepatch = new /obj/item/clothing/glasses/meson/eyepatch
+		new_eyepatch = new /obj/item/clothing/glasses/meson/eyepatch
 		to_chat(user, span_notice("You fasten the meson projector to the inside of the eyepatch."))
-	if(!eyepatch)
+	else if(istype(I, /obj/item/clothing/glasses/night/m56_goggles))
+		new_eyepatch = new /obj/item/clothing/glasses/night/eyepatch
+		to_chat(user, span_notice("You fasten the KTLD sight to the inside of the eyepatch."))
+	if(!new_eyepatch)
 		return
+	new_eyepatch.vars["right_eye"] = right_eye
+	new_eyepatch.update_icon()
 	qdel(I)
 	qdel(src)
-	user.put_in_hands(eyepatch)
-	update_icon()
+	user.put_in_hands(new_eyepatch)
 
 /obj/item/clothing/glasses/monocle
 	name = "monocle"
@@ -188,6 +215,10 @@
 		else
 			our_glasses = new /obj/item/clothing/glasses/meson/enggoggles
 		to_chat(user, span_notice("You fasten the optical meson scanner to the inside of the goggles."))
+
+	else if(istype(our_item, /obj/item/clothing/glasses/night/m56_goggles))
+		our_glasses = new /obj/item/clothing/glasses/night/mgoggles
+		to_chat(user, span_notice("You fasten the KTLD sight to the inside of the goggles."))
 
 	if(!our_glasses)
 		return
@@ -351,6 +382,17 @@
 	icon_state = "bigsunglasses"
 	worn_icon_state = "bigsunglasses"
 
+/obj/item/clothing/glasses/sunglasses/fake/big/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/clothing/glasses/night/m56_goggles))
+		var/obj/item/clothing/glasses/our_glasses = new /obj/item/clothing/glasses/night/bigsunglasses
+		to_chat(user, span_notice("You fasten the KTLD sight to the inside of the glasses."))
+		qdel(I)
+		qdel(src)
+		user.put_in_hands(our_glasses)
+		update_icon()
+		return TRUE
+	return ..()
+
 /obj/item/clothing/glasses/sunglasses/fake/big/prescription
 	name = "prescription designer sunglasses"
 	prescription = TRUE
@@ -396,7 +438,6 @@
 	desc = "A pair of orange glasses."
 	icon_state = "orange"
 	worn_icon_state = "orange"
-	species_exception = list(/datum/species/robot)
 
 /obj/item/clothing/glasses/orange/attackby(obj/item/our_item, mob/user, params)
 	. = ..()
@@ -409,6 +450,9 @@
 	else if(istype(our_item, /obj/item/clothing/glasses/meson))
 		our_glasses = new /obj/item/clothing/glasses/meson/orange_glasses
 		to_chat(user, span_notice("You fasten the optical meson scaner to the inside of the glasses."))
+	else if(istype(our_item, /obj/item/clothing/glasses/night/m56_goggles))
+		our_glasses = new /obj/item/clothing/glasses/night/orange
+		to_chat(user, span_notice("You fasten the KTLD sight to the inside of the glasses."))
 	if(!our_glasses)
 		return
 	qdel(our_item)

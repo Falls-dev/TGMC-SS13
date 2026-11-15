@@ -19,6 +19,8 @@ export const GearCustomization = (props) => {
     10: 'Head',
     8: 'Eyewear',
     9: 'Mouth',
+    3: 'Uniform',
+    17: 'Hands',
     20: 'Miscellaneous',
   };
 
@@ -107,6 +109,54 @@ export const GearCustomization = (props) => {
           <Section title={'Mouth'}>
             <LabeledList>
               {bySlot['Mouth']?.map((item) => (
+                <LabeledList.Item
+                  key={item.name}
+                  label={`${item.name} (${item.cost})`}
+                >
+                  <Button.Checkbox
+                    inline
+                    content={'Equipped'}
+                    checked={gear.includes(item.name)}
+                    onClick={() =>
+                      gear.includes(item.name)
+                        ? act('loadoutremove', { gear: item.name })
+                        : act('loadoutadd', { gear: item.name })
+                    }
+                  />
+                </LabeledList.Item>
+              ))}
+            </LabeledList>
+          </Section>
+        </Stack.Item>
+        <Stack.Item grow>
+          <Section title={'Uniform'}>
+            <LabeledList>
+              {bySlot['Uniform']?.map((item) => (
+                <LabeledList.Item
+                  key={item.name}
+                  label={`${item.name} (${item.cost})`}
+                >
+                  <Button.Checkbox
+                    inline
+                    content={'Equipped'}
+                    checked={gear.includes(item.name)}
+                    onClick={() =>
+                      gear.includes(item.name)
+                        ? act('loadoutremove', { gear: item.name })
+                        : act('loadoutadd', { gear: item.name })
+                    }
+                  />
+                </LabeledList.Item>
+              ))}
+            </LabeledList>
+          </Section>
+        </Stack.Item>
+      </Stack>
+      <Stack>
+        <Stack.Item grow>
+          <Section title={'Hands'}>
+            <LabeledList>
+              {bySlot['Hands']?.map((item) => (
                 <LabeledList.Item
                   key={item.name}
                   label={`${item.name} (${item.cost})`}

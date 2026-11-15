@@ -42,7 +42,7 @@
 /obj/effect/landmark/itemspawner/scratch
 	items_to_spawn = list(\
 	/obj/item/clothing/gloves/white,\
-	/obj/item/clothing/shoes/white,\
+	/obj/item/clothing/shoes/marine/white,\
 	/obj/item/clothing/under/scratch,\
 	/obj/item/clothing/head/cueball)
 

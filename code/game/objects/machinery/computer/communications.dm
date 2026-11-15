@@ -66,6 +66,8 @@
 	.["dest_status"] = SSevacuation.dest_status
 	.["time_message"] = cooldown_message
 	.["time_request"] = cooldown_request
+	.["distress_pending"] = just_called || SSticker.mode?.waiting_for_candidates
+	.["distress_recharging"] = SSticker.mode?.on_distress_cooldown
 	.["time_central"] = cooldown_central
 	.["stat_msg1"] = stat_msg1
 	.["stat_msg2"] = stat_msg2
@@ -332,7 +334,7 @@
 				to_chat(user, span_warning("The ship must be under red alert in order to enact evacuation procedures."))
 				return FALSE
 
-			if(SSevacuation.scuttle_flags & SDEVAC_TIMELOCK_flags)
+			if(!SSevacuation.has_scuttle_threat())
 				to_chat(user, span_warning("The sensors do not detect a sufficient threat present."))
 				return FALSE
 
@@ -379,7 +381,7 @@
 				to_chat(user, span_warning("The distress beacon has been just launched."))
 				return FALSE
 
-			if(SSticker.mode.on_distress_cooldown)
+			if(SSticker.mode.on_distress_cooldown || (cooldown_request && world.time < cooldown_request + COOLDOWN_COMM_REQUEST))
 				to_chat(user, span_warning("The distress beacon is currently recalibrating."))
 				return FALSE
 
@@ -394,9 +396,12 @@
 				return FALSE
 
 			SSticker.mode.distress_cancelled = FALSE
-			just_called = TRUE
 
 			var/datum/emergency_call/emergency_call = SSticker.mode.get_random_call()
+			if(!emergency_call)
+				to_chat(user, span_warning("No response teams are available."))
+				return FALSE
+			just_called = TRUE
 
 			var/admin_response = admin_approval("<span color='prefix'>DISTRESS:</span> [ADMIN_TPMONTY(user)] has called a Distress Beacon that was received by [emergency_call.name]. Humans: [all_marines], Xenos: [all_xenos].",
 				user_message = span_boldnotice("A distress beacon will launch in 60 seconds unless High Command responds otherwise."),

@@ -17,6 +17,7 @@
 	skins = list(
 		/datum/xenomorph_skin/king,
 		/datum/xenomorph_skin/king/red,
+		/datum/xenomorph_skin/king/pumpkin,
 	)
 	footstep_type = FOOTSTEP_XENO_STOMPY
 	inherent_verbs = list(

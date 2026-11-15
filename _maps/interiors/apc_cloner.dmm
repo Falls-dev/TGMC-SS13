@@ -47,6 +47,7 @@
 /turf/closed/interior/apc/thirteen,
 /area/interior/apc)
 "s" = (
+/obj/machinery/vending/nanoammo/directional/south,
 /turf/open/interior/apc/eight,
 /area/interior/apc)
 "t" = (

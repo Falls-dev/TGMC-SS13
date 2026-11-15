@@ -501,7 +501,7 @@
 	new /obj/item/clothing/head/tgmcberet/squad/charlie/black(src)
 	new /obj/item/clothing/mask/bandanna/charlie(src)
 	new /obj/item/clothing/head/squad_headband/charlie(src)
-	new /obj/item/clothing/under/marine/squad/neck/charile(src)
+	new /obj/item/clothing/under/marine/squad/neck/charlie(src)
 	new /obj/effect/spawner/random/misc/prizemecha(src)
 
 /obj/structure/closet/marine/delta

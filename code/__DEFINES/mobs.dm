@@ -670,7 +670,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define RAVAGER_RAGE_WARNING 0.7
 #define RAVAGER_RAGE_MIN_HEALTH_THRESHOLD 0.5 //The maximum % of HP we can have to trigger Rage
 #define RAVAGER_RAGE_STAGGERSTUN_IMMUNE_THRESHOLD 0.3
-#define RAVAGER_RAGE_ENDURE_INCREASE_PER_SLASH 1 SECONDS //The amount of time each slash during Rage increases Endure's duration
+#define RAVAGER_RAGE_ENDURE_INCREASE_PER_SLASH 2 SECONDS //The amount of time each slash during Rage increases Endure's duration
 #define RAVAGER_RAGE_HEALTH_RECOVERY_PER_SLASH 32 //Base amount of healing from slash during Rage
 #define RAVAGER_IMMORTALITY_DURATION 5 SECONDS
 
@@ -757,7 +757,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// How fast the fireball moves
 #define PYROGEN_FIREBALL_SPEED 1
 /// How much damage the fire does per tick or cross.
-#define PYROGEN_MELTING_FIRE_DAMAGE 10
+#define PYROGEN_MELTING_FIRE_DAMAGE 8
 /// How many melting fire effect stacks we give per tick or cross
 #define PYROGEN_MELTING_FIRE_EFFECT_STACK 2
 /// How many  tornadoes we unleash when using the firestorm

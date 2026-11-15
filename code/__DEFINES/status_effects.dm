@@ -48,6 +48,7 @@
 #define STATUS_EFFECT_XENO_FEAST /datum/status_effect/xeno_feast
 #define STATUS_EFFECT_XENO_BATONPASS /datum/status_effect/baton_pass
 #define STATUS_EFFECT_RESIN_JELLY_COATING /datum/status_effect/resin_jelly_coating
+#define STATUS_EFFECT_XENOMORPH_CLOAKING /datum/status_effect/xenomorph_cloaking
 #define STATUS_EFFECT_PLASMA_SURGE /datum/status_effect/plasma_surge
 #define STATUS_EFFECT_HEALING_INFUSION /datum/status_effect/healing_infusion
 #define STATUS_EFFECT_DRAIN_SURGE /datum/status_effect/drain_surge

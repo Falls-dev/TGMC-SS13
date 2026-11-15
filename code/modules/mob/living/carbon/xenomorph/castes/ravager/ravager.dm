@@ -58,7 +58,7 @@
 	add_filter("ravager_rage_outline", 5, outline_filter(rage_power, COLOR_RED))
 
 	if(!rage)
-		RegisterSignal(src, COMSIG_XENOMORPH_ATTACK_LIVING, PROC_REF(drain_slash))
+		RegisterSignal(src, COMSIG_XENOMORPH_ATTACK_LIVING, PROC_REF(drain_slash), override = TRUE)
 		rage = TRUE
 
 	if(!staggerstun_immune && (health <= maxHealth * RAVAGER_RAGE_STAGGERSTUN_IMMUNE_THRESHOLD))
@@ -72,7 +72,7 @@
 		REMOVE_TRAIT(src, TRAIT_STAGGERIMMUNE, RAGE_TRAIT)
 		staggerstun_immune = FALSE
 
-	xeno_melee_damage_modifier = initial(xeno_melee_damage_modifier) + rage_power * 0.333
+	xeno_melee_damage_modifier = initial(xeno_melee_damage_modifier) + rage_power * 0.5
 	add_movespeed_modifier(MOVESPEED_ID_RAVAGER_RAGE, TRUE, 0, NONE, TRUE, xeno_caste.speed * 0.5 * rage_power)
 
 	if((health <= 0) && !on_cooldown && stat == CONSCIOUS)

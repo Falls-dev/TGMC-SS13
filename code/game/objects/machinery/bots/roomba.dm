@@ -7,7 +7,7 @@
 	///The mine we have attached to this roomba
 	var/obj/item/explosive/mine/claymore //Claymore roomb
 	///Admins can let it have a claymore
-	var/allow_claymore = FALSE
+	var/allow_claymore = TRUE
 	sentences = list(
 		"Clean up your bloody mess you ANIMAL!",
 		"Who teached you to leave your trash behind you? Your mom should be ashamed!",
@@ -145,3 +145,15 @@
 		if(sucked.stat != CONSCIOUS)
 			qdel(sucked)
 			counter++
+
+/obj/machinery/bot/roomba/valhalla/eord/attack_hand(mob/living/user)
+	if(user.a_intent != INTENT_HARM)
+		visible_message(span_notice("[user] lovingly pats the [src]."), span_notice("You lovingly pat the [src]."))
+		return
+	if(prob(50))
+		cell_explosion(user, 250, 250)
+		visible_message("[user] lost at the roomba roulette!")
+		return
+	cell_explosion(src, 50, 50)
+	visible_message("[user] won at the roomba roulette!")
+	qdel(src)

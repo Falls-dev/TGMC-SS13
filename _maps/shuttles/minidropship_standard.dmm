@@ -42,6 +42,9 @@
 	},
 /area/shuttle/minidropship)
 "j" = (
+/obj/machinery/vending/nanoammo/directional/south{
+	pixel_x = -5
+	},
 /obj/machinery/door_control{
 	id = "minidropship_podlock";
 	name = "inner door-control"
@@ -155,6 +158,9 @@
 /obj/docking_port/mobile/marine_dropship/minidropship,
 /obj/structure/bed/chair/dropship/pilot{
 	dir = 1
+	},
+/mob/living/simple_animal/pig/mini{
+	name = "Alexander"
 	},
 /turf/open/floor/plating/plating_catwalk,
 /area/shuttle/minidropship)

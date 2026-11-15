@@ -44,6 +44,7 @@ SUBSYSTEM_DEF(persistence)
 		/datum/season_datum/weapons/guns/heavy_autorail,
 		/datum/season_datum/weapons/guns/heavy_shock,
 		/datum/season_datum/weapons/guns/heavy_unpopular,
+		/datum/season_datum/weapons/guns/heavy_remote,
 		),
 	)
 	///The saved list of custom outfits names
@@ -139,9 +140,16 @@ SUBSYSTEM_DEF(persistence)
 ///Loads seasons data, advances seasons and saves the data
 /datum/controller/subsystem/persistence/proc/LoadSeasonalItems()
 	var/json_file = file("data/seasonal_items.json")
+	var/list/seasons_file_info
+
 	if(!fexists(json_file))
-		initialize_seasonal_items_file()
-	var/list/seasons_file_info = json_decode(file2text(json_file))
+		seasons_file_info = list()
+	else
+		var/json_text = file2text(json_file)
+		if(!length(json_text))
+			seasons_file_info = list()
+		else
+			seasons_file_info = json_decode(json_text)
 
 	for(var/season_class in seasons_durations)
 		seasons_file_info = update_season_data(season_class, seasons_file_info)
@@ -387,4 +395,20 @@ SUBSYSTEM_DEF(persistence)
 		/obj/item/ammo_magazine/rifle/tx54/smoke/tangle = 4,
 		/obj/item/weapon/gun/rifle/famas = 2,
 		/obj/item/ammo_magazine/rifle/famas = -1,
+	)
+
+/datum/season_datum/weapons/guns/heavy_remote
+	name = "Remote Weapons"
+	description = "Unmanned vehicles for roundstart vendors."
+	item_list = list(
+		/obj/item/unmanned_vehicle_remote = 6,
+		/obj/vehicle/unmanned = 1,
+		/obj/vehicle/unmanned/medium = 1,
+		/obj/vehicle/unmanned/heavy = 1,
+		/obj/item/deployable_vehicle/tiny = 3,
+		/obj/item/uav_turret = 1,
+		/obj/item/ammo_magazine/box11x35mm = 3,
+		/obj/item/uav_turret/heavy = 1,
+		/obj/item/ammo_magazine/box12x40mm = 3,
+		/obj/item/uav_turret/claw = 1,
 	)

@@ -24,6 +24,10 @@
 	},
 /turf/open/shuttle/dropship/floor,
 /area/shuttle/dropship/normandy)
+"cc" = (
+/obj/machinery/vending/nanoammo/directional/south,
+/turf/open/shuttle/dropship/five,
+/area/shuttle/dropship/normandy)
 "cz" = (
 /obj/machinery/light{
 	dir = 4
@@ -158,6 +162,12 @@
 "lq" = (
 /obj/structure/dropship_piece/two/rearwing/rightrrbottom,
 /turf/template_noop,
+/area/shuttle/dropship/normandy)
+"lu" = (
+/obj/structure/bed/chair/dropship/doublewide/right,
+/obj/structure/bed/chair/dropship/doublewide/left,
+/obj/machinery/vending/nanoammo/directional/west,
+/turf/open/shuttle/dropship/floor,
 /area/shuttle/dropship/normandy)
 "lY" = (
 /obj/structure/dropship_piece/two/wing/left/bottom,
@@ -501,6 +511,12 @@
 /obj/structure/bed/chair/dropship/doublewide/left,
 /turf/open/shuttle/dropship/floor,
 /area/shuttle/dropship/normandy)
+"Uo" = (
+/obj/structure/bed/chair/dropship/doublewide/right,
+/obj/structure/bed/chair/dropship/doublewide/left,
+/obj/machinery/vending/nanoammo/directional/east,
+/turf/open/shuttle/dropship/floor,
+/area/shuttle/dropship/normandy)
 "Vg" = (
 /obj/structure/dropship_piece/two/front/left{
 	dir = 1
@@ -630,7 +646,7 @@ KP
 Od
 pO
 FA
-pO
+Uo
 ZE
 ZE
 pO
@@ -659,7 +675,7 @@ Cd
 Cd
 Cd
 HY
-pO
+Uo
 QV
 IC
 rC
@@ -674,7 +690,7 @@ fP
 PH
 VB
 Yi
-FO
+cc
 yG
 FO
 Ui
@@ -720,7 +736,7 @@ ET
 jc
 WO
 EF
-FO
+cc
 XL
 FO
 Qp
@@ -751,7 +767,7 @@ Cd
 Cd
 Cd
 Tk
-pO
+lu
 KQ
 Ns
 bq
@@ -768,7 +784,7 @@ tn
 Od
 pO
 kZ
-pO
+lu
 ZE
 ZE
 pO

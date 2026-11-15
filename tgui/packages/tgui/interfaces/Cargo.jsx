@@ -614,7 +614,7 @@ const PackName = (props) => {
 
   return (
     <Box inline pl={pl}>
-      <Box inline textAlign="right" width="130px" color="warning" mr={1}>
+      <Box inline textAlign="right" style={{ minWidth: '130px', whiteSpace: 'nowrap' }} color="warning" mr={1}>
         {amount ? `${amount}x ` : ''}
         {cost} очков {amount ? `(${amount * cost})` : ''}
       </Box>

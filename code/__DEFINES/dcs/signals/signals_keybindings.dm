@@ -98,6 +98,7 @@
 #define COMSIG_KB_DEFENDORDER "keybind_defendorder"
 #define COMSIG_KB_RETREATORDER "keybind_retreatorder"
 #define COMSIG_KB_VEHICLEHONK "keybind_vehiclehonk"
+#define COMSIG_KB_VEHICLE_MEGAPHONE "keybing_mehaphone"
 #define COMSIG_ABILITY_PLACE_HOLOGRAM "ability_place_hologram"
 #define COMSIG_ABILITY_SELECT_BUILDTYPE "ability_select_buildtype"
 #define COMSIG_VEHICLEABILITY_TESLA "vehicleability_tesla"
@@ -168,6 +169,8 @@
 #define COMSIG_XENOABILITY_RALLY_MINION "xenoability_rally_minion"
 #define COMSIG_XENOABILITY_MINION_BEHAVIOUR "xenoability_minion_behavior"
 #define COMSIG_XENOABILITY_SILENCE "xenoability_silence"
+#define COMSIG_XENOABILITY_PLACE_PATTERN "xenoability_place_pattern"
+#define COMSIG_XENOABILITY_SELECT_PATTERN "xenoability_select_pattern"
 
 #define COMSIG_XENOABILITY_DODGE "xenoability_dodge"
 #define COMSIG_XENOABILITY_IMPALE "xenoability_impale"
