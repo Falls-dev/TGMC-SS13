@@ -115,7 +115,7 @@
 	caste_desc = "A primordial beast, sculpted by countless fights, intent on conquering the battlefield."
 
 	// *** Melee Attacks *** //
-	melee_damage = 25
+	melee_damage = 30
 	melee_ap = 15
 	attack_delay = 7
 
@@ -141,7 +141,7 @@
 	caste_traits = list(TRAIT_STAGGERIMMUNE, TRAIT_STOPS_TANK_COLLISION)
 
 	// *** Defense *** //
-	soft_armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 40, BOMB = 60, BIO = 60, FIRE = 60, ACID = 60)
+	soft_armor = list(MELEE = 65, BULLET = 70, LASER = 70, ENERGY = 65, BOMB = 90, BIO = 60, FIRE = 70, ACID = 60)
 
 	// *** Pheromones *** //
 	aura_strength = 3.0
