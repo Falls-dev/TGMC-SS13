@@ -163,6 +163,39 @@
 	scene.update_chunks()
 	TEST_ASSERT_EQUAL(scene.chunks[key], edge_chunk, "Unchanged scene cells must reuse native blocks")
 	TEST_ASSERT_EQUAL(length(scene.chunks), count, "Repeated membership checks must allocate no additional blocks")
+	// Reproduce the old single-step radius threshold: 24 -> 25 allocates
+	// four borders at once; returning deletes them again, unlike scrolling.
+	scene.radius = 24
+	scene.update_chunks()
+	var/list/before_step = scene.chunks.Copy()
+	scene.radius = 25
+	scene.update_chunks()
+	var/added_blocks = 0
+	for(var/chunk_key in scene.chunks)
+		if(!before_step[chunk_key])
+			added_blocks++
+	TEST_ASSERT_EQUAL(added_blocks, 32, "The old one-tile walking threshold must reproduce its 32-block allocation burst")
+	world.log << "TADPOLE_WALK_REPRO: radius 24->25 adds [added_blocks] blocks / [added_blocks * 64] native anchors"
+	var/old_width = port.width
+	var/old_height = port.height
+	port.width = 7
+	port.height = 9
+	var/list/viewport = list(26, 26)
+	scene.origin_x = FLOOR(helm.flight_x / 8, 1) * 8
+	scene.origin_y = FLOOR(helm.flight_y / 8, 1) * 8
+	scene.radius = scene.source_radius(viewport)
+	scene.update_chunks()
+	var/list/stable_blocks = scene.chunks.Copy()
+	var/turf/pilot_start = get_turf(pilot)
+	for(var/i in 1 to 4)
+		pilot.forceMove(i % 2 ? get_step(pilot_start, EAST) : pilot_start)
+		TEST_ASSERT(!scene.update_region(scene.source_radius(viewport), scene.source_z), "Passenger movement must not trigger a terrain rebuild or zero-shift camera rebase")
+	TEST_ASSERT_EQUAL(length(scene.chunks), length(stable_blocks), "Walking must retain the same block count")
+	for(var/chunk_key in stable_blocks)
+		TEST_ASSERT_EQUAL(scene.chunks[chunk_key], stable_blocks[chunk_key], "Walking must preserve every cached block identity")
+	pilot.forceMove(pilot_start)
+	port.width = old_width
+	port.height = old_height
 	qdel(scene)
 	TEST_ASSERT_EQUAL(length(scene.chunks), 0, "Scene deletion must release all native blocks")
 	// Flight-specific graph edits must be local to one HUD and reversible.

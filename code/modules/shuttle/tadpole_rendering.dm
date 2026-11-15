@@ -163,6 +163,8 @@
 	var/origin_y
 	var/source_z
 	var/radius = 0
+	var/list/viewer_candidates = list()
+	var/next_viewer_scan = 0
 
 /datum/tadpole_scene/New(obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/owner)
 	helm = owner
@@ -170,6 +172,7 @@
 /datum/tadpole_scene/Destroy()
 	QDEL_LIST_ASSOC_VAL(views)
 	QDEL_LIST_ASSOC_VAL(chunks)
+	viewer_candidates.Cut()
 	helm = null
 	return ..()
 
@@ -182,13 +185,15 @@
 		return
 	var/list/remaining = views.Copy()
 	var/needed_radius = 0
-	for(var/mob/viewer as anything in GLOB.player_list)
-		var/client/display = viewer.client
+	if(world.time >= next_viewer_scan)
+		refresh_viewer_candidates()
+	for(var/client/display as anything in viewer_candidates)
+		var/mob/viewer = display?.mob
 		var/turf/eye = get_turf(display?.eye)
-		if(!eye || !helm.ground_tiles[eye] || !viewer.hud_used)
+		if(!eye || !helm.ground_tiles[eye] || !viewer?.hud_used)
 			continue
 		var/list/size = getviewsize(display.view)
-		needed_radius = max(needed_radius, CEILING(sqrt(size[1] ** 2 + size[2] ** 2) / 2, 1) + get_dist(eye, helm.shuttle_port) + 2)
+		needed_radius = max(needed_radius, source_radius(size))
 		var/datum/tadpole_scene_view/view = views[display]
 		if(view && (view.hud != viewer.hud_used || view.source_offset != depth || QDELETED(view.plate) || view.plate.is_outside_bounds))
 			qdel(view)
@@ -205,18 +210,7 @@
 			QDEL_LIST_ASSOC_VAL(chunks)
 		radius = 0
 		return
-	var/new_x = FLOOR(helm.flight_x / TADPOLE_CHUNK_SIZE, 1) * TADPOLE_CHUNK_SIZE
-	var/new_y = FLOOR(helm.flight_y / TADPOLE_CHUNK_SIZE, 1) * TADPOLE_CHUNK_SIZE
-	if(origin_x != new_x || origin_y != new_y || source_z != helm.eyeobj.z || radius != needed_radius)
-		if(!isnull(origin_x) && !isnull(origin_y))
-			for(var/client/display as anything in views)
-				var/datum/tadpole_scene_view/view = views[display]
-				view.rebase_camera((new_x - origin_x) * world.icon_size, (new_y - origin_y) * world.icon_size)
-		origin_x = new_x
-		origin_y = new_y
-		source_z = helm.eyeobj.z
-		radius = needed_radius
-		update_chunks()
+	update_region(needed_radius, helm.eyeobj.z)
 	for(var/client/display as anything in views)
 		var/datum/tadpole_scene_view/view = views[display]
 		var/turf/eye = get_turf(display.eye)
@@ -233,6 +227,40 @@
 		camera.Turn(-angle)
 		camera.Translate((px - (px * c - py * s) + dx * c - dy * s) * world.icon_size, (py - (py * c + px * s) + dy * c + dx * s) * world.icon_size)
 		view.update_camera(camera, animation_seconds)
+
+/// Discovery is separate from the five-Hz flight path. Existing viewers are
+/// still validated every step; new remote eyes can take up to one second.
+/datum/tadpole_scene/proc/refresh_viewer_candidates()
+	viewer_candidates.Cut()
+	for(var/mob/viewer as anything in GLOB.player_list)
+		var/client/display = viewer.client
+		var/turf/eye = get_turf(display?.eye)
+		if(eye && helm.ground_tiles[eye])
+			viewer_candidates |= display
+	next_viewer_scan = world.time + 1 SECONDS
+
+/// Allocate for the ship footprint, not the passenger's current walking tile.
+/datum/tadpole_scene/proc/source_radius(list/size)
+	var/obj/docking_port/mobile/port = helm.shuttle_port
+	var/footprint = max(port.width + abs(port.dwidth), port.height + abs(port.dheight))
+	return CEILING(sqrt(size[1] ** 2 + size[2] ** 2) / 2, 1) + footprint + 2
+
+/datum/tadpole_scene/proc/update_region(needed_radius, ground_z)
+	needed_radius = max(radius, needed_radius)
+	var/new_x = FLOOR(helm.flight_x / TADPOLE_CHUNK_SIZE, 1) * TADPOLE_CHUNK_SIZE
+	var/new_y = FLOOR(helm.flight_y / TADPOLE_CHUNK_SIZE, 1) * TADPOLE_CHUNK_SIZE
+	if(origin_x != new_x || origin_y != new_y || source_z != ground_z || radius != needed_radius)
+		if(!isnull(origin_x) && !isnull(origin_y) && (new_x != origin_x || new_y != origin_y))
+			for(var/client/display as anything in views)
+				var/datum/tadpole_scene_view/view = views[display]
+				view.rebase_camera((new_x - origin_x) * world.icon_size, (new_y - origin_y) * world.icon_size)
+		origin_x = new_x
+		origin_y = new_y
+		source_z = ground_z
+		radius = needed_radius
+		update_chunks()
+		return TRUE
+	return FALSE
 
 /datum/tadpole_scene/proc/update_chunks()
 	var/list/remaining = chunks.Copy()

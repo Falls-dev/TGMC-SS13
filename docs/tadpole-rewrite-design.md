@@ -163,6 +163,33 @@ samples the current interpolated matrix and applies the inverse block shift
 instantly to that matrix and its target, preserving unfinished animation time.
 Subsequent physics movement continues from the compensated displayed frame.
 
+## Passenger walking allocation fix
+
+After reverting the experimental visibility and ship-image changes, the native
+block renderer remains in use. Its source radius previously included the
+passenger eye's distance from the docking port. A single walking tile could
+change radius 24 to 25: the focused regression reproduces 32 additional blocks
+(2048 native tile anchors), which were removed again on the reverse step.
+This is allocation evidence, not a client frame-time benchmark.
+
+The source radius now includes a fixed hull footprint instead of passenger
+distance. It can grow for a larger viewport but stays allocated while viewers
+remain. Camera rebasing only runs when the chunk origin actually moves.
+Regression coverage walks the passenger repeatedly and checks that region
+updates are skipped and every cached block retains its identity.
+
+Global player discovery now runs once per second; only cached candidate
+clients are checked on each flight update. Discovery connects each client's
+HUD planes to the shared terrain scene. A newly arriving eye can take up to
+one second to connect; existing viewers leaving the ship are detached on the
+next flight update.
+
+The render graph, lighting, and passenger-relative projection are unchanged.
+The reported black regions and visual walking jitter are not considered
+resolved by this allocation fix. The focused `tadpole_flight` suite passes
+with a `Success!` shutdown marker in
+`data/logs/tadpole-walk-radius-only/clean_run.lk`.
+
 Regression checks cover adjacent cell positions, turf replacement through
 an anchor, and conservation of screen coordinates during a rebase halfway
 through a rotated camera interpolation. Client confirmation of the black
