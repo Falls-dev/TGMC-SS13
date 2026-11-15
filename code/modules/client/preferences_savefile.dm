@@ -47,7 +47,6 @@
 
 		to_chat(parent, span_userdanger("Forced keybindings for say (T), me (M), ooc (O), looc (L) have been applied."))
 
-
 //handles converting savefiles to new formats
 //MAKE SURE YOU KEEP THIS UP TO DATE!
 //If the sanity checks are capable of handling any issues. Only increase SAVEFILE_VERSION_MAX,

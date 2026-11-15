@@ -92,13 +92,14 @@
 	var/y_offset = ((pixel_y - 1) % 32) + 1
 	return "[x_tile]:[x_offset],[y_tile]:[y_offset]"
 
-/// Frame: one solid 32x32 sprite per part, size and position set via transform/pixel_x/pixel_y. Icons are not created on the fly
+/// Each part is anchored at its actual screen-pixel centre. Avoid LEFT/BOTTOM plus pixel offsets:
+/// those offsets are relative to the control edge and can collapse the frame into the lower-left corner.
 /mob/living/carbon/xenomorph/hivemind/proc/place_rts_box_part(atom/movable/screen/hivemind_rts_drag_box/part, left, bottom, width, height, part_color, part_alpha)
-	// LEFT/BOTTOM tracks the actual map-control edge (including client view scaling).
-	// The offset places the transformed 32x32 sprite's center on the rectangle part's center.
-	part.screen_loc = "LEFT,BOTTOM"
-	part.pixel_x = left + width / 2 - 16
-	part.pixel_y = bottom + height / 2 - 16
+	var/center_x = max(1, round(left + (width - 1) / 2))
+	var/center_y = max(1, round(bottom + (height - 1) / 2))
+	part.screen_loc = rts_pixel_to_screen_loc(center_x, center_y)
+	part.pixel_x = 0
+	part.pixel_y = 0
 	part.transform = matrix(width / 32, 0, 0, 0, height / 32, 0)
 	part.color = part_color
 	part.alpha = part_alpha

@@ -62,7 +62,27 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 /datum/ai_behavior/xeno/nymph/proc/can_flee()
 	return !(rts_attack_ordered || hivemind_rts_hold_position || (hivemind_rts_direct_move && !nymph_moving))
 
+/datum/ai_behavior/xeno/nymph/proc/get_nearest_nymph_threat()
+	var/mob/living/carbon/xenomorph/X = mob_parent
+	// Search non-xeno threats with the normal hostility rules. Xenos are checked
+	// separately so the same-hive comparison is explicit for nymph behaviour.
+	var/atom/nearest = get_nearest_target(X, NYMPH_FLEE_RADIUS, TARGET_HOSTILE & ~TARGET_XENO, X.faction, X.get_xeno_hivenumber(), TRUE)
+	var/nearest_distance = nearest ? get_dist(X, nearest) : NYMPH_FLEE_RADIUS + 1
+	for(var/mob/living/carbon/xenomorph/nearby_xeno in cheap_get_xenos_near(X, NYMPH_FLEE_RADIUS))
+		if(nearby_xeno == X || nearby_xeno.stat == DEAD || (X.hive && nearby_xeno.hive == X.hive) || X.issamexenohive(nearby_xeno))
+			continue
+		if((nearby_xeno.status_flags & (GODMODE|INCORPOREAL)) || nearby_xeno.alpha <= HUNTER_STEALTH_RUN_ALPHA || HAS_TRAIT(nearby_xeno, TRAIT_STEALTH))
+			continue
+		var/distance = get_dist(X, nearby_xeno)
+		if(distance >= nearest_distance || !line_of_sight(X, nearby_xeno))
+			continue
+		nearest = nearby_xeno
+		nearest_distance = distance
+	return nearest
+
 /datum/ai_behavior/xeno/nymph/proc/flee_from(atom/threat)
+	if(isxeno(threat) && mob_parent.issamexenohive(threat))
+		return
 	halt_job()
 	if(current_action == MOVING_TO_SAFETY && combat_target == threat)
 		return
@@ -70,6 +90,17 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 	change_action(MOVING_TO_SAFETY, threat, list(INFINITY))
 	if(!registered_for_move)
 		INVOKE_ASYNC(src, PROC_REF(scheduled_move))
+
+/// Critical-health retreat must use the same friendly-hive filtering as autonomous threat checks.
+/datum/ai_behavior/xeno/nymph/check_for_critical_health(datum/source, damage, mob/living/attacker)
+	if(!can_heal || hivemind_rts_direct_move || hivemind_rts_hold_position || mob_parent.health - damage > minimum_health * mob_parent.maxHealth)
+		return
+	var/atom/next_target = get_nearest_nymph_threat()
+	if(!next_target)
+		return
+	target_distance = 15
+	flee_from(next_target)
+	UnregisterSignal(mob_parent, COMSIG_XENOMORPH_TAKING_DAMAGE)
 
 /// No threat: return to the normal state
 /datum/ai_behavior/xeno/nymph/proc/stop_fleeing()
@@ -95,10 +126,14 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 	if(rts_well)
 		return
 	if(can_flee())
-		var/atom/threat = get_nearest_target(mob_parent, NYMPH_FLEE_RADIUS, TARGET_HOSTILE, mob_parent.faction, mob_parent.get_xeno_hivenumber(), TRUE)
+		var/atom/threat = get_nearest_nymph_threat()
 		if(threat)
-			flee_from(threat)
-			return
+			// A stale combat target must never make a nymph flee from a member of her own hive.
+			if(isxeno(threat) && mob_parent.issamexenohive(threat))
+				do_unset_target(threat, need_new_state = FALSE)
+			else
+				flee_from(threat)
+				return
 		if(current_action == MOVING_TO_SAFETY)
 			stop_fleeing()
 	if(support_target)
@@ -125,6 +160,16 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 		if(nymph_moving)
 			halt_job()
 		return
+	if(job_type == NYMPH_JOB_BUILD)
+		var/obj/effect/xeno_blueprint/bp = job_target
+		if(bp && !bp.is_demolish && bp.entry && ispath(bp.entry.path, /turf/closed) && get_turf(mob_parent) == get_turf(bp))
+			var/turf/step_off = get_build_step_off_turf(get_turf(bp))
+			if(step_off)
+				go_to(step_off)
+			else
+				blacklist[job_target] = world.time + NYMPH_BLACKLIST_TIME
+				halt_job()
+			return
 	if(job_in_reach())
 		halt_job(FALSE)
 		INVOKE_ASYNC(src, PROC_REF(do_job))
@@ -186,19 +231,40 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 			return TRUE
 	return FALSE
 
-/// A wall on the turf would trap some nymph nearby (or us)
+/// Find a free adjacent turf so a nymph standing on a wall blueprint can step off before building.
+/datum/ai_behavior/xeno/nymph/proc/get_build_step_off_turf(turf/build_turf)
+	if(!build_turf || get_turf(mob_parent) != build_turf)
+		return null
+	var/turf/best_turf
+	var/best_score = INFINITY
+	// Use cardinal neighbours: diagonal step-off points can be unreachable when
+	// both adjoining cardinal tiles are blocked.
+	for(var/direction in list(NORTH, SOUTH, EAST, WEST))
+		var/turf/candidate = get_step(build_turf, direction)
+		if(!candidate || is_blocked_turf(candidate) || candidate.z != build_turf.z)
+			continue
+		var/score = get_dist(mob_parent, candidate)
+		if(score < best_score)
+			best_score = score
+			best_turf = candidate
+	return best_turf
+
 /datum/ai_behavior/xeno/nymph/proc/build_would_trap(turf/T, datum/xeno_build_entry/entry)
-	if(!ispath(entry.path, /turf/closed))
+	if(!entry || !ispath(entry.path, /turf/closed))
 		return FALSE
 	for(var/mob/living/carbon/xenomorph/nymph/other in range(2, T))
 		if(other.stat == DEAD)
 			continue
 		var/turf/their = get_turf(other)
 		if(their == T)
+			// Our own nymph can safely build after moving one tile away. Other nymphs
+			// on the blueprint tile would be trapped, so keep refusing that build.
+			if(other == mob_parent && get_build_step_off_turf(T))
+				continue
 			return TRUE
 		var/free = 0
 		for(var/turf/N in orange(1, their))
-			if(N != T && !N.density)
+			if(N != T && !is_blocked_turf(N))
 				free++
 		if(free <= 0)
 			return TRUE
