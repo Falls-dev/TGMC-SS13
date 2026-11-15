@@ -1,13 +1,24 @@
 #define TADPOLE_CHUNK_SIZE 8
 
-/// As in map_view/camera, a set of native turfs preserves its map grid in
-/// vis_contents. One holder per block is sufficient: no per-tile proxies.
+/// A world-space turf relay must have an explicit tile anchor. Bulk map_view
+/// layout is intended for screen maps, not separately shifted world blocks.
+/obj/effect/abstract/tadpole_native_tile
+	icon = null
+	plane = HUD_PLANE
+	appearance_flags = PIXEL_SCALE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/effect/abstract/tadpole_native_tile/Destroy()
+	vis_contents.Cut()
+	return ..()
+
 /obj/effect/abstract/tadpole_native_chunk
 	icon = null
 	plane = HUD_PLANE
 	appearance_flags = PIXEL_SCALE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/list/tiles = list()
+	var/list/anchors = list()
 
 /obj/effect/abstract/tadpole_native_chunk/proc/build(base_x, base_y, ground_z)
 	var/turf/first = locate(max(1, base_x), max(1, base_y), ground_z)
@@ -15,8 +26,13 @@
 	if(!first || !last || base_x > world.maxx || base_y > world.maxy || base_x + TADPOLE_CHUNK_SIZE <= 1 || base_y + TADPOLE_CHUNK_SIZE <= 1)
 		return
 	tiles = block(first, last)
-	vis_contents = tiles.Copy()
 	for(var/turf/source as anything in tiles)
+		var/obj/effect/abstract/tadpole_native_tile/anchor = new
+		anchor.pixel_x = (source.x - first.x) * world.icon_size
+		anchor.pixel_y = (source.y - first.y) * world.icon_size
+		anchor.vis_contents += source
+		anchors[source] = anchor
+		vis_contents += anchor
 		RegisterSignal(source, COMSIG_TURF_CHANGE, PROC_REF(on_turf_change))
 
 /obj/effect/abstract/tadpole_native_chunk/proc/on_turf_change(datum/source, path, baseturfs, flags, list/callbacks)
@@ -24,15 +40,17 @@
 	callbacks += CALLBACK(src, PROC_REF(reconnect))
 
 /obj/effect/abstract/tadpole_native_chunk/proc/reconnect(turf/replacement)
-	if(!QDELETED(src))
-		// Turf references in tiles persist through ChangeTurf; reconnect native
-		// vis_loc after replacement without inspecting any appearance tree.
-		vis_contents = tiles.Copy()
+	if(QDELETED(src))
+		return
+	var/obj/effect/abstract/tadpole_native_tile/anchor = anchors[replacement]
+	if(anchor)
+		anchor.vis_contents = list(replacement)
 
 /obj/effect/abstract/tadpole_native_chunk/Destroy()
 	for(var/turf/source as anything in tiles)
 		UnregisterSignal(source, COMSIG_TURF_CHANGE)
 	vis_contents.Cut()
+	QDEL_LIST_ASSOC_VAL(anchors)
 	tiles.Cut()
 	return ..()
 
@@ -44,6 +62,9 @@
 	var/source_offset
 	var/output_plane
 	var/matrix/last_camera
+	var/matrix/animation_from
+	var/animation_started = 0
+	var/animation_duration = 0
 	var/list/forced_planes = list()
 	var/atom/movable/screen/plane_master/emissive_plate
 	var/had_emissive_relay = FALSE
@@ -92,8 +113,47 @@
 		return
 	if(last_camera && last_camera.a == camera.a && last_camera.b == camera.b && last_camera.c == camera.c && last_camera.d == camera.d && last_camera.e == camera.e && last_camera.f == camera.f)
 		return
+	animation_from = displayed_camera()
+	animation_started = world.time
+	animation_duration = animation_seconds * 10
 	last_camera = camera
-	animate(plate, transform = camera, time = animation_seconds * 10, easing = LINEAR_EASING)
+	animate(plate, transform = camera, time = animation_duration, easing = LINEAR_EASING)
+
+/// Match the LINEAR_EASING matrix interpolation currently visible to clients.
+/datum/tadpole_scene_view/proc/displayed_camera()
+	if(!last_camera)
+		return plate?.transform ? matrix(plate.transform) : matrix()
+	var/progress = animation_duration ? clamp((world.time - animation_started) / animation_duration, 0, 1) : 1
+	if(!animation_from || progress >= 1)
+		return matrix(last_camera)
+	var/matrix/result = matrix()
+	result.a = animation_from.a + (last_camera.a - animation_from.a) * progress
+	result.b = animation_from.b + (last_camera.b - animation_from.b) * progress
+	result.c = animation_from.c + (last_camera.c - animation_from.c) * progress
+	result.d = animation_from.d + (last_camera.d - animation_from.d) * progress
+	result.e = animation_from.e + (last_camera.e - animation_from.e) * progress
+	result.f = animation_from.f + (last_camera.f - animation_from.f) * progress
+	return result
+
+/// Blocks change coordinate frames instantly. Apply the inverse displacement
+/// to the displayed camera instantly, before animating the next physics step.
+/datum/tadpole_scene_view/proc/rebase_camera(shift_x, shift_y)
+	if(QDELETED(plate) || !last_camera)
+		return
+	var/matrix/current = displayed_camera()
+	var/remaining = max(0, animation_duration - (world.time - animation_started))
+	current.c += current.a * shift_x + current.b * shift_y
+	current.f += current.d * shift_x + current.e * shift_y
+	var/matrix/target = matrix(last_camera)
+	target.c += target.a * shift_x + target.b * shift_y
+	target.f += target.d * shift_x + target.e * shift_y
+	animation_from = current
+	last_camera = target
+	animation_started = world.time
+	animation_duration = remaining
+	animate(plate, transform = current, time = 0)
+	if(remaining)
+		animate(plate, transform = target, time = remaining, easing = LINEAR_EASING)
 
 /datum/tadpole_scene
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/helm
@@ -148,6 +208,10 @@
 	var/new_x = FLOOR(helm.flight_x / TADPOLE_CHUNK_SIZE, 1) * TADPOLE_CHUNK_SIZE
 	var/new_y = FLOOR(helm.flight_y / TADPOLE_CHUNK_SIZE, 1) * TADPOLE_CHUNK_SIZE
 	if(origin_x != new_x || origin_y != new_y || source_z != helm.eyeobj.z || radius != needed_radius)
+		if(!isnull(origin_x) && !isnull(origin_y))
+			for(var/client/display as anything in views)
+				var/datum/tadpole_scene_view/view = views[display]
+				view.rebase_camera((new_x - origin_x) * world.icon_size, (new_y - origin_y) * world.icon_size)
 		origin_x = new_x
 		origin_y = new_y
 		source_z = helm.eyeobj.z

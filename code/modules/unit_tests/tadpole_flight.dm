@@ -59,18 +59,22 @@
 	var/original_plane = start.plane
 	chunk.build(start.x, start.y, start.z)
 	TEST_ASSERT_EQUAL(length(chunk.tiles), 64, "A native chunk must own exactly one 8x8 cell block")
-	TEST_ASSERT(start in chunk.vis_contents, "Native scene must share the actual turf")
+	TEST_ASSERT(start in chunk.anchors[start]:vis_contents, "Native scene must share the actual turf")
+	var/obj/effect/abstract/tadpole_native_tile/east_anchor = chunk.anchors[get_step(start, EAST)]
+	var/obj/effect/abstract/tadpole_native_tile/north_anchor = chunk.anchors[get_step(start, NORTH)]
+	TEST_ASSERT_EQUAL(east_anchor.pixel_x, world.icon_size, "Adjacent native cells must have explicit contiguous x offsets")
+	TEST_ASSERT_EQUAL(north_anchor.pixel_y, world.icon_size, "Adjacent native cells must have explicit contiguous y offsets")
 	TEST_ASSERT_EQUAL(start.appearance, original_picture, "Native relay must not rewrite source geometry")
 	TEST_ASSERT_EQUAL(start.plane, original_plane, "Native relay must not modify source planes")
 	var/obj/item/item = allocate(/obj/item, start)
 	var/turf/destination = get_step(start, EAST)
 	item.forceMove(destination)
-	TEST_ASSERT(start in chunk.vis_contents, "Object movement must not rebuild the terrain relay")
+	TEST_ASSERT(start in chunk.anchors[start]:vis_contents, "Object movement must not rebuild the terrain relay")
 	TEST_ASSERT_EQUAL(length(chunk.tiles), 64, "Object movement must allocate no motion proxies")
 	var/old_type = start.type
 	start = start.ChangeTurf(/turf/open/floor/plating)
 	sleep(world.tick_lag)
-	TEST_ASSERT(start in chunk.vis_contents, "Replacing a turf must reconnect its native relay")
+	TEST_ASSERT(start in chunk.anchors[start]:vis_contents, "Replacing a turf must reconnect its native relay")
 	start.ChangeTurf(old_type)
 	qdel(chunk)
 	TEST_ASSERT_EQUAL(length(chunk.tiles), 0, "Scene deletion must release source subscriptions")
@@ -170,6 +174,21 @@
 	TEST_ASSERT_NOTNULL(native_view.plate, "Ground must have a preallocated native lower render plate")
 	TEST_ASSERT(native_view.plate.get_relay_to(TADPOLE_GROUND_PLANE), "Passenger plate must relay below the physical craft")
 	TEST_ASSERT_EQUAL(other_plate.render_relay_planes.Join(","), original_targets.Join(","), "Another observer must retain their native graph")
+	// Rebase halfway through an actual camera interpolation. Shifting the
+	// source grid and inverse-shifting the camera must preserve every pixel.
+	var/matrix/target = matrix()
+	target.Turn(-37)
+	target.Translate(14, -7)
+	native_view.update_camera(target, 1)
+	native_view.animation_started = world.time - 5
+	var/matrix/before_rebase = native_view.displayed_camera()
+	var/screen_x = before_rebase.a * 64 + before_rebase.b * 128 + before_rebase.c
+	var/screen_y = before_rebase.d * 64 + before_rebase.e * 128 + before_rebase.f
+	native_view.rebase_camera(256, -256)
+	var/matrix/after_rebase = native_view.displayed_camera()
+	TEST_ASSERT(abs(after_rebase.a * (64 - 256) + after_rebase.b * (128 + 256) + after_rebase.c - screen_x) < 0.001, "An eight-tile rebase must preserve displayed x during a turn")
+	TEST_ASSERT(abs(after_rebase.d * (64 - 256) + after_rebase.e * (128 + 256) + after_rebase.f - screen_y) < 0.001, "An eight-tile rebase must preserve displayed y during a turn")
+	TEST_ASSERT_EQUAL(native_view.animation_duration, 5, "Rebase must retain only the unfinished half of the animation")
 	var/atom/movable/screen/plane_master/passenger_plate = native_view.plate
 	qdel(native_view)
 	TEST_ASSERT_NULL(passenger_plate.get_relay_to(TADPOLE_GROUND_PLANE), "Leaving the scene must remove the aircraft relay")

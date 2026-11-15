@@ -86,8 +86,8 @@ ground observers use their normal HUD offset. No source plane/appearance is
 mutated when a flight starts, moves or ends.
 
 A scene owns 8x8 blocks of real turfs in vis_contents (the same bulk-turf
-mechanism already used by map_view/camera). There are no per-tile or per-actor
-visual proxies. Each block subscribes to turf replacement only. Membership
+mechanism already used by map_view/camera). Each turf has an explicit positioning anchor; there are no per-actor
+appearance copies. Each block subscribes to turf replacement only. Membership
 covers an entire eight-cell camera bucket plus the rotation/view margin;
 it changes at bucket boundaries or when the viewers/source level change.
 
@@ -146,3 +146,24 @@ lighting/cameras, takeoff with multiple passengers, idle/straight/turning
 flight (especially 45-degree edges), NVG, pilot release/passenger movement,
 landing, return, and dropping with/without a parachute. Capture a fresh code
 and network profile after startup, then compare the same flight path.
+
+## Chunk seam correction
+
+The first native implementation assumed bulk screen-map turf layout was
+suitable for individually shifted world-space blocks. Client testing showed
+8x8 black blocks. Blocks now own an explicit native turf anchor for each cell,
+with contiguous 32-pixel offsets; native turf contents and light remain shared,
+without appearance normalization or per-object synchronization.
+
+Rebasing also used to move the source blocks eight tiles instantly while
+animating the inverse camera displacement over the next physics interval.
+This produced an apparent backward jump although flight coordinates did not
+change. The camera now tracks its linear matrix timeline. At a rebase it
+samples the current interpolated matrix and applies the inverse block shift
+instantly to that matrix and its target, preserving unfinished animation time.
+Subsequent physics movement continues from the compensated displayed frame.
+
+Regression checks cover adjacent cell positions, turf replacement through
+an anchor, and conservation of screen coordinates during a rebase halfway
+through a rotated camera interpolation. Client confirmation of the black
+blocks and continuous flight remains necessary.
