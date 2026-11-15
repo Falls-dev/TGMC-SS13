@@ -163,6 +163,18 @@
 	scene.update_chunks()
 	TEST_ASSERT_EQUAL(scene.chunks[key], edge_chunk, "Unchanged scene cells must reuse native blocks")
 	TEST_ASSERT_EQUAL(length(scene.chunks), count, "Repeated membership checks must allocate no additional blocks")
+	var/old_width = port.width
+	var/old_height = port.height
+	port.width = 7
+	port.height = 9
+	var/list/viewport = list(21, 21)
+	var/walking_radius = scene.view_radius(viewport, 0)
+	for(var/distance in 1 to 9)
+		TEST_ASSERT_EQUAL(scene.view_radius(viewport, distance), walking_radius, "Walking inside the ship must not resize its source scene")
+	scene.radius = scene.view_radius(viewport, 30)
+	TEST_ASSERT_EQUAL(scene.view_radius(viewport, 0), scene.radius, "Returning from a remote eye must not shrink/reallocate terrain every step")
+	port.width = old_width
+	port.height = old_height
 	qdel(scene)
 	TEST_ASSERT_EQUAL(length(scene.chunks), 0, "Scene deletion must release all native blocks")
 	// Flight-specific graph edits must be local to one HUD and reversible.
@@ -172,8 +184,26 @@
 	var/list/original_targets = other_plate.render_relay_planes.Copy()
 	var/datum/tadpole_scene_view/native_view = new(display, 1)
 	TEST_ASSERT_NOTNULL(native_view.plate, "Ground must have a preallocated native lower render plate")
-	TEST_ASSERT(native_view.plate.get_relay_to(TADPOLE_GROUND_PLANE), "Passenger plate must relay below the physical craft")
+	TEST_ASSERT(native_view.plate.get_relay_to(RENDER_PLANE_GAME), "Completed lower scene must bypass the upper lighting pass")
 	TEST_ASSERT_EQUAL(other_plate.render_relay_planes.Join(","), original_targets.Join(","), "Another observer must retain their native graph")
+	var/atom/movable/screen/plane_master/upper_geometry = display.get_plane_master(RENDER_PLANE_GAME_WORLD)
+	TEST_ASSERT_EQUAL(native_view.output_relay.filter_data["ship_cutout"]["render_source"], upper_geometry.render_target, "Late lower scene must mask native ship geometry instead of covering the hull")
+	var/atom/movable/screen/plane_master/upper_floor = display.get_plane_master(FLOOR_PLANE)
+	TEST_ASSERT_EQUAL(native_view.output_relay.filter_data["upper_cutout_[FLOOR_PLANE]"]["render_source"], upper_floor.render_target, "Floor masks must protect the real interior, since floors bypass GAME_WORLD")
+	TEST_ASSERT(native_view.output_relay.layer > LIGHT_MASK_PLANE + abs(LOWEST_EVER_PLANE * 30), "Lower image must be composed after upper lighting and visibility masking")
+	TEST_ASSERT(native_view.output_relay.layer < ABOVE_LIGHTING_PLANE + abs(LOWEST_EVER_PLANE * 30), "Above-lighting effects must remain above the lower scene")
+	var/obj/item/eye_fixture = allocate(/obj/item, start)
+	eye_fixture.set_glide_size(8)
+	native_view.bind_eye(eye_fixture)
+	TEST_ASSERT(eye_fixture.Move(get_step(start, EAST), EAST, 8), "The eye fixture must take a real step")
+	TEST_ASSERT_EQUAL(native_view.eye_from_x, start.x, "Eye compensation must begin at the displayed position")
+	TEST_ASSERT(native_view.eye_duration > 0, "Eye movement must preserve native glide timing")
+	native_view.eye_started = world.time - native_view.eye_duration / 2
+	var/list/halfway_eye = native_view.eye_position(world.time)
+	TEST_ASSERT(abs(halfway_eye[1] - start.x - 0.5) < 0.001, "Eye compensation must interpolate within the tile, not jump to its endpoint")
+	eye_fixture.forceMove(start)
+	TEST_ASSERT_EQUAL(native_view.eye_duration, 0, "Forced eye moves must remain teleports")
+	native_view.bind_eye(null)
 	// Rebase halfway through an actual camera interpolation. Shifting the
 	// source grid and inverse-shifting the camera must preserve every pixel.
 	var/matrix/target = matrix()
@@ -191,7 +221,7 @@
 	TEST_ASSERT_EQUAL(native_view.animation_duration, 5, "Rebase must retain only the unfinished half of the animation")
 	var/atom/movable/screen/plane_master/passenger_plate = native_view.plate
 	qdel(native_view)
-	TEST_ASSERT_NULL(passenger_plate.get_relay_to(TADPOLE_GROUND_PLANE), "Leaving the scene must remove the aircraft relay")
+	TEST_ASSERT_NULL(passenger_plate.get_relay_to(RENDER_PLANE_GAME), "Leaving the scene must remove the aircraft relay")
 	TEST_ASSERT(passenger_plate.get_relay_to(RENDER_PLANE_TRANSPARENT), "Leaving must restore native multiz routing")
 	var/turf/ground = locate(40,40,SSmapping.ground_start)
 	TEST_ASSERT(SSmapping.z_level_to_plane_offset[ground.z] >= 1, "Ground planes must be allocated below transit before atom initialization")
@@ -208,6 +238,13 @@
 	TEST_ASSERT_EQUAL(popup.view_offset(0), 1, "Ground camera must remain on depth one for a shipside observer")
 	popup.source_plane_offset = 0
 	TEST_ASSERT_EQUAL(popup.view_offset(1), 0, "Nullspace preview must remain on depth zero for a ground observer")
+	var/obj/docking_port/stationary/dust_destination = allocate(/obj/docking_port/stationary, ground)
+	port.use_ripples = TRUE
+	port.uses_dust = TRUE
+	TEST_ASSERT(port.create_ripples(dust_destination, 1), "Landing effect fixture must execute the actual ripple/particle path")
+	TEST_ASSERT_NOTNULL(port.particle_holder, "Landing must create its native dust holder")
+	TEST_ASSERT_EQUAL(port.particle_holder.plane, WALL_PLANE - PLANE_RANGE * SSmapping.z_level_to_plane_offset[ground.z], "Dust must use the landing destination's plane rather than transit")
+	port.remove_ripples()
 	// Destroy HUDs while their owners are still alive; the generic fixture
 	// cleanup otherwise deletes mobs before the lighting backdrop timers.
 	qdel(display)

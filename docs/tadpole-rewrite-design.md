@@ -167,3 +167,37 @@ Regression checks cover adjacent cell positions, turf replacement through
 an anchor, and conservation of screen coordinates during a rebase halfway
 through a rotated camera interpolation. Client confirmation of the black
 blocks and continuous flight remains necessary.
+
+## Passenger visibility, walking and landing-effect corrections
+
+The completed lower master no longer enters the upper lighting pipeline.
+It is relayed to the game plate immediately AFTER the upper light/visibility
+passes and BEFORE above-lighting effects. Native upper geometry, floor,
+massive-object, ghost and point render targets mask that relay, so it cannot
+paint over the physical craft. Floors require their own mask because this
+fork routes FLOOR_PLANE directly to GAME rather than GAME_WORLD. This avoids
+multiplying an already-lit lower image by passenger-dependent transit light.
+No changes were made to flight coordinates or the landing destination.
+
+The source radius now includes the entire physical docking footprint and
+never shrinks during an observed flight. Walking inside the craft therefore
+cannot resize the source cache. A larger remote eye may grow it; an empty
+scene releases it. Zero-displacement cache refreshes do not rebase cameras.
+
+Each scene view subscribes to its actual eye's Move/forceMove/deletion signals.
+It tracks the displayed native glide and schedules compensation for the end
+of the same interval, beginning with the movement signal instead of waiting
+for the next flight tick. Flight ticks do not extend an unfinished eye glide.
+Subscriptions are released on view/eye replacement and destruction.
+
+Shuttle landing dust previously took its plane from the mobile port still in
+transit. It now takes it from the stationary destination, matching its real
+location and the lower native render graph.
+
+Validation: focused tadpole_flight PASS and clean_run Success! in
+`data/logs/tadpole-walking-and-light-fix`; normal BYOND build 0 errors/warnings.
+Tests include late-composition routing/cutout targets and ordering, a real
+Move with midpoint glide and forceMove, stable cache radius across the ship,
+and the actual create_ripples/particle path with a cross-depth destination.
+Client confirmation of visibility, walking performance and dust alignment is
+still required; this check did not measure client frame times.
