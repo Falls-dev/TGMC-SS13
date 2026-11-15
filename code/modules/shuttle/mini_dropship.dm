@@ -50,16 +50,23 @@
 	var/launching_delay = 10 SECONDS
 	/// World-space holders rendering the ground below the actual transit shuttle.
 	var/list/ground_holders = list()
-	var/list/ground_mobs = list()
+	var/list/ground_movables = list()
+	/// One native light-mask relay per source, shared by the entire lower scene.
+	var/list/ground_lights = list()
+	var/list/dirty_ground_tiles = list()
+	var/obj/effect/abstract/tadpole_searchlight/ground_searchlight
 	var/obj/effect/abstract/tadpole_ground_surface/ground_surface
 	var/ground_origin_x
 	var/ground_origin_y
 	var/list/ground_tiles = list()
 	var/list/ground_view_bounds
 	var/next_ground_bounds = 0
+	/// Round-robin terrain polling keeps periodic appearance checks bounded.
+	var/ground_refresh_cursor = 0
 	var/last_ground_x
 	var/last_ground_y
 	var/last_ground_heading
+	var/last_ground_z
 	var/list/last_ground_bounds
 	/// Continuous coordinates in tiles, velocity in tiles/second, heading in degrees.
 	var/flight_x
@@ -205,9 +212,25 @@
 	if(!origin_port_id)
 		return
 	open_prompt = FALSE
-	clear_ground_view()
 	clean_ui_user()
 	SSshuttle.moveShuttle(shuttle_id, origin_port_id, TRUE)
+
+/// Manual only: moving the shuttle never changes the chosen shutter state.
+/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/proc/toggle_shutters()
+	if(!shuttle_port)
+		return
+	var/list/shutters = list()
+	var/should_open = FALSE
+	for(var/turf/tile as anything in shuttle_port.return_turfs())
+		for(var/obj/machinery/door/poddoor/shutters/transit/shutter in tile)
+			shutters |= shutter
+			if(shutter.density)
+				should_open = TRUE
+	for(var/obj/machinery/door/poddoor/shutters/transit/shutter as anything in shutters)
+		if(should_open)
+			INVOKE_ASYNC(shutter, TYPE_PROC_REF(/obj/machinery/door/poddoor, open))
+		else
+			INVOKE_ASYNC(shutter, TYPE_PROC_REF(/obj/machinery/door/poddoor, close))
 
 /// Toggle the vision between small nightvision and turf vision
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/proc/toggle_nvg()
@@ -310,6 +333,8 @@
 			return_to_ship()
 		if("toggle_nvg")
 			toggle_nvg()
+		if("toggle_shutters")
+			toggle_shutters()
 		if("equip_interact")
 			var/base_tag = text2num(params["equip_interact"])
 			var/obj/docking_port/mobile/marine_dropship/shuttle = shuttle_port
@@ -350,7 +375,8 @@
 	SStgui.close_user_uis(C, origin)
 	origin.shuttle_port.set_mode(SHUTTLE_CALL)
 	origin.last_valid_ground_port = origin.my_port
-	origin.clear_ground_view()
+	// Keep the terrain and light visible throughout the landing countdown.
+	// shuttle_arrived() removes them once the real shuttle reaches the ground.
 	origin.remove_eye_control(C)
 	SSshuttle.moveShuttleToDock(origin.shuttle_id, origin.my_port, TRUE)
 
@@ -406,28 +432,88 @@
 	var/turf/displayed_turf
 	var/next_refresh = 0
 	var/view_turn = 0
+	var/obj/effect/abstract/tadpole_ground_lighting/ground_lighting
+	var/cached_static_light
+	var/cached_ambient_light
+	var/cached_static_lighting
 	var/list/cached_ground_directions
 	var/list/obj/effect/abstract/tadpole_ground_sprite/sprites = list()
 	var/list/cached_ground_appearances
+	var/list/cached_ground_visuals
+	var/list/cached_ground_sources
 
 /obj/effect/abstract/tadpole_ground/Destroy()
+	for(var/atom/old_source as anything in cached_ground_sources)
+		UnregisterSignal(old_source, list(COMSIG_ATOM_UPDATED_ICON, COMSIG_ATOM_DIR_CHANGE, COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
+	if(flight_helm)
+		flight_helm.dirty_ground_tiles -= displayed_turf
 	if(displayed_turf)
-		UnregisterSignal(displayed_turf, COMSIG_ATOM_ENTERED)
+		UnregisterSignal(displayed_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED))
 	flight_helm = null
+	QDEL_NULL(ground_lighting)
+	cached_static_light = null
+	cached_ambient_light = null
 	vis_contents.Cut()
 	QDEL_LIST(sprites)
 	displayed_turf = null
 	cached_ground_directions = null
 	cached_ground_appearances = null
+	cached_ground_visuals = null
+	cached_ground_sources = null
 	return ..()
 
 /obj/effect/abstract/tadpole_ground/proc/on_ground_entered(datum/source, atom/movable/arrived, atom/old_loc)
 	SIGNAL_HANDLER
-	if(ismob(arrived))
-		flight_helm?.track_ground_mob(arrived, old_loc)
+	if(tadpole_ground_tracks_movement(arrived))
+		flight_helm?.track_ground_movable(arrived, old_loc)
+	else
+		mark_dirty()
+
+/obj/effect/abstract/tadpole_ground/proc/on_ground_exited(datum/source, atom/movable/departed)
+	SIGNAL_HANDLER
+	forget_source(departed)
+
+/obj/effect/abstract/tadpole_ground/proc/mark_dirty()
+	next_refresh = 0
+	if(flight_helm && displayed_turf)
+		flight_helm.dirty_ground_tiles[displayed_turf] = TRUE
+
+/obj/effect/abstract/tadpole_ground/proc/on_source_changed()
+	SIGNAL_HANDLER
+	mark_dirty()
+
+/obj/effect/abstract/tadpole_ground/proc/on_static_moved(atom/movable/source)
+	SIGNAL_HANDLER
+	// Also listen on the atom: some turf Exited overrides omit the parent
+	// signal, and portable scenery can be unanchored before its next poll.
+	if(source.loc != displayed_turf)
+		forget_source(source)
+	else
+		mark_dirty()
+
+/obj/effect/abstract/tadpole_ground/proc/on_static_deleted(atom/source)
+	SIGNAL_HANDLER
+	if(ismovable(source))
+		forget_source(source)
+	mark_dirty()
+
+/// Remove a departed static copy immediately, before a new motion anchor is
+/// shown. Remaining geometry is rebuilt later within the same bounded budget.
+/obj/effect/abstract/tadpole_ground/proc/forget_source(atom/movable/source)
+	var/index = cached_ground_sources?.Find(source)
+	if(!index)
+		return
+	var/obj/effect/abstract/tadpole_ground_sprite/departed_sprite = sprites[index]
+	vis_contents -= departed_sprite
+	sprites.Cut(index, index + 1)
+	cached_ground_sources.Cut(index, index + 1)
+	UnregisterSignal(source, list(COMSIG_ATOM_UPDATED_ICON, COMSIG_ATOM_DIR_CHANGE, COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
+	qdel(departed_sprite)
+	cached_ground_appearances = null
+	mark_dirty()
 
 /// A persistent motion anchor, independent of the cached terrain snapshots.
-/// Only normalized visuals are relayed: real mobs keep their own world/planes.
+/// Only normalized visuals are relayed: real atoms keep their own world/planes.
 /obj/effect/abstract/tadpole_mobile_anchor
 	icon = null
 	layer = FLOAT_LAYER
@@ -435,9 +521,10 @@
 	plane = FLOAT_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/helm
-	var/mob/source_mob
+	var/atom/movable/source_atom
 	var/obj/effect/abstract/tadpole_ground_sprite/sprite
 	var/last_appearance
+	var/list/last_visuals
 	var/last_direction
 	var/last_turn
 	var/last_glide_duration = 0
@@ -448,20 +535,22 @@
 	var/to_y = 0
 
 /obj/effect/abstract/tadpole_mobile_anchor/Destroy()
-	if(source_mob)
-		UnregisterSignal(source_mob, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING, COMSIG_ATOM_DIR_CHANGE, COMSIG_ATOM_UPDATED_ICON))
+	if(source_atom)
+		UnregisterSignal(source_atom, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING, COMSIG_ATOM_DIR_CHANGE, COMSIG_ATOM_UPDATED_ICON))
 	if(helm)
 		helm.ground_surface?.vis_contents.Remove(src)
-		if(helm.ground_mobs[source_mob] == src)
-			helm.ground_mobs -= source_mob
+		if(helm.ground_movables[source_atom] == src)
+			helm.ground_movables -= source_atom
 	helm = null
-	source_mob = null
+	source_atom = null
+	last_visuals = null
+	last_appearance = null
 	vis_contents.Cut()
 	QDEL_NULL(sprite)
 	return ..()
 
-/obj/effect/abstract/tadpole_mobile_anchor/proc/bind_mob(mob/mobile, obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/owner, atom/old_loc)
-	source_mob = mobile
+/obj/effect/abstract/tadpole_mobile_anchor/proc/bind_movable(atom/movable/mobile, obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/owner, atom/old_loc)
+	source_atom = mobile
 	helm = owner
 	sprite = new
 	vis_contents += sprite
@@ -479,28 +568,36 @@
 	sync_visual()
 
 /obj/effect/abstract/tadpole_mobile_anchor/proc/sync_visual()
-	if(!source_mob || !helm)
+	if(!source_atom || !helm)
 		return
 	var/turn = 90 * round((SIMPLIFY_DEGREES(helm.flight_heading - dir2angle(helm.shuttle_port.dir)) + 45) / 90)
-	if(last_appearance != source_mob.appearance || last_direction != source_mob.dir)
-		var/offset = PLANE_RANGE * SSmapping.z_level_to_plane_offset[source_mob.z]
-		var/mutable_appearance/picture = tadpole_ground_appearance(source_mob.appearance, offset)
-		picture.layer = tadpole_ground_layer(source_mob.appearance, offset)
+	var/list/visuals = tadpole_ground_visual_signature(source_atom)
+	if(last_appearance != source_atom.appearance || last_direction != source_atom.dir || !tadpole_ground_same_list(visuals, last_visuals))
+		var/offset = PLANE_RANGE * SSmapping.z_level_to_plane_offset[source_atom.z]
+		var/mutable_appearance/picture = tadpole_ground_atom_appearance(source_atom, offset)
+		picture.layer = tadpole_ground_layer(source_atom.appearance, offset)
 		picture.appearance_flags = (picture.appearance_flags & ~TILE_BOUND) | KEEP_TOGETHER
-		sprite.configure_source(source_mob, picture)
+		sprite.configure_source(source_atom, picture)
 		sprite.set_view_turn(turn)
-		last_appearance = source_mob.appearance
-		last_direction = source_mob.dir
+		last_appearance = source_atom.appearance
+		last_visuals = visuals
+		last_direction = source_atom.dir
 		last_turn = turn
 	else if(last_turn != turn)
 		sprite.set_view_turn(turn)
 		last_turn = turn
+	// Let each client apply see_invisible instead of dropping all nonzero levels.
+	sprite.invisibility = source_atom.invisibility
 	var/angle = helm.flight_heading - dir2angle(helm.shuttle_port.dir)
-	sprite.set_view_depth((source_mob.y - helm.flight_y) * cos(angle) + (source_mob.x - helm.flight_x) * sin(angle))
+	// Match the displayed glide, not the destination turf reached by Move().
+	var/progress = last_glide_duration ? clamp((world.time - move_started) / last_glide_duration, 0, 1) : 1
+	var/draw_x = from_x + (to_x - from_x) * progress
+	var/draw_y = from_y + (to_y - from_y) * progress
+	sprite.set_view_depth((draw_y * cos(angle) + draw_x * sin(angle)) / world.icon_size)
 
-/obj/effect/abstract/tadpole_mobile_anchor/proc/on_source_moved(mob/mobile, atom/old_loc, movement_dir, forced)
+/obj/effect/abstract/tadpole_mobile_anchor/proc/on_source_moved(atom/movable/mobile, atom/old_loc, movement_dir, forced)
 	SIGNAL_HANDLER
-	if(!tadpole_ground_mob_visible(mobile) || mobile.z != helm.eyeobj.z)
+	if(!tadpole_ground_movable_visible(mobile) || mobile.z != helm.eyeobj.z)
 		qdel(src)
 		return
 	sync_visual()
@@ -513,10 +610,11 @@
 	to_x = (mobile.x - helm.ground_origin_x) * world.icon_size
 	to_y = (mobile.y - helm.ground_origin_y) * world.icon_size
 	move_started = world.time
-	last_glide_duration = !forced && old_turf && old_turf.z == mobile.z && get_dist(old_turf, mobile) <= 1 ? world.icon_size / max(mobile.glide_size, 1) * world.tick_lag : 0
+	last_glide_duration = (!forced || istype(mobile, /obj/vehicle)) && old_turf && old_turf.z == mobile.z && get_dist(old_turf, mobile) <= 1 ? world.icon_size / max(mobile.glide_size, 1) * world.tick_lag : 0
 	animate(src, pixel_x = to_x, pixel_y = to_y, time = last_glide_duration, easing = LINEAR_EASING)
+	sync_visual()
 
-/// Changing the terrain origin must not interrupt an in-progress mob glide.
+/// Changing the terrain origin must not interrupt an in-progress glide.
 /obj/effect/abstract/tadpole_mobile_anchor/proc/rebase(shift_x, shift_y)
 	var/progress = last_glide_duration ? clamp((world.time - move_started) / last_glide_duration, 0, 1) : 1
 	var/remaining = max(0, last_glide_duration - (world.time - move_started))
@@ -534,7 +632,7 @@
 	SIGNAL_HANDLER
 	qdel(src)
 
-/obj/effect/abstract/tadpole_mobile_anchor/proc/on_source_dir(mob/mobile, old_dir, new_dir)
+/obj/effect/abstract/tadpole_mobile_anchor/proc/on_source_dir(atom/movable/mobile, old_dir, new_dir)
 	SIGNAL_HANDLER
 	// setDir sends its signal before assigning mobile.dir.
 	sprite.source_direction = new_dir
@@ -544,36 +642,167 @@
 	SIGNAL_HANDLER
 	sync_visual()
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/proc/track_ground_mob(mob/mobile, atom/old_loc)
-	if(!ground_surface || !tadpole_ground_mob_visible(mobile) || mobile.z != eyeobj.z)
+/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/proc/track_ground_movable(atom/movable/mobile, atom/old_loc)
+	if(!ground_surface || !tadpole_ground_tracks_movement(mobile) || !tadpole_ground_movable_visible(mobile) || mobile.z != eyeobj.z || mobile.plane + PLANE_RANGE * SSmapping.z_level_to_plane_offset[mobile.z] >= LIGHTING_PLANE)
 		return
-	if(ground_mobs[mobile])
+	if(ground_movables[mobile])
 		return
 	var/obj/effect/abstract/tadpole_mobile_anchor/anchor = new
-	ground_mobs[mobile] = anchor
+	ground_movables[mobile] = anchor
 	ground_surface.vis_contents += anchor
-	anchor.bind_mob(mobile, src, old_loc)
+	anchor.bind_movable(mobile, src, old_loc)
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/proc/update_ground_mobs()
-	for(var/mob/mobile as anything in ground_mobs.Copy())
-		var/obj/effect/abstract/tadpole_mobile_anchor/anchor = ground_mobs[mobile]
-		if(QDELETED(mobile) || !tadpole_ground_mob_visible(mobile) || !ground_holders[mobile.loc])
+/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/proc/update_ground_movables()
+	for(var/atom/movable/mobile as anything in ground_movables.Copy())
+		var/obj/effect/abstract/tadpole_mobile_anchor/anchor = ground_movables[mobile]
+		if(QDELETED(mobile) || !tadpole_ground_tracks_movement(mobile) || !tadpole_ground_movable_visible(mobile) || !ground_movable_in_view(mobile))
 			qdel(anchor)
 			continue
 		anchor.sync_visual()
 
-/// Reuse the eight original atmosphere cloud tiles as a translucent texture,
-/// above every lower-level sprite but below the real shuttle floor. Cached
-/// appearances add no per-frame processing or full-screen object layer.
-/obj/effect/abstract/tadpole_ground/proc/add_cloud_haze(turf/source)
-	var/static/list/clouds = list()
-	var/state = ((4 * source.x + source.y) % 8) + 1
-	if(!clouds["[state]"])
-		var/mutable_appearance/cloud = mutable_appearance('icons/turf/space.dmi', "Cloud_[state]", layer = 9000, alpha = 45)
-		cloud.dir = SOUTH
-		cloud.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-		clouds["[state]"] = cloud
-	add_overlay(clouds["[state]"])
+/// A multi-tile vehicle can still overlap the viewport after its root turf
+/// leaves it. Native vis_contents sees the occupied turfs, so do the same.
+/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/proc/ground_movable_in_view(atom/movable/mobile)
+	if(ground_holders[mobile.loc])
+		return TRUE
+	for(var/turf/occupied as anything in mobile.locs)
+		if(ground_holders[occupied])
+			return TRUE
+	return FALSE
+
+/// Native movable light placed on the lower map. This is a real light source,
+/// so observers on the ground see the beam and normal wall occlusion applies.
+/obj/effect/abstract/tadpole_searchlight
+	icon = null
+	invisibility = INVISIBILITY_ABSTRACT
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	blocks_emissive = EMISSIVE_BLOCK_NONE
+	atom_flags = SHUTTLE_IMMUNE|PREVENT_CONTENTS_EXPLOSION
+	// Moving a static source invalidates hundreds of corner underlays, dirtying
+	// both the real map and terrain snapshots. Hybrid light uses a moving mask.
+	light_system = HYBRID_LIGHT
+	light_range = 9
+	light_power = 8
+	light_color = COLOR_WHITE
+
+/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/proc/update_ground_searchlight()
+	if(fly_state != SHUTTLE_IN_ATMOSPHERE || !eyeobj?.z || !shuttle_port)
+		return
+	var/list/bounds = shuttle_port.return_coords(shuttle_port.x, shuttle_port.y, shuttle_port.dir)
+	var/dx = (bounds[1] + bounds[3]) / 2 - shuttle_port.x
+	var/dy = (bounds[2] + bounds[4]) / 2 - shuttle_port.y
+	var/angle = flight_heading - dir2angle(shuttle_port.dir)
+	var/turf/target = locate(round(flight_x + dx * cos(angle) + dy * sin(angle) + 0.5), round(flight_y + dy * cos(angle) - dx * sin(angle) + 0.5), eyeobj.z)
+	if(!target)
+		return
+	if(!ground_searchlight)
+		ground_searchlight = new(target)
+	else if(get_turf(ground_searchlight) != target)
+		ground_searchlight.forceMove(target)
+
+/// Retain the native static-light appearance. SSlighting has already calculated
+/// its corner colours; the flight controller must never calculate them again.
+/obj/effect/abstract/tadpole_ground/proc/update_ground_lighting(turf/source)
+	var/area/region = source.loc
+	var/mutable_appearance/static_light = source.static_lighting_object?.current_underlay
+	var/mutable_appearance/ambient = LAZYACCESS(region.lighting_effects, GET_TURF_PLANE_OFFSET(source) + 1)
+	var/static_picture = static_light?.appearance
+	var/ambient_picture = ambient?.appearance
+	if(ground_lighting && cached_static_light == static_picture && cached_ambient_light == ambient_picture && cached_static_lighting == region.static_lighting)
+		return FALSE
+	cached_static_light = static_picture
+	cached_ambient_light = ambient_picture
+	cached_static_lighting = region.static_lighting
+	if(!ground_lighting)
+		ground_lighting = new
+		if(flight_helm)
+			SET_PLANE(ground_lighting, TADPOLE_GROUND_LIGHTING_PLANE, flight_helm)
+		vis_contents += ground_lighting
+	ground_lighting.overlays.Cut()
+	// Native light planes have a white backdrop; the static underlay supplies
+	// darkness. An uninitialised static tile must stay dark instead of flashing.
+	ground_lighting.color = static_light || !region.static_lighting ? COLOR_WHITE : COLOR_BLACK
+	if(static_light)
+		var/mutable_appearance/light = new(static_light)
+		light.plane = FLOAT_PLANE
+		light.layer = FLOAT_LAYER
+		light.appearance_flags &= ~RESET_TRANSFORM
+		ground_lighting.overlays += light
+	if(ambient)
+		var/mutable_appearance/light = new(ambient)
+		light.plane = FLOAT_PLANE
+		light.layer = FLOAT_LAYER
+		light.appearance_flags &= ~RESET_TRANSFORM
+		ground_lighting.overlays += light
+	return TRUE
+
+/// The light pass is separate from geometry, like the native multiz plates.
+/// KEEP_APART is required: these children must escape the geometry surface
+/// KEEP_TOGETHER group before the lighting plane can collect them.
+/// Native additive light masks are combined first, then the plane master
+/// multiplies the resulting light image onto the lower scene exactly once.
+/obj/effect/abstract/tadpole_ground_lighting
+	icon = 'icons/effects/alphacolors.dmi'
+	icon_state = "white"
+	plane = TADPOLE_GROUND_LIGHTING_PLANE
+	layer = TOPDOWN_LAYER + 9000
+	appearance_flags = KEEP_APART | KEEP_TOGETHER | PIXEL_SCALE | RESET_COLOR
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	blocks_emissive = EMISSIVE_BLOCK_NONE
+	anchored = TRUE
+
+/obj/effect/abstract/tadpole_light_relay
+	plane = TADPOLE_GROUND_LIGHTING_PLANE
+	layer = TOPDOWN_LAYER + 9500
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	blocks_emissive = EMISSIVE_BLOCK_NONE
+	var/last_light_appearance
+
+/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/proc/update_ground_lights()
+	var/list/needed = list()
+	for(var/turf/lower as anything in ground_holders)
+		var/obj/effect/abstract/tadpole_ground/holder = ground_holders[lower]
+		holder.update_ground_lighting(lower)
+		for(var/atom/movable/lighting_mask/light as anything in lower.hybrid_lights_affecting)
+			needed[light] = TRUE
+	for(var/atom/movable/lighting_mask/light as anything in ground_lights.Copy())
+		if(!needed[light] || QDELETED(light))
+			ground_surface.vis_contents -= ground_lights[light]
+			qdel(ground_lights[light])
+			ground_lights -= light
+	for(var/atom/movable/lighting_mask/light as anything in needed)
+		if(QDELETED(light) || !light.attached_atom)
+			continue
+		var/obj/effect/abstract/tadpole_light_relay/relay = ground_lights[light]
+		if(!relay)
+			relay = new
+			ground_lights[light] = relay
+			ground_surface.vis_contents += relay
+		if(relay.last_light_appearance != light.appearance)
+			relay.last_light_appearance = light.appearance
+			var/mutable_appearance/picture = new(light.appearance)
+			picture.plane = MUTATE_PLANE(TADPOLE_GROUND_LIGHTING_PLANE, src)
+			picture.layer = TOPDOWN_LAYER + 9500
+			picture.invisibility = 0
+			picture.appearance_flags = (picture.appearance_flags & ~RESET_TRANSFORM) | KEEP_APART | KEEP_TOGETHER
+			// Keep the native shadow triangles and alpha filter, but namespace
+			// their target so this lower scene cannot shadow the real shuttle.
+			var/shadow_target = "*tadpole_shadow_[REF(src)]"
+			picture.overlays = list()
+			for(var/overlay as anything in light.overlays)
+				var/mutable_appearance/shadow = new(overlay)
+				if(shadow.render_target == SHADOW_RENDER_TARGET)
+					shadow.render_target = shadow_target
+				shadow.plane = FLOAT_PLANE
+				picture.overlays += shadow
+			picture.filters = null
+			relay.appearance = picture
+			relay.add_filter("pixel_smoother", 3, gauss_blur_filter(2))
+			relay.add_filter("shadow_alpha_masking", 4, alpha_mask_filter(render_source = shadow_target, flags = MASK_INVERSE))
+			relay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		var/turf/position = get_turf(light.attached_atom)
+		relay.pixel_x = (position.x - ground_origin_x) * world.icon_size + light.pixel_x
+		relay.pixel_y = (position.y - ground_origin_y) * world.icon_size + light.pixel_y
 
 /// Each original atom has its own direction and local overlay hierarchy.
 /// A mutable appearance used directly as another atom's overlay may inherit
@@ -706,12 +935,14 @@
 /// The composite is rendered as a single plane, so reproduce SIDE_MAP depth
 /// explicitly. Floors are a separate back layer; walls, props and mobs share
 /// a depth band. A plane-based bank would put every mob above every wall.
+/// ALL composite bands must use TOPDOWN_LAYER: otherwise SIDE_MAP sorts
+/// their pixel_y/bounds before layer and neighbouring tiles cut large sprites.
 /proc/tadpole_ground_depth_layer(source_plane, source_layer, view_depth)
 	if(source_plane <= FLOOR_PLANE || source_layer >= TOPDOWN_LAYER)
-		return 1000 + (source_layer >= TOPDOWN_LAYER ? (source_layer - TOPDOWN_LAYER) / 100 : source_layer)
+		return TOPDOWN_LAYER + 1000 + (source_layer >= TOPDOWN_LAYER ? (source_layer - TOPDOWN_LAYER) / 100 : source_layer)
 	if(source_layer >= EFFECTS_LAYER)
-		return 7000 + source_layer / 100
-	return 4000 - view_depth * 16 + source_layer
+		return TOPDOWN_LAYER + 7000 + source_layer / 100
+	return TOPDOWN_LAYER + 4000 - view_depth * 16 + source_layer
 
 /obj/effect/abstract/tadpole_ground_sprite/proc/set_view_depth(new_depth)
 	view_depth = new_depth
@@ -721,9 +952,15 @@
 	for(var/obj/effect/abstract/tadpole_ground_sprite/sprite as anything in sprites)
 		sprite.set_view_depth(view_depth)
 
+/// Loose items, vehicles and projectiles need persistent motion just like mobs.
+/// Anchored scenery stays in the bounded geometry cache instead of adding
+/// per-frame work for every wall, table and door in view.
+/proc/tadpole_ground_tracks_movement(atom/movable/source)
+	return ismob(source) || istype(source, /atom/movable/projectile) || istype(source, /obj/vehicle) || (isobj(source) && !source.anchored)
+
 /// Do not expose a mob whose real anchor is inside an opaque closed turf.
-/proc/tadpole_ground_mob_visible(mob/mobile)
-	if(!mobile || mobile.invisibility || !isturf(mobile.loc))
+/proc/tadpole_ground_movable_visible(atom/movable/mobile)
+	if(!mobile || mobile.invisibility >= INVISIBILITY_ABSTRACT || !isturf(mobile.loc))
 		return FALSE
 	var/turf/location = mobile.loc
 	return !(isclosedturf(location) && location.density && location.opacity)
@@ -742,18 +979,18 @@
 	var/local_layer = original.layer
 	if(local_layer >= TOPDOWN_LAYER)
 		local_layer = (local_layer - TOPDOWN_LAYER) / 100
-	return (original.plane + plane_offset - PLANE_SPACE + 1) * 100 + local_layer
+	return TOPDOWN_LAYER + (original.plane + plane_offset - PLANE_SPACE + 1) * 100 + local_layer
 
 /// Assemble an axis-aligned lower level first, then rotate this ONE image.
 /// Rotating separate tile sprites produces cracks and visibility holes.
 /obj/effect/abstract/tadpole_ground_surface
 	icon = null
-	layer = 1
+	layer = TOPDOWN_LAYER + 1
 	blocks_emissive = EMISSIVE_BLOCK_NONE
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
-	plane = TADPOLE_GROUND_PLANE
+	plane = TADPOLE_GROUND_GEOMETRY_PLANE
 
 /obj/effect/abstract/tadpole_ground_surface/Destroy()
 	vis_contents.Cut()
@@ -786,29 +1023,132 @@
 		result.underlays += tadpole_ground_appearance(child, plane_offset)
 	return result
 
+/proc/tadpole_ground_vis_contents(atom/source)
+	if(isturf(source))
+		var/turf/tile = source
+		return tile.vis_contents
+	if(ismovable(source))
+		var/atom/movable/movable = source
+		return movable.vis_contents
+	return null
+
+/// Native multiz relays actual vis_contents, not just atom.appearance.
+/// Include attached visuals (canopies, cables, wounds, shields) in the snapshot
+/// without exposing the real lower-level atoms to the shuttle's plane graph.
+/proc/tadpole_ground_atom_appearance(atom/source, plane_offset, base_appearance, list/seen, inherited_dir)
+	var/list/children = tadpole_ground_vis_contents(source)
+	var/mutable_appearance/result = tadpole_ground_appearance(isnull(base_appearance) ? source.appearance : base_appearance, plane_offset)
+	if(!isnull(inherited_dir))
+		result.dir = inherited_dir
+	if(!length(children))
+		return result
+	if(!seen)
+		seen = list()
+	if((source in seen) || length(seen) >= 16)
+		return result
+	seen += source
+	for(var/atom/movable/child in children)
+		if(QDELETED(child) || (child in seen) || child.invisibility || (child.vis_flags & VIS_HIDE))
+			continue
+		var/child_offset = child.z ? PLANE_RANGE * SSmapping.z_level_to_plane_offset[child.z] : 0
+		if(child.plane != FLOAT_PLANE && !(child.vis_flags & VIS_INHERIT_PLANE) && child.plane + child_offset >= LIGHTING_PLANE)
+			continue
+		var/mutable_appearance/child_base = new(child.appearance)
+		if(child.vis_flags & VIS_INHERIT_ICON)
+			child_base.icon = result.icon
+		if(child.vis_flags & VIS_INHERIT_ICON_STATE)
+			child_base.icon_state = result.icon_state
+		var/mutable_appearance/picture = tadpole_ground_atom_appearance(child, child_offset, child_base, seen, (child.vis_flags & VIS_INHERIT_DIR) ? result.dir : child.dir)
+		if(child.vis_flags & VIS_INHERIT_LAYER)
+			picture.layer = FLOAT_LAYER
+		if(child.vis_flags & VIS_UNDERLAY)
+			result.underlays += picture
+		else
+			result.overlays += picture
+	seen -= source
+	return result
+
+/// Cheap immutable revision data; do not rebuild unchanged attachment trees.
+/proc/tadpole_ground_visual_signature(atom/source, list/result, list/seen)
+	var/list/children = tadpole_ground_vis_contents(source)
+	if(!result && !length(children))
+		return null
+	if(!result)
+		result = list()
+	if(!length(children))
+		return result
+	if(!seen)
+		seen = list()
+	if((source in seen) || length(seen) >= 16)
+		return result
+	seen += source
+	result += list(source, length(children))
+	for(var/atom/movable/child in children)
+		if(QDELETED(child) || (child in seen))
+			continue
+		result += list(child, child.appearance, child.vis_flags, child.invisibility)
+		tadpole_ground_visual_signature(child, result, seen)
+	seen -= source
+	return result
+
+/proc/tadpole_ground_same_list(list/left, list/right)
+	if(length(left) != length(right))
+		return FALSE
+	for(var/i in 1 to length(left))
+		if(left[i] != right[i])
+			return FALSE
+	return TRUE
+
+/// Terrain geometry must not depend on lighting underlays. SSlighting changes
+/// these whenever a light moves, even when the floor and its props are static.
+/// Strip only top-level light/emissive passes here; recursive normalization is
+/// still performed only when actual geometry or a visible overlay changes.
+/proc/tadpole_ground_geometry(turf/source, plane_offset)
+	var/mutable_appearance/picture = new(source.appearance)
+	var/list/visible_overlays = list()
+	var/list/visible_underlays = list()
+	for(var/child as anything in picture.overlays)
+		var/mutable_appearance/layer = new(child)
+		if(layer.plane == FLOAT_PLANE || layer.plane + plane_offset < LIGHTING_PLANE)
+			visible_overlays += child
+	for(var/child as anything in picture.underlays)
+		var/mutable_appearance/layer = new(child)
+		if(layer.plane == FLOAT_PLANE || layer.plane + plane_offset < LIGHTING_PLANE)
+			visible_underlays += child
+	picture.overlays = visible_overlays
+	picture.underlays = visible_underlays
+	return picture.appearance
+
 /obj/effect/abstract/tadpole_ground/proc/refresh_ground(turf/source)
 	if(flight_helm && source != displayed_turf)
 		if(displayed_turf)
-			UnregisterSignal(displayed_turf, COMSIG_ATOM_ENTERED)
+			UnregisterSignal(displayed_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED))
 		RegisterSignal(source, COMSIG_ATOM_ENTERED, PROC_REF(on_ground_entered))
+		RegisterSignal(source, COMSIG_ATOM_EXITED, PROC_REF(on_ground_exited))
 	var/offset = PLANE_RANGE * SSmapping.z_level_to_plane_offset[source.z]
-	var/list/source_appearances = list(source.appearance)
+	var/list/source_appearances = list(tadpole_ground_geometry(source, offset))
 	var/list/source_directions = list(source.dir)
 	var/list/source_atoms = list(source)
 	for(var/atom/movable/thing in source)
 		// A bounded atom occurs in every turf it occupies. Draw its complete
 		// sprite exactly once at its real loc, not once per occupied turf.
-		if(thing.loc != source || thing.invisibility || thing.plane + offset >= LIGHTING_PLANE)
+		if(thing.invisibility >= INVISIBILITY_ABSTRACT || thing.plane + offset >= LIGHTING_PLANE)
 			continue
-		if(flight_helm && ismob(thing))
-			flight_helm.track_ground_mob(thing)
+		if(flight_helm && tadpole_ground_tracks_movement(thing))
+			flight_helm.track_ground_movable(thing)
+			continue
+		if(thing.loc != source)
 			continue
 		source_appearances += thing.appearance
 		source_directions += thing.dir
 		source_atoms += thing
+	var/list/source_visuals = list()
+	for(var/atom/source_atom as anything in source_atoms)
+		source_visuals += list(source_atom, source_atom.invisibility)
+		tadpole_ground_visual_signature(source_atom, source_visuals)
 	// Appearances are immutable values. Check their identities before doing
 	// recursive flattening or dirtying the holder for SendMaps().
-	var/unchanged = displayed_turf == source && length(cached_ground_appearances) == length(source_appearances)
+	var/unchanged = displayed_turf == source && length(cached_ground_appearances) == length(source_appearances) && tadpole_ground_same_list(source_visuals, cached_ground_visuals)
 	if(unchanged)
 		for(var/i in 1 to length(source_appearances))
 			if(source_appearances[i] != cached_ground_appearances[i] || source_directions[i] != cached_ground_directions[i])
@@ -820,15 +1160,26 @@
 	displayed_turf = source
 	cached_ground_appearances = source_appearances
 	cached_ground_directions = source_directions
+	cached_ground_visuals = source_visuals
+	for(var/atom/old_source as anything in cached_ground_sources)
+		UnregisterSignal(old_source, list(COMSIG_ATOM_UPDATED_ICON, COMSIG_ATOM_DIR_CHANGE, COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
+	cached_ground_sources = source_atoms
+	for(var/atom/new_source as anything in cached_ground_sources)
+		RegisterSignals(new_source, list(COMSIG_ATOM_UPDATED_ICON, COMSIG_ATOM_DIR_CHANGE), PROC_REF(on_source_changed))
+		RegisterSignal(new_source, COMSIG_QDELETING, PROC_REF(on_static_deleted))
+		RegisterSignal(new_source, COMSIG_MOVABLE_MOVED, PROC_REF(on_static_moved))
 	vis_contents.Cut()
+	if(ground_lighting)
+		vis_contents += ground_lighting
 	QDEL_LIST(sprites)
 	for(var/i in 1 to length(source_appearances))
 		var/obj/effect/abstract/tadpole_ground_sprite/sprite = new
-		var/mutable_appearance/picture = tadpole_ground_appearance(source_appearances[i], offset)
+		var/mutable_appearance/picture = tadpole_ground_atom_appearance(source_atoms[i], offset, source_appearances[i])
 		picture.layer = tadpole_ground_layer(source_appearances[i], offset)
 		picture.appearance_flags = (picture.appearance_flags & ~TILE_BOUND) | KEEP_TOGETHER
 		sprite.appearance = picture
 		sprite.configure_source(source_atoms[i], picture)
+		sprite.invisibility = source_atoms[i]:invisibility
 		sprite.set_view_turn(view_turn)
 		sprite.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		sprites += sprite
@@ -839,9 +1190,11 @@
 /// each 0.2-second physics step, including fractional position and rotation.
 /datum/tadpole_flight_controller
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/helm
+	var/last_process_time
 
 /datum/tadpole_flight_controller/New(obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/owner)
 	helm = owner
+	last_process_time = world.time
 
 /datum/tadpole_flight_controller/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -858,7 +1211,10 @@
 			input = pilot_client.intended_direction
 	else if(helm.current_user)
 		helm.remove_eye_control(helm.current_user)
-	helm.advance_flight(seconds_per_tick, input)
+	var/elapsed = clamp((world.time - last_process_time) / 10, 0, 0.5)
+	last_process_time = world.time
+	helm.advance_flight(elapsed, input)
+	helm.update_ground_searchlight()
 	helm.update_ground_view(seconds_per_tick)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/proc/advance_flight(dt, input)
@@ -935,9 +1291,13 @@
 	last_ground_x = null
 	last_ground_y = null
 	last_ground_heading = null
-	for(var/mob/mobile as anything in ground_mobs.Copy())
-		qdel(ground_mobs[mobile])
-	ground_mobs.Cut()
+	last_ground_z = null
+	for(var/atom/movable/mobile as anything in ground_movables.Copy())
+		qdel(ground_movables[mobile])
+	ground_movables.Cut()
+	dirty_ground_tiles.Cut()
+	QDEL_NULL(ground_searchlight)
+	QDEL_LIST_ASSOC_VAL(ground_lights)
 	QDEL_NULL(ground_surface)
 	QDEL_LIST_ASSOC_VAL(ground_holders)
 	flight_velocity_x = 0
@@ -956,6 +1316,7 @@
 		ground_tiles[tile] = TRUE
 		if(istype(tile, /turf/open/space/transit/atmos))
 			tile.icon_state = ""
+	update_ground_searchlight()
 	update_ground_view()
 	START_PROCESSING(SSfastprocess, flight_controller)
 
@@ -1003,17 +1364,15 @@
 			if(ground_view_bounds[i] != last_ground_bounds[i])
 				bounds_changed = TRUE
 				break
-	if(!bounds_changed && flight_x == last_ground_x && flight_y == last_ground_y && flight_heading == last_ground_heading)
-		for(var/turf/lower as anything in ground_holders)
-			var/obj/effect/abstract/tadpole_ground/holder = ground_holders[lower]
-			if(world.time >= holder.next_refresh && holder.refresh_ground(lower))
-				var/angle = flight_heading - dir2angle(shuttle_port.dir)
-				holder.set_view_depth((lower.y - flight_y) * cos(angle) + (lower.x - flight_x) * sin(angle))
-		update_ground_mobs()
+	if(!bounds_changed && eyeobj.z == last_ground_z && flight_x == last_ground_x && flight_y == last_ground_y && flight_heading == last_ground_heading)
+		animate_ground_view(animation_seconds)
+		refresh_ground_slice()
+		update_ground_lights()
+		update_ground_movables()
 		return
 	if(!ground_surface)
 		ground_surface = new(get_turf(src))
-		SET_PLANE(ground_surface, TADPOLE_GROUND_PLANE, src)
+		SET_PLANE(ground_surface, TADPOLE_GROUND_GEOMETRY_PLANE, src)
 		ground_origin_x = round(flight_x)
 		ground_origin_y = round(flight_y)
 	// Rebase only occasionally, keeping the composite's texture bounds small
@@ -1028,13 +1387,14 @@
 			var/obj/effect/abstract/tadpole_ground/holder = ground_holders[lower]
 			holder.pixel_x = (lower.x - ground_origin_x) * world.icon_size
 			holder.pixel_y = (lower.y - ground_origin_y) * world.icon_size
-		for(var/mob/mobile as anything in ground_mobs)
-			var/obj/effect/abstract/tadpole_mobile_anchor/anchor = ground_mobs[mobile]
+		for(var/atom/movable/mobile as anything in ground_movables)
+			var/obj/effect/abstract/tadpole_mobile_anchor/anchor = ground_movables[mobile]
 			anchor.rebase((old_origin_x - ground_origin_x) * world.icon_size, (old_origin_y - ground_origin_y) * world.icon_size)
 		ground_surface.transform = ground_surface_transform(last_ground_x, last_ground_y, last_ground_heading)
 	last_ground_x = flight_x
 	last_ground_y = flight_y
 	last_ground_heading = flight_heading
+	last_ground_z = eyeobj.z
 	last_ground_bounds = ground_view_bounds.Copy()
 	var/angle = flight_heading - dir2angle(shuttle_port.dir)
 	var/cardinal_turn = 90 * round((SIMPLIFY_DEGREES(angle) + 45) / 90)
@@ -1057,14 +1417,14 @@
 			max_gx = max(max_gx, gx)
 			min_gy = min(min_gy, gy)
 			max_gy = max(max_gy, gy)
-	for(var/gx in max(1, round(min_gx) - 1) to min(world.maxx, CEILING(max_gx, 1) + 1))
-		for(var/gy in max(1, round(min_gy) - 1) to min(world.maxy, CEILING(max_gy, 1) + 1))
+	for(var/gx in max(1, round(min_gx) - 2) to min(world.maxx, CEILING(max_gx, 1) + 2))
+		for(var/gy in max(1, round(min_gy) - 2) to min(world.maxy, CEILING(max_gy, 1) + 2))
 			var/dx = gx - flight_x
 			var/dy = gy - flight_y
 			var/px = (dx * cos_angle - dy * sin_angle) * world.icon_size
 			var/py = (dy * cos_angle + dx * sin_angle) * world.icon_size
 			var/turf/upper = locate(shuttle_port.x + round(px / world.icon_size + 0.5), shuttle_port.y + round(py / world.icon_size + 0.5), shuttle_port.z)
-			if(!upper || !ground_tiles[upper] || upper.x < ground_view_bounds[1] || upper.x > ground_view_bounds[3] || upper.y < ground_view_bounds[2] || upper.y > ground_view_bounds[4])
+			if(!upper || !ground_tiles[upper] || upper.x < ground_view_bounds[1] - 1 || upper.x > ground_view_bounds[3] + 1 || upper.y < ground_view_bounds[2] - 1 || upper.y > ground_view_bounds[4] + 1)
 				continue
 			var/turf/lower = locate(gx, gy, eyeobj.z)
 			var/obj/effect/abstract/tadpole_ground/holder = ground_holders[lower]
@@ -1073,7 +1433,6 @@
 				holder = new
 				holder.plane = FLOAT_PLANE
 				holder.flight_helm = src
-				holder.add_cloud_haze(lower)
 				holder.pixel_x = (gx - ground_origin_x) * world.icon_size
 				holder.pixel_y = (gy - ground_origin_y) * world.icon_size
 				ground_holders[lower] = holder
@@ -1081,17 +1440,66 @@
 			else
 				remaining -= lower
 
-			if(is_new || world.time >= holder.next_refresh)
+			if(is_new)
 				holder.refresh_ground(lower)
 			holder.set_view_turn(cardinal_turn)
-			holder.set_view_depth(dy * cos_angle + dx * sin_angle)
+			holder.set_view_depth((gy - ground_origin_y) * cos_angle + (gx - ground_origin_x) * sin_angle)
 
 	for(var/turf/unused as anything in remaining)
 		ground_surface.vis_contents -= ground_holders[unused]
 		qdel(ground_holders[unused])
 		ground_holders -= unused
-	update_ground_mobs()
-	animate(ground_surface, transform = ground_surface_transform(flight_x, flight_y, flight_heading), time = animation_seconds * 10, easing = LINEAR_EASING)
+	update_ground_lights()
+	animate_ground_view(animation_seconds)
+	refresh_ground_slice()
+	update_ground_movables()
+
+/// Follow only confirmed coordinates. Keep a two-update interpolation window
+/// so normal scheduler jitter does not exhaust the client animation. A new
+/// target supersedes from the currently displayed position without END_NOW.
+/// Never queue velocity extrapolation: braking or delayed physics would make
+/// the next confirmed position fall behind that endpoint and visibly rewind.
+/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/proc/animate_ground_view(animation_seconds)
+	if(!ground_surface)
+		return
+	var/duration = animation_seconds > 0 ? max(animation_seconds * 20, world.tick_lag) : 0
+	animate(ground_surface, transform = ground_surface_transform(flight_x, flight_y, flight_heading), time = duration, easing = LINEAR_EASING)
+
+/// Poll a bounded slice instead of synchronizing every tile on a half-second
+/// timer. Newly visible tiles are still built immediately; movable atoms use
+/// signals independently of this static-geometry budget.
+/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/proc/refresh_ground_slice(budget = 24)
+	var/count = length(ground_holders)
+	if(!count)
+		ground_refresh_cursor = 0
+		dirty_ground_tiles.Cut()
+		return 0
+	var/angle = flight_heading - dir2angle(shuttle_port.dir)
+	var/checked = 0
+	// Doors, smoothing and topology changes take priority; fallback polling
+	// remains for code that changes appearance without emitting an icon signal.
+	for(var/turf/lower as anything in dirty_ground_tiles.Copy())
+		if(checked >= budget)
+			break
+		dirty_ground_tiles -= lower
+		var/obj/effect/abstract/tadpole_ground/holder = ground_holders[lower]
+		if(QDELETED(holder))
+			continue
+		checked++
+		if(holder.refresh_ground(lower))
+			holder.set_view_depth((lower.y - ground_origin_y) * cos(angle) + (lower.x - ground_origin_x) * sin(angle))
+	for(var/i in 1 to min(budget, count))
+		if(checked >= budget)
+			break
+		ground_refresh_cursor = (ground_refresh_cursor % count) + 1
+		var/turf/lower = ground_holders[ground_refresh_cursor]
+		var/obj/effect/abstract/tadpole_ground/holder = ground_holders[lower]
+		if(world.time < holder.next_refresh)
+			continue
+		checked++
+		if(holder.refresh_ground(lower))
+			holder.set_view_depth((lower.y - ground_origin_y) * cos(angle) + (lower.x - ground_origin_x) * sin(angle))
+	return checked
 
 /// Transform the assembled grid around the docking origin, not around each
 /// tile's separate icon center. All seams share exactly the same transform.

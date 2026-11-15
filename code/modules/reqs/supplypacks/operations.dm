@@ -136,3 +136,15 @@
 	containertype = null
 	cost = 200
 	crash_restricted = TRUE
+
+/datum/supply_packs/operations/parachutes
+	name = "Parachute crate (6)"
+	contains = list(
+		/obj/item/parachute,
+		/obj/item/parachute,
+		/obj/item/parachute,
+		/obj/item/parachute,
+		/obj/item/parachute,
+		/obj/item/parachute,
+	)
+	cost = 100

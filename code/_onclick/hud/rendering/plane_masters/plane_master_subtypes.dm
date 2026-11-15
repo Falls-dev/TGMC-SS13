@@ -452,3 +452,19 @@
 	documentation = "Renders the ground z level beneath the real Tadpole in transit, below its floors and occupants."
 	plane = TADPOLE_GROUND_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME, LIGHT_MASK_PLANE)
+
+/// Use the same relay ordering as the native game/lighting plates: geometry,
+/// additive light image, multiply, and only then relay the lit scene upwards.
+/atom/movable/screen/plane_master/tadpole_geometry
+	name = "Tadpole ground geometry"
+	documentation = "Unlit lower scene, relayed beneath its independent lighting pass."
+	plane = TADPOLE_GROUND_GEOMETRY_PLANE
+	render_relay_planes = list(TADPOLE_GROUND_PLANE)
+
+/atom/movable/screen/plane_master/tadpole_lighting
+	name = "Tadpole ground lighting"
+	documentation = "Native static underlays and hybrid masks, multiplied onto the lower scene without lighting the shuttle."
+	plane = TADPOLE_GROUND_LIGHTING_PLANE
+	appearance_flags = PLANE_MASTER | NO_CLIENT_COLOR
+	blend_mode_override = BLEND_MULTIPLY
+	render_relay_planes = list(TADPOLE_GROUND_PLANE)

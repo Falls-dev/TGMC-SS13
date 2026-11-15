@@ -2411,6 +2411,7 @@
 #include "code\modules\reqtorio\crafts\vehicles_craft.dm"
 #include "code\modules\reqtorio\crafts\weapons_craft.dm"
 #include "code\modules\requisitions\fulton.dm"
+#include "code\game\objects\items\parachute.dm"
 #include "code\modules\requisitions\supply_export.dm"
 #include "code\modules\screen_alert\_screen_alert.dm"
 #include "code\modules\screen_alert\command_alert.dm"
