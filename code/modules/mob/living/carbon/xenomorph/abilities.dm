@@ -270,8 +270,8 @@
 
 /// Nymphs are dedicated builders, so their per-structure start time is lower.
 /datum/action/ability/activable/xeno/secrete_resin/nymph
-	base_wait = 0.2 SECONDS
-	scaling_wait = 0.8 SECONDS
+	base_wait = 1 SECONDS
+	scaling_wait = 1.4 SECONDS
 
 /// Extra handling for adding the action for quickbuild counter.
 /datum/action/ability/activable/xeno/secrete_resin/give_action(mob/living/L)
@@ -297,13 +297,20 @@
 
 /datum/action/ability/activable/xeno/secrete_resin/update_button_icon()
 	if(xeno_owner)
-		var/atom/A = xeno_owner.selected_resin
-		action_icon_state = initial(A.name)
-	if(!is_gameplay_level(xeno_owner?.loc?.z))
+		// The catalog is built lazily (psychic entries need the game mode), so it is never forced from here.
+		var/datum/xeno_build_entry/entry = length(GLOB.xeno_build_catalog) ? GLOB.xeno_build_catalog["[xeno_owner.selected_resin]"] : null
+		action_icon = entry ? entry.get_action_icon() : initial(action_icon)
+		action_icon_state = entry ? entry.icon_state : initial(action_icon_state)
+	if(!button || !is_gameplay_level(xeno_owner?.loc?.z))
 		return ..() // prevents runtimes.
 	if(SSmonitor.gamestate == SHUTTERS_CLOSED && CHECK_BITFIELD(SSticker.mode?.round_type_flags, MODE_ALLOW_XENO_QUICKBUILD) && SSresinshaping.active)
-		button.cut_overlay(visual_references[VREF_MUTABLE_BUILDING_COUNTER])
 		var/mutable_appearance/number = visual_references[VREF_MUTABLE_BUILDING_COUNTER]
+		if(number)
+			button.cut_overlay(number)
+		else // the counter is only created in give_action, which can run before quickbuild is active
+			number = mutable_appearance(icon = null, icon_state = null, layer = ACTION_LAYER_MAPTEXT)
+			number.pixel_x = 12
+			number.pixel_y = -5
 		number.maptext = MAPTEXT("[SSresinshaping.get_building_points(owner)]")
 		visual_references[VREF_MUTABLE_BUILDING_COUNTER] = number
 		button.add_overlay(visual_references[VREF_MUTABLE_BUILDING_COUNTER])

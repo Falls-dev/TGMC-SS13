@@ -43,9 +43,12 @@ KEYBINDINGS
 	else
 		var/list/maptext_list = list()
 		for(var/keybind_type in keybinding_signals)
+			var/list/offsets = GLOB.action_maptext_offsets[keybind_type]
+			if(!offsets)
+				continue // extra keybinds without a button label
 			var/mutable_appearance/maptext_appearance = mutable_appearance(null, null, ACTION_LAYER_MAPTEXT)
-			maptext_appearance.pixel_x = GLOB.action_maptext_offsets[keybind_type][1]
-			maptext_appearance.pixel_y = GLOB.action_maptext_offsets[keybind_type][2]
+			maptext_appearance.pixel_x = offsets[1]
+			maptext_appearance.pixel_y = offsets[2]
 			maptext_list[keybinding_signals[keybind_type]] = maptext_appearance
 		visual_references[VREF_MUTABLE_MAPTEXT] = maptext_list
 	switch(action_type)
@@ -100,10 +103,13 @@ KEYBINDINGS
 		visual_references[VREF_MUTABLE_MAPTEXT] = reference
 		button.add_overlay(reference)
 	else
-		reference = visual_references[VREF_MUTABLE_MAPTEXT][key_signal]
+		var/list/maptext_refs = visual_references[VREF_MUTABLE_MAPTEXT]
+		reference = maptext_refs?[key_signal]
+		if(!reference)
+			return
 		button.cut_overlay(reference)
 		reference.maptext = MAPTEXT(key_string)
-		visual_references[VREF_MUTABLE_MAPTEXT][key_signal] = reference
+		maptext_refs[key_signal] = reference
 		button.add_overlay(reference)
 
 /datum/action/proc/update_button_icon()

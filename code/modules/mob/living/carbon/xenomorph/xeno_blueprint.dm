@@ -93,6 +93,10 @@
 	var/prefix = (icon_file == 'icons/Xeno/actions/hivelord.dmi') ? "h_" : "c_"
 	return "xenobuild32x32 [prefix][replacetext(icon_state, " ", "_")]"
 
+/// Icon file of the ability button; icon_state is shared with the UI/radial
+/datum/xeno_build_entry/proc/get_action_icon()
+	return icon_file
+
 /// Icon for radial menus
 /datum/xeno_build_entry/proc/get_radial_image()
 	return image(icon_file, icon_state = icon_state)
@@ -219,6 +223,9 @@
 
 /datum/xeno_build_entry/psychic/proc/get_upgrade(mob/living/carbon/xenomorph/X)
 	return X.hive?.purchases?.upgrades_by_name[upgrade_name]
+
+/datum/xeno_build_entry/psychic/get_action_icon()
+	return 'icons/UI_Icons/buyable_icons.dmi'
 
 /datum/xeno_build_entry/psychic/get_radial_image()
 	return image('icons/UI_Icons/buyable_icons.dmi', icon_state = icon_state)

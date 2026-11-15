@@ -7,6 +7,8 @@
 #define NYMPH_RECHARGE_RADIUS 22
 #define NYMPH_THINK_COOLDOWN 0.5 SECONDS
 #define NYMPH_BLACKLIST_TIME 20 SECONDS
+#define NYMPH_BUILD_RETRY 3 SECONDS
+#define NYMPH_BUILD_TIME 1.6 SECONDS
 #define NYMPH_STUCK_TIMEOUT 6 SECONDS
 #define NYMPH_RECHARGE_RETRY 5 SECONDS
 #define NYMPH_PLASMA_RESERVE 100
@@ -29,6 +31,8 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 	/// Following our own job (not a hivemind order)
 	var/nymph_moving = FALSE
 	var/mob/living/carbon/xenomorph/support_target
+	/// Escort set by a hivemind/minion order; automatic escorts never block work
+	var/ordered_escort = FALSE
 	/// Attack on a direct hivemind order (otherwise the nymph attacks no one)
 	var/rts_attack_ordered = FALSE
 	var/list/blacklist = list()
@@ -55,6 +59,7 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 	recharging_plasma = FALSE
 	support_target = null
 	rts_attack_ordered = FALSE
+	ordered_escort = FALSE
 
 /datum/ai_behavior/xeno/nymph/rts_attack(atom/target)
 	. = ..()
@@ -63,8 +68,18 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 /// Guarding an ally = tending to it: heal wounds, and if it's a xeno, give plasma
 /datum/ai_behavior/xeno/nymph/rts_guard(atom/target, datum/source)
 	. = ..()
+	ordered_escort = TRUE
 	if(isxeno(target) && target != mob_parent)
 		support_target = target
+
+/// Automatic escorting/node roaming must not override work or clobber a running route
+/datum/ai_behavior/xeno/nymph/set_escort()
+	if(ordered_escort)
+		if(escorted_atom && !QDELETED(escorted_atom))
+			return FALSE // keep the ordered charge
+	else if(job_target || nymph_moving || recharging_plasma)
+		return FALSE
+	return ..()
 
 /datum/ai_behavior/xeno/nymph/look_for_new_state(atom/next_target)
 	if(rts_attack_ordered && !combat_target)
@@ -174,9 +189,8 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 				late_initialize()
 			return
 		// Stay with the escorted ally, but only spend actions when they actually need help.
-		if(support_need(support_target, 0.7))
-			support_act(support_target, 0.7)
-		return
+		if(support_need(support_target, 0.7) && support_act(support_target, 0.7))
+			return
 	if(!is_free())
 		return
 	// Autonomous A* routes use smoothed, verified waypoints. Do not issue a new goal
@@ -214,6 +228,7 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 	if(nymph_moving)
 		return
 	if(!job_target)
+		resume_escort()
 		return
 	if(X.resting)
 		SEND_SIGNAL(X, COMSIG_XENOABILITY_REST)
@@ -225,9 +240,17 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 		blacklist[job_target] = world.time + NYMPH_BLACKLIST_TIME
 		halt_job()
 
-/// Free for independent work: no order, combat, or escort
+/// After finishing own work, an ordered escort walks back to its charge
+/datum/ai_behavior/xeno/nymph/proc/resume_escort()
+	if(!ordered_escort || nymph_moving || !escorted_atom || QDELETED(escorted_atom) || current_action == ESCORTING_ATOM)
+		return
+	change_action(ESCORTING_ATOM, escorted_atom)
+	if(!registered_for_move)
+		INVOKE_ASYNC(src, PROC_REF(scheduled_move))
+
+/// Free for independent work: no hold order and no combat. An ordered escort still builds, but only around its charge
 /datum/ai_behavior/xeno/nymph/proc/is_free()
-	if(hivemind_rts_hold_position || combat_target || escorted_atom)
+	if(hivemind_rts_hold_position || combat_target)
 		return FALSE
 	if(hivemind_rts_direct_move && !nymph_moving)
 		return FALSE
@@ -262,6 +285,10 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 	job_target = target
 	job_type = job
 	GLOB.nymph_job_claims[target] = src
+	if(!ordered_escort && escorted_atom)
+		clean_escorted_atom()
+		if(current_action == ESCORTING_ATOM)
+			change_action(IDLE)
 
 /// Find the shortest reachable tile from which this job can be completed.
 /datum/ai_behavior/xeno/nymph/proc/get_route_to_job(atom/target, job)
@@ -457,6 +484,10 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 	if(!own)
 		return
 	var/hive = X.hivenumber
+	var/escorting = ordered_escort && escorted_atom && !QDELETED(escorted_atom)
+	var/turf/anchor = escorting ? get_turf(escorted_atom) : own
+	anchor ||= own
+	var/blueprint_radius = escorting ? NYMPH_WORK_RADIUS : NYMPH_BLUEPRINT_RADIUS
 	var/plasma_capacity = X.xeno_caste.plasma_max * X.xeno_caste.plasma_regen_limit
 	var/best_score = INFINITY
 	var/obj/effect/xeno_blueprint/best
@@ -464,7 +495,7 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 	// Look across the whole nearby hive blueprint list, not just the immediate area.
 	// This lets the nymph head toward construction instead of aimlessly planting weeds.
 	for(var/obj/effect/xeno_blueprint/bp in GLOB.xeno_blueprints[hive])
-		if(QDELETED(bp) || bp.hivenumber != hive || bp.z != own.z || get_dist(own, bp) > NYMPH_BLUEPRINT_RADIUS || claimed_by_other(bp) || in_blacklist(bp))
+		if(QDELETED(bp) || bp.hivenumber != hive || bp.z != own.z || get_dist(anchor, bp) > blueprint_radius || claimed_by_other(bp) || in_blacklist(bp))
 			continue
 		var/turf/T = get_turf(bp)
 		if(!bp.is_demolish)
@@ -498,6 +529,8 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 		recharging_plasma = FALSE
 		claim(best, NYMPH_JOB_BUILD)
 		return
+	if(escorting)
+		return // an escort only builds around its charge: no recharging or chores
 	// Keep resting on resin until the appropriate reserve is reached. If a blueprint
 	// is waiting, charge to the full capacity; otherwise keep a 90% passive reserve.
 	var/recharge_target = needs_build_plasma ? plasma_capacity : plasma_capacity * NYMPH_PLASMA_RECHARGE_TARGET
@@ -576,6 +609,8 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 	var/max_job_distance = job_type == NYMPH_JOB_BUILD ? NYMPH_BLUEPRINT_RADIUS + 3 : NYMPH_WORK_RADIUS + 3
 	if(job_target.z != X.z || get_dist(X, job_target) > max_job_distance)
 		return FALSE
+	if(job_type == NYMPH_JOB_BUILD && ordered_escort && escorted_atom && !QDELETED(escorted_atom) && get_dist(escorted_atom, job_target) > NYMPH_WORK_RADIUS + 2)
+		return FALSE // the charge moved away
 	if(in_blacklist(job_target))
 		return FALSE
 	switch(job_type)
@@ -645,10 +680,16 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 					COOLDOWN_RESET(src, think_cooldown)
 					INVOKE_ASYNC(src, PROC_REF(nymph_think))
 					return
+				blacklist[target] = world.time + 2 SECONDS // weeds on cooldown: retry soon, the blueprint is fine
+				release_job()
+				return
 			else if(err == NO_ERROR && !build_would_trap(T, bp.entry))
-				ok = X.try_build_blueprint(bp)
+				var/build_wait = xeno_quickbuild_active() ? 0 : NYMPH_BUILD_TIME * bp.entry.wait_mult
+				X.face_atom(T)
+				if(build_wait <= 0 || do_after(X, build_wait, NONE, T, BUSY_ICON_BUILD))
+					ok = !QDELETED(bp) && bp.entry.check_turf(T) == NO_ERROR && !build_would_trap(T, bp.entry) && X.try_build_blueprint(bp)
 	if(!ok)
-		blacklist[target] = world.time + NYMPH_BLACKLIST_TIME
+		blacklist[target] = world.time + (job == NYMPH_JOB_BUILD ? NYMPH_BUILD_RETRY : NYMPH_BLACKLIST_TIME)
 	release_job()
 	if(ok)
 		// Do not wait for the next one-second AI think cycle between adjacent builds.
@@ -703,6 +744,8 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 #undef NYMPH_RECHARGE_RADIUS
 #undef NYMPH_THINK_COOLDOWN
 #undef NYMPH_BLACKLIST_TIME
+#undef NYMPH_BUILD_RETRY
+#undef NYMPH_BUILD_TIME
 #undef NYMPH_STUCK_TIMEOUT
 #undef NYMPH_RECHARGE_RETRY
 #undef NYMPH_PLASMA_RESERVE
