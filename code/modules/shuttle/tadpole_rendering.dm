@@ -78,6 +78,7 @@
 	var/had_emissive_relay = FALSE
 	var/datum/tadpole_scene/scene
 	var/atom/movable/tracked_eye
+	var/mob/visibility_owner
 
 /datum/tadpole_scene_view/New(datum/hud/display, depth, datum/tadpole_scene/owner)
 	hud = display
@@ -102,9 +103,11 @@
 	if(emissive_plate?.get_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, depth - 1)))
 		had_emissive_relay = TRUE
 		emissive_plate.remove_relay_from(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, depth - 1))
+	bind_visibility(hud.mymob)
 
 /datum/tadpole_scene_view/Destroy()
 	track_eye(null)
+	bind_visibility(null)
 	scene = null
 	if(!QDELETED(plate))
 		animate(plate, transform = original_transform, time = 0)
@@ -120,6 +123,25 @@
 	emissive_plate = null
 	forced_planes.Cut()
 	return ..()
+
+/// Living passengers need the same native scene visibility as observers.
+/// The modifier is owned by this view and survives equipment sight updates.
+/datum/tadpole_scene_view/proc/bind_visibility(mob/viewer)
+	if(viewer == visibility_owner)
+		return
+	if(visibility_owner)
+		UnregisterSignal(visibility_owner, list(COMSIG_MOB_LOGOUT, COMSIG_QDELETING))
+		visibility_owner.remove_sight_modifier(REF(src))
+	visibility_owner = viewer
+	if(!viewer)
+		return
+	viewer.add_sight_modifier(REF(src), SEE_SELF | SEE_TURFS | SEE_OBJS | SEE_MOBS)
+	RegisterSignals(viewer, list(COMSIG_MOB_LOGOUT, COMSIG_QDELETING), PROC_REF(on_visibility_lost))
+
+/datum/tadpole_scene_view/proc/on_visibility_lost()
+	SIGNAL_HANDLER
+	track_eye(null)
+	bind_visibility(null)
 
 /datum/tadpole_scene_view/proc/track_eye(atom/new_eye)
 	if(!ismovable(new_eye))
@@ -137,8 +159,14 @@
 /datum/tadpole_scene_view/proc/on_eye_move(atom/movable/source, atom/old_loc, direction, forced)
 	SIGNAL_HANDLER
 	var/turf/eye = get_turf(source)
-	if(!scene || !eye || !scene.helm.ground_tiles[eye])
+	if(!scene || !eye)
 		return
+	if(!scene.helm.ground_tiles[eye])
+		if(source == visibility_owner)
+			bind_visibility(null)
+		return
+	if(source == hud?.mymob)
+		bind_visibility(hud.mymob)
 	var/duration = 0
 	if(!forced && isturf(old_loc) && old_loc.z == eye.z && get_dist(old_loc, eye) == 1)
 		var/dx = abs(eye.x - old_loc.x)
@@ -230,6 +258,7 @@
 			view = new(viewer.hud_used, depth, src)
 			views[display] = view
 		view.track_eye(display.eye)
+		view.bind_visibility(viewer)
 		remaining -= display
 	for(var/client/departed as anything in remaining)
 		qdel(views[departed])

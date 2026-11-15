@@ -299,3 +299,34 @@ Validation: focused `tadpole_flight` PASS (0.8 seconds), no runtime errors,
 `Success!` at `data/logs/tadpole-source-translation/clean_run.lk`. Normal
 BYOND 516.1659 build: 0 errors, 0 warnings. The isolated test build has the
 existing `loop_checks` warning. No in-client visual verification was performed.
+
+## Passenger native visibility
+
+The user compared an observer and a living passenger at the same aircraft:
+the observer sees the ground apart from small rotated viewport edges, while
+the living passenger still has large black regions. The user requested
+disabling scene visibility restrictions while aboard.
+
+Each active scene view now grants its viewer SEE_SELF, SEE_TURFS, SEE_OBJS
+and SEE_MOBS, matching the observer's native visibility flags. The modifier
+bypasses native occlusion for the displayed scene without changing client.eye,
+perspective, plane routing, lighting cutoff or see_invisible. It does not
+remove the renderer's finite viewport and its small rotation-edge cuts.
+
+Temporary sight flags are tracked by owner separately from the mob's requested
+base sight. Equipment can continue calling set_sight/add_sight/clear_sight;
+removing a modifier restores the latest base state and preserves other owners.
+The view releases its modifier on deletion, Logout, or the camera-owning mob's
+movement out of the Tadpole region; quick reentry reattaches it. No global
+visibility override is installed for other mobs or other scenes.
+
+Regression coverage checks equipment recalculation, independently owned flags,
+an effective sight value equal to a new base request, view activation, another
+HUD's isolation, unchanged invisibility visibility, Logout cleanup, ordinary
+Move exit/reentry and final view cleanup. Headless tests deliver the Logout
+signal without a real client; actual visual output remains a client check.
+
+Validation: focused `tadpole_flight` PASS (0.8 seconds), no runtime errors,
+`Success!` at `data/logs/tadpole-native-visibility-final/clean_run.lk`. Normal
+BYOND 516.1659 build: 0 errors, 0 warnings. The test build has the existing
+`loop_checks` warning. Client visuals have not been independently verified.

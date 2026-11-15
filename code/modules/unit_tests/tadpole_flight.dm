@@ -256,10 +256,44 @@
 	var/datum/tadpole_scene/walking_scene = new(helm)
 	walking_scene.origin_x = FLOOR(helm.flight_x / 8, 1) * 8
 	walking_scene.origin_y = FLOOR(helm.flight_y / 8, 1) * 8
+	// Temporary visibility must survive equipment updates without overwriting
+	// the underlying sight or another owner's modifier.
+	var/mob/living/carbon/human/sight_subject = allocate(/mob/living/carbon/human)
+	sight_subject.set_sight(SEE_SELF)
+	sight_subject.add_sight_modifier("tadpole_test_a", SEE_TURFS | SEE_OBJS)
+	sight_subject.add_sight_modifier("tadpole_test_b", SEE_MOBS)
+	sight_subject.set_sight(SEE_INFRA)
+	TEST_ASSERT_EQUAL(sight_subject.sight, SEE_INFRA | SEE_TURFS | SEE_OBJS | SEE_MOBS, "Equipment sight updates must preserve active visibility modifiers")
+	sight_subject.add_sight(SEE_SELF)
+	sight_subject.clear_sight(SEE_INFRA)
+	sight_subject.remove_sight_modifier("tadpole_test_a")
+	TEST_ASSERT_EQUAL(sight_subject.sight, SEE_SELF | SEE_MOBS, "Removing one sight owner must retain another owner's flags")
+	sight_subject.remove_sight_modifier("tadpole_test_b")
+	TEST_ASSERT_EQUAL(sight_subject.sight, SEE_SELF, "Temporary flags must not leak into the underlying sight")
+	sight_subject.add_sight_modifier("tadpole_test_a", SEE_TURFS)
+	sight_subject.set_sight(SEE_SELF | SEE_TURFS)
+	sight_subject.remove_sight_modifier("tadpole_test_a")
+	TEST_ASSERT_EQUAL(sight_subject.sight, SEE_SELF | SEE_TURFS, "A sight update equal to effective sight must still update the underlying flags")
+	var/sight_before_view = pilot.sight
+	var/invisibility_before_view = pilot.see_invisible
+	var/mob/other_passenger = other_display.mymob
+	var/other_sight_before = other_passenger.sight
 	var/datum/tadpole_scene_view/native_view = new(display, 1, walking_scene)
 	TEST_ASSERT_NOTNULL(native_view.plate, "Ground must have a preallocated native lower render plate")
 	TEST_ASSERT(native_view.plate.get_relay_to(TADPOLE_GROUND_PLANE), "Passenger plate must relay below the physical craft")
 	TEST_ASSERT_EQUAL(other_plate.render_relay_planes.Join(","), original_targets.Join(","), "Another observer must retain their native graph")
+	var/required_sight = SEE_SELF | SEE_TURFS | SEE_OBJS | SEE_MOBS
+	TEST_ASSERT_EQUAL(pilot.sight & required_sight, required_sight, "Living passengers must receive observer-style native scene visibility")
+	TEST_ASSERT_EQUAL(pilot.see_invisible, invisibility_before_view, "Removing scene occlusion must not reveal invisible entities")
+	TEST_ASSERT_EQUAL(other_passenger.sight, other_sight_before, "A view must not change another mob's visibility")
+	// This fixture has no client; deliver the native Logout signal through
+	// the actual subscription instead of invoking client disconnection.
+	SEND_SIGNAL(pilot, COMSIG_MOB_LOGOUT)
+	TEST_ASSERT_EQUAL(pilot.sight, sight_before_view, "Logout must release temporary passenger vision")
+	TEST_ASSERT_NULL(native_view.tracked_eye, "Logout must stop movement callbacks from reactivating vision")
+	native_view.bind_visibility(pilot)
+	pilot.set_sight(SEE_INFRA)
+	TEST_ASSERT_EQUAL(pilot.sight, SEE_INFRA | required_sight, "Regular sight recalculation must not restore passenger occlusion")
 	// Exercise the real Move -> COMSIG_MOVABLE_MOVED path without calling
 	// the 0.2-second scene processor. Headless fixture has a HUD but no client.
 	var/turf/walking_start = get_turf(pilot)
@@ -279,6 +313,12 @@
 	TEST_ASSERT_EQUAL(native_view.animation_started, world.time, "Walking projection must start in the movement tick")
 	TEST_ASSERT_EQUAL(native_view.animation_duration, world.icon_size / max(pilot.glide_size, 1) * world.tick_lag, "Walking interpolation must match eye glide instead of the flight interval")
 	TEST_ASSERT_EQUAL(length(walking_scene.chunks), 0, "Walking projection must not allocate or update terrain membership")
+	var/turf/outside_ship = get_step(walking_end, EAST)
+	TEST_ASSERT(pilot.Move(outside_ship, EAST), "Visibility fixture must step out of the Tadpole region")
+	TEST_ASSERT_EQUAL(pilot.sight, SEE_INFRA, "Leaving must restore the latest underlying sight in the movement tick")
+	TEST_ASSERT(pilot.Move(walking_end, WEST), "Visibility fixture must reenter the Tadpole region")
+	TEST_ASSERT_EQUAL(pilot.sight, SEE_INFRA | required_sight, "Reentry must reactivate native scene visibility")
+	pilot.set_sight(sight_before_view)
 	native_view.track_eye(eye)
 	old_camera_values = native_view.last_camera.tolist().Join(",")
 	pilot.forceMove(walking_start)
@@ -300,6 +340,8 @@
 	helm.flight_x = projection_flight_x
 	var/atom/movable/screen/plane_master/passenger_plate = native_view.plate
 	qdel(native_view)
+	TEST_ASSERT_EQUAL(pilot.sight, sight_before_view, "Scene departure must remove its sight modifier")
+	TEST_ASSERT(!length(pilot.sight_modifiers), "Scene cleanup must leave no owned sight modifiers")
 	qdel(walking_scene)
 	TEST_ASSERT_NULL(passenger_plate.get_relay_to(TADPOLE_GROUND_PLANE), "Leaving the scene must remove the aircraft relay")
 	TEST_ASSERT(passenger_plate.get_relay_to(RENDER_PLANE_TRANSPARENT), "Leaving must restore native multiz routing")
