@@ -54,6 +54,19 @@
 	tiles.Cut()
 	return ..()
 
+/// The native source is collected at a fixed screen origin, independently
+/// of the passenger camera. Its completed image is attached to the ship.
+/atom/movable/screen/tadpole_source_canvas
+	icon = null
+	screen_loc = "CENTER,CENTER"
+	plane = HUD_PLANE
+	appearance_flags = PIXEL_SCALE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/atom/movable/screen/tadpole_source_canvas/Destroy()
+	vis_contents.Cut()
+	return ..()
+
 /// Owns a passenger's temporary connection to the completed lower render plate.
 /datum/tadpole_scene_view
 	var/datum/hud/hud
@@ -61,6 +74,12 @@
 	var/matrix/original_transform
 	var/source_offset
 	var/output_plane
+	var/datum/tadpole_scene/scene
+	var/client/display_client
+	var/atom/movable/screen/tadpole_source_canvas/source_canvas
+	var/image/ship_image
+	var/view_width = 0
+	var/view_height = 0
 	var/matrix/last_camera
 	var/matrix/animation_from
 	var/animation_started = 0
@@ -69,8 +88,10 @@
 	var/atom/movable/screen/plane_master/emissive_plate
 	var/had_emissive_relay = FALSE
 
-/datum/tadpole_scene_view/New(datum/hud/display, depth)
+/datum/tadpole_scene_view/New(datum/hud/display, depth, datum/tadpole_scene/owner)
 	hud = display
+	scene = owner
+	display_client = hud.mymob?.canon_client
 	source_offset = depth
 	plate = hud.get_plane_master(GET_NEW_PLANE(RENDER_PLANE_MASTER, depth))
 	if(!plate)
@@ -79,6 +100,22 @@
 	plate.remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_TRANSPARENT, depth - 1))
 	output_plane = GET_NEW_PLANE(TADPOLE_GROUND_PLANE, hud.current_plane_offset)
 	plate.add_relay_to(output_plane)
+	if(scene)
+		// Keep the native target allocated, but replace its screen-fixed output
+		// with a client-private world image at the real navigation console.
+		var/atom/movable/render_plane_relay/screen_relay = plate.get_relay_to(output_plane)
+		screen_relay.alpha = 0
+		source_canvas = new
+		ship_image = image(loc = scene.helm)
+		ship_image.render_source = plate.render_target
+		ship_image.plane = output_plane
+		ship_image.layer = TOPDOWN_LAYER + 1
+		ship_image.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		ship_image.appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
+		if(display_client)
+			display_client.screen += source_canvas
+			display_client.images += ship_image
+		sync_chunks()
 	var/datum/plane_master_group/group = hud.get_plane_group(PLANE_GROUP_MAIN)
 	for(var/key in group.plane_masters)
 		var/atom/movable/screen/plane_master/master = group.plane_masters[key]
@@ -93,6 +130,13 @@
 		emissive_plate.remove_relay_from(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, depth - 1))
 
 /datum/tadpole_scene_view/Destroy()
+	if(display_client)
+		display_client.screen -= source_canvas
+		display_client.images -= ship_image
+	QDEL_NULL(source_canvas)
+	QDEL_NULL(ship_image)
+	display_client = null
+	scene = null
 	if(!QDELETED(plate))
 		animate(plate, transform = original_transform, time = 0)
 		plate.remove_relay_from(output_plane)
@@ -107,6 +151,23 @@
 	emissive_plate = null
 	forced_planes.Cut()
 	return ..()
+
+/datum/tadpole_scene_view/proc/sync_chunks()
+	if(!source_canvas || !scene)
+		return
+	source_canvas.vis_contents.Cut()
+	for(var/key in scene.chunks)
+		source_canvas.vis_contents += scene.chunks[key]
+
+/datum/tadpole_scene_view/proc/refresh_layout(width, height)
+	if(!ship_image || (width == view_width && height == view_height))
+		return
+	view_width = width
+	view_height = height
+	// render_source is a full-map texture whose origin is its bottom-left.
+	// Place its centre at the docking origin through a real world loc.
+	ship_image.pixel_x = (scene.helm.shuttle_port.x - scene.helm.x) * world.icon_size - (width - 1) * world.icon_size / 2
+	ship_image.pixel_y = (scene.helm.shuttle_port.y - scene.helm.y) * world.icon_size - (height - 1) * world.icon_size / 2
 
 /datum/tadpole_scene_view/proc/update_camera(matrix/camera, animation_seconds)
 	if(QDELETED(plate))
@@ -188,14 +249,15 @@
 		if(!eye || !helm.ground_tiles[eye] || !viewer.hud_used)
 			continue
 		var/list/size = getviewsize(display.view)
-		needed_radius = max(needed_radius, CEILING(sqrt(size[1] ** 2 + size[2] ** 2) / 2, 1) + get_dist(eye, helm.shuttle_port) + 2)
+		needed_radius = max(needed_radius, required_radius(size))
 		var/datum/tadpole_scene_view/view = views[display]
 		if(view && (view.hud != viewer.hud_used || view.source_offset != depth || QDELETED(view.plate) || view.plate.is_outside_bounds))
 			qdel(view)
 			view = null
 		if(!view)
-			view = new(viewer.hud_used, depth)
+			view = new(viewer.hud_used, depth, src)
 			views[display] = view
+		view.refresh_layout(size[1], size[2])
 		remaining -= display
 	for(var/client/departed as anything in remaining)
 		qdel(views[departed])
@@ -205,10 +267,11 @@
 			QDEL_LIST_ASSOC_VAL(chunks)
 		radius = 0
 		return
+	needed_radius = max(radius, needed_radius)
 	var/new_x = FLOOR(helm.flight_x / TADPOLE_CHUNK_SIZE, 1) * TADPOLE_CHUNK_SIZE
 	var/new_y = FLOOR(helm.flight_y / TADPOLE_CHUNK_SIZE, 1) * TADPOLE_CHUNK_SIZE
 	if(origin_x != new_x || origin_y != new_y || source_z != helm.eyeobj.z || radius != needed_radius)
-		if(!isnull(origin_x) && !isnull(origin_y))
+		if(!isnull(origin_x) && !isnull(origin_y) && (new_x != origin_x || new_y != origin_y))
 			for(var/client/display as anything in views)
 				var/datum/tadpole_scene_view/view = views[display]
 				view.rebase_camera((new_x - origin_x) * world.icon_size, (new_y - origin_y) * world.icon_size)
@@ -217,22 +280,26 @@
 		source_z = helm.eyeobj.z
 		radius = needed_radius
 		update_chunks()
+	var/matrix/camera = camera_transform()
 	for(var/client/display as anything in views)
 		var/datum/tadpole_scene_view/view = views[display]
-		var/turf/eye = get_turf(display.eye)
-		if(!eye || QDELETED(view.plate))
-			continue
-		var/angle = helm.flight_heading - dir2angle(helm.shuttle_port.dir)
-		var/c = cos(angle)
-		var/s = sin(angle)
-		var/px = helm.shuttle_port.x - eye.x
-		var/py = helm.shuttle_port.y - eye.y
-		var/dx = origin_x - helm.flight_x
-		var/dy = origin_y - helm.flight_y
-		var/matrix/camera = matrix()
-		camera.Turn(-angle)
-		camera.Translate((px - (px * c - py * s) + dx * c - dy * s) * world.icon_size, (py - (py * c + px * s) + dy * c + dx * s) * world.icon_size)
 		view.update_camera(camera, animation_seconds)
+
+/// Only aircraft state enters this matrix. A passenger's position does not.
+/datum/tadpole_scene/proc/camera_transform()
+	var/angle = helm.flight_heading - dir2angle(helm.shuttle_port.dir)
+	var/c = cos(angle)
+	var/s = sin(angle)
+	var/dx = origin_x - helm.flight_x
+	var/dy = origin_y - helm.flight_y
+	var/matrix/camera = matrix()
+	camera.Turn(-angle)
+	camera.Translate((dx * c - dy * s) * world.icon_size, (dy * c + dx * s) * world.icon_size)
+	return camera
+
+/datum/tadpole_scene/proc/required_radius(list/size)
+	var/footprint = max(helm.shuttle_port.width + abs(helm.shuttle_port.dwidth), helm.shuttle_port.height + abs(helm.shuttle_port.dheight))
+	return CEILING(sqrt(size[1] ** 2 + size[2] ** 2) / 2, 1) + footprint + 2
 
 /datum/tadpole_scene/proc/update_chunks()
 	var/list/remaining = chunks.Copy()
@@ -247,16 +314,19 @@
 			var/key = "[x],[y],[source_z]"
 			var/obj/effect/abstract/tadpole_native_chunk/chunk = chunks[key]
 			if(!chunk)
-				chunk = new(get_turf(helm))
+				chunk = new
 				chunk.build(x, y, source_z)
 				chunks[key] = chunk
 			else
 				remaining -= key
-			chunk.pixel_x = (max(1, x) - origin_x + helm.shuttle_port.x - helm.x) * world.icon_size
-			chunk.pixel_y = (max(1, y) - origin_y + helm.shuttle_port.y - helm.y) * world.icon_size
+			chunk.pixel_x = (max(1, x) - origin_x) * world.icon_size
+			chunk.pixel_y = (max(1, y) - origin_y) * world.icon_size
 	for(var/key in remaining)
 		qdel(chunks[key])
 		chunks -= key
+	for(var/client/display as anything in views)
+		var/datum/tadpole_scene_view/view = views[display]
+		view.sync_chunks()
 
 /obj/effect/abstract/tadpole_searchlight
 	icon = null

@@ -167,3 +167,29 @@ Regression checks cover adjacent cell positions, turf replacement through
 an anchor, and conservation of screen coordinates during a rebase halfway
 through a rotated camera interpolation. Client confirmation of the black
 blocks and continuous flight remains necessary.
+
+## Ship-anchored image (after rollback of the passenger-compensation patch)
+
+The intermediate visibility/glide patch 10c34f955 was reverted at the user's
+request. This change replaces passenger-relative projection instead.
+
+Source blocks now live in nullspace and are linked into each observer's
+client-private screen canvas at CENTER,CENTER. Their native lower plane graph
+collects the source at a fixed origin, independent of the passenger world eye.
+The completed texture is displayed by a client-private world image attached
+to the real navigation console, offset once to the docking origin. BYOND's
+normal camera moves that image and the physical hull together when a passenger
+walks. Source canvas/image references are removed when the view is destroyed.
+
+camera_transform() accepts no eye or passenger coordinates. It uses aircraft
+heading and logical ground displacement only. All observers share the same
+flight matrix. Image layout changes only with viewport dimensions; membership
+radius uses the ship footprint, not passenger distance, and does not shrink
+while observed. Eight-cell rebase compensation is retained.
+
+Validation: tadpole_flight PASS and clean_run Success! in
+`data/logs/tadpole-ship-anchored-scene`; normal build 0 errors/warnings.
+The regression moves a real passenger and checks that the world image,
+positioning, matrix target, animation identity and requested cache radius
+remain unchanged, and that destruction releases the image and canvas.
+Client appearance, texture bounds and performance still need user validation.
