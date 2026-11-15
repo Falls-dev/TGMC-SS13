@@ -19,9 +19,7 @@ To add TK to a living mob, just make it register this proc on ranged attacks and
 Redefine as needed.
 */
 /mob/living/proc/on_ranged_attack_tk(mob/user, atom/target)
-	//A click that gets here while a grab is already held was already handled by
-	//tk_grab/afterattack, which throws or uses whatever is held. Grabbing as well
-	//would swap the held grab out from under the wearer and drop what it carried.
+	//A held grab already handles this click through afterattack.
 	if(istype(user.get_active_held_item(), /obj/item/tk_grab))
 		return
 	target.attack_tk(user)
@@ -35,8 +33,7 @@ Redefine as needed.
 	add_fingerprint(user, "attack_tk")
 
 
-//Turfs are not movable, so they cannot be placed in a tk_grab. TK-7 still gets universal
-//remote interaction with floors, walls and ceilings through the normal unarmed attack path.
+//Interact with turfs remotely; they cannot be held in a tk_grab.
 /turf/attack_tk(mob/user)
 	if(user.incapacitated() || !tkMaxRangeCheck(user, src))
 		return FALSE
@@ -211,8 +208,7 @@ Redefine as needed.
 	if(!istype(tk_user) || QDELETED(target) || !istype(target) || !CHECK_BITFIELD(tk_user.status_flags, TK_USER))
 		qdel(src)
 		return FALSE
-	//TK-7 is an administrator tool rather than a gameplay grab. It may take anchored objects,
-	//living mobs and vehicles; TK-5 has its own separate field and does not use this path.
+	//TK-7 allows anchored objects, living mobs and vehicles; TK-5 uses separate rules.
 	if(!tkMaxRangeCheck(tk_user, target) || !isturf(target.loc))
 		qdel(src)
 		return FALSE
