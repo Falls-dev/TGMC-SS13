@@ -61,15 +61,6 @@
 	var/matrix/original_transform
 	var/source_offset
 	var/output_plane
-	var/atom/movable/render_plane_relay/output_relay
-	var/datum/tadpole_scene/scene
-	var/atom/movable/eye_source
-	var/eye_from_x
-	var/eye_from_y
-	var/eye_to_x
-	var/eye_to_y
-	var/eye_started = 0
-	var/eye_duration = 0
 	var/matrix/last_camera
 	var/matrix/animation_from
 	var/animation_started = 0
@@ -78,30 +69,16 @@
 	var/atom/movable/screen/plane_master/emissive_plate
 	var/had_emissive_relay = FALSE
 
-/datum/tadpole_scene_view/New(datum/hud/display, depth, datum/tadpole_scene/owner)
+/datum/tadpole_scene_view/New(datum/hud/display, depth)
 	hud = display
-	scene = owner
 	source_offset = depth
 	plate = hud.get_plane_master(GET_NEW_PLANE(RENDER_PLANE_MASTER, depth))
 	if(!plate)
 		return
 	original_transform = plate.transform
 	plate.remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_TRANSPARENT, depth - 1))
-	// The lower plate is ALREADY lit. Rendering it before upper lighting
-	// applies the passenger's visibility/darkness a second time.
-	output_plane = GET_NEW_PLANE(RENDER_PLANE_GAME, hud.current_plane_offset)
-	var/late_layer = GET_NEW_PLANE(LIGHT_MASK_PLANE, hud.current_plane_offset) + abs(LOWEST_EVER_PLANE * 30) + 0.5
-	plate.add_relay_to(output_plane, relay_layer = late_layer)
-	output_relay = plate.get_relay_to(output_plane)
-	var/atom/movable/screen/plane_master/ship_geometry = hud.get_plane_master(GET_NEW_PLANE(RENDER_PLANE_GAME_WORLD, hud.current_plane_offset))
-	if(ship_geometry?.render_target)
-		// Keep the completed lower scene behind native hull/occupant pixels.
-		output_relay.add_filter("ship_cutout", 1, alpha_mask_filter(render_source = ship_geometry.render_target, flags = MASK_INVERSE))
-	// Floors and several effect planes relay directly to GAME, not GAME_WORLD.
-	for(var/upper_plane in list(FLOOR_PLANE, MASSIVE_OBJ_PLANE, GHOST_PLANE, POINT_PLANE))
-		var/atom/movable/screen/plane_master/upper = hud.get_plane_master(GET_NEW_PLANE(upper_plane, hud.current_plane_offset))
-		if(upper?.render_target)
-			output_relay.add_filter("upper_cutout_[upper_plane]", 2, alpha_mask_filter(render_source = upper.render_target, flags = MASK_INVERSE))
+	output_plane = GET_NEW_PLANE(TADPOLE_GROUND_PLANE, hud.current_plane_offset)
+	plate.add_relay_to(output_plane)
 	var/datum/plane_master_group/group = hud.get_plane_group(PLANE_GROUP_MAIN)
 	for(var/key in group.plane_masters)
 		var/atom/movable/screen/plane_master/master = group.plane_masters[key]
@@ -116,8 +93,6 @@
 		emissive_plate.remove_relay_from(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, depth - 1))
 
 /datum/tadpole_scene_view/Destroy()
-	bind_eye(null)
-	scene = null
 	if(!QDELETED(plate))
 		animate(plate, transform = original_transform, time = 0)
 		plate.remove_relay_from(output_plane)
@@ -130,7 +105,6 @@
 	hud = null
 	plate = null
 	emissive_plate = null
-	output_relay = null
 	forced_planes.Cut()
 	return ..()
 
@@ -181,51 +155,6 @@
 	if(remaining)
 		animate(plate, transform = target, time = remaining, easing = LINEAR_EASING)
 
-/// Track the actual eye's native glide instead of its destination turf.
-/datum/tadpole_scene_view/proc/bind_eye(atom/movable/source)
-	if(source == eye_source)
-		return
-	if(eye_source)
-		UnregisterSignal(eye_source, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
-	eye_source = source
-	eye_duration = 0
-	if(!source)
-		return
-	var/turf/location = get_turf(source)
-	eye_from_x = location?.x
-	eye_to_x = location?.x
-	eye_from_y = location?.y
-	eye_to_y = location?.y
-	RegisterSignal(source, COMSIG_MOVABLE_MOVED, PROC_REF(on_eye_moved))
-	RegisterSignal(source, COMSIG_QDELETING, PROC_REF(on_eye_deleted))
-
-/datum/tadpole_scene_view/proc/eye_position(at_time)
-	var/progress = eye_duration ? clamp((at_time - eye_started) / eye_duration, 0, 1) : 1
-	return list(eye_from_x + (eye_to_x - eye_from_x) * progress, eye_from_y + (eye_to_y - eye_from_y) * progress)
-
-/datum/tadpole_scene_view/proc/on_eye_moved(atom/movable/source, atom/old_loc, movement_dir, forced)
-	SIGNAL_HANDLER
-	var/list/current = eye_position(world.time)
-	var/turf/previous = get_turf(old_loc)
-	var/turf/next = get_turf(source)
-	if(!next)
-		return
-	eye_from_x = current[1]
-	eye_from_y = current[2]
-	eye_to_x = next.x
-	eye_to_y = next.y
-	eye_started = world.time
-	eye_duration = !forced && previous && previous.z == next.z && get_dist(previous, next) <= 1 ? world.icon_size / max(source.glide_size, 1) * world.tick_lag : 0
-	if(!eye_duration)
-		eye_from_x = next.x
-		eye_from_y = next.y
-	// Start with the movement signal, not up to 0.2 seconds later.
-	scene?.update_view_camera(src, eye_duration / 10)
-
-/datum/tadpole_scene_view/proc/on_eye_deleted()
-	SIGNAL_HANDLER
-	bind_eye(null)
-
 /datum/tadpole_scene
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/helm
 	var/list/chunks = list()
@@ -259,15 +188,14 @@
 		if(!eye || !helm.ground_tiles[eye] || !viewer.hud_used)
 			continue
 		var/list/size = getviewsize(display.view)
-		needed_radius = max(needed_radius, view_radius(size, get_dist(eye, helm.shuttle_port)))
+		needed_radius = max(needed_radius, CEILING(sqrt(size[1] ** 2 + size[2] ** 2) / 2, 1) + get_dist(eye, helm.shuttle_port) + 2)
 		var/datum/tadpole_scene_view/view = views[display]
 		if(view && (view.hud != viewer.hud_used || view.source_offset != depth || QDELETED(view.plate) || view.plate.is_outside_bounds))
 			qdel(view)
 			view = null
 		if(!view)
-			view = new(viewer.hud_used, depth, src)
+			view = new(viewer.hud_used, depth)
 			views[display] = view
-		view.bind_eye(ismovable(display.eye) ? display.eye : null)
 		remaining -= display
 	for(var/client/departed as anything in remaining)
 		qdel(views[departed])
@@ -277,13 +205,10 @@
 			QDEL_LIST_ASSOC_VAL(chunks)
 		radius = 0
 		return
-	// Do not shrink/rebuild the scene for each passenger step. The footprint
-	// margin covers normal walking; unusual remote eyes can grow it once.
-	needed_radius = max(radius, needed_radius)
 	var/new_x = FLOOR(helm.flight_x / TADPOLE_CHUNK_SIZE, 1) * TADPOLE_CHUNK_SIZE
 	var/new_y = FLOOR(helm.flight_y / TADPOLE_CHUNK_SIZE, 1) * TADPOLE_CHUNK_SIZE
 	if(origin_x != new_x || origin_y != new_y || source_z != helm.eyeobj.z || radius != needed_radius)
-		if(!isnull(origin_x) && !isnull(origin_y) && (new_x != origin_x || new_y != origin_y))
+		if(!isnull(origin_x) && !isnull(origin_y))
 			for(var/client/display as anything in views)
 				var/datum/tadpole_scene_view/view = views[display]
 				view.rebase_camera((new_x - origin_x) * world.icon_size, (new_y - origin_y) * world.icon_size)
@@ -293,32 +218,21 @@
 		radius = needed_radius
 		update_chunks()
 	for(var/client/display as anything in views)
-		update_view_camera(views[display], animation_seconds)
-
-/datum/tadpole_scene/proc/update_view_camera(datum/tadpole_scene_view/view, animation_seconds)
-	if(!helm?.shuttle_port || QDELETED(view.plate) || !view.eye_source || isnull(origin_x) || !helm.ground_tiles[get_turf(view.eye_source)])
-		return
-	var/remaining_eye_glide = max(0, view.eye_started + view.eye_duration - world.time)
-	if(remaining_eye_glide && animation_seconds)
-		animation_seconds = min(animation_seconds, remaining_eye_glide / 10)
-	// Target the eye position at the END of the same interpolation interval.
-	// Sampling only its current tile makes the background jump while walking.
-	var/list/eye = view.eye_position(world.time + animation_seconds * 10)
-	var/angle = helm.flight_heading - dir2angle(helm.shuttle_port.dir)
-	var/c = cos(angle)
-	var/s = sin(angle)
-	var/px = helm.shuttle_port.x - eye[1]
-	var/py = helm.shuttle_port.y - eye[2]
-	var/dx = origin_x - helm.flight_x
-	var/dy = origin_y - helm.flight_y
-	var/matrix/camera = matrix()
-	camera.Turn(-angle)
-	camera.Translate((px - (px * c - py * s) + dx * c - dy * s) * world.icon_size, (py - (py * c + px * s) + dy * c + dx * s) * world.icon_size)
-	view.update_camera(camera, animation_seconds)
-
-/datum/tadpole_scene/proc/view_radius(list/size, eye_distance)
-	var/footprint = max(helm.shuttle_port.width + abs(helm.shuttle_port.dwidth), helm.shuttle_port.height + abs(helm.shuttle_port.dheight))
-	return max(radius, CEILING(sqrt(size[1] ** 2 + size[2] ** 2) / 2, 1) + max(footprint, eye_distance) + 2)
+		var/datum/tadpole_scene_view/view = views[display]
+		var/turf/eye = get_turf(display.eye)
+		if(!eye || QDELETED(view.plate))
+			continue
+		var/angle = helm.flight_heading - dir2angle(helm.shuttle_port.dir)
+		var/c = cos(angle)
+		var/s = sin(angle)
+		var/px = helm.shuttle_port.x - eye.x
+		var/py = helm.shuttle_port.y - eye.y
+		var/dx = origin_x - helm.flight_x
+		var/dy = origin_y - helm.flight_y
+		var/matrix/camera = matrix()
+		camera.Turn(-angle)
+		camera.Translate((px - (px * c - py * s) + dx * c - dy * s) * world.icon_size, (py - (py * c + px * s) + dy * c + dx * s) * world.icon_size)
+		view.update_camera(camera, animation_seconds)
 
 /datum/tadpole_scene/proc/update_chunks()
 	var/list/remaining = chunks.Copy()
