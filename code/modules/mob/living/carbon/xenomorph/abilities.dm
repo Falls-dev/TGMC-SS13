@@ -1445,7 +1445,7 @@ GLOBAL_LIST_INIT(minion_call_drone_images, list(
 			if(minion == calling_xeno || minion.stat == DEAD || minion.z != calling_xeno.z || get_dist(minion, calling_xeno) != radius)
 				continue
 			// Minions born from a Widow are permanently hers and cannot be reassigned by a call.
-			if(minion.widow_personal_minion)
+			if(minion.personal_minion)
 				continue
 			if(!minion.is_hivemind_ai_minion())
 				continue

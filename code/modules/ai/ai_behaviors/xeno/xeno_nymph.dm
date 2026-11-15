@@ -17,13 +17,13 @@
 #define NYMPH_JOB_FILL 3
 #define NYMPH_JOB_SUPPORT 4
 #define NYMPH_FLEE_RADIUS 6
-#define NYMPH_ROUTE_SMOOTH_RANGE 6
 
 /// Job target => nymph that claimed it
 GLOBAL_LIST_EMPTY(nymph_job_claims)
 
 /datum/ai_behavior/xeno/nymph
 	can_heal = TRUE
+	advanced_pathing = TRUE
 	var/atom/job_target
 	var/job_type
 	/// Following our own job (not a hivemind order)
@@ -32,12 +32,7 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 	/// Attack on a direct hivemind order (otherwise the nymph attacks no one)
 	var/rts_attack_ordered = FALSE
 	var/list/blacklist = list()
-	/// Reversed A* path for the current autonomous move (next step is at the end).
-	var/list/nymph_path = list()
-	var/turf/nymph_route_destination
 	var/turf/last_resin_turf
-	var/route_last_progress_time = 0
-	var/route_last_distance = INFINITY
 	var/recharge_retry_at = 0
 	var/route_is_recharge = FALSE
 	/// Persist recharge intent after reaching resin so other idle chores do not interrupt regeneration.
@@ -47,7 +42,7 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 /datum/ai_behavior/xeno/nymph/Destroy(force, ...)
 	UnregisterSignal(mob_parent, COMSIG_STATE_MAINTAINED_DISTANCE)
 	release_job()
-	clear_nymph_route()
+	clear_adv_route()
 	recharging_plasma = FALSE
 	support_target = null
 	return ..()
@@ -56,7 +51,7 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 	. = ..()
 	UnregisterSignal(mob_parent, COMSIG_STATE_MAINTAINED_DISTANCE)
 	release_job()
-	clear_nymph_route()
+	clear_adv_route()
 	recharging_plasma = FALSE
 	support_target = null
 	rts_attack_ordered = FALSE
@@ -79,13 +74,6 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 	if(nymph_moving)
 		return
 	return ..(null) // do not pick combat targets ourselves
-
-/// Autonomous routes use the maintained-distance signal to advance A* tiles, not to attack the floor.
-/datum/ai_behavior/xeno/nymph/register_action_signals(action_type)
-	if(action_type == MOVING_TO_ATOM && nymph_moving)
-		RegisterSignal(mob_parent, COMSIG_STATE_MAINTAINED_DISTANCE, PROC_REF(finished_nymph_path_step))
-		return
-	return ..()
 
 /// Are we under a direct order (then we do not run)
 /datum/ai_behavior/xeno/nymph/proc/can_flee()
@@ -146,7 +134,7 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 	if(mob_parent && !QDELETED(mob_parent))
 		if(nymph_moving && (mob_parent.stat != CONSCIOUS || mob_parent.notransform || mob_parent.do_actions || should_hold()))
 			// Do not count stuns, actions or ally-wrangling as pathfinding failure.
-			route_last_progress_time = world.time
+			adv_route_last_progress_time = world.time
 		else if(mob_parent.stat == CONSCIOUS && !mob_parent.notransform && !mob_parent.do_actions)
 			nymph_think()
 	return ..()
@@ -197,19 +185,19 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 		if(job_target && !job_valid())
 			halt_job()
 			return
-		if(route_is_recharge && (!nymph_route_destination || !(locate(/obj/alien/weeds) in nymph_route_destination)))
+		if(route_is_recharge && (!adv_route_destination || !(locate(/obj/alien/weeds) in adv_route_destination)))
 			recharge_retry_at = world.time + NYMPH_RECHARGE_RETRY
 			recharging_plasma = FALSE
 			halt_job()
 			return
 		var/turf/next_step = get_turf(atom_to_walk_to)
 		var/distance_to_step = next_step ? get_dist(X, next_step) : INFINITY
-		if(distance_to_step < route_last_distance)
-			route_last_distance = distance_to_step
-			route_last_progress_time = world.time
-		else if(world.time >= route_last_progress_time + NYMPH_STUCK_TIMEOUT)
+		if(distance_to_step < adv_route_last_distance)
+			adv_route_last_distance = distance_to_step
+			adv_route_last_progress_time = world.time
+		else if(world.time >= adv_route_last_progress_time + NYMPH_STUCK_TIMEOUT)
 			// No progress includes oscillating between two tiles at the same distance.
-			var/atom/failed_goal = job_target ? job_target : nymph_route_destination
+			var/atom/failed_goal = job_target ? job_target : adv_route_destination
 			if(failed_goal)
 				blacklist[failed_goal] = world.time + NYMPH_BLACKLIST_TIME
 			if(route_is_recharge)
@@ -259,7 +247,7 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 /datum/ai_behavior/xeno/nymph/proc/halt_job(drop_job = TRUE)
 	if(nymph_moving)
 		UnregisterSignal(mob_parent, COMSIG_STATE_MAINTAINED_DISTANCE)
-		clear_nymph_route()
+		clear_adv_route()
 		rts_finish_move()
 	if(drop_job)
 		release_job()
@@ -318,73 +306,21 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 		return null
 	return list("path" = best_path, "destination" = best_destination)
 
-/// Start following a reversed tile path. Path order is goal-to-start in get_path().
+/// Start a job route. With advanced_pathing off the nymph just walks straight to the destination.
 /datum/ai_behavior/xeno/nymph/proc/start_nymph_route(list/path, turf/destination, recharge = FALSE)
 	if(!path || !length(path) || !destination)
 		return FALSE
-	clear_nymph_route()
-	nymph_path = path.Copy()
-	nymph_route_destination = destination
-	route_is_recharge = recharge
-	nymph_moving = TRUE
-	var/turf/next_step = pop_next_nymph_waypoint()
-	if(!next_step)
-		clear_nymph_route()
+	if(!advanced_pathing)
+		path = list(destination)
+	if(!start_adv_route(path, destination))
 		return FALSE
-	route_last_progress_time = world.time
-	route_last_distance = get_dist(mob_parent, next_step)
-	change_action(MOVING_TO_ATOM, next_step)
+	nymph_moving = TRUE
+	route_is_recharge = recharge
 	return TRUE
 
-/// Remove the next verified A* waypoint, skipping straight, unobstructed tiles.
-/datum/ai_behavior/xeno/nymph/proc/pop_next_nymph_waypoint()
-	if(!length(nymph_path))
-		return null
-	var/turf/start = get_turf(mob_parent)
-	var/next_path_index = length(nymph_path)
-	var/turf/next_step = nymph_path[next_path_index]
-	if(start)
-		// Collapse consecutive A* tiles into the furthest point reachable by a
-		// shortest direct route. Walls and blocked corners keep their own waypoints.
-		for(var/i = next_path_index - 1, i >= 1, i--)
-			var/turf/candidate = nymph_path[i]
-			var/distance = get_dist(start, candidate)
-			if(distance > NYMPH_ROUTE_SMOOTH_RANGE || !line_of_sight(start, candidate, NYMPH_ROUTE_SMOOTH_RANGE))
-				break
-			var/list/direct_path = get_path(start, candidate, TILE_PATHING)
-			if(isnull(direct_path) || length(direct_path) != distance)
-				break
-			next_path_index = i
-			next_step = candidate
-	nymph_path.Cut(next_path_index)
-	return next_step
-
-/// Called by the movement state when the current path tile is reached.
-/datum/ai_behavior/xeno/nymph/proc/finished_nymph_path_step()
-	SIGNAL_HANDLER
-	if(!nymph_moving)
-		return COMSIG_MAINTAIN_POSITION
-	if(length(nymph_path))
-		var/turf/next_step = pop_next_nymph_waypoint()
-		if(next_step)
-			set_atom_to_walk_to(next_step)
-			route_last_progress_time = world.time
-			route_last_distance = get_dist(mob_parent, next_step)
-			return COMSIG_MAINTAIN_POSITION
+/datum/ai_behavior/xeno/nymph/clear_adv_route()
+	. = ..()
 	nymph_moving = FALSE
-	nymph_route_destination = null
-	route_is_recharge = FALSE
-	nymph_path = list()
-	rts_finish_move()
-	return COMSIG_MAINTAIN_POSITION
-
-/// Remove only nymph-owned route state. The caller decides whether to change the AI action.
-/datum/ai_behavior/xeno/nymph/proc/clear_nymph_route()
-	nymph_moving = FALSE
-	nymph_path = list()
-	nymph_route_destination = null
-	route_last_progress_time = 0
-	route_last_distance = INFINITY
 	route_is_recharge = FALSE
 
 /// Return to a resin tile when plasma is low, then rest until the reserve is replenished.
@@ -777,4 +713,3 @@ GLOBAL_LIST_EMPTY(nymph_job_claims)
 #undef NYMPH_JOB_FILL
 #undef NYMPH_JOB_SUPPORT
 #undef NYMPH_FLEE_RADIUS
-#undef NYMPH_ROUTE_SMOOTH_RANGE

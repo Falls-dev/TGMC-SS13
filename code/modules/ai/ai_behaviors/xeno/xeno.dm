@@ -19,6 +19,8 @@
 
 /// Instant hivemind orders; every proc resets the previous order.
 /datum/ai_behavior/xeno/proc/rts_reset()
+	clear_adv_route()
+	advanced_pathing = initial(advanced_pathing)
 	rts_well = null
 	hivemind_rts_hold_position = FALSE
 	hivemind_rts_direct_move = FALSE
@@ -36,7 +38,7 @@
 	if(!controller || QDELETED(controller))
 		return FALSE
 	var/mob/living/carbon/xenomorph/minion = mob_parent
-	if(minion?.widow_personal_minion)
+	if(minion?.personal_minion)
 		return FALSE
 	var/mob/living/carbon/xenomorph/current_owner = get_minion_call_owner()
 	return !current_owner || current_owner == controller || requested_priority > minion_call_priority
@@ -44,7 +46,7 @@
 /// Whether an external controller (currently the Hivemind RTS) may issue orders to this minion.
 /datum/ai_behavior/xeno/proc/can_be_controlled_by(mob/living/carbon/xenomorph/controller)
 	var/mob/living/carbon/xenomorph/minion = mob_parent
-	return !minion?.widow_personal_minion
+	return !minion?.personal_minion
 
 /// Attach to a caller and enter escort mode. The caller's priority is stored for later takeovers.
 /datum/ai_behavior/xeno/proc/begin_minion_call(mob/living/carbon/xenomorph/controller, requested_priority)
@@ -69,6 +71,10 @@
 /datum/ai_behavior/xeno/proc/rts_move(turf/destination)
 	rts_reset()
 	hivemind_rts_direct_move = TRUE
+	if(rts_advanced_pathing)
+		advanced_pathing = TRUE
+	if(start_advanced_move(destination))
+		return
 	change_action(MOVING_TO_ATOM, destination)
 	if(!registered_for_move)
 		INVOKE_ASYNC(src, PROC_REF(scheduled_move))
@@ -107,11 +113,14 @@
 		return FALSE
 	if(get_dist(X, rts_well) > 1)
 		var/turf/well_turf = get_turf(rts_well)
-		if(!hivemind_rts_direct_move || atom_to_walk_to != well_turf)
+		if(!hivemind_rts_direct_move || (atom_to_walk_to != well_turf && !adv_route_active))
 			hivemind_rts_direct_move = TRUE
-			change_action(MOVING_TO_ATOM, well_turf)
-			if(!registered_for_move)
-				INVOKE_ASYNC(src, PROC_REF(scheduled_move))
+			if(rts_advanced_pathing)
+				advanced_pathing = TRUE
+			if(!start_advanced_move(well_turf))
+				change_action(MOVING_TO_ATOM, well_turf)
+				if(!registered_for_move)
+					INVOKE_ASYNC(src, PROC_REF(scheduled_move))
 		return TRUE
 	if(hivemind_rts_direct_move)
 		rts_finish_move()
@@ -129,6 +138,9 @@
 
 /// Arrived, or the spot is taken/blocked and we are adjacent to it.
 /datum/ai_behavior/xeno/proc/rts_arrived()
+	// Intermediate waypoint of an A* route, not the destination.
+	if(adv_route_active && length(adv_path))
+		return FALSE
 	if(!isturf(atom_to_walk_to))
 		return TRUE
 	var/dist = get_dist(mob_parent, atom_to_walk_to)
@@ -145,6 +157,8 @@
 	return FALSE
 
 /datum/ai_behavior/xeno/proc/rts_finish_move()
+	clear_adv_route()
+	advanced_pathing = initial(advanced_pathing)
 	hivemind_rts_direct_move = FALSE
 	if(atom_to_walk_to)
 		do_unset_target(atom_to_walk_to, need_new_state = FALSE, need_new_escort = FALSE)
@@ -221,6 +235,8 @@
 	set_escorted_atom(source, atom_to_escort)
 
 /datum/ai_behavior/xeno/process()
+	if(adv_route_active && hivemind_rts_direct_move)
+		adv_route_think()
 	if(rts_well && !mob_parent?.notransform && well_task_think())
 		return
 	if(has_living_hivemind())

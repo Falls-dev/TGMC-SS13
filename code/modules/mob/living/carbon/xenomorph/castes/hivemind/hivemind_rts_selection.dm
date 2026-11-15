@@ -50,7 +50,7 @@
 	if(target.hivenumber != hivenumber || !target.is_hivemind_ai_minion())
 		return FALSE
 	// Widow-created minions are personal to their creator and must never enter Hive Mind RTS.
-	if(target.widow_personal_minion)
+	if(target.personal_minion)
 		return FALSE
 	if(istype(target, /mob/living/carbon/xenomorph/spiderling) || istype(target, /mob/living/carbon/xenomorph/puppet))
 		return FALSE

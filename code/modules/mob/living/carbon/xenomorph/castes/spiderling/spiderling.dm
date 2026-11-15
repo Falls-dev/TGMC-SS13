@@ -22,7 +22,7 @@
 	spidermother = mother
 	// Spiderlings born from a Widow are her personal minions, not general hive minions.
 	if(istype(spidermother, /mob/living/carbon/xenomorph/widow))
-		widow_personal_minion = TRUE
+		personal_minion = TRUE
 	if(spidermother)
 		AddComponent(/datum/component/ai_controller, /datum/ai_behavior/spiderling, spidermother)
 		transfer_to_hive(spidermother.get_xeno_hivenumber())
