@@ -176,11 +176,11 @@
 	port.abstract_move(relay_center)
 	var/datum/tadpole_scene/scene = new(helm)
 	scene.source_z = SSmapping.ground_start
-	scene.origin_x = 40
-	scene.origin_y = 40
+	scene.origin_x = FLOOR(helm.flight_x / 8, 1) * 8
+	scene.origin_y = FLOOR(helm.flight_y / 8, 1) * 8
 	scene.radius = 16
 	scene.update_chunks()
-	var/key = "56,56,[scene.source_z]"
+	var/key = "[scene.origin_x + 16],[scene.origin_y + 16],[scene.source_z]"
 	var/obj/effect/abstract/tadpole_native_chunk/edge_chunk = scene.chunks[key]
 	TEST_ASSERT_NOTNULL(edge_chunk, "Prefetch must cover the last cell of an eight-tile camera bucket")
 	var/count = length(scene.chunks)
@@ -191,8 +191,8 @@
 	for(var/chunk_key in scene.chunks)
 		var/obj/effect/abstract/tadpole_native_chunk/spatial_block = scene.chunks[chunk_key]
 		var/turf/first_source = spatial_block.tiles[1]
-		TEST_ASSERT_EQUAL((spatial_block.x - port.x) * world.icon_size + spatial_block.pixel_x, (first_source.x - scene.origin_x) * world.icon_size, "Spatial placement must preserve source x projection")
-		TEST_ASSERT_EQUAL((spatial_block.y - port.y) * world.icon_size + spatial_block.pixel_y, (first_source.y - scene.origin_y) * world.icon_size, "Spatial placement must preserve source y projection")
+		TEST_ASSERT_EQUAL((spatial_block.x - port.x) * world.icon_size + spatial_block.pixel_x, (first_source.x - helm.flight_x) * world.icon_size, "Spatial placement must preserve source x projection")
+		TEST_ASSERT_EQUAL((spatial_block.y - port.y) * world.icon_size + spatial_block.pixel_y, (first_source.y - helm.flight_y) * world.icon_size, "Spatial placement must preserve source y projection")
 	scene.update_chunks()
 	TEST_ASSERT_EQUAL(scene.chunks[key], edge_chunk, "Unchanged scene cells must reuse native blocks")
 	TEST_ASSERT_EQUAL(length(scene.chunks), count, "Repeated membership checks must allocate no additional blocks")
@@ -220,12 +220,27 @@
 	scene.update_chunks()
 	var/list/stable_blocks = scene.chunks.Copy()
 	var/turf/pilot_start = get_turf(pilot)
+	scene.update_source_position(0)
 	for(var/i in 1 to 4)
 		pilot.forceMove(i % 2 ? get_step(pilot_start, EAST) : pilot_start)
-		TEST_ASSERT(!scene.update_region(scene.source_radius(viewport), scene.source_z), "Passenger movement must not trigger a terrain rebuild or zero-shift camera rebase")
+		TEST_ASSERT(!scene.update_region(scene.source_radius(viewport), scene.source_z), "Passenger movement must not trigger a terrain rebuild")
+		TEST_ASSERT(!scene.update_source_position(0.2), "Walking must not restart shared terrain movement")
 	TEST_ASSERT_EQUAL(length(scene.chunks), length(stable_blocks), "Walking must retain the same block count")
 	for(var/chunk_key in stable_blocks)
 		TEST_ASSERT_EQUAL(scene.chunks[chunk_key], stable_blocks[chunk_key], "Walking must preserve every cached block identity")
+	// A bucket transition during a source animation changes membership only.
+	var/flight_before_x = helm.flight_x
+	var/center_key = "[scene.origin_x],[scene.origin_y],[scene.source_z]"
+	var/obj/effect/abstract/tadpole_native_chunk/center_chunk = scene.chunks[center_key]
+	helm.flight_x += 8
+	scene.update_source_position(1)
+	scene.source_started = world.time - 5
+	var/list/source_before = scene.displayed_source_position()
+	TEST_ASSERT(abs(source_before[1] - flight_before_x - 4) < 0.001, "Shared terrain must interpolate the actual flight position")
+	TEST_ASSERT(scene.update_region(scene.radius, scene.source_z), "Crossing eight tiles must update source membership")
+	TEST_ASSERT_EQUAL(scene.displayed_source_position().Join(","), source_before.Join(","), "Changing cache origin must not move the displayed terrain")
+	TEST_ASSERT_EQUAL(scene.chunks[center_key], center_chunk, "A cache seam must retain overlapping source blocks")
+	helm.flight_x = flight_before_x
 	pilot.forceMove(pilot_start)
 	port.width = old_width
 	port.height = old_height
@@ -271,21 +286,18 @@
 	native_view.track_eye(null)
 	helm.flight_heading = walking_heading
 	helm.ground_tiles = old_ground_tiles
-	// Rebase halfway through an actual camera interpolation. Shifting the
-	// source grid and inverse-shifting the camera must preserve every pixel.
-	var/matrix/target = matrix()
-	target.Turn(-37)
-	target.Translate(14, -7)
-	native_view.update_camera(target, 1)
-	native_view.animation_started = world.time - 5
-	var/matrix/before_rebase = native_view.displayed_camera()
-	var/screen_x = before_rebase.a * 64 + before_rebase.b * 128 + before_rebase.c
-	var/screen_y = before_rebase.d * 64 + before_rebase.e * 128 + before_rebase.f
-	native_view.rebase_camera(256, -256)
-	var/matrix/after_rebase = native_view.displayed_camera()
-	TEST_ASSERT(abs(after_rebase.a * (64 - 256) + after_rebase.b * (128 + 256) + after_rebase.c - screen_x) < 0.001, "An eight-tile rebase must preserve displayed x during a turn")
-	TEST_ASSERT(abs(after_rebase.d * (64 - 256) + after_rebase.e * (128 + 256) + after_rebase.f - screen_y) < 0.001, "An eight-tile rebase must preserve displayed y during a turn")
-	TEST_ASSERT_EQUAL(native_view.animation_duration, 5, "Rebase must retain only the unfinished half of the animation")
+	// Translation belongs to source geometry, before the plane's viewport
+	// crop. The completed plate must never pan by a chunk-origin residual.
+	walking_scene.update_view(native_view, get_turf(pilot), 0)
+	old_camera_values = native_view.last_camera.tolist().Join(",")
+	var/projection_flight_x = helm.flight_x
+	helm.flight_x += 0.5
+	walking_scene.update_view(native_view, get_turf(pilot), 0.2)
+	TEST_ASSERT_EQUAL(native_view.last_camera.tolist().Join(","), old_camera_values, "Flight translation must not shift the already cropped output plate")
+	walking_scene.origin_x += 8
+	walking_scene.update_view(native_view, get_turf(pilot), 0.2)
+	TEST_ASSERT_EQUAL(native_view.last_camera.tolist().Join(","), old_camera_values, "A chunk boundary must not translate or rebase the output plate")
+	helm.flight_x = projection_flight_x
 	var/atom/movable/screen/plane_master/passenger_plate = native_view.plate
 	qdel(native_view)
 	qdel(walking_scene)

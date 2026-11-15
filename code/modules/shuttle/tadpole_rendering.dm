@@ -25,6 +25,15 @@
 	pixel_x = (tile_x - target.x) * world.icon_size
 	pixel_y = (tile_y - target.y) * world.icon_size
 
+/// Translate the native source before it enters a screen-sized render plate.
+/// Reanchor on whole tiles without a jump in the unfinished pixel animation.
+/obj/effect/abstract/tadpole_native_chunk/proc/move_ground(from_x, from_y, to_x, to_y, transit_z, duration)
+	place(FLOOR(to_x, 1), FLOOR(to_y, 1), transit_z)
+	if(!loc)
+		return
+	animate(src, pixel_x = (from_x - x) * world.icon_size, pixel_y = (from_y - y) * world.icon_size, time = 0)
+	animate(src, pixel_x = (to_x - x) * world.icon_size, pixel_y = (to_y - y) * world.icon_size, time = duration, easing = LINEAR_EASING)
+
 /obj/effect/abstract/tadpole_native_chunk/proc/build(base_x, base_y, ground_z)
 	var/turf/first = locate(max(1, base_x), max(1, base_y), ground_z)
 	var/turf/last = locate(min(world.maxx, base_x + TADPOLE_CHUNK_SIZE - 1), min(world.maxy, base_y + TADPOLE_CHUNK_SIZE - 1), ground_z)
@@ -165,26 +174,6 @@
 	result.f = animation_from.f + (last_camera.f - animation_from.f) * progress
 	return result
 
-/// Blocks change coordinate frames instantly. Apply the inverse displacement
-/// to the displayed camera instantly, before animating the next physics step.
-/datum/tadpole_scene_view/proc/rebase_camera(shift_x, shift_y)
-	if(QDELETED(plate) || !last_camera)
-		return
-	var/matrix/current = displayed_camera()
-	var/remaining = max(0, animation_duration - (world.time - animation_started))
-	current.c += current.a * shift_x + current.b * shift_y
-	current.f += current.d * shift_x + current.e * shift_y
-	var/matrix/target = matrix(last_camera)
-	target.c += target.a * shift_x + target.b * shift_y
-	target.f += target.d * shift_x + target.e * shift_y
-	animation_from = current
-	last_camera = target
-	animation_started = world.time
-	animation_duration = remaining
-	animate(plate, transform = current, time = 0)
-	if(remaining)
-		animate(plate, transform = target, time = remaining, easing = LINEAR_EASING)
-
 /datum/tadpole_scene
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/helm
 	var/list/chunks = list()
@@ -195,6 +184,15 @@
 	var/radius = 0
 	var/list/viewer_candidates = list()
 	var/next_viewer_scan = 0
+	var/source_from_x
+	var/source_from_y
+	var/source_to_x
+	var/source_to_y
+	var/source_started = 0
+	var/source_duration = 0
+	var/last_port_x
+	var/last_port_y
+	var/last_port_z
 
 /datum/tadpole_scene/New(obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/owner)
 	helm = owner
@@ -240,8 +238,12 @@
 		if(length(chunks))
 			QDEL_LIST_ASSOC_VAL(chunks)
 		radius = 0
+		source_to_x = null
+		source_to_y = null
+		source_duration = 0
 		return
 	update_region(needed_radius, helm.eyeobj.z)
+	update_source_position(animation_seconds)
 	for(var/client/display as anything in views)
 		var/datum/tadpole_scene_view/view = views[display]
 		update_view(view, get_turf(display.eye), animation_seconds)
@@ -254,12 +256,40 @@
 	var/s = sin(angle)
 	var/px = helm.shuttle_port.x - eye.x
 	var/py = helm.shuttle_port.y - eye.y
-	var/dx = origin_x - helm.flight_x
-	var/dy = origin_y - helm.flight_y
 	var/matrix/camera = matrix()
 	camera.Turn(-angle)
-	camera.Translate((px - (px * c - py * s) + dx * c - dy * s) * world.icon_size, (py - (py * c + px * s) + dy * c + dx * s) * world.icon_size)
+	camera.Translate((px - (px * c - py * s)) * world.icon_size, (py - (py * c + px * s)) * world.icon_size)
 	view.update_camera(camera, animation_seconds)
+
+/// One shared flight timeline, independent of all passenger positions.
+/datum/tadpole_scene/proc/displayed_source_position()
+	if(isnull(source_to_x) || isnull(source_to_y))
+		return list(helm.flight_x, helm.flight_y)
+	var/progress = source_duration ? clamp((world.time - source_started) / source_duration, 0, 1) : 1
+	return list(source_from_x + (source_to_x - source_from_x) * progress, source_from_y + (source_to_y - source_from_y) * progress)
+
+/datum/tadpole_scene/proc/update_source_position(animation_seconds)
+	var/obj/docking_port/mobile/port = helm.shuttle_port
+	if(source_to_x == helm.flight_x && source_to_y == helm.flight_y && last_port_x == port.x && last_port_y == port.y && last_port_z == port.z)
+		return FALSE
+	var/initialized = !isnull(source_to_x) && !isnull(source_to_y)
+	var/list/current = displayed_source_position()
+	source_from_x = current[1]
+	source_from_y = current[2]
+	source_to_x = helm.flight_x
+	source_to_y = helm.flight_y
+	source_started = world.time
+	source_duration = initialized ? animation_seconds * 10 : 0
+	last_port_x = port.x
+	last_port_y = port.y
+	last_port_z = port.z
+	for(var/key in chunks)
+		var/obj/effect/abstract/tadpole_native_chunk/chunk = chunks[key]
+		if(!length(chunk.tiles))
+			continue
+		var/turf/first = chunk.tiles[1]
+		chunk.move_ground(port.x + first.x - source_from_x, port.y + first.y - source_from_y, port.x + first.x - source_to_x, port.y + first.y - source_to_y, port.z, source_duration)
+	return TRUE
 
 /// Discovery is separate from the five-Hz flight path. Existing viewers are
 /// still validated every step; new remote eyes can take up to one second.
@@ -283,10 +313,6 @@
 	var/new_x = FLOOR(helm.flight_x / TADPOLE_CHUNK_SIZE, 1) * TADPOLE_CHUNK_SIZE
 	var/new_y = FLOOR(helm.flight_y / TADPOLE_CHUNK_SIZE, 1) * TADPOLE_CHUNK_SIZE
 	if(origin_x != new_x || origin_y != new_y || source_z != ground_z || radius != needed_radius)
-		if(!isnull(origin_x) && !isnull(origin_y) && (new_x != origin_x || new_y != origin_y))
-			for(var/client/display as anything in views)
-				var/datum/tadpole_scene_view/view = views[display]
-				view.rebase_camera((new_x - origin_x) * world.icon_size, (new_y - origin_y) * world.icon_size)
 		origin_x = new_x
 		origin_y = new_y
 		source_z = ground_z
@@ -297,6 +323,10 @@
 
 /datum/tadpole_scene/proc/update_chunks()
 	var/list/remaining = chunks.Copy()
+	var/list/current = displayed_source_position()
+	var/target_x = isnull(source_to_x) ? helm.flight_x : source_to_x
+	var/target_y = isnull(source_to_y) ? helm.flight_y : source_to_y
+	var/remaining_time = max(0, source_duration - (world.time - source_started))
 	// Cover the entire origin bucket, including its last fractional cell.
 	// Membership remains valid until the next eight-tile boundary.
 	var/min_x = FLOOR((origin_x - radius) / TADPOLE_CHUNK_SIZE, 1) * TADPOLE_CHUNK_SIZE
@@ -311,9 +341,9 @@
 				chunk = new
 				chunk.build(x, y, source_z)
 				chunks[key] = chunk
+				chunk.move_ground(helm.shuttle_port.x + max(1, x) - current[1], helm.shuttle_port.y + max(1, y) - current[2], helm.shuttle_port.x + max(1, x) - target_x, helm.shuttle_port.y + max(1, y) - target_y, helm.z, remaining_time)
 			else
 				remaining -= key
-			chunk.place(max(1, x) - origin_x + helm.shuttle_port.x, max(1, y) - origin_y + helm.shuttle_port.y, helm.z)
 	for(var/key in remaining)
 		qdel(chunks[key])
 		chunks -= key

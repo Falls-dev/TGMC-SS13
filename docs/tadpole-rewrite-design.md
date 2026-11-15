@@ -265,3 +265,37 @@ Final validation: focused `tadpole_flight` PASS (1 second), no runtime errors,
 `Success!` at `data/logs/tadpole-spatial-walk-final/clean_run.lk`. Normal
 BYOND 516.1659 build: 0 errors, 0 warnings. The isolated test build has the
 existing `loop_checks` warning.
+
+## Translate source geometry before viewport cropping
+
+The final-composition mask experiment was reverted in 3699a2e7591 after client
+testing showed that its upper floor/wall mask cut off hull overhangs. The
+user also observed the visible ground window following passenger coordinates.
+The native upper rendering graph is restored; no hull mask remains.
+
+An additional source of missing strips was the post-composition translation
+`origin - flight_position`: it moved an already screen-cropped render target
+by up to eight tiles. Source blocks now move by the actual continuous flight
+position before native plane composition. The final plate only rotates about
+the ship's docking origin relative to the passenger eye. Cache-origin changes
+only add/remove blocks and never translate or rebase the completed plate.
+
+All blocks share one flight-position interpolation timeline. Retained blocks
+continue it across bucket changes; newly loaded blocks join its remaining
+duration. Reanchoring a block's whole-tile loc preserves the current displayed
+pixel position before animating the remaining displacement. Walking does not
+change this timeline or update source blocks. The camera still follows the
+passenger, with the existing movement signal and glide handling.
+
+Regressions check source projection against continuous flight coordinates,
+no shared source animation restart on walking, timeline continuity and block
+reuse at a cache seam, and no completed-plate translation on flight movement
+or bucket changes. This addresses the eight-tile translation strips; the
+separate limitation of rotating a finite viewport still needs client QA.
+Moving source blocks may change SendMaps/network cost during flight; no load
+improvement is claimed without a fresh client measurement.
+
+Validation: focused `tadpole_flight` PASS (0.8 seconds), no runtime errors,
+`Success!` at `data/logs/tadpole-source-translation/clean_run.lk`. Normal
+BYOND 516.1659 build: 0 errors, 0 warnings. The isolated test build has the
+existing `loop_checks` warning. No in-client visual verification was performed.
