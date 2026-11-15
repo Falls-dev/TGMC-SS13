@@ -279,3 +279,25 @@ GLOBAL_LIST_INIT(xeno_ai_spawnable, list(
 #define HIVEMIND_RTS_GROUP_CENTER_INDEX 3
 #define HIVEMIND_RTS_GUARD_LEASH 12
 #define HIVEMIND_RTS_FORMATION_RADIUS 5
+
+#define BP_STATE_FREE 0
+#define BP_STATE_GHOST 1
+#define BP_STATE_BLOCKED 2
+
+#define BUILD_KIND_RESIN "resin"
+#define BUILD_KIND_WELL "well"
+#define BUILD_KIND_PSYCHIC "psychic"
+
+#define BP_MAX_PER_HIVE 2400
+
+#define NONBUILDER_WALL_WAIT_MULT 4
+#define NONBUILDER_WALL_COST 50
+#define BP_BASE_WAIT 0.5 SECONDS
+#define BP_SCALING_WAIT 1.5 SECONDS
+
+#define BP_TINT_GHOST "#4aa8ff"
+#define BP_TINT_DEMOLISH "#ff4a4a"
+
+GLOBAL_LIST_EMPTY(xeno_build_catalog)
+/// hivenumber => list of blueprints
+GLOBAL_LIST_EMPTY(xeno_blueprints)

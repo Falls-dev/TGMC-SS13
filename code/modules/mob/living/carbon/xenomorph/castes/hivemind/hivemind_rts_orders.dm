@@ -7,6 +7,9 @@
 
 /// Enemy = living non-hive mob, or a non-hive structure/machine/vehicle.
 /mob/living/carbon/xenomorph/hivemind/proc/is_rts_enemy(atom/A)
+	// Acid wells are work targets, never enemies, even if an old save left the wrong hive ID.
+	if(istype(A, /obj/structure/xeno/acidwell))
+		return FALSE
 	if(isliving(A))
 		var/mob/living/L = A
 		return L.stat != DEAD && L.get_xeno_hivenumber() != hivenumber
@@ -21,6 +24,15 @@
 		return FALSE
 	var/mob/living/carbon/xenomorph/xeno_target = A
 	return xeno_target.hivenumber == hivenumber && xeno_target.stat != DEAD
+
+/// Own acid well: minions will fill it
+/mob/living/carbon/xenomorph/hivemind/proc/is_rts_well(atom/A)
+	if(!istype(A, /obj/structure/xeno/acidwell))
+		return FALSE
+	var/obj/structure/xeno/acidwell/well = A
+	if(well.creator && !QDELETED(well.creator))
+		return well.creator.hivenumber == hivenumber
+	return well.get_xeno_hivenumber() == hivenumber
 
 /// Closest free turfs around center, nearest first.
 /mob/living/carbon/xenomorph/hivemind/proc/get_rts_formation_turfs(turf/center, count)
@@ -47,13 +59,19 @@
 		return FALSE
 	var/atom/actual_target = target
 	if(isturf(target))
+		// Prefer our acid well over any hostile-looking structure on the same turf.
+		for(var/obj/structure/xeno/acidwell/well in target_turf)
+			if(is_rts_well(well))
+				actual_target = well
+				break
+	if(isturf(target) && actual_target == target)
 		for(var/mob/living/L in target_turf)
 			if(is_rts_enemy(L))
 				actual_target = L
 				break
 		if(actual_target == target)
 			for(var/obj/O in target_turf)
-				if(is_rts_enemy(O) || is_rts_friend(O))
+				if(is_rts_enemy(O) || is_rts_friend(O) || is_rts_well(O))
 					actual_target = O
 					break
 	var/list/units = list()
@@ -68,6 +86,11 @@
 		for(var/mob/living/carbon/xenomorph/minion in units)
 			get_minion_behavior(minion)?.rts_attack(actual_target)
 		new /obj/effect/temp_visual/rts_order/attack(target_turf)
+		return TRUE
+	if(is_rts_well(actual_target))
+		for(var/mob/living/carbon/xenomorph/minion in units)
+			get_minion_behavior(minion)?.rts_fill_well(actual_target)
+		new /obj/effect/temp_visual/rts_order/escort(target_turf)
 		return TRUE
 	if(is_rts_friend(actual_target))
 		for(var/mob/living/carbon/xenomorph/minion in units)

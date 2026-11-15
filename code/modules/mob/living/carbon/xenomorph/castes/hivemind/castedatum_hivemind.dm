@@ -52,6 +52,7 @@
 		/datum/action/ability/xeno_action/rts_minion_control,
 		/datum/action/ability/xeno_action/select_all_minions,
 		/datum/action/ability/xeno_action/stop_minions,
+		/datum/action/ability/xeno_action/minion_call,
 		/datum/action/ability/activable/xeno/plant_weeds/ranged,
 		/datum/action/ability/activable/xeno/secrete_resin/hivemind,
 		/datum/action/ability/xeno_action/place_acidwell/hivemind,

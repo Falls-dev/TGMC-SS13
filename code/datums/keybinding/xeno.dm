@@ -34,20 +34,6 @@
 	keybind_signal = COMSIG_XENOABILITY_DROP_WEEDS
 	hotkey_keys = list("V")
 
-/datum/keybinding/xeno/place_pattern
-	name = "place_pattern"
-	full_name = "Place Pattern"
-	description = "Place a template of hive walls."
-	keybind_signal = COMSIG_XENOABILITY_DROP_WEEDS
-	hotkey_keys = list("E")
-
-/datum/keybinding/xeno/select_pattern
-	name = "select_pattern"
-	full_name = "Select Pattern"
-	description = "Select the template to use when using Place Pattern"
-	keybind_signal = COMSIG_XENOABILITY_DROP_WEEDS
-	hotkey_keys = list("Q")
-
 /datum/keybinding/xeno/choose_weeds
 	name = "choose_weeds"
 	full_name = "Choose Weed"
@@ -61,6 +47,20 @@
 	description = "Builds whatever you've selected with (choose resin structure) on your tile."
 	keybind_signal = COMSIG_XENOABILITY_SECRETE_RESIN
 	hotkey_keys = list("R")
+
+/datum/keybinding/xeno/secrete_resin_undo
+	name = "secrete_resin_undo"
+	full_name = "Undo Resin Construction"
+	description = "Undo the last resin construction edit while the construction UI is open."
+	keybind_signal = COMSIG_XENOABILITY_SECRETE_RESIN_UNDO
+	hotkey_keys = list("CtrlZ")
+
+/datum/keybinding/xeno/secrete_resin_redo
+	name = "secrete_resin_redo"
+	full_name = "Redo Resin Construction"
+	description = "Redo the last undone resin construction edit while the construction UI is open."
+	keybind_signal = COMSIG_XENOABILITY_SECRETE_RESIN_REDO
+	hotkey_keys = list("CtrlY")
 
 /datum/keybinding/xeno/recycle
 	name = "Recycle"

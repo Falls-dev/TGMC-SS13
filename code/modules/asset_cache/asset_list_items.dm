@@ -159,3 +159,13 @@
 		"ntlogo.png" = 'html/images/ntlogo.png',
 		"tgmclogo.png" = 'html/images/tgmclogo.png',
 	)
+
+/datum/asset/spritesheet/xenobuild
+	name = "xenobuild"
+
+/datum/asset/spritesheet/xenobuild/create_spritesheets()
+	var/list/sources = list("c_" = 'icons/Xeno/actions/construction.dmi', "h_" = 'icons/Xeno/actions/hivelord.dmi', "p_" = 'icons/UI_Icons/buyable_icons.dmi')
+	for(var/prefix in sources)
+		var/file = sources[prefix]
+		for(var/state in icon_states(file))
+			Insert("[prefix][replacetext(state, " ", "_")]", file, state)

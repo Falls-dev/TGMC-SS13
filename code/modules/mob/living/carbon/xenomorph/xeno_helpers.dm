@@ -21,9 +21,9 @@
 	if(!actions_by_path[/datum/action/ability/xeno_action/rally_hive])
 		var/datum/action/ability/xeno_action/rally_hive/rally = new /datum/action/ability/xeno_action/rally_hive
 		rally.give_action(src)
-	if(!actions_by_path[/datum/action/ability/xeno_action/rally_minion])
-		var/datum/action/ability/xeno_action/rally_minion/rally = new /datum/action/ability/xeno_action/rally_minion
-		rally.give_action(src)
+	if(!actions_by_path[/datum/action/ability/xeno_action/minion_call])
+		var/datum/action/ability/xeno_action/minion_call/minion_call_action = new /datum/action/ability/xeno_action/minion_call
+		minion_call_action.give_action(src)
 
 
 ///Helper proc for removing the rally hive ability appropriately
@@ -33,10 +33,9 @@
 
 	if(rally)
 		rally.remove_action(src)
-	var/datum/action/ability/xeno_action/rally_minion/rally_minion = actions_by_path[/datum/action/ability/xeno_action/rally_minion]
-
-	if(rally_minion)
-		rally_minion.remove_action(src)
+	var/datum/action/ability/xeno_action/minion_call/minion_call = actions_by_path[/datum/action/ability/xeno_action/minion_call]
+	if(minion_call && !(locate(/datum/action/ability/xeno_action/minion_call) in xeno_caste.actions) && !(xeno_flags & XENO_LEADER) && hive?.living_xeno_ruler != src)
+		minion_call.remove_action(src)
 
 /mob/living/carbon/xenomorph/get_liquid_slowdown()
 	return
@@ -55,8 +54,8 @@
 	if(!actions_by_path[/datum/action/ability/xeno_action/rally_hive])
 		var/datum/action/ability/xeno_action/rally_hive/hive = new /datum/action/ability/xeno_action/rally_hive
 		hive.give_action(src)
-	if(!actions_by_path[/datum/action/ability/xeno_action/rally_minion])
-		var/datum/action/ability/xeno_action/rally_minion/minion = new /datum/action/ability/xeno_action/rally_minion
+	if(!actions_by_path[/datum/action/ability/xeno_action/minion_call])
+		var/datum/action/ability/xeno_action/minion_call/minion = new /datum/action/ability/xeno_action/minion_call
 		minion.give_action(src)
 
 ///Helper proc for removing ruler abilities
@@ -73,8 +72,8 @@
 	var/datum/action/ability/xeno_action/rally_hive/hive = actions_by_path[/datum/action/ability/xeno_action/rally_hive]
 	if(hive && !(locate(/datum/action/ability/xeno_action/rally_hive) in xeno_caste.actions))
 		hive.remove_action(src)
-	var/datum/action/ability/xeno_action/rally_minion/minion = actions_by_path[/datum/action/ability/xeno_action/rally_minion]
-	if(minion && !(locate(/datum/action/ability/xeno_action/rally_minion) in xeno_caste.actions))
+	var/datum/action/ability/xeno_action/minion_call/minion = actions_by_path[/datum/action/ability/xeno_action/minion_call]
+	if(minion && !(locate(/datum/action/ability/xeno_action/minion_call) in xeno_caste.actions) && !(xeno_flags & XENO_LEADER))
 		minion.remove_action(src)
 
 /**

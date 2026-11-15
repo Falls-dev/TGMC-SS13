@@ -49,6 +49,9 @@
 		return FALSE
 	if(target.hivenumber != hivenumber || !target.is_hivemind_ai_minion())
 		return FALSE
+	// Widow-created minions are personal to their creator and must never enter Hive Mind RTS.
+	if(target.widow_personal_minion)
+		return FALSE
 	if(istype(target, /mob/living/carbon/xenomorph/spiderling) || istype(target, /mob/living/carbon/xenomorph/puppet))
 		return FALSE
 
@@ -60,11 +63,18 @@
 	else if(istype(target, /mob/living/carbon/xenomorph/baneling) || istype(target, /mob/living/carbon/xenomorph/beetle) || istype(target, /mob/living/carbon/xenomorph/mantis))
 		desired_ai_type = /datum/ai_behavior/xeno/suicidal
 
+	if(istype(target, /mob/living/carbon/xenomorph/nymph))
+		desired_ai_type = /datum/ai_behavior/xeno/nymph
+
 	if(!controller)
 		target.AddComponent(/datum/component/ai_controller, desired_ai_type)
 	else if(!istype(controller.ai_behavior, desired_ai_type))
 		qdel(controller)
 		target.AddComponent(/datum/component/ai_controller, desired_ai_type)
+	controller = target.GetComponent(/datum/component/ai_controller)
+	var/datum/ai_behavior/xeno/behavior = controller?.ai_behavior
+	if(behavior && !behavior.can_be_controlled_by(src))
+		return FALSE
 	return TRUE
 
 /mob/living/carbon/xenomorph/hivemind/proc/select_minion(mob/living/carbon/xenomorph/minion, clear_previous = TRUE)
@@ -79,8 +89,6 @@
 	selected_minions += minion
 	update_minion_selection_overlay(minion)
 	RegisterSignals(minion, list(COMSIG_MOB_DEATH, COMSIG_QDELETING, COMSIG_MOB_LOGIN), PROC_REF(on_selected_minion_lost))
-	RegisterSignal(minion, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_selected_minion_dir_changed))
-	RegisterSignal(minion, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_selected_minion_icon_updated))
 	if(active_control_group && !suspend_group_selection_sync)
 		save_active_control_group()
 	update_rts_hud()
@@ -90,8 +98,6 @@
 	if(!(minion in selected_minions))
 		return
 	UnregisterSignal(minion, list(COMSIG_MOB_DEATH, COMSIG_QDELETING, COMSIG_MOB_LOGIN))
-	UnregisterSignal(minion, COMSIG_ATOM_DIR_CHANGE)
-	UnregisterSignal(minion, COMSIG_ATOM_UPDATED_ICON)
 	var/image/selection = selection_images[minion]
 	if(client && selection)
 		client.images -= selection
@@ -104,8 +110,6 @@
 /mob/living/carbon/xenomorph/hivemind/proc/clear_minion_selection()
 	for(var/mob/living/carbon/xenomorph/minion in selected_minions.Copy())
 		UnregisterSignal(minion, list(COMSIG_MOB_DEATH, COMSIG_QDELETING, COMSIG_MOB_LOGIN))
-		UnregisterSignal(minion, COMSIG_ATOM_DIR_CHANGE)
-		UnregisterSignal(minion, COMSIG_ATOM_UPDATED_ICON)
 		var/image/selection = selection_images[minion]
 		if(client && selection)
 			client.images -= selection
@@ -115,32 +119,34 @@
 		save_active_control_group()
 	update_rts_hud()
 
-/mob/living/carbon/xenomorph/hivemind/proc/update_minion_selection_overlay(mob/living/carbon/xenomorph/minion, dir_override = null)
+/// Кольцо под ногами рисуется один раз и привязано к миньону через loc, поэтому двигается вместе с ним без пересборки
+/proc/get_hivemind_rts_ring_icon()
+	var/static/icon/ring
+	if(ring)
+		return ring
+	ring = icon('icons/effects/alphacolors.dmi', "white")
+	ring.DrawBox(null, 1, 1, 32, 32)
+	for(var/px in 1 to 32)
+		for(var/py in 1 to 32)
+			var/dist = sqrt(((px - 16.5) / 14) ** 2 + ((py - 9) / 8) ** 2)
+			if(dist >= 0.72 && dist <= 1)
+				ring.DrawBox(HIVEMIND_RTS_MINION_SELECTION_COLOR, px, py)
+	return ring
+
+/mob/living/carbon/xenomorph/hivemind/proc/update_minion_selection_overlay(mob/living/carbon/xenomorph/minion)
 	if(!minion || QDELETED(minion) || !(minion in selected_minions))
 		return
-	var/image/old_selection = selection_images[minion]
-	if(client && old_selection)
-		client.images -= old_selection
-	var/mutable_appearance/selection_appearance = new /mutable_appearance(minion)
-	if(dir_override)
-		selection_appearance.dir = dir_override
-	selection_appearance.filters += filter(type = "outline", size = 3, color = HIVEMIND_RTS_MINION_SELECTION_COLOR)
-	selection_appearance.appearance_flags = RESET_COLOR|RESET_ALPHA|KEEP_APART
-	var/image/selection = image(selection_appearance)
-	selection.loc = minion
-	selection.layer = MOB_LAYER + HIVEMIND_RTS_SELECTION_LAYER_OFFSET
-	SET_PLANE_EXPLICIT(selection, GAME_PLANE, minion)
-	selection_images[minion] = selection
+	var/image/selection = selection_images[minion]
+	if(!selection)
+		selection = image(get_hivemind_rts_ring_icon(), minion, null, BELOW_MOB_LAYER)
+		selection.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
+		selection.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		SET_PLANE_EXPLICIT(selection, GAME_PLANE, minion)
+		if(minion.tier == XENO_TIER_THREE || minion.tier == XENO_TIER_FOUR)
+			selection.transform = matrix().Scale(1.5)
+		selection_images[minion] = selection
 	if(client)
-		client.images += selection
-
-/mob/living/carbon/xenomorph/hivemind/proc/on_selected_minion_dir_changed(mob/living/carbon/xenomorph/minion, old_dir, new_dir)
-	SIGNAL_HANDLER
-	update_minion_selection_overlay(minion, new_dir)
-
-/mob/living/carbon/xenomorph/hivemind/proc/on_selected_minion_icon_updated(mob/living/carbon/xenomorph/minion, updates, did_anything)
-	SIGNAL_HANDLER
-	update_minion_selection_overlay(minion)
+		client.images |= selection
 
 /mob/living/carbon/xenomorph/hivemind/proc/on_selected_minion_lost(mob/living/carbon/xenomorph/minion)
 	SIGNAL_HANDLER

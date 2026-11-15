@@ -65,7 +65,7 @@
 		/datum/action/ability/xeno_action/pheromones/emit_frenzy,
 		/datum/action/ability/xeno_action/hive_message,
 		/datum/action/ability/xeno_action/rally_hive,
-		/datum/action/ability/xeno_action/rally_minion,
+		/datum/action/ability/xeno_action/minion_call,
 		/datum/action/ability/xeno_action/blessing_menu,
 	)
 
@@ -99,6 +99,6 @@
 		/datum/action/ability/xeno_action/pheromones/emit_frenzy,
 		/datum/action/ability/xeno_action/hive_message,
 		/datum/action/ability/xeno_action/rally_hive,
-		/datum/action/ability/xeno_action/rally_minion,
+		/datum/action/ability/xeno_action/minion_call,
 		/datum/action/ability/xeno_action/blessing_menu,
 	)

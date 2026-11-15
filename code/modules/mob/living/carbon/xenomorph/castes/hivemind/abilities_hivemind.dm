@@ -27,9 +27,15 @@ GLOBAL_LIST_INIT(hivemind_resin_images_list, list(
 	return ..()
 
 /datum/action/ability/activable/xeno/secrete_resin/hivemind/can_use_action(silent = FALSE, override_flags, selecting = FALSE)
-	if(owner.status_flags & INCORPOREAL)
-		return FALSE
+	// The Hivemind's eye may place blueprints while incorporeal.
 	return ..()
+
+/datum/action/ability/activable/xeno/secrete_resin/hivemind/New(Target)
+	. = ..()
+	ghost_mode = TRUE
+
+/datum/action/ability/activable/xeno/secrete_resin/hivemind/can_build_directly()
+	return FALSE
 
 /datum/action/ability/xeno_action/sow/hivemind/can_use_action(silent = FALSE, override_flags, selecting = FALSE)
 	if(owner.status_flags & INCORPOREAL)
@@ -178,26 +184,6 @@ GLOBAL_LIST_INIT(hivemind_resin_images_list, list(
 		/obj/alien/resin/resin_growth,
 		/obj/alien/resin/resin_growth/door,
 	)
-
-/datum/action/ability/activable/xeno/secrete_resin/hivemind/action_activate()
-	if(xeno_owner.selected_ability != src)
-		return ..()
-	var/resin_choice = show_radial_menu(owner, owner, GLOB.hivemind_resin_images_list, radius = 48)
-	if(!resin_choice)
-		return
-	var/i = GLOB.hivemind_resin_images_list.Find(resin_choice)
-	xeno_owner.selected_resin = buildable_structures[i]
-	var/atom/A = xeno_owner.selected_resin
-	xeno_owner.balloon_alert(xeno_owner, initial(A.name))
-	update_button_icon()
-
-/datum/action/ability/activable/xeno/secrete_resin/hivemind/get_wait()
-	. = ..()
-	switch(xeno_owner.selected_resin)
-		if(/obj/alien/resin/resin_growth)
-			return 0
-		if(/obj/alien/resin/resin_growth/door)
-			return 0
 
 // ***************************************
 // *********** Psy Gain

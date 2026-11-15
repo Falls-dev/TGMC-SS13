@@ -40,7 +40,7 @@
 	var/rts_mode_active = FALSE
 	/// Currently selected AI minions.
 	var/list/mob/living/carbon/xenomorph/selected_minions = list()
-	/// Client-only outline overlays, keyed by minion.
+	/// Client-only selection rings, keyed by minion.
 	var/list/selection_images = list()
 	/// Five groups containing direct minion references; invalid entries are pruned on use.
 	var/list/list/control_groups = list(list(), list(), list(), list(), list())
@@ -58,6 +58,8 @@
 	var/rts_drag_start_screen_y = 0
 	var/rts_drag_active = FALSE
 	var/rts_drag_additive = FALSE
+	/// Last drawn frame rectangle, to avoid updating screen objects for nothing
+	var/rts_drag_last_rect
 	/// Visible drag-selection box, rendered on the client's HUD plane.
 	var/atom/movable/screen/hivemind_rts_drag_box/rts_drag_fill
 	var/atom/movable/screen/hivemind_rts_drag_box/rts_drag_border_top

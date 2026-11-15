@@ -218,14 +218,18 @@
 	target_flags = ABILITY_TURF_TARGET
 	ability_cost = 50
 	action_type = ACTION_TOGGLE
+	// Blueprint placement is handled by the click signal; resource/cooldown checks happen when building.
+	use_state_flags = ABILITY_IGNORE_PLASMA|ABILITY_IGNORE_COOLDOWN
 	keybinding_signals = list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_SECRETE_RESIN,
+		KEYBINDING_ALTERNATE = COMSIG_XENOABILITY_SECRETE_RESIN_UNDO,
+		KEYBINDING_SECONDARY = COMSIG_XENOABILITY_SECRETE_RESIN_REDO,
 	)
-	///Minimum time to build a resin structure
+	/// Minimum time to build a resin structure.
 	var/base_wait = 0.5 SECONDS
-	///Multiplicator factor to add to the building time, depends on the health of the structure built
+	/// Multiplicator factor to add to the building time, depends on the health of the structure built.
 	var/scaling_wait = 1.5 SECONDS
-	///List of buildable structures. Order corresponds with resin_images_list.
+	/// List of buildable structures. Order corresponds with resin_images_list.
 	var/list/buildable_structures = list(
 		/turf/closed/wall/resin/regenerating,
 		/turf/closed/wall/resin/regenerating/bulletproof,
@@ -234,59 +238,48 @@
 		/obj/alien/resin/sticky,
 		/obj/structure/mineral_door/resin,
 		/obj/structure/bed/nest,
-		)
-	/// Used for the dragging functionality of pre-shuttter building
-	var/dragging = FALSE
+	)
 	/// The percentage of maximum health to heal the owner whenever a structure is built.
 	var/heal_percentage = 0
+	/// Only place blueprints, never build directly.
+	var/ghost_mode = FALSE
+	/// Place demolition blueprints instead of construction blueprints.
+	var/demolish_mode = FALSE
+	/// Structures built with this flag leave a new blueprint in place when destroyed.
+	var/auto_rebuild_mode = FALSE
+	var/datum/buildingpattern/selected_pattern
+	/// Keys in the catalog marked as favorites.
+	var/list/favorites = list()
+	var/list/atom/holograms = list()
+	var/cleanup_timer
+	var/cleanup_time = 4 SECONDS
+	/// History is only enabled while the TGUI construction mode is open.
+	var/ui_mode_active = FALSE
+	var/list/undo_stack = list()
+	var/list/redo_stack = list()
+	var/max_history = 50
 
 
-/// Helper for handling the start of mouse-down and to begin the drag-building
-/datum/action/ability/activable/xeno/secrete_resin/proc/start_resin_drag(mob/user, atom/object, turf/location, control, params)
-	SIGNAL_HANDLER
-
-	var/list/modifiers = params2list(params)
-	//if(toggled && !(modifiers[BUTTON] == LEFT_CLICK))
-	if(toggled && modifiers[BUTTON] == LEFT_CLICK)
-		dragging = TRUE
-		preshutter_build_resin(get_turf(object))
-
-/// Helper for ending drag-building , activated on mose-up
-/datum/action/ability/activable/xeno/secrete_resin/proc/stop_resin_drag()
-	SIGNAL_HANDLER
-	dragging = FALSE
-
-/// Handles removing the dragging functionality from the action all-togheter on round-start (shutter open)
-/datum/action/ability/activable/xeno/secrete_resin/proc/end_resin_drag()
-	SIGNAL_HANDLER
-	dragging = FALSE
-	UnregisterSignal(owner, list(COMSIG_MOB_MOUSEDRAG, COMSIG_MOB_MOUSEUP, COMSIG_MOB_MOUSEDOWN))
-	UnregisterSignal(SSdcs, list(COMSIG_GLOB_OPEN_SHUTTERS_EARLY, COMSIG_GLOB_OPEN_TIMED_SHUTTERS_LATE,COMSIG_GLOB_TADPOLE_LANDED_OUT_LZ,COMSIG_GLOB_DROPPOD_LANDED))
-
-/// Extra handling for adding the action for draggin functionality (for instant building)
+/// Extra handling for adding the action for quickbuild counter.
 /datum/action/ability/activable/xeno/secrete_resin/give_action(mob/living/L)
 	. = ..()
 	if(!CHECK_BITFIELD(SSticker?.mode?.round_type_flags, MODE_ALLOW_XENO_QUICKBUILD))
 		return
 	if(!SSresinshaping.active)
 		return
-	var/mutable_appearance/build_maptext = mutable_appearance(icon = null,icon_state = null, layer = ACTION_LAYER_MAPTEXT)
+	var/mutable_appearance/build_maptext = mutable_appearance(icon = null, icon_state = null, layer = ACTION_LAYER_MAPTEXT)
 	build_maptext.pixel_x = 12
 	build_maptext.pixel_y = -5
 	build_maptext.maptext = MAPTEXT(SSresinshaping.get_building_points(owner))
 	visual_references[VREF_MUTABLE_BUILDING_COUNTER] = build_maptext
-	RegisterSignal(owner, COMSIG_MOB_MOUSEDOWN, PROC_REF(start_resin_drag))
-	RegisterSignal(owner, COMSIG_MOB_MOUSEDRAG, PROC_REF(preshutter_resin_drag))
-	RegisterSignal(owner, COMSIG_MOB_MOUSEUP, PROC_REF(stop_resin_drag))
-	RegisterSignals(SSdcs, list(COMSIG_GLOB_OPEN_SHUTTERS_EARLY, COMSIG_GLOB_OPEN_TIMED_SHUTTERS_LATE,COMSIG_GLOB_TADPOLE_LANDED_OUT_LZ,COMSIG_GLOB_DROPPOD_LANDED), PROC_REF(end_resin_drag))
 
-/// Extra handling to remove the stuff needed for dragging
+/// Extra handling to remove the quickbuild counter.
 /datum/action/ability/activable/xeno/secrete_resin/remove_action(mob/living/carbon/xenomorph/X)
+	ui_mode_active = FALSE
+	clear_history()
 	if(!CHECK_BITFIELD(SSticker.mode?.round_type_flags, MODE_ALLOW_XENO_QUICKBUILD))
 		return ..()
-	UnregisterSignal(owner, list(COMSIG_MOB_MOUSEDRAG, COMSIG_MOB_MOUSEUP, COMSIG_MOB_MOUSEDOWN))
-	UnregisterSignal(SSdcs, list(COMSIG_GLOB_OPEN_SHUTTERS_EARLY, COMSIG_GLOB_OPEN_TIMED_SHUTTERS_LATE,COMSIG_GLOB_TADPOLE_LANDED_OUT_LZ,COMSIG_GLOB_DROPPOD_LANDED))
-	update_button_icon() //reason for the double return ..() here is owner gets unassigned in one of the parent procs, so we can't call parent before unregistering signals here
+	update_button_icon() // owner is unassigned by parent remove_action.
 	return ..()
 
 /datum/action/ability/activable/xeno/secrete_resin/update_button_icon()
@@ -294,7 +287,7 @@
 		var/atom/A = xeno_owner.selected_resin
 		action_icon_state = initial(A.name)
 	if(!is_gameplay_level(xeno_owner?.loc?.z))
-		return ..() // prevents runtimes
+		return ..() // prevents runtimes.
 	if(SSmonitor.gamestate == SHUTTERS_CLOSED && CHECK_BITFIELD(SSticker.mode?.round_type_flags, MODE_ALLOW_XENO_QUICKBUILD) && SSresinshaping.active)
 		button.cut_overlay(visual_references[VREF_MUTABLE_BUILDING_COUNTER])
 		var/mutable_appearance/number = visual_references[VREF_MUTABLE_BUILDING_COUNTER]
@@ -306,202 +299,295 @@
 		visual_references[VREF_MUTABLE_BUILDING_COUNTER] = null
 	return ..()
 
-/datum/action/ability/activable/xeno/secrete_resin/action_activate()
-	//Left click on the secrete resin button opens up radial menu (new type of changing structures).
-	if(xeno_owner.selected_ability != src)
-		return ..()
+/datum/action/ability/activable/xeno/secrete_resin/New(Target)
 	. = ..()
-	var/resin_choice = show_radial_menu(owner, owner, GLOB.resin_images_list, radius = 35)
-	if(!resin_choice)
+	selected_pattern = get_xeno_build_patterns()["single"]
+
+/// Select this ability if it is not already selected.
+/datum/action/ability/activable/xeno/secrete_resin/proc/ensure_selected()
+	if(!xeno_owner || xeno_owner.selected_ability == src)
 		return
-	var/i = GLOB.resin_images_list.Find(resin_choice)
-	xeno_owner.selected_resin = buildable_structures[i]
-	var/atom/A = xeno_owner.selected_resin
-	xeno_owner.balloon_alert(xeno_owner, initial(A.name))
+	xeno_owner.selected_ability?.deselect()
+	select()
+
+/// Main action opens the construction UI.
+/datum/action/ability/activable/xeno/secrete_resin/action_activate()
+	. = ..()
+	if(!.)
+		return
+	ui_mode_active = TRUE
+	INVOKE_ASYNC(src, PROC_REF(ui_interact), xeno_owner)
+
+/// Undo is intentionally available only while the TGUI construction mode is active.
+/datum/action/ability/activable/xeno/secrete_resin/alternate_action_activate()
+	if(!ui_mode_active)
+		return COMSIG_KB_NOT_ACTIVATED
+	step_back()
+	return COMSIG_KB_ACTIVATED
+
+/// Secondary key redoes the last UI blueprint operation.
+/datum/action/ability/activable/xeno/secrete_resin/proc/secondary_action_activate()
+	if(!ui_mode_active)
+		return COMSIG_KB_NOT_ACTIVATED
+	step_forward()
+	return COMSIG_KB_ACTIVATED
+
+/// The base action only knows normal/alternate bindings; route this action's third binding here.
+/datum/action/ability/activable/xeno/secrete_resin/keybind_trigger(mob/source, datum/keybinding/kb_type)
+	SIGNAL_HANDLER_DOES_SLEEP
+	if(kb_type?.keybind_signal == keybinding_signals[KEYBINDING_SECONDARY])
+		return secondary_action_activate()
+	return ..()
+
+/datum/action/ability/activable/xeno/secrete_resin/proc/select_entry(datum/xeno_build_entry/entry)
+	if(!entry)
+		return
+	xeno_owner.selected_resin = entry.path
+	xeno_owner.balloon_alert(xeno_owner, entry.name)
 	update_button_icon()
 
-/datum/action/ability/activable/xeno/secrete_resin/alternate_action_activate()
-	//Right click on secrete resin button cycles through to the next construction type (old method of changing structures).
-	if(xeno_owner.selected_ability != src)
-		return ..()
-	var/i = buildable_structures.Find(xeno_owner.selected_resin)
-	if(length(buildable_structures) == i)
-		xeno_owner.selected_resin = buildable_structures[1]
-	else
-		xeno_owner.selected_resin = buildable_structures[i+1]
-	var/atom/A = xeno_owner.selected_resin
-	xeno_owner.balloon_alert(xeno_owner, initial(A.name))
-	update_button_icon()
+/datum/action/ability/activable/xeno/secrete_resin/proc/get_selected_entry()
+	var/datum/xeno_build_entry/entry = get_xeno_build_catalog()["[xeno_owner.selected_resin]"]
+	if(!entry || entry.unavailable_reason(xeno_owner))
+		return null
+	return entry
 
 /datum/action/ability/activable/xeno/secrete_resin/use_ability(atom/A)
-	if(get_dist(xeno_owner, A) > xeno_owner.xeno_caste.resin_max_range) //Maximum range is defined in the castedatum with resin_max_range, defaults to 0
-		build_resin(get_turf(xeno_owner))
+	INVOKE_ASYNC(src, PROC_REF(act_on_turf), get_turf(A))
+
+/// Handles one click, expanding it to the selected pattern.
+/datum/action/ability/activable/xeno/secrete_resin/proc/can_build_directly()
+	return !ghost_mode
+
+/datum/action/ability/activable/xeno/secrete_resin/proc/act_on_turf(turf/T)
+	if(!T || !xeno_owner)
+		return
+	var/list/turfs = get_target_turfs(T)
+	if(!length(turfs))
+		xeno_owner.balloon_alert(xeno_owner, "no valid ground found")
+		return
+
+	var/datum/xeno_build_entry/entry
+	var/direct = FALSE
+	if(!demolish_mode)
+		entry = get_selected_entry()
+		if(!entry)
+			xeno_owner.balloon_alert(xeno_owner, "select a structure")
+			return
+		direct = can_build_directly() && (length(turfs) == 1 || xeno_owner.can_pattern_build())
+
+	// Only the UI construction mode keeps an undo history.
+	var/record_history = ui_mode_active && (demolish_mode || (entry && entry.kind != BUILD_KIND_PSYCHIC))
+	if(ui_mode_active && !record_history)
+		clear_history() // Psychic purchases have their own economy and are not reversible.
+	var/list/before_states = list()
+	if(record_history)
+		for(var/turf/target AS in turfs)
+			before_states += list(xeno_owner.capture_construction_state(target))
+
+	if(demolish_mode)
+		for(var/turf/target AS in turfs)
+			xeno_owner.place_demolish_blueprint(target)
 	else
-		build_resin(get_turf(A))
+		for(var/turf/target AS in turfs)
+			var/obj/effect/xeno_blueprint/bp = locate() in target
+			if(bp && !bp.is_demolish && bp.entry == entry && bp.auto_rebuild == auto_rebuild_mode)
+				if(direct)
+					xeno_owner.try_build_blueprint(bp)
+				continue
+			if(xeno_owner.get_blueprint_state(target, entry) == BP_STATE_BLOCKED)
+				continue
+			if(!direct || xeno_owner.get_blueprint_state(target, entry) != BP_STATE_FREE)
+				xeno_owner.place_blueprint(target, entry, auto_rebuild_mode)
+				continue
+			if(xeno_owner.place_blueprint(target, entry, auto_rebuild_mode))
+				xeno_owner.try_build_blueprint(locate(/obj/effect/xeno_blueprint) in target)
+			else if(bp) // A click on another blueprint builds the blueprint already there.
+				xeno_owner.try_build_blueprint(bp)
 
-/datum/action/ability/activable/xeno/secrete_resin/proc/get_wait()
-	. = base_wait
-	if(!scaling_wait)
-		return
+	if(record_history)
+		var/list/changes = list()
+		for(var/i in 1 to length(before_states))
+			var/list/before_state = before_states[i]
+			var/turf/current_turf = locate(before_state["x"], before_state["y"], before_state["z"])
+			var/list/after_state = xeno_owner.capture_construction_state(current_turf)
+			if(!xeno_owner.construction_states_equal(before_state, after_state))
+				changes += list(list("x" = before_state["x"], "y" = before_state["y"], "z" = before_state["z"], "before" = before_state, "after" = after_state))
+		if(length(changes))
+			push_action(new /datum/xeno_building_action(changes))
+			SStgui.update_uis(src)
 
-	var/build_resin_modifier = 1
-	switch(xeno_owner.selected_resin)
-		if(/obj/alien/resin/sticky)
-			build_resin_modifier = 0.5
-	return (base_wait + scaling_wait - max(0, (scaling_wait * xeno_owner.health / xeno_owner.maxHealth))) * build_resin_modifier
+// ---------------------------------------------------------------------------
+// Holograms: green = can build now, blue = blueprint, red = blocked.
+// ---------------------------------------------------------------------------
+/datum/action/ability/activable/xeno/secrete_resin/on_selection()
+	RegisterSignal(owner, COMSIG_MOB_CLICKON, PROC_REF(handle_click))
+	RegisterSignal(owner, COMSIG_MOB_CLICK_RIGHT, PROC_REF(handle_right_click))
+	RegisterSignal(owner, COMSIG_ATOM_MOUSE_ENTERED, PROC_REF(show_hologram_call))
 
-/// A version of build_resin with the plasma drain and distance checks removed.
-/datum/action/ability/activable/xeno/secrete_resin/proc/preshutter_build_resin(turf/T)
-	if(!SSresinshaping.active)
-		stack_trace("[owner] ([key_name(owner)]) didn't have their quickbuild signals unregistered properly and tried using quickbuild after the subsystem was off!")
-		end_resin_drag()
-		return
+/datum/action/ability/activable/xeno/secrete_resin/on_deselection()
+	ui_mode_active = FALSE
+	clear_history()
+	if(owner)
+		UnregisterSignal(owner, list(COMSIG_MOB_CLICKON, COMSIG_MOB_CLICK_RIGHT, COMSIG_ATOM_MOUSE_ENTERED))
+		SStgui.update_uis(src)
+	cleanup_holograms()
 
-	if(!SSresinshaping.get_building_points(owner))
-		owner.balloon_alert(owner, "You have used all your quick-build points! Wait until the marines have landed!")
-		return
-
-	switch(is_valid_for_resin_structure(T, xeno_owner.selected_resin == /obj/structure/mineral_door/resin, xeno_owner.selected_resin))
-		if(ERROR_CANT_WEED)
-			owner.balloon_alert(owner, span_notice("This spot cannot support a garden!"))
-			return
-		if(ERROR_NO_WEED)
-			owner.balloon_alert(owner, span_notice("This spot has no weeds to serve as support!"))
-			return
-		if(ERROR_NO_SUPPORT)
-			owner.balloon_alert(owner, span_notice("This spot has no adjaecent support for the structure!"))
-			return
-		if(ERROR_NOT_ALLOWED)
-			owner.balloon_alert(owner, span_notice("The queen mother prohibits us from building here."))
-			return
-		if(ERROR_BLOCKER)
-			owner.balloon_alert(owner, span_notice("There's another xenomorph blocking the spot!"))
-			return
-		if(ERROR_FOG)
-			owner.balloon_alert(owner, span_notice("The fog will prevent the resin from ever taking shape!"))
-			return
-		// it fails a lot here when dragging , so its to prevent spam
-		if(ERROR_CONSTRUCT)
-			return
-		if(ERROR_JUST_NO)
-			return
-
-	for(var/mob/living/carbon/human AS in cheap_get_humans_near(T, 10))
-		if(human.client && human.stat != DEAD)
-			owner.balloon_alert(owner, "Somebody humanlike is alive nearby!")
-			return
-
-	if(xeno_owner.selected_resin == /obj/structure/bed/nest)
-		for(var/obj/structure/bed/nest/xeno_nest in range(2, T))
-			owner.balloon_alert(owner, span_notice("Another nest is too close!"))
-			return
-
-	if(xeno_owner.selected_resin == /obj/structure/mineral_door/resin)
-		for(var/obj/structure/mineral_door/resin/door in range(2, T))
-			owner.balloon_alert(owner, span_notice("Another door is too close!"))
-			return
-
-	var/atom/new_resin
-	if(ispath(xeno_owner.selected_resin, /turf)) // We should change turfs, not spawn them in directly
-		var/list/baseturfs = islist(T.baseturfs) ? T.baseturfs : list(T.baseturfs)
-		baseturfs |= T.type
-		T.ChangeTurf(xeno_owner.selected_resin, baseturfs)
-		new_resin = T
-	else
-		new_resin = new xeno_owner.selected_resin(T)
-	if(new_resin)
-		SSresinshaping.increment_build_counter(owner)
-
-/datum/action/ability/activable/xeno/secrete_resin/proc/preshutter_resin_drag(datum/source, atom/src_object, atom/over_object, turf/src_location, turf/over_location, src_control, over_control, params)
+/datum/action/ability/activable/xeno/secrete_resin/proc/show_hologram_call(datum/source, atom/target)
 	SIGNAL_HANDLER
-	if(dragging)
-		preshutter_build_resin(get_turf(over_object))
+	INVOKE_ASYNC(src, PROC_REF(show_hologram), target)
 
-/datum/action/ability/activable/xeno/secrete_resin/proc/build_resin(turf/T)
-	if(xeno_owner.selected_resin == /obj/structure/bed/nest)
-		for(var/obj/structure/bed/nest/xeno_nest in range (2, T))
-			owner.balloon_alert(owner, span_notice("Another nest is too close!"))
-			return
-	if(xeno_owner.selected_resin == /obj/structure/mineral_door/resin)
-		for(var/obj/structure/mineral_door/resin/door in range(2, T))
-			owner.balloon_alert(owner, span_notice("Another door is too close!"))
-			return
-	switch(is_valid_for_resin_structure(T, xeno_owner.selected_resin == /obj/structure/mineral_door/resin, xeno_owner.selected_resin))
-		if(ERROR_CANT_WEED)
-			owner.balloon_alert(owner, span_notice("This spot cannot support a garden!"))
-			return
-		if(ERROR_NO_WEED)
-			owner.balloon_alert(owner, span_notice("This spot has no weeds to serve as support!"))
-			return
-		if(ERROR_NO_SUPPORT)
-			owner.balloon_alert(owner, span_notice("This spot has no adjaecent support for the structure!"))
-			return
-		if(ERROR_NOT_ALLOWED)
-			owner.balloon_alert(owner, span_notice("The queen mother prohibits us from building here."))
-			return
-		if(ERROR_BLOCKER)
-			owner.balloon_alert(owner, span_notice("There's another xenomorph blocking the spot!"))
-			return
-		if(ERROR_FOG)
-			owner.balloon_alert(owner, span_notice("The fog will prevent the resin from ever taking shape!"))
-			return
-		// it fails a lot here when dragging , so its to prevent spam
-		if(ERROR_CONSTRUCT)
-			return
-		if(TRUE)
-			return
-	if(!line_of_sight(owner, T))
-		to_chat(owner, span_warning("You cannot secrete resin without line of sight!"))
-		return fail_activate()
-	if(!do_after(xeno_owner, get_wait(), NONE, T, BUSY_ICON_BUILD))
-		return fail_activate()
-	switch(is_valid_for_resin_structure(T, xeno_owner.selected_resin == /obj/structure/mineral_door/resin, xeno_owner.selected_resin))
-		if(ERROR_CANT_WEED)
-			owner.balloon_alert(owner, span_notice("This spot cannot support a garden!"))
-			return
-		if(ERROR_NO_WEED)
-			owner.balloon_alert(owner, span_notice("This spot has no weeds to serve as support!"))
-			return
-		if(ERROR_NO_SUPPORT)
-			owner.balloon_alert(owner, span_notice("This spot has no adjaecent support for the structure!"))
-			return
-		if(ERROR_NOT_ALLOWED)
-			owner.balloon_alert(owner, span_notice("The queen mother prohibits us from building here."))
-			return
-		if(ERROR_BLOCKER)
-			owner.balloon_alert(owner, span_notice("There's another xenomorph blocking the spot!"))
-			return
-		if(ERROR_FOG)
-			owner.balloon_alert(owner, span_notice("The fog will prevent the resin from ever taking shape!"))
-			return
-		// it fails a lot here when dragging , so its to prevent spam
-		if(ERROR_CONSTRUCT)
-			return
-		if(TRUE)
-			return
-	var/atom/AM = xeno_owner.selected_resin
-	xeno_owner.visible_message(span_xenowarning("\The [xeno_owner] regurgitates a thick substance and shapes it into \a [initial(AM.name)]!"), \
-	span_xenonotice("We regurgitate some resin and shape it into \a [initial(AM.name)]."), null, 5)
-	playsound(owner.loc, SFX_ALIEN_RESIN_BUILD, 25)
-	var/atom/new_resin
-	if(ispath(xeno_owner.selected_resin, /turf)) // We should change turfs, not spawn them in directly
-		var/list/baseturfs = islist(T.baseturfs) ? T.baseturfs : list(T.baseturfs)
-		baseturfs |= T.type
-		T.ChangeTurf(xeno_owner.selected_resin, baseturfs)
-		new_resin = T
+/datum/action/ability/activable/xeno/secrete_resin/proc/show_hologram(atom/target)
+	var/list/target_turfs = get_target_turfs(target)
+	if(!length(target_turfs))
+		cleanup_holograms()
+		return
+	var/datum/xeno_build_entry/entry = demolish_mode ? null : get_selected_entry()
+	if(!demolish_mode && !entry)
+		cleanup_holograms()
+		return
+	var/create_new = length(holograms) != length(target_turfs)
+	if(create_new)
+		cleanup_holograms()
+	var/index = 1
+	for(var/turf/target_turf AS in target_turfs)
+		if(create_new)
+			create_hologram(target_turf)
+		else
+			var/obj/effect/hologram = holograms[index]
+			hologram.abstract_move(target_turf)
+		tint_hologram(holograms[index], target_turf, entry)
+		index++
+	delete_timer()
+	cleanup_timer = addtimer(CALLBACK(src, PROC_REF(cleanup_holograms)), cleanup_time, TIMER_STOPPABLE)
+
+/datum/action/ability/activable/xeno/secrete_resin/proc/tint_hologram(obj/effect/hologram, turf/target_turf, datum/xeno_build_entry/entry)
+	hologram.remove_filter("state_filter")
+	var/color
+	if(demolish_mode)
+		color = get_demolish_target(target_turf) ? rgb(233, 23, 23) : rgb(120, 120, 120)
 	else
-		new_resin = new xeno_owner.selected_resin(T)
-	switch(xeno_owner.selected_resin)
-		if(/obj/alien/resin/sticky)
-			ability_cost = initial(ability_cost) / 3
-	if(new_resin)
-		add_cooldown(SSmonitor.gamestate == SHUTTERS_CLOSED ? get_cooldown() * 0.5 : get_cooldown())
-		succeed_activate(SSmonitor.gamestate == SHUTTERS_CLOSED ? ability_cost * 0.5 : ability_cost)
-		if(heal_percentage)
-			var/health_healed = xeno_owner.maxHealth * heal_percentage
-			HEAL_XENO_DAMAGE(xeno_owner, health_healed, FALSE)
-	ability_cost = initial(ability_cost) //Reset the plasma cost
-	owner.record_structures_built()
+		switch(xeno_owner.get_blueprint_state(target_turf, entry))
+			if(BP_STATE_FREE)
+				color = ghost_mode ? rgb(74, 168, 255) : rgb(60, 220, 60)
+			if(BP_STATE_GHOST)
+				color = rgb(74, 168, 255)
+			else
+				color = rgb(233, 23, 23)
+	hologram.add_filter("state_filter", 1, color_matrix_filter(color))
+
+/datum/action/ability/activable/xeno/secrete_resin/proc/create_hologram(turf/target_turf)
+	var/atom/selected = demolish_mode ? /turf/closed/wall/resin/regenerating : xeno_owner.selected_resin
+	var/obj/effect/build_hologram/hologram = new(target_turf, selected, FALSE, xeno_owner)
+	hologram.alpha = 0
+	hologram.layer = initial(selected.layer) + 1
+	hologram.step_size = 4 * ICON_SIZE_ALL
+	animate(hologram, 1 SECONDS, alpha = initial(hologram.alpha))
+	holograms += hologram
+
+/datum/action/ability/activable/xeno/secrete_resin/proc/delete_timer()
+	deltimer(cleanup_timer)
+	cleanup_timer = null
+
+/datum/action/ability/activable/xeno/secrete_resin/proc/cleanup_holograms()
+	delete_timer()
+	QDEL_LIST(holograms)
+
+/// Left click places the selected pattern. This signal handler itself never sleeps.
+/datum/action/ability/activable/xeno/secrete_resin/proc/handle_click(datum/source, atom/target, params)
+	SIGNAL_HANDLER
+	var/list/modifiers = params2list(params)
+	if(modifiers[BUTTON] != LEFT_CLICK || modifiers[SHIFT_CLICK] || modifiers[CTRL_CLICK] || modifiers[ALT_CLICK] || modifiers[MIDDLE_CLICK])
+		return
+	if(!xeno_owner || xeno_owner.selected_ability != src)
+		return
+	INVOKE_ASYNC(src, PROC_REF(act_on_turf), get_turf(target))
+	return COMSIG_MOB_CLICK_CANCELED
+
+/// Right click deselects the ability and suppresses the normal right-click interaction.
+/datum/action/ability/activable/xeno/secrete_resin/proc/handle_right_click(datum/source, atom/target)
+	SIGNAL_HANDLER
+	if(!xeno_owner || xeno_owner.selected_ability != src)
+		return
+	ui_mode_active = FALSE
+	SStgui.close_user_uis(xeno_owner, src)
+	if(xeno_owner.selected_ability == src)
+		deselect()
+	return COMSIG_MOB_CLICK_HANDLED
+
+/// Redo (secondary key): reapply the most recently undone construction edit.
+/datum/action/ability/activable/xeno/secrete_resin/proc/step_forward()
+	if(!ui_mode_active)
+		return FALSE
+	if(!length(redo_stack))
+		xeno_owner.balloon_alert(xeno_owner, "Nothing to redo")
+		return FALSE
+	var/datum/xeno_building_action/action = redo_stack[redo_stack.len]
+	if(!action.redo(xeno_owner))
+		xeno_owner.balloon_alert(xeno_owner, "cannot redo: construction changed")
+		return FALSE
+	redo_stack.Cut(redo_stack.len)
+	undo_stack += action
+	SStgui.update_uis(src)
+	xeno_owner.balloon_alert(xeno_owner, "Redo")
+	return TRUE
+
+/// Undo (alternate key): restore the previous blueprint state.
+/datum/action/ability/activable/xeno/secrete_resin/proc/step_back()
+	if(!ui_mode_active)
+		return FALSE
+	if(!length(undo_stack))
+		xeno_owner.balloon_alert(xeno_owner, "Nothing to undo")
+		return FALSE
+	var/datum/xeno_building_action/action = undo_stack[undo_stack.len]
+	if(!action.undo(xeno_owner))
+		xeno_owner.balloon_alert(xeno_owner, "cannot undo: construction changed")
+		return FALSE
+	undo_stack.Cut(undo_stack.len)
+	redo_stack += action
+	SStgui.update_uis(src)
+	xeno_owner.balloon_alert(xeno_owner, "Undo")
+	return TRUE
+
+/// Record an action and discard the redo branch.
+/datum/action/ability/activable/xeno/secrete_resin/proc/push_action(datum/xeno_building_action/action)
+	if(!action || !ui_mode_active)
+		qdel(action)
+		return
+	for(var/datum/xeno_building_action/redo_action AS in redo_stack)
+		qdel(redo_action)
+	redo_stack.Cut()
+	undo_stack += action
+	while(length(undo_stack) > max_history)
+		qdel(undo_stack[1])
+		undo_stack.Cut(1, 2)
+
+/datum/action/ability/activable/xeno/secrete_resin/proc/clear_history()
+	for(var/datum/xeno_building_action/action AS in undo_stack)
+		qdel(action)
+	for(var/datum/xeno_building_action/action AS in redo_stack)
+		qdel(action)
+	undo_stack.Cut()
+	redo_stack.Cut()
+
+/// Cells of the selected pattern, centered on the clicked turf.
+/datum/action/ability/activable/xeno/secrete_resin/proc/get_target_turfs(atom/A)
+	var/turf/source = get_turf(A)
+	if(!source || !selected_pattern)
+		return list()
+	var/starty = source.y + selected_pattern.offset_y
+	var/list/turfs = list()
+	for(var/layer in selected_pattern.pattern)
+		var/iterx = source.x + selected_pattern.offset_x
+		for(var/tile in splittext(layer, ""))
+			if(tile == "X")
+				var/turf/target = locate(iterx, starty, source.z)
+				if(target)
+					turfs += target
+			iterx--
+		starty++
+	return turfs
+
 
 /datum/action/ability/xeno_action/pheromones
 	name = "Emit Pheromones"
@@ -1167,6 +1253,209 @@
 	GLOB.round_statistics.xeno_rally_hive++ //statistics
 	SSblackbox.record_feedback(FEEDBACK_TALLY, "round_statistics", 1, "xeno_rally_hive")
 
+// =======================================
+// *********** Minion Call
+// =======================================
+
+/// Images used by the minion-caste radial selector.
+GLOBAL_LIST_INIT(minion_call_images, list(
+	"All castes" = image('icons/Xeno/actions/general.dmi', icon_state = "minion_agressive"),
+	"Beetle" = image('icons/Xeno/castes/beetle/basic.dmi', icon_state = "Beetle Walking"),
+	"Mantis" = image('icons/Xeno/castes/mantis/basic.dmi', icon_state = "Mantis Walking"),
+	"Scorpion" = image('icons/Xeno/castes/scorpion/basic.dmi', icon_state = "Scorpion Walking"),
+	"Nymph" = image('icons/Xeno/castes/nymph/basic.dmi', icon_state = "Nymph Walking"),
+	"Baneling" = image('icons/Xeno/castes/baneling/basic.dmi', icon_state = "Baneling Walking")
+))
+
+GLOBAL_LIST_INIT(minion_call_drone_images, list(
+	"Nymph" = image('icons/Xeno/castes/nymph/basic.dmi', icon_state = "Nymph Walking")
+))
+
+#define MINION_CALL_RADIUS 9
+#define MINION_CALL_WAVE_TIME 2 SECONDS
+#define MINION_CALL_WAVE_STEP 2
+
+/datum/action/ability/xeno_action/minion_call
+	name = "Minion Call"
+	desc = "Roar to call nearby AI minions into escort formation. Right-click to choose a caste. Use again to release your minions. Higher-ranked src_callers can take minions from lower-ranked ones."
+	action_icon_state = "minion_agressive"
+	action_icon = 'icons/Xeno/actions/general.dmi'
+	ability_cost = 0
+	cooldown_duration = 0
+	keybinding_signals = list(
+		KEYBINDING_NORMAL = COMSIG_XENOABILITY_RALLY_MINION,
+		KEYBINDING_ALTERNATE = COMSIG_XENOABILITY_MINION_BEHAVIOUR,
+	)
+	keybind_flags = ABILITY_KEYBIND_USE_ABILITY
+	use_state_flags = ABILITY_USE_LYING|ABILITY_USE_BUCKLED
+	/// Null means every supported AI minion caste; otherwise this is a base mob typepath.
+	var/selected_minion_type
+	var/call_in_progress = FALSE
+
+/datum/action/ability/xeno_action/minion_call/proc/get_call_priority()
+	var/mob/living/carbon/xenomorph/xeno_owner = owner
+	if(isxenohivemind(xeno_owner))
+		return 1000
+	if(isxenoqueen(xeno_owner))
+		return 400
+	if(isxenoking(xeno_owner) || isxenoshrike(xeno_owner) || istype(xeno_owner, /mob/living/carbon/xenomorph/dragon))
+		return 300
+	if(xeno_owner && (xeno_owner.xeno_flags & XENO_LEADER))
+		return 200
+	if(isxenodrone(xeno_owner))
+		return 100
+	return 0
+
+/datum/action/ability/xeno_action/minion_call/proc/get_call_capacity()
+	var/mob/living/carbon/xenomorph/xeno_owner = owner
+	if(isxenohivemind(xeno_owner))
+		return 20
+	if(isxenoqueen(xeno_owner))
+		return 12
+	if(isxenoking(xeno_owner) || isxenoshrike(xeno_owner) || istype(xeno_owner, /mob/living/carbon/xenomorph/dragon))
+		return 8
+	if(xeno_owner && (xeno_owner.xeno_flags & XENO_LEADER))
+		return 5
+	if(isxenodrone(xeno_owner))
+		return 2
+	return 0
+
+/datum/action/ability/xeno_action/minion_call/proc/get_owned_minions(mob/living/carbon/xenomorph/controller)
+	var/list/result = list()
+	if(!controller || !controller.hivenumber)
+		return result
+	for(var/mob/living/carbon/xenomorph/minion AS in GLOB.alive_xeno_list_hive[controller.hivenumber])
+		var/datum/component/ai_controller/ai_controller = minion.GetComponent(/datum/component/ai_controller)
+		var/datum/ai_behavior/xeno/behavior = ai_controller?.ai_behavior
+		if(behavior?.get_minion_call_owner() == controller)
+			result += minion
+	return result
+
+/datum/action/ability/xeno_action/minion_call/action_activate()
+	var/mob/living/carbon/xenomorph/src_caller = owner
+	if(!istype(src_caller))
+		return
+
+	var/list/attached_minions = get_owned_minions(src_caller)
+	if(length(attached_minions))
+		call_in_progress = FALSE
+		for(var/mob/living/carbon/xenomorph/minion AS in attached_minions)
+			var/datum/component/ai_controller/ai_controller = minion.GetComponent(/datum/component/ai_controller)
+			var/datum/ai_behavior/xeno/behavior = ai_controller?.ai_behavior
+			behavior?.end_minion_call(src_caller)
+		src_caller.balloon_alert(src_caller, "Minions released")
+		return
+	if(call_in_progress)
+		call_in_progress = FALSE
+		src_caller.balloon_alert(src_caller, "Call cancelled")
+		return
+
+	var/capacity = get_call_capacity()
+	if(!capacity)
+		return
+	var/requested_type = selected_minion_type
+	if(isxenodrone(src_caller))
+		requested_type = /mob/living/carbon/xenomorph/nymph
+
+	call_in_progress = TRUE
+	src_caller.emote("roar")
+	new /obj/effect/temp_visual/minion_call_wave(get_turf(src_caller), MINION_CALL_RADIUS)
+	INVOKE_ASYNC(src, PROC_REF(do_call_wave), WEAKREF(src_caller), requested_type, get_call_priority(), capacity)
+	succeed_activate()
+
+/datum/action/ability/xeno_action/minion_call/proc/do_call_wave(datum/weakref/src_caller_ref, requested_type, requested_priority, capacity)
+	var/mob/living/carbon/xenomorph/calling_xeno = src_caller_ref?.resolve()
+	if(!calling_xeno || QDELETED(calling_xeno) || calling_xeno.stat == DEAD)
+		call_in_progress = FALSE
+		return
+	var/attached_count = length(get_owned_minions(calling_xeno))
+	for(var/radius in 0 to MINION_CALL_RADIUS)
+		if(!call_in_progress)
+			return
+		calling_xeno = src_caller_ref?.resolve()
+		if(!calling_xeno || QDELETED(calling_xeno) || calling_xeno.stat == DEAD)
+			call_in_progress = FALSE
+			return
+		if(attached_count >= capacity)
+			break
+		for(var/mob/living/carbon/xenomorph/minion AS in GLOB.alive_xeno_list_hive[calling_xeno.hivenumber])
+			if(minion == calling_xeno || minion.stat == DEAD || minion.z != calling_xeno.z || get_dist(minion, calling_xeno) != radius)
+				continue
+			// Minions born from a Widow are permanently hers and cannot be reassigned by a call.
+			if(minion.widow_personal_minion)
+				continue
+			if(!minion.is_hivemind_ai_minion())
+				continue
+			if(isxenodrone(calling_xeno) && !istype(minion, /mob/living/carbon/xenomorph/nymph))
+				continue
+			if(requested_type && !istype(minion, requested_type))
+				continue
+			var/datum/component/ai_controller/ai_controller = minion.GetComponent(/datum/component/ai_controller)
+			var/datum/ai_behavior/xeno/behavior = ai_controller?.ai_behavior
+			if(!behavior || !behavior.can_be_called_by(calling_xeno, requested_priority))
+				continue
+			if(behavior.begin_minion_call(calling_xeno, requested_priority))
+				attached_count++
+				if(attached_count >= capacity)
+					break
+		if(radius < MINION_CALL_RADIUS)
+			sleep(MINION_CALL_WAVE_STEP)
+	call_in_progress = FALSE
+	var/list/final_minions = get_owned_minions(calling_xeno)
+	calling_xeno.balloon_alert(calling_xeno, length(final_minions) ? "Minions called: [length(final_minions)]" : "No minions answered")
+
+/datum/action/ability/xeno_action/minion_call/alternate_action_activate()
+	INVOKE_ASYNC(src, PROC_REF(select_minion_type_radial))
+	return COMSIG_KB_ACTIVATED
+
+/datum/action/ability/xeno_action/minion_call/proc/select_minion_type_radial()
+	var/mob/living/carbon/xenomorph/src_caller = owner
+	if(!istype(src_caller))
+		return
+	var/list/available_types = isxenodrone(src_caller) ? GLOB.minion_call_drone_images : GLOB.minion_call_images
+	var/choice = show_radial_menu(src_caller, src_caller, available_types, radius = 48)
+	if(!choice)
+		return
+	if(choice == "All castes")
+		selected_minion_type = null
+	else
+		switch(choice)
+			if("Beetle")
+				selected_minion_type = /mob/living/carbon/xenomorph/beetle
+			if("Mantis")
+				selected_minion_type = /mob/living/carbon/xenomorph/mantis
+			if("Scorpion")
+				selected_minion_type = /mob/living/carbon/xenomorph/scorpion
+			if("Nymph")
+				selected_minion_type = /mob/living/carbon/xenomorph/nymph
+			if("Baneling")
+				selected_minion_type = /mob/living/carbon/xenomorph/baneling
+	src_caller.balloon_alert(src_caller, "Minion type: [choice]")
+
+/obj/effect/temp_visual/minion_call_wave
+	name = "minion call wave"
+	icon = 'icons/effects/blips.dmi'
+	icon_state = "SL_locator_near"
+	duration = MINION_CALL_WAVE_TIME
+	plane = GAME_PLANE
+	layer = ABOVE_NORMAL_TURF_LAYER
+	randomdir = FALSE
+	color = list(
+		0, 0, 0, 0, 1,
+		0, 0, 0, 0, 1,
+		0, 0, 0, 0, 1,
+		0, 0, 0, 1, 0
+	)
+
+/obj/effect/temp_visual/minion_call_wave/Initialize(mapload, max_radius)
+	. = ..()
+	transform = matrix().Scale(0.1)
+	animate(src, transform = matrix().Scale(max_radius * 2), alpha = 0, time = duration, easing = QUAD_EASING|EASE_OUT)
+
+#undef MINION_CALL_RADIUS
+#undef MINION_CALL_WAVE_TIME
+#undef MINION_CALL_WAVE_STEP
+
 /datum/action/ability/xeno_action/rally_minion
 	name = "Rally Minions"
 	desc = "Rallies the minions around you, asking them to follow you if they don't have a leader already. Rightclick to change minion behaviour."
@@ -1415,176 +1704,6 @@
 	if(owner.client)
 		var/datum/personal_statistics/personal_statistics = GLOB.personal_statistics_list[owner.ckey]
 		personal_statistics.cocooned++
-
-/////////////////////////////////
-// pattern building
-/////////////////////////////////
-
-//Pattern Defines, for the radial menu.
-#define CROSS_3X3 /datum/buildingpattern/cross3x3
-#define SQUARE_2X2 /datum/buildingpattern/square2x2
-#define SQUARE_3X3 /datum/buildingpattern/square3x3
-#define HOLLOW_CROSS /datum/buildingpattern/hollow_cross3x3
-
-//List of all images used for Patterns, in the radial selection menu
-GLOBAL_LIST_INIT(pattern_images_list, list(
-	CROSS_3X3 = image('icons/Xeno/patterns.dmi', icon_state = "cross3x3"),
-	SQUARE_2X2 = image('icons/Xeno/patterns.dmi', icon_state = "square2x2"),
-	SQUARE_3X3 = image('icons/Xeno/patterns.dmi', icon_state = "square3x3"),
-	HOLLOW_CROSS = image('icons/Xeno/patterns.dmi', icon_state = "hollowcross3x3"),
-))
-
-/datum/action/ability/activable/xeno/place_pattern
-	name = "Place Pattern"
-	desc = "Place a pattern of hive walls."
-	action_icon_state = "square2x2"
-	action_icon = 'icons/Xeno/patterns.dmi'
-	target_flags = ABILITY_TURF_TARGET
-	gamemode_flags = ABILITY_ALL_GAMEMODE
-	keybinding_signals = list(
-		KEYBINDING_NORMAL = COMSIG_XENOABILITY_PLACE_PATTERN,
-		KEYBINDING_ALTERNATE = COMSIG_XENOABILITY_SELECT_PATTERN,
-	)
-	use_state_flags = ABILITY_USE_LYING
-	var/datum/buildingpattern/selected_pattern = new /datum/buildingpattern/square2x2
-	/// Holograms are used to show the pattern before placing it
-	var/list/atom/holograms = list()
-	/// timerid before we cleanup the holograms
-	var/cleanup_timer
-	/// how long a hologram lasts without movement
-	var/cleanup_time = 4 SECONDS
-
-/datum/action/ability/activable/xeno/place_pattern/alternate_action_activate()
-	INVOKE_ASYNC(src, PROC_REF(select_pattern))
-
-/datum/action/ability/activable/xeno/place_pattern/give_action(mob/living/L)
-	. = ..()
-	//if its not prep, remove the ability instantly
-	if(!(SSmonitor.gamestate == SHUTTERS_CLOSED && CHECK_BITFIELD(SSticker.mode?.round_type_flags, MODE_ALLOW_XENO_QUICKBUILD) && SSresinshaping.active))
-		remove_action(owner)
-	RegisterSignals(SSdcs, list(COMSIG_GLOB_OPEN_SHUTTERS_EARLY, COMSIG_GLOB_OPEN_TIMED_SHUTTERS_LATE, COMSIG_GLOB_TADPOLE_LANDED_OUT_LZ, COMSIG_GLOB_DROPPOD_LANDED), PROC_REF(toggle_off))
-
-///Seperate proc that calls remove_action, to block any signal shenanigans.
-/datum/action/ability/activable/xeno/place_pattern/proc/toggle_off()
-	SIGNAL_HANDLER
-	remove_action(owner)
-
-/datum/action/ability/activable/xeno/place_pattern/remove_action(mob/living/L)
-	. = ..()
-	UnregisterSignal(SSdcs, list(COMSIG_GLOB_OPEN_SHUTTERS_EARLY, COMSIG_GLOB_OPEN_TIMED_SHUTTERS_LATE, COMSIG_GLOB_TADPOLE_LANDED_OUT_LZ, COMSIG_GLOB_DROPPOD_LANDED))
-
-/datum/action/ability/activable/xeno/place_pattern/on_selection()
-	RegisterSignal(owner, COMSIG_ATOM_MOUSE_ENTERED, PROC_REF(show_hologram_call))
-
-/datum/action/ability/activable/xeno/place_pattern/on_deselection()
-	UnregisterSignal(owner, COMSIG_ATOM_MOUSE_ENTERED)
-	cleanup_holograms()
-
-// don't slow down the other signals
-/datum/action/ability/activable/xeno/place_pattern/proc/show_hologram_call(mob/user, atom/target)
-	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, PROC_REF(show_hologram), user, target)
-
-/// move or create a hologram on mousemove, and also start the cleanup timer and check turf validity
-/datum/action/ability/activable/xeno/place_pattern/proc/show_hologram(mob/user, atom/target)
-	SIGNAL_HANDLER
-	var/list/target_turfs = get_target_turfs(target)
-	if(!length(target_turfs))
-		// no turfs? means the mouse is offscreen so we can cleanup
-		cleanup_holograms()
-		return
-	var/index = 1
-	var/create_new = length(holograms) != length(target_turfs)
-	if(create_new)
-		cleanup_holograms()
-	for(var/turf/target_turf AS in target_turfs)
-		if(create_new)
-			create_hologram(target_turf)
-		else
-			move_hologram(target_turf, holograms[index])
-		check_turf_validity(target_turf, holograms[index])
-		index++
-	start_cleanup_timer()
-
-/// check if the turf is valid or not for the selected build type, and apply a matrix color if not
-/datum/action/ability/activable/xeno/place_pattern/proc/check_turf_validity(turf/target_turf, obj/effect/hologram)
-	var/datum/action/ability/activable/xeno/secrete_resin/secrete_resin = locate() in xeno_owner.actions
-	if(!secrete_resin)
-		return
-	hologram.remove_filter("invalid_turf_filter")
-	if(is_valid_for_resin_structure(target_turf, FALSE, xeno_owner.selected_resin) != NO_ERROR)
-		hologram.add_filter("invalid_turf_filter", 1, color_matrix_filter(rgb(233, 23, 23)))
-
-/// creates the hologram and quickly fades it in, step_size is increased to make movement smoother
-/datum/action/ability/activable/xeno/place_pattern/proc/create_hologram(turf/target_turf)
-	var/atom/selected = xeno_owner.selected_resin
-	var/obj/effect/build_hologram/hologram = new(target_turf, selected, FALSE, xeno_owner)
-	hologram.alpha = 0
-	hologram.layer = selected.layer + 1
-	hologram.step_size = 4 * ICON_SIZE_ALL
-	animate(hologram, 1 SECONDS, alpha = initial(hologram.alpha))
-	holograms += hologram
-
-/datum/action/ability/activable/xeno/place_pattern/proc/move_hologram(turf/target_turf, obj/effect/hologram)
-	hologram.abstract_move(target_turf)
-
-/datum/action/ability/activable/xeno/place_pattern/proc/start_cleanup_timer()
-	delete_timer()
-	cleanup_timer = addtimer(CALLBACK(src, PROC_REF(cleanup_holograms)), cleanup_time, TIMER_STOPPABLE)
-
-/datum/action/ability/activable/xeno/place_pattern/proc/delete_timer()
-	deltimer(cleanup_timer)
-	cleanup_timer = null
-
-/datum/action/ability/activable/xeno/place_pattern/proc/cleanup_holograms()
-	delete_timer()
-	QDEL_LIST(holograms)
-
-///Selects the pattern from a radial menu
-/datum/action/ability/activable/xeno/place_pattern/proc/select_pattern()
-	var/pattern_choice = show_radial_menu(owner, owner, GLOB.pattern_images_list, radius = 48)
-	if(!pattern_choice)
-		return
-	selected_pattern = new pattern_choice
-	var/datum/buildingpattern/pattern = pattern_choice
-	var/image/pattern_icon = GLOB.pattern_images_list[pattern_choice]
-	action_icon_state = pattern_icon.icon_state
-	update_button_icon()
-	xeno_owner.balloon_alert(xeno_owner, pattern.overheadmsg)
-	cleanup_holograms()
-
-/datum/action/ability/activable/xeno/place_pattern/use_ability(atom/A)
-	var/datum/action/ability/activable/xeno/secrete_resin/secrete_resin = locate() in xeno_owner.actions
-	if(!istype(secrete_resin))
-		xeno_owner.balloon_alert(xeno_owner, "secrete resin ability missing!")
-		return FALSE
-	var/list/target_turfs = get_target_turfs(A)
-	if(!length(target_turfs))
-		xeno_owner.balloon_alert(xeno_owner, "no valid ground found")
-		return FALSE
-	for(var/turf/target_turf as anything in target_turfs)
-		secrete_resin.preshutter_build_resin(target_turf)
-
-/// gets turfs based on the current active pattern with the pattern offsets around the target atom
-/datum/action/ability/activable/xeno/place_pattern/proc/get_target_turfs(atom/A)
-	var/turf/sourceturf = get_turf(A)
-	if(!sourceturf)
-		return list()
-	var/starty = sourceturf.y + selected_pattern.offset_y
-	var/iterx
-	var/startz = sourceturf.z
-	var/turf/targetturf
-
-	var/list/turfs = list()
-	for(var/layer in selected_pattern.pattern)
-		iterx = sourceturf.x + selected_pattern.offset_x
-		for(var/tile in splittext(layer, ""))
-			if(tile == "X")
-				targetturf = locate(iterx, starty, startz)
-				turfs += targetturf
-			iterx = iterx - 1
-		starty = starty + 1
-	return turfs
 
 /////////////////////////////////
 // blessing Menu

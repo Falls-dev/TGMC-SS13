@@ -10,13 +10,61 @@
 	var/hivemind_rts_hold_position = FALSE
 	///Hivemind order: walk to atom_to_walk_to (a turf) ignoring hostiles until arrival
 	var/hivemind_rts_direct_move = FALSE
+	///Hivemind order: acid well to fill with our plasma
+	var/obj/structure/xeno/acidwell/rts_well
+	/// Controller that most recently summoned this minion.
+	var/datum/weakref/minion_call_owner_ref
+	/// Priority of the current summon owner; higher-ranked callers may take control.
+	var/minion_call_priority = 0
 
 /// Instant hivemind orders; every proc resets the previous order.
 /datum/ai_behavior/xeno/proc/rts_reset()
+	rts_well = null
 	hivemind_rts_hold_position = FALSE
 	hivemind_rts_direct_move = FALSE
+	minion_call_owner_ref = null
+	minion_call_priority = 0
 	clean_escorted_atom()
 	set_combat_target(null)
+
+/// The current caller, if this minion is attached to one.
+/datum/ai_behavior/xeno/proc/get_minion_call_owner()
+	return minion_call_owner_ref?.resolve()
+
+/// Whether a controller can take this minion from its current caller.
+/datum/ai_behavior/xeno/proc/can_be_called_by(mob/living/carbon/xenomorph/controller, requested_priority)
+	if(!controller || QDELETED(controller))
+		return FALSE
+	var/mob/living/carbon/xenomorph/minion = mob_parent
+	if(minion?.widow_personal_minion)
+		return FALSE
+	var/mob/living/carbon/xenomorph/current_owner = get_minion_call_owner()
+	return !current_owner || current_owner == controller || requested_priority > minion_call_priority
+
+/// Whether an external controller (currently the Hivemind RTS) may issue orders to this minion.
+/datum/ai_behavior/xeno/proc/can_be_controlled_by(mob/living/carbon/xenomorph/controller)
+	var/mob/living/carbon/xenomorph/minion = mob_parent
+	return !minion?.widow_personal_minion
+
+/// Attach to a caller and enter escort mode. The caller's priority is stored for later takeovers.
+/datum/ai_behavior/xeno/proc/begin_minion_call(mob/living/carbon/xenomorph/controller, requested_priority)
+	if(!can_be_called_by(controller, requested_priority))
+		return FALSE
+	rts_guard(controller, controller)
+	minion_call_owner_ref = WEAKREF(controller)
+	minion_call_priority = requested_priority
+	return TRUE
+
+/// Detach only when the request comes from the current owner.
+/datum/ai_behavior/xeno/proc/end_minion_call(mob/living/carbon/xenomorph/controller)
+	if(get_minion_call_owner() != controller)
+		return FALSE
+	rts_reset()
+	if(has_living_hivemind())
+		change_action(IDLE)
+	else
+		late_initialize()
+	return TRUE
 
 /datum/ai_behavior/xeno/proc/rts_move(turf/destination)
 	rts_reset()
@@ -38,6 +86,40 @@
 	change_action(ESCORTING_ATOM, target)
 	if(!registered_for_move)
 		INVOKE_ASYNC(src, PROC_REF(scheduled_move))
+
+/// Command: fill the acid well with our plasma until it's full or plasma runs out
+/datum/ai_behavior/xeno/proc/rts_fill_well(obj/structure/xeno/acidwell/well)
+	rts_reset()
+	rts_well = well
+	well_task_think()
+
+/// TRUE if the tick is busy filling the acid well
+/datum/ai_behavior/xeno/proc/well_task_think()
+	if(!rts_well || QDELETED(mob_parent))
+		return FALSE
+	var/mob/living/carbon/xenomorph/X = mob_parent
+	if(QDELETED(rts_well) || rts_well.charges >= XENO_ACID_WELL_MAX_CHARGES || X.plasma_stored < XENO_ACID_WELL_FILL_COST || X.z != rts_well.z)
+		rts_well = null
+		if(hivemind_rts_direct_move)
+			rts_finish_move()
+		return FALSE
+	if(combat_target)
+		return FALSE
+	if(get_dist(X, rts_well) > 1)
+		var/turf/well_turf = get_turf(rts_well)
+		if(!hivemind_rts_direct_move || atom_to_walk_to != well_turf)
+			hivemind_rts_direct_move = TRUE
+			change_action(MOVING_TO_ATOM, well_turf)
+			if(!registered_for_move)
+				INVOKE_ASYNC(src, PROC_REF(scheduled_move))
+		return TRUE
+	if(hivemind_rts_direct_move)
+		rts_finish_move()
+	if(X.do_actions)
+		return TRUE
+	X.face_atom(rts_well)
+	INVOKE_ASYNC(rts_well, TYPE_PROC_REF(/obj/structure/xeno/acidwell, fill_charge), X)
+	return TRUE
 
 /datum/ai_behavior/xeno/proc/rts_stop()
 	rts_reset()
@@ -139,6 +221,8 @@
 	set_escorted_atom(source, atom_to_escort)
 
 /datum/ai_behavior/xeno/process()
+	if(rts_well && !mob_parent?.notransform && well_task_think())
+		return
 	if(has_living_hivemind())
 		if(mob_parent.notransform || mob_parent.do_actions || should_hold())
 			return
@@ -332,11 +416,34 @@
 	UnregisterSignal(mob_parent, COMSIG_XENOMORPH_TAKING_DAMAGE)
 
 /datum/ai_behavior/xeno/ranged
+	/// Orbit turn direction around the guarded target: 90 / -90
+	var/orbit_turn = 90
 	upper_maintain_dist = 5
 	lower_maintain_dist = 4
 	upper_engage_dist = 5
 	lower_engage_dist = 3
 	minimum_health = 0.3
+
+/datum/ai_behavior/xeno/ranged/New(loc, mob/parent_to_assign, atom/escorted_atom)
+	. = ..()
+	orbit_turn = pick(90, -90)
+
+/// Attack order: stand at spit range (lower..upper_engage_dist), no need to get close
+/datum/ai_behavior/xeno/ranged/rts_attack(atom/target)
+	. = ..()
+	upper_engage_dist = initial(upper_engage_dist)
+	lower_engage_dist = initial(lower_engage_dist)
+
+/// While guarding, orbit the target at 2..upper_escort_dist instead of standing still
+/datum/ai_behavior/xeno/ranged/find_next_dirs()
+	if(current_action == ESCORTING_ATOM && !combat_target && escorted_atom && atom_to_walk_to == escorted_atom)
+		var/dist = get_dist(mob_parent, escorted_atom)
+		if(dist >= 2 && dist <= upper_escort_dist)
+			if(prob(55))
+				return
+			var/dir_to = angle2dir(Get_Angle(get_turf(mob_parent), get_turf(escorted_atom)))
+			return list(turn(dir_to, orbit_turn))
+	return ..()
 
 /datum/ai_behavior/xeno/suicidal
 	minimum_health = 0

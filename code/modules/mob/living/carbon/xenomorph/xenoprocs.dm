@@ -731,8 +731,10 @@
 	charge_datum.speed_down(1) //Lose one turf worth of speed.
 	return PRECRUSH_PLOWED
 
-/mob/living/carbon/xenomorph/ClickOn(atom/A, params)
+/mob/living/carbon/xenomorph/ClickOn(atom/A, location, params)
 	if(health_scan && scanner_functionality && isliving(A))
 		scanner_functionality.analyze_vitals(A, src)
+		return
+	if(blueprint_click(A, params) == COMSIG_MOB_CLICK_CANCELED)
 		return
 	return ..()

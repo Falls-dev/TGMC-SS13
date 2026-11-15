@@ -7,7 +7,7 @@
 	plane = ABOVE_HUD_PLANE
 	layer = 120
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	appearance_flags = APPEARANCE_UI
+	appearance_flags = APPEARANCE_UI_TRANSFORM //APPEARANCE_UI contains RESET_TRANSFORM and kills the frame scale
 
 /mob/living/carbon/xenomorph/hivemind/proc/on_rts_mousedown(mob/source, atom/object, turf/location, control, params)
 	SIGNAL_HANDLER
@@ -26,13 +26,13 @@
 		return
 	rts_drag_start_screen_x = start_coords[1]
 	rts_drag_start_screen_y = start_coords[2]
-	var/atom/start_target = get_turf_on_clickcatcher(object, src, params)
-	if(!start_target)
-		start_target = location
-	rts_drag_start_turf = get_turf(start_target)
-	if(!rts_drag_start_turf && modifiers["screen-loc"])
-		var/atom/viewer = client.eye ? client.eye : src
-		rts_drag_start_turf = params2turf(modifiers["screen-loc"], get_turf(viewer), client)
+	var/atom/viewer = client.eye ? client.eye : src
+	rts_drag_start_turf = params2turf(modifiers["screen-loc"], get_turf(viewer), client)
+	if(!rts_drag_start_turf)
+		var/atom/start_target = get_turf_on_clickcatcher(object, src, params)
+		if(!start_target)
+			start_target = location
+		rts_drag_start_turf = get_turf(start_target)
 	rts_drag_active = FALSE
 	rts_drag_additive = !!modifiers["shift"]
 	// Show a small visible preview immediately; plain clicks remove it on MouseUp.
@@ -61,13 +61,15 @@
 		clear_rts_drag_state()
 		return
 	var/list/modifiers = params2list(params)
-	var/atom/end_target = get_turf_on_clickcatcher(object, src, params)
-	if(!end_target)
-		end_target = location
-	var/turf/end_turf = get_turf(end_target)
-	if(!end_turf && modifiers["screen-loc"] && client)
+	var/turf/end_turf
+	if(modifiers["screen-loc"] && client)
 		var/atom/viewer = client.eye ? client.eye : src
 		end_turf = params2turf(modifiers["screen-loc"], get_turf(viewer), client)
+	if(!end_turf)
+		var/atom/end_target = get_turf_on_clickcatcher(object, src, params)
+		if(!end_target)
+			end_target = location
+		end_turf = get_turf(end_target)
 	var/turf/start_turf = rts_drag_start_turf
 	var/additive = rts_drag_additive || !!modifiers["shift"]
 	clear_rts_drag_state()
@@ -90,79 +92,41 @@
 	var/y_offset = ((pixel_y - 1) % 32) + 1
 	return "[x_tile]:[x_offset],[y_tile]:[y_offset]"
 
+/// Frame: one solid 32x32 sprite per part, size and position set via transform/pixel_x/pixel_y. Icons are not created on the fly
+/mob/living/carbon/xenomorph/hivemind/proc/place_rts_box_part(atom/movable/screen/hivemind_rts_drag_box/part, left, bottom, width, height, part_color, part_alpha)
+	// LEFT/BOTTOM tracks the actual map-control edge (including client view scaling).
+	// The offset places the transformed 32x32 sprite's center on the rectangle part's center.
+	part.screen_loc = "LEFT,BOTTOM"
+	part.pixel_x = left + width / 2 - 16
+	part.pixel_y = bottom + height / 2 - 16
+	part.transform = matrix(width / 32, 0, 0, 0, height / 32, 0)
+	part.color = part_color
+	part.alpha = part_alpha
+
 /mob/living/carbon/xenomorph/hivemind/proc/update_rts_drag_box(start_x, start_y, end_x, end_y)
 	if(!client)
 		return
 	var/min_x = min(start_x, end_x)
-	var/max_x = max(start_x, end_x)
 	var/min_y = min(start_y, end_y)
-	var/max_y = max(start_y, end_y)
-	var/box_width = max(1, max_x - min_x + 1)
-	var/box_height = max(1, max_y - min_y + 1)
-	var/base_screen_loc = rts_pixel_to_screen_loc(min_x, min_y)
-
-	if(!rts_drag_fill)
-		rts_drag_fill = new /atom/movable/screen/hivemind_rts_drag_box(null)
-		client.screen += rts_drag_fill
-	if(!rts_drag_border_top)
-		rts_drag_border_top = new /atom/movable/screen/hivemind_rts_drag_box(null)
-		client.screen += rts_drag_border_top
-	if(!rts_drag_border_bottom)
-		rts_drag_border_bottom = new /atom/movable/screen/hivemind_rts_drag_box(null)
-		client.screen += rts_drag_border_bottom
-	if(!rts_drag_border_left)
-		rts_drag_border_left = new /atom/movable/screen/hivemind_rts_drag_box(null)
-		client.screen += rts_drag_border_left
-	if(!rts_drag_border_right)
-		rts_drag_border_right = new /atom/movable/screen/hivemind_rts_drag_box(null)
-		client.screen += rts_drag_border_right
-
-	// Scale the bitmap itself to the target pixel size. Matrix scaling a 32x32 DMI state
-	// by a screen-pixel width expands it by another factor of 32 and covers the viewport.
-	rts_drag_fill.icon = hivemind_rts_solid_icon(box_width, box_height)
-	rts_drag_fill.icon_state = "white"
-	rts_drag_fill.color = "#18FF68"
-	rts_drag_fill.alpha = 56
-	rts_drag_fill.screen_loc = base_screen_loc
-	rts_drag_fill.pixel_x = 0
-	rts_drag_fill.pixel_y = 0
-	rts_drag_fill.transform = null
-
-	rts_drag_border_top.icon = hivemind_rts_solid_icon(box_width, 2)
-	rts_drag_border_top.icon_state = "white"
-	rts_drag_border_top.color = "#35FF80"
-	rts_drag_border_top.alpha = 255
-	rts_drag_border_top.screen_loc = base_screen_loc
-	rts_drag_border_top.pixel_x = 0
-	rts_drag_border_top.pixel_y = box_height - 2
-	rts_drag_border_top.transform = null
-
-	rts_drag_border_bottom.icon = hivemind_rts_solid_icon(box_width, 2)
-	rts_drag_border_bottom.icon_state = "white"
-	rts_drag_border_bottom.color = "#35FF80"
-	rts_drag_border_bottom.alpha = 255
-	rts_drag_border_bottom.screen_loc = base_screen_loc
-	rts_drag_border_bottom.pixel_x = 0
-	rts_drag_border_bottom.pixel_y = 0
-	rts_drag_border_bottom.transform = null
-
-	rts_drag_border_left.icon = hivemind_rts_solid_icon(2, box_height)
-	rts_drag_border_left.icon_state = "white"
-	rts_drag_border_left.color = "#35FF80"
-	rts_drag_border_left.alpha = 255
-	rts_drag_border_left.screen_loc = base_screen_loc
-	rts_drag_border_left.pixel_x = 0
-	rts_drag_border_left.pixel_y = 0
-	rts_drag_border_left.transform = null
-
-	rts_drag_border_right.icon = hivemind_rts_solid_icon(2, box_height)
-	rts_drag_border_right.icon_state = "white"
-	rts_drag_border_right.color = "#35FF80"
-	rts_drag_border_right.alpha = 255
-	rts_drag_border_right.screen_loc = base_screen_loc
-	rts_drag_border_right.pixel_x = box_width - 2
-	rts_drag_border_right.pixel_y = 0
-	rts_drag_border_right.transform = null
+	var/box_width = max(1, abs(end_x - start_x) + 1)
+	var/box_height = max(1, abs(end_y - start_y) + 1)
+	var/rect = "[min_x],[min_y],[box_width],[box_height]"
+	if(rect == rts_drag_last_rect && rts_drag_fill)
+		return
+	rts_drag_last_rect = rect
+	var/list/parts = list("rts_drag_fill", "rts_drag_border_top", "rts_drag_border_bottom", "rts_drag_border_left", "rts_drag_border_right")
+	for(var/part_name in parts)
+		if(!vars[part_name])
+			var/atom/movable/screen/hivemind_rts_drag_box/new_part = new(null)
+			vars[part_name] = new_part
+			client.screen += new_part
+	var/left = min_x
+	var/bottom = min_y
+	place_rts_box_part(rts_drag_fill, left, bottom, box_width, box_height, "#18FF68", 56)
+	place_rts_box_part(rts_drag_border_top, left, bottom + box_height - 2, box_width, 2, "#35FF80", 255)
+	place_rts_box_part(rts_drag_border_bottom, left, bottom, box_width, 2, "#35FF80", 255)
+	place_rts_box_part(rts_drag_border_left, left, bottom, 2, box_height, "#35FF80", 255)
+	place_rts_box_part(rts_drag_border_right, left + box_width - 2, bottom, 2, box_height, "#35FF80", 255)
 
 /mob/living/carbon/xenomorph/hivemind/proc/clear_rts_drag_state()
 	if(client)
@@ -179,3 +143,4 @@
 	rts_drag_start_screen_y = 0
 	rts_drag_active = FALSE
 	rts_drag_additive = FALSE
+	rts_drag_last_rect = null
