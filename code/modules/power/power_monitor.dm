@@ -78,7 +78,7 @@
 
 	var/list/areas = list()
 	if(powernet)
-		for(var/obj/machinery/power/terminal/term AS in powernet.nodes)
+		for(var/obj/machinery/power/terminal/term in powernet.nodes)
 			var/obj/machinery/power/apc/apc = term.master
 			if(!istype(apc))
 				continue
