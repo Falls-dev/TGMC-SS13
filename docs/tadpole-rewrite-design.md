@@ -265,36 +265,3 @@ Final validation: focused `tadpole_flight` PASS (1 second), no runtime errors,
 `Success!` at `data/logs/tadpole-spatial-walk-final/clean_run.lk`. Normal
 BYOND 516.1659 build: 0 errors, 0 warnings. The isolated test build has the
 existing `loop_checks` warning.
-
-## Completed ground composition
-
-Client feedback after e8ac0fd9a reports walking lag apparently resolved, with
-black ground regions still present. A graph error remained: the source master
-plate already contains lit ground, but TADPOLE_GROUND_PLANE fed that completed
-image through the transit GAME and LIGHT_MASK planes. Transit lighting and
-visibility could therefore darken the image again.
-
-The ground plane now relays directly to the final MASTER below the completed
-interior. A temporary alpha mask on the upper GAME plate clips its darkness
-backdrop to upper geometry (the native LIGHT_MASK render target, independent
-of light intensity). The upper interior retains its native lighting. Each view
-owns its uniquely named filter and removes it on departure; other HUDs retain
-their graph and filters. This does not change spatial source blocks, movement
-signals, camera tracking, source sight flags or terrain membership.
-
-Structural regressions verify the ground bypasses upper GAME/LIGHT_MASK,
-composites below the completed interior, uses the upper geometry cutout and
-removes only its temporary filter. They cannot prove that every black region
-is gone: rotation/slate-edge clipping remains a separate possible limitation
-requiring the user's client check.
-
-Multiple passengers share one scene and its chunk cache. Every client renders
-its own native planes and camera transform; SendMaps runs for each client.
-A larger passenger viewport may grow the shared cache, not clone it per client.
-
-Validation: `plane_double_transform` PASS with `Success!` in
-`data/logs/tadpole-final-composition/clean_run.lk`; separately focused
-`tadpole_flight` PASS (0.9 seconds) with `Success!` in
-`data/logs/tadpole-final-composition-flight/clean_run.lk`. Neither run reports
-runtime errors. Normal BYOND 516.1659 build: 0 errors, 0 warnings; test builds
-have the existing `loop_checks` warning.
