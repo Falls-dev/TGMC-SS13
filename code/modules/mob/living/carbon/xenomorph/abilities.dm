@@ -327,16 +327,54 @@
 	ui_mode_active = TRUE
 	INVOKE_ASYNC(src, PROC_REF(ui_interact), xeno_owner)
 
-/// Undo is intentionally available only while the TGUI construction mode is active.
+/// Right click on the button: radial menu of favorited structures.
 /datum/action/ability/activable/xeno/secrete_resin/alternate_action_activate()
-	if(!ui_mode_active)
+	INVOKE_ASYNC(src, PROC_REF(open_favorites_radial))
+	return COMSIG_KB_ACTIVATED
+
+/// Picking a favorite switches to construction mode with the single-tile pattern and that structure.
+/datum/action/ability/activable/xeno/secrete_resin/proc/open_favorites_radial()
+	if(!xeno_owner)
+		return
+	var/list/catalog = get_xeno_build_catalog()
+	var/list/choices = list()
+	var/list/key_by_label = list()
+	for(var/key in favorites)
+		var/datum/xeno_build_entry/entry = catalog[key]
+		if(!entry || entry.unavailable_reason(xeno_owner))
+			continue
+		var/label = entry.name
+		if(key_by_label[label])
+			label = "[entry.name] ([length(key_by_label) + 1])"
+		key_by_label[label] = key
+		choices[label] = entry.get_radial_image()
+	if(!length(choices))
+		xeno_owner.balloon_alert(xeno_owner, "no favorites: star structures in the build menu")
+		return
+	var/choice = show_radial_menu(xeno_owner, xeno_owner, choices, radius = 48, tooltips = TRUE)
+	if(!choice || !key_by_label[choice] || QDELETED(xeno_owner))
+		return
+	var/datum/xeno_build_entry/chosen = catalog[key_by_label[choice]]
+	if(!chosen || chosen.unavailable_reason(xeno_owner))
+		return
+	selected_pattern = get_xeno_build_patterns()["single"]
+	demolish_mode = FALSE
+	select_entry(chosen)
+	ensure_selected()
+	ui_mode_active = TRUE
+	cleanup_holograms()
+	SStgui.update_uis(src)
+
+/// Undo key. History survives deselecting the ability and closing the UI.
+/datum/action/ability/activable/xeno/secrete_resin/proc/undo_action_activate()
+	if(!length(undo_stack) && !ui_mode_active)
 		return COMSIG_KB_NOT_ACTIVATED
 	step_back()
 	return COMSIG_KB_ACTIVATED
 
-/// Secondary key redoes the last UI blueprint operation.
+/// Redo key. History survives deselecting the ability and closing the UI.
 /datum/action/ability/activable/xeno/secrete_resin/proc/secondary_action_activate()
-	if(!ui_mode_active)
+	if(!length(redo_stack) && !ui_mode_active)
 		return COMSIG_KB_NOT_ACTIVATED
 	step_forward()
 	return COMSIG_KB_ACTIVATED
@@ -345,6 +383,8 @@
 /datum/action/ability/activable/xeno/secrete_resin/keybind_trigger(mob/source, datum/keybinding/kb_type)
 	SIGNAL_HANDLER_DOES_SLEEP
 	var/signal = kb_type?.keybind_signal
+	if(signal == keybinding_signals[KEYBINDING_ALTERNATE])
+		return undo_action_activate() // the alternate key is undo; the button's right click is the favorites radial
 	if(signal == keybinding_signals[KEYBINDING_SECONDARY])
 		return secondary_action_activate()
 	if(signal == keybinding_signals["pattern_previous"])
@@ -490,7 +530,6 @@
 
 /datum/action/ability/activable/xeno/secrete_resin/on_deselection()
 	ui_mode_active = FALSE
-	clear_history()
 	if(owner)
 		UnregisterSignal(owner, list(COMSIG_MOB_CLICKON, COMSIG_MOB_CLICK_RIGHT, COMSIG_ATOM_MOUSE_ENTERED))
 		SStgui.update_uis(src)
@@ -580,7 +619,7 @@
 
 /// Redo (secondary key): reapply the most recently undone construction edit.
 /datum/action/ability/activable/xeno/secrete_resin/proc/step_forward()
-	if(!ui_mode_active)
+	if(!xeno_owner)
 		return FALSE
 	if(!length(redo_stack))
 		xeno_owner.balloon_alert(xeno_owner, "Nothing to redo")
@@ -597,7 +636,7 @@
 
 /// Undo (alternate key): restore the previous blueprint state.
 /datum/action/ability/activable/xeno/secrete_resin/proc/step_back()
-	if(!ui_mode_active)
+	if(!xeno_owner)
 		return FALSE
 	if(!length(undo_stack))
 		xeno_owner.balloon_alert(xeno_owner, "Nothing to undo")

@@ -93,6 +93,10 @@
 	var/prefix = (icon_file == 'icons/Xeno/actions/hivelord.dmi') ? "h_" : "c_"
 	return "xenobuild32x32 [prefix][replacetext(icon_state, " ", "_")]"
 
+/// Icon for radial menus
+/datum/xeno_build_entry/proc/get_radial_image()
+	return image(icon_file, icon_state = icon_state)
+
 /// Static data for the UI
 /datum/xeno_build_entry/proc/get_ui_data()
 	return list("key" = key, "name" = name, "desc" = desc, "category" = category, "kind" = kind, "icon" = get_icon_class())
@@ -215,6 +219,9 @@
 
 /datum/xeno_build_entry/psychic/proc/get_upgrade(mob/living/carbon/xenomorph/X)
 	return X.hive?.purchases?.upgrades_by_name[upgrade_name]
+
+/datum/xeno_build_entry/psychic/get_radial_image()
+	return image('icons/UI_Icons/buyable_icons.dmi', icon_state = icon_state)
 
 /datum/xeno_build_entry/psychic/get_icon_class()
 	return "xenobuild32x32 p_[replacetext(icon_state, " ", "_")]"

@@ -51,8 +51,8 @@
 	.["plasma"] = xeno_owner.plasma_stored
 	.["psy_points"] = SSpoints.xeno_points_by_hive[xeno_owner.hivenumber]
 	.["range"] = xeno_owner.get_build_range()
-	.["can_undo"] = ui_mode_active && length(undo_stack) > 0
-	.["can_redo"] = ui_mode_active && length(redo_stack) > 0
+	.["can_undo"] = length(undo_stack) > 0
+	.["can_redo"] = length(redo_stack) > 0
 
 /datum/action/ability/activable/xeno/secrete_resin/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -60,13 +60,9 @@
 		return
 	switch(action)
 		if("undo")
-			if(!ui_mode_active)
-				return FALSE
 			step_back()
 			return TRUE
 		if("redo")
-			if(!ui_mode_active)
-				return FALSE
 			step_forward()
 			return TRUE
 		if("toggle_ghost")
@@ -119,7 +115,6 @@
 /datum/action/ability/activable/xeno/secrete_resin/ui_close(mob/user)
 	if(user == xeno_owner)
 		ui_mode_active = FALSE
-		clear_history()
 		if(xeno_owner.selected_ability == src)
 			deselect()
 	return ..()
