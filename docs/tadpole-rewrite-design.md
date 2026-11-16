@@ -330,3 +330,48 @@ Validation: focused `tadpole_flight` PASS (0.8 seconds), no runtime errors,
 `Success!` at `data/logs/tadpole-native-visibility-final/clean_run.lk`. Normal
 BYOND 516.1659 build: 0 errors, 0 warnings. The test build has the existing
 `loop_checks` warning. Client visuals have not been independently verified.
+
+## Fixed capture experiment: separate source crop from passenger camera
+
+The user confirmed that ground features remain aligned with the aircraft;
+only the already cropped frame boundary moves incorrectly during walking.
+Rotating that eye-centered crop about the ship cannot restore its lost pixels.
+After reverting the per-block-rotation attempt, this experiment keeps rotation
+on the completed lower master plane and fixes the source capture independently.
+
+One source canvas belongs to each scene, shared by all its passengers. Cached
+eight-by-eight blocks remain in nullspace and feed that canvas using translation
+only. Its screen anchor is always CENTER; passenger coordinates never enter
+the source position, crop or cache-membership calculation. A transparent HUD
+border allocates a 25x25 native render surface around that anchor. client.view,
+client.eye and ordinary HUD coordinates are unchanged. This is an internal
+capture surface; there are no per-tile screen objects or HUD-coordinate parser.
+The native source references and scoped sight modifiers remain in use.
+
+The capture is centered on the hull midpoint. Its ground-space center is
+F + inverse(R) * (C - P), where F is the continuous flight origin, P the transit
+docking origin and C the hull midpoint. The completed plane rotates by R and
+translates by C - eye. Thus features still project to P - eye + R * (S - F),
+while a fixed buffer corner now moves by -delta(eye), the same as the hull,
+instead of moving by (I - R) * -delta(eye). Blocks never rotate individually.
+
+All main-group render relays temporarily use SCREEN_SOUTHWEST to copy slates
+including their allocated borders in BYOND 516. Original anchors and source
+multiz scaling are restored when the view is deleted. The capture supplies
+owned lighting backplanes sized for its surface without resizing other game
+lighting backdrops. It also preserves visible pixel scale with a temporary
+map-control zoom; resize/preferences refresh it, and leaving/Logout restores
+the current ordinary zoom preference. No zoom queries run on movement ticks.
+
+The 25x25 source remains finite. This change targets the camera-dependent
+movement of its boundary, not guaranteed full-window coverage for every zoom
+and passenger position. Native HUD-border rasterization, source visibility and
+SendMaps cost still require client verification; headless tests do not prove
+those renderer behaviors.
+
+Validation: focused tadpole_flight PASS (0.9 seconds), no runtime errors,
+Success! at data/logs/tadpole-fixed-capture-final/clean_run.lk. Checks cover
+unrotated shared blocks, fixed source anchor/frame, source-corner movement at
+0/37/90/180/270 degrees, actual southward Move after a 180-degree turn, unchanged
+landing coordinates and baseline scene cleanup. Normal BYOND 516.1659 build:
+0 errors, 0 warnings. The test build has the existing loop_checks warning.

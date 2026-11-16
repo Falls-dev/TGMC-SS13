@@ -10,6 +10,8 @@
 /datum/unit_test/tadpole_flight/Run()
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/flight_test/helm = allocate(/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/flight_test)
 	var/obj/docking_port/mobile/port = allocate(/obj/docking_port/mobile)
+	port.width = 1
+	port.height = 1
 	var/mob/living/pilot = allocate(/mob/living/carbon/human)
 	var/turf/start = locate(40, 40, run_loc_floor_bottom_left.z)
 	var/mob/camera/aiEye/remote/shuttle_docker/eye = allocate(/mob/camera/aiEye/remote/shuttle_docker, start, helm)
@@ -86,14 +88,14 @@
 	start.ChangeTurf(old_type)
 	var/turf/placement_target = locate(80, 80, start.z)
 	RegisterSignal(placement_target, COMSIG_ATOM_ENTERED, PROC_REF(on_relay_entered))
-	chunk.place(placement_target.x, placement_target.y, placement_target.z)
-	TEST_ASSERT_EQUAL(get_turf(chunk), placement_target, "Native blocks must occupy their displayed world position")
+	chunk.move_ground(placement_target.x, placement_target.y, placement_target.x, placement_target.y, placement_target.z, 0)
+	TEST_ASSERT_NULL(get_turf(chunk), "Capture blocks must not enter any world turf")
 	TEST_ASSERT(!relay_entered, "Placing a visual block must not invoke transit entry or airdrop hooks")
 	UnregisterSignal(placement_target, COMSIG_ATOM_ENTERED)
-	chunk.place(-3, -2, start.z)
-	TEST_ASSERT_EQUAL(chunk.x, 1, "World-edge relays must retain a valid spatial anchor")
-	TEST_ASSERT_EQUAL(chunk.x * world.icon_size + chunk.pixel_x, -3 * world.icon_size, "Clamping must preserve the displayed x coordinate")
-	TEST_ASSERT_EQUAL(chunk.y * world.icon_size + chunk.pixel_y, -2 * world.icon_size, "Clamping must preserve the displayed y coordinate")
+	chunk.move_ground(-3, -2, -3, -2, start.z, 0)
+	TEST_ASSERT_NULL(chunk.loc, "Capture offsets must not require a spatial world anchor")
+	TEST_ASSERT_EQUAL(chunk.pixel_x, -3 * world.icon_size, "Capture must preserve negative source x offsets")
+	TEST_ASSERT_EQUAL(chunk.pixel_y, -2 * world.icon_size, "Capture must preserve negative source y offsets")
 	qdel(chunk)
 	TEST_ASSERT_EQUAL(length(chunk.tiles), 0, "Scene deletion must release source subscriptions")
 	TEST_ASSERT_EQUAL(length(chunk.vis_contents), 0, "Scene deletion must release native visual links")
@@ -187,12 +189,17 @@
 	var/nearby_blocks = 0
 	for(var/obj/effect/abstract/tadpole_native_chunk/nearby in range(13, helm))
 		nearby_blocks++
-	TEST_ASSERT(nearby_blocks > 0 && nearby_blocks < count / 2, "An eye near the helm must not have every cached block on its local turfs")
+	TEST_ASSERT_EQUAL(nearby_blocks, 0, "Capture blocks must not enter the passenger world visibility range")
+	TEST_ASSERT_EQUAL(length(scene.canvas.vis_contents), count, "One shared canvas must own every source block")
 	for(var/chunk_key in scene.chunks)
 		var/obj/effect/abstract/tadpole_native_chunk/spatial_block = scene.chunks[chunk_key]
 		var/turf/first_source = spatial_block.tiles[1]
-		TEST_ASSERT_EQUAL((spatial_block.x - port.x) * world.icon_size + spatial_block.pixel_x, (first_source.x - helm.flight_x) * world.icon_size, "Spatial placement must preserve source x projection")
-		TEST_ASSERT_EQUAL((spatial_block.y - port.y) * world.icon_size + spatial_block.pixel_y, (first_source.y - helm.flight_y) * world.icon_size, "Spatial placement must preserve source y projection")
+		var/matrix/source_shift = spatial_block.transform
+		TEST_ASSERT_NULL(spatial_block.loc, "Capture blocks must remain in nullspace")
+		TEST_ASSERT(abs(spatial_block.pixel_x + source_shift.c - (first_source.x - helm.flight_x) * world.icon_size) < 0.001, "Source x must depend on flight rather than the passenger eye")
+		TEST_ASSERT(abs(spatial_block.pixel_y + source_shift.f - (first_source.y - helm.flight_y) * world.icon_size) < 0.001, "Source y must depend on flight rather than the passenger eye")
+		TEST_ASSERT_EQUAL(source_shift.a, 1, "Individual blocks must never rotate")
+		TEST_ASSERT_EQUAL(source_shift.e, 1, "Individual blocks must never rotate")
 	scene.update_chunks()
 	TEST_ASSERT_EQUAL(scene.chunks[key], edge_chunk, "Unchanged scene cells must reuse native blocks")
 	TEST_ASSERT_EQUAL(length(scene.chunks), count, "Repeated membership checks must allocate no additional blocks")
@@ -230,13 +237,14 @@
 		TEST_ASSERT_EQUAL(scene.chunks[chunk_key], stable_blocks[chunk_key], "Walking must preserve every cached block identity")
 	// A bucket transition during a source animation changes membership only.
 	var/flight_before_x = helm.flight_x
+	var/list/effective_before = scene.displayed_source_position()
 	var/center_key = "[scene.origin_x],[scene.origin_y],[scene.source_z]"
 	var/obj/effect/abstract/tadpole_native_chunk/center_chunk = scene.chunks[center_key]
 	helm.flight_x += 8
 	scene.update_source_position(1)
 	scene.source_started = world.time - 5
 	var/list/source_before = scene.displayed_source_position()
-	TEST_ASSERT(abs(source_before[1] - flight_before_x - 4) < 0.001, "Shared terrain must interpolate the actual flight position")
+	TEST_ASSERT(abs(source_before[1] - effective_before[1] - 4) < 0.001, "Shared terrain must interpolate the actual flight position")
 	TEST_ASSERT(scene.update_region(scene.radius, scene.source_z), "Crossing eight tiles must update source membership")
 	TEST_ASSERT_EQUAL(scene.displayed_source_position().Join(","), source_before.Join(","), "Changing cache origin must not move the displayed terrain")
 	TEST_ASSERT_EQUAL(scene.chunks[center_key], center_chunk, "A cache seam must retain overlapping source blocks")
@@ -279,6 +287,7 @@
 	var/mob/other_passenger = other_display.mymob
 	var/other_sight_before = other_passenger.sight
 	var/datum/tadpole_scene_view/native_view = new(display, 1, walking_scene)
+	check_fixed_capture(walking_scene, native_view)
 	TEST_ASSERT_NOTNULL(native_view.plate, "Ground must have a preallocated native lower render plate")
 	TEST_ASSERT(native_view.plate.get_relay_to(TADPOLE_GROUND_PLANE), "Passenger plate must relay below the physical craft")
 	TEST_ASSERT_EQUAL(other_plate.render_relay_planes.Join(","), original_targets.Join(","), "Another observer must retain their native graph")
@@ -296,27 +305,35 @@
 	TEST_ASSERT_EQUAL(pilot.sight, SEE_INFRA | required_sight, "Regular sight recalculation must not restore passenger occlusion")
 	// Exercise the real Move -> COMSIG_MOVABLE_MOVED path without calling
 	// the 0.2-second scene processor. Headless fixture has a HUD but no client.
-	var/turf/walking_start = get_turf(pilot)
-	var/turf/walking_end = get_step(walking_start, EAST)
+	// Leave room for two real southward steps inside the fixture floor.
+	var/turf/walking_start = locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y + 2, run_loc_floor_bottom_left.z)
+	pilot.forceMove(walking_start)
+	var/turf/walking_end = get_step(walking_start, SOUTH)
 	var/list/old_ground_tiles = helm.ground_tiles
 	helm.ground_tiles = list()
 	helm.ground_tiles[walking_start] = TRUE
 	helm.ground_tiles[walking_end] = TRUE
 	var/walking_heading = helm.flight_heading
-	helm.flight_heading = dir2angle(port.dir) + 37
+	helm.flight_heading = dir2angle(port.dir) + 180
 	native_view.track_eye(pilot)
 	walking_scene.update_view(native_view, walking_start, 0)
+	var/matrix/camera_before_step = matrix(native_view.last_camera)
+	var/source_anchor_before = walking_scene.canvas.screen_loc
+	var/source_frame_before = walking_scene.frame.screen_loc
 	var/old_camera_values = native_view.last_camera.tolist().Join(",")
 	pilot.set_glide_size(8)
-	TEST_ASSERT(pilot.Move(walking_end, EAST), "Walking camera fixture must move through the ordinary Move path")
-	TEST_ASSERT_NOTEQUAL(native_view.last_camera.tolist().Join(","), old_camera_values, "A passenger step must update projection before flight processing runs")
+	TEST_ASSERT(pilot.Move(walking_end, SOUTH), "Walking camera fixture must move through the ordinary Move path")
+	TEST_ASSERT_EQUAL(native_view.last_camera.c, camera_before_step.c, "A southward step must not shift the capture frame horizontally")
+	TEST_ASSERT_EQUAL(native_view.last_camera.f - camera_before_step.f, world.icon_size, "After a 180-degree turn the capture frame must move with the ship, not twice as far in rotated local coordinates")
+	TEST_ASSERT_EQUAL(walking_scene.canvas.screen_loc, source_anchor_before, "Walking must not move the source anchor")
+	TEST_ASSERT_EQUAL(walking_scene.frame.screen_loc, source_frame_before, "Walking must not move the source crop")
 	TEST_ASSERT_EQUAL(native_view.animation_started, world.time, "Walking projection must start in the movement tick")
 	TEST_ASSERT_EQUAL(native_view.animation_duration, world.icon_size / max(pilot.glide_size, 1) * world.tick_lag, "Walking interpolation must match eye glide instead of the flight interval")
 	TEST_ASSERT_EQUAL(length(walking_scene.chunks), 0, "Walking projection must not allocate or update terrain membership")
-	var/turf/outside_ship = get_step(walking_end, EAST)
-	TEST_ASSERT(pilot.Move(outside_ship, EAST), "Visibility fixture must step out of the Tadpole region")
+	var/turf/outside_ship = get_step(walking_end, SOUTH)
+	TEST_ASSERT(pilot.Move(outside_ship, SOUTH), "Visibility fixture must step out of the Tadpole region")
 	TEST_ASSERT_EQUAL(pilot.sight, SEE_INFRA, "Leaving must restore the latest underlying sight in the movement tick")
-	TEST_ASSERT(pilot.Move(walking_end, WEST), "Visibility fixture must reenter the Tadpole region")
+	TEST_ASSERT(pilot.Move(walking_end, NORTH), "Visibility fixture must reenter the Tadpole region")
 	TEST_ASSERT_EQUAL(pilot.sight, SEE_INFRA | required_sight, "Reentry must reactivate native scene visibility")
 	pilot.set_sight(sight_before_view)
 	native_view.track_eye(eye)
@@ -365,6 +382,56 @@
 	qdel(display)
 	qdel(other_display)
 	helm.eyeobj = null
+
+/// Both visible features and the crop boundary must follow the hull while the
+/// capture canvas remains untouched, including after a half turn.
+/datum/unit_test/tadpole_flight/proc/check_fixed_capture(datum/tadpole_scene/scene, datum/tadpole_scene_view/view)
+	var/obj/docking_port/mobile/port = scene.helm.shuttle_port
+	var/old_width = port.width
+	var/old_height = port.height
+	var/old_heading = scene.helm.flight_heading
+	port.width = 7
+	port.height = 9
+	var/source_anchor = scene.canvas.screen_loc
+	var/source_frame = scene.frame.screen_loc
+	TEST_ASSERT_EQUAL(source_anchor, "CENTER", "Capture anchor must have no passenger coordinate")
+	TEST_ASSERT_EQUAL(source_frame, "CENTER-12,CENTER-12 to CENTER+12,CENTER+12", "Capture surface must allocate 25x25 tiles")
+	TEST_ASSERT_EQUAL(view.capture_unlit.transform.a, 25, "Capture lighting backplane must cover the entire source width")
+	TEST_ASSERT_EQUAL(view.capture_unlit.transform.e, 25, "Capture lighting backplane must cover the entire source height")
+	var/datum/plane_master_group/group = view.capture_group
+	for(var/key in group.plane_masters)
+		var/atom/movable/screen/plane_master/master = group.plane_masters[key]
+		for(var/atom/movable/render_plane_relay/relay as anything in master.relays)
+			TEST_ASSERT_EQUAL(relay.screen_loc, "SCREEN_SOUTHWEST", "Capture relays must include offscreen source borders")
+	for(var/angle in list(0, 37, 90, 180, 270))
+		scene.helm.flight_heading = dir2angle(port.dir) + angle
+		scene.update_source_position(0)
+		var/list/source = scene.displayed_source_position()
+		var/list/last_corner
+		for(var/dy in list(0, 1))
+			var/turf/eye = locate(port.x + 3, port.y + 4 - dy, port.z)
+			scene.update_view(view, eye, 0)
+			var/matrix/camera = view.last_camera
+			var/raw_x = (scene.helm.flight_x + 4 - source[1]) * world.icon_size
+			var/raw_y = (scene.helm.flight_y - 5 - source[2]) * world.icon_size
+			var/projected_x = camera.a * raw_x + camera.b * raw_y + camera.c
+			var/projected_y = camera.d * raw_x + camera.e * raw_y + camera.f
+			var/expected_x = (port.x - eye.x + camera.a * 4 - camera.b * 5) * world.icon_size
+			var/expected_y = (port.y - eye.y + camera.d * 4 - camera.e * 5) * world.icon_size
+			TEST_ASSERT(abs(projected_x - expected_x) < 0.001 && abs(projected_y - expected_y) < 0.001, "Fixed capture must preserve the actual landing/ground coordinates")
+			// This is a buffer corner, not a ground feature that could hide a
+			// wrong crop behind eye-motion compensation.
+			var/corner_x = camera.a * 12.5 * world.icon_size + camera.b * 12.5 * world.icon_size + camera.c
+			var/corner_y = camera.d * 12.5 * world.icon_size + camera.e * 12.5 * world.icon_size + camera.f
+			if(dy)
+				TEST_ASSERT(abs(corner_x - last_corner[1]) < 0.001 && abs(corner_y - last_corner[2] - world.icon_size) < 0.001, "The crop boundary must follow the hull after a southward step at every heading")
+			last_corner = list(corner_x, corner_y)
+			TEST_ASSERT_EQUAL(scene.canvas.screen_loc, source_anchor, "Walking must not change the source anchor")
+			TEST_ASSERT_EQUAL(scene.frame.screen_loc, source_frame, "Walking must not change the source crop")
+			TEST_ASSERT_EQUAL(scene.displayed_source_position().Join(","), source.Join(","), "Walking must not change the captured ground coordinates")
+	port.width = old_width
+	port.height = old_height
+	scene.helm.flight_heading = old_heading
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/flight_test/checkLandingSpot()
 	return SHUTTLE_DOCKER_LANDING_CLEAR
