@@ -8,7 +8,7 @@
 	appearance_flags = PIXEL_SCALE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
-	// Reanchor without native glide; the shared projection owns animation.
+	// Bucket rebases are instantaneous; only the completed plate interpolates.
 	animate_movement = NO_STEPS
 	atom_flags = SHUTTLE_IMMUNE | PREVENT_CONTENTS_EXPLOSION
 	var/list/tiles = list()
@@ -25,33 +25,14 @@
 	pixel_x = (tile_x - target.x) * world.icon_size
 	pixel_y = (tile_y - target.y) * world.icon_size
 
-/// Project blocks into transit world coordinates before native plane composition.
-/// The finished screen is never rotated, so its crop follows the normal camera.
-/obj/effect/abstract/tadpole_native_chunk/proc/project_ground(matrix/from_map, matrix/to_map, transit_z, duration)
-	if(!length(tiles))
-		return
-	var/turf/first = tiles[1]
-	var/from_x = from_map.a * first.x + from_map.b * first.y + from_map.c
-	var/from_y = from_map.d * first.x + from_map.e * first.y + from_map.f
-	var/to_x = to_map.a * first.x + to_map.b * first.y + to_map.c
-	var/to_y = to_map.d * first.x + to_map.e * first.y + to_map.f
-	var/matrix/from_rotation = matrix(from_map)
-	var/matrix/to_rotation = matrix(to_map)
+/// Translate the native source before it enters a screen-sized render plate.
+/// Reanchor on whole tiles without a jump in the unfinished pixel animation.
+/obj/effect/abstract/tadpole_native_chunk/proc/move_ground(from_x, from_y, to_x, to_y, transit_z, duration)
 	place(FLOOR(to_x, 1), FLOOR(to_y, 1), transit_z)
 	if(!loc)
 		return
-	// BYOND truncates pixel_x/y to integers. Preserve fractional pixels in the
-	// matrix translation so independently anchored rotated blocks have no seams.
-	var/from_pixel_x = FLOOR((from_x - x) * world.icon_size, 1)
-	var/from_pixel_y = FLOOR((from_y - y) * world.icon_size, 1)
-	var/to_pixel_x = FLOOR((to_x - x) * world.icon_size, 1)
-	var/to_pixel_y = FLOOR((to_y - y) * world.icon_size, 1)
-	from_rotation.c = (from_x - x) * world.icon_size - from_pixel_x
-	from_rotation.f = (from_y - y) * world.icon_size - from_pixel_y
-	to_rotation.c = (to_x - x) * world.icon_size - to_pixel_x
-	to_rotation.f = (to_y - y) * world.icon_size - to_pixel_y
-	animate(src, transform = from_rotation, pixel_x = from_pixel_x, pixel_y = from_pixel_y, time = 0)
-	animate(src, transform = to_rotation, pixel_x = to_pixel_x, pixel_y = to_pixel_y, time = duration, easing = LINEAR_EASING)
+	animate(src, pixel_x = (from_x - x) * world.icon_size, pixel_y = (from_y - y) * world.icon_size, time = 0)
+	animate(src, pixel_x = (to_x - x) * world.icon_size, pixel_y = (to_y - y) * world.icon_size, time = duration, easing = LINEAR_EASING)
 
 /obj/effect/abstract/tadpole_native_chunk/proc/build(base_x, base_y, ground_z)
 	var/turf/first = locate(max(1, base_x), max(1, base_y), ground_z)
@@ -93,7 +74,6 @@
 	var/animation_started = 0
 	var/animation_duration = 0
 	var/list/forced_planes = list()
-	var/list/unscaled_planes = list()
 	var/atom/movable/screen/plane_master/emissive_plate
 	var/had_emissive_relay = FALSE
 	var/datum/tadpole_scene/scene
@@ -116,10 +96,6 @@
 		var/atom/movable/screen/plane_master/master = group.plane_masters[key]
 		if(master.offset < depth)
 			continue
-		if(master.multiz_scaled)
-			unscaled_planes += master
-			master.multiz_scaled = FALSE
-			animate(master, transform = null, time = 0)
 		if(master.is_outside_bounds)
 			forced_planes += master
 			master.inside_bounds(hud.mymob)
@@ -140,16 +116,12 @@
 	if(had_emissive_relay && !QDELETED(emissive_plate))
 		emissive_plate.add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, source_offset - 1), relay_layer = EMISSIVE_Z_BELOW_LAYER)
 	if(!QDELETED(hud))
-		for(var/atom/movable/screen/plane_master/master as anything in unscaled_planes)
-			if(!QDELETED(master))
-				master.multiz_scaled = TRUE
 		var/datum/plane_master_group/group = hud.get_plane_group(PLANE_GROUP_MAIN)
 		group?.build_planes_offset(hud, hud.current_plane_offset)
 	hud = null
 	plate = null
 	emissive_plate = null
 	forced_planes.Cut()
-	unscaled_planes.Cut()
 	return ..()
 
 /// Living passengers need the same native scene visibility as observers.
@@ -182,7 +154,8 @@
 	if(tracked_eye)
 		RegisterSignal(tracked_eye, COMSIG_MOVABLE_MOVED, PROC_REF(on_eye_move))
 
-/// Update passenger visibility immediately. Walking never changes ground pose.
+/// React in the movement tick, not up to 0.2 seconds later in flight processing.
+/// This touches one plate only; no player discovery, source polling or chunks.
 /datum/tadpole_scene_view/proc/on_eye_move(atom/movable/source, atom/old_loc, direction, forced)
 	SIGNAL_HANDLER
 	var/turf/eye = get_turf(source)
@@ -194,7 +167,13 @@
 		return
 	if(source == hud?.mymob)
 		bind_visibility(hud.mymob)
-	scene.update_view(src, eye, 0)
+	var/duration = 0
+	if(!forced && isturf(old_loc) && old_loc.z == eye.z && get_dist(old_loc, eye) == 1)
+		var/dx = abs(eye.x - old_loc.x)
+		var/dy = abs(eye.y - old_loc.y)
+		var/distance = (source.appearance_flags & LONG_GLIDE) ? max(dx, dy) : sqrt(dx ** 2 + dy ** 2)
+		duration = distance * world.icon_size / max(source.glide_size, 1) * world.tick_lag / 10
+	scene.update_view(src, eye, duration)
 
 /datum/tadpole_scene_view/proc/update_camera(matrix/camera, animation_seconds)
 	if(QDELETED(plate))
@@ -237,9 +216,6 @@
 	var/source_from_y
 	var/source_to_x
 	var/source_to_y
-	var/matrix/source_from_transform
-	var/matrix/source_to_transform
-	var/source_heading
 	var/source_started = 0
 	var/source_duration = 0
 	var/last_port_x
@@ -294,8 +270,6 @@
 		source_to_x = null
 		source_to_y = null
 		source_duration = 0
-		source_from_transform = null
-		source_to_transform = null
 		return
 	update_region(needed_radius, helm.eyeobj.z)
 	update_source_position(animation_seconds)
@@ -306,34 +280,15 @@
 /datum/tadpole_scene/proc/update_view(datum/tadpole_scene_view/view, turf/eye, animation_seconds)
 	if(!eye || QDELETED(view.plate) || isnull(origin_x) || isnull(origin_y))
 		return
-	// Geometry already has the aircraft's world pose. Walking must not rotate
-	// or translate a screen-sized image about the passenger's changing eye.
-	view.update_camera(matrix(), 0)
-
-/// A single source-to-transit mapping, shared by every passenger.
-/datum/tadpole_scene/proc/target_source_transform()
-	var/matrix/result = matrix()
-	result.Turn(-(helm.flight_heading - dir2angle(helm.shuttle_port.dir)))
-	result.c = helm.shuttle_port.x - result.a * helm.flight_x - result.b * helm.flight_y
-	result.f = helm.shuttle_port.y - result.d * helm.flight_x - result.e * helm.flight_y
-	return result
-
-/// Interpolate the full affine mapping, including R * flight_position. New
-/// blocks then join the exact same linear path as retained blocks at seams.
-/datum/tadpole_scene/proc/displayed_source_transform()
-	if(!source_to_transform)
-		return target_source_transform()
-	var/progress = source_duration ? clamp((world.time - source_started) / source_duration, 0, 1) : 1
-	if(!source_from_transform || progress >= 1)
-		return matrix(source_to_transform)
-	var/matrix/result = matrix()
-	result.a = source_from_transform.a + (source_to_transform.a - source_from_transform.a) * progress
-	result.b = source_from_transform.b + (source_to_transform.b - source_from_transform.b) * progress
-	result.c = source_from_transform.c + (source_to_transform.c - source_from_transform.c) * progress
-	result.d = source_from_transform.d + (source_to_transform.d - source_from_transform.d) * progress
-	result.e = source_from_transform.e + (source_to_transform.e - source_from_transform.e) * progress
-	result.f = source_from_transform.f + (source_to_transform.f - source_from_transform.f) * progress
-	return result
+	var/angle = helm.flight_heading - dir2angle(helm.shuttle_port.dir)
+	var/c = cos(angle)
+	var/s = sin(angle)
+	var/px = helm.shuttle_port.x - eye.x
+	var/py = helm.shuttle_port.y - eye.y
+	var/matrix/camera = matrix()
+	camera.Turn(-angle)
+	camera.Translate((px - (px * c - py * s)) * world.icon_size, (py - (py * c + px * s)) * world.icon_size)
+	view.update_camera(camera, animation_seconds)
 
 /// One shared flight timeline, independent of all passenger positions.
 /datum/tadpole_scene/proc/displayed_source_position()
@@ -344,14 +299,10 @@
 
 /datum/tadpole_scene/proc/update_source_position(animation_seconds)
 	var/obj/docking_port/mobile/port = helm.shuttle_port
-	var/angle = helm.flight_heading - dir2angle(port.dir)
-	if(source_to_x == helm.flight_x && source_to_y == helm.flight_y && source_heading == angle && last_port_x == port.x && last_port_y == port.y && last_port_z == port.z)
+	if(source_to_x == helm.flight_x && source_to_y == helm.flight_y && last_port_x == port.x && last_port_y == port.y && last_port_z == port.z)
 		return FALSE
 	var/initialized = !isnull(source_to_x) && !isnull(source_to_y)
 	var/list/current = displayed_source_position()
-	source_from_transform = displayed_source_transform()
-	source_to_transform = target_source_transform()
-	source_heading = angle
 	source_from_x = current[1]
 	source_from_y = current[2]
 	source_to_x = helm.flight_x
@@ -363,7 +314,10 @@
 	last_port_z = port.z
 	for(var/key in chunks)
 		var/obj/effect/abstract/tadpole_native_chunk/chunk = chunks[key]
-		chunk.project_ground(source_from_transform, source_to_transform, port.z, source_duration)
+		if(!length(chunk.tiles))
+			continue
+		var/turf/first = chunk.tiles[1]
+		chunk.move_ground(port.x + first.x - source_from_x, port.y + first.y - source_from_y, port.x + first.x - source_to_x, port.y + first.y - source_to_y, port.z, source_duration)
 	return TRUE
 
 /// Discovery is separate from the five-Hz flight path. Existing viewers are
@@ -398,8 +352,9 @@
 
 /datum/tadpole_scene/proc/update_chunks()
 	var/list/remaining = chunks.Copy()
-	var/matrix/current = displayed_source_transform()
-	var/matrix/target = source_to_transform || current
+	var/list/current = displayed_source_position()
+	var/target_x = isnull(source_to_x) ? helm.flight_x : source_to_x
+	var/target_y = isnull(source_to_y) ? helm.flight_y : source_to_y
 	var/remaining_time = max(0, source_duration - (world.time - source_started))
 	// Cover the entire origin bucket, including its last fractional cell.
 	// Membership remains valid until the next eight-tile boundary.
@@ -415,7 +370,7 @@
 				chunk = new
 				chunk.build(x, y, source_z)
 				chunks[key] = chunk
-				chunk.project_ground(current, target, helm.z, remaining_time)
+				chunk.move_ground(helm.shuttle_port.x + max(1, x) - current[1], helm.shuttle_port.y + max(1, y) - current[2], helm.shuttle_port.x + max(1, x) - target_x, helm.shuttle_port.y + max(1, y) - target_y, helm.z, remaining_time)
 			else
 				remaining -= key
 	for(var/key in remaining)

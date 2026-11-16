@@ -174,8 +174,6 @@
 	var/turf/relay_center = locate(180, 180, helm.z)
 	helm.abstract_move(relay_center)
 	port.abstract_move(relay_center)
-	var/render_heading_before = helm.flight_heading
-	helm.flight_heading = dir2angle(port.dir)
 	var/datum/tadpole_scene/scene = new(helm)
 	scene.source_z = SSmapping.ground_start
 	scene.origin_x = FLOOR(helm.flight_x / 8, 1) * 8
@@ -243,8 +241,6 @@
 	TEST_ASSERT_EQUAL(scene.displayed_source_position().Join(","), source_before.Join(","), "Changing cache origin must not move the displayed terrain")
 	TEST_ASSERT_EQUAL(scene.chunks[center_key], center_chunk, "A cache seam must retain overlapping source blocks")
 	helm.flight_x = flight_before_x
-	check_world_rotation(scene)
-	helm.flight_heading = render_heading_before
 	pilot.forceMove(pilot_start)
 	port.width = old_width
 	port.height = old_height
@@ -299,7 +295,7 @@
 	pilot.set_sight(SEE_INFRA)
 	TEST_ASSERT_EQUAL(pilot.sight, SEE_INFRA | required_sight, "Regular sight recalculation must not restore passenger occlusion")
 	// Exercise the real Move -> COMSIG_MOVABLE_MOVED path without calling
-	// flight processing. Visibility changes, but the shared ground pose does not.
+	// the 0.2-second scene processor. Headless fixture has a HUD but no client.
 	var/turf/walking_start = get_turf(pilot)
 	var/turf/walking_end = get_step(walking_start, EAST)
 	var/list/old_ground_tiles = helm.ground_tiles
@@ -307,16 +303,15 @@
 	helm.ground_tiles[walking_start] = TRUE
 	helm.ground_tiles[walking_end] = TRUE
 	var/walking_heading = helm.flight_heading
-	helm.flight_heading = dir2angle(port.dir) + 180
+	helm.flight_heading = dir2angle(port.dir) + 37
 	native_view.track_eye(pilot)
 	walking_scene.update_view(native_view, walking_start, 0)
 	var/old_camera_values = native_view.last_camera.tolist().Join(",")
-	var/animation_start_before = native_view.animation_started
 	pilot.set_glide_size(8)
 	TEST_ASSERT(pilot.Move(walking_end, EAST), "Walking camera fixture must move through the ordinary Move path")
-	TEST_ASSERT_EQUAL(native_view.last_camera.tolist().Join(","), old_camera_values, "A passenger step must not transform a completed ground frame")
-	TEST_ASSERT_EQUAL(native_view.animation_started, animation_start_before, "Walking after a 180-degree turn must not restart a screen animation")
-	TEST_ASSERT_EQUAL(native_view.animation_duration, 0, "Walking must use native eye glide without animating the ground plate")
+	TEST_ASSERT_NOTEQUAL(native_view.last_camera.tolist().Join(","), old_camera_values, "A passenger step must update projection before flight processing runs")
+	TEST_ASSERT_EQUAL(native_view.animation_started, world.time, "Walking projection must start in the movement tick")
+	TEST_ASSERT_EQUAL(native_view.animation_duration, world.icon_size / max(pilot.glide_size, 1) * world.tick_lag, "Walking interpolation must match eye glide instead of the flight interval")
 	TEST_ASSERT_EQUAL(length(walking_scene.chunks), 0, "Walking projection must not allocate or update terrain membership")
 	var/turf/outside_ship = get_step(walking_end, EAST)
 	TEST_ASSERT(pilot.Move(outside_ship, EAST), "Visibility fixture must step out of the Tadpole region")
@@ -370,38 +365,6 @@
 	qdel(display)
 	qdel(other_display)
 	helm.eyeobj = null
-
-/// Check the actual shared block poses, not a formula for a screen transform.
-/datum/unit_test/tadpole_flight/proc/check_world_rotation(datum/tadpole_scene/scene)
-	var/obj/docking_port/mobile/port = scene.helm.shuttle_port
-	for(var/angle in list(0, 37, 90, 180, 270))
-		scene.helm.flight_heading = dir2angle(port.dir) + angle
-		scene.update_source_position(0)
-		var/matrix/rotation = matrix()
-		rotation.Turn(-angle)
-		for(var/key in scene.chunks)
-			var/obj/effect/abstract/tadpole_native_chunk/chunk = scene.chunks[key]
-			if(!length(chunk.tiles))
-				continue
-			var/turf/first = chunk.tiles[1]
-			for(var/u in list(0, 7))
-				for(var/v in list(0, 7))
-					var/matrix/pose = chunk.transform
-					var/actual_x = chunk.x + (chunk.pixel_x + pose.c) / world.icon_size + pose.a * u + pose.b * v
-					var/actual_y = chunk.y + (chunk.pixel_y + pose.f) / world.icon_size + pose.d * u + pose.e * v
-					var/ground_dx = first.x + u - scene.helm.flight_x
-					var/ground_dy = first.y + v - scene.helm.flight_y
-					var/expected_x = port.x + rotation.a * ground_dx + rotation.b * ground_dy
-					var/expected_y = port.y + rotation.d * ground_dx + rotation.e * ground_dy
-					TEST_ASSERT(abs(actual_x - expected_x) < 0.001 && abs(actual_y - expected_y) < 0.001, "World pose mismatch: angle=[angle], block=[key], uv=[u],[v], actual=[actual_x],[actual_y], expected=[expected_x],[expected_y], pixels=[chunk.pixel_x],[chunk.pixel_y], matrix=[pose.tolist().Join(",")]")
-		TEST_ASSERT(!scene.update_source_position(0.2), "An unchanged aircraft pose must not restart block animations")
-		var/matrix/pose_before = scene.displayed_source_transform()
-		var/old_origin_x = scene.origin_x
-		scene.origin_x += 8
-		scene.update_chunks()
-		TEST_ASSERT_EQUAL(scene.displayed_source_transform().tolist().Join(","), pose_before.tolist().Join(","), "Cache membership must not change world projection")
-		scene.origin_x = old_origin_x
-		scene.update_chunks()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/flight_test/checkLandingSpot()
 	return SHUTTLE_DOCKER_LANDING_CLEAR
