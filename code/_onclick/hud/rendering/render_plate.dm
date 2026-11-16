@@ -429,7 +429,7 @@
 	if(!length(relays) && !initial(render_target))
 		render_target = OFFSET_RENDER_TARGET(get_plane_master_render_base(name), offset)
 	if(!relay_loc)
-		relay_loc = home?.relay_loc == "SCREEN_SOUTHWEST" ? home.relay_loc : ((show_to?.byond_version > 515) ? "1,1" : "CENTER")
+		relay_loc = (show_to?.byond_version > 515) ? "1,1" : "CENTER"
 		// If we're using a submap (say for a popup window) make sure we draw onto it
 		if(home?.map)
 			relay_loc = "[home.map]:[relay_loc]"

@@ -45,8 +45,6 @@
 /datum/view_data/proc/assert_format()
 	winset(chief, "mapwindow.map", "zoom=0")
 	zoom = 0
-	if(chief?.tadpole_capture_view)
-		INVOKE_ASYNC(chief.tadpole_capture_view, TYPE_PROC_REF(/datum/tadpole_scene_view, apply_capture_zoom))
 
 ///applies the current clients preferred pixel size setting
 /datum/view_data/proc/update_pixel_format()
