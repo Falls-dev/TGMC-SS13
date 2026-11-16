@@ -130,7 +130,7 @@
 		COORD_LIST_ADD(opaque_atoms_in_view, turf.x, turf.y)
 
 	//We are too small to consider shadows on, luminsoty has been considered at least.
-	if(radius < 2)
+	if(!casts_shadows || radius < 2)
 		return
 
 	//Group atoms together for optimisation

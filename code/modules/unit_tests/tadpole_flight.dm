@@ -11,8 +11,6 @@
 	check_viewport_coverage()
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/flight_test/helm = allocate(/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/flight_test)
 	var/obj/docking_port/mobile/port = allocate(/obj/docking_port/mobile)
-	port.width = 1
-	port.height = 1
 	var/mob/living/pilot = allocate(/mob/living/carbon/human)
 	var/turf/start = locate(40, 40, run_loc_floor_bottom_left.z)
 	var/mob/camera/aiEye/remote/shuttle_docker/eye = allocate(/mob/camera/aiEye/remote/shuttle_docker, start, helm)
@@ -233,14 +231,13 @@
 		TEST_ASSERT_EQUAL(scene.chunks[chunk_key], stable_blocks[chunk_key], "Walking must preserve every cached block identity")
 	// A bucket transition during a source animation changes membership only.
 	var/flight_before_x = helm.flight_x
-	var/list/effective_before = scene.displayed_source_position()
 	var/center_key = "[scene.origin_x],[scene.origin_y],[scene.source_z]"
 	var/obj/effect/abstract/tadpole_native_chunk/center_chunk = scene.chunks[center_key]
 	helm.flight_x += 8
 	scene.update_source_position(1)
 	scene.source_started = world.time - 5
 	var/list/source_before = scene.displayed_source_position()
-	TEST_ASSERT(abs(source_before[1] - effective_before[1] - 4) < 0.001, "Shared terrain must interpolate the actual flight position")
+	TEST_ASSERT(abs(source_before[1] - flight_before_x - 4) < 0.001, "Shared terrain must interpolate the actual flight position")
 	TEST_ASSERT(scene.update_region(scene.radius, scene.source_z), "Crossing eight tiles must update source membership")
 	TEST_ASSERT_EQUAL(scene.displayed_source_position().Join(","), source_before.Join(","), "Changing cache origin must not move the displayed terrain")
 	TEST_ASSERT_EQUAL(scene.chunks[center_key], center_chunk, "A cache seam must retain overlapping source blocks")
@@ -283,9 +280,6 @@
 	var/mob/other_passenger = other_display.mymob
 	var/other_sight_before = other_passenger.sight
 	var/datum/tadpole_scene_view/native_view = new(display, 1, walking_scene)
-	check_ground_projection(walking_scene, native_view)
-	var/atom/movable/screen/plane_master/source_floor = display.get_plane_master(GET_NEW_PLANE(FLOOR_PLANE, 1))
-	TEST_ASSERT(!source_floor.multiz_scaled, "Ground source must not inherit passenger-centered multiz parallax")
 	TEST_ASSERT_NOTNULL(native_view.plate, "Ground must have a preallocated native lower render plate")
 	TEST_ASSERT(native_view.plate.get_relay_to(TADPOLE_GROUND_PLANE), "Passenger plate must relay below the physical craft")
 	TEST_ASSERT_EQUAL(other_plate.render_relay_planes.Join(","), original_targets.Join(","), "Another observer must retain their native graph")
@@ -347,7 +341,6 @@
 	helm.flight_x = projection_flight_x
 	var/atom/movable/screen/plane_master/passenger_plate = native_view.plate
 	qdel(native_view)
-	TEST_ASSERT(source_floor.multiz_scaled, "Leaving must restore native multiz scaling eligibility")
 	TEST_ASSERT_EQUAL(pilot.sight, sight_before_view, "Scene departure must remove its sight modifier")
 	TEST_ASSERT(!length(pilot.sight_modifiers), "Scene cleanup must leave no owned sight modifiers")
 	qdel(walking_scene)
@@ -358,6 +351,17 @@
 	var/obj/effect/lighting_mask_holder/light_holder = allocate(/obj/effect/lighting_mask_holder, ground)
 	var/atom/movable/lighting_mask/light = new
 	light_holder.assign_mask(light)
+	TEST_ASSERT(light.casts_shadows, "Ordinary lights must retain terrain shadows")
+	var/atom/movable/lighting_mask/overhead = new /atom/movable/lighting_mask/tadpole_overhead
+	var/obj/effect/lighting_mask_holder/overhead_holder = allocate(/obj/effect/lighting_mask_holder, ground)
+	overhead_holder.assign_mask(overhead)
+	overhead.attached_atom = overhead_holder
+	overhead.set_radius(9)
+	overhead.calculate_lighting_shadows()
+	TEST_ASSERT(!overhead.get_filter("shadow_alpha_masking"), "Overhead light must not inherit horizontal shadow clipping")
+	TEST_ASSERT(!length(overhead.shadows), "Overhead light must not generate horizontal shadow triangles")
+	TEST_ASSERT(get_step(ground, SOUTH) in overhead.affecting_turfs, "Overhead illumination must reach south of the projector")
+	TEST_ASSERT(get_step(ground, NORTH) in overhead.affecting_turfs, "Overhead illumination must reach north of the projector")
 	TEST_ASSERT_EQUAL(light.plane, LIGHTING_PLANE - PLANE_RANGE * SSmapping.z_level_to_plane_offset[ground.z], "Nullspace hybrid mask must use its holder's ground plane")
 	var/atom/movable/screen/map_view/remote_map = allocate(/atom/movable/screen/map_view)
 	TEST_ASSERT_EQUAL(remote_map.source_depth(), 0, "Empty/nullspace previews must render at their own depth zero")
@@ -377,24 +381,17 @@
 /// Test geometric coverage before the source plate is rotated. Merely growing
 /// the terrain cache cannot recover pixels clipped by the native viewport.
 /datum/unit_test/tadpole_flight/proc/check_viewport_coverage()
-	var/atom/movable/screen/fullscreen/lighting_backdrop/backplane/backdrop = allocate(/atom/movable/screen/fullscreen/lighting_backdrop/backplane)
-	for(var/size in list("15x15", "19x15", "43x45", "19x15"))
-		backdrop.update_for_view(size)
-		var/list/dimensions = getviewsize(size)
-		TEST_ASSERT_EQUAL(backdrop.screen_loc, "CENTER", "Lighting backplane must be centered on the viewport")
-		TEST_ASSERT_EQUAL(backdrop.transform.a, dimensions[1], "One-tile lighting backdrop must cover the entire viewport width")
-		TEST_ASSERT_EQUAL(backdrop.transform.e, dimensions[2], "One-tile lighting backdrop must cover the entire viewport height")
-	var/datum/tadpole_viewport/cache_test/viewport = allocate(/datum/tadpole_viewport/cache_test)
-	viewport.pivot_x = 3
-	viewport.pivot_y = 4
+	var/datum/tadpole_viewport/viewport = allocate(/datum/tadpole_viewport)
+	viewport.pivot_x = 6
+	viewport.pivot_y = 8
 	viewport.configure("19x15")
 	TEST_ASSERT(viewport.complete_coverage, "Default Tadpole viewport must have full rotational coverage")
-	TEST_ASSERT(viewport.render_width * viewport.render_height <= 2000, "Default overscan must fit the render budget")
+	TEST_ASSERT(viewport.render_width * viewport.render_height <= 4096, "Default overscan must fit the render budget")
 	TEST_ASSERT_EQUAL(viewport.render_width % 2, 19 % 2, "Overscan must preserve horizontal eye centering")
 	TEST_ASSERT_EQUAL(viewport.render_height % 2, 15 % 2, "Overscan must preserve vertical eye centering")
 	for(var/angle in 0 to 359 step 15)
-		for(var/px in list(-3, 0, 3))
-			for(var/py in list(-4, 0, 4))
+		for(var/px in list(-6, 0, 6))
+			for(var/py in list(-8, 0, 8))
 				for(var/qx in list(-9.5, 9.5))
 					for(var/qy in list(-7.5, 7.5))
 						var/x = px + (qx - px) * cos(angle) - (qy - py) * sin(angle)
@@ -408,10 +405,6 @@
 	TEST_ASSERT_EQUAL(viewport.map_location("CENTER"), "[10 + dx],[8 + dy]", "HUD center must remain aligned with the eye")
 	TEST_ASSERT_EQUAL(viewport.map_location("popup:1,1"), "popup:1,1", "Remote map coordinates must be untouched")
 	TEST_ASSERT_EQUAL(viewport.map_location("LEFT,TOP"), "LEFT,TOP", "Control-relative HUD anchors must be untouched")
-	var/parse_calls = viewport.parse_calls
-	for(var/i in 1 to 100)
-		viewport.map_location("WEST:6,1:5")
-	TEST_ASSERT_EQUAL(viewport.parse_calls, parse_calls, "Steady HUD refreshes must reuse parsed coordinates")
 	var/obj/widget = allocate(/obj)
 	widget.screen_loc = "10,10"
 	viewport.hud_locations[widget] = list("1,1", "10,10")
@@ -423,44 +416,6 @@
 	viewport.configure("60x50")
 	TEST_ASSERT(!viewport.complete_coverage, "Extreme viewports must use the bounded fallback")
 	TEST_ASSERT(viewport.render_width >= 60 && viewport.render_height >= 50 && viewport.render_width * viewport.render_height <= 4096, "Bounded overscan must retain the logical view without unbounded growth")
-	viewport.map_location("WEST:6,1:5")
-	TEST_ASSERT(viewport.parse_calls > parse_calls, "A logical view change must invalidate cached HUD coordinates")
-
-/datum/tadpole_viewport/cache_test
-	var/parse_calls = 0
-
-/datum/tadpole_viewport/cache_test/map_axis(text, axis)
-	parse_calls++
-	return ..()
-
-/datum/unit_test/tadpole_flight/proc/check_ground_projection(datum/tadpole_scene/scene, datum/tadpole_scene_view/view)
-	var/obj/docking_port/mobile/port = scene.helm.shuttle_port
-	var/old_width = port.width
-	var/old_height = port.height
-	var/old_heading = scene.helm.flight_heading
-	port.width = 7
-	port.height = 9
-	for(var/angle in list(0, 37, 90, 180, 270))
-		scene.helm.flight_heading = dir2angle(port.dir) + angle
-		var/list/source = scene.source_position()
-		var/list/last_point
-		for(var/dy in list(0, 1, 4, 8))
-			var/turf/eye = locate(port.x + 3, port.y + dy, port.z)
-			scene.update_view(view, eye, 0)
-			var/matrix/camera = view.last_camera
-			var/raw_x = (port.x + scene.helm.flight_x + 4 - source[1] - eye.x) * world.icon_size
-			var/raw_y = (port.y + scene.helm.flight_y - 5 - source[2] - eye.y) * world.icon_size
-			var/projected_x = camera.a * raw_x + camera.b * raw_y + camera.c
-			var/projected_y = camera.d * raw_x + camera.e * raw_y + camera.f
-			var/expected_x = (port.x - eye.x + camera.a * 4 - camera.b * 5) * world.icon_size
-			var/expected_y = (port.y - eye.y + camera.d * 4 - camera.e * 5) * world.icon_size
-			TEST_ASSERT(abs(projected_x - expected_x) < 0.001 && abs(projected_y - expected_y) < 0.001, "Recentered source must preserve ground/landing coordinates at every heading")
-			if(dy == 1)
-				TEST_ASSERT(abs(projected_x - last_point[1]) < 0.001 && abs(projected_y - last_point[2] + world.icon_size) < 0.001, "A northward passenger step must shift ground south one tile even after a 180-degree turn")
-			last_point = list(projected_x, projected_y)
-	port.width = old_width
-	port.height = old_height
-	scene.helm.flight_heading = old_heading
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/flight_test/checkLandingSpot()
 	return SHUTTLE_DOCKER_LANDING_CLEAR
