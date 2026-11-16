@@ -228,6 +228,17 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/fullscreen)
 	blend_mode = BLEND_OVERLAY
 	show_when_dead = TRUE
 	needs_offsetting = FALSE
+	screen_loc = "CENTER"
+	fs_view = null
+
+/// This is a one-tile flash icon, not the 15x15-tile fullscreen artwork.
+/// The generic scaler shrank the lighting backplane and left its edges exposed.
+/atom/movable/screen/fullscreen/lighting_backdrop/update_for_view(client_view)
+	if(fs_view == client_view)
+		return
+	fs_view = client_view
+	var/list/size = getviewsize(client_view)
+	transform = matrix(size[1], 0, 0, 0, size[2], 0)
 
 //Provides darkness to the back of the lighting plane
 /atom/movable/screen/fullscreen/lighting_backdrop/lit_secondary

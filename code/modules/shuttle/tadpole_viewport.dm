@@ -17,6 +17,7 @@
 	var/base_zoom = 0
 	var/complete_coverage = TRUE
 	var/list/hud_locations = list()
+	var/list/location_cache = list()
 
 /datum/tadpole_viewport/proc/start(datum/tadpole_scene_view/view, client/display)
 	owner = view
@@ -27,8 +28,8 @@
 	logical_size = chief.view
 	var/obj/docking_port/mobile/port = view.scene.helm.shuttle_port
 	var/list/bounds = port.return_coords(0, 0, port.dir)
-	pivot_x = max(abs(bounds[1]), abs(bounds[3]))
-	pivot_y = max(abs(bounds[2]), abs(bounds[4]))
+	pivot_x = abs(bounds[3] - bounds[1]) / 2
+	pivot_y = abs(bounds[4] - bounds[2]) / 2
 	base_zoom = chief.view_size?.zoom || 0
 	if(QDELETED(src) || QDELETED(view) || !chief || chief.tadpole_viewport != src || chief.mob != view.hud?.mymob || !view.scene?.helm.ground_tiles[get_turf(chief.eye)])
 		qdel(src)
@@ -39,7 +40,13 @@
 /// Cover every rotated visible corner, including a pivot away from the eye.
 /// Matching parity keeps the eye on the same pixel/tile center.
 /datum/tadpole_viewport/proc/configure(view_size)
+	if(logical_size == view_size && render_size)
+		return render_size
+	for(var/atom/movable/thing as anything in hud_locations)
+		restore_location(thing)
+	hud_locations.Cut()
 	logical_size = view_size
+	location_cache.Cut()
 	var/list/size = getviewsize(view_size)
 	logical_width = size[1]
 	logical_height = size[2]
@@ -137,14 +144,20 @@
 	return "[x],[y]"
 
 /datum/tadpole_viewport/proc/map_location(location)
+	var/cached = location_cache[location]
+	if(!isnull(cached))
+		return cached
 	var/list/parts = splittext(location, " to ")
 	var/list/result = list()
 	for(var/part in parts)
 		var/mapped = map_point(part)
 		if(isnull(mapped))
+			location_cache[location] = location
 			return location
 		result += mapped
-	return result.Join(" to ")
+	var/mapped_location = result.Join(" to ")
+	location_cache[location] = mapped_location
+	return mapped_location
 
 /datum/tadpole_viewport/proc/sync_hud()
 	if(!active || !chief)
@@ -158,12 +171,14 @@
 			if(screen_thing.assigned_map)
 				continue
 		var/list/state = hud_locations[thing]
-		var/original = state && thing.screen_loc == state[2] ? state[1] : thing.screen_loc
+		remaining -= thing
+		if(state && thing.screen_loc == state[2])
+			continue
+		var/original = thing.screen_loc
 		var/mapped = map_location(original)
-		if(mapped != original)
-			hud_locations[thing] = list(original, mapped)
+		hud_locations[thing] = list(original, mapped)
+		if(thing.screen_loc != mapped)
 			thing.screen_loc = mapped
-			remaining -= thing
 	for(var/atom/movable/thing as anything in remaining)
 		restore_location(thing)
 		hud_locations -= thing

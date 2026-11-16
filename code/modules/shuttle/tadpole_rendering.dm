@@ -74,6 +74,7 @@
 	var/animation_started = 0
 	var/animation_duration = 0
 	var/list/forced_planes = list()
+	var/list/unscaled_planes = list()
 	var/atom/movable/screen/plane_master/emissive_plate
 	var/had_emissive_relay = FALSE
 	var/datum/tadpole_scene/scene
@@ -97,6 +98,12 @@
 		var/atom/movable/screen/plane_master/master = group.plane_masters[key]
 		if(master.offset < depth)
 			continue
+		// Multiz parallax scales around the passenger eye. Ground projected onto
+		// a flying ship must instead retain the shared source's exact geometry.
+		if(master.multiz_scaled)
+			unscaled_planes += master
+			master.multiz_scaled = FALSE
+			animate(master, transform = null, time = 0)
 		if(master.is_outside_bounds)
 			forced_planes += master
 			master.inside_bounds(hud.mymob)
@@ -118,12 +125,16 @@
 	if(had_emissive_relay && !QDELETED(emissive_plate))
 		emissive_plate.add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, source_offset - 1), relay_layer = EMISSIVE_Z_BELOW_LAYER)
 	if(!QDELETED(hud))
+		for(var/atom/movable/screen/plane_master/master as anything in unscaled_planes)
+			if(!QDELETED(master))
+				master.multiz_scaled = TRUE
 		var/datum/plane_master_group/group = hud.get_plane_group(PLANE_GROUP_MAIN)
 		group?.build_planes_offset(hud, hud.current_plane_offset)
 	hud = null
 	plate = null
 	emissive_plate = null
 	forced_planes.Cut()
+	unscaled_planes.Cut()
 	return ..()
 
 /// Living passengers need the same native scene visibility as observers.
@@ -279,6 +290,7 @@
 	update_source_position(animation_seconds)
 	for(var/client/display as anything in views)
 		var/datum/tadpole_scene_view/view = views[display]
+		view.viewport?.sync_hud()
 		update_view(view, get_turf(display.eye), animation_seconds)
 
 /datum/tadpole_scene/proc/update_view(datum/tadpole_scene_view/view, turf/eye, animation_seconds)
@@ -290,34 +302,49 @@
 		view.viewport.start(view, display)
 	if(QDELETED(view) || QDELETED(view.plate))
 		return
-	view.viewport?.sync_hud()
 	var/angle = helm.flight_heading - dir2angle(helm.shuttle_port.dir)
-	var/c = cos(angle)
-	var/s = sin(angle)
-	var/px = helm.shuttle_port.x - eye.x
-	var/py = helm.shuttle_port.y - eye.y
+	var/list/center = center_offset()
+	var/px = helm.shuttle_port.x + center[1] - eye.x
+	var/py = helm.shuttle_port.y + center[2] - eye.y
 	var/matrix/camera = matrix()
 	camera.Turn(-angle)
-	camera.Translate((px - (px * c - py * s)) * world.icon_size, (py - (py * c + px * s)) * world.icon_size)
+	camera.Translate((px - (camera.a * px + camera.b * py)) * world.icon_size, (py - (camera.d * px + camera.e * py)) * world.icon_size)
 	view.update_camera(camera, animation_seconds)
+
+/// The docking origin lies at a hull corner. Capture/rotate around the hull's
+/// center instead, keeping the source buffer centered near all passengers.
+/datum/tadpole_scene/proc/center_offset()
+	var/obj/docking_port/mobile/port = helm.shuttle_port
+	var/list/bounds = port.return_coords(0, 0, port.dir)
+	return list((bounds[1] + bounds[3]) / 2, (bounds[2] + bounds[4]) / 2)
+
+/// Recenter shared source geometry BEFORE viewport composition. This preserves
+/// P + R * (ground - flight_origin), so rotation cannot move the landing target.
+/// R is orthogonal: its inverse is its transpose. No passenger input is used.
+/datum/tadpole_scene/proc/source_position()
+	var/list/center = center_offset()
+	var/matrix/rotation = matrix()
+	rotation.Turn(-(helm.flight_heading - dir2angle(helm.shuttle_port.dir)))
+	return list(helm.flight_x - center[1] + rotation.a * center[1] + rotation.d * center[2], helm.flight_y - center[2] + rotation.b * center[1] + rotation.e * center[2])
 
 /// One shared flight timeline, independent of all passenger positions.
 /datum/tadpole_scene/proc/displayed_source_position()
 	if(isnull(source_to_x) || isnull(source_to_y))
-		return list(helm.flight_x, helm.flight_y)
+		return source_position()
 	var/progress = source_duration ? clamp((world.time - source_started) / source_duration, 0, 1) : 1
 	return list(source_from_x + (source_to_x - source_from_x) * progress, source_from_y + (source_to_y - source_from_y) * progress)
 
 /datum/tadpole_scene/proc/update_source_position(animation_seconds)
 	var/obj/docking_port/mobile/port = helm.shuttle_port
-	if(source_to_x == helm.flight_x && source_to_y == helm.flight_y && last_port_x == port.x && last_port_y == port.y && last_port_z == port.z)
+	var/list/target = source_position()
+	if(source_to_x == target[1] && source_to_y == target[2] && last_port_x == port.x && last_port_y == port.y && last_port_z == port.z)
 		return FALSE
 	var/initialized = !isnull(source_to_x) && !isnull(source_to_y)
 	var/list/current = displayed_source_position()
 	source_from_x = current[1]
 	source_from_y = current[2]
-	source_to_x = helm.flight_x
-	source_to_y = helm.flight_y
+	source_to_x = target[1]
+	source_to_y = target[2]
 	source_started = world.time
 	source_duration = initialized ? animation_seconds * 10 : 0
 	last_port_x = port.x
@@ -364,8 +391,8 @@
 /datum/tadpole_scene/proc/update_chunks()
 	var/list/remaining = chunks.Copy()
 	var/list/current = displayed_source_position()
-	var/target_x = isnull(source_to_x) ? helm.flight_x : source_to_x
-	var/target_y = isnull(source_to_y) ? helm.flight_y : source_to_y
+	var/target_x = isnull(source_to_x) ? current[1] : source_to_x
+	var/target_y = isnull(source_to_y) ? current[2] : source_to_y
 	var/remaining_time = max(0, source_duration - (world.time - source_started))
 	// Cover the entire origin bucket, including its last fractional cell.
 	// Membership remains valid until the next eight-tile boundary.
@@ -397,11 +424,6 @@
 	light_range = 9
 	light_power = 8
 	light_color = COLOR_WHITE
-	light_mask_type = /atom/movable/lighting_mask/tadpole_overhead
-
-/// A light above the ground must not project horizontal terrain-wall shadows.
-/atom/movable/lighting_mask/tadpole_overhead
-	casts_shadows = FALSE
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/proc/update_ground_searchlight()
 	if(fly_state != SHUTTLE_IN_ATMOSPHERE || !eyeobj?.z || !shuttle_port)
