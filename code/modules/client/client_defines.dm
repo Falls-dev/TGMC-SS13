@@ -55,8 +55,6 @@
 
 	/// datum wrapper for client view
 	var/datum/view_data/view_size
-	/// Extra native render area while viewing a rotating Tadpole scene.
-	var/datum/tadpole_viewport/tadpole_viewport
 
 	/// our current tab
 	var/stat_tab

@@ -8,7 +8,6 @@
 	relay_entered = TRUE
 
 /datum/unit_test/tadpole_flight/Run()
-	check_viewport_coverage()
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/flight_test/helm = allocate(/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/flight_test)
 	var/obj/docking_port/mobile/port = allocate(/obj/docking_port/mobile)
 	var/mob/living/pilot = allocate(/mob/living/carbon/human)
@@ -351,17 +350,6 @@
 	var/obj/effect/lighting_mask_holder/light_holder = allocate(/obj/effect/lighting_mask_holder, ground)
 	var/atom/movable/lighting_mask/light = new
 	light_holder.assign_mask(light)
-	TEST_ASSERT(light.casts_shadows, "Ordinary lights must retain terrain shadows")
-	var/atom/movable/lighting_mask/overhead = new /atom/movable/lighting_mask/tadpole_overhead
-	var/obj/effect/lighting_mask_holder/overhead_holder = allocate(/obj/effect/lighting_mask_holder, ground)
-	overhead_holder.assign_mask(overhead)
-	overhead.attached_atom = overhead_holder
-	overhead.set_radius(9)
-	overhead.calculate_lighting_shadows()
-	TEST_ASSERT(!overhead.get_filter("shadow_alpha_masking"), "Overhead light must not inherit horizontal shadow clipping")
-	TEST_ASSERT(!length(overhead.shadows), "Overhead light must not generate horizontal shadow triangles")
-	TEST_ASSERT(get_step(ground, SOUTH) in overhead.affecting_turfs, "Overhead illumination must reach south of the projector")
-	TEST_ASSERT(get_step(ground, NORTH) in overhead.affecting_turfs, "Overhead illumination must reach north of the projector")
 	TEST_ASSERT_EQUAL(light.plane, LIGHTING_PLANE - PLANE_RANGE * SSmapping.z_level_to_plane_offset[ground.z], "Nullspace hybrid mask must use its holder's ground plane")
 	var/atom/movable/screen/map_view/remote_map = allocate(/atom/movable/screen/map_view)
 	TEST_ASSERT_EQUAL(remote_map.source_depth(), 0, "Empty/nullspace previews must render at their own depth zero")
@@ -377,45 +365,6 @@
 	qdel(display)
 	qdel(other_display)
 	helm.eyeobj = null
-
-/// Test geometric coverage before the source plate is rotated. Merely growing
-/// the terrain cache cannot recover pixels clipped by the native viewport.
-/datum/unit_test/tadpole_flight/proc/check_viewport_coverage()
-	var/datum/tadpole_viewport/viewport = allocate(/datum/tadpole_viewport)
-	viewport.pivot_x = 6
-	viewport.pivot_y = 8
-	viewport.configure("19x15")
-	TEST_ASSERT(viewport.complete_coverage, "Default Tadpole viewport must have full rotational coverage")
-	TEST_ASSERT(viewport.render_width * viewport.render_height <= 4096, "Default overscan must fit the render budget")
-	TEST_ASSERT_EQUAL(viewport.render_width % 2, 19 % 2, "Overscan must preserve horizontal eye centering")
-	TEST_ASSERT_EQUAL(viewport.render_height % 2, 15 % 2, "Overscan must preserve vertical eye centering")
-	for(var/angle in 0 to 359 step 15)
-		for(var/px in list(-6, 0, 6))
-			for(var/py in list(-8, 0, 8))
-				for(var/qx in list(-9.5, 9.5))
-					for(var/qy in list(-7.5, 7.5))
-						var/x = px + (qx - px) * cos(angle) - (qy - py) * sin(angle)
-						var/y = py + (qx - px) * sin(angle) + (qy - py) * cos(angle)
-						TEST_ASSERT(abs(x) < viewport.render_width / 2 && abs(y) < viewport.render_height / 2, "Rotated viewport corner must remain inside the source buffer")
-	var/dx = viewport.padding_x
-	var/dy = viewport.padding_y
-	TEST_ASSERT_EQUAL(viewport.map_location("WEST:6,1:5"), "[1 + dx]:6,[1 + dy]:5", "Numeric and anchored HUD coordinates must retain pixel offsets")
-	TEST_ASSERT_EQUAL(viewport.map_location("EAST-1:28,SOUTH+1:7"), "[18 + dx]:28,[2 + dy]:7", "HUD edge offsets must use the visible dimensions")
-	TEST_ASSERT_EQUAL(viewport.map_location("NORTH:2,WEST:3"), "[1 + dx]:3,[15 + dy]:2", "Vertical-first HUD coordinates must retain their axes")
-	TEST_ASSERT_EQUAL(viewport.map_location("CENTER"), "[10 + dx],[8 + dy]", "HUD center must remain aligned with the eye")
-	TEST_ASSERT_EQUAL(viewport.map_location("popup:1,1"), "popup:1,1", "Remote map coordinates must be untouched")
-	TEST_ASSERT_EQUAL(viewport.map_location("LEFT,TOP"), "LEFT,TOP", "Control-relative HUD anchors must be untouched")
-	var/obj/widget = allocate(/obj)
-	widget.screen_loc = "10,10"
-	viewport.hud_locations[widget] = list("1,1", "10,10")
-	viewport.restore_location(widget)
-	TEST_ASSERT_EQUAL(widget.screen_loc, "1,1", "Viewport cleanup must restore its own HUD changes")
-	widget.screen_loc = "2,2"
-	viewport.restore_location(widget)
-	TEST_ASSERT_EQUAL(widget.screen_loc, "2,2", "Viewport cleanup must preserve unrelated HUD changes")
-	viewport.configure("60x50")
-	TEST_ASSERT(!viewport.complete_coverage, "Extreme viewports must use the bounded fallback")
-	TEST_ASSERT(viewport.render_width >= 60 && viewport.render_height >= 50 && viewport.render_width * viewport.render_height <= 4096, "Bounded overscan must retain the logical view without unbounded growth")
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/flight_test/checkLandingSpot()
 	return SHUTTLE_DOCKER_LANDING_CLEAR

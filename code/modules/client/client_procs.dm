@@ -923,15 +923,11 @@
 		CRASH("change_view called with a number argument. Use the string format instead.")
 	if(prefs && !prefs.widescreenpref && new_size == CONFIG_GET(string/default_view))
 		new_size = CONFIG_GET(string/default_view_square)
-	if(tadpole_viewport?.active)
-		new_size = tadpole_viewport.configure(new_size)
 
 	view = new_size
 	SEND_SIGNAL(src, COMSIG_VIEW_SET, new_size)
 	apply_clickcatcher()
 	mob.reload_fullscreens()
-	if(tadpole_viewport?.active)
-		tadpole_viewport.sync_hud()
 	attempt_auto_fit_viewport()
 
 ///Change the fullscreen setting of the client

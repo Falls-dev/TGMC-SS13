@@ -79,7 +79,6 @@
 	var/datum/tadpole_scene/scene
 	var/atom/movable/tracked_eye
 	var/mob/visibility_owner
-	var/datum/tadpole_viewport/viewport
 
 /datum/tadpole_scene_view/New(datum/hud/display, depth, datum/tadpole_scene/owner)
 	hud = display
@@ -109,7 +108,6 @@
 /datum/tadpole_scene_view/Destroy()
 	track_eye(null)
 	bind_visibility(null)
-	QDEL_NULL(viewport)
 	scene = null
 	if(!QDELETED(plate))
 		animate(plate, transform = original_transform, time = 0)
@@ -144,7 +142,6 @@
 	SIGNAL_HANDLER
 	track_eye(null)
 	bind_visibility(null)
-	QDEL_NULL(viewport)
 
 /datum/tadpole_scene_view/proc/track_eye(atom/new_eye)
 	if(!ismovable(new_eye))
@@ -167,7 +164,6 @@
 	if(!scene.helm.ground_tiles[eye])
 		if(source == visibility_owner)
 			bind_visibility(null)
-			QDEL_NULL(viewport)
 		return
 	if(source == hud?.mymob)
 		bind_visibility(hud.mymob)
@@ -252,7 +248,7 @@
 		var/turf/eye = get_turf(display?.eye)
 		if(!eye || !helm.ground_tiles[eye] || !viewer?.hud_used)
 			continue
-		var/list/size = getviewsize(display.tadpole_viewport?.logical_size || display.view)
+		var/list/size = getviewsize(display.view)
 		needed_radius = max(needed_radius, source_radius(size))
 		var/datum/tadpole_scene_view/view = views[display]
 		if(view && (view.hud != viewer.hud_used || view.source_offset != depth || QDELETED(view.plate) || view.plate.is_outside_bounds))
@@ -284,13 +280,6 @@
 /datum/tadpole_scene/proc/update_view(datum/tadpole_scene_view/view, turf/eye, animation_seconds)
 	if(!eye || QDELETED(view.plate) || isnull(origin_x) || isnull(origin_y))
 		return
-	var/client/display = view.hud?.mymob?.client
-	if(display && (!view.viewport || QDELETED(view.viewport)))
-		view.viewport = new
-		view.viewport.start(view, display)
-	if(QDELETED(view) || QDELETED(view.plate))
-		return
-	view.viewport?.sync_hud()
 	var/angle = helm.flight_heading - dir2angle(helm.shuttle_port.dir)
 	var/c = cos(angle)
 	var/s = sin(angle)
@@ -397,11 +386,6 @@
 	light_range = 9
 	light_power = 8
 	light_color = COLOR_WHITE
-	light_mask_type = /atom/movable/lighting_mask/tadpole_overhead
-
-/// A light above the ground must not project horizontal terrain-wall shadows.
-/atom/movable/lighting_mask/tadpole_overhead
-	casts_shadows = FALSE
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/proc/update_ground_searchlight()
 	if(fly_state != SHUTTLE_IN_ATMOSPHERE || !eyeobj?.z || !shuttle_port)
