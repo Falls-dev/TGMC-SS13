@@ -41,11 +41,14 @@
 	var/awaiting_update = FALSE
 	///Set to TRUE if you want the light to rotate with the owner
 	var/is_directional = FALSE
+	/// Overhead projectors illuminate from above rather than casting planar shadows.
+	var/casts_shadows = TRUE
 
 /atom/movable/lighting_mask/Initialize(mapload, ...)
 	. = ..()
 	add_filter("pixel_smoother", 3, gauss_blur_filter(2))
-	add_filter("shadow_alpha_masking", 4, alpha_mask_filter(render_source = SHADOW_RENDER_TARGET, flags = MASK_INVERSE))
+	if(casts_shadows)
+		add_filter("shadow_alpha_masking", 4, alpha_mask_filter(render_source = SHADOW_RENDER_TARGET, flags = MASK_INVERSE))
 
 /atom/movable/lighting_mask/Destroy()
 	mask_holder = null
@@ -164,4 +167,5 @@
 		return
 	last_plane_offset = new_offset
 	SET_PLANE(src, LIGHTING_PLANE, position)
-	add_filter("shadow_alpha_masking", 4, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(SHADOW_RENDER_TARGET, GET_TURF_PLANE_OFFSET(position)), flags = MASK_INVERSE))
+	if(casts_shadows)
+		add_filter("shadow_alpha_masking", 4, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(SHADOW_RENDER_TARGET, GET_TURF_PLANE_OFFSET(position)), flags = MASK_INVERSE))
