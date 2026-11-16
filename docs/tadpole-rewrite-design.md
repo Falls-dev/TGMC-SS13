@@ -330,3 +330,50 @@ Validation: focused `tadpole_flight` PASS (0.8 seconds), no runtime errors,
 `Success!` at `data/logs/tadpole-native-visibility-final/clean_run.lk`. Normal
 BYOND 516.1659 build: 0 errors, 0 warnings. The test build has the existing
 `loop_checks` warning. Client visuals have not been independently verified.
+
+## Fixed native eye with final-world follow (option 1)
+
+This experiment uses a native invisible eye anchored at the hull center. An
+ordinary passenger camera temporarily owns client.eye and EYE_PERSPECTIVE;
+the original character remains the logical eye tracked by movement signals,
+viewer discovery and dark-tile click-coordinate conversion. Remote cameras
+are left alone. Client.view, pixel zoom, HUD coordinates and source block
+membership do not change on passenger movement.
+
+The source blocks retain native world positions and translation-only flight
+animation. Their shared source translation is recentered using the inverse
+heading so ground/landing coordinates remain P + R*(S-F). The lower completed
+plane rotates about the fixed eye. It does not receive passenger compensation.
+Source multiz parallax scaling is disabled while the scene owns these planes
+and restored on cleanup.
+
+Character following is applied to final render copies of the game, masked and
+unmasked FOV passes, ghosts, runechat and balloon text. Those copies move by
+anchor - logical_eye after lighting/FOV composition. HUD and fullscreen copies
+remain unchanged. World-follow interpolation matches ordinary mob glide; FOV
+changes attach newly enabled copies to the current interpolation. Initial
+offset and capture rotation are set before changing the native eye.
+
+Leaving the scene, Logout, deletion of the capture anchor or scene releases
+the camera and owned world-copy transforms. Restoration checks ownership and
+does not replace another system's newly assigned eye/perspective. The ordinary
+ground projection is restored immediately when fixed mode ends. Dead living
+bodies are not repinned after their death camera reset. The native eye stays
+stationary during ordinary passenger walking, avoiding eye-range movement over
+the shared terrain tree.
+
+Headless regressions exercise ground projection at 0/37/90/180/270 degrees,
+unchanged capture during a southward step after a half turn, final-world glide,
+HUD isolation, FOV relay changes, click-origin selection and transform cleanup.
+Actual connected-client eye ownership/restoration, mouse-hit rasterization,
+appearance and SendMaps load are not verified by these tests.
+
+The source buffer is still the native viewport's finite rectangle. This first
+experiment checks camera anchoring and walking cost; it does not guarantee
+full-window coverage when the virtual view extends past the captured world.
+No HUD source canvas, expanded client.view or per-tile rotation is used.
+
+Validation: focused tadpole_flight PASS (0.9 seconds), no runtime errors,
+Success! at data/logs/tadpole-fixed-eye-final/clean_run.lk. Normal BYOND
+516.1659 compilation: 0 errors and 0 warnings. The isolated test build has
+the existing loop_checks warning. No connected-client visual/load test ran.

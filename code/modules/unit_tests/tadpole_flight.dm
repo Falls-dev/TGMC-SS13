@@ -10,6 +10,8 @@
 /datum/unit_test/tadpole_flight/Run()
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/flight_test/helm = allocate(/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/flight_test)
 	var/obj/docking_port/mobile/port = allocate(/obj/docking_port/mobile)
+	port.width = 1
+	port.height = 1
 	var/mob/living/pilot = allocate(/mob/living/carbon/human)
 	var/turf/start = locate(40, 40, run_loc_floor_bottom_left.z)
 	var/mob/camera/aiEye/remote/shuttle_docker/eye = allocate(/mob/camera/aiEye/remote/shuttle_docker, start, helm)
@@ -230,13 +232,14 @@
 		TEST_ASSERT_EQUAL(scene.chunks[chunk_key], stable_blocks[chunk_key], "Walking must preserve every cached block identity")
 	// A bucket transition during a source animation changes membership only.
 	var/flight_before_x = helm.flight_x
+	var/list/effective_before = scene.displayed_source_position()
 	var/center_key = "[scene.origin_x],[scene.origin_y],[scene.source_z]"
 	var/obj/effect/abstract/tadpole_native_chunk/center_chunk = scene.chunks[center_key]
 	helm.flight_x += 8
 	scene.update_source_position(1)
 	scene.source_started = world.time - 5
 	var/list/source_before = scene.displayed_source_position()
-	TEST_ASSERT(abs(source_before[1] - flight_before_x - 4) < 0.001, "Shared terrain must interpolate the actual flight position")
+	TEST_ASSERT(abs(source_before[1] - effective_before[1] - 4) < 0.001, "Shared terrain must interpolate the actual flight position")
 	TEST_ASSERT(scene.update_region(scene.radius, scene.source_z), "Crossing eight tiles must update source membership")
 	TEST_ASSERT_EQUAL(scene.displayed_source_position().Join(","), source_before.Join(","), "Changing cache origin must not move the displayed terrain")
 	TEST_ASSERT_EQUAL(scene.chunks[center_key], center_chunk, "A cache seam must retain overlapping source blocks")
@@ -279,6 +282,8 @@
 	var/mob/other_passenger = other_display.mymob
 	var/other_sight_before = other_passenger.sight
 	var/datum/tadpole_scene_view/native_view = new(display, 1, walking_scene)
+	check_fixed_eye_projection(walking_scene, native_view)
+	native_view.begin_fixed_view()
 	TEST_ASSERT_NOTNULL(native_view.plate, "Ground must have a preallocated native lower render plate")
 	TEST_ASSERT(native_view.plate.get_relay_to(TADPOLE_GROUND_PLANE), "Passenger plate must relay below the physical craft")
 	TEST_ASSERT_EQUAL(other_plate.render_relay_planes.Join(","), original_targets.Join(","), "Another observer must retain their native graph")
@@ -292,31 +297,39 @@
 	TEST_ASSERT_EQUAL(pilot.sight, sight_before_view, "Logout must release temporary passenger vision")
 	TEST_ASSERT_NULL(native_view.tracked_eye, "Logout must stop movement callbacks from reactivating vision")
 	native_view.bind_visibility(pilot)
+	native_view.begin_fixed_view()
 	pilot.set_sight(SEE_INFRA)
 	TEST_ASSERT_EQUAL(pilot.sight, SEE_INFRA | required_sight, "Regular sight recalculation must not restore passenger occlusion")
 	// Exercise the real Move -> COMSIG_MOVABLE_MOVED path without calling
 	// the 0.2-second scene processor. Headless fixture has a HUD but no client.
-	var/turf/walking_start = get_turf(pilot)
-	var/turf/walking_end = get_step(walking_start, EAST)
+	var/turf/walking_start = locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y + 2, run_loc_floor_bottom_left.z)
+	pilot.forceMove(walking_start)
+	var/turf/walking_end = get_step(walking_start, SOUTH)
 	var/list/old_ground_tiles = helm.ground_tiles
 	helm.ground_tiles = list()
 	helm.ground_tiles[walking_start] = TRUE
 	helm.ground_tiles[walking_end] = TRUE
 	var/walking_heading = helm.flight_heading
-	helm.flight_heading = dir2angle(port.dir) + 37
+	helm.flight_heading = dir2angle(port.dir) + 180
 	native_view.track_eye(pilot)
 	walking_scene.update_view(native_view, walking_start, 0)
 	var/old_camera_values = native_view.last_camera.tolist().Join(",")
+	var/old_world_y = native_view.world_to_y
+	var/turf/fixed_eye_before = get_turf(walking_scene.camera_anchor)
 	pilot.set_glide_size(8)
-	TEST_ASSERT(pilot.Move(walking_end, EAST), "Walking camera fixture must move through the ordinary Move path")
-	TEST_ASSERT_NOTEQUAL(native_view.last_camera.tolist().Join(","), old_camera_values, "A passenger step must update projection before flight processing runs")
-	TEST_ASSERT_EQUAL(native_view.animation_started, world.time, "Walking projection must start in the movement tick")
-	TEST_ASSERT_EQUAL(native_view.animation_duration, world.icon_size / max(pilot.glide_size, 1) * world.tick_lag, "Walking interpolation must match eye glide instead of the flight interval")
+	TEST_ASSERT(pilot.Move(walking_end, SOUTH), "Walking camera fixture must move through the ordinary Move path")
+	TEST_ASSERT_EQUAL(native_view.last_camera.tolist().Join(","), old_camera_values, "Walking must not transform the ground capture plane")
+	TEST_ASSERT_EQUAL(native_view.world_to_y - old_world_y, world.icon_size, "A southward step after a half turn must shift the final world north by one tile")
+	TEST_ASSERT_EQUAL(get_turf(walking_scene.camera_anchor), fixed_eye_before, "Walking must leave the native capture eye fixed")
+	TEST_ASSERT_EQUAL(native_view.logical_click_origin(fixed_eye_before), walking_end, "Dark-tile click origin must follow the character rather than the technical eye")
+	TEST_ASSERT_EQUAL(native_view.world_started, world.time, "Final-world follow must start in the movement tick")
+	TEST_ASSERT_EQUAL(native_view.world_duration, world.icon_size / max(pilot.glide_size, 1) * world.tick_lag, "Final-world glide must match ordinary mob glide")
 	TEST_ASSERT_EQUAL(length(walking_scene.chunks), 0, "Walking projection must not allocate or update terrain membership")
-	var/turf/outside_ship = get_step(walking_end, EAST)
-	TEST_ASSERT(pilot.Move(outside_ship, EAST), "Visibility fixture must step out of the Tadpole region")
+	var/turf/outside_ship = get_step(walking_end, SOUTH)
+	TEST_ASSERT(pilot.Move(outside_ship, SOUTH), "Visibility fixture must step out of the Tadpole region")
 	TEST_ASSERT_EQUAL(pilot.sight, SEE_INFRA, "Leaving must restore the latest underlying sight in the movement tick")
-	TEST_ASSERT(pilot.Move(walking_end, WEST), "Visibility fixture must reenter the Tadpole region")
+	TEST_ASSERT(!native_view.fixed_camera, "Leaving must release fixed-camera world transforms immediately")
+	TEST_ASSERT(pilot.Move(walking_end, NORTH), "Visibility fixture must reenter the Tadpole region")
 	TEST_ASSERT_EQUAL(pilot.sight, SEE_INFRA | required_sight, "Reentry must reactivate native scene visibility")
 	pilot.set_sight(sight_before_view)
 	native_view.track_eye(eye)
@@ -365,6 +378,70 @@
 	qdel(display)
 	qdel(other_display)
 	helm.eyeobj = null
+
+/// Headless renderer/state test. Actual client eye assignment and mouse-hit
+/// rasterization require a connected-client check, not a matrix assertion.
+/datum/unit_test/tadpole_flight/proc/check_fixed_eye_projection(datum/tadpole_scene/scene, datum/tadpole_scene_view/view)
+	var/obj/docking_port/mobile/port = scene.helm.shuttle_port
+	var/old_width = port.width
+	var/old_height = port.height
+	var/old_heading = scene.helm.flight_heading
+	port.width = 7
+	port.height = 9
+	scene.ensure_camera_anchor()
+	var/turf/anchor_before = get_turf(scene.camera_anchor)
+	var/atom/movable/screen/plane_master/hud_plane = view.hud.get_plane_master(HUD_PLANE)
+	var/atom/movable/render_plane_relay/hud_relay = hud_plane.get_relay_to(RENDER_PLANE_NON_GAME)
+	var/hud_transform_before = hud_relay.transform.tolist().Join(",")
+	view.begin_fixed_view()
+	TEST_ASSERT(length(view.world_relays), "Fixed mode must find completed world relays")
+	for(var/angle in list(0, 37, 90, 180, 270))
+		scene.helm.flight_heading = dir2angle(port.dir) + angle
+		scene.update_source_position(0)
+		var/list/source = scene.displayed_source_position()
+		var/old_capture
+		var/old_shift_y
+		for(var/dy in list(0, 1))
+			var/turf/eye = locate(port.x + 3, port.y + 4 - dy, port.z)
+			scene.update_view(view, eye, 0)
+			var/matrix/camera = view.last_camera
+			var/raw_x = (port.x + scene.helm.flight_x + 2 - source[1] - scene.camera_anchor.x) * world.icon_size
+			var/raw_y = (port.y + scene.helm.flight_y - 3 - source[2] - scene.camera_anchor.y) * world.icon_size
+			var/projected_x = camera.a * raw_x + camera.b * raw_y + camera.c + view.world_to_x
+			var/projected_y = camera.d * raw_x + camera.e * raw_y + camera.f + view.world_to_y
+			var/expected_x = (port.x - eye.x + camera.a * 2 - camera.b * 3) * world.icon_size
+			var/expected_y = (port.y - eye.y + camera.d * 2 - camera.e * 3) * world.icon_size
+			TEST_ASSERT(abs(projected_x - expected_x) < 0.001 && abs(projected_y - expected_y) < 0.001, "Fixed-eye world follow must preserve ground and landing coordinates")
+			if(dy)
+				TEST_ASSERT_EQUAL(camera.tolist().Join(","), old_capture, "A southward step must not change the capture plane at any heading")
+				TEST_ASSERT_EQUAL(view.world_to_y - old_shift_y, world.icon_size, "The final world and crop must follow the hull by one tile after a southward step")
+			old_capture = camera.tolist().Join(",")
+			old_shift_y = view.world_to_y
+			TEST_ASSERT_EQUAL(get_turf(scene.camera_anchor), anchor_before, "Passenger walking must leave the native eye fixed")
+			TEST_ASSERT_EQUAL(scene.displayed_source_position().Join(","), source.Join(","), "Passenger walking must not restart source movement")
+			TEST_ASSERT_EQUAL(hud_relay.transform.tolist().Join(","), hud_transform_before, "World follow must never transform the HUD")
+			for(var/atom/movable/render_plane_relay/relay as anything in view.world_relays)
+				if(QDELETED(relay))
+					continue
+				var/matrix/original = view.world_relays[relay]
+				TEST_ASSERT_EQUAL(relay.transform.c, original.c + view.world_to_x, "Completed world copies must receive the x follow offset")
+				TEST_ASSERT_EQUAL(relay.transform.f, original.f + view.world_to_y, "Completed world copies must receive the y follow offset")
+	ADD_TRAIT(view.hud.mymob, TRAIT_FOV_APPLIED, "tadpole_camera_test")
+	var/atom/movable/screen/plane_master/masked = view.hud.get_plane_master(RENDER_PLANE_GAME_MASKED)
+	var/atom/movable/render_plane_relay/masked_relay = masked.get_relay_to(RENDER_PLANE_MASTER)
+	TEST_ASSERT_EQUAL(masked_relay.transform.f, view.world_to_y, "FOV activation must preserve final-world follow")
+	REMOVE_TRAIT(view.hud.mymob, TRAIT_FOV_APPLIED, "tadpole_camera_test")
+	var/list/owned_relays = view.world_relays.Copy()
+	view.end_fixed_view()
+	for(var/atom/movable/render_plane_relay/relay as anything in owned_relays)
+		if(!QDELETED(relay))
+			var/matrix/original = owned_relays[relay]
+			TEST_ASSERT_EQUAL(relay.transform.tolist().Join(","), original.tolist().Join(","), "Camera release must restore owned world-copy transforms")
+	TEST_ASSERT(!view.fixed_camera && !length(view.world_relays), "Release must clear fixed-camera state")
+	port.width = old_width
+	port.height = old_height
+	scene.helm.flight_heading = old_heading
+	scene.ensure_camera_anchor()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/flight_test/checkLandingSpot()
 	return SHUTTLE_DOCKER_LANDING_CLEAR
