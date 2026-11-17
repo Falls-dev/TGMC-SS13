@@ -129,7 +129,8 @@ GLOBAL_VAR(common_report) //Contains common part of roundend report
 	transfer_characters()
 	SSpoints.prepare_supply_packs_list(iscrashgamemode(src))
 	SSreqtorio.prepare_assembly_crafts_list()
-	SSpoints.dropship_points = 0
+	var/datum/map_config/ship_map_config = SSmapping.configs[SHIP_MAP]
+	SSpoints.dropship_points = ship_map_config?.starting_dropship_points || 0
 	SSpoints.supply_points[FACTION_TERRAGOV] = 0
 
 	for(var/hivenum in GLOB.hive_datums)
