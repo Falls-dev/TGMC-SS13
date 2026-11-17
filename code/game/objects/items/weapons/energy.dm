@@ -90,7 +90,7 @@
 		heat = 3500
 		icon_state = "[initial(icon_state)]_[sword_color]"
 		w_class = WEIGHT_CLASS_BULKY
-		playsound(src, 'sound/weapons/saberon.ogg', 25, 1)
+		playsound(src, 'sound/weapons/saberon.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	else
 		UnregisterSignal(src, list(COMSIG_ITEM_EQUIPPED_TO_SLOT, COMSIG_ITEM_EQUIPPED_NOT_IN_SLOT, COMSIG_ITEM_UNEQUIPPED))
 		toggle_item_bump_attack(user, FALSE)
@@ -101,7 +101,7 @@
 		heat = 0
 		icon_state = "[initial(icon_state)]"
 		w_class = WEIGHT_CLASS_SMALL
-		playsound(src, 'sound/weapons/saberoff.ogg', 25, 1)
+		playsound(src, 'sound/weapons/saberoff.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 		special_attack?.remove_action(user)
 
 /obj/item/weapon/energy/sword/pirate

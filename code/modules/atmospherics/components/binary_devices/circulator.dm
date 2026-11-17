@@ -35,7 +35,7 @@
 	if(!CHECK_BITFIELD(machine_stat, PANEL_OPEN))
 		return
 	anchored = !anchored
-	playsound(loc, 'sound/items/ratchet.ogg', 25, 1)
+	playsound(loc, 'sound/items/ratchet.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	to_chat(user, span_notice("You [anchored?"secure":"unsecure"] [src]."))
 
 

@@ -159,7 +159,7 @@ Note that this means that snipers will have a slowdown of 3, due to the scope
 	if(laser_target && !line_of_sight(user, laser_target, 24))
 		laser_off()
 		to_chat(user, span_danger("You lose sight of your target!"))
-		playsound(user,'sound/machines/click.ogg', 25, 1)
+		playsound(user,'sound/machines/click.ogg', 25, TRUE, SUPPRESSED_SOUND_RANGE)
 
 /obj/item/weapon/gun/rifle/sniper/antimaterial/zoom(mob/living/user, tileoffset = 11, viewsize = 12) //tileoffset is client view offset in the direction the user is facing. viewsize is how far out this thing zooms. 7 is normal view
 	. = ..()
@@ -194,7 +194,7 @@ Note that this means that snipers will have a slowdown of 3, due to the scope
 	if(user?.client)
 		user.client.click_intercept = src
 		to_chat(user, span_notice("<b>You activate your target marker and take careful aim.</b>"))
-		playsound(user,'sound/machines/click.ogg', 25, 1)
+		playsound(user,'sound/machines/click.ogg', 25, TRUE, SUPPRESSED_SOUND_RANGE)
 	return TRUE
 
 
@@ -209,7 +209,7 @@ Note that this means that snipers will have a slowdown of 3, due to the scope
 	if(user?.client)
 		user.client.click_intercept = null
 		to_chat(user, span_notice("<b>You deactivate your target marker.</b>"))
-		playsound(user,'sound/machines/click.ogg', 25, 1)
+		playsound(user,'sound/machines/click.ogg', 25, TRUE, SUPPRESSED_SOUND_RANGE)
 	return TRUE
 
 

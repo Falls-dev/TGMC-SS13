@@ -1,9 +1,9 @@
 /mob/living/carbon/xenomorph/proc/death_cry()
 	var/datum/xenomorph_skin/skin_datum = current_skin
 	if(skin_datum && skin_datum.death_sound)
-		playsound(loc, skin_datum.death_sound, 30, 1)
+		playsound(loc, skin_datum.death_sound, 25, 1, MEDIUM_SOUND_RANGE)
 		return
-	playsound(loc, prob(50) ? 'sound/voice/alien/death.ogg' : 'sound/voice/alien/death2.ogg', 25, 1)
+	playsound(loc, prob(50) ? 'sound/voice/alien/death.ogg' : 'sound/voice/alien/death2.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 
 /mob/living/carbon/xenomorph/death(gibbing = FALSE, deathmessage = "lets out a waning guttural screech, green blood bubbling from its maw.", silent = FALSE)
 	return ..() //we're just changing the death message

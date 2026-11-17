@@ -271,7 +271,7 @@
 	if(xeno_attacker.a_intent == INTENT_HARM)
 		xeno_attacker.do_attack_animation(src, ATTACK_EFFECT_SMASH)
 		if(prob(xeno_attacker.xeno_caste.melee_damage))
-			playsound(loc, 'sound/effects/metalhit.ogg', 25, 1)
+			playsound(loc, 'sound/effects/metalhit.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			xeno_attacker.visible_message(span_danger("\The [xeno_attacker] smashes \the [src] beyond recognition!"), \
 			span_danger("We enter a frenzy and smash \the [src] apart!"), null, 5)
 			malfunction()
@@ -279,7 +279,7 @@
 		else
 			xeno_attacker.visible_message(span_danger("[xeno_attacker] slashes \the [src]!"), \
 			span_danger("We slash \the [src]!"), null, 5)
-			playsound(loc, 'sound/effects/metalhit.ogg', 25, 1)
+			playsound(loc, 'sound/effects/metalhit.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 		return TRUE
 
 	if(tipped_level)
@@ -375,7 +375,7 @@
 		return
 	if(!do_after(user, 20, NONE, src, BUSY_ICON_BUILD))
 		return
-	playsound(loc, 'sound/items/ratchet.ogg', 25, 1)
+	playsound(loc, 'sound/items/ratchet.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	anchored = !anchored
 	if(anchored)
 		user.visible_message("[user] tightens the bolts securing \the [src] to the floor.", "You tighten the bolts securing \the [src] to the floor.")

@@ -537,7 +537,7 @@
 	if(user?.client)
 		user.client.click_intercept = null
 		to_chat(user, span_notice("<b>You deactivate your target marker.</b>"))
-		playsound(user,'sound/machines/click.ogg', 25, 1)
+		playsound(user,'sound/machines/click.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	return TRUE
 
 #undef PRED_MODE_STUN

@@ -52,7 +52,7 @@
 		else
 			visible_message(span_notice("[user] feeds [M] some [loaded] from \the [src]"))
 			M.reagents.add_reagent(/datum/reagent/consumable/nutriment, 1)
-		playsound(M.loc,'sound/items/eatfood.ogg', 15, 1)
+		playsound(M.loc,'sound/items/eatfood.ogg', 15, 1, SHORT_SOUND_RANGE)
 		QDEL_NULL(loaded)
 		update_appearance(UPDATE_OVERLAYS)
 		return
@@ -276,7 +276,7 @@
 	if(istype(I, /obj/item/tool/kitchen/rollingpin))
 		if(cooldown < world.time - 25)
 			user.visible_message(span_warning("[user] bashes [src] with [I]!"))
-			playsound(user.loc, 'sound/effects/shieldbash.ogg', 25, 1)
+			playsound(user.loc, 'sound/effects/shieldbash.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			cooldown = world.time
 
 /*

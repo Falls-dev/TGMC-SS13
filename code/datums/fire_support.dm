@@ -59,7 +59,7 @@
 	addtimer(CALLBACK(src, PROC_REF(start_fire_support), target_turf), delay_to_impact)
 
 	if(initiate_sound)
-		playsound(target_turf, initiate_sound, 100)
+		playsound(target_turf, initiate_sound, 100, FALSE, VERY_LOUD_SOUND_RANGE)
 	if(initiate_chat_message)
 		to_chat(user, span_notice(initiate_chat_message))
 	if(portrait_type && initiate_screen_message && initiate_title)
@@ -73,7 +73,7 @@
 	if(start_visual)
 		new start_visual(target_turf)
 	if(start_sound)
-		playsound(target_turf, start_sound, 100)
+		playsound(target_turf, start_sound, 100, VERY_LOUD_SOUND_RANGE)
 
 ///Selects the final target turf(s) and calls impact procs
 /datum/fire_support/proc/select_target(turf/target_turf)
@@ -118,7 +118,7 @@
 ///Takes the top 3 turfs and miniguns them, then repeats until none left
 /datum/fire_support/gau/proc/strafe_turfs(list/strafelist)
 	var/turf/strafed
-	playsound(strafelist[1], 'sound/weapons/gauimpact.ogg', 40, 1, 20, falloff = 3)
+	playsound(strafelist[1], 'sound/weapons/gauimpact.ogg', 40, TRUE, LOUD_SOUND_RANGE, 3)
 	for(var/i=1 to 3)
 		strafed = strafelist[1]
 		strafelist -= strafed
@@ -361,7 +361,7 @@
 /datum/fire_support/mortar/smoke/do_impact(turf/target_turf)
 	var/datum/effect_system/smoke_spread/smoke = new smoketype()
 	playsound(target_turf, SFX_EXPLOSION_SMALL, 50)
-	playsound(target_turf, 'sound/effects/smoke_bomb.ogg', 25, TRUE)
+	playsound(target_turf, 'sound/effects/smoke_bomb.ogg', 25, TRUE, MEDIUM_SOUND_RANGE)
 	smoke.set_up(smokeradius, target_turf, smoke_duration)
 	smoke.start()
 
@@ -413,7 +413,7 @@
 	var/outer_range = 9
 
 /datum/fire_support/rad_missile/do_impact(turf/target_turf)
-	playsound(target_turf, 'sound/effects/portal_opening.ogg', 100, FALSE)
+	playsound(target_turf, 'sound/effects/portal_opening.ogg', 100, FALSE, LOUD_SOUND_RANGE)
 	for(var/mob/living/victim in hearers(outer_range, target_turf))
 		var/strength
 		var/sound_level

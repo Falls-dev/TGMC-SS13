@@ -168,7 +168,7 @@
 		old_coords["target_y"] = coords["targ_y"]
 		usr.visible_message(span_notice("[usr] adjusts [src]'s firing angle and distance."),
 		span_notice("You adjust [src]'s firing angle and distance to match the new coordinates."))
-		playsound(loc, 'sound/items/ratchet.ogg', 25, 1)
+		playsound(loc, 'sound/items/ratchet.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 
 /**
  * this proc is used because pointers suck and references would break the saving of coordinates.
@@ -239,13 +239,13 @@
 		to_chat(AI, span_notice("NOTICE - [src] has been linked to your systems, allowing for remote targeting. Use shift click to set a target."))
 		user.transferItemToLoc(I, src)
 		AI.associate_artillery(src)
-		playsound(loc, 'sound/items/ratchet.ogg', 25, 1)
+		playsound(loc, 'sound/items/ratchet.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 		ai_targeter = I
 
 	if(!istype(I, /obj/item/binoculars/tactical))
 		return
 	var/obj/item/binoculars/tactical/binocs = I
-	playsound(src, 'sound/effects/binoctarget.ogg', 35)
+	playsound(src, 'sound/effects/binoctarget.ogg', 35, FALSE, SHORT_SOUND_RANGE)
 	if(binocs.set_mortar(src))
 		balloon_alert(user, "linked")
 		return
@@ -291,7 +291,7 @@
 	coords["targ_x"] = T.x
 	coords["targ_y"] = T.y
 	say("Remote targeting set by [user]. COORDINATES: X:[coords["targ_x"]] Y:[coords["targ_y"]] OFFSET: X:[coords["dial_x"]] Y:[coords["dial_y"]]")
-	playsound(loc, 'sound/items/ratchet.ogg', 25, 1)
+	playsound(loc, 'sound/items/ratchet.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 
 ///perform any individual sprite-specific visuals here
 /obj/machinery/deployable/mortar/proc/perform_firing_visuals()

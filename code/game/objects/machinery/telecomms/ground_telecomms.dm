@@ -125,7 +125,7 @@
 		X.do_attack_animation(src, ATTACK_EFFECT_CLAW)
 		X.visible_message(span_danger("[X] slashes \the [src]!"), \
 		span_danger("We slash \the [src]!"), null, 5)
-		playsound(loc, SFX_ALIEN_CLAW_METAL, 25, TRUE)
+		playsound(loc, SFX_ALIEN_CLAW_METAL, 25, TRUE, MEDIUM_SOUND_RANGE)
 		tower_integrity -= 25
 		set_tower_status()
 

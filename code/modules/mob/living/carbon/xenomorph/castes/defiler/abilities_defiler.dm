@@ -105,7 +105,7 @@
 	if(!can_use_ability(A))
 		return fail_activate()
 	xeno_owner.do_attack_animation(living_target)
-	playsound(living_target, 'sound/effects/spray3.ogg', 15, TRUE)
+	playsound(living_target, 'sound/effects/spray3.ogg', 15, TRUE, SHORT_SOUND_RANGE)
 	playsound(living_target, pick('sound/voice/alien/drool1.ogg', 'sound/voice/alien/drool2.ogg'), 15, 1)
 	to_chat(xeno_owner, span_xenodanger("Our stinger successfully discharges accelerant into our victim."))
 	to_chat(living_target, span_danger("You feel horrible pain as something sharp forcibly pierces your thorax."))
@@ -239,7 +239,7 @@
 		toggle_particles(FALSE)
 		return
 	var/turf/T = get_turf(xeno_owner)
-	playsound(T, 'sound/effects/smoke.ogg', 25)
+	playsound(T, 'sound/effects/smoke.ogg', 25, FALSE, MEDIUM_SOUND_RANGE)
 	if(time_left > 1)
 		emitted_gas.set_up(smoke_range, T)
 	else //last emission is larger
@@ -470,7 +470,7 @@
 	else
 		carbon_target.reagents.add_reagent(reagent_slash_reagent, DEFILER_REAGENT_SLASH_INJECT_AMOUNT)
 		xeno_owner.visible_message(carbon_target, span_danger("[carbon_target] is pricked by [xeno_owner]'s spines!"))
-	playsound(carbon_target, 'sound/effects/spray3.ogg', 15, TRUE)
+	playsound(carbon_target, 'sound/effects/spray3.ogg', 15, TRUE, SHORT_SOUND_RANGE)
 
 	GLOB.round_statistics.defiler_reagent_slashes++ //Statistics
 	SSblackbox.record_feedback(FEEDBACK_TALLY, "round_statistics", 1, "defiler_reagent_slashes")

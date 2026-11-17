@@ -382,7 +382,7 @@
 	if(!do_after(owner, 0.5 SECONDS, NONE, T, BUSY_ICON_BUILD))
 		return
 
-	playsound(T, SFX_ALIEN_RESIN_BUILD, 25)
+	playsound(T, SFX_ALIEN_RESIN_BUILD, 25, FALSE, MEDIUM_SOUND_RANGE)
 	new /obj/structure/xeno/acidwell(T, owner)
 
 	succeed_activate()

@@ -66,7 +66,7 @@
 /obj/structure/mineral_door/proc/toggle_state()
 	switching_states = TRUE
 	open = !open
-	playsound(get_turf(src), trigger_sound, 25, 1)
+	playsound(get_turf(src), trigger_sound, 25, 1, MEDIUM_SOUND_RANGE)
 	flick("[base_icon_state][smoothing_flags ? "-[smoothing_junction]" : ""]-[open ? "opening" : "closing"]", src)
 	density = !density
 	opacity = !opacity
@@ -147,7 +147,7 @@
 	user.do_attack_animation(src, used_item = I)
 	I.cut_apart(user, name, src, charge_cost)
 	take_damage(max(0, I.force * (1 + PLASMACUTTER_RESIN_MULTIPLIER)), I.damtype, MELEE)
-	playsound(src, SFX_ALIEN_RESIN_BREAK, 25)
+	playsound(src, SFX_ALIEN_RESIN_BREAK, 25, FALSE, MEDIUM_SOUND_RANGE)
 	return TRUE
 
 /obj/structure/mineral_door/get_explosion_resistance()

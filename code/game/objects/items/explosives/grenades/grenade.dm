@@ -102,7 +102,7 @@
 
 	icon_state = initial(icon_state) + "_active"
 	active = TRUE
-	playsound(loc, pick(arm_sound), 30, 1, 6)
+	playsound(loc, pick(arm_sound), 30, TRUE, SHORT_SOUND_RANGE)
 	if(dangerous)
 		GLOB.round_statistics.grenades_thrown++
 		SSblackbox.record_feedback(FEEDBACK_TALLY, "round_statistics", 1, "grenades_thrown")
