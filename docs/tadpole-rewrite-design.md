@@ -407,3 +407,20 @@ Validation: focused tadpole_flight PASS (1 second), no runtime errors, Success!
 at data/logs/tadpole-glide25-final/clean_run.lk. Normal BYOND 516.1659 build:
 0 errors, 0 warnings. The isolated test build has the existing loop_checks
 warning. Connected-client smoothness, clipping and load remain unverified.
+
+## Movable ground searchlight
+
+The searchlight now uses MOVABLE_LIGHT, retaining radius 9, power 8 and white
+color. The standard overlay_lighting component supplies the mask and movement
+updates; no hybrid light source or polygon shadow calculation is created for
+this lamp. Its empty holder is visible (invisibility 0), since invisibility
+would also hide the movable light underlay from living passengers. Flight still
+reuses one ground source and clear_ground_view deletes it on departure.
+The movable lamp is explicitly enabled with light_on = TRUE.
+
+Validation: normal build 0 errors/0 warnings; focused tadpole_flight PASS (1.9s),
+including real source creation, deferred mask attachment, ground plane,
+movement reuse and source/component cleanup. No runtime errors; clean marker
+Success! at data/logs/tadpole-movable-light-on/clean_run.lk. The isolated test
+build retains the existing loop_checks warning. Client visuals and performance
+have not been measured.

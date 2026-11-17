@@ -637,10 +637,13 @@
 
 /obj/effect/abstract/tadpole_searchlight
 	icon = null
-	invisibility = INVISIBILITY_ABSTRACT
+	// The movable light is an underlay and inherits its holder's visibility.
+	// An empty icon keeps the source hidden without hiding the light itself.
+	invisibility = 0
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	atom_flags = SHUTTLE_IMMUNE|PREVENT_CONTENTS_EXPLOSION
-	light_system = HYBRID_LIGHT
+	light_system = MOVABLE_LIGHT
+	light_on = TRUE
 	light_range = 9
 	light_power = 8
 	light_color = COLOR_WHITE

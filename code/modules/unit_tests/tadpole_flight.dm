@@ -366,6 +366,7 @@
 	TEST_ASSERT(passenger_plate.get_relay_to(RENDER_PLANE_TRANSPARENT), "Leaving must restore native multiz routing")
 	var/turf/ground = locate(40,40,SSmapping.ground_start)
 	TEST_ASSERT(SSmapping.z_level_to_plane_offset[ground.z] >= 1, "Ground planes must be allocated below transit before atom initialization")
+	check_movable_searchlight(ground)
 	var/obj/effect/lighting_mask_holder/light_holder = allocate(/obj/effect/lighting_mask_holder, ground)
 	var/atom/movable/lighting_mask/light = new
 	light_holder.assign_mask(light)
@@ -469,6 +470,39 @@
 	TEST_ASSERT_EQUAL(view.follow_duration(actor, next_eye), 48 / 8 * world.tick_lag / 10, "A new step must include the previous glide's remaining 16 pixels")
 	TEST_ASSERT_EQUAL(view.follow_duration(actor, get_turf(scene.camera_anchor)), 16 / 8 * world.tick_lag / 10, "Reversing mid-step must use remaining distance, not a fresh full-tile duration")
 	actor.set_glide_size(old_glide)
+
+/datum/unit_test/tadpole_flight/proc/check_movable_searchlight(turf/ground)
+	var/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/flight_test/helm = allocate(/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/flight_test)
+	var/obj/docking_port/mobile/port = allocate(/obj/docking_port/mobile, ground)
+	port.width = 1
+	port.height = 1
+	helm.shuttle_port = port
+	helm.eyeobj = allocate(/mob/camera/aiEye/remote/shuttle_docker, ground, helm)
+	helm.fly_state = SHUTTLE_IN_ATMOSPHERE
+	helm.flight_x = ground.x
+	helm.flight_y = ground.y
+	helm.flight_heading = dir2angle(port.dir)
+	helm.update_ground_searchlight()
+	var/obj/effect/abstract/tadpole_searchlight/source = helm.ground_searchlight
+	var/datum/component/overlay_lighting/overlay = source.GetComponent(/datum/component/overlay_lighting)
+	TEST_ASSERT_NOTNULL(overlay, "Searchlight must initialize movable overlay lighting")
+	TEST_ASSERT_NULL(source.light, "Searchlight must not create a hybrid shadow source")
+	TEST_ASSERT_EQUAL(source.invisibility, 0, "The empty source must not hide its light underlay from living passengers")
+	// Component holder attachment is deferred through the timer subsystem.
+	sleep(1 SECONDS)
+	TEST_ASSERT_EQUAL(overlay.current_holder, source, "Movable searchlight must attach to its ground source")
+	// Underlays stores appearances, not the component's image reference.
+	TEST_ASSERT(length(source.underlays), "Movable searchlight must attach its visible light mask")
+	TEST_ASSERT_EQUAL(overlay.visible_mask.plane, GET_NEW_PLANE(O_LIGHTING_VISUAL_PLANE, SSmapping.z_level_to_plane_offset[ground.z]), "Searchlight must render on the ground lighting plane")
+	var/turf/previous = get_turf(source)
+	helm.flight_x++
+	helm.update_ground_searchlight()
+	TEST_ASSERT_EQUAL(helm.ground_searchlight, source, "Movement must reuse the same movable source")
+	TEST_ASSERT_EQUAL(source.x, previous.x + 1, "Movable searchlight must follow flight position")
+	helm.clear_ground_view()
+	TEST_ASSERT_NULL(helm.ground_searchlight, "Leaving flight must remove its searchlight")
+	TEST_ASSERT(QDELETED(source) && QDELETED(overlay), "Source cleanup must also delete its lighting component")
+	helm.eyeobj = null
 
 /datum/unit_test/tadpole_flight/proc/check_capture_viewport()
 	var/datum/tadpole_viewport/cache_test/viewport = allocate(/datum/tadpole_viewport/cache_test)
