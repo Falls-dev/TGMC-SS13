@@ -174,6 +174,12 @@
 	if(armored_flags & ARMORED_HAS_HEADLIGHTS)
 		initialize_controller_action_type(/datum/action/vehicle/sealed/armored/toggle_lights, VEHICLE_CONTROL_SETTINGS)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/armored/horn, VEHICLE_CONTROL_SETTINGS)
+	//Мегафончик
+	initialize_controller_action_type(/datum/action/vehicle/sealed/armored/megaphone, VEHICLE_CONTROL_SETTINGS)
+	//Стреляла тоже хочет ворчать
+	initialize_controller_action_type(/datum/action/vehicle/sealed/armored/megaphone, VEHICLE_CONTROL_EQUIPMENT)
+
+
 	if(interior)
 		return
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/armored/eject)
@@ -187,7 +193,7 @@
 		return list(get_turf(entering_thing))
 
 /obj/vehicle/sealed/armored/obj_destruction(damage_amount, damage_type, damage_flag)
-	playsound(get_turf(src), SFX_EXPLOSION_LARGE, 100, TRUE) //destroy sound is normally very quiet
+	playsound(get_turf(src), SFX_EXPLOSION_LARGE, 100, TRUE, LOUD_SOUND_RANGE) //destroy sound is normally very quiet
 	new /obj/effect/temp_visual/explosion(get_turf(src), 7, LIGHT_COLOR_LAVA, FALSE, TRUE)
 	for(var/mob/living/nearby_mob AS in occupants + cheap_get_living_near(src, 7))
 		shake_camera(nearby_mob, 4, 2)

@@ -504,7 +504,7 @@ GLOBAL_LIST_EMPTY(flamer_particles)
 	width = 100
 	height = 100
 	count = 1000
-	spawning = 8
+	spawning = 4 // The fire sprite marks the tile even with fewer particles.
 	lifespan = 0.7 SECONDS
 	fade = 1 SECONDS
 	grow = -0.01

@@ -275,7 +275,7 @@ GLOBAL_LIST_INIT(blocked_droppod_tiles, typecacheof(list(/turf/open/space/transi
 /obj/structure/droppod/proc/dodrop(turf/targetturf, mob/user)
 	deadchat_broadcast("has landed at [get_area(targetturf)]!", src, user ? user : null, targetturf)
 	cell_explosion(targetturf, 30, 15)
-	playsound(targetturf, 'sound/effects/droppod_impact.ogg', 100)
+	playsound(targetturf, 'sound/effects/droppod_impact.ogg', 100, FALSE, LOUD_SOUND_RANGE)
 	QDEL_NULL(reserved_area)
 	addtimer(CALLBACK(src, PROC_REF(completedrop), user), 7) //dramatic effect
 
@@ -499,7 +499,7 @@ GLOBAL_LIST_INIT(blocked_droppod_tiles, typecacheof(list(/turf/open/space/transi
 /obj/structure/droppod/nonmob/mech_pod/dodrop(turf/targetturf, mob/user)
 	deadchat_broadcast("has landed at [get_area(targetturf)]!", src, stored_object ? stored_object : null)
 	cell_explosion(targetturf, 100, 50) //A mech just dropped onto your head from orbit
-	playsound(targetturf, 'sound/effects/droppod_impact.ogg', 100)
+	playsound(targetturf, 'sound/effects/droppod_impact.ogg', 100, VERY_LOUD_SOUND_RANGE)
 	QDEL_NULL(reserved_area)
 	addtimer(CALLBACK(src, PROC_REF(completedrop), user), 7) //dramatic effect
 

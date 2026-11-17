@@ -99,7 +99,7 @@
 		return
 	if(AM && (hivenumber == AM.get_xeno_hivenumber()))
 		return
-	playsound(src, SFX_ALIEN_RESIN_BREAK, 25)
+	playsound(src, SFX_ALIEN_RESIN_BREAK, 25, FALSE, MEDIUM_SOUND_RANGE)
 	if(iscarbon(AM))
 		if(CHECK_BITFIELD(AM.pass_flags, PASS_LOW_STRUCTURE))
 			return
@@ -174,7 +174,7 @@
 				set_trap_type(TRAP_ACID_STRONG)
 	else
 		return // nothing happened!
-	playsound(xeno_attacker.loc, 'sound/effects/refill.ogg', 25, 1)
+	playsound(xeno_attacker.loc, 'sound/effects/refill.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	balloon_alert(xeno_attacker, "Filled with [trap_type]")
 
 /obj/structure/xeno/trap/attackby(obj/item/I, mob/user, params)

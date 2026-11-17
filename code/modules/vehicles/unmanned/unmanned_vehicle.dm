@@ -227,7 +227,7 @@
 	battery = new_battery
 	user.transferItemToLoc(new_battery, src)
 	user.visible_message(span_notice("[user] installs [new_battery] into [src]."), span_notice("You install [new_battery] into [src]."))
-	playsound(loc, 'sound/items/ratchet.ogg', 25, 1)
+	playsound(loc, 'sound/items/ratchet.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 
 ///Try to remove/replace the battery with a screwdriver
 /obj/vehicle/unmanned/screwdriver_act(mob/living/user, obj/item/I)
@@ -244,7 +244,7 @@
 	battery = null
 	user.put_in_hands(removed_battery)
 	user.visible_message(span_notice("[user] removes [removed_battery] from [src]."), span_notice("You remove [removed_battery] from [src]."))
-	playsound(loc, 'sound/items/screwdriver.ogg', 25, 1)
+	playsound(loc, 'sound/items/screwdriver.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 
 ///Try to reload the turret of our vehicule
 /obj/vehicle/unmanned/proc/reload_turret(obj/item/ammo_magazine/reload_ammo, mob/user)
@@ -265,7 +265,7 @@
 	else
 		qdel(reload_ammo)
 	user.visible_message(span_notice("[user] reloads [src] with [reload_ammo]."), span_notice("You reload [src] with [reload_ammo]. It now has [current_rounds] shots left out of a maximum of [max_rounds]."))
-	playsound(loc, 'sound/weapons/guns/interact/smartgun_unload.ogg', 25, 1)
+	playsound(loc, 'sound/weapons/guns/interact/smartgun_unload.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	update_icon()
 	hud_set_uav_ammo()
 

@@ -24,6 +24,7 @@ GLOBAL_LIST_INIT(pp_transformables, list(
 		list(name = "Vatborn", key = "vatborn", color = "green"),
 		list(name = "Vatgrown", key = "vatgrown", color = "green"),
 		list(name = "Combat Robot", key = "combat_robot", color = "green"),
+		list(name = "Supersoldier", key = "prototype_supersoldier", color = "green"),
 		list(name = "Monkey", key = "monkey", color = "green"),
 		list(name = "Moth", key = "moth", color = "green"),
 		list(name = "Zombie", key = "zombie", color = "green"),
@@ -192,6 +193,8 @@ GLOBAL_LIST_INIT(pp_transformables, list(
 			new_mob = target.change_mob_type(/mob/living/carbon/human/species/vatgrown, location, null, delmob)
 		if("combat_robot")
 			new_mob = target.change_mob_type(/mob/living/carbon/human/species/robot, location, null, delmob)
+		if("prototype_supersoldier")
+			new_mob = target.change_mob_type(/mob/living/carbon/human/species/prototype_supersoldier, location, null, delmob)
 		if("SKELETON")
 			new_mob = target.change_mob_type(/mob/living/carbon/human/species/skeleton, location, null, delmob)
 		if("monkey")

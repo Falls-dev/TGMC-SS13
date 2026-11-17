@@ -63,7 +63,7 @@
 			concurrent_users += user_ref
 		// Turn on the console
 		if(length(concurrent_users) == 1 && is_living)
-			playsound(src, 'sound/machines/terminal_on.ogg', 25, FALSE)
+			playsound(src, 'sound/machines/terminal_on.ogg', 25, FALSE, MEDIUM_SOUND_RANGE)
 			use_power(active_power_usage)
 		// Register map objects
 		cam_screen.display_to(user)
@@ -110,7 +110,7 @@
 		var/list/cameras = get_available_cameras()
 		var/obj/machinery/camera/C = cameras[c_tag]
 		active_camera = C
-		playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
+		playsound(src, SFX_TERMINAL_TYPE, 25, FALSE, MEDIUM_SOUND_RANGE)
 
 		// Show static if can't use the camera
 		if(!active_camera?.can_use())
@@ -141,7 +141,7 @@
 	// Turn off the console
 	if(length(concurrent_users) == 0 && is_living)
 		active_camera = null
-		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
+		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE, MEDIUM_SOUND_RANGE)
 		use_power(0)
 
 /obj/machinery/computer/camera/proc/show_camera_static()

@@ -7,7 +7,7 @@
 ///Plays the mech step sound effect. Split from movement procs so that other mechs (HONK) can override this one specific part.
 /obj/vehicle/sealed/mecha/proc/play_stepsound()
 	SIGNAL_HANDLER
-	playsound(src, stepsound, 40, TRUE)
+	playsound(src, stepsound, 40, TRUE, LOUD_SOUND_RANGE)
 
 /obj/vehicle/sealed/mecha/relaymove(mob/living/user, direction)
 	. = TRUE

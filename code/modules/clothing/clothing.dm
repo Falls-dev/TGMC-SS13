@@ -176,7 +176,7 @@
 		return
 	set_light_on(toggle_on)
 	armor_features_flags ^= ARMOR_LAMP_ON
-	playsound(src, 'sound/items/flashlight.ogg', 15, TRUE)
+	playsound(src, 'sound/items/flashlight.ogg', 15, TRUE, SHORT_SOUND_RANGE)
 	update_icon()
 
 /obj/item/clothing/suit/update_clothing_icon()
@@ -234,7 +234,7 @@
 			update_icon()
 			return
 
-		playsound(loc, 'sound/items/wirecutter.ogg', 25, 1)
+		playsound(loc, 'sound/items/wirecutter.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 		user.visible_message(span_warning("[user] cuts the fingertips off of the [src]."),span_warning("You cut the fingertips off of the [src]."))
 
 		clipped = TRUE

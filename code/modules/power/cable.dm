@@ -335,7 +335,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 /obj/structure/cable/proc/get_machine_connections(powernetless_only)
 	. = list()
 	for(var/obj/machinery/power/P in get_turf(src))
-		if(powernetless_only || P.powernet)
+		if(powernetless_only && P.powernet)
 			continue
 		if(!P.anchored)
 			continue

@@ -101,7 +101,7 @@ Contains most of the procs that are called when a mob is attacked by something
 
 	if(!target_zone)
 		user.do_attack_animation(src)
-		playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE)
+		playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, MEDIUM_SOUND_RANGE)
 		visible_message(span_danger("[user] tries to hit [src] with [user.p_their()] [I]!"), null, null, 5)
 		log_combat(user, src, "[attack_verb]", "(missed)")
 		if(!user.mind?.bypass_ff && !mind?.bypass_ff && user.faction == faction)

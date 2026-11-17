@@ -1355,7 +1355,7 @@
 		return fail_activate()
 
 	new /obj/alien/egg/facehugger(current_turf, xeno_owner.hivenumber, use_selected_hugger ? xeno_owner.selected_hugger_type : null, hand_attach_time_multiplier)
-	playsound(current_turf, 'sound/effects/splat.ogg', 15, 1)
+	playsound(current_turf, 'sound/effects/splat.ogg', 15, 1, SHORT_SOUND_RANGE)
 
 	succeed_activate()
 	add_cooldown()

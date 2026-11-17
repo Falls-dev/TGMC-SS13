@@ -184,7 +184,7 @@ GLOBAL_LIST_EMPTY(ob_type_fuel_requirements)
 			shake_camera(current_mob, 0.7 SECONDS)
 			to_chat(current_mob, span_warning("The deck of the [SSmapping.configs[SHIP_MAP].map_name] shudders as her orbital cannon opens fire."))
 			continue
-		playsound(loc, 'sound/effects/obfire.ogg', 100, FALSE, 20, 4)
+		playsound(loc, 'sound/effects/obfire.ogg', 100, FALSE, VERY_LOUD_SOUND_RANGE, 4)
 		if(current_mob.z != target.z)
 			continue
 		if(get_dist(current_mob, target) > WARHEAD_FALLING_SOUND_RANGE)
@@ -235,7 +235,7 @@ GLOBAL_LIST_EMPTY(ob_type_fuel_requirements)
 	var/list/receivers = (GLOB.alive_human_list + GLOB.ai_list + GLOB.observer_list)
 	for(var/mob/living/screentext_receiver AS in receivers)
 		screentext_receiver.play_screen_text(HUD_ANNOUNCEMENT_FORMATTING("ОРБИТАЛЬНЫЙ УДАР", "ТИП СНАРЯДА: [uppertext(tray.warhead.warhead_kind_rus)]", LEFT_ALIGN_TEXT), new /atom/movable/screen/text/screen_text/picture/potrait/custom_mugshot(null, null, user))
-	playsound(target, 'sound/effects/OB_warning_announce_novoiceover.ogg', 125, FALSE, 30, 10) //VOX-less version for xenomorphs
+	playsound(target, 'sound/effects/OB_warning_announce_novoiceover.ogg', 125, FALSE, VERY_LOUD_SOUND_RANGE, 10) //VOX-less version for xenomorphs
 
 	var/impact_time = 10 SECONDS + (WARHEAD_FLY_TIME * (GLOB.current_orbit/3))
 
@@ -601,8 +601,8 @@ GLOBAL_LIST_EMPTY(ob_type_fuel_requirements)
 		last_firing_ai = world.time
 	else
 		last_firing = world.time
-	playsound(loc, 'sound/weapons/guns/fire/tank_smokelauncher.ogg', 70, 1)
-	playsound(loc, 'sound/weapons/guns/fire/pred_plasma_shot.ogg', 70, 1)
+	playsound(loc, 'sound/weapons/guns/fire/tank_smokelauncher.ogg', 70, TRUE, LOUD_SOUND_RANGE)
+	playsound(loc, 'sound/weapons/guns/fire/pred_plasma_shot.ogg', 70, TRUE, LOUD_SOUND_RANGE)
 	var/turf/target = locate(T.x + rand(-4, 4), T.y + rand(-4, 4), T.z)
 	for(var/mob/living/silicon/ai/AI AS in GLOB.ai_list)
 		to_chat(AI, span_notice("NOTICE - \The [src] has fired."))

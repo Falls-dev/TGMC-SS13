@@ -52,7 +52,7 @@
 			overlays.Cut()
 			overlays += sparks
 			addtimer(CALLBACK(src, PROC_REF(clear_sparks)), 0.6 SECONDS)
-			playsound(src.loc, 'sound/effects/sparks4.ogg', 25, 1)
+			playsound(src.loc, 'sound/effects/sparks4.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			locked = 0
 		update_icon()
 	if(!opened && prob(20 / severity))
@@ -61,7 +61,7 @@
 		else
 			req_access = list()
 			req_access += pick(ALL_ACCESS)
-			
+
 /// Used in emp_act to clear sparks with delay
 /obj/structure/closet/crate/secure/proc/clear_sparks()
 	overlays -= sparks

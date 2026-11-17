@@ -205,12 +205,12 @@
 	if(active)
 		force = on_force
 		w_class = WEIGHT_CLASS_BULKY
-		playsound(user, 'sound/weapons/saberon.ogg', 25, TRUE)
+		playsound(user, 'sound/weapons/saberon.ogg', 25, TRUE, MEDIUM_SOUND_RANGE)
 		to_chat(user, span_notice("[src] is now active."))
 	else
 		force = initial(force)
 		w_class = WEIGHT_CLASS_SMALL
-		playsound(user, 'sound/weapons/saberoff.ogg', 25, TRUE)
+		playsound(user, 'sound/weapons/saberoff.ogg', 25, TRUE, MEDIUM_SOUND_RANGE)
 		to_chat(user, span_notice("[src] can now be concealed."))
 	add_fingerprint(user, "turned [active ? "on" : "off"]")
 

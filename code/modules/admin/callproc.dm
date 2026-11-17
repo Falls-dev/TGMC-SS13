@@ -145,6 +145,7 @@ ADMIN_VERB(advanced_proc_call, R_DEBUG, "Advanced ProcCall", "Call a proc on any
 		log_admin(msg)
 		message_admins(msg) //Proccall announce removed.
 		admin_ticket_log(target, msg)
+		returnval = WrapAdminProcCall(target, procname, lst) // Pass the lst as an argument list to the proc
 	else
 		log_admin("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 		message_admins("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].") //Proccall announce removed.

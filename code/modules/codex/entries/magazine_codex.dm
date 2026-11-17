@@ -81,6 +81,11 @@
 		traits += "Fires [default_ammo.bonus_projectiles_amount] additional projectiles<br>"
 		traits += "Additional projectiles have a scatter of [default_ammo.bonus_projectiles_scatter]<br>"
 
+	if((!default_ammo || default_ammo.matter_cost <= 0))
+		traits += "<U>This ammunition type CANNOT be produced by matter ammo bin</U>:<br>"
+	else
+		traits += "<U>This ammunition type CAN be produced by matter ammo bin</U>:<br>"
+
 	traits += "<U>Special behavior</U>:<br>"
 	traits += get_additional_codex_info()
 

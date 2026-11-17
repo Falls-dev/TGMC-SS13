@@ -61,6 +61,7 @@
 
 /datum/ammo/bullet/pistol/ap/smart
 	ammo_behavior_flags = AMMO_BALLISTIC|AMMO_IFF
+	matter_cost = 6
 
 /datum/ammo/bullet/pistol/heavy
 	name = "heavy pistol bullet"
