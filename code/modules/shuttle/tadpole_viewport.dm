@@ -1,4 +1,4 @@
-/// Fixed native capture size. Logical zoom changes apparent scale, not terrain
+/// Hull-centered capture with a native-camera margin. Logical zoom changes scale, not terrain
 /// capture extent. HUD positions are cached and never parsed on movement ticks.
 /atom/movable/screen/background/tadpole_view_bounds
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -43,7 +43,7 @@
 	sync_relays()
 	chief.change_view(logical_size)
 
-/// Preserve the requested visual zoom while keeping the native input at 25x25.
+/// Keep a hull-sized rotation buffer independent of passenger walking/zoom.
 /datum/tadpole_viewport/proc/configure(view_size)
 	if(logical_size == view_size && render_size)
 		return render_size
@@ -55,8 +55,12 @@
 	var/list/size = getviewsize(view_size)
 	logical_width = size[1]
 	logical_height = size[2]
-	var/bounds_width = max(TADPOLE_CAPTURE_SIZE, logical_width)
-	var/bounds_height = max(TADPOLE_CAPTURE_SIZE, logical_height)
+	var/list/geometry = owner?.scene?.capture_geometry() || list(TADPOLE_CAPTURE_SIZE, TADPOLE_CAPTURE_SIZE, TADPOLE_CAPTURE_SIZE)
+	render_width = geometry[2]
+	render_height = geometry[3]
+	owner?.set_capture_size(geometry[1], geometry[1])
+	var/bounds_width = max(render_width, logical_width)
+	var/bounds_height = max(render_height, logical_height)
 	if(!(bounds_width % 2))
 		bounds_width++
 	if(!(bounds_height % 2))
@@ -65,10 +69,8 @@
 		var/hx = (bounds_width - 1) / 2
 		var/hy = (bounds_height - 1) / 2
 		frame.screen_loc = "CENTER-[hx],CENTER-[hy] to CENTER+[hx],CENTER+[hy]"
-	padding_x = (TADPOLE_CAPTURE_SIZE - logical_width) / 2
-	padding_y = (TADPOLE_CAPTURE_SIZE - logical_height) / 2
-	render_width = TADPOLE_CAPTURE_SIZE
-	render_height = TADPOLE_CAPTURE_SIZE
+	padding_x = (render_width - logical_width) / 2
+	padding_y = (render_height - logical_height) / 2
 	render_size = "[render_width]x[render_height]"
 	return render_size
 

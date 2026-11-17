@@ -62,8 +62,8 @@
 	tiles.Cut()
 	return ..()
 
-/// Native capture origin shared by everyone aboard; never follows a passenger.
-/obj/effect/abstract/tadpole_camera_anchor
+/// Hull render origin shared by everyone aboard. Never assigned to client.eye.
+/obj/effect/abstract/tadpole_render_origin
 	invisibility = INVISIBILITY_ABSTRACT
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
@@ -82,22 +82,15 @@
 	var/animation_duration = 0
 	var/list/forced_planes = list()
 	var/list/unscaled_planes = list()
-	var/fixed_camera = FALSE
-	var/client/camera_client
-	var/atom/original_eye
-	var/original_perspective
-	var/changing_eye = FALSE
-	var/list/world_relays = list()
-	var/list/world_relay_flags = list()
+	var/capture_active = FALSE
+	var/client/capture_client
 	var/datum/tadpole_viewport/viewport
 	var/atom/movable/render_plane_relay/rotation_relay
 	var/matrix/original_rotation_transform
-	var/world_from_x = 0
-	var/world_from_y = 0
-	var/world_to_x = 0
-	var/world_to_y = 0
-	var/world_started = 0
-	var/world_duration = 0
+	var/capture_x = 0
+	var/capture_y = 0
+	var/capture_width = TADPOLE_CAPTURE_SIZE
+	var/capture_height = TADPOLE_CAPTURE_SIZE
 	var/atom/movable/screen/plane_master/emissive_plate
 	var/had_emissive_relay = FALSE
 	var/datum/tadpole_scene/scene
@@ -164,7 +157,7 @@
 	if(visibility_owner)
 		UnregisterSignal(visibility_owner, list(COMSIG_MOB_LOGOUT, COMSIG_QDELETING))
 		visibility_owner.remove_sight_modifier(REF(src))
-	release_camera()
+	release_capture()
 	visibility_owner = viewer
 	if(!viewer)
 		return
@@ -176,186 +169,82 @@
 	track_eye(null)
 	bind_visibility(null)
 
-/client/proc/tadpole_logical_eye()
-	var/datum/tadpole_scene_view/view = tadpole_camera_view
-	if(view?.camera_client == src && eye == view.scene?.camera_anchor)
-		return view.tracked_eye || mob
-	return eye
-
-/// Only ordinary character cameras are pinned. Existing remote cameras retain
-/// their own perspective and the original renderer until they are released.
-/datum/tadpole_scene_view/proc/pin_camera(client/display)
-	if(camera_client && camera_client.eye != scene?.camera_anchor)
-		release_camera(FALSE)
-	if(!display || camera_client == display || tracked_eye != display.mob || display.eye != tracked_eye)
+/// Keep the native camera on the character. Only the ground output is rotated;
+/// no final game/FOV/ghost relay receives a synthetic camera animation.
+/datum/tadpole_scene_view/proc/start_capture(client/display)
+	if(!display || capture_client == display || tracked_eye != display.mob || display.eye != tracked_eye)
 		return
 	if(isliving(display.mob) && display.mob.stat == DEAD)
 		return
-	scene.ensure_camera_anchor()
-	if(!scene.camera_anchor?.loc || !scene.helm.ground_tiles[get_turf(tracked_eye)])
+	if(!scene?.helm.ground_tiles[get_turf(display.eye)])
 		return
-	if(display.tadpole_camera_view && display.tadpole_camera_view != src)
-		display.tadpole_camera_view.release_camera()
-	camera_client = display
-	original_eye = display.eye
-	original_perspective = display.perspective
-	display.tadpole_camera_view = src
+	capture_client = display
 	RegisterSignal(display, COMSIG_CLIENT_SET_EYE, PROC_REF(on_client_eye_change))
-	RegisterSignal(scene.camera_anchor, COMSIG_QDELETING, PROC_REF(on_anchor_lost))
-	begin_fixed_view()
+	begin_capture()
 	viewport = new
 	viewport.start(src, display)
-	var/turf/follow = get_turf(tracked_eye)
-	update_world_shift((scene.camera_anchor.x - follow.x) * world.icon_size, (scene.camera_anchor.y - follow.y) * world.icon_size, 0)
-	var/matrix/capture_rotation = matrix()
-	capture_rotation.Turn(-(scene.helm.flight_heading - dir2angle(scene.helm.shuttle_port.dir)))
-	update_camera(capture_rotation, 0)
-	changing_eye = TRUE
-	display.perspective = EYE_PERSPECTIVE
-	display.set_eye(scene.camera_anchor)
-	changing_eye = FALSE
-	if(display.eye != scene.camera_anchor)
-		release_camera(FALSE)
 
-/datum/tadpole_scene_view/proc/release_camera(restore_eye = TRUE)
-	var/client/display = camera_client
-	var/was_fixed = fixed_camera
-	camera_client = null
+/datum/tadpole_scene_view/proc/release_capture()
+	if(capture_client)
+		UnregisterSignal(capture_client, COMSIG_CLIENT_SET_EYE)
+	capture_client = null
 	QDEL_NULL(viewport)
-	if(display)
-		UnregisterSignal(display, COMSIG_CLIENT_SET_EYE)
-		if(display.tadpole_camera_view == src)
-			display.tadpole_camera_view = null
-		if(scene?.camera_anchor)
-			UnregisterSignal(scene.camera_anchor, COMSIG_QDELETING)
-		if(restore_eye && display.eye == scene?.camera_anchor)
-			var/atom/restore_target = QDELETED(original_eye) || display.mob != hud?.mymob ? display.mob : original_eye
-			display.set_eye(restore_target)
-			if(display.perspective == EYE_PERSPECTIVE)
-				display.perspective = restore_target == original_eye ? original_perspective : MOB_PERSPECTIVE
-	original_eye = null
-	end_fixed_view()
-	if(was_fixed && !QDELETED(scene) && !QDELETED(plate))
-		var/turf/normal_eye = get_turf(display?.eye || tracked_eye)
-		if(normal_eye)
-			scene.update_view(src, normal_eye, 0)
+	end_capture()
 
 /datum/tadpole_scene_view/proc/on_client_eye_change(datum/source, atom/old_eye, atom/new_eye)
 	SIGNAL_HANDLER
-	if(!changing_eye && new_eye != scene?.camera_anchor)
-		// Another camera has taken over. Never overwrite its eye/perspective.
-		release_camera(FALSE)
+	if(new_eye != tracked_eye)
+		release_capture()
 
-/datum/tadpole_scene_view/proc/on_anchor_lost()
-	SIGNAL_HANDLER
-	release_camera()
-
-/datum/tadpole_scene_view/proc/logical_click_origin(turf/origin)
-	if(fixed_camera && origin == get_turf(scene?.camera_anchor))
-		return get_turf(tracked_eye) || origin
-	return origin
-
-/datum/tadpole_scene_view/proc/begin_fixed_view()
-	if(fixed_camera || QDELETED(hud) || !hud.mymob)
+/datum/tadpole_scene_view/proc/begin_capture()
+	if(capture_active || QDELETED(hud) || !hud.mymob)
 		return
-	fixed_camera = TRUE
+	capture_active = TRUE
 	rotation_relay = plate.get_relay_to(output_plane)
 	original_rotation_transform = rotation_relay.transform || matrix()
 	animate(plate, transform = original_transform, time = 0)
-	plate.add_filter("tadpole_capture_bounds", 100, alpha_mask_filter(icon = capture_mask()))
+	set_capture_size(TADPOLE_CAPTURE_SIZE, TADPOLE_CAPTURE_SIZE)
 	last_camera = null
 	animation_from = null
 	animation_duration = 0
-	RegisterSignals(hud.mymob, list(SIGNAL_ADDTRAIT(TRAIT_FOV_APPLIED), SIGNAL_REMOVETRAIT(TRAIT_FOV_APPLIED)), PROC_REF(on_world_graph_change))
-	sync_world_relays()
 
-/datum/tadpole_scene_view/proc/capture_mask()
-	var/static/icon/bounds
-	if(!bounds)
-		bounds = icon('icons/effects/alphacolors.dmi', "white")
-		bounds.Scale(TADPOLE_CAPTURE_SIZE * world.icon_size, TADPOLE_CAPTURE_SIZE * world.icon_size)
-	return bounds
+/// Crop in unrotated source space, around the hull rather than the viewer.
+/datum/tadpole_scene_view/proc/set_capture_size(width, height)
+	capture_width = width
+	capture_height = height
+	plate.add_filter("tadpole_capture_bounds", 100, alpha_mask_filter(icon = capture_mask(width, height), x = capture_x, y = capture_y))
 
-/datum/tadpole_scene_view/proc/end_fixed_view()
-	if(!fixed_camera)
+/datum/tadpole_scene_view/proc/capture_mask(width = TADPOLE_CAPTURE_SIZE, height = TADPOLE_CAPTURE_SIZE)
+	var/static/list/masks = list()
+	var/key = "[width]x[height]"
+	if(!masks[key])
+		var/icon/bounds = icon('icons/effects/alphacolors.dmi', "white")
+		bounds.Scale(width * world.icon_size, height * world.icon_size)
+		masks[key] = bounds
+	return masks[key]
+
+/datum/tadpole_scene_view/proc/update_capture_origin(dx, dy, animation_seconds)
+	if(capture_x == dx && capture_y == dy)
 		return
-	fixed_camera = FALSE
-	if(hud?.mymob)
-		UnregisterSignal(hud.mymob, list(SIGNAL_ADDTRAIT(TRAIT_FOV_APPLIED), SIGNAL_REMOVETRAIT(TRAIT_FOV_APPLIED)))
-	for(var/atom/movable/render_plane_relay/relay as anything in world_relays)
-		if(QDELETED(relay))
-			continue
-		var/matrix/original = world_relays[relay]
-		// This mode owns these final copies until release. Their current
-		// transform may still be anywhere along an unfinished client glide.
-		animate(relay, transform = original, time = 0)
-		if(!(world_relay_flags[relay] & PIXEL_SCALE))
-			relay.appearance_flags &= ~PIXEL_SCALE
-	world_relays.Cut()
-	world_relay_flags.Cut()
+	capture_x = dx
+	capture_y = dy
+	var/bounds = plate.get_filter("tadpole_capture_bounds")
+	animate(bounds, x = dx, y = dy, time = animation_seconds * 10, easing = LINEAR_EASING)
+
+/datum/tadpole_scene_view/proc/end_capture()
+	if(!capture_active)
+		return
+	capture_active = FALSE
 	plate?.remove_filter("tadpole_capture_bounds")
 	if(!QDELETED(rotation_relay))
 		animate(rotation_relay, transform = original_rotation_transform, time = 0)
 	rotation_relay = null
 	original_rotation_transform = null
+	capture_x = 0
+	capture_y = 0
 	last_camera = null
 	animation_from = null
 	animation_duration = 0
-	world_from_x = 0
-	world_from_y = 0
-	world_to_x = 0
-	world_to_y = 0
-	world_duration = 0
-
-/datum/tadpole_scene_view/proc/on_world_graph_change()
-	SIGNAL_HANDLER
-	sync_world_relays()
-
-/datum/tadpole_scene_view/proc/displayed_world_shift()
-	var/progress = world_duration ? clamp((world.time - world_started) / world_duration, 0, 1) : 1
-	return list(world_from_x + (world_to_x - world_from_x) * progress, world_from_y + (world_to_y - world_from_y) * progress)
-
-/datum/tadpole_scene_view/proc/update_world_shift(target_x, target_y, animation_seconds)
-	var/changed = target_x != world_to_x || target_y != world_to_y
-	if(changed)
-		var/list/current = displayed_world_shift()
-		world_from_x = current[1]
-		world_from_y = current[2]
-		world_to_x = target_x
-		world_to_y = target_y
-		world_started = world.time
-		world_duration = animation_seconds * 10
-	sync_world_relays(changed)
-
-/// Shift final world copies after lighting and FOV. HUD/fullscreen relays are
-/// deliberately untouched. Newly enabled FOV copies join the current glide.
-/datum/tadpole_scene_view/proc/sync_world_relays(update_existing = FALSE)
-	if(!fixed_camera || QDELETED(hud))
-		return
-	var/list/current = displayed_world_shift()
-	var/remaining = max(0, world_duration - (world.time - world_started))
-	for(var/plane_id in list(RENDER_PLANE_GAME, RENDER_PLANE_GAME_MASKED, RENDER_PLANE_GAME_UNMASKED, GHOST_PLANE, RUNECHAT_PLANE, BALLOON_CHAT_PLANE))
-		var/atom/movable/screen/plane_master/source = hud.get_plane_master(GET_NEW_PLANE(plane_id, hud.current_plane_offset))
-		var/target = (plane_id in list(RENDER_PLANE_GAME, RENDER_PLANE_GAME_MASKED, RENDER_PLANE_GAME_UNMASKED)) ? RENDER_PLANE_MASTER : RENDER_PLANE_NON_GAME
-		var/atom/movable/render_plane_relay/relay = source?.get_relay_to(GET_NEW_PLANE(target, hud.current_plane_offset))
-		if(!relay)
-			continue
-		var/is_new = !(relay in world_relays)
-		if(is_new)
-			world_relays[relay] = relay.transform || matrix()
-			world_relay_flags[relay] = relay.appearance_flags
-			relay.appearance_flags |= PIXEL_SCALE
-		if(!is_new && !update_existing)
-			continue
-		var/matrix/from_transform = matrix(world_relays[relay])
-		var/matrix/to_transform = matrix(world_relays[relay])
-		from_transform.Translate(current[1], current[2])
-		to_transform.Translate(world_to_x, world_to_y)
-		// Existing copies continue from their actual client-side interpolation.
-		// Resetting to our tick-based estimate on every step caused visible snaps.
-		if(is_new)
-			animate(relay, transform = from_transform, time = 0)
-		animate(relay, transform = to_transform, time = remaining, easing = LINEAR_EASING, flags = ANIMATION_LINEAR_TRANSFORM)
 
 /datum/tadpole_scene_view/proc/track_eye(atom/new_eye)
 	if(!ismovable(new_eye))
@@ -369,7 +258,7 @@
 		RegisterSignal(tracked_eye, COMSIG_MOVABLE_MOVED, PROC_REF(on_eye_move))
 
 /// React in the movement tick, not up to 0.2 seconds later in flight processing.
-/// This touches one plate only; no player discovery, source polling or chunks.
+/// Only ground projection/cropping changes; native camera and mob glide are untouched.
 /datum/tadpole_scene_view/proc/on_eye_move(atom/movable/source, atom/old_loc, direction, forced)
 	SIGNAL_HANDLER
 	var/turf/eye = get_turf(source)
@@ -381,25 +270,14 @@
 		return
 	if(source == hud?.mymob)
 		bind_visibility(hud.mymob)
-		pin_camera(hud.mymob.client)
+		start_capture(hud.mymob.client)
 	var/duration = 0
 	if(!forced && isturf(old_loc) && old_loc.z == eye.z && get_dist(old_loc, eye) == 1)
 		var/dx = abs(eye.x - old_loc.x)
 		var/dy = abs(eye.y - old_loc.y)
 		var/distance = (source.appearance_flags & LONG_GLIDE) ? max(dx, dy) : sqrt(dx ** 2 + dy ** 2)
 		duration = distance * world.icon_size / max(source.glide_size, 1) * world.tick_lag / 10
-		if(fixed_camera)
-			duration = follow_duration(source, eye)
 	scene.update_view(src, eye, duration)
-
-/// Native glide has constant pixel speed. A second step/reversal may arrive
-/// before the previous glide ends; include the entire remaining displacement.
-/datum/tadpole_scene_view/proc/follow_duration(atom/movable/source, turf/eye)
-	var/list/current = displayed_world_shift()
-	var/dx = abs((scene.camera_anchor.x - eye.x) * world.icon_size - current[1])
-	var/dy = abs((scene.camera_anchor.y - eye.y) * world.icon_size - current[2])
-	var/distance = (source.appearance_flags & LONG_GLIDE) ? max(dx, dy) : sqrt(dx ** 2 + dy ** 2)
-	return distance / max(source.glide_size, 1) * world.tick_lag / 10
 
 /datum/tadpole_scene_view/proc/update_camera(matrix/camera, animation_seconds)
 	if(QDELETED(plate))
@@ -410,13 +288,13 @@
 	animation_started = world.time
 	animation_duration = animation_seconds * 10
 	last_camera = camera
-	var/atom/movable/target = fixed_camera ? rotation_relay : plate
+	var/atom/movable/target = capture_active ? rotation_relay : plate
 	animate(target, transform = camera, time = animation_duration, easing = LINEAR_EASING)
 
 /// Match the LINEAR_EASING matrix interpolation currently visible to clients.
 /datum/tadpole_scene_view/proc/displayed_camera()
 	if(!last_camera)
-		var/atom/movable/target = fixed_camera ? rotation_relay : plate
+		var/atom/movable/target = capture_active ? rotation_relay : plate
 		return target?.transform ? matrix(target.transform) : matrix()
 	var/progress = animation_duration ? clamp((world.time - animation_started) / animation_duration, 0, 1) : 1
 	if(!animation_from || progress >= 1)
@@ -449,16 +327,16 @@
 	var/last_port_x
 	var/last_port_y
 	var/last_port_z
-	var/obj/effect/abstract/tadpole_camera_anchor/camera_anchor
+	var/obj/effect/abstract/tadpole_render_origin/render_origin
 
 /datum/tadpole_scene/New(obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/owner)
 	helm = owner
-	ensure_camera_anchor()
+	ensure_render_origin()
 
 /datum/tadpole_scene/Destroy()
 	QDEL_LIST_ASSOC_VAL(views)
 	QDEL_LIST_ASSOC_VAL(chunks)
-	QDEL_NULL(camera_anchor)
+	QDEL_NULL(render_origin)
 	viewer_candidates.Cut()
 	helm = null
 	return ..()
@@ -470,14 +348,14 @@
 	// Only map-load allocated lower depths may enter the native render graph.
 	if(!depth)
 		return
-	ensure_camera_anchor()
+	ensure_render_origin()
 	var/list/remaining = views.Copy()
 	var/needed_radius = 0
 	if(world.time >= next_viewer_scan)
 		refresh_viewer_candidates()
 	for(var/client/display as anything in viewer_candidates)
 		var/mob/viewer = display?.mob
-		var/turf/eye = get_turf(display?.tadpole_logical_eye())
+		var/turf/eye = get_turf(display?.eye)
 		if(!eye || !helm.ground_tiles[eye] || !viewer?.hud_used)
 			continue
 		var/list/size = getviewsize(display.view)
@@ -489,9 +367,9 @@
 		if(!view)
 			view = new(viewer.hud_used, depth, src)
 			views[display] = view
-		view.track_eye(display.tadpole_logical_eye())
+		view.track_eye(display.eye)
 		view.bind_visibility(viewer)
-		view.pin_camera(display)
+		view.start_capture(display)
 		remaining -= display
 	for(var/client/departed as anything in remaining)
 		qdel(views[departed])
@@ -509,40 +387,40 @@
 	for(var/client/display as anything in views)
 		var/datum/tadpole_scene_view/view = views[display]
 		view.viewport?.sync_hud()
-		update_view(view, get_turf(display.tadpole_logical_eye()), animation_seconds)
+		update_view(view, get_turf(display.eye), animation_seconds)
 
 /datum/tadpole_scene/proc/update_view(datum/tadpole_scene_view/view, turf/eye, animation_seconds)
 	if(!eye || QDELETED(view.plate) || isnull(origin_x) || isnull(origin_y))
 		return
-	ensure_camera_anchor()
+	ensure_render_origin()
 	var/angle = helm.flight_heading - dir2angle(helm.shuttle_port.dir)
-	var/turf/capture_eye = view.fixed_camera ? get_turf(camera_anchor) : eye
-	var/px = camera_anchor.x - capture_eye.x
-	var/py = camera_anchor.y - capture_eye.y
+	var/turf/capture_eye = eye
+	var/px = render_origin.x - capture_eye.x
+	var/py = render_origin.y - capture_eye.y
 	var/matrix/camera = matrix()
 	camera.Turn(-angle)
 	camera.Translate((px - camera.a * px - camera.b * py) * world.icon_size, (py - camera.d * px - camera.e * py) * world.icon_size)
 	view.update_camera(camera, animation_seconds)
-	if(view.fixed_camera)
-		view.update_world_shift((camera_anchor.x - eye.x) * world.icon_size, (camera_anchor.y - eye.y) * world.icon_size, animation_seconds)
+	if(view.capture_active)
+		view.update_capture_origin(px * world.icon_size, py * world.icon_size, animation_seconds)
 
-/datum/tadpole_scene/proc/ensure_camera_anchor()
+/datum/tadpole_scene/proc/ensure_render_origin()
 	var/obj/docking_port/mobile/port = helm.shuttle_port
 	if(!port?.z)
 		return
-	if(QDELETED(camera_anchor))
-		camera_anchor = new
+	if(QDELETED(render_origin))
+		render_origin = new
 	var/list/bounds = port.return_coords(port.x, port.y, port.dir)
 	var/turf/center = locate(round((bounds[1] + bounds[3]) / 2 + 0.5), round((bounds[2] + bounds[4]) / 2 + 0.5), port.z)
-	if(center && camera_anchor.loc != center)
-		camera_anchor.abstract_move(center)
+	if(center && render_origin.loc != center)
+		render_origin.abstract_move(center)
 
 /// Recenter source translation around the fixed eye before composition.
 /// The inverse rotation preserves P + R*(S-F) and actual landing coordinates.
 /datum/tadpole_scene/proc/target_source_position()
-	ensure_camera_anchor()
-	var/dx = camera_anchor.x - helm.shuttle_port.x
-	var/dy = camera_anchor.y - helm.shuttle_port.y
+	ensure_render_origin()
+	var/dx = render_origin.x - helm.shuttle_port.x
+	var/dy = render_origin.y - helm.shuttle_port.y
 	var/matrix/rotation = matrix()
 	rotation.Turn(-(helm.flight_heading - dir2angle(helm.shuttle_port.dir)))
 	return list(helm.flight_x - dx + rotation.a * dx + rotation.d * dy, helm.flight_y - dy + rotation.b * dx + rotation.e * dy)
@@ -584,16 +462,32 @@
 	viewer_candidates.Cut()
 	for(var/mob/viewer as anything in GLOB.player_list)
 		var/client/display = viewer.client
-		var/turf/eye = get_turf(display?.tadpole_logical_eye())
+		var/turf/eye = get_turf(display?.eye)
 		if(eye && helm.ground_tiles[eye])
 			viewer_candidates |= display
 	next_viewer_scan = world.time + 1 SECONDS
 
-/// Allocate for the ship footprint, not the passenger's current walking tile.
+/// Cover the normal visible window at every hull tile and every rotation.
+/// The source crop is hull-centered; the native viewport also needs the offset
+/// from a passenger to that crop, plus a tile for unfinished camera glide.
+/// Logical observer zoom deliberately does not grow this shared geometry.
+/datum/tadpole_scene/proc/capture_geometry()
+	ensure_render_origin()
+	var/obj/docking_port/mobile/port = helm.shuttle_port
+	var/list/bounds = port.return_coords(port.x, port.y, port.dir)
+	var/dx = max(abs(bounds[1] - render_origin.x), abs(bounds[3] - render_origin.x))
+	var/dy = max(abs(bounds[2] - render_origin.y), abs(bounds[4] - render_origin.y))
+	var/list/visible = getviewsize(CONFIG_GET(string/default_view))
+	var/radius = sqrt((visible[1] / 2 + dx) ** 2 + (visible[2] / 2 + dy) ** 2)
+	var/side = max(TADPOLE_CAPTURE_SIZE, 2 * CEILING(radius - 0.5, 1) + 1)
+	return list(side, side + 2 * (dx + 1), side + 2 * (dy + 1))
+
+/// Allocate for the shared hull buffer, never for a passenger's walking tile.
 /datum/tadpole_scene/proc/source_radius(list/size)
 	var/obj/docking_port/mobile/port = helm.shuttle_port
 	var/footprint = max(port.width + abs(port.dwidth), port.height + abs(port.dheight))
-	return CEILING(sqrt(2 * TADPOLE_CAPTURE_SIZE ** 2) / 2, 1) + footprint + 2
+	var/list/geometry = capture_geometry()
+	return CEILING(sqrt(2 * geometry[1] ** 2) / 2, 1) + footprint + 2
 
 /datum/tadpole_scene/proc/update_region(needed_radius, ground_z)
 	needed_radius = max(radius, needed_radius)

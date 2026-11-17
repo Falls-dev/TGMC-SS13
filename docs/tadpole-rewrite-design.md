@@ -439,3 +439,38 @@ including no validation during flight/turns and the actual Land action rejecting
 a blocked result. No runtime errors; Success! at
 data/logs/tadpole-landing-demand/clean_run.lk. The isolated test build retains
 the existing loop_checks warning. In-client CPU savings were not measured.
+
+## Native character eye with a hull-centered ground buffer
+
+This replaces the fixed-eye experiment above. The Tadpole renderer no longer
+assigns client.eye/perspective, animates final game/FOV/ghost relays, or substitutes
+click origins. Native character camera/glide handle walking again. Departure,
+Logout and a switch to another eye release only the viewport and ground crop.
+
+The shared invisible render origin remains at the hull center, but is never
+used as a camera. Native terrain chunks retain their shared flight translation.
+For a passenger eye E, hull center C and ground rotation R, the completed ground
+output uses translation (I-R)*(C-E). The source alpha crop is centered at C-E
+before rotation. Thus both the crop and rotation follow the hull in screen
+coordinates at any heading. Only the lower ground projection animates on steps;
+the ship, characters and final world relays receive no synthetic follow offset.
+
+A moving native eye still determines the engine's source rectangle. To prevent
+it clipping the hull-centered ground buffer, capture_geometry computes a fixed
+margin from the whole hull footprint and normal configured visible window.
+It covers every heading and every hull tile, with one extra native tile for
+unfinished glide. For a 7x9 hull and 19x15 window this is a 35x35 source crop
+inside a 43x45 native viewport. 25 is now the minimum, not the final buffer size.
+Walking and ghost zoom do not resize the buffer. Extreme logical zoom can show
+its finite outer boundary. The larger native view and moving eye may increase
+SendMaps load compared with the fixed-eye version; this needs client profiling.
+
+Headless regressions check ground/landing projection and inverse-projected
+window corner coverage at hull edges and 0/37/90/180/270 degrees. They also
+exercise ordinary Move exit/reentry and verify final game/HUD relays stay
+unchanged. They cannot verify client camera glide, clipping or CPU load.
+
+Validation: normal BYOND 516.1659 build 0 errors/0 warnings; focused
+tadpole_flight PASS (1.9 seconds), no runtime errors and Success! at
+data/logs/tadpole-native-camera/clean_run.lk. The isolated test build has the
+existing loop_checks warning. No connected-client visual/load test ran.
