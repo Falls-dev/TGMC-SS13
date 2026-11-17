@@ -92,7 +92,7 @@
 	return TRUE
 
 /datum/species/robot/prefs_name(datum/preferences/prefs)
-	. = prefs.squad_robot_name
+	. = prefs.real_name
 	if(!. || . == "Undefined") //In case they don't have a name set.
 		. = GLOB.namepool[namepool].get_random_name()
 		to_chat(prefs.parent, span_warning("You forgot to set your robot in your preferences. Please do so next time."))
