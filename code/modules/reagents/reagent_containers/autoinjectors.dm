@@ -419,3 +419,40 @@
 		/datum/reagent/medicine/regrow = 30,
 	)
 	description_overlay = "Grw"
+
+/obj/item/reagent_containers/hypospray/autoinjector/custom
+	name = "custom autoinjector"
+	desc = "A recolorable autoinjector."
+	icon = 'icons/obj/items/syringe.dmi'
+	icon_state = "autoinjector-13"
+	base_icon_state = "autoinjector-13"
+	greyscale_config = /datum/greyscale_config/autoinjector_13
+	greyscale_colors = "#409EB1"
+
+/obj/item/reagent_containers/hypospray/autoinjector/custom/Initialize(mapload)
+	. = ..()
+	base_icon_state = "autoinjector-13"
+	update_icon()
+
+/obj/item/reagent_containers/hypospray/autoinjector/custom/update_icon_state()
+	. = ..()
+	if(!reagents?.total_volume && is_drawable())
+		icon_state = "[base_icon_state]X"
+		name = "expended [initial(name)]"
+		DISABLE_BITFIELD(reagents.reagent_flags, DRAWABLE)
+	else if(reagents?.total_volume && !CHECK_BITFIELD(reagents.reagent_flags, DRAWABLE))
+		icon_state = base_icon_state
+		name = initial(name)
+		ENABLE_BITFIELD(reagents.reagent_flags, DRAWABLE)
+
+/obj/item/reagent_containers/hypospray/autoinjector/custom/sulfa
+	greyscale_colors = "#4CFF00"
+
+/obj/item/reagent_containers/hypospray/autoinjector/custom/rr
+	greyscale_colors = "#EE4847"
+
+/obj/item/reagent_containers/hypospray/autoinjector/custom/meral
+	greyscale_colors = "#F6E322"
+
+/obj/item/reagent_containers/hypospray/autoinjector/custom/misery
+	greyscale_colors = "#B200FF"
