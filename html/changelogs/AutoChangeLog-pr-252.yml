@@ -1,0 +1,5 @@
+author: "ACupOfChicory"
+delete-after: True
+changes:
+  - bugfix: "SMES больше не отрезаются от APC после обрыва кабеля"
+  - bugfix: "Power Monitoring снова показывает список отсеков"
