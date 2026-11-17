@@ -498,7 +498,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	if(!client)
 		return
 
-	if(client.view != CONFIG_GET(string/default_view))
+	if((client.tadpole_viewport?.logical_size || client.view) != CONFIG_GET(string/default_view))
 		client.view_size.reset_to_default()
 	else
 		client.view_size.set_view_radius_to(12.5)

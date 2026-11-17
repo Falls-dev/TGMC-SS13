@@ -88,6 +88,10 @@
 	var/original_perspective
 	var/changing_eye = FALSE
 	var/list/world_relays = list()
+	var/list/world_relay_flags = list()
+	var/datum/tadpole_viewport/viewport
+	var/atom/movable/render_plane_relay/rotation_relay
+	var/matrix/original_rotation_transform
 	var/world_from_x = 0
 	var/world_from_y = 0
 	var/world_to_x = 0
@@ -199,6 +203,8 @@
 	RegisterSignal(display, COMSIG_CLIENT_SET_EYE, PROC_REF(on_client_eye_change))
 	RegisterSignal(scene.camera_anchor, COMSIG_QDELETING, PROC_REF(on_anchor_lost))
 	begin_fixed_view()
+	viewport = new
+	viewport.start(src, display)
 	var/turf/follow = get_turf(tracked_eye)
 	update_world_shift((scene.camera_anchor.x - follow.x) * world.icon_size, (scene.camera_anchor.y - follow.y) * world.icon_size, 0)
 	var/matrix/capture_rotation = matrix()
@@ -215,6 +221,7 @@
 	var/client/display = camera_client
 	var/was_fixed = fixed_camera
 	camera_client = null
+	QDEL_NULL(viewport)
 	if(display)
 		UnregisterSignal(display, COMSIG_CLIENT_SET_EYE)
 		if(display.tadpole_camera_view == src)
@@ -252,8 +259,22 @@
 	if(fixed_camera || QDELETED(hud) || !hud.mymob)
 		return
 	fixed_camera = TRUE
+	rotation_relay = plate.get_relay_to(output_plane)
+	original_rotation_transform = rotation_relay.transform || matrix()
+	animate(plate, transform = original_transform, time = 0)
+	plate.add_filter("tadpole_capture_bounds", 100, alpha_mask_filter(icon = capture_mask()))
+	last_camera = null
+	animation_from = null
+	animation_duration = 0
 	RegisterSignals(hud.mymob, list(SIGNAL_ADDTRAIT(TRAIT_FOV_APPLIED), SIGNAL_REMOVETRAIT(TRAIT_FOV_APPLIED)), PROC_REF(on_world_graph_change))
 	sync_world_relays()
+
+/datum/tadpole_scene_view/proc/capture_mask()
+	var/static/icon/bounds
+	if(!bounds)
+		bounds = icon('icons/effects/alphacolors.dmi', "white")
+		bounds.Scale(TADPOLE_CAPTURE_SIZE * world.icon_size, TADPOLE_CAPTURE_SIZE * world.icon_size)
+	return bounds
 
 /datum/tadpole_scene_view/proc/end_fixed_view()
 	if(!fixed_camera)
@@ -265,12 +286,21 @@
 		if(QDELETED(relay))
 			continue
 		var/matrix/original = world_relays[relay]
-		var/matrix/owned = matrix(original)
-		owned.Translate(world_to_x, world_to_y)
-		var/matrix/current = relay.transform || matrix()
-		if(current.a == owned.a && current.b == owned.b && current.c == owned.c && current.d == owned.d && current.e == owned.e && current.f == owned.f)
-			animate(relay, transform = original, time = 0)
+		// This mode owns these final copies until release. Their current
+		// transform may still be anywhere along an unfinished client glide.
+		animate(relay, transform = original, time = 0)
+		if(!(world_relay_flags[relay] & PIXEL_SCALE))
+			relay.appearance_flags &= ~PIXEL_SCALE
 	world_relays.Cut()
+	world_relay_flags.Cut()
+	plate?.remove_filter("tadpole_capture_bounds")
+	if(!QDELETED(rotation_relay))
+		animate(rotation_relay, transform = original_rotation_transform, time = 0)
+	rotation_relay = null
+	original_rotation_transform = null
+	last_camera = null
+	animation_from = null
+	animation_duration = 0
 	world_from_x = 0
 	world_from_y = 0
 	world_to_x = 0
@@ -313,14 +343,19 @@
 		var/is_new = !(relay in world_relays)
 		if(is_new)
 			world_relays[relay] = relay.transform || matrix()
+			world_relay_flags[relay] = relay.appearance_flags
+			relay.appearance_flags |= PIXEL_SCALE
 		if(!is_new && !update_existing)
 			continue
 		var/matrix/from_transform = matrix(world_relays[relay])
 		var/matrix/to_transform = matrix(world_relays[relay])
 		from_transform.Translate(current[1], current[2])
 		to_transform.Translate(world_to_x, world_to_y)
-		animate(relay, transform = from_transform, time = 0)
-		animate(relay, transform = to_transform, time = remaining, easing = LINEAR_EASING)
+		// Existing copies continue from their actual client-side interpolation.
+		// Resetting to our tick-based estimate on every step caused visible snaps.
+		if(is_new)
+			animate(relay, transform = from_transform, time = 0)
+		animate(relay, transform = to_transform, time = remaining, easing = LINEAR_EASING, flags = ANIMATION_LINEAR_TRANSFORM)
 
 /datum/tadpole_scene_view/proc/track_eye(atom/new_eye)
 	if(!ismovable(new_eye))
@@ -353,7 +388,18 @@
 		var/dy = abs(eye.y - old_loc.y)
 		var/distance = (source.appearance_flags & LONG_GLIDE) ? max(dx, dy) : sqrt(dx ** 2 + dy ** 2)
 		duration = distance * world.icon_size / max(source.glide_size, 1) * world.tick_lag / 10
+		if(fixed_camera)
+			duration = follow_duration(source, eye)
 	scene.update_view(src, eye, duration)
+
+/// Native glide has constant pixel speed. A second step/reversal may arrive
+/// before the previous glide ends; include the entire remaining displacement.
+/datum/tadpole_scene_view/proc/follow_duration(atom/movable/source, turf/eye)
+	var/list/current = displayed_world_shift()
+	var/dx = abs((scene.camera_anchor.x - eye.x) * world.icon_size - current[1])
+	var/dy = abs((scene.camera_anchor.y - eye.y) * world.icon_size - current[2])
+	var/distance = (source.appearance_flags & LONG_GLIDE) ? max(dx, dy) : sqrt(dx ** 2 + dy ** 2)
+	return distance / max(source.glide_size, 1) * world.tick_lag / 10
 
 /datum/tadpole_scene_view/proc/update_camera(matrix/camera, animation_seconds)
 	if(QDELETED(plate))
@@ -364,12 +410,14 @@
 	animation_started = world.time
 	animation_duration = animation_seconds * 10
 	last_camera = camera
-	animate(plate, transform = camera, time = animation_duration, easing = LINEAR_EASING)
+	var/atom/movable/target = fixed_camera ? rotation_relay : plate
+	animate(target, transform = camera, time = animation_duration, easing = LINEAR_EASING)
 
 /// Match the LINEAR_EASING matrix interpolation currently visible to clients.
 /datum/tadpole_scene_view/proc/displayed_camera()
 	if(!last_camera)
-		return plate?.transform ? matrix(plate.transform) : matrix()
+		var/atom/movable/target = fixed_camera ? rotation_relay : plate
+		return target?.transform ? matrix(target.transform) : matrix()
 	var/progress = animation_duration ? clamp((world.time - animation_started) / animation_duration, 0, 1) : 1
 	if(!animation_from || progress >= 1)
 		return matrix(last_camera)
@@ -460,6 +508,7 @@
 	update_source_position(animation_seconds)
 	for(var/client/display as anything in views)
 		var/datum/tadpole_scene_view/view = views[display]
+		view.viewport?.sync_hud()
 		update_view(view, get_turf(display.tadpole_logical_eye()), animation_seconds)
 
 /datum/tadpole_scene/proc/update_view(datum/tadpole_scene_view/view, turf/eye, animation_seconds)
@@ -544,7 +593,7 @@
 /datum/tadpole_scene/proc/source_radius(list/size)
 	var/obj/docking_port/mobile/port = helm.shuttle_port
 	var/footprint = max(port.width + abs(port.dwidth), port.height + abs(port.dheight))
-	return CEILING(sqrt(size[1] ** 2 + size[2] ** 2) / 2, 1) + footprint + 2
+	return CEILING(sqrt(2 * TADPOLE_CAPTURE_SIZE ** 2) / 2, 1) + footprint + 2
 
 /datum/tadpole_scene/proc/update_region(needed_radius, ground_z)
 	needed_radius = max(radius, needed_radius)

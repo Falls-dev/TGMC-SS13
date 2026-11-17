@@ -1,4 +1,6 @@
 //shuttle mode defines
+/// Fixed native ground capture side length; independent of passenger zoom.
+#define TADPOLE_CAPTURE_SIZE 25
 #define SHUTTLE_IDLE "idle"
 #define SHUTTLE_IGNITING "igniting"
 #define SHUTTLE_RECALL "recalled"

@@ -377,3 +377,33 @@ Validation: focused tadpole_flight PASS (0.9 seconds), no runtime errors,
 Success! at data/logs/tadpole-fixed-eye-final/clean_run.lk. Normal BYOND
 516.1659 compilation: 0 errors and 0 warnings. The isolated test build has
 the existing loop_checks warning. No connected-client visual/load test ran.
+
+## Fixed 25x25 capture and uninterrupted passenger glide
+
+Native capture is now 25x25, independent of the passenger's logical view or
+observer zoom. A scoped viewport adapter preserves logical HUD placement and
+pixel zoom, caches coordinate mappings, and restores its changes on release.
+HUD synchronization runs on scene updates, not on passenger movement signals.
+Ghost zoom no longer increases the shared terrain cache radius. The cache still
+includes the hull footprint and chunk padding beyond the displayed capture.
+
+The lower completed master is cropped to 25x25 before its output relay rotates.
+Terrain remains in shared world-space chunks; no tile is independently rotated
+and no terrain references are attached to HUD widgets. A transparent symmetric
+UI bounds object keeps the larger logical HUD centered when zoomed out.
+
+Final world relays use point sampling and continue their existing client glide
+without snapping to a server estimate at every step. Glide duration includes
+unfinished displacement when another step or reversal arrives. Release cancels
+unfinished animations and restores the owned world transforms and sample flags.
+The single-tile lighting backdrop now scales to the actual view dimensions.
+
+The ground searchlight remains HYBRID_LIGHT (radius 9, power 8). It moves on
+the real ground map and queues polygon shadow-mask calculation when its turf
+changes. This is separate from the simple MOVABLE_LIGHT used by marine suits.
+These changes do not replace that lighting algorithm.
+
+Validation: focused tadpole_flight PASS (1 second), no runtime errors, Success!
+at data/logs/tadpole-glide25-final/clean_run.lk. Normal BYOND 516.1659 build:
+0 errors, 0 warnings. The isolated test build has the existing loop_checks
+warning. Connected-client smoothness, clipping and load remain unverified.

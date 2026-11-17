@@ -8,6 +8,7 @@
 	relay_entered = TRUE
 
 /datum/unit_test/tadpole_flight/Run()
+	check_capture_viewport()
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/flight_test/helm = allocate(/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/flight_test)
 	var/obj/docking_port/mobile/port = allocate(/obj/docking_port/mobile)
 	port.width = 1
@@ -177,6 +178,7 @@
 	helm.abstract_move(relay_center)
 	port.abstract_move(relay_center)
 	var/datum/tadpole_scene/scene = new(helm)
+	TEST_ASSERT_EQUAL(scene.source_radius(list(19, 15)), scene.source_radius(list(61, 57)), "Ghost zoom must not enlarge the shared terrain cache")
 	scene.source_z = SSmapping.ground_start
 	scene.origin_x = FLOOR(helm.flight_x / 8, 1) * 8
 	scene.origin_y = FLOOR(helm.flight_y / 8, 1) * 8
@@ -324,6 +326,10 @@
 	TEST_ASSERT_EQUAL(native_view.logical_click_origin(fixed_eye_before), walking_end, "Dark-tile click origin must follow the character rather than the technical eye")
 	TEST_ASSERT_EQUAL(native_view.world_started, world.time, "Final-world follow must start in the movement tick")
 	TEST_ASSERT_EQUAL(native_view.world_duration, world.icon_size / max(pilot.glide_size, 1) * world.tick_lag, "Final-world glide must match ordinary mob glide")
+	native_view.world_started = world.time - native_view.world_duration / 2
+	TEST_ASSERT(pilot.Move(walking_start, NORTH), "Walking fixture must reverse before the previous glide completes")
+	TEST_ASSERT_EQUAL(native_view.world_duration, (world.icon_size / 2) / pilot.glide_size * world.tick_lag, "Reversal must cover the unfinished half-tile rather than animate a fresh tile")
+	TEST_ASSERT(pilot.Move(walking_end, SOUTH), "Walking fixture must return inside the ship before testing exit")
 	TEST_ASSERT_EQUAL(length(walking_scene.chunks), 0, "Walking projection must not allocate or update terrain membership")
 	var/turf/outside_ship = get_step(walking_end, SOUTH)
 	TEST_ASSERT(pilot.Move(outside_ship, SOUTH), "Visibility fixture must step out of the Tadpole region")
@@ -394,6 +400,10 @@
 	var/atom/movable/render_plane_relay/hud_relay = hud_plane.get_relay_to(RENDER_PLANE_NON_GAME)
 	var/hud_transform_before = hud_relay.transform.tolist().Join(",")
 	view.begin_fixed_view()
+	var/icon/bounds = view.capture_mask()
+	TEST_ASSERT_EQUAL(bounds.Width(), TADPOLE_CAPTURE_SIZE * world.icon_size, "Pre-rotation crop width must stay at 25 tiles")
+	TEST_ASSERT_EQUAL(bounds.Height(), TADPOLE_CAPTURE_SIZE * world.icon_size, "Pre-rotation crop height must stay at 25 tiles")
+	TEST_ASSERT_NOTNULL(view.plate.get_filter("tadpole_capture_bounds"), "The capture must be clipped before its output relay rotates")
 	TEST_ASSERT(length(view.world_relays), "Fixed mode must find completed world relays")
 	for(var/angle in list(0, 37, 90, 180, 270))
 		scene.helm.flight_heading = dir2angle(port.dir) + angle
@@ -424,6 +434,7 @@
 				if(QDELETED(relay))
 					continue
 				var/matrix/original = view.world_relays[relay]
+				TEST_ASSERT(relay.appearance_flags & PIXEL_SCALE, "Moving world copies must use point sampling")
 				TEST_ASSERT_EQUAL(relay.transform.c, original.c + view.world_to_x, "Completed world copies must receive the x follow offset")
 				TEST_ASSERT_EQUAL(relay.transform.f, original.f + view.world_to_y, "Completed world copies must receive the y follow offset")
 	ADD_TRAIT(view.hud.mymob, TRAIT_FOV_APPLIED, "tadpole_camera_test")
@@ -432,16 +443,60 @@
 	TEST_ASSERT_EQUAL(masked_relay.transform.f, view.world_to_y, "FOV activation must preserve final-world follow")
 	REMOVE_TRAIT(view.hud.mymob, TRAIT_FOV_APPLIED, "tadpole_camera_test")
 	var/list/owned_relays = view.world_relays.Copy()
+	var/list/owned_flags = view.world_relay_flags.Copy()
+	check_follow_timing(scene, view)
 	view.end_fixed_view()
+	TEST_ASSERT_NULL(view.plate.get_filter("tadpole_capture_bounds"), "Release must remove the owned crop filter")
 	for(var/atom/movable/render_plane_relay/relay as anything in owned_relays)
 		if(!QDELETED(relay))
 			var/matrix/original = owned_relays[relay]
 			TEST_ASSERT_EQUAL(relay.transform.tolist().Join(","), original.tolist().Join(","), "Camera release must restore owned world-copy transforms")
+			TEST_ASSERT_EQUAL(relay.appearance_flags & PIXEL_SCALE, owned_flags[relay] & PIXEL_SCALE, "Release must restore the original sampling flag")
 	TEST_ASSERT(!view.fixed_camera && !length(view.world_relays), "Release must clear fixed-camera state")
 	port.width = old_width
 	port.height = old_height
 	scene.helm.flight_heading = old_heading
 	scene.ensure_camera_anchor()
+
+/datum/unit_test/tadpole_flight/proc/check_follow_timing(datum/tadpole_scene/scene, datum/tadpole_scene_view/view)
+	var/mob/actor = view.hud.mymob
+	var/old_glide = actor.glide_size
+	actor.set_glide_size(8)
+	view.update_world_shift(0, 0, 0)
+	view.update_world_shift(-32, 0, 0.4)
+	view.world_started = world.time - view.world_duration / 2
+	var/turf/next_eye = locate(scene.camera_anchor.x + 2, scene.camera_anchor.y, scene.camera_anchor.z)
+	TEST_ASSERT_EQUAL(view.follow_duration(actor, next_eye), 48 / 8 * world.tick_lag / 10, "A new step must include the previous glide's remaining 16 pixels")
+	TEST_ASSERT_EQUAL(view.follow_duration(actor, get_turf(scene.camera_anchor)), 16 / 8 * world.tick_lag / 10, "Reversing mid-step must use remaining distance, not a fresh full-tile duration")
+	actor.set_glide_size(old_glide)
+
+/datum/unit_test/tadpole_flight/proc/check_capture_viewport()
+	var/datum/tadpole_viewport/cache_test/viewport = allocate(/datum/tadpole_viewport/cache_test)
+	viewport.frame = allocate(/atom/movable/screen/background/tadpole_view_bounds)
+	TEST_ASSERT_EQUAL(viewport.configure("19x15"), "25x25", "Native capture must use 25x25")
+	TEST_ASSERT_EQUAL(viewport.map_location("WEST:6,1:5"), "4:6,6:5", "HUD must retain visible placement when capture grows")
+	var/calls = viewport.parse_calls
+	for(var/i in 1 to 100)
+		viewport.map_location("WEST:6,1:5")
+	TEST_ASSERT_EQUAL(viewport.parse_calls, calls, "Unchanged HUD locations must not be reparsed")
+	TEST_ASSERT_EQUAL(viewport.configure("61x57"), "25x25", "Ghost zoom must not resize native capture")
+	TEST_ASSERT_EQUAL(viewport.map_location("CENTER"), "13,13", "Ghost zoom must keep the capture center fixed")
+	TEST_ASSERT_EQUAL(viewport.frame.screen_loc, "CENTER-30,CENTER-28 to CENTER+30,CENTER+28", "Zoomed HUD bounds must stay symmetric around the fixed capture")
+	viewport.configure("26x24")
+	TEST_ASSERT_EQUAL(viewport.map_location("WEST,SOUTH"), "0:16,1:16", "Even logical sizes must use pixel offsets rather than fractional tile strings")
+	TEST_ASSERT_EQUAL(viewport.map_location("CENTER"), "13,13", "Even logical sizes must preserve capture centering")
+	TEST_ASSERT_EQUAL(viewport.map_location("popup:1,1"), "popup:1,1", "Auxiliary map coordinates must remain untouched")
+	var/atom/movable/screen/fullscreen/lighting_backdrop/backplane/backdrop = allocate(/atom/movable/screen/fullscreen/lighting_backdrop/backplane)
+	backdrop.update_for_view("25x25")
+	TEST_ASSERT_EQUAL(backdrop.transform.a, 25, "Lighting background must cover the larger capture")
+	TEST_ASSERT_EQUAL(backdrop.transform.e, 25, "Lighting background must cover the larger capture")
+
+/datum/tadpole_viewport/cache_test
+	var/parse_calls = 0
+
+/datum/tadpole_viewport/cache_test/map_axis(text, axis)
+	parse_calls++
+	return ..()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/flight_test/checkLandingSpot()
 	return SHUTTLE_DOCKER_LANDING_CLEAR

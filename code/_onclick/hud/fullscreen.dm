@@ -228,6 +228,16 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/fullscreen)
 	blend_mode = BLEND_OVERLAY
 	show_when_dead = TRUE
 	needs_offsetting = FALSE
+	screen_loc = "CENTER"
+	fs_view = null
+
+/// Lighting uses a single-tile icon, not the generic 15x15 fullscreen artwork.
+/atom/movable/screen/fullscreen/lighting_backdrop/update_for_view(client_view)
+	if(fs_view == client_view)
+		return
+	fs_view = client_view
+	var/list/size = getviewsize(client_view)
+	transform = matrix(size[1], 0, 0, 0, size[2], 0)
 
 //Provides darkness to the back of the lighting plane
 /atom/movable/screen/fullscreen/lighting_backdrop/lit_secondary
