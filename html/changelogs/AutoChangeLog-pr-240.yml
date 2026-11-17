@@ -1,0 +1,4 @@
+author: "LoneAsket"
+delete-after: True
+changes:
+  - bugfix: "Был исправлен кодекс экипировки КАСа. Исправлены фосфорные ракеты."
