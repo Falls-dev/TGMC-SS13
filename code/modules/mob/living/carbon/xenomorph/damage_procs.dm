@@ -28,16 +28,6 @@
 	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_MOB_EX_ACT))
 		return
 
-	if(lying_angle)
-		severity *= EXPLOSION_PRONE_MULTIPLIER
-
-	if(severity >= max(health, EXPLOSION_THRESHOLD_GIB + get_soft_armor(BOMB) * 2))
-		var/oldloc = loc
-		gib()
-		if(mob_size > MOB_SIZE_SMALL) // cause the size of 0 will cause errors
-			create_shrapnel(oldloc, rand(4, 8) * mob_size, direction, shrapnel_type = /datum/ammo/bullet/shrapnel/light/xeno)
-		return
-
 	var/sunder_amount = severity * 0.125
 	adjust_sunder(sunder_amount)
 
