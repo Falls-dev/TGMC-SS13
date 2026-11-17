@@ -702,8 +702,6 @@ GLOBAL_LIST_INIT(common_tools, typecacheof(list(
 /proc/params2turf(scr_loc, turf/origin, client/C)
 	if(!scr_loc || !origin)
 		return
-	if(C?.tadpole_camera_view)
-		origin = C.tadpole_camera_view.logical_click_origin(origin)
 	var/tX = splittext(scr_loc, ",")
 	var/tY = splittext(tX[2], ":")
 	var/tZ = origin.z

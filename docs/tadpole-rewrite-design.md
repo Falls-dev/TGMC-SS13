@@ -485,3 +485,43 @@ reuse without new holders, stationary membership reuse, stale turf callbacks,
 source replacement, transit safety and unchanged fixed-camera projection.
 The isolated test build retains the existing loop_checks warning. No actual
 client performance or visual verification was performed.
+
+## Native character camera with per-turf sources
+
+Technical eye ownership and synthetic final-world follow are now removed.
+The renderer never calls set_eye, assigns perspective, or substitutes the
+click origin. It observes the normal client.eye and releases its viewport/crop
+when another camera takes over. Native mob glide and camera movement handle
+walking. GAME/FOV/ghost/HUD output copies receive no Tadpole follow transform.
+
+The shared render_origin remains at the hull center strictly as a coordinate
+reference. Ground output rotates about its screen position C-E; the unrotated
+alpha crop follows the same point. Source placement remains shared and tracks
+the aircraft, not the passenger. MOVABLE_LIGHT and on-demand landing checks
+are unchanged.
+
+This combines ordinary camera movement with the new one-turf holders/pool.
+Unlike the reverted native-eye experiment, source_radius is only half the
+calculated hull crop plus one neighboring row. No diagonal/hull bucket
+prefetch is restored. For 7x9/default 19x15, the source crop is 35x35 and
+the native viewport remains the calculated 43x45 needed for full-angle hull
+edge coverage. Idle attached sources are normally 1521-1600, rather than the
+old experiment's up-to-7744 turfs under 8x8 roots. Flight adds its interpolation
+corridor. These are geometry/reference counts, not a measured CPU reduction.
+
+Native SendMaps now follows the character again and the viewport is larger
+than the fixed-eye 25x25 baseline. Thus this still needs in-client profiling;
+it must not be described as identical in cost or topology to upstream multiz.
+Arbitrary remote terrain rotation remains specific to Tadpole. Observer zoom
+does not expand the shared capture; extreme zoom can expose its finite boundary.
+
+Validation: normal BYOND 516.1659 build 0 errors/0 warnings; focused
+tadpole_flight PASS (2.4 seconds), no runtime errors and Success! at
+data/logs/tadpole-native-eye-sources/clean_run.lk. Regressions cover normal-eye
+ground/landing projection and normal-window corner coverage at hull edges for
+0/37/90/180/270 degrees, unchanged final GAME/HUD transforms, ordinary Move
+exit/reentry, viewport setup/zoom independence, bounded per-turf sources and
+holder reuse/cleanup. The isolated test build retains the existing loop_checks
+warning. Actual client camera smoothness, clipping and SendMaps cost remain
+unverified. Source review confirms no set_eye/perspective assignments in the
+Tadpole renderer; the headless fixture has no real connected client.
