@@ -1,65 +1,67 @@
-#define TADPOLE_CHUNK_SIZE 8
+#define TADPOLE_BUCKET_SIZE 8
 
-/// Native multi-turf visual contents provide their own relative coordinates.
-/// Keep one relay per block instead of adding a movable relay for every tile.
-/obj/effect/abstract/tadpole_native_chunk
+/// A spatial holder for one real turf, following upstream's z_holder model.
+/// Grouping is metadata only; no render root contains an entire 8x8 tree.
+/obj/effect/abstract/tadpole_native_tile
 	icon = null
 	plane = HUD_PLANE
 	appearance_flags = PIXEL_SCALE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
-	// Bucket rebases are instantaneous; only the completed plate interpolates.
 	animate_movement = NO_STEPS
 	atom_flags = SHUTTLE_IMMUNE | PREVENT_CONTENTS_EXPLOSION
-	var/list/tiles = list()
+	var/turf/source
 
-/// Use spatial positions instead of putting every oversized visual tree on
-/// the helm tile. Keep pixel offsets only for clipping at the world's edge.
-/obj/effect/abstract/tadpole_native_chunk/proc/place(tile_x, tile_y, transit_z)
+/obj/effect/abstract/tadpole_native_tile/proc/place(tile_x, tile_y, transit_z, update_pixels = TRUE)
 	var/turf/target = locate(clamp(tile_x, 1, world.maxx), clamp(tile_y, 1, world.maxy), transit_z)
 	if(!target)
 		return
 	if(loc != target)
-		// These are visual relays, not passengers: never trigger transit drops.
+		// Never trigger passenger transit-entry/airdrop hooks for visual holders.
 		abstract_move(target)
-	pixel_x = (tile_x - target.x) * world.icon_size
-	pixel_y = (tile_y - target.y) * world.icon_size
+	if(update_pixels)
+		pixel_x = (tile_x - target.x) * world.icon_size
+		pixel_y = (tile_y - target.y) * world.icon_size
 
-/// Translate the native source before it enters a screen-sized render plate.
-/// Reanchor on whole tiles without a jump in the unfinished pixel animation.
-/obj/effect/abstract/tadpole_native_chunk/proc/move_ground(from_x, from_y, to_x, to_y, transit_z, duration)
-	place(FLOOR(to_x, 1), FLOOR(to_y, 1), transit_z)
+/// Translation only. Rotation belongs to the completed lower render plate.
+/obj/effect/abstract/tadpole_native_tile/proc/move_ground(from_x, from_y, to_x, to_y, transit_z, duration)
+	place(FLOOR(to_x, 1), FLOOR(to_y, 1), transit_z, FALSE)
 	if(!loc)
 		return
 	animate(src, pixel_x = (from_x - x) * world.icon_size, pixel_y = (from_y - y) * world.icon_size, time = 0)
 	animate(src, pixel_x = (to_x - x) * world.icon_size, pixel_y = (to_y - y) * world.icon_size, time = duration, easing = LINEAR_EASING)
 
-/obj/effect/abstract/tadpole_native_chunk/proc/build(base_x, base_y, ground_z)
-	var/turf/first = locate(max(1, base_x), max(1, base_y), ground_z)
-	var/turf/last = locate(min(world.maxx, base_x + TADPOLE_CHUNK_SIZE - 1), min(world.maxy, base_y + TADPOLE_CHUNK_SIZE - 1), ground_z)
-	if(!first || !last || base_x > world.maxx || base_y > world.maxy || base_x + TADPOLE_CHUNK_SIZE <= 1 || base_y + TADPOLE_CHUNK_SIZE <= 1)
+/obj/effect/abstract/tadpole_native_tile/proc/build(tile_x, tile_y, ground_z)
+	clear_source()
+	source = locate(tile_x, tile_y, ground_z)
+	if(!source)
 		return
-	tiles = block(first, last)
-	vis_contents = tiles.Copy()
-	for(var/turf/source as anything in tiles)
-		RegisterSignal(source, COMSIG_TURF_CHANGE, PROC_REF(on_turf_change))
+	vis_contents += source
+	RegisterSignal(source, COMSIG_TURF_CHANGE, PROC_REF(on_turf_change))
 
-/obj/effect/abstract/tadpole_native_chunk/proc/on_turf_change(datum/source, path, baseturfs, flags, list/callbacks)
+/obj/effect/abstract/tadpole_native_tile/proc/on_turf_change(datum/old_source, path, baseturfs, flags, list/callbacks)
 	SIGNAL_HANDLER
 	callbacks += CALLBACK(src, PROC_REF(reconnect))
 
-/obj/effect/abstract/tadpole_native_chunk/proc/reconnect(turf/replacement)
-	if(QDELETED(src))
+/obj/effect/abstract/tadpole_native_tile/proc/reconnect(turf/replacement)
+	if(QDELETED(src) || source != replacement)
 		return
-	// ChangeTurf preserves references in tiles, but replaces the native visual
-	// link. Refresh only this block after the replacement has completed.
-	vis_contents = tiles.Copy()
+	// A pooled holder may have acquired another source before this callback.
+	vis_contents = list(source)
 
-/obj/effect/abstract/tadpole_native_chunk/Destroy()
-	for(var/turf/source as anything in tiles)
+/// Pool entries have no visual tree, turf subscriptions or spatial location.
+/obj/effect/abstract/tadpole_native_tile/proc/clear_source()
+	if(!source && !loc && !length(vis_contents))
+		return
+	if(source)
 		UnregisterSignal(source, COMSIG_TURF_CHANGE)
+	source = null
 	vis_contents.Cut()
-	tiles.Cut()
+	animate(src, pixel_x = 0, pixel_y = 0, time = 0)
+	abstract_move(null)
+
+/obj/effect/abstract/tadpole_native_tile/Destroy()
+	clear_source()
 	return ..()
 
 /// Native capture origin shared by everyone aboard; never follows a passenger.
@@ -369,7 +371,7 @@
 		RegisterSignal(tracked_eye, COMSIG_MOVABLE_MOVED, PROC_REF(on_eye_move))
 
 /// React in the movement tick, not up to 0.2 seconds later in flight processing.
-/// This touches one plate only; no player discovery, source polling or chunks.
+/// This touches one plate only; no player discovery, source polling or sources.
 /datum/tadpole_scene_view/proc/on_eye_move(atom/movable/source, atom/old_loc, direction, forced)
 	SIGNAL_HANDLER
 	var/turf/eye = get_turf(source)
@@ -432,7 +434,9 @@
 
 /datum/tadpole_scene
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/helm
-	var/list/chunks = list()
+	var/list/sources = list()
+	var/list/source_pool = list()
+	var/list/source_bounds
 	var/list/views = list()
 	var/origin_x
 	var/origin_y
@@ -457,7 +461,8 @@
 
 /datum/tadpole_scene/Destroy()
 	QDEL_LIST_ASSOC_VAL(views)
-	QDEL_LIST_ASSOC_VAL(chunks)
+	QDEL_LIST_ASSOC_VAL(sources)
+	QDEL_LIST(source_pool)
 	QDEL_NULL(camera_anchor)
 	viewer_candidates.Cut()
 	helm = null
@@ -497,8 +502,10 @@
 		qdel(views[departed])
 		views -= departed
 	if(!needed_radius)
-		if(length(chunks))
-			QDEL_LIST_ASSOC_VAL(chunks)
+		if(length(sources))
+			QDEL_LIST_ASSOC_VAL(sources)
+		QDEL_LIST(source_pool)
+		source_bounds = null
 		radius = 0
 		source_to_x = null
 		source_to_y = null
@@ -570,12 +577,11 @@
 	last_port_x = port.x
 	last_port_y = port.y
 	last_port_z = port.z
-	for(var/key in chunks)
-		var/obj/effect/abstract/tadpole_native_chunk/chunk = chunks[key]
-		if(!length(chunk.tiles))
-			continue
-		var/turf/first = chunk.tiles[1]
-		chunk.move_ground(port.x + first.x - source_from_x, port.y + first.y - source_from_y, port.x + first.x - source_to_x, port.y + first.y - source_to_y, port.z, source_duration)
+	update_sources(FALSE)
+	for(var/key in sources)
+		var/obj/effect/abstract/tadpole_native_tile/holder = sources[key]
+		var/turf/tile = holder.source
+		holder.move_ground(port.x + tile.x - source_from_x, port.y + tile.y - source_from_y, port.x + tile.x - source_to_x, port.y + tile.y - source_to_y, port.z, source_duration)
 	return TRUE
 
 /// Discovery is separate from the five-Hz flight path. Existing viewers are
@@ -589,51 +595,77 @@
 			viewer_candidates |= display
 	next_viewer_scan = world.time + 1 SECONDS
 
-/// Allocate for the ship footprint, not the passenger's current walking tile.
+/// The raw 25x25 capture precedes rotation. Its center is computed explicitly
+/// below, so it needs one neighboring row, not the hull plus a diagonal radius.
 /datum/tadpole_scene/proc/source_radius(list/size)
-	var/obj/docking_port/mobile/port = helm.shuttle_port
-	var/footprint = max(port.width + abs(port.dwidth), port.height + abs(port.dheight))
-	return CEILING(sqrt(2 * TADPOLE_CAPTURE_SIZE ** 2) / 2, 1) + footprint + 2
+	return CEILING(TADPOLE_CAPTURE_SIZE / 2, 1) + 1
 
 /datum/tadpole_scene/proc/update_region(needed_radius, ground_z)
 	needed_radius = max(radius, needed_radius)
-	var/new_x = FLOOR(helm.flight_x / TADPOLE_CHUNK_SIZE, 1) * TADPOLE_CHUNK_SIZE
-	var/new_y = FLOOR(helm.flight_y / TADPOLE_CHUNK_SIZE, 1) * TADPOLE_CHUNK_SIZE
+	var/new_x = FLOOR(helm.flight_x / TADPOLE_BUCKET_SIZE, 1) * TADPOLE_BUCKET_SIZE
+	var/new_y = FLOOR(helm.flight_y / TADPOLE_BUCKET_SIZE, 1) * TADPOLE_BUCKET_SIZE
 	if(origin_x != new_x || origin_y != new_y || source_z != ground_z || radius != needed_radius)
 		origin_x = new_x
 		origin_y = new_y
 		source_z = ground_z
 		radius = needed_radius
-		update_chunks()
+		update_sources()
 		return TRUE
 	return FALSE
 
-/datum/tadpole_scene/proc/update_chunks()
-	var/list/remaining = chunks.Copy()
+/// Stream only the shared native capture and its current animation corridor.
+/// Holders leaving the window are detached before allocating incoming rows,
+/// allowing the same objects to serve the next source strip without GC bursts.
+/datum/tadpole_scene/proc/update_sources(move_new = TRUE)
+	if(!source_z || !radius)
+		return FALSE
 	var/list/current = displayed_source_position()
 	var/target_x = isnull(source_to_x) ? current[1] : source_to_x
 	var/target_y = isnull(source_to_y) ? current[2] : source_to_y
 	var/remaining_time = max(0, source_duration - (world.time - source_started))
-	// Cover the entire origin bucket, including its last fractional cell.
-	// Membership remains valid until the next eight-tile boundary.
-	var/min_x = FLOOR((origin_x - radius) / TADPOLE_CHUNK_SIZE, 1) * TADPOLE_CHUNK_SIZE
-	var/max_x = FLOOR((origin_x + TADPOLE_CHUNK_SIZE - 1 + radius) / TADPOLE_CHUNK_SIZE, 1) * TADPOLE_CHUNK_SIZE
-	var/min_y = FLOOR((origin_y - radius) / TADPOLE_CHUNK_SIZE, 1) * TADPOLE_CHUNK_SIZE
-	var/max_y = FLOOR((origin_y + TADPOLE_CHUNK_SIZE - 1 + radius) / TADPOLE_CHUNK_SIZE, 1) * TADPOLE_CHUNK_SIZE
-	for(var/x in min_x to max_x step TADPOLE_CHUNK_SIZE)
-		for(var/y in min_y to max_y step TADPOLE_CHUNK_SIZE)
+	var/obj/docking_port/mobile/port = helm.shuttle_port
+	ensure_camera_anchor()
+	var/dx = camera_anchor.x - port.x
+	var/dy = camera_anchor.y - port.y
+	var/min_x = max(1, FLOOR(min(current[1], target_x) + dx - radius, 1))
+	var/max_x = min(world.maxx, CEILING(max(current[1], target_x) + dx + radius, 1))
+	var/min_y = max(1, FLOOR(min(current[2], target_y) + dy - radius, 1))
+	var/max_y = min(world.maxy, CEILING(max(current[2], target_y) + dy + radius, 1))
+	if(source_bounds && source_bounds[1] == min_x && source_bounds[2] == min_y && source_bounds[3] == max_x && source_bounds[4] == max_y && source_bounds[5] == source_z)
+		return FALSE
+	source_bounds = list(min_x, min_y, max_x, max_y, source_z)
+	var/list/retired = list()
+	for(var/key in sources)
+		var/obj/effect/abstract/tadpole_native_tile/holder = sources[key]
+		var/turf/tile = holder.source
+		if(tile && tile.z == source_z && tile.x >= min_x && tile.x <= max_x && tile.y >= min_y && tile.y <= max_y)
+			continue
+		retired += key
+		holder.clear_source()
+		source_pool += holder
+	for(var/key in retired)
+		sources -= key
+	for(var/x in min_x to max_x)
+		for(var/y in min_y to max_y)
 			var/key = "[x],[y],[source_z]"
-			var/obj/effect/abstract/tadpole_native_chunk/chunk = chunks[key]
-			if(!chunk)
-				chunk = new
-				chunk.build(x, y, source_z)
-				chunks[key] = chunk
-				chunk.move_ground(helm.shuttle_port.x + max(1, x) - current[1], helm.shuttle_port.y + max(1, y) - current[2], helm.shuttle_port.x + max(1, x) - target_x, helm.shuttle_port.y + max(1, y) - target_y, helm.z, remaining_time)
+			if(sources[key])
+				continue
+			var/obj/effect/abstract/tadpole_native_tile/holder
+			if(length(source_pool))
+				holder = source_pool[length(source_pool)]
+				source_pool.len--
 			else
-				remaining -= key
-	for(var/key in remaining)
-		qdel(chunks[key])
-		chunks -= key
+				holder = new
+			holder.build(x, y, source_z)
+			sources[key] = holder
+			if(move_new)
+				holder.move_ground(port.x + x - current[1], port.y + y - current[2], port.x + x - target_x, port.y + y - target_y, port.z, remaining_time)
+	// Keep a few spare strips, not a second complete visual map in nullspace.
+	while(length(source_pool) > 256)
+		var/obj/effect/abstract/tadpole_native_tile/extra = source_pool[length(source_pool)]
+		source_pool.len--
+		qdel(extra)
+	return TRUE
 
 /obj/effect/abstract/tadpole_searchlight
 	icon = null
@@ -663,4 +695,4 @@
 	else if(get_turf(ground_searchlight) != target)
 		ground_searchlight.forceMove(target)
 
-#undef TADPOLE_CHUNK_SIZE
+#undef TADPOLE_BUCKET_SIZE

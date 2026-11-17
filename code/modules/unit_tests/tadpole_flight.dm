@@ -79,24 +79,24 @@
 
 
 	// Scene relays real turfs and keeps source appearance/planes untouched.
-	var/obj/effect/abstract/tadpole_native_chunk/chunk = allocate(/obj/effect/abstract/tadpole_native_chunk)
+	var/obj/effect/abstract/tadpole_native_tile/chunk = allocate(/obj/effect/abstract/tadpole_native_tile)
 	var/original_picture = start.appearance
 	var/original_plane = start.plane
 	chunk.build(start.x, start.y, start.z)
-	TEST_ASSERT_EQUAL(length(chunk.tiles), 64, "A native chunk must own exactly one 8x8 cell block")
+	TEST_ASSERT_EQUAL(chunk.source, start, "A native holder must own exactly one real turf")
 	TEST_ASSERT(start in chunk.vis_contents, "Native scene must share the actual turf")
-	TEST_ASSERT_EQUAL(length(chunk.vis_contents), 64, "The native block must contain all 64 turfs directly")
-	TEST_ASSERT(get_step(start, EAST) in chunk.vis_contents, "Native layout must include the adjacent east turf")
-	TEST_ASSERT(get_step(start, NORTH) in chunk.vis_contents, "Native layout must include the adjacent north turf")
+	TEST_ASSERT_EQUAL(length(chunk.vis_contents), 1, "A holder must expose one turf instead of a whole 8x8 subtree")
+	TEST_ASSERT(!(get_step(start, EAST) in chunk.vis_contents), "Neighbor turfs must have independent spatial holders")
+	TEST_ASSERT(!(get_step(start, NORTH) in chunk.vis_contents), "A source holder must not retain a neighbor subtree")
 	for(var/atom/source as anything in chunk.vis_contents)
-		TEST_ASSERT(isturf(source), "A block must allocate no per-tile movable relays for SendMaps to traverse")
+		TEST_ASSERT(isturf(source), "Holders must reference the actual turf, not appearance or movable copies")
 	TEST_ASSERT_EQUAL(start.appearance, original_picture, "Native relay must not rewrite source geometry")
 	TEST_ASSERT_EQUAL(start.plane, original_plane, "Native relay must not modify source planes")
 	var/obj/item/item = allocate(/obj/item, start)
 	var/turf/destination = get_step(start, EAST)
 	item.forceMove(destination)
 	TEST_ASSERT(start in chunk.vis_contents, "Object movement must not rebuild the terrain relay")
-	TEST_ASSERT_EQUAL(length(chunk.tiles), 64, "Object movement must allocate no motion proxies")
+	TEST_ASSERT_EQUAL(length(chunk.vis_contents), 1, "Object movement must allocate no motion proxies")
 	var/old_type = start.type
 	start = start.ChangeTurf(/turf/open/floor/plating)
 	sleep(world.tick_lag)
@@ -112,8 +112,17 @@
 	TEST_ASSERT_EQUAL(chunk.x, 1, "World-edge relays must retain a valid spatial anchor")
 	TEST_ASSERT_EQUAL(chunk.x * world.icon_size + chunk.pixel_x, -3 * world.icon_size, "Clamping must preserve the displayed x coordinate")
 	TEST_ASSERT_EQUAL(chunk.y * world.icon_size + chunk.pixel_y, -2 * world.icon_size, "Clamping must preserve the displayed y coordinate")
+	chunk.build(destination.x, destination.y, destination.z)
+	chunk.reconnect(start)
+	TEST_ASSERT_EQUAL(chunk.source, destination, "A reused holder must retain its new source")
+	TEST_ASSERT(destination in chunk.vis_contents, "An old turf callback must retain the new visual link")
+	TEST_ASSERT(!(start in chunk.vis_contents), "An old turf callback must not restore its previous source")
+	chunk.clear_source()
+	TEST_ASSERT_NULL(chunk.loc, "An idle pool entry must have no spatial location")
+	TEST_ASSERT_NULL(chunk.source, "An idle pool entry must release its source")
+	TEST_ASSERT_EQUAL(length(chunk.vis_contents), 0, "An idle pool entry must expose no turf tree")
 	qdel(chunk)
-	TEST_ASSERT_EQUAL(length(chunk.tiles), 0, "Scene deletion must release source subscriptions")
+	TEST_ASSERT_EQUAL(chunk.source, null, "Scene deletion must release source subscriptions")
 	TEST_ASSERT_EQUAL(length(chunk.vis_contents), 0, "Scene deletion must release native visual links")
 	// Exercise the actual transit-enter signal and delayed fall callback.
 	var/turf/fall_floor = locate(110, 110, start.z)
@@ -197,37 +206,45 @@
 	scene.source_z = SSmapping.ground_start
 	scene.origin_x = FLOOR(helm.flight_x / 8, 1) * 8
 	scene.origin_y = FLOOR(helm.flight_y / 8, 1) * 8
-	scene.radius = 16
-	scene.update_chunks()
-	var/key = "[scene.origin_x + 16],[scene.origin_y + 16],[scene.source_z]"
-	var/obj/effect/abstract/tadpole_native_chunk/edge_chunk = scene.chunks[key]
-	TEST_ASSERT_NOTNULL(edge_chunk, "Prefetch must cover the last cell of an eight-tile camera bucket")
-	var/count = length(scene.chunks)
+	scene.radius = scene.source_radius(list(19, 15))
+	scene.update_sources()
+	var/key = "[round(helm.flight_x)],[round(helm.flight_y)],[scene.source_z]"
+	var/obj/effect/abstract/tadpole_native_tile/edge_chunk = scene.sources[key]
+	TEST_ASSERT_NOTNULL(edge_chunk, "The native window must contain the central source turf")
+	var/count = length(scene.sources)
+	TEST_ASSERT(count <= 1024, "An idle 25x25 capture must not attach thousands of prefetched turfs")
 	var/nearby_blocks = 0
-	for(var/obj/effect/abstract/tadpole_native_chunk/nearby in range(13, helm))
+	for(var/obj/effect/abstract/tadpole_native_tile/nearby in range(5, helm))
 		nearby_blocks++
-	TEST_ASSERT(nearby_blocks > 0 && nearby_blocks < count / 2, "An eye near the helm must not have every cached block on its local turfs")
-	for(var/chunk_key in scene.chunks)
-		var/obj/effect/abstract/tadpole_native_chunk/spatial_block = scene.chunks[chunk_key]
-		var/turf/first_source = spatial_block.tiles[1]
+	TEST_ASSERT(nearby_blocks > 0 && nearby_blocks < count / 2, "Source holders must be distributed spatially, not piled on the helm")
+	for(var/chunk_key in scene.sources)
+		var/obj/effect/abstract/tadpole_native_tile/spatial_block = scene.sources[chunk_key]
+		var/turf/first_source = spatial_block.source
+		TEST_ASSERT_EQUAL(length(spatial_block.vis_contents), 1, "Every active holder must contain exactly one real turf")
 		TEST_ASSERT_EQUAL((spatial_block.x - port.x) * world.icon_size + spatial_block.pixel_x, (first_source.x - helm.flight_x) * world.icon_size, "Spatial placement must preserve source x projection")
 		TEST_ASSERT_EQUAL((spatial_block.y - port.y) * world.icon_size + spatial_block.pixel_y, (first_source.y - helm.flight_y) * world.icon_size, "Spatial placement must preserve source y projection")
-	scene.update_chunks()
-	TEST_ASSERT_EQUAL(scene.chunks[key], edge_chunk, "Unchanged scene cells must reuse native blocks")
-	TEST_ASSERT_EQUAL(length(scene.chunks), count, "Repeated membership checks must allocate no additional blocks")
-	// Reproduce the old single-step radius threshold: 24 -> 25 allocates
-	// four borders at once; returning deletes them again, unlike scrolling.
-	scene.radius = 24
-	scene.update_chunks()
-	var/list/before_step = scene.chunks.Copy()
-	scene.radius = 25
-	scene.update_chunks()
-	var/added_blocks = 0
-	for(var/chunk_key in scene.chunks)
-		if(!before_step[chunk_key])
-			added_blocks++
-	TEST_ASSERT_EQUAL(added_blocks, 32, "The old one-tile walking threshold must reproduce its 32-block allocation burst")
-	world.log << "TADPOLE_WALK_REPRO: radius 24->25 adds [added_blocks] blocks; old per-tile relays would add [added_blocks * 64] movables"
+	TEST_ASSERT(!scene.update_sources(), "An unchanged capture must skip membership scans and allocation")
+	TEST_ASSERT_EQUAL(scene.sources[key], edge_chunk, "Unchanged source cells must retain their holder")
+	TEST_ASSERT_EQUAL(length(scene.sources), count, "Repeated checks must not allocate extra holders")
+	// Scroll exactly one source tile. Retiring the outgoing strip before
+	// attaching the incoming strip must reuse objects rather than create a burst.
+	var/list/before_scroll = scene.sources.Copy()
+	var/list/allocated = list()
+	for(var/source_key in before_scroll)
+		allocated += before_scroll[source_key]
+	scene.source_from_x = helm.flight_x + 1
+	scene.source_to_x = helm.flight_x + 1
+	scene.source_from_y = helm.flight_y
+	scene.source_to_y = helm.flight_y
+	scene.source_duration = 0
+	scene.update_sources()
+	TEST_ASSERT_EQUAL(length(scene.sources), count, "A one-tile scroll must retain the active window size")
+	for(var/source_key in scene.sources)
+		TEST_ASSERT(scene.sources[source_key] in allocated, "Incoming strips must reuse outgoing holders without creating new atoms")
+	scene.source_from_x = null
+	scene.source_to_x = null
+	scene.source_to_y = null
+	scene.update_sources()
 	var/old_width = port.width
 	var/old_height = port.height
 	port.width = 7
@@ -236,22 +253,22 @@
 	scene.origin_x = FLOOR(helm.flight_x / 8, 1) * 8
 	scene.origin_y = FLOOR(helm.flight_y / 8, 1) * 8
 	scene.radius = scene.source_radius(viewport)
-	scene.update_chunks()
-	var/list/stable_blocks = scene.chunks.Copy()
+	scene.update_sources()
+	var/list/stable_blocks = scene.sources.Copy()
 	var/turf/pilot_start = get_turf(pilot)
 	scene.update_source_position(0)
 	for(var/i in 1 to 4)
 		pilot.forceMove(i % 2 ? get_step(pilot_start, EAST) : pilot_start)
 		TEST_ASSERT(!scene.update_region(scene.source_radius(viewport), scene.source_z), "Passenger movement must not trigger a terrain rebuild")
 		TEST_ASSERT(!scene.update_source_position(0.2), "Walking must not restart shared terrain movement")
-	TEST_ASSERT_EQUAL(length(scene.chunks), length(stable_blocks), "Walking must retain the same block count")
+	TEST_ASSERT_EQUAL(length(scene.sources), length(stable_blocks), "Walking must retain the same block count")
 	for(var/chunk_key in stable_blocks)
-		TEST_ASSERT_EQUAL(scene.chunks[chunk_key], stable_blocks[chunk_key], "Walking must preserve every cached block identity")
+		TEST_ASSERT_EQUAL(scene.sources[chunk_key], stable_blocks[chunk_key], "Walking must preserve every cached block identity")
 	// A bucket transition during a source animation changes membership only.
 	var/flight_before_x = helm.flight_x
 	var/list/effective_before = scene.displayed_source_position()
 	var/center_key = "[scene.origin_x],[scene.origin_y],[scene.source_z]"
-	var/obj/effect/abstract/tadpole_native_chunk/center_chunk = scene.chunks[center_key]
+	var/obj/effect/abstract/tadpole_native_tile/center_chunk = scene.sources[center_key]
 	helm.flight_x += 8
 	scene.update_source_position(1)
 	scene.source_started = world.time - 5
@@ -259,13 +276,14 @@
 	TEST_ASSERT(abs(source_before[1] - effective_before[1] - 4) < 0.001, "Shared terrain must interpolate the actual flight position")
 	TEST_ASSERT(scene.update_region(scene.radius, scene.source_z), "Crossing eight tiles must update source membership")
 	TEST_ASSERT_EQUAL(scene.displayed_source_position().Join(","), source_before.Join(","), "Changing cache origin must not move the displayed terrain")
-	TEST_ASSERT_EQUAL(scene.chunks[center_key], center_chunk, "A cache seam must retain overlapping source blocks")
+	TEST_ASSERT_EQUAL(scene.sources[center_key], center_chunk, "A source-window seam must retain overlapping holders")
+	check_source_coverage(scene)
 	helm.flight_x = flight_before_x
 	pilot.forceMove(pilot_start)
 	port.width = old_width
 	port.height = old_height
 	qdel(scene)
-	TEST_ASSERT_EQUAL(length(scene.chunks), 0, "Scene deletion must release all native blocks")
+	TEST_ASSERT_EQUAL(length(scene.sources), 0, "Scene deletion must release all native blocks")
 	helm.abstract_move(old_helm_location)
 	port.abstract_move(old_port_location)
 	// Flight-specific graph edits must be local to one HUD and reversible.
@@ -345,7 +363,7 @@
 	TEST_ASSERT(pilot.Move(walking_start, NORTH), "Walking fixture must reverse before the previous glide completes")
 	TEST_ASSERT_EQUAL(native_view.world_duration, (world.icon_size / 2) / pilot.glide_size * world.tick_lag, "Reversal must cover the unfinished half-tile rather than animate a fresh tile")
 	TEST_ASSERT(pilot.Move(walking_end, SOUTH), "Walking fixture must return inside the ship before testing exit")
-	TEST_ASSERT_EQUAL(length(walking_scene.chunks), 0, "Walking projection must not allocate or update terrain membership")
+	TEST_ASSERT_EQUAL(length(walking_scene.sources), 0, "Walking projection must not allocate or update terrain membership")
 	var/turf/outside_ship = get_step(walking_end, SOUTH)
 	TEST_ASSERT(pilot.Move(outside_ship, SOUTH), "Visibility fixture must step out of the Tadpole region")
 	TEST_ASSERT_EQUAL(pilot.sight, SEE_INFRA, "Leaving must restore the latest underlying sight in the movement tick")
@@ -403,6 +421,24 @@
 
 /// Headless renderer/state test. Actual client eye assignment and mouse-hit
 /// rasterization require a connected-client check, not a matrix assertion.
+/datum/unit_test/tadpole_flight/proc/check_source_coverage(datum/tadpole_scene/scene)
+	var/old_heading = scene.helm.flight_heading
+	for(var/angle in list(0, 37, 90, 180, 270))
+		scene.helm.flight_heading = dir2angle(scene.helm.shuttle_port.dir) + angle
+		scene.update_source_position(0.2)
+		var/dx = scene.camera_anchor.x - scene.helm.shuttle_port.x
+		var/dy = scene.camera_anchor.y - scene.helm.shuttle_port.y
+		for(var/phase in list(0, 0.5, 1))
+			var/cx = scene.source_from_x + (scene.source_to_x - scene.source_from_x) * phase + dx
+			var/cy = scene.source_from_y + (scene.source_to_y - scene.source_from_y) * phase + dy
+			for(var/sx in list(-12.5, 12.5))
+				for(var/sy in list(-12.5, 12.5))
+					var/tx = FLOOR(cx + sx, 1)
+					var/ty = FLOOR(cy + sy, 1)
+					TEST_ASSERT_NOTNULL(scene.sources["[tx],[ty],[scene.source_z]"], "Source strips must cover every corner of the native 25x25 capture throughout flight interpolation and rotation")
+	scene.helm.flight_heading = old_heading
+	scene.update_source_position(0)
+
 /datum/unit_test/tadpole_flight/proc/check_fixed_eye_projection(datum/tadpole_scene/scene, datum/tadpole_scene_view/view)
 	var/obj/docking_port/mobile/port = scene.helm.shuttle_port
 	var/old_width = port.width

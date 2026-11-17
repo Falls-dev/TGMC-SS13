@@ -439,3 +439,49 @@ including no validation during flight/turns and the actual Land action rejecting
 a blocked result. No runtime errors; Success! at
 data/logs/tadpole-landing-demand/clean_run.lk. The isolated test build retains
 the existing loop_checks warning. In-client CPU savings were not measured.
+
+## Per-turf native sources with a bounded streaming window
+
+This replaces the 8x8 visual-root implementation, following the one-real-turf
+holder pattern from official upstream's z_holder/turf_transparency at
+d320ae32a9a91733c6e5805b947f8c764d4da5c8. It is an adaptation for the remote,
+moving Tadpole ground scene, not a port of ordinary vertical topology.
+
+tadpole_native_tile contains one actual turf in vis_contents. Its native
+contents, lighting and animations are preserved without appearance copies.
+Replacing that turf refreshes only its holder. Rebinding a pooled holder
+unregisters the old source; a late old-turf callback cannot restore that source.
+Holders translate only. The completed ground plate remains the rotation point;
+there are no per-tile rotation matrices or source-specific object replicas.
+
+Source membership is computed around the raw fixed 25x25 capture, with a
+neighbor row and the union of current/target positions during interpolation.
+The hull-to-capture offset is included explicitly. The previous diagonal plus
+hull radius and complete eight-tile bucket prefetch are no longer needed.
+For a stationary 7x9 Tadpole, the old layout could attach 5184 lower turfs;
+the new window normally attaches 841-900, depending on fractional alignment.
+Flight temporarily adds the intervening strips. These are structure counts,
+not measured SendMaps speedups.
+
+Retiring rows detach their visual references, turf signals and spatial loc
+before incoming rows are allocated. A bounded pool (up to 256 empty holders)
+reuses them. A one-tile constant-size scroll reuses the existing holder set.
+Unchanged bounds skip membership scans. Passenger walking does not change
+shared source membership or restart its flight animations. One scene/source
+set is shared by all viewers; per-passenger HUD composition remains separate.
+
+Camera ownership, world-follow animation, 25x25 viewport, MOVABLE_LIGHT and
+on-demand landing validation remain as before. This change isolates source
+granularity and size. It does not claim to fix the existing camera-follow jitter
+or finite outer crop, and it does not reintroduce the reverted 43x45 viewport.
+There are more movable roots and fewer attached turfs than before. Actual
+client SendMaps/Render performance during walking and flight must be compared.
+
+Validation: normal BYOND 516.1659 compilation 0 errors/0 warnings; focused
+tadpole_flight PASS (2.2 seconds), no runtime errors and Success! at
+data/logs/tadpole-native-sources-verified/clean_run.lk. Coverage includes the
+native capture corners through movement/heading interpolation, one-tile pool
+reuse without new holders, stationary membership reuse, stale turf callbacks,
+source replacement, transit safety and unchanged fixed-camera projection.
+The isolated test build retains the existing loop_checks warning. No actual
+client performance or visual verification was performed.
