@@ -1,4 +1,0 @@
-author: "Fenysha"
-delete-after: True
-changes:
-  - qol: "Оптимизирован apply_damage() у ксеноморфов."
