@@ -5,7 +5,6 @@
 /datum/xenomorph_skin/shrike/rouny
 	name = "Rouny"
 	icon = 'icons/Xeno/castes/shrike/rouny.dmi'
-	access_needed = BOOSTY_TIER_3
 
 /datum/xenomorph_skin/shrike/joker
 	name = "Joker"
@@ -14,4 +13,4 @@
 /datum/xenomorph_skin/shrike/clown
 	name = "Clown"
 	icon = 'icons/Xeno/castes/shrike/joker_rouny.dmi'
-	access_needed = BOOSTY_TIER_3
+	access_needed = BOOSTY_TIER_2

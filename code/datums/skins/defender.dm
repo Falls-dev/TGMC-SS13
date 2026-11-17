@@ -5,4 +5,3 @@
 /datum/xenomorph_skin/defender/rouny
 	name = "Rouny"
 	icon = 'icons/Xeno/castes/defender/rouny.dmi'
-	access_needed = BOOSTY_TIER_3

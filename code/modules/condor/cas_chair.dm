@@ -31,7 +31,7 @@
 
 /obj/structure/caspart/caschair/proc/receive_laser_cas(datum/source, obj/effect/overlay/temp/laser_target/cas/incoming_laser)
 	SIGNAL_HANDLER
-	playsound(src, 'sound/effects/binoctarget.ogg', 15)
+	playsound(src, 'sound/effects/binoctarget.ogg', 15, FALSE, SHORT_SOUND_RANGE)
 	if(occupant)
 		to_chat(occupant, span_notice("CAS laser detected, [incoming_laser.name] [CAS_JUMP_LINK(incoming_laser)]"))
 
@@ -97,6 +97,12 @@
 			occupant = user
 			interact(occupant)
 
+			RegisterSignals(occupant, list(
+				COMSIG_KB_MOVEMENT_NORTH_DOWN,
+				COMSIG_KB_MOVEMENT_SOUTH_DOWN,
+				COMSIG_KB_MOVEMENT_EAST_DOWN,
+				COMSIG_KB_MOVEMENT_WEST_DOWN
+			), PROC_REF(on_occupant_keydown))
 			RegisterSignal(occupant, COMSIG_LIVING_DO_RESIST, TYPE_PROC_REF(/atom/movable, resisted_against))
 			set_cockpit_overlay("cockpit_closing")
 			addtimer(CALLBACK(src, PROC_REF(set_cockpit_overlay), "cockpit_closed"), 7)
@@ -121,6 +127,29 @@
 	playsound(loc, 'sound/effects/refill.ogg', 25, 1, 3)
 	to_chat(user, span_notice("You refill the plane with fuel. New fuel level [owner.fuel_left/owner.fuel_max*100]%"))
 
+/obj/structure/caspart/caschair/proc/on_occupant_keydown(datum/source, datum/keybinding/kb)
+	SIGNAL_HANDLER
+	if(source != occupant || !owner)
+		return
+	if(owner.state == PLANE_STATE_ACTIVATED)
+		return
+	var/newdir = 0
+	switch(kb.keybind_signal)
+		if(COMSIG_KB_MOVEMENT_NORTH_DOWN)
+			newdir = NORTH
+		if(COMSIG_KB_MOVEMENT_SOUTH_DOWN)
+			newdir = SOUTH
+		if(COMSIG_KB_MOVEMENT_EAST_DOWN)
+			newdir = EAST
+		if(COMSIG_KB_MOVEMENT_WEST_DOWN)
+			newdir = WEST
+	if(!newdir)
+		return
+	if(owner.attackdir != newdir)
+		owner.attackdir = newdir
+		SStgui.update_uis(src)
+	return COMSIG_KB_ACTIVATED
+
 /obj/structure/caspart/caschair/resisted_against(datum/source)
 	if(owner.state)
 		ui_interact(occupant)
@@ -139,6 +168,12 @@
 	set_cockpit_overlay("cockpit_opening")
 	addtimer(CALLBACK(src, PROC_REF(set_cockpit_overlay), "cockpit_open"), 7)
 	UnregisterSignal(occupant, COMSIG_LIVING_DO_RESIST)
+	UnregisterSignal(occupant, list(
+		COMSIG_KB_MOVEMENT_NORTH_DOWN,
+		COMSIG_KB_MOVEMENT_SOUTH_DOWN,
+		COMSIG_KB_MOVEMENT_EAST_DOWN,
+		COMSIG_KB_MOVEMENT_WEST_DOWN
+	))
 	occupant.unset_interaction()
 	occupant.forceMove(get_step(loc, WEST))
 	occupant = null
@@ -150,10 +185,10 @@
 	if(xeno_attacker.status_flags & INCORPOREAL || xeno_attacker.do_actions)
 		return
 	visible_message(span_warning("[xeno_attacker] begins to pry the [src]'s cover!"), 3)
-	playsound(src,'sound/effects/metal_creaking.ogg', 25, 1)
+	playsound(src,'sound/effects/metal_creaking.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	if(!do_after(xeno_attacker, 2 SECONDS))
 		return
-	playsound(loc, 'sound/effects/metal_creaking.ogg', 25, 1)
+	playsound(loc, 'sound/effects/metal_creaking.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	eject_user(TRUE)
 
 /obj/structure/caspart/caschair/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)

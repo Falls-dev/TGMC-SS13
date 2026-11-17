@@ -1,6 +1,5 @@
 import os
 import io
-import gc
 import subprocess
 import requests
 import re
@@ -10,6 +9,7 @@ import string
 import random
 import json
 from flask import Flask, request, send_file, abort, make_response
+from num2words import num2words
 
 tts_sample_rate = 48000 # Set to 40000 if you're using RVC, or whatever sample rate your endpoint is going to send the audio in.
 app = Flask(__name__)
@@ -17,139 +17,184 @@ segmenter = pysbd.Segmenter(language="ru", clean=True)
 radio_starts = ["./on1.wav", "./on2.wav"]
 radio_ends = ["./off1.wav", "./off2.wav", "./off3.wav", "./off4.wav"]
 authorization_token = os.getenv("TTS_AUTHORIZATION_TOKEN", "coolio")
+tts_backend_url = os.getenv("TTS_BACKEND_URL", "http://tts:5003").rstrip("/")
 
 def hhmmss_to_seconds(string):
-    new_time = 0
-    separated_times = string.split(":")
-    new_time = 60 * 60 * float(separated_times[0])
-    new_time += 60 * float(separated_times[1])
-    new_time += float(separated_times[2])
-    return new_time
+	new_time = 0
+	separated_times = string.split(":")
+	new_time = 60 * 60 * float(separated_times[0])
+	new_time += 60 * float(separated_times[1])
+	new_time += float(separated_times[2])
+	return new_time
+
+def prepare_tts_text(text):
+	vowels = set("АЕЁИОУЫЭЮЯ")
+	letter_names = {
+		'А':'а', 'Б':'бэ', 'В':'вэ', 'Г':'гэ', 'Д':'дэ', 'Е':'е', 'Ё':'ё',
+		'Ж':'жэ', 'З':'зэ', 'И':'и', 'Й':'и-краткое', 'К':'ка', 'Л':'эл',
+		'М':'эм', 'Н':'эн', 'О':'о', 'П':'пэ', 'Р':'эр', 'С':'эс', 'Т':'тэ',
+		'У':'у', 'Ф':'фэ', 'Х':'ха', 'Ц':'цэ', 'Ч':'че', 'Ш':'ша', 'Щ':'ща',
+		'Э':'э', 'Ю':'ю', 'Я':'я'
+	}
+	exceptions = ["СМИ", "РО", "ФОБ", "ВУЗ", "МИД", "ТАД"]
+	def replace_acronym(match):
+		word = match.group(0)
+		if word in exceptions:
+			return word
+
+		word_vowels = [c for c in word if c in vowels]
+		if not word_vowels or (len(word_vowels) == 1 and (word[0] in vowels or word[-1] in vowels)):
+			return "-".join([letter_names.get(c, c) for c in word])
+		return word
+
+	def replace_digits(match):
+		try:
+			num = int(match.group(0))
+			return num2words(num, lang='ru')
+		except:
+			return match.group(0)
+
+	text = re.sub(r'\d+', replace_digits, text)
+	text = re.sub(r'\b[А-ЯЁ]{2,}\b', replace_acronym, text)
+	return text
 
 def text_to_speech_handler(endpoint, voice, text, filter_complex, pitch, special_filters = []):
-    filter_complex = filter_complex.replace("\"", "")
-    data_bytes = io.BytesIO()
-    final_audio = pydub.AudioSegment.empty()
+	filter_complex = filter_complex.replace("\"", "")
+	data_bytes = io.BytesIO()
+	final_audio = pydub.AudioSegment.empty()
+	text = prepare_tts_text(text)
 
-    print(f"--> Входящий запрос: voice='{voice}', pitch='{pitch}', text='{text[:40]}...'", flush=True)
+	print(f"--> Входящий запрос: voice='{voice}', pitch='{pitch}', text='{text[:40]}'", flush=True)
 
-    for sentence in segmenter.segment(text):
-        try:
-            response = requests.get(f"http://tts:5003/" + endpoint, json={ 'text': sentence, 'voice': voice, 'pitch': pitch }, timeout=300)
-            if response.status_code != 200:
-                print(f"Ошибка TTS 5003 Код: {response.status_code}, Ответ: {response.text}", flush=True)
-                abort(500)
-        except Exception as e:
-            print(f"Не удалось подключиться к TTS 5003: {e}", flush=True)
-            abort(500)
+	for sentence in segmenter.segment(text):
+		try:
+			response = requests.get(f"{tts_backend_url}/" + endpoint, json={ 'text': sentence, 'voice': voice, 'pitch': pitch }, timeout=300)
+			if response.status_code != 200:
+				print(f"Ошибка TTS 5003 Код: {response.status_code}, Ответ: {response.text}", flush=True)
+				abort(500)
+		except Exception as e:
+			print(f"Не удалось подключиться к TTS 5003: {e}", flush=True)
+			abort(500)
 
-        sentence_audio = pydub.AudioSegment.from_file(io.BytesIO(response.content), "wav")
-        sentence_silence = pydub.AudioSegment.silent(250, 48000)
-        sentence_audio += sentence_silence
-        final_audio += sentence_audio
+		sentence_audio = pydub.AudioSegment.from_file(io.BytesIO(response.content), "wav")
+		sentence_silence = pydub.AudioSegment.silent(250, 48000)
+		sentence_audio += sentence_silence
+		final_audio += sentence_audio
 
-    final_audio.export(data_bytes, format="wav")
-    filter_complex = filter_complex.replace("%SAMPLE_RATE%", str(tts_sample_rate))
+	final_audio.export(data_bytes, format="wav")
+	filter_complex = filter_complex.replace("%SAMPLE_RATE%", str(tts_sample_rate))
 
-    input_audio_bytes = data_bytes.getvalue()
-    ffmpeg_result = None
+	input_audio_bytes = data_bytes.getvalue()
+	ffmpeg_result = None
 
-    if filter_complex != "":
-        ffmpeg_result = subprocess.run(["ffmpeg", "-f", "wav", "-i", "pipe:0", "-filter_complex", filter_complex, "-c:a", "libvorbis", "-b:a", "64k", "-f", "ogg", "pipe:1"], input=input_audio_bytes, capture_output = True)
-    else:
-        if "silicon" in special_filters:
-            ffmpeg_result = subprocess.run(["ffmpeg", "-f", "wav", "-i", "pipe:0", "-i", "./SynthImpulse.wav", "-i", "./RoomImpulse.wav", "-filter_complex", "[0] aresample=44100 [re_1]; [re_1] apad=pad_dur=2 [in_1]; [in_1] asplit=2 [in_1_1] [in_1_2]; [in_1_1] [1] afir=dry=10:wet=10 [reverb_1]; [in_1_2] [reverb_1] amix=inputs=2:weights=8 1 [mix_1]; [mix_1] asplit=2 [mix_1_1] [mix_1_2]; [mix_1_1] [2] afir=dry=1:wet=1 [reverb_2]; [mix_1_2] [reverb_2] amix=inputs=2:weights=10 1 [mix_2]; [mix_2] equalizer=f=7710:t=q:w=0.6:g=-6,equalizer=f=33:t=q:w=0.44:g=-10 [out]; [out] alimiter=level_in=1:level_out=1:limit=0.5:attack=5:release=20:level=disabled", "-c:a", "libvorbis", "-b:a", "64k", "-f", "ogg", "pipe:1"], input=input_audio_bytes, capture_output = True)
-        else:
-            ffmpeg_result = subprocess.run(["ffmpeg", "-f", "wav", "-i", "pipe:0", "-c:a", "libvorbis", "-b:a", "64k", "-f", "ogg", "pipe:1"], input=input_audio_bytes, capture_output = True)
+	if filter_complex != "":
+		ffmpeg_result = subprocess.run(["ffmpeg", "-f", "wav", "-i", "pipe:0", "-filter_complex", filter_complex, "-c:a", "libvorbis", "-b:a", "64k", "-f", "ogg", "pipe:1"], input=input_audio_bytes, capture_output = True)
+	else:
+		if "silicon" in special_filters:
+			ffmpeg_result = subprocess.run([
+				"ffmpeg", "-f", "wav", "-i", "pipe:0",
+				"-i", "./SynthImpulse.wav",
+				"-i", "./RoomImpulse.wav",
+				"-filter_complex",
+				"[0] aresample=44100 [re_1]; "
+				"[re_1] asplit=2 [in_1_1] [in_1_2]; "
+				"[in_1_1] [1] afir=dry=10:wet=10 [reverb_1]; "
+				"[in_1_2] [reverb_1] amix=inputs=2:weights=8 1 [mix_1]; "
+				"[mix_1] asplit=2 [mix_1_1] [mix_1_2]; "
+				"[mix_1_1] [2] afir=dry=1:wet=1 [reverb_2]; "
+				"[mix_1_2] [reverb_2] amix=inputs=2:weights=10 1 [mix_2]; "
+				"[mix_2] equalizer=f=7710:t=q:w=0.6:g=-6,equalizer=f=33:t=q:w=0.44:g=-10 [out]; "
+				"[out] alimiter=level_in=1:level_out=1:limit=0.5:attack=5:release=20:level=disabled",
+				"-c:a", "libvorbis", "-b:a", "64k", "-f", "ogg", "pipe:1"
+			], input=input_audio_bytes, capture_output=True)
+		else:
+			ffmpeg_result = subprocess.run(["ffmpeg", "-f", "wav", "-i", "pipe:0", "-c:a", "libvorbis", "-b:a", "64k", "-f", "ogg", "pipe:1"], input=input_audio_bytes, capture_output = True)
 
-    ffmpeg_metadata_output = ffmpeg_result.stderr.decode('utf-8', errors='ignore')
+	ffmpeg_metadata_output = ffmpeg_result.stderr.decode('utf-8', errors='ignore')
 
-    if ffmpeg_result.returncode != 0:
-        print(f"\nОшибка Ffmpeg (Код {ffmpeg_result.returncode}) [!]\nЛог ошибки:\n{ffmpeg_metadata_output}\n", flush=True)
-        abort(500)
+	if ffmpeg_result.returncode != 0:
+		print(f"\nОшибка Ffmpeg (Код {ffmpeg_result.returncode}) [!]\nЛог ошибки:\n{ffmpeg_metadata_output}\n", flush=True)
+		abort(500)
 
-    print(f"<-- Успешно обработано. Размер OGG: {len(ffmpeg_result.stdout)} байт", flush=True)
-    export_audio = io.BytesIO(ffmpeg_result.stdout)
+	print(f"<-- Успешно обработано. Размер OGG: {len(ffmpeg_result.stdout)} байт", flush=True)
+	export_audio = io.BytesIO(ffmpeg_result.stdout)
 
-    if "radio" in special_filters:
-        radio_audio = pydub.AudioSegment.from_file(random.choice(radio_starts), "wav")
-        radio_audio += pydub.AudioSegment.from_file(io.BytesIO(ffmpeg_result.stdout), "ogg")
-        radio_audio += pydub.AudioSegment.from_file(random.choice(radio_ends), "wav")
-        new_data_bytes = io.BytesIO()
-        radio_audio.export(new_data_bytes, format="ogg")
-        export_audio = io.BytesIO(new_data_bytes.getvalue())
+	if "radio" in special_filters:
+		radio_audio = pydub.AudioSegment.from_file(random.choice(radio_starts), "wav")
+		radio_audio += pydub.AudioSegment.from_file(io.BytesIO(ffmpeg_result.stdout), "ogg")
+		radio_audio += pydub.AudioSegment.from_file(random.choice(radio_ends), "wav")
+		new_data_bytes = io.BytesIO()
+		radio_audio.export(new_data_bytes, format="ogg")
+		export_audio = io.BytesIO(new_data_bytes.getvalue())
 
-    matched_length = re.search(r"time=([0-9:\\.]+)", ffmpeg_metadata_output)
-    if matched_length:
-        hh_mm_ss = matched_length.group(1)
-        length = hhmmss_to_seconds(hh_mm_ss)
-    else:
-        length = 0
-        print("FFmpeg не вернул время, длина аудио установлена в 0.", flush=True)
+	matched_length = re.search(r"time=([0-9:\\.]+)", ffmpeg_metadata_output)
+	if matched_length:
+		hh_mm_ss = matched_length.group(1)
+		length = hhmmss_to_seconds(hh_mm_ss)
+	else:
+		length = 0
+		print("FFmpeg не вернул время, длина аудио установлена в 0.", flush=True)
 
-    response = send_file(export_audio, as_attachment=True, download_name='identifier.ogg', mimetype="audio/ogg")
-    response.headers['audio-length'] = length
-    return response
+	response = send_file(export_audio, as_attachment=True, download_name='identifier.ogg', mimetype="audio/ogg")
+	response.headers['audio-length'] = length
+	return response
 
-@app.route("/tts")
+@app.route("/tts", methods=["GET", "POST"])
 def text_to_speech_normal():
-    if authorization_token != request.headers.get("Authorization", ""):
-        abort(401)
+	if authorization_token != request.headers.get("Authorization", ""):
+		abort(401)
 
-    voice = request.args.get("voice", '')
-    text = request.json.get("text", '') if request.is_json else request.args.get("text", '')
-    pitch = request.args.get("pitch", '')
-    special_filters = request.args.get("special_filters", '')
-    if pitch == "":
-        pitch = "0"
-    silicon = request.args.get("silicon", '')
-    if silicon:
-        special_filters = ["silicon"]
+	voice = request.args.get("voice", '')
+	text = request.json.get("text", '') if request.is_json else request.args.get("text", '')
+	pitch = request.args.get("pitch", '')
+	special_filters = request.args.get("special_filters", '')
+	if pitch == "":
+		pitch = "0"
+	silicon = request.args.get("silicon", '')
+	if silicon:
+		special_filters = ["silicon"]
 
-    filter_complex = request.args.get("filter", '')
-    return text_to_speech_handler("generate-tts", voice, text, filter_complex, pitch, special_filters)
+	filter_complex = request.args.get("filter", '')
+	return text_to_speech_handler("generate-tts", voice, text, filter_complex, pitch, special_filters)
 
-@app.route("/tts-blips")
+@app.route("/tts-blips", methods=["GET", "POST"])
 def text_to_speech_blips():
-    if authorization_token != request.headers.get("Authorization", ""):
-        abort(401)
+	if authorization_token != request.headers.get("Authorization", ""):
+		abort(401)
 
-    voice = request.args.get("voice", '')
-    text = request.json.get("text", '') if request.is_json else request.args.get("text", '')
-    pitch = request.args.get("pitch", '')
-    special_filters = request.args.get("special_filters", '')
-    if pitch == "":
-        pitch = "0"
-    special_filters = special_filters.split("|")
+	voice = request.args.get("voice", '')
+	text = request.json.get("text", '') if request.is_json else request.args.get("text", '')
+	pitch = request.args.get("pitch", '')
+	special_filters = request.args.get("special_filters", '')
+	if pitch == "":
+		pitch = "0"
+	special_filters = special_filters.split("|")
 
-    filter_complex = request.args.get("filter", '')
-    return text_to_speech_handler("generate-tts-blips", voice, text, filter_complex, pitch, special_filters)
+	filter_complex = request.args.get("filter", '')
+	return text_to_speech_handler("generate-tts-blips", voice, text, filter_complex, pitch, special_filters)
 
 @app.route("/tts-voices")
 def voices_list():
-    if authorization_token != request.headers.get("Authorization", ""):
-        abort(401)
+	if authorization_token != request.headers.get("Authorization", ""):
+		abort(401)
 
-    response = requests.get(f"http://tts:5003/tts-voices")
-    return response.content
+	response = requests.get(f"{tts_backend_url}/tts-voices")
+	return response.content
 
 @app.route("/health-check")
 def tts_health_check():
-    gc.collect()
-    return "OK", 200
+	return "OK", 200
 
 @app.route("/pitch-available")
 def pitch_available():
-    if authorization_token != request.headers.get("Authorization", ""):
-        abort(401)
+	if authorization_token != request.headers.get("Authorization", ""):
+		abort(401)
 
-    response = requests.get(f"http://tts:5003/pitch-available")
-    if response.status_code != 200:
-        abort(500)
-    return make_response("Pitch available", 200)
+	response = requests.get(f"{tts_backend_url}/pitch-available")
+	if response.status_code != 200:
+		abort(500)
+	return make_response("Pitch available", 200)
 
 if __name__ == "__main__":
-    if os.getenv('TTS_LD_LIBRARY_PATH', "") != "":
-        os.putenv('LD_LIBRARY_PATH', os.getenv('TTS_LD_LIBRARY_PATH'))
-    from waitress import serve
-    serve(app, host="0.0.0.0", port=5002, threads=4, backlog=16, connection_limit=32, channel_timeout=15)
+	from waitress import serve
+	serve(app, host="0.0.0.0", port=5002, threads=4, backlog=16, connection_limit=32, channel_timeout=120)

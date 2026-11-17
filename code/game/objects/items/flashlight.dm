@@ -43,7 +43,7 @@
 /obj/item/flashlight/attack_alien(mob/living/carbon/xenomorph/xeno_attacker, isrightclick = FALSE)
 	if(turn_light(xeno_attacker, FALSE) != CHECKS_PASSED)
 		return
-	playsound(loc, SFX_ALIEN_CLAW_METAL, 25, 1)
+	playsound(loc, SFX_ALIEN_CLAW_METAL, 25, 1, MEDIUM_SOUND_RANGE)
 	xeno_attacker.do_attack_animation(src, ATTACK_EFFECT_CLAW)
 	to_chat(xeno_attacker, span_warning("We disable the metal thing's lights.") )
 
@@ -62,7 +62,7 @@
 		to_chat(user, "You cannot turn the light on while in [user.loc].")
 		return FALSE
 	if(activation_sound && (turn_light(user, !light_on) != STILL_ON_COOLDOWN))
-		playsound(get_turf(src), activation_sound, 15, 1)
+		playsound(get_turf(src), activation_sound, 15, 1, SHORT_SOUND_RANGE)
 	return TRUE
 
 /obj/item/flashlight/screwdriver_act(mob/living/user, obj/item/I)
@@ -172,7 +172,7 @@
 	if(xeno_attacker.status_flags & INCORPOREAL)
 		return FALSE
 	xeno_attacker.do_attack_animation(src, ATTACK_EFFECT_SMASH)
-	playsound(loc, 'sound/effects/metalhit.ogg', 20, TRUE)
+	playsound(loc, 'sound/effects/metalhit.ogg', 20, TRUE, MEDIUM_SOUND_RANGE)
 	xeno_attacker.visible_message(span_danger("\The [xeno_attacker] smashes [src]!"), \
 	span_danger("We smash [src]!"), null, 5)
 	deconstruct(FALSE)

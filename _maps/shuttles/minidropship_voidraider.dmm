@@ -125,6 +125,7 @@
 /obj/machinery/door/window{
 	dir = 2
 	},
+/obj/machinery/vending/nanoammo/directional/west,
 /turf/open/floor/plating/plating_catwalk,
 /area/shuttle/minidropship)
 "aK" = (
@@ -239,6 +240,12 @@
 	},
 /turf/open/floor/mainship/mono,
 /area/shuttle/minidropship)
+"Vh" = (
+/mob/living/simple_animal/pig/mini{
+	name = "MEL"
+	},
+/turf/open/floor/mainship/mono,
+/area/shuttle/minidropship)
 
 (1,1,1) = {"
 aw
@@ -300,7 +307,7 @@ aQ
 bJ
 rN
 aH
-aY
+Vh
 aC
 aY
 aa

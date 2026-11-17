@@ -170,3 +170,60 @@
 	current_rounds = 280
 	reload_delay = 0 SECONDS
 
+/obj/item/ammo_magazine/flamer_tank/internal/proc/empty_fuel(mob/user)
+	if(current_rounds <= 0)
+		if(user)
+			to_chat(user, span_warning("[src] is already empty."))
+		return FALSE
+	if(user)
+		to_chat(user, span_notice("You dump [current_rounds] units of [lowertext(caliber)] from [src]."))
+	current_rounds = 0
+	default_ammo = /datum/ammo/flamethrower
+	dispenser_type = /obj/structure/reagent_dispensers/fueltank
+	return TRUE
+
+/obj/item/ammo_magazine/flamer_tank/internal/proc/set_fuel_from_dispenser(obj/structure/reagent_dispensers/dispenser)
+	if(istype(dispenser, /obj/structure/reagent_dispensers/fueltank/xfuel))
+		default_ammo = /datum/ammo/flamethrower/blue
+		dispenser_type = /obj/structure/reagent_dispensers/fueltank/xfuel
+		caliber = CALIBER_FUEL_THICK
+		return TRUE
+	if(istype(dispenser, /obj/structure/reagent_dispensers/fueltank/gfuel))
+		default_ammo = /datum/ammo/flamethrower/green
+		dispenser_type = /obj/structure/reagent_dispensers/fueltank/gfuel
+		caliber = CALIBER_FUEL_THICK
+		return TRUE
+	if(istype(dispenser, /obj/structure/reagent_dispensers/fueltank))
+		default_ammo = /datum/ammo/flamethrower
+		dispenser_type = /obj/structure/reagent_dispensers/fueltank
+		caliber = CALIBER_FUEL_THICK
+		return TRUE
+	return FALSE
+
+/obj/item/ammo_magazine/flamer_tank/internal/afterattack(obj/target, mob/user, flag)
+	if(!istype(target, /obj/structure/reagent_dispensers) || get_dist(user, target) > 1)
+		return ..()
+
+	var/obj/structure/reagent_dispensers/dispenser = target
+	if(dispenser.reagents.total_volume <= 0)
+		to_chat(user, span_warning("This tank is empty!"))
+		return
+
+	if(current_rounds <= 0)
+		if(!set_fuel_from_dispenser(dispenser))
+			to_chat(user, span_warning("Not a valid fuel source!"))
+			return
+	else if(!istype(dispenser, dispenser_type))
+		to_chat(user, span_warning("Fuel type mismatch! Empty the bag first to change fuel."))
+		return
+
+	if(current_rounds >= max_rounds)
+		to_chat(user, span_warning("[src] is already full."))
+		return
+
+	var/liquid_transfer_amount = min(dispenser.reagents.total_volume, (max_rounds - current_rounds))
+	dispenser.reagents.remove_any(liquid_transfer_amount)
+	current_rounds += liquid_transfer_amount
+	playsound(user, 'sound/effects/refill.ogg', 25, 1, 3)
+	to_chat(user, span_notice("You refill [src] with [lowertext(caliber)]."))
+

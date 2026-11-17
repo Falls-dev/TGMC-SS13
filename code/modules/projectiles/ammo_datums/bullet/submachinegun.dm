@@ -88,7 +88,7 @@
 	damage = 15
 	penetration = 15
 	armor_type = BOMB
-	sundering = 1
+	additional_xeno_penetration = 10
 	damage_falloff = 2
 	shrapnel_chance = 0
 	var/shatter_duration = 3 SECONDS
@@ -103,4 +103,4 @@
 	name = "heavy submachinegun bullet"
 	damage = 27.5
 	penetration = 10
-	sundering = 1
+	additional_xeno_penetration = 10

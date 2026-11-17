@@ -202,11 +202,7 @@
 	. = TRUE
 	//TODO: Make firetypes, colour types are terrible
 	if(flame_color == FLAME_COLOR_LIME)
-		if(has_status_effect(STATUS_EFFECT_MELTING))
-			var/datum/status_effect/stacking/melting/debuff = has_status_effect(STATUS_EFFECT_MELTING)
-			debuff.add_stacks(2)
-		else
-			apply_status_effect(STATUS_EFFECT_MELTING, 2)
+		apply_melting_stacks(3)
 
 	take_overall_damage(rand(10, burn_level), BURN, FIRE, updating_health = TRUE, max_limbs = 4)
 	to_chat(src, span_warning("You are burned!"))
@@ -215,6 +211,15 @@
 	if(on_fire || !fire_stacks)
 		return
 	IgniteMob()
+
+/mob/living/proc/apply_melting_stacks(stacks_to_add)
+	if(!iscarbon(src))
+		return
+	var/datum/status_effect/stacking/melting/debuff = has_status_effect(STATUS_EFFECT_MELTING)
+	if(debuff)
+		debuff.add_stacks(stacks_to_add)
+	else
+		apply_status_effect(STATUS_EFFECT_MELTING, stacks_to_add)
 
 ///Try and remove fire from ourselves
 /mob/living/proc/resist_fire(datum/source)

@@ -62,6 +62,12 @@
 	var/about_to_jump = FALSE
 	///Time to become active after moving into the facehugger's space.
 	var/proximity_time = 0.75 SECONDS
+	///How long it takes to plant this hugger on a human by hand.
+	var/hand_attach_time = 1 SECONDS
+	///Is this hugger immune to fire?
+	var/fire_immune = FALSE
+	///How far this hugger can leap at a target.
+	var/leap_range = 4
 	var/trap_type = TRAP_HUGGER_LARVAL
 
 /obj/item/clothing/mask/facehugger/Initialize(mapload, input_hivenumber, input_source)
@@ -161,7 +167,7 @@
 		return ..()
 	user.visible_message(span_warning("\ [user] attempts to plant [src] on [M]'s face!"), \
 	span_warning("We attempt to plant [src] on [M]'s face!"))
-	if(!do_after(user, 1 SECONDS, NONE, M, BUSY_ICON_DANGER))
+	if(!do_after(user, hand_attach_time, NONE, M, BUSY_ICON_DANGER))
 		return
 	if(!try_attach(M))
 		go_idle()
@@ -272,7 +278,7 @@
 	if(chosen_target)
 		visible_message(span_warning("\The scuttling [src] leaps at [chosen_target]!"), null, null, 4)
 		leaping = TRUE
-		throw_at(chosen_target, 4, 1)
+		throw_at(chosen_target, leap_range, 1)
 		return
 
 	remove_danger_overlay() //Remove the danger overlay
@@ -559,7 +565,7 @@
 			hugsound = SFX_PRED_HUGGED
 		else
 			hugsound = user.gender == FEMALE ? SFX_FEMALE_HUGGED : SFX_MALE_HUGGED
-		playsound(loc, hugsound, 25, 0)
+		playsound(loc, hugsound, 25, 0, MEDIUM_SOUND_RANGE)
 	if(!sterile && !issynth(user))
 		var/stamina_dmg = user.maxHealth + user.max_stamina
 		user.apply_damage(stamina_dmg, STAMINA) // complete winds the target
@@ -593,7 +599,7 @@
 		kill_hugger()
 	else
 		reset_attach_status(as_planned)
-		playsound(loc, 'sound/voice/alien/facehugger_dies.ogg', 25, 1)
+		playsound(loc, 'sound/voice/alien/facehugger_dies.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 		activetimer = addtimer(CALLBACK(src, PROC_REF(go_active)), activate_time, TIMER_STOPPABLE|TIMER_UNIQUE)
 		update_icon()
 
@@ -608,7 +614,17 @@
 		dropped(target)
 
 /// Kills the hugger, should be self explanatory
+/// Sets whether this hugger is immune to fire, with a visible outline.
+/obj/item/clothing/mask/facehugger/proc/set_fire_immunity(new_fire_immunity)
+	if(!fire_immune && new_fire_immunity)
+		add_filter("facehugger_fire_immunity_outline", 2, outline_filter(1, COLOR_TAN_ORANGE))
+	if(fire_immune && !new_fire_immunity)
+		remove_filter("facehugger_fire_immunity_outline")
+	fire_immune = new_fire_immunity
+
 /obj/item/clothing/mask/facehugger/proc/kill_hugger(melt_timer = 1 MINUTES)
+	if(fire_immune)
+		set_fire_immunity(FALSE)
 	reset_attach_status()
 
 	if(stat == DEAD)
@@ -622,7 +638,7 @@
 	remove_danger_overlay() //Remove the danger overlay
 
 	update_icon()
-	playsound(loc, 'sound/voice/alien/facehugger_dies.ogg', 25, 1)
+	playsound(loc, 'sound/voice/alien/facehugger_dies.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 
 	layer = BELOW_MOB_LAYER //so dead hugger appears below live hugger if stacked on same tile.
 
@@ -648,7 +664,7 @@
 //  DAMAGE STUFF
 ///////////////////////////////
 /obj/item/clothing/mask/facehugger/fire_act(burn_level, flame_color)
-	if(leaping || throwing) // no dying because of jumping over fire
+	if(leaping || throwing || fire_immune) // no dying because of jumping over fire
 		return
 	kill_hugger()
 
@@ -748,7 +764,7 @@
 	do_attack_animation(M)
 	M.apply_damage(1, BRUTE, sharp = TRUE, updating_health = TRUE) //Token brute for the injection
 	M.reagents.add_reagent(injected_chemical_type, amount_injected, no_overdose = TRUE)
-	playsound(M, 'sound/effects/spray3.ogg', 25, 1)
+	playsound(M, 'sound/effects/spray3.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	M.visible_message(span_danger("[src] penetrates [M] with its sharp probscius!"), span_danger("[src] penetrates you with a sharp probscius before falling down!"))
 	leaping = FALSE
 	go_idle() //We're a bit slow on the recovery
@@ -860,7 +876,7 @@
 
 	var/mob/living/victim = M
 	do_attack_animation(M, ATTACK_EFFECT_REDSLASH)
-	playsound(loc, SFX_ALIEN_CLAW_FLESH, 25, 1)
+	playsound(loc, SFX_ALIEN_CLAW_FLESH, 25, 1, MEDIUM_SOUND_RANGE)
 	var/affecting = ran_zone(null, 0)
 	if(!affecting) //Still nothing??
 		affecting = BODY_ZONE_CHEST //Gotta have a torso?!
@@ -881,6 +897,19 @@
 		if(hivenumber == X.hive.hivenumber) //No friendly fire
 			return FALSE
 	return TRUE
+
+/// A fake hugger thrown together with a real one (Fake Huggers). It never attaches, but looks and acts like a hugger.
+/obj/item/clothing/mask/facehugger/combat/harmless
+	name = "harmless hugger"
+	color = COLOR_BROWN
+
+/obj/item/clothing/mask/facehugger/combat/harmless/try_attach(mob/M, mob/user)
+	if(!combat_hugger_check_target(M))
+		return FALSE
+	return TRUE
+
+/obj/item/clothing/mask/facehugger/combat/harmless/attack_self(mob/user)
+	return
 
 #undef FACEHUGGER_DEATH
 #undef IMPREGNATION_TIME

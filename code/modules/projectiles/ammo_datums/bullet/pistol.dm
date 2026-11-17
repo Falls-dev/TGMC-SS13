@@ -24,7 +24,7 @@
 	penetration = 15 //So it can actually hurt something.
 	additional_xeno_penetration = 7.5
 	damage_falloff = 1.5
-	matter_cost = 0
+	matter_cost = 2
 
 /datum/ammo/bullet/pistol/tranq
 	name = "tranq bullet"
@@ -61,6 +61,7 @@
 
 /datum/ammo/bullet/pistol/ap/smart
 	ammo_behavior_flags = AMMO_BALLISTIC|AMMO_IFF
+	matter_cost = 6
 
 /datum/ammo/bullet/pistol/heavy
 	name = "heavy pistol bullet"

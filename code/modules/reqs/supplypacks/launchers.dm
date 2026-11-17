@@ -4,7 +4,10 @@
 
 /datum/supply_packs/launchers/rpgoneuse
 	name = "RL-72 disposable RPG"
-	contains = list(/obj/item/weapon/gun/launcher/rocket/oneuse)
+	contains = list(
+	/obj/item/weapon/gun/launcher/rocket/oneuse,
+	/obj/item/weapon/gun/launcher/rocket/oneuse,
+	)
 	cost = 100
 
 /datum/supply_packs/launchers/recoillesskit

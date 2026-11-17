@@ -69,7 +69,7 @@
 	var/boosty_access_tier = SSdiscord.get_boosty_tier(ckey)
 	if(check_other_rights(client, R_ADMIN, FALSE))
 		boosty_access_tier = BOOSTY_TIER_3
-	if(boosty_access_tier < BOOSTY_TIER_2)
+	if(boosty_access_tier < BOOSTY_TIER_1)
 		to_chat(usr, span_notice("You need a higher boosty tier to use this!"))
 		return
 
@@ -90,6 +90,10 @@
 
 	icon = selection.icon
 	effects_icon = selection.effects_icon
+	max_wound_states = selection.max_wound_states
+	current_skin = selection
+	if(selection.select_sound)
+		playsound(loc, selection.select_sound, 25, 1)
 
 /mob/living/carbon/xenomorph/Topic(href, href_list)
 	. = ..()
@@ -589,8 +593,8 @@
 	var/i = 1
 	to_chat(C, span_danger("You feel a tiny prick."))
 	to_chat(src, span_xenowarning("Our stinger injects our victim with [initial(toxin.name)]!"))
-	playsound(C, 'sound/effects/spray3.ogg', 15, TRUE)
-	playsound(C, SFX_ALIEN_DROOL, 15, TRUE)
+	playsound(C, 'sound/effects/spray3.ogg', 15, TRUE, SHORT_SOUND_RANGE)
+	playsound(C, SFX_ALIEN_DROOL, 15, TRUE, SHORT_SOUND_RANGE)
 	do
 		face_atom(C)
 		if(IsStaggered())

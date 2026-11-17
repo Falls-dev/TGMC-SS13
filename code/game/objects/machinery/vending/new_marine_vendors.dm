@@ -182,7 +182,7 @@
 			else
 				vended_items += new idx(loc)
 
-			playsound(src, SFX_VENDING, 25, 0)
+			playsound(src, SFX_VENDING, 25, 0, MEDIUM_SOUND_RANGE)
 
 			if(icon_vend)
 				flick(icon_vend, src)
@@ -575,7 +575,7 @@
 		/obj/item/clothing/under/marine/whites,
 		/obj/item/clothing/suit/white_dress_jacket,
 		/obj/item/clothing/head/white_dress,
-		/obj/item/clothing/shoes/white,
+		/obj/item/clothing/shoes/marine/white,
 		/obj/item/clothing/gloves/white,
 	)
 

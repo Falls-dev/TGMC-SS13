@@ -31,6 +31,8 @@
 	var/category = CAT_NORMAL
 	///Incase its a tabbed vendor what tab this belongs to.
 	var/tab
+	/// Optional upper limit when restocking.
+	var/max_capacity
 
 /datum/vending_product/New(name, atom/typepath, product_amount, product_price, product_display_color, category = CAT_NORMAL, tab)
 	product_path = typepath
@@ -58,6 +60,7 @@
 	icon_state = "generic"
 	anchored = TRUE
 	density = TRUE
+	var/list/max_capacities
 	coverage = 80
 	soft_armor = list(MELEE = 0, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 0, BIO = 100, FIRE = 0, ACID = 0)
 	layer = BELOW_OBJ_LAYER
@@ -245,6 +248,7 @@
 				if(isnull(amount))
 					amount = 1
 				var/datum/vending_product/record = new(typepath = typepath, product_amount = amount, category = category, tab = entry)
+				record.max_capacity = max_capacities?[typepath]
 				recordlist += record
 			continue
 		//This item is not tab dependent
@@ -252,6 +256,7 @@
 		if(isnull(amount))
 			amount = 1
 		var/datum/vending_product/record = new(typepath = entry, product_amount = amount, category = category)
+		record.max_capacity = max_capacities?[entry]
 		recordlist += record
 
 ///Makes additional tabs/adds to the tabs based on the seasonal_items vendor specification
@@ -266,7 +271,7 @@
 	if(xeno_attacker.a_intent == INTENT_HARM)
 		xeno_attacker.do_attack_animation(src, ATTACK_EFFECT_SMASH)
 		if(prob(xeno_attacker.xeno_caste.melee_damage))
-			playsound(loc, 'sound/effects/metalhit.ogg', 25, 1)
+			playsound(loc, 'sound/effects/metalhit.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			xeno_attacker.visible_message(span_danger("\The [xeno_attacker] smashes \the [src] beyond recognition!"), \
 			span_danger("We enter a frenzy and smash \the [src] apart!"), null, 5)
 			malfunction()
@@ -274,7 +279,7 @@
 		else
 			xeno_attacker.visible_message(span_danger("[xeno_attacker] slashes \the [src]!"), \
 			span_danger("We slash \the [src]!"), null, 5)
-			playsound(loc, 'sound/effects/metalhit.ogg', 25, 1)
+			playsound(loc, 'sound/effects/metalhit.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 		return TRUE
 
 	if(tipped_level)
@@ -370,7 +375,7 @@
 		return
 	if(!do_after(user, 20, NONE, src, BUSY_ICON_BUILD))
 		return
-	playsound(loc, 'sound/items/ratchet.ogg', 25, 1)
+	playsound(loc, 'sound/items/ratchet.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	anchored = !anchored
 	if(anchored)
 		user.visible_message("[user] tightens the bolts securing \the [src] to the floor.", "You tighten the bolts securing \the [src] to the floor.")
@@ -649,6 +654,10 @@
 			return FALSE
 
 	else if(amount >= 0) //Item is finite so we are more strict on its condition
+		if(!isnull(max_capacity) && amount >= max_capacity)
+			user?.balloon_alert(user, "Vendor is full!")
+			return FALSE
+
 
 		if(isammomagazine(item_to_stock))
 			var/obj/item/ammo_magazine/A = item_to_stock

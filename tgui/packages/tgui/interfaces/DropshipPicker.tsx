@@ -23,7 +23,7 @@ export const DropshipPicker = (_props) => {
   const { act, data } = useBackend<DropshipPickerData>();
 
   return (
-    <Window width={510} height={500} title={'Dropship Selector'}>
+    <Window width={660} height={500} title={'Dropship Selector'}>
       <Window.Content>
         <Flex height={'95%'} direction={'row'}>
           <Flex.Item width={'45%'}>

@@ -182,7 +182,18 @@
 	possible_transfer_amounts = list(5, 10, 15, 30)
 
 /obj/item/reagent_containers/glass/beaker/cryoxadone
-	list_reagents = list(/datum/reagent/medicine/cryoxadone = 30)
+	list_reagents = list(
+		/datum/reagent/medicine/cryoxadone = 10,
+		/datum/reagent/medicine/clonexadone = 10,
+		/datum/reagent/medicine/saline_glucose = 5,
+		/datum/reagent/medicine/tricordrazine = 10,
+		/datum/reagent/medicine/quickclot = 5,
+		/datum/reagent/medicine/dexalinplus = 5,
+		/datum/reagent/medicine/spaceacillin = 5,
+		/datum/reagent/medicine/bihexajuline = 5,
+		/datum/reagent/medicine/peridaxon = 5,
+		)
+//Такой же микс как и снизу, но чтобы не менять спавн этих баночек на корабле или планете
 
 /obj/item/reagent_containers/glass/beaker/cryoxadone/Initialize(mapload)
 	. = ..()
@@ -198,6 +209,7 @@
 		/datum/reagent/medicine/dexalinplus = 5,
 		/datum/reagent/medicine/spaceacillin = 5,
 		/datum/reagent/medicine/bihexajuline = 5,
+		/datum/reagent/medicine/peridaxon = 5,
 	)
 
 /obj/item/reagent_containers/glass/beaker/cryomix/Initialize(mapload)
@@ -238,7 +250,7 @@
 		return
 	reagents.trans_to(I, 5)
 	to_chat(user, span_notice("You wet [I] in [src]."))
-	playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+	playsound(loc, 'sound/effects/slosh.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 
 /obj/item/reagent_containers/glass/bucket/update_overlays()
 	. = ..()

@@ -136,7 +136,6 @@
 			/obj/item/implanter/skill/medical = -1,
 			/obj/item/implanter/skill/surgery = -1,
 			/obj/item/implanter/skill/engineer = -1,
-			/obj/item/implanter/skill/construct = -1,
 			/obj/item/implanter/skill/leadership = -1,
 		),
 	)
@@ -420,6 +419,7 @@
 			/obj/item/armored_weapon/tow = -1,
 			/obj/item/ammo_magazine/tank/tow_missile = -1,
 			/obj/item/armored_weapon/microrocket_pod = -1,
+			/obj/item/armored_weapon/secondary_tesla = -1,
 			/obj/item/ammo_magazine/tank/microrocket_rack = -1,
 			/obj/item/tank_module/overdrive = -1,
 			/obj/item/tank_module/ability/zoom = -1,

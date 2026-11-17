@@ -44,7 +44,7 @@
 	overheal_max = 275
 	drain_plasma_gain = 75
 	carnage_plasma_gain = 150
-	feast_plasma_drain = 15
+	feast_plasma_drain = 20
 
 	actions = list(
 		/datum/action/ability/xeno_action/xeno_resting,

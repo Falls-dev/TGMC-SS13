@@ -16,6 +16,9 @@
 	var/hair_concealing_option
 	/// The contents in the storage (If there is storage)
 	var/list/contents = list()
+	/// Бейджи
+	var/badge_style
+	var/badge_shape
 
 /datum/item_representation/New(obj/item/item_to_copy)
 	if(!item_to_copy && !isobj(item_to_copy))
@@ -31,6 +34,11 @@
 
 	if(item_to_copy.current_hair_concealment && item_to_copy.colorable_allowed & HAIR_CONCEALING_CHANGE_ALLOWED)
 		hair_concealing_option = item_to_copy.current_hair_concealment
+
+	if(istype(item_to_copy, /obj/item/armor_module/armor/badge))
+		var/obj/item/armor_module/armor/badge/badge = item_to_copy
+		badge_style = badge.current_style
+		badge_shape = badge.greyscale_config
 
 	if(!item_to_copy.greyscale_config)
 		return
@@ -63,6 +71,14 @@
 		item.switch_hair_concealment_flags(user)
 	if(item.storage_datum)
 		instantiate_current_storage_datum(seller, item, user)
+	if(istype(item, /obj/item/armor_module/armor/badge))
+		var/obj/item/armor_module/armor/badge/badge = item
+		if(badge_style)
+			badge.current_style = badge_style
+			badge.update_icon()
+		if(badge_shape)
+			badge.set_greyscale_config(badge_shape)
+			badge.update_icon()
 	return item
 
 /**

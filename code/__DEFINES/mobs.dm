@@ -588,6 +588,8 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define XENO_HIVEMIND_DETECTION_RANGE 10 //How far out (in tiles) can the hivemind detect hostiles
 #define XENO_HIVEMIND_DETECTION_COOLDOWN 1 MINUTES
 
+#define XENO_BIOMASS_GAIN_BONUS_MAX 1.5 //Maximum passive biomass gain bonus from psydrain and cocoons
+
 #define XENO_RESTING_COOLDOWN 2 SECONDS
 #define XENO_UNRESTING_COOLDOWN 1 SECONDS
 
@@ -668,7 +670,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define RAVAGER_RAGE_WARNING 0.7
 #define RAVAGER_RAGE_MIN_HEALTH_THRESHOLD 0.5 //The maximum % of HP we can have to trigger Rage
 #define RAVAGER_RAGE_STAGGERSTUN_IMMUNE_THRESHOLD 0.3
-#define RAVAGER_RAGE_ENDURE_INCREASE_PER_SLASH 1 SECONDS //The amount of time each slash during Rage increases Endure's duration
+#define RAVAGER_RAGE_ENDURE_INCREASE_PER_SLASH 2 SECONDS //The amount of time each slash during Rage increases Endure's duration
 #define RAVAGER_RAGE_HEALTH_RECOVERY_PER_SLASH 32 //Base amount of healing from slash during Rage
 #define RAVAGER_IMMORTALITY_DURATION 5 SECONDS
 
@@ -743,9 +745,9 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// Bonus damage per fire stack
 #define PYROGEN_FIRECHARGE_DAMAGE_PER_STACK 3
 /// Bonus damage for directly hitting someone
-#define PYROGEN_FIREBALL_DIRECT_DAMAGE 20
+#define PYROGEN_FIREBALL_DIRECT_DAMAGE 15
 /// Damage in a 3x3 AOE when we hit anything
-#define PYROGEN_FIREBALL_AOE_DAMAGE 20
+#define PYROGEN_FIREBALL_AOE_DAMAGE 15
 /// Damage in a 3x3 AOE when we hit a vehicle
 #define PYROGEN_FIREBALL_VEHICLE_AOE_DAMAGE 10
 /// Fire stacks on FIREBALL burst in the 3x3 AOE
@@ -755,7 +757,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// How fast the fireball moves
 #define PYROGEN_FIREBALL_SPEED 1
 /// How much damage the fire does per tick or cross.
-#define PYROGEN_MELTING_FIRE_DAMAGE 10
+#define PYROGEN_MELTING_FIRE_DAMAGE 8
 /// How many melting fire effect stacks we give per tick or cross
 #define PYROGEN_MELTING_FIRE_EFFECT_STACK 2
 /// How many  tornadoes we unleash when using the firestorm

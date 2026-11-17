@@ -6,6 +6,8 @@
 /datum/xeno_mutation/runner
 	category = "Enhancement"
 	caste_restrictions = list("runner")
+	// Melter is a strain of Runner: it must not buy its parent's mutations.
+	caste_type_exclusions = list(/datum/xeno_caste/runner/melter)
 
 /datum/status_effect/runner
 	duration = -1
@@ -204,7 +206,7 @@
 	addtimer(CALLBACK(xenomorph_owner, TYPE_PROC_REF(/datum, remove_filter), "ingrained_evasion"), 0.5 SECONDS)
 	xenomorph_owner.do_jitter_animation(4000)
 	var/turf/current_turf = get_turf(xenomorph_owner)
-	playsound(current_turf, pick('sound/effects/throw.ogg','sound/effects/alien/tail_swipe1.ogg', 'sound/effects/alien/tail_swipe2.ogg'), 25, 1) //sound effects
+	playsound(current_turf, pick(SFX_THROW,'sound/effects/alien/tail_swipe1.ogg', 'sound/effects/alien/tail_swipe2.ogg'), 25, 1) //sound effects
 	var/obj/effect/temp_visual/after_image/after_image
 	for(var/i = 0 to 2)
 		after_image = new /obj/effect/temp_visual/after_image(current_turf, xenomorph_owner)

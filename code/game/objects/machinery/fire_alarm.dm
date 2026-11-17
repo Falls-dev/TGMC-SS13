@@ -129,7 +129,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, (-32))
 	if(buildstage != FIRE_ALARM_BUILD_SECURED)
 		return
 	user.visible_message(span_warning("[user] has cut the wires inside \the [src]!"), "You have cut the wires inside \the [src].")
-	playsound(loc, 'sound/items/wirecutter.ogg', 25, 1)
+	playsound(loc, 'sound/items/wirecutter.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	buildstage = FIRE_ALARM_BUILD_NO_WIRES
 	update_icon()
 
@@ -140,7 +140,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, (-32))
 	if(buildstage != FIRE_ALARM_BUILD_NO_WIRES)
 		return
 	to_chat(user, "You start prying out the circuit!")
-	playsound(loc, 'sound/items/crowbar.ogg', 25, 1)
+	playsound(loc, 'sound/items/crowbar.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	if(!do_after(user, 2 SECONDS, NONE, src, BUSY_ICON_BUILD))
 		return
 	new /obj/item/circuitboard/firealarm(loc)
@@ -156,7 +156,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, (-32))
 	to_chat(user, "You remove the fire alarm assembly from the wall!")
 	var/obj/item/frame/fire_alarm/frame = new /obj/item/frame/fire_alarm
 	frame.forceMove(user.loc)
-	playsound(loc, 'sound/items/ratchet.ogg', 25, 1)
+	playsound(loc, 'sound/items/ratchet.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	qdel(src)
 
 /obj/machinery/firealarm/attackby(obj/item/I, mob/user, params)

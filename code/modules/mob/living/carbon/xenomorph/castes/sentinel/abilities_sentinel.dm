@@ -69,7 +69,6 @@
 	particle_holder = new(owner, /particles/toxic_slash)
 	particle_holder.pixel_x = 9
 	particle_holder.pixel_y = 2
-	xeno_owner.soft_armor = xeno_owner.soft_armor.modifyRating(bullet = 60)
 	succeed_activate()
 	add_cooldown()
 
@@ -80,7 +79,7 @@
 	if(HAS_TRAIT(xeno_target, TRAIT_INTOXICATION_IMMUNE))
 		xeno_target.balloon_alert(xeno_owner, "Immune to Intoxication")
 		return
-	playsound(xeno_target, 'sound/effects/spray3.ogg', 20, TRUE)
+	playsound(xeno_target, 'sound/effects/spray3.ogg', 20, TRUE, MEDIUM_SOUND_RANGE)
 	if(xeno_target.has_status_effect(STATUS_EFFECT_INTOXICATED))
 		var/datum/status_effect/stacking/intoxicated/debuff = xeno_target.has_status_effect(STATUS_EFFECT_INTOXICATED)
 		debuff.add_stacks(intoxication_stacks)
@@ -102,7 +101,6 @@
 	xeno_owner.balloon_alert(xeno_owner, "Toxic Slash over") //Let the user know
 	xeno_owner.playsound_local(xeno_owner, 'sound/voice/alien/hiss8.ogg', 25)
 	action_icon_state = "neuroclaws_off"
-	xeno_owner.soft_armor = xeno_owner.soft_armor.modifyRating(bullet = -60)
 
 /datum/action/ability/xeno_action/toxic_slash/on_cooldown_finish()
 	owner.playsound_local(owner, 'sound/effects/alien/newlarva.ogg', 25, 0, 1)

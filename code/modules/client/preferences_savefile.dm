@@ -173,6 +173,8 @@
 	READ_FILE(S["mute_others_combat_messages"], mute_others_combat_messages)
 	READ_FILE(S["show_xeno_rank"], show_xeno_rank)
 
+	READ_FILE(S["stim_sequences"], stim_sequences)
+
 	// Runechat options
 	READ_FILE(S["chat_on_map"], chat_on_map)
 	READ_FILE(S["max_chat_length"], max_chat_length)
@@ -248,6 +250,10 @@
 	mute_self_combat_messages = sanitize_integer(mute_self_combat_messages, FALSE, TRUE, initial(mute_self_combat_messages))
 	mute_others_combat_messages = sanitize_integer(mute_others_combat_messages, FALSE, TRUE, initial(mute_others_combat_messages))
 	show_xeno_rank = sanitize_integer(show_xeno_rank, FALSE, TRUE, initial(show_xeno_rank))
+
+	stim_sequences = sanitize_islist(stim_sequences, list())
+	for(var/spell_sequence in stim_sequences)
+		stim_sequences[spell_sequence] = sanitize_islist(stim_sequences[spell_sequence], list(), null, TRUE, GLOB.stim_type_lookup)
 
 	chat_on_map = sanitize_integer(chat_on_map, FALSE, TRUE, initial(chat_on_map))
 	max_chat_length = sanitize_integer(max_chat_length, 1, CHAT_MESSAGE_MAX_LENGTH, initial(max_chat_length))
@@ -333,6 +339,10 @@
 	slot_draw_order_pref = sanitize_islist(slot_draw_order_pref, SLOT_DRAW_ORDER, length(SLOT_DRAW_ORDER), TRUE, SLOT_DRAW_ORDER)
 	status_toggle_flags = sanitize_integer(status_toggle_flags, NONE, MAX_BITFLAG, initial(status_toggle_flags))
 
+	stim_sequences = sanitize_islist(stim_sequences, list())
+	for(var/spell_sequence in stim_sequences)
+		stim_sequences[spell_sequence] = sanitize_islist(stim_sequences[spell_sequence], list(), null, TRUE, GLOB.stim_type_lookup)
+
 	// Runechat
 	chat_on_map = sanitize_integer(chat_on_map, FALSE, TRUE, initial(chat_on_map))
 	max_chat_length = sanitize_integer(max_chat_length, 1, CHAT_MESSAGE_MAX_LENGTH, initial(max_chat_length))
@@ -402,6 +412,8 @@
 	WRITE_FILE(S["mute_self_combat_messages"], mute_self_combat_messages)
 	WRITE_FILE(S["mute_others_combat_messages"], mute_others_combat_messages)
 	WRITE_FILE(S["show_xeno_rank"], show_xeno_rank)
+
+	WRITE_FILE(S["stim_sequences"], stim_sequences)
 
 	// Runechat options
 	WRITE_FILE(S["chat_on_map"], chat_on_map)
@@ -493,7 +505,6 @@
 	READ_FILE(S["age"], age)
 	READ_FILE(S["species"], species)
 	READ_FILE(S["ethnicity"], ethnicity)
-	READ_FILE(S["good_eyesight"], good_eyesight)
 	READ_FILE(S["preferred_squad"], preferred_squad)
 	READ_FILE(S["alternate_option"], alternate_option)
 	READ_FILE(S["job_preferences"], job_preferences)
@@ -552,7 +563,6 @@
 	age = sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
 	species = sanitize_inlist(species, GLOB.all_species, initial(species))
 	ethnicity = sanitize_ethnicity(ethnicity)
-	good_eyesight = sanitize_integer(good_eyesight, FALSE, TRUE, initial(good_eyesight))
 	preferred_squad = sanitize_inlist(preferred_squad, SELECTABLE_SQUADS, initial(preferred_squad))
 	alternate_option = sanitize_integer(alternate_option, 0, 2, initial(alternate_option))
 	job_preferences = SANITIZE_LIST(job_preferences)
@@ -600,7 +610,7 @@
 	religion = sanitize_inlist(religion, RELIGION_CHOICES, initial(religion))
 
 	tts_voice = sanitize_inlist_tts(tts_voice)
-	tts_pitch = sanitize_integer(tts_pitch, -12, 12, initial(tts_pitch))
+	tts_pitch = sanitize_integer(tts_pitch, -2, 2, initial(tts_pitch))
 
 	med_record = sanitize_text(med_record, initial(med_record))
 	sec_record = sanitize_text(sec_record, initial(sec_record))
@@ -669,7 +679,6 @@
 	age = sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
 	species = sanitize_inlist(species, GLOB.all_species, initial(species))
 	ethnicity = sanitize_ethnicity(ethnicity)
-	good_eyesight = sanitize_integer(good_eyesight, FALSE, TRUE, initial(good_eyesight))
 	preferred_squad = sanitize_inlist(preferred_squad, SELECTABLE_SQUADS, initial(preferred_squad))
 	alternate_option = sanitize_integer(alternate_option, 0, 2, initial(alternate_option))
 	job_preferences = SANITIZE_LIST(job_preferences)
@@ -760,7 +769,6 @@
 	WRITE_FILE(S["age"], age)
 	WRITE_FILE(S["species"], species)
 	WRITE_FILE(S["ethnicity"], ethnicity)
-	WRITE_FILE(S["good_eyesight"], good_eyesight)
 	WRITE_FILE(S["preferred_squad"], preferred_squad)
 	WRITE_FILE(S["alternate_option"], alternate_option)
 	WRITE_FILE(S["job_preferences"], job_preferences)

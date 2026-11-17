@@ -159,7 +159,7 @@
 		M.emote("me", EMOTE_VISIBLE, "[M.friendly] [src]")
 	else
 		if(M.attack_sound)
-			playsound(loc, M.attack_sound, 25, 1)
+			playsound(loc, M.attack_sound, 25, 1, MEDIUM_SOUND_RANGE)
 		visible_message(span_danger("[M] [M.attacktext] [src]!"))
 		log_combat(M, src, "attacked")
 		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
@@ -544,7 +544,7 @@
 /mob/living/carbon/human/proc/play_xylophone()
 	visible_message(span_warning("[src] begins playing his ribcage like a xylophone. It's quite spooky."),span_notice("You begin to play a spooky refrain on your ribcage."),span_warning("You hear a spooky xylophone melody."))
 	var/song = pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg')
-	playsound(loc, song, 25, 1)
+	playsound(loc, song, 25, 1, MEDIUM_SOUND_RANGE)
 
 
 /mob/living/carbon/human/proc/is_lung_ruptured()
@@ -914,12 +914,11 @@
 	return TRUE
 
 
-/mob/living/carbon/human/do_camera_update(oldloc, obj/item/radio/headset/mainship/H)
-	if(QDELETED(H?.camera) || oldloc == get_turf(src))
+/mob/living/carbon/human/do_camera_update(obj/item/radio/headset/mainship/headset)
+	if(wear_ear != headset || QDELETED(headset?.camera))
 		return
 
-	var/datum/cameranet/net = H.camera.parent_cameranet
-	net.updatePortableCamera(H.camera)
+	headset.camera.parent_cameranet.updatePortableCamera(headset.camera)
 
 
 /mob/living/carbon/human/update_camera_location(oldloc)
@@ -933,7 +932,7 @@
 	if(QDELETED(H.camera))
 		return
 
-	addtimer(CALLBACK(src, PROC_REF(do_camera_update), oldloc, H), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(do_camera_update), H), 1 SECONDS, TIMER_UNIQUE)
 
 
 /mob/living/carbon/human/get_language_holder()

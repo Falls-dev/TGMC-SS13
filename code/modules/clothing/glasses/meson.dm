@@ -34,6 +34,31 @@
 	desc = "An eyepatch fitted with the meson scanner interface. For the disabled and/or edgy Engineer."
 	icon_state = "patchmeson"
 	deactive_state = "deactivated_patch"
+	/// То, какой глаз закрывает повязка (FALSE = левый, TRUE = правый)
+	var/right_eye = FALSE
+
+/obj/item/clothing/glasses/meson/eyepatch/update_icon_state()
+	. = ..()
+	if(active)
+		icon_state = right_eye ? "patchmeson_a" : "patchmeson"
+	else
+		icon_state = right_eye ? "deactivated_patch_a" : "deactivated_patch"
+	worn_icon_state = icon_state
+
+/obj/item/clothing/glasses/meson/eyepatch/verb/switcheye()
+	set name = "Switch Eyepatch Side"
+	set category = "IC.Clothing"
+	set src in usr
+
+	if(!isliving(usr) || usr.incapacitated())
+		return
+
+	right_eye = !right_eye
+	to_chat(usr, span_notice("You adjust the eyepatch to cover your [right_eye ? "right" : "left"] eye."))
+	update_icon()
+	if(ismob(loc))
+		var/mob/user = loc
+		user.update_inv_glasses()
 
 /obj/item/clothing/glasses/meson/sunglasses
 	name = "\improper Meson sunglasses"

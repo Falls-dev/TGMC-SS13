@@ -24,6 +24,32 @@
 /obj/structure/xeno/evotower/ex_act(severity)
 	take_damage(severity * 2.5, BRUTE, BOMB)
 
+/obj/structure/xeno/mutationtower
+	name = "mutation tower"
+	desc = "A sickly outcrop from the ground. It seems to ooze a strange chemical that accelerates the hive's mutations."
+	icon = 'icons/Xeno/2x2building.dmi'
+	icon_state = "mutationtower"
+	pixel_x = -16
+	pixel_y = -16
+	obj_integrity = 600
+	max_integrity = 600
+	xeno_structure_flags = CRITICAL_STRUCTURE|IGNORE_WEED_REMOVAL
+	///Bonus biomass generated per minute by this tower.
+	var/boost_amount = 0.75
+
+/obj/structure/xeno/mutationtower/Initialize(mapload, _hivenumber)
+	. = ..()
+	GLOB.hive_datums[hivenumber].mutationtowers += src
+	set_light(2, 2, LIGHT_COLOR_RED)
+	SSminimaps.add_marker(src, MINIMAP_FLAG_XENO, image('icons/UI_icons/map_blips.dmi', null, "tower", MINIMAP_BLIPS_LAYER))
+
+/obj/structure/xeno/mutationtower/Destroy()
+	GLOB.hive_datums[hivenumber].mutationtowers -= src
+	return ..()
+
+/obj/structure/xeno/mutationtower/ex_act(severity)
+	take_damage(severity * 2.5, BRUTE, BOMB)
+
 /obj/structure/xeno/psychictower
 	name = "Psychic Relay"
 	desc = "A sickly outcrop from the ground. It seems to allow for more advanced growth of the Xenomorphs."
@@ -70,7 +96,7 @@
 
 	//Pheromone towers start off with recovery.
 	current_aura = SSaura.add_emitter(src, AURA_XENO_RECOVERY, aura_radius, aura_strength, -1, FACTION_XENO, hivenumber)
-	playsound(src, SFX_ALIEN_DROOL, 25)
+	playsound(src, SFX_ALIEN_DROOL, 25, FALSE, MEDIUM_SOUND_RANGE)
 	update_icon()
 
 /obj/structure/xeno/pherotower/ex_act(severity)
@@ -91,7 +117,7 @@
 	QDEL_NULL(current_aura)
 	current_aura = SSaura.add_emitter(src, phero_choice, aura_radius, aura_strength, -1, FACTION_XENO, hivenumber)
 	balloon_alert(xeno_attacker, "[phero_choice]")
-	playsound(src, SFX_ALIEN_DROOL, 25)
+	playsound(src, SFX_ALIEN_DROOL, 25, FALSE, MEDIUM_SOUND_RANGE)
 	update_icon()
 
 /obj/structure/xeno/pherotower/update_icon_state()

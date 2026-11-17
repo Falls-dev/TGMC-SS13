@@ -81,7 +81,6 @@
 			data["gender"] = gender
 			data["ethnicity"] = ethnicity
 			data["species"] = species || "Human"
-			data["good_eyesight"] = good_eyesight
 			data["citizenship"] = citizenship
 			data["tts_voice"] = tts_voice
 			data["tts_pitch"] = "[tts_pitch]"
@@ -548,9 +547,6 @@
 				names_by_species[species] = real_name
 			update_preview_icon()
 
-		if("toggle_eyesight")
-			good_eyesight = !good_eyesight
-
 		if("be_special")
 			var/flag = text2num(params["flag"])
 			TOGGLE_BITFIELD(be_special, flag)
@@ -774,7 +770,7 @@
 			INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), ui.user.client, "Так звучит мой голос.", speaker = choice, local = TRUE, special_filters = isrobot(GLOB.all_species[species]) ? TTS_FILTER_SILICON : "", pitch = tts_pitch)
 
 		if("tts_pitch")
-			tts_pitch = clamp(text2num(params["newValue"]), -12, 12)
+			tts_pitch = clamp(text2num(params["newValue"]), -2, 2)
 			if(TIMER_COOLDOWN_RUNNING(user, COOLDOWN_TRY_TTS))
 				return
 			TIMER_COOLDOWN_START(ui.user, COOLDOWN_TRY_TTS, 0.5 SECONDS)

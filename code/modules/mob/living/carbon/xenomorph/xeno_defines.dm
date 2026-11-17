@@ -348,8 +348,6 @@ GLOBAL_LIST_INIT(strain_list, init_glob_strain_list())
 	var/regen_power = 0
 	///Stored biomass
 	var/biomass = 0
-	///Bonus to passive biomass gain rate (added to base rate)
-	var/biomass_gain_bonus = 0
 	///Stored upgrade effects, so we reapply them on evolve
 	var/list/upgrades_holder = list()
 	///History of purchased mutations (mutation names)
@@ -421,6 +419,18 @@ GLOBAL_LIST_INIT(strain_list, init_glob_strain_list())
 
 	// *** Bull vars *** //
 	var/bull_charging = FALSE
+	/// Bull: the bonus duration of the charges, as a fraction of their base duration (0.4 = 40% longer). Set by the Railgun mutation.
+	var/charge_duration_bonus = 0
+	/// Bull: the speed that is added on top of the movespeed of the charges (positive is faster). Set by the Speed Demon mutation.
+	var/charge_speed_bonus = 0
+	/// Bull: the fraction (0 to 1) of the charge duration after which the xenomorph is immune to stagger. 0 means never. Set by the Unstoppable mutation.
+	var/charge_stagger_immunity_fraction = 0
+	/// Bull: the timer that grants the stagger immunity during a charge.
+	var/charge_immunity_timer
+	/// Hivelord: how long (in deciseconds) thrown Resin Jelly staggers a human it hits. 0 means thrown jelly is not combustive. Set by the Combustive Jelly mutation.
+	var/jelly_combustive_stagger = 0
+	/// Spitter (Wet Claws): extra fire stacks removed from a burning allied xeno when this xeno helps put it out (help intent).
+	var/extinguish_bonus_stacks = 0
 
 	//Notification spam controls
 	var/recent_notice = 0
@@ -444,6 +454,10 @@ GLOBAL_LIST_INIT(strain_list, init_glob_strain_list())
 	var/huggers = 0
 	///Boiler acid ammo
 	var/corrosive_ammo = 0
+	///Количество спрайтов поврежедний (effects_icon)
+	var/max_wound_states = 3
+	///Текущий скин
+	var/datum/xenomorph_skin/current_skin
 
 	///The resting cooldown
 	COOLDOWN_DECLARE(xeno_resting_cooldown)

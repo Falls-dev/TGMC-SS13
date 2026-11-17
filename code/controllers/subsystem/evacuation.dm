@@ -75,10 +75,19 @@ SUBSYSTEM_DEF(evacuation)
 			var/obj/docking_port/mobile/escape_pod/P = pick_n_take(pod_list)
 			P.launch()
 
+/// A hijack unlocks evacuation. Boarders can also trigger it if they arrive another way.
+/datum/controller/subsystem/evacuation/proc/has_scuttle_threat()
+	if(!(scuttle_flags & SDEVAC_TIMELOCK_flags))
+		return TRUE
+	for(var/mob/living/carbon/xenomorph/boarder as anything in GLOB.alive_xeno_list)
+		if(is_mainship_level(boarder.z) && !isspaceturf(boarder.loc) && !isxenohivemind(boarder))
+			return TRUE
+	return FALSE
+
 /datum/controller/subsystem/evacuation/proc/initiate_evacuation(override)
 	if(evac_status != EVACUATION_STATUS_STANDING_BY)
 		return FALSE
-	if(!override && scuttle_flags & (EVACUATION_DENY_flags|SDEVAC_TIMELOCK_flags))
+	if(!override && ((scuttle_flags & EVACUATION_DENY_flags) || !has_scuttle_threat()))
 		return FALSE
 	GLOB.enter_allowed = FALSE
 	evac_time = world.time
@@ -131,7 +140,7 @@ SUBSYSTEM_DEF(evacuation)
 /datum/controller/subsystem/evacuation/proc/enable_self_destruct(override)
 	if(dest_status != NUKE_EXPLOSION_INACTIVE)
 		return FALSE
-	if(!override && scuttle_flags & (SELF_DESTRUCT_DENY_flags|SDEVAC_TIMELOCK_flags))
+	if(!dest_master || (!override && ((scuttle_flags & SELF_DESTRUCT_DENY_flags) || !has_scuttle_threat())))
 		return FALSE
 	dest_status = NUKE_EXPLOSION_ACTIVE
 	dest_master.toggle()
@@ -179,7 +188,7 @@ SUBSYSTEM_DEF(evacuation)
 	priority_announce("ТРЕВОГА. ТРЕВОГА. ПРОТОКОЛ САМОУНИЧТОЖЕНИЯ ЗАВЕРШЕН. ТРЕВОГА. ТРЕВОГА. ДЕТОНАЦИЯ.", title = "Протокол Самоуничтожения", type = ANNOUNCEMENT_PRIORITY, color_override = "purple")
 	GLOB.enter_allowed = FALSE
 	dest_status = NUKE_EXPLOSION_IN_PROGRESS
-	playsound(dest_master, 'sound/machines/alarm.ogg', 75, 0, 30)
+	playsound(dest_master, 'sound/machines/alarm.ogg', 75, FALSE, VERY_LOUD_SOUND_RANGE)
 	var/sound/S = sound(pick('sound/theme/nuclear_detonation1.ogg','sound/theme/nuclear_detonation2.ogg'), channel = CHANNEL_CINEMATIC)
 	SEND_SOUND(world, S)
 

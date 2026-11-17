@@ -81,6 +81,7 @@
 /datum/item_representation/hat/modular_helmet
 	///Icon_state suffix for the saved icon_state varient.
 	var/current_variant
+	var/list/helmet_cosmetics = list()
 
 /datum/item_representation/hat/modular_helmet/New(obj/item/item_to_copy)
 	if(!item_to_copy)
@@ -88,10 +89,15 @@
 	if(!ismodularhelmet(item_to_copy))
 		CRASH("/datum/item_representation/hat/modular_helmet created from an item that is not an modular helmet")
 	. = ..()
-	if(colors)
-		return
 	var/obj/item/clothing/head/modular/helmet_to_copy = item_to_copy
 	current_variant = helmet_to_copy.current_variant
+
+	var/obj/item/armor_module/storage/storage_module = helmet_to_copy.attachments_by_slot[ATTACHMENT_SLOT_STORAGE]
+	if(storage_module && istype(storage_module.storage_datum, /datum/storage/internal/marinehelmet))
+		var/datum/storage/internal/marinehelmet/storage = storage_module.storage_datum
+		for(var/obj/item/cosmetic in storage.helmet_cosmetics)
+			if(istype(cosmetic))
+				helmet_cosmetics += cosmetic.type
 
 /datum/item_representation/hat/modular_helmet/instantiate_object(datum/loadout_seller/seller, master = null, mob/living/user)
 	. = ..()
@@ -99,6 +105,14 @@
 		return
 	var/obj/item/clothing/head/modular/modular_helmet = .
 	modular_helmet.current_variant = (current_variant in modular_helmet.icon_state_variants) ? current_variant : initial(modular_helmet.current_variant)
+	if(length(helmet_cosmetics))
+		var/obj/item/armor_module/storage/storage_module = modular_helmet.attachments_by_slot[ATTACHMENT_SLOT_STORAGE]
+		if(storage_module && istype(storage_module.storage_datum, /datum/storage/internal/marinehelmet))
+			var/datum/storage/internal/marinehelmet/storage = storage_module.storage_datum
+			for(var/i in 1 to length(helmet_cosmetics))
+				var/path = helmet_cosmetics[i]
+				if(ispath(path, /obj/item))
+					storage.helmet_cosmetics[i] = new path
 	if(colors)
 		modular_helmet.set_greyscale_colors(colors)
 	modular_helmet.update_icon()

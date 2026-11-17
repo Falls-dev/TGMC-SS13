@@ -34,6 +34,7 @@
 /obj/effect/countdown/proc/stop()
 	if(started)
 		maptext = null
+		displayed_text = null
 		STOP_PROCESSING(SSprocessing, src)
 		started = FALSE
 
@@ -44,6 +45,7 @@
 /obj/effect/countdown/process()
 	if(QDELETED(attached_to))
 		qdel(src)
+		return
 	forceMove(get_turf(attached_to))
 	var/new_val = get_value()
 	if(new_val == displayed_text)
@@ -56,8 +58,8 @@
 		maptext = null
 
 /obj/effect/countdown/Destroy()
+	stop()
 	attached_to = null
-	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/effect/countdown/nuclearbomb
@@ -101,6 +103,13 @@
 	if(!started)
 		START_PROCESSING(SSfastprocess, src)
 		started = TRUE
+
+/obj/effect/countdown/action_cooldown/stop()
+	if(started)
+		maptext = null
+		displayed_text = null
+		STOP_PROCESSING(SSfastprocess, src)
+		started = FALSE
 
 /obj/effect/countdown/action_cooldown/process()
 	if(QDELETED(attached_to))

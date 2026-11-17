@@ -1,29 +1,32 @@
 services:
-  tts-api:
-    container_name: tts-api
-
-    build: ./tts-api
-    ports:
-      - "127.0.0.1:5002:5002"
-    restart: always
-    healthcheck:
-      test: ["CMD", "curl", "-sf", "http://localhost:5002/health-check"]
-      interval: 1s
-      timeout: 1s
-      retries: 3
-      start_period: 30s
-    links:
-      - "tts:tts-container"
   tts:
     container_name: tts
-
     build: ./tts
-    restart: always
+    restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-sf", "http://localhost:5003/health-check"]
-      interval: 1s
-      timeout: 1s
-      retries: 3
-      start_period: 30s
+      interval: 15s
+      timeout: 5s
+      retries: 20
+      start_period: 300s
     volumes:
       - ./tts/persistent_data/tts_models:/root/tts_data
+
+  tts-api:
+    container_name: tts-api
+    build: ./tts-api
+    ports:
+      - "5002:5002"
+    restart: unless-stopped
+    environment:
+      TTS_AUTHORIZATION_TOKEN: ${TTS_AUTHORIZATION_TOKEN:-coolio}
+      TTS_BACKEND_URL: http://tts:5003
+    depends_on:
+      tts:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:5002/health-check"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s

@@ -5,8 +5,8 @@
 /datum/xenomorph_skin/ravager/rouny
 	name = "Rouny"
 	icon = 'icons/Xeno/castes/ravager/rouny.dmi'
-	access_needed = BOOSTY_TIER_3
 
 /datum/xenomorph_skin/ravager/bonehead
 	name = "Bonehead"
 	icon = 'icons/Xeno/castes/ravager/bone.dmi'
+	select_sound = 'sound/voice/alien/ravanger_bone/pick_doom.ogg'

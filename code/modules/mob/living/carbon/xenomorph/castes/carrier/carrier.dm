@@ -6,6 +6,10 @@
 	icon_state = "Carrier Walking"
 	effects_icon = 'icons/Xeno/castes/carrier/effects.dmi'
 	bubble_icon = "alienroyal"
+	skins = list(
+		/datum/xenomorph_skin/carrier,
+		/datum/xenomorph_skin/carrier/scary,
+	)
 	health = 200
 	maxHealth = 200
 	plasma_stored = 50

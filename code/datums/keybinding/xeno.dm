@@ -34,6 +34,20 @@
 	keybind_signal = COMSIG_XENOABILITY_DROP_WEEDS
 	hotkey_keys = list("V")
 
+/datum/keybinding/xeno/place_pattern
+	name = "place_pattern"
+	full_name = "Place Pattern"
+	description = "Place a template of hive walls."
+	keybind_signal = COMSIG_XENOABILITY_DROP_WEEDS
+	hotkey_keys = list("E")
+
+/datum/keybinding/xeno/select_pattern
+	name = "select_pattern"
+	full_name = "Select Pattern"
+	description = "Select the template to use when using Place Pattern"
+	keybind_signal = COMSIG_XENOABILITY_DROP_WEEDS
+	hotkey_keys = list("Q")
+
 /datum/keybinding/xeno/choose_weeds
 	name = "choose_weeds"
 	full_name = "Choose Weed"
@@ -1118,6 +1132,34 @@
 	description = "Precisely strike your target from further away. Resets punch cooldown."
 	keybind_signal = COMSIG_XENOABILITY_JAB
 	hotkey_keys = list("C")
+
+/datum/keybinding/xeno/encased_plates
+	name = "encased_plates"
+	full_name = "Bulwark: Encased Plates"
+	description = "Raise or lower your armored plates."
+	keybind_signal = COMSIG_XENOABILITY_ENCASED_PLATES
+	hotkey_keys = list("C")
+
+/datum/keybinding/xeno/plate_bash
+	name = "plate_bash"
+	full_name = "Bulwark: Plate Bash"
+	description = "Dash at a target and shove it. While encased: launches adjacent targets away with knockdown."
+	keybind_signal = COMSIG_XENOABILITY_PLATE_BASH
+	hotkey_keys = list("V")
+
+/datum/keybinding/xeno/reflective_shield
+	name = "reflective_shield"
+	full_name = "Bulwark: Reflective Shield"
+	description = "Lock your facing and reflect frontal bullets back at the firer."
+	keybind_signal = COMSIG_XENOABILITY_REFLECTIVE_SHIELD
+	hotkey_keys = list("B")
+
+/datum/keybinding/xeno/shield_shatter
+	name = "shield_shatter"
+	full_name = "Bulwark: Shield Shatter"
+	description = "Shatter your reflective shield outward, throwing nearby enemies back. Primordial only."
+	keybind_signal = COMSIG_XENOABILITY_SHIELD_SHATTER
+	hotkey_keys = list("X")
 
 /datum/keybinding/xeno/flurry
 	name = "flurry"

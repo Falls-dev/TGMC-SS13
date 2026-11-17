@@ -128,6 +128,7 @@
 	desc = "Capsule based grenade that sticks to sufficiently hard surfaces, causing a trail of air combustable gel to form. This one creates cloaking smoke! It is set to detonate in 5 seconds."
 	icon_state = "grenade_sticky_cloak"
 	worn_icon_state = "grenade_sticky_cloak"
+	dangerous = FALSE
 	det_time = 5 SECONDS
 	self_sticky = TRUE
 	overlay_type = "green"

@@ -90,7 +90,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/age = 20
 	var/species = "Human"
 	var/ethnicity = "Western"
-	var/good_eyesight = TRUE
 	var/preferred_squad = "None"
 	var/alternate_option = RETURN_TO_LOBBY
 	///Quick equip slots, up to [MAX_QUICK_EQUIP_SLOTS]. One per quick equip hotkey.
@@ -218,6 +217,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	///What outfit typepaths we've favorited in the SelectEquipment menu
 	var/list/favorite_outfits = list()
+
+	/// list("sequencename" = list(uid, uid, uid))
+	var/list/stim_sequences = list()
 
 	///List of slot_draw_order
 	var/list/slot_draw_order_pref = list()

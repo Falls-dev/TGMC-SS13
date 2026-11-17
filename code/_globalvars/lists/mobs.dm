@@ -83,6 +83,8 @@ GLOBAL_LIST_INIT(all_xeno_types, list(
 	/mob/living/carbon/xenomorph/panther/primordial,
 	/mob/living/carbon/xenomorph/warrior,
 	/mob/living/carbon/xenomorph/warrior/primordial,
+	/mob/living/carbon/xenomorph/warrior/bulwark,
+	/mob/living/carbon/xenomorph/warrior/bulwark/primordial,
 	/mob/living/carbon/xenomorph/spitter,
 	/mob/living/carbon/xenomorph/spitter/primordial,
 	/mob/living/carbon/xenomorph/spitter/globadier,
@@ -258,4 +260,5 @@ GLOBAL_LIST_INIT(human_init_actions, list(
 	/datum/action/innate/order/retreat_order/personal,
 	/datum/action/innate/order/rally_order/personal,
 	/datum/action/innate/message_squad,
+	/datum/action/ability/activable/build_designator,
 ))

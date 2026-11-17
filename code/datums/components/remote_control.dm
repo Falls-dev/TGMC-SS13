@@ -74,6 +74,7 @@
 			left_click_proc = CALLBACK(src, PROC_REF(uv_handle_click_explosive))
 		if(TURRET_TYPE_CLAW)
 			left_click_proc = CALLBACK(src, PROC_REF(uv_handle_click_claw))
+			right_click_proc = CALLBACK(src, PROC_REF(uv_handle_right_click_claw))
 		else
 			left_click_proc = null
 
@@ -114,8 +115,12 @@
 ///Called when a claw vehicle clicks and tries to grab/pull something
 /datum/component/remote_control/proc/uv_handle_click_claw(mob/user, atom/target, params)
 	var/obj/vehicle/unmanned/T = controlled
-	log_attack("[key_name(user)] used claw while remote controlling [controlled] at [AREACOORD(controlled)]")
 	T.use_claw(target, user)
+	return TRUE
+
+/datum/component/remote_control/proc/uv_handle_right_click_claw(mob/user, atom/target, params)
+	var/obj/vehicle/unmanned/T = controlled
+	T.claw_shove(target, user)
 	return TRUE
 
 ///Self explanatory, toggles remote control

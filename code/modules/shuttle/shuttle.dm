@@ -392,6 +392,9 @@
 	/// All shuttle_control computers that share at least one control flag is able to link to this shuttle
 	var/control_flags = NONE
 
+	var/max_personnel = null
+	var/max_vehicles = null
+
 	///Reference of the shuttle docker holding the mobile docking port
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/shuttle_computer
 
@@ -551,14 +554,14 @@
 
 // called on entering the igniting state
 /obj/docking_port/mobile/proc/on_ignition()
-	playsound(return_center_turf(), ignition_sound, 60, 0)
+	playsound(return_center_turf(), ignition_sound, 60, 0, LOUD_SOUND_RANGE)
 
 /obj/docking_port/mobile/proc/on_prearrival()
 	if(destination.loc == loc)
 		return
 	if(destination)
-		playsound(destination.return_center_turf(), landing_sound, 60, 0)
-	playsound(return_center_turf(), landing_sound, 60, 0)
+		playsound(destination.return_center_turf(), landing_sound, 60, 0, LOUD_SOUND_RANGE)
+	playsound(return_center_turf(), landing_sound, 60, 0, LOUD_SOUND_RANGE)
 
 /obj/docking_port/mobile/proc/on_crash()
 	return

@@ -5,7 +5,6 @@
 /datum/xenomorph_skin/warlock/rouny
 	name = "Rouny"
 	icon = 'icons/Xeno/castes/warlock/rouny.dmi'
-	access_needed = BOOSTY_TIER_3
 
 /datum/xenomorph_skin/warlock/arabian
 	name = "Arabian"

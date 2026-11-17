@@ -38,6 +38,10 @@
 
 	. = ..()
 
+	filters += filter(type="drop_shadow", x=0, y=0, size=4, color=light_color)
+	animate(filters[length(filters)], size=6, time=rand(4, 8), loop=-1, easing=SINE_EASING)
+	animate(size=3, time=rand(4, 8), easing=SINE_EASING)
+
 	START_PROCESSING(SSobj, src)
 
 	var/static/list/connections = list(
@@ -100,7 +104,7 @@
 		return
 	burn_ticks -= EXTINGUISH_AMOUNT
 	if(burn_ticks <= 0)
-		playsound(affecting_smoke, 'sound/effects/smoke_extinguish.ogg', 20)
+		playsound(affecting_smoke, 'sound/effects/smoke_extinguish.ogg', 20, FALSE, MEDIUM_SOUND_RANGE)
 		qdel(src)
 		return
 	update_appearance(UPDATE_ICON)

@@ -223,14 +223,14 @@
 /obj/item/clothing/head/helmet/marine/robot/advanced/acid
 	name = "\improper Exidobate upper armor plating"
 	desc = "Heavy armor plating designed for self mounting on the upper half of TerraGov combat robotics. It has self-sealing bolts for mounting on robotic owners inside. It was created for the survival of robots in places with high acid concentration. Uses the already known technology of nickel-gold plates to protect important modules in the upper part of the robot"
-	soft_armor = list(MELEE = 50, BULLET = 60, LASER = 65, ENERGY = 65, BOMB = 50, BIO = 65, FIRE = 40, ACID = 75)
+	soft_armor = list(MELEE = 50, BULLET = 60, LASER = 65, ENERGY = 65, BOMB = 50, BIO = 65, FIRE = 40, ACID = 85)
 	icon_state = "robo_helm_acid"
 	worn_icon_state = "robo_helm_acid"
 
 /obj/item/clothing/suit/storage/marine/robot/advanced/acid
 	name = "\improper Exidobate armor plating"
 	desc = "Heavy armor plating designed for self mounting on TerraGov combat robotics. It has self-sealing bolts for mounting on robotic owners inside. It was created for the survival of robots in places with high acid concentration. Armor uses nickel and golden plate technology for perfect protection against acids."
-	soft_armor = list(MELEE = 50, BULLET = 70, LASER = 80, ENERGY = 80, BOMB = 50, BIO = 80, FIRE = 60, ACID = 75)
+	soft_armor = list(MELEE = 50, BULLET = 70, LASER = 80, ENERGY = 80, BOMB = 50, BIO = 80, FIRE = 60, ACID = 85)
 	slowdown = 0.7
 
 	icon_state = "robo_armor_acid"

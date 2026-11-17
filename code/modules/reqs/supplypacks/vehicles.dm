@@ -60,12 +60,12 @@
 /datum/supply_packs/vehicles/tow_rocket
 	name = "TOW missile"
 	contains = list(/obj/item/ammo_magazine/tank/tow_missile)
-	cost = 25 // marginally cheaper due to being a single loader
+	cost = 15
 
 /datum/supply_packs/vehicles/microrocket_pod
 	name = "Microrocket pod"
 	contains = list(/obj/item/ammo_magazine/tank/microrocket_rack)
-	cost = 50
+	cost = 40
 
 /datum/supply_packs/vehicles/motorbike
 	name = "All-terrain motorbike"
@@ -141,6 +141,12 @@
 	name = "Heavy UV weapon"
 	contains = list(/obj/item/uav_turret/heavy)
 	cost = 150
+	containertype = /obj/structure/closet/crate/weapon
+
+/datum/supply_packs/vehicles/uv_claw
+	name = "UV Claw module"
+	contains = list(/obj/item/uav_turret/claw)
+	cost = 50
 	containertype = /obj/structure/closet/crate/weapon
 
 /datum/supply_packs/vehicles/uv_light_ammo

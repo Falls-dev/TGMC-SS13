@@ -21,6 +21,7 @@
 	skins = list(
 		/datum/xenomorph_skin/panther,
 		/datum/xenomorph_skin/panther/rouny,
+		/datum/xenomorph_skin/panther/MaLO,
 	)
 
 /mob/living/carbon/xenomorph/panther/Initialize(mapload)

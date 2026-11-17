@@ -171,6 +171,8 @@
 /datum/hud/proc/update_parallax(mob/viewmob)
 	var/mob/screenmob = viewmob || mymob
 	var/client/C = screenmob.client
+	if(!C)
+		return
 	var/turf/posobj = get_turf(C.eye)
 	if(!posobj)
 		return

@@ -18,7 +18,7 @@
 	GLOB.round_statistics.crusher_stomps++
 	SSblackbox.record_feedback(FEEDBACK_TALLY, "round_statistics", 1, "crusher_stomps")
 
-	playsound(xeno_owner.loc, 'sound/effects/bang.ogg', 25, 0)
+	playsound(xeno_owner.loc, 'sound/effects/bang.ogg', 25, 0, MEDIUM_SOUND_RANGE)
 	xeno_owner.visible_message(span_xenodanger("[xeno_owner] smashes into the ground!"), \
 	span_xenodanger("We smash into the ground!"))
 	xeno_owner.create_stomp() //Adds the visual effect. Wom wom wom

@@ -131,7 +131,7 @@
 		/obj/item/tool/kitchen/knife/butcher,
 		/obj/item/weapon/twohanded/fireaxe,
 		/obj/item/weapon/twohanded/spear/tactical,
-		/obj/item/weapon/twohanded/spear/tactical/tacticool,
+		/obj/item/weapon/gun/tacticoolspear,
 	)
 
 /obj/effect/spawner/random/weaponry/shiv

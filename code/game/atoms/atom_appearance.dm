@@ -11,6 +11,12 @@
 	/// Oh and note, if order of addition is important this WILL break that. so mind yourself
 	var/list/image/update_overlays_on_z
 
+	/// Base transform matrix, edited by admin tooling and such
+	var/matrix/base_transform
+	/// Last transform used before being compound with base_transform
+	/// This allows us to re-create transform if only base_transform changes
+	var/matrix/raw_transform
+
 
 /**
  * Updates the appearence of the icon
@@ -217,3 +223,25 @@
 	message_admins(text)
 	log_world(text)
 	return diff_found
+
+/// Updates the atom's transform compounding it with [/atom/var/base_transform]
+/atom/proc/apply_transform(matrix/new_transform, time = 0, easing = (EASE_IN|EASE_OUT))
+	var/matrix/base_copy
+	if(base_transform)
+		base_copy = matrix(base_transform)
+	else
+		base_copy = matrix()
+	raw_transform = matrix(new_transform) // Keep a copy to replay if needed
+
+	// Compose the base and applied transform in that order
+	var/matrix/complete = base_copy.Multiply(raw_transform)
+
+	if(!time)
+		transform = complete
+		return
+	animate(src, transform = complete, time = time, easing = easing, flags = ANIMATION_PARALLEL)
+
+/// Upates the base_transform which will be compounded with other transforms
+/atom/proc/update_base_transform(matrix/new_transform, time = 0)
+	base_transform = matrix(new_transform)
+	apply_transform(raw_transform, time)

@@ -1,0 +1,4 @@
+author: "ACupOfChicory"
+delete-after: True
+changes:
+  - admin: "Advanced ProcCall снова вызывает proc у выбранного объекта"

@@ -129,7 +129,8 @@ GLOBAL_VAR(common_report) //Contains common part of roundend report
 	transfer_characters()
 	SSpoints.prepare_supply_packs_list(iscrashgamemode(src))
 	SSreqtorio.prepare_assembly_crafts_list()
-	SSpoints.dropship_points = 0
+	var/datum/map_config/ship_map_config = SSmapping.configs[SHIP_MAP]
+	SSpoints.dropship_points = ship_map_config?.starting_dropship_points || 0
 	SSpoints.supply_points[FACTION_TERRAGOV] = 0
 
 	for(var/hivenum in GLOB.hive_datums)
@@ -304,7 +305,7 @@ GLOBAL_LIST_INIT(bioscan_locations, list(
 	add_verb(source, /mob/proc/eord_respawn)
 	add_verb(source, /mob/proc/eord_xeno_respawn)
 	if(isnewplayer(source))
-		open_eord_menu(source)
+		INVOKE_ASYNC(src, PROC_REF(open_eord_menu), source)
 
 /datum/game_mode/proc/end_of_round_deathmatch()
 	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_LOGIN, PROC_REF(grant_eord_respawn)) // New mobs can now respawn into EORD

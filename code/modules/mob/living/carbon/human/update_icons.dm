@@ -547,7 +547,7 @@ GLOBAL_LIST_EMPTY(damage_icon_parts)
 ///snowflake replacement handling since we don't have tg's proper handling of individual body parts as overlays
 /mob/living/carbon/human/proc/update_bodyparts()
 	remove_overlay(BODYPARTS_LAYER)
-	overlays_standing[BODYPARTS_LAYER] = image(icon=stand_icon, layer=-BODYPARTS_LAYER)
+	overlays_standing[BODYPARTS_LAYER] = image(icon=stand_icon, icon_state="blank", layer=-BODYPARTS_LAYER)
 	apply_overlay(BODYPARTS_LAYER)
 
 /mob/living/carbon/human/update_inv_w_uniform()
@@ -789,7 +789,11 @@ GLOBAL_LIST_EMPTY(damage_icon_parts)
 /mob/living/carbon/human/update_fire()
 	remove_overlay(FIRE_LAYER)
 	if(!on_fire)
+		set_light_on(FALSE)
 		return
+	var/fire_light_range = clamp(3 + max(fire_stacks - 5, 0) / 10, 3, 4.5)
+	set_light_range_power_color(fire_light_range, 2, LIGHT_COLOR_FLAME)
+	set_light_on(TRUE)
 	overlays_standing[FIRE_LAYER] = mutable_appearance('icons/mob/OnFire.dmi', fire_stacks < 15 ? "Standing_weak" : "Standing_medium", -FIRE_LAYER)
 	apply_overlay(FIRE_LAYER)
 

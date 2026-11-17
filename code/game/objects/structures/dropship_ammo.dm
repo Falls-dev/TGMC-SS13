@@ -208,9 +208,10 @@
 /obj/structure/ship_ammo/cas/heavygun/examine(mob/user)
 	. = ..()
 	. += "It has [ammo_count] round\s."
+	. += "This will be enough for [ammo_count / ammo_used_per_firing] shot\s."
 
 /obj/structure/ship_ammo/cas/heavygun/show_loaded_desc(mob/user)
-	return "It's loaded with \a [src] containing [ammo_count] round\s."
+	return "It's loaded with \a [src] containing [ammo_count] round\s.<br>This will be enough for [ammo_count / ammo_used_per_firing] shot\s."
 
 /obj/structure/ship_ammo/cas/heavygun/get_turfs_to_impact(turf/impact, attackdir = NORTH)
 	var/turf/beginning = impact
@@ -229,13 +230,13 @@
 	return strafelist
 
 /obj/structure/ship_ammo/cas/heavygun/detonate_on(turf/impact, attackdir = NORTH)
-	playsound(impact, 'sound/effects/casplane_flyby.ogg', 40)
+	playsound(impact, 'sound/effects/casplane_flyby.ogg', 40, FALSE, VERY_LOUD_SOUND_RANGE)
 	strafe_turfs(get_turfs_to_impact(impact, attackdir))
 
 ///Takes the top 3 turfs and miniguns them, then repeats until none left
 /obj/structure/ship_ammo/cas/heavygun/proc/strafe_turfs(list/strafelist)
 	var/turf/strafed
-	playsound(strafelist[1], get_sfx("explosion"), 40, 1, 20, falloff = 3)
+	playsound(strafelist[1], get_sfx("explosion"), 40, 1, LOUD_SOUND_RANGE, falloff = 3)
 	for(var/i=1 to attack_width)
 		strafed = strafelist[1]
 		strafelist -= strafed
@@ -340,7 +341,7 @@
 
 ///Lazer ammo acts on the turf passed in
 /obj/structure/ship_ammo/cas/laser_battery/proc/laser_burn(turf/T)
-	playsound(T, 'sound/effects/pred_vision.ogg', 30, 1)
+	playsound(T, 'sound/effects/pred_vision.ogg', 30, TRUE, LOUD_SOUND_RANGE)
 	for(var/mob/living/L in T)
 		L.adjust_fire_loss(120)
 		L.adjust_fire_stacks(20)
@@ -558,19 +559,19 @@
 	name = "MGA-110B phosphorus"
 	desc = "A pack of incendiary phosphorus mini-rockets. Moving this will require some sort of lifter."
 	icon_state = "minirocket_inc_phos"
-	point_cost = 350
+	point_cost = 275
 	travelling_time = 4 SECONDS
 	fire_range = 4
 	prediction_type = CAS_AMMO_INCENDIARY
 	cas_effect = /obj/effect/overlay/blinking_laser/phosphorus // Enemies must know that something serious is coming at them
-	var/datum/effect_system/smoke_spread/phosphorus/smoke
 
 /obj/structure/ship_ammo/cas/minirocket/phosphorus/detonate_on(turf/impact, attackdir = NORTH)
-	. = ..()
+	impact.ceiling_debris_check(2)
+	var/datum/effect_system/smoke_spread/phosphorus/smoke = new
 	playsound(loc, 'sound/effects/smoke.ogg', 25, 1, 4)
 	smoke.set_up(6, impact, 7)
 	smoke.start()
-	flame_radius(fire_range, impact, burn_intensity = 75, burn_duration = 45, burn_damage = 15, fire_stacks = 75, colour = "blue")
+	flame_radius(fire_range,impact)
 
 /obj/structure/ship_ammo/cas/minirocket/smoke
 	name = "MGA-108C smoke"

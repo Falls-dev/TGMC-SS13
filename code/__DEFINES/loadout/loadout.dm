@@ -38,7 +38,7 @@
 /// How many points the leader can spend
 #define SMARTGUNNER_TOTAL_BUY_POINTS 45
 /// How many points a medic can spend on pills
-#define MEDIC_TOTAL_BUY_POINTS 45
+#define MEDIC_TOTAL_BUY_POINTS 55
 /// How many points an engineer can spend
 #define ENGINEER_TOTAL_BUY_POINTS 65
 /// How many points the field commander can spend
@@ -130,6 +130,7 @@ GLOBAL_LIST_INIT(loadout_linked_vendor, list(
 		/obj/machinery/vending/MarineMed/valhalla,
 		/obj/machinery/vending/cigarette/valhalla,
 		/obj/machinery/vending/tool/nopower/valhalla,
+		/obj/machinery/vending/medical/valhalla,
 	),
 	SQUAD_CORPSMAN = list(
 		/obj/machinery/vending/medical/shipside,

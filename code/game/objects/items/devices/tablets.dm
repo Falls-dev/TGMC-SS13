@@ -144,7 +144,7 @@
 		var/list/cameras = get_available_cameras()
 
 		active_camera = cameras[camera_reference]
-		playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
+		playsound(src, SFX_TERMINAL_TYPE, 25, FALSE, MEDIUM_SOUND_RANGE)
 
 		if(!active_camera)
 			return TRUE
