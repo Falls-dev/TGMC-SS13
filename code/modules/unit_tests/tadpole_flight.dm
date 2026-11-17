@@ -56,6 +56,21 @@
 	previous_heading = helm.flight_heading
 	helm.advance_flight(0.2, NONE)
 	TEST_ASSERT(helm.flight_heading < previous_heading, "Rotational inertia must survive key release")
+	TEST_ASSERT_EQUAL(helm.landing_checks, 0, "Flying and rotating must not validate a landing footprint")
+	// Exercise the actual Land action: blocked terrain must still be checked
+	// on demand and must not start a shuttle movement.
+	helm.current_user = pilot
+	pilot.remote_control = eye
+	helm.landing_result = SHUTTLE_DOCKER_BLOCKED
+	helm.land_action.target = pilot
+	helm.land_action.owner = pilot
+	helm.land_action.Activate()
+	TEST_ASSERT_EQUAL(helm.landing_checks, 1, "Pressing Land must validate the current footprint")
+	TEST_ASSERT_EQUAL(port.mode, SHUTTLE_IDLE, "Blocked landing must not start a shuttle movement")
+	TEST_ASSERT_NULL(helm.my_port, "Blocked landing must not create a destination port")
+	helm.landing_result = SHUTTLE_DOCKER_LANDING_CLEAR
+	helm.current_user = null
+	pilot.remote_control = null
 	helm.fly_state = SHUTTLE_ON_GROUND
 	previous_y = helm.flight_y
 	helm.advance_flight(0.2, NORTH|EAST)
@@ -532,8 +547,13 @@
 	parse_calls++
 	return ..()
 
+/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/flight_test
+	var/landing_checks = 0
+	var/landing_result = SHUTTLE_DOCKER_LANDING_CLEAR
+
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/flight_test/checkLandingSpot()
-	return SHUTTLE_DOCKER_LANDING_CLEAR
+	landing_checks++
+	return landing_result
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/flight_test/check_hovering_spot(turf/next_turf)
 	return TRUE

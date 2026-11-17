@@ -424,3 +424,18 @@ movement reuse and source/component cleanup. No runtime errors; clean marker
 Success! at data/logs/tadpole-movable-light-on/clean_run.lk. The isolated test
 build retains the existing loop_checks warning. Client visuals and performance
 have not been measured.
+
+## Landing validation on demand
+
+Continuous flight no longer calls checkLandingSpot when crossing a tile or
+rotating the cardinal docking footprint. Tadpole eye relocation also skips
+the camera preview validation. Ordinary navigation consoles keep their live
+preview checks. The Land action still calls placeLandingSpot, which validates
+the current footprint before creating a destination (and after designation
+delay, if configured). Blocked and hidden-port restrictions remain in place.
+
+Validation: normal build 0 errors/0 warnings; focused tadpole_flight PASS (1.9s),
+including no validation during flight/turns and the actual Land action rejecting
+a blocked result. No runtime errors; Success! at
+data/logs/tadpole-landing-demand/clean_run.lk. The isolated test build retains
+the existing loop_checks warning. In-client CPU savings were not measured.

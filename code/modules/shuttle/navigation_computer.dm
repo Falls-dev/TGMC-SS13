@@ -239,7 +239,7 @@
 	return TRUE
 
 /// Handles the rotation of the shuttle
-/obj/machinery/computer/camera_advanced/shuttle_docker/proc/rotateLandingSpot()
+/obj/machinery/computer/camera_advanced/shuttle_docker/proc/rotateLandingSpot(validate = TRUE)
 	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
 	var/list/image_cache = the_eye.placement_images
 	the_eye.setDir(turn(the_eye.dir, -90))
@@ -253,7 +253,8 @@
 	var/Tmp = x_offset
 	x_offset = y_offset
 	y_offset = -Tmp
-	checkLandingSpot()
+	if(validate)
+		checkLandingSpot()
 
 /// Checks if the currently hovered area is accessible by the shuttle
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/check_hovering_spot(turf/next_turf)
@@ -383,10 +384,11 @@
 /mob/camera/aiEye/remote/shuttle_docker/setLoc(T)
 	. = ..()
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/console = origin
-	console?.checkLandingSpot()
 	if(istype(console, /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship))
 		var/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/helm = console
 		helm.update_ground_view()
+	else
+		console?.checkLandingSpot()
 
 /mob/camera/aiEye/remote/shuttle_docker/update_remote_sight(mob/living/user)
 	if(istype(origin, /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship))

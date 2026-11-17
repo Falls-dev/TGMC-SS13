@@ -69,11 +69,11 @@
 	for(var/i in 1 to 3)
 		if(eyeobj.dir == landing_dir)
 			break
-		rotateLandingSpot()
+		rotateLandingSpot(validate = FALSE)
 	var/turf/landing_turf = locate(round(flight_x + 0.5), round(flight_y + 0.5), eyeobj.z)
 	if(get_turf(eyeobj) != landing_turf)
 		eyeobj.abstract_move(landing_turf)
-		checkLandingSpot()
+	// Validate the footprint only when Land is pressed, in placeLandingSpot().
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/proc/initialize_flight_position()
 	if(!eyeobj)
