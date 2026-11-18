@@ -50,6 +50,7 @@
 	var/launching_delay = 10 SECONDS
 	/// Native lower-level scene. No per-object appearance snapshots.
 	var/datum/tadpole_scene/flight_scene
+	var/datum/tadpole_transit_animation/transit_animation
 	var/obj/effect/abstract/tadpole_searchlight/ground_searchlight
 	var/list/ground_tiles = list()
 	/// Continuous coordinates in tiles, velocity in tiles/second, heading in degrees.
@@ -76,6 +77,7 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/Destroy()
 	if(current_user)
 		remove_eye_control(current_user)
+	QDEL_NULL(transit_animation)
 	clear_ground_view()
 	QDEL_NULL(flight_controller)
 	QDEL_NULL(land_action)
@@ -123,12 +125,18 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/shuttle_arrived()
 	if(fly_state == next_fly_state)
 		return
+	var/previous_fly_state = fly_state
 	clear_ground_view()
 	fly_state = next_fly_state
 	if(fly_state != SHUTTLE_IN_ATMOSPHERE && current_user)
 		remove_eye_control(current_user)
 	if(fly_state == SHUTTLE_IN_SPACE)
 		shuttle_port.assigned_transit.reserved_area.set_turf_type(/turf/open/space/transit)
+		QDEL_NULL(transit_animation)
+		if(previous_fly_state == SHUTTLE_ON_SHIP && destination_fly_state == SHUTTLE_IN_ATMOSPHERE)
+			transit_animation = new(src, FALSE)
+	else if(fly_state != SHUTTLE_IN_ATMOSPHERE)
+		QDEL_NULL(transit_animation)
 	if(to_transit)
 		to_transit = FALSE
 		next_fly_state = destination_fly_state
@@ -138,6 +146,7 @@
 	if(fly_state != SHUTTLE_IN_ATMOSPHERE)
 		return
 	shuttle_port.assigned_transit.reserved_area.set_turf_type(/turf/open/space/transit/atmos)
+	transit_animation?.reveal_ground()
 	open_prompt = TRUE
 	initialize_flight_position()
 	build_ground_view()
@@ -145,6 +154,8 @@
 ///The action of taking off and sending the shuttle to the atmosphere
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/proc/take_off()
 	shuttle_port = SSshuttle.getShuttle(shuttle_id)
+	if((fly_state != SHUTTLE_ON_SHIP && fly_state != SHUTTLE_ON_GROUND) || shuttle_port?.mode != SHUTTLE_IDLE)
+		return
 	#ifndef TESTING
 	if(!(shuttle_port.shuttle_flags & GAMEMODE_IMMUNE) && world.time < SSticker.round_start_time + SSticker.mode.deploy_time_lock)
 		to_chat(ui_user, span_warning("The mothership is too far away from the theatre of operation, we cannot take off."))
@@ -189,15 +200,33 @@
 ///The action of sending the shuttle back to its shuttle port on main ship
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/proc/return_to_ship()
 	shuttle_port = SSshuttle.getShuttle(shuttle_id)
+	if(fly_state != SHUTTLE_IN_ATMOSPHERE || shuttle_port?.mode != SHUTTLE_IDLE)
+		return
+	var/obj/docking_port/stationary/hangar = SSshuttle.getDock(origin_port_id)
+	if(!hangar || !shuttle_port.check_dock(hangar, TRUE))
+		return
 	shuttle_port.shuttle_computer = src
+	SSshuttle.moveShuttleToDock(shuttle_id, hangar, TRUE)
+	if(shuttle_port.mode != SHUTTLE_IGNITING || shuttle_port.destination != hangar)
+		return
 	to_transit = TRUE
 	next_fly_state = SHUTTLE_IN_SPACE
 	destination_fly_state = SHUTTLE_ON_SHIP
-	if(!origin_port_id)
-		return
 	open_prompt = FALSE
 	clean_ui_user()
-	SSshuttle.moveShuttle(shuttle_id, origin_port_id, TRUE)
+	var/initial_scale = transit_animation?.ground_scale() || 1
+	QDEL_NULL(transit_animation)
+	transit_animation = new(src, TRUE, initial_scale)
+
+/obj/docking_port/mobile/marine_dropship/minidropship/check()
+	. = ..()
+	var/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/helm = shuttle_computer
+	if(!istype(helm) || !helm.transit_animation)
+		return
+	if(!helm.transit_animation.revealing_ground && (mode == SHUTTLE_IDLE || mode == SHUTTLE_RECALL))
+		QDEL_NULL(helm.transit_animation)
+		return
+	helm.transit_animation.refresh_viewers()
 
 /// Manual only: moving the shuttle never changes the chosen shutter state.
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/proc/toggle_shutters()

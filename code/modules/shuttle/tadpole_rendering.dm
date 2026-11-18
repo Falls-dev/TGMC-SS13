@@ -103,7 +103,7 @@
 	original_transform = plate.transform
 	plate.remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_TRANSPARENT, depth - 1))
 	output_plane = GET_NEW_PLANE(TADPOLE_GROUND_PLANE, hud.current_plane_offset)
-	plate.add_relay_to(output_plane)
+	plate.add_relay_to(output_plane, relay_layer = 1)
 	var/atom/movable/render_plane_relay/ground_relay = plate.get_relay_to(output_plane)
 	// Let the relay receive the hit itself. Some composed pixels have no
 	// click-catcher behind them once the source's mouse hits are disabled.
@@ -460,6 +460,8 @@
 	// Its destination in screen space is (port - eye) + R * (G - flight).
 	var/matrix/camera = matrix()
 	camera.Turn(dir2angle(port.dir) - helm.flight_heading)
+	if(helm.transit_animation)
+		camera.Scale(helm.transit_animation.ground_scale())
 	var/input_x = helm.flight_x + source_offset_x - eye.x
 	var/input_y = helm.flight_y + source_offset_y - eye.y
 	camera.c = (port.x - eye.x - camera.a * input_x - camera.b * input_y) * world.icon_size

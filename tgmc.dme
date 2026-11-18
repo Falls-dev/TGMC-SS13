@@ -2434,6 +2434,7 @@
 #include "code\modules\shuttle\gamemodes\crash.dm"
 #include "code\modules\shuttle\tadpole_flight.dm"
 #include "code\modules\shuttle\tadpole_rendering.dm"
+#include "code\modules\shuttle\tadpole_transit_animation.dm"
 #include "code\modules\shuttle\tadpole_viewport.dm"
 #include "code\modules\spatial_grid\cell_tracker.dm"
 #include "code\modules\surgery\amputation.dm"

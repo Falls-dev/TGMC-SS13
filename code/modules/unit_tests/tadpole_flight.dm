@@ -77,6 +77,21 @@
 	TEST_ASSERT_EQUAL(helm.flight_y, previous_y, "Grounded aircraft must ignore flight input")
 	TEST_ASSERT_EQUAL(get_turf(port), run_loc_floor_bottom_left, "Flight must not move physical shuttle turfs")
 
+	var/datum/tadpole_transit_animation/outbound = new(helm, FALSE)
+	helm.transit_animation = outbound
+	TEST_ASSERT_EQUAL(length(outbound.layers), 3, "The cinematic must use three shared overlays")
+	TEST_ASSERT_EQUAL(outbound.ground_scale(), 1, "Orbital travel must not scale the ground before arrival")
+	outbound.reveal_ground()
+	var/reveal_scale = outbound.ground_scale(outbound.phase_started)
+	TEST_ASSERT(reveal_scale < 1, "Arrival must start with the ground receding below the hull")
+	TEST_ASSERT_EQUAL(outbound.ground_scale(outbound.phase_started + 10 SECONDS), 1, "Descent must restore normal ground scale")
+	qdel(outbound)
+	TEST_ASSERT_NULL(helm.transit_animation, "Deleting the effect must detach it from the helm")
+	var/datum/tadpole_transit_animation/inbound = new(helm, TRUE)
+	helm.transit_animation = inbound
+	TEST_ASSERT_EQUAL(inbound.ground_scale(inbound.phase_started), 1, "Return to ship must begin at the current altitude")
+	TEST_ASSERT_EQUAL(inbound.ground_scale(inbound.phase_started + 10 SECONDS), reveal_scale, "The two directions must converge at the same altitude")
+	qdel(inbound)
 
 	// Scene relays real turfs and keeps source appearance/planes untouched.
 	var/obj/effect/abstract/tadpole_native_chunk/chunk = allocate(/obj/effect/abstract/tadpole_native_chunk)
