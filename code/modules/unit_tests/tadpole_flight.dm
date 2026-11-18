@@ -340,6 +340,20 @@
 	TEST_ASSERT(pilot.Move(walking_end, SOUTH), "Walking fixture must return inside the ship before testing exit")
 	TEST_ASSERT_EQUAL(length(walking_scene.sources), 0, "Walking projection must not allocate or update terrain membership")
 	var/turf/outside_ship = get_step(walking_end, SOUTH)
+	helm.ground_tiles[outside_ship] = TRUE
+	helm.flight_heading = dir2angle(port.dir) + 180
+	pilot.forceMove(walking_start)
+	TEST_ASSERT(pilot.Move(walking_end, SOUTH), "The consecutive-step fixture must start a native glide")
+	var/first_step_duration = native_view.eye_duration
+	var/first_step_destination = native_view.last_camera.f
+	native_view.eye_started = world.time - first_step_duration / 2
+	native_view.animation_started = native_view.eye_started
+	TEST_ASSERT(pilot.Move(outside_ship, SOUTH), "The second step must interrupt the first glide")
+	TEST_ASSERT_EQUAL(native_view.eye_from_y, walking_end.y, "Continuing straight must start one tile from the new destination")
+	TEST_ASSERT_EQUAL(native_view.eye_duration, first_step_duration, "A clipped step must still glide over just one tile")
+	TEST_ASSERT_EQUAL(native_view.animation_from.f, first_step_destination, "Terrain must rebase when the native camera trims its old glide")
+	pilot.forceMove(walking_end)
+	helm.ground_tiles -= outside_ship
 	TEST_ASSERT(pilot.Move(outside_ship, SOUTH), "Visibility fixture must step out of the Tadpole region")
 	TEST_ASSERT_EQUAL(pilot.sight, SEE_INFRA, "Leaving must restore the latest underlying sight in the movement tick")
 	TEST_ASSERT(!native_view.capture_active, "Leaving must release its ground capture immediately")

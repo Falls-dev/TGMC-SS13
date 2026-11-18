@@ -271,10 +271,20 @@
 		bind_visibility(hud.mymob)
 		start_capture(hud.mymob.client)
 	var/duration = 0
+	var/eye_shift_x = 0
+	var/eye_shift_y = 0
 	var/list/current_eye = list(old_loc?.x, old_loc?.y)
 	if(!forced && isturf(old_loc) && old_loc.z == eye.z && get_dist(old_loc, eye) == 1)
 		if(eye_to_x == old_loc.x && eye_to_y == old_loc.y)
 			current_eye = displayed_eye()
+			// Dream Seeker caps the unfinished scroll to one tile per axis
+			// from the new destination. The cap applies before the new glide.
+			var/start_x = clamp(current_eye[1], eye.x - 1, eye.x + 1)
+			var/start_y = clamp(current_eye[2], eye.y - 1, eye.y + 1)
+			eye_shift_x = start_x - current_eye[1]
+			eye_shift_y = start_y - current_eye[2]
+			current_eye[1] = start_x
+			current_eye[2] = start_y
 		var/dx = abs(eye.x - current_eye[1])
 		var/dy = abs(eye.y - current_eye[2])
 		var/distance = (source.appearance_flags & LONG_GLIDE) ? max(dx, dy) : sqrt(dx ** 2 + dy ** 2)
@@ -289,7 +299,7 @@
 	eye_to_y = eye.y
 	eye_started = world.time - step_lead
 	eye_duration = duration
-	scene.update_view(src, eye, duration / 10, step_lead)
+	scene.update_view(src, eye, duration / 10, step_lead, eye_shift_x, eye_shift_y)
 
 /// Approximate the native camera glide using the eye's pixel speed.
 /datum/tadpole_scene_view/proc/displayed_eye(at_time = world.time)
@@ -298,7 +308,7 @@
 
 /// Both motion and heading live in this matrix. If a block was relocated,
 /// convert the current transform to the new input coordinates before tweening.
-/datum/tadpole_scene_view/proc/update_camera(matrix/camera, offset_x, offset_y, transit_z, animation_seconds, step_lead = 0)
+/datum/tadpole_scene_view/proc/update_camera(matrix/camera, offset_x, offset_y, transit_z, animation_seconds, step_lead = 0, eye_shift_x = 0, eye_shift_y = 0)
 	if(QDELETED(plate))
 		return
 	var/rebased = projected_offset_x != offset_x || projected_offset_y != offset_y || projected_z != transit_z
@@ -314,6 +324,15 @@
 		var/dy = (projected_offset_y - offset_y) * world.icon_size
 		animation_from.c += animation_from.a * dx + animation_from.b * dy
 		animation_from.f += animation_from.d * dx + animation_from.e * dy
+
+	var/eye_rebased = eye_shift_x || eye_shift_y
+	if(eye_rebased)
+		var/dx = eye_shift_x * world.icon_size
+		var/dy = eye_shift_y * world.icon_size
+		// Projection's eye term is (A - I) * eye, with A the current
+		// rotation and scale. Apply the native jump in the same frame.
+		animation_from.c += (animation_from.a - 1) * dx + animation_from.b * dy
+		animation_from.f += animation_from.d * dx + (animation_from.e - 1) * dy
 
 	projected_offset_x = offset_x
 	projected_offset_y = offset_y
@@ -341,7 +360,7 @@
 		animate(plate)
 		plate.transform = camera
 		return
-	if(rebased)
+	if(rebased || eye_rebased)
 		// Stop the old animation before changing its coordinate basis.
 		animate(plate)
 		plate.transform = animation_from
@@ -452,7 +471,7 @@
 		view.viewport?.sync_hud()
 		update_view(view, get_turf(display.eye), animation_seconds)
 
-/datum/tadpole_scene/proc/update_view(datum/tadpole_scene_view/view, turf/eye, animation_seconds, step_lead = 0)
+/datum/tadpole_scene/proc/update_view(datum/tadpole_scene_view/view, turf/eye, animation_seconds, step_lead = 0, eye_shift_x = 0, eye_shift_y = 0)
 	if(!eye || isnull(source_offset_x))
 		return
 	var/obj/docking_port/mobile/port = helm.shuttle_port
@@ -466,7 +485,7 @@
 	var/input_y = helm.flight_y + source_offset_y - eye.y
 	camera.c = (port.x - eye.x - camera.a * input_x - camera.b * input_y) * world.icon_size
 	camera.f = (port.y - eye.y - camera.d * input_x - camera.e * input_y) * world.icon_size
-	view.update_camera(camera, source_offset_x, source_offset_y, source_transit_z, animation_seconds, step_lead)
+	view.update_camera(camera, source_offset_x, source_offset_y, source_transit_z, animation_seconds, step_lead, eye_shift_x, eye_shift_y)
 
 /datum/tadpole_scene/proc/ensure_render_origin()
 	var/obj/docking_port/mobile/port = helm.shuttle_port
