@@ -91,7 +91,11 @@
 	helm.transit_animation = inbound
 	TEST_ASSERT_EQUAL(inbound.ground_scale(inbound.phase_started), 1, "Return to ship must begin at the current altitude")
 	TEST_ASSERT_EQUAL(inbound.ground_scale(inbound.phase_started + 10 SECONDS), reveal_scale, "The two directions must converge at the same altitude")
+	inbound.fade_to_space()
+	TEST_ASSERT(inbound.blending_into_space, "Entering space must start the parallax handoff")
+	TEST_ASSERT_EQUAL(helm.transit_animation, inbound, "The transition must remain attached while space fades in")
 	qdel(inbound)
+	TEST_ASSERT_NULL(helm.transit_animation, "Ending the handoff must release the temporary layers")
 
 	// Scene relays real turfs and keeps source appearance/planes untouched.
 	var/obj/effect/abstract/tadpole_native_chunk/chunk = allocate(/obj/effect/abstract/tadpole_native_chunk)
