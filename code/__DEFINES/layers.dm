@@ -20,6 +20,9 @@
 
 #define TRANSPARENT_FLOOR_PLANE -10
 
+/// Completed ground translated before its crop and rotation.
+#define TADPOLE_SOURCE_PLANE -8
+
 /// Ground rendered under the stationary Tadpole transit interior.
 #define TADPOLE_GROUND_PLANE -7
 

@@ -23,14 +23,6 @@
 		pixel_x = (tile_x - target.x) * world.icon_size
 		pixel_y = (tile_y - target.y) * world.icon_size
 
-/// Translation only. Rotation belongs to the completed lower render plate.
-/obj/effect/abstract/tadpole_native_tile/proc/move_ground(from_x, from_y, to_x, to_y, transit_z, duration)
-	place(FLOOR(to_x, 1), FLOOR(to_y, 1), transit_z, FALSE)
-	if(!loc)
-		return
-	animate(src, pixel_x = (from_x - x) * world.icon_size, pixel_y = (from_y - y) * world.icon_size, time = 0)
-	animate(src, pixel_x = (to_x - x) * world.icon_size, pixel_y = (to_y - y) * world.icon_size, time = duration, easing = LINEAR_EASING)
-
 /obj/effect/abstract/tadpole_native_tile/proc/build(tile_x, tile_y, ground_z)
 	clear_source()
 	source = locate(tile_x, tile_y, ground_z)
@@ -57,12 +49,21 @@
 		UnregisterSignal(source, COMSIG_TURF_CHANGE)
 	source = null
 	vis_contents.Cut()
-	animate(src, pixel_x = 0, pixel_y = 0, time = 0)
+	pixel_x = 0
+	pixel_y = 0
 	abstract_move(null)
 
 /obj/effect/abstract/tadpole_native_tile/Destroy()
 	clear_source()
 	return ..()
+
+/// One common translation pass for finished, lit terrain. The following
+/// relay crops/rotates it; individual turf holders never animate in flight.
+/atom/movable/screen/plane_master/rendering_plate/tadpole_source
+	name = "Tadpole translated ground"
+	documentation = "Composes the shared flight translation before hull cropping and rotation."
+	plane = TADPOLE_SOURCE_PLANE
+	render_relay_planes = list(TADPOLE_GROUND_PLANE)
 
 /// Shared hull origin for ground projection; never assigned to client.eye.
 /obj/effect/abstract/tadpole_render_origin
@@ -78,6 +79,12 @@
 	var/matrix/original_transform
 	var/source_offset
 	var/output_plane
+	var/source_plane
+	var/atom/movable/screen/plane_master/translated_plate
+	var/atom/movable/render_plane_relay/translation_relay
+	var/source_revision = -1
+	var/source_anchor_x
+	var/source_anchor_y
 	var/matrix/last_camera
 	var/matrix/animation_from
 	var/animation_started = 0
@@ -109,7 +116,12 @@
 	original_transform = plate.transform
 	plate.remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_TRANSPARENT, depth - 1))
 	output_plane = GET_NEW_PLANE(TADPOLE_GROUND_PLANE, hud.current_plane_offset)
-	plate.add_relay_to(output_plane)
+	source_plane = GET_NEW_PLANE(TADPOLE_SOURCE_PLANE, hud.current_plane_offset)
+	plate.add_relay_to(source_plane)
+	translation_relay = plate.get_relay_to(source_plane)
+	translated_plate = hud.get_plane_master(source_plane)
+	rotation_relay = translated_plate.get_relay_to(output_plane)
+	original_rotation_transform = rotation_relay.transform || matrix()
 	var/datum/plane_master_group/group = hud.get_plane_group(PLANE_GROUP_MAIN)
 	for(var/key in group.plane_masters)
 		var/atom/movable/screen/plane_master/master = group.plane_masters[key]
@@ -134,7 +146,7 @@
 	scene = null
 	if(!QDELETED(plate))
 		animate(plate, transform = original_transform, time = 0)
-		plate.remove_relay_from(output_plane)
+		plate.remove_relay_from(source_plane)
 		plate.offset_change(hud.current_plane_offset)
 	if(had_emissive_relay && !QDELETED(emissive_plate))
 		emissive_plate.add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, source_offset - 1), relay_layer = EMISSIVE_Z_BELOW_LAYER)
@@ -202,8 +214,6 @@
 	if(capture_active || QDELETED(hud) || !hud.mymob)
 		return
 	capture_active = TRUE
-	rotation_relay = plate.get_relay_to(output_plane)
-	original_rotation_transform = rotation_relay.transform || matrix()
 	animate(plate, transform = original_transform, time = 0)
 	set_capture_size(TADPOLE_CAPTURE_SIZE, TADPOLE_CAPTURE_SIZE)
 	last_camera = null
@@ -214,7 +224,7 @@
 /datum/tadpole_scene_view/proc/set_capture_size(width, height)
 	capture_width = width
 	capture_height = height
-	plate.add_filter("tadpole_capture_bounds", 100, alpha_mask_filter(icon = capture_mask(width, height), x = capture_x, y = capture_y))
+	rotation_relay.add_filter("tadpole_capture_bounds", 100, alpha_mask_filter(icon = capture_mask(width, height), x = capture_x, y = capture_y))
 
 /datum/tadpole_scene_view/proc/capture_mask(width = TADPOLE_CAPTURE_SIZE, height = TADPOLE_CAPTURE_SIZE)
 	var/static/list/masks = list()
@@ -230,23 +240,40 @@
 		return
 	capture_x = dx
 	capture_y = dy
-	var/bounds = plate.get_filter("tadpole_capture_bounds")
+	var/bounds = rotation_relay.get_filter("tadpole_capture_bounds")
 	animate(bounds, x = dx, y = dy, time = animation_seconds * 10, easing = LINEAR_EASING)
 
 /datum/tadpole_scene_view/proc/end_capture()
 	if(!capture_active)
 		return
 	capture_active = FALSE
-	plate?.remove_filter("tadpole_capture_bounds")
+	rotation_relay?.remove_filter("tadpole_capture_bounds")
 	if(!QDELETED(rotation_relay))
 		animate(rotation_relay, transform = original_rotation_transform, time = 0)
-	rotation_relay = null
-	original_rotation_transform = null
+	source_revision = -1
 	capture_x = 0
 	capture_y = 0
 	last_camera = null
 	animation_from = null
 	animation_duration = 0
+
+/// Source motion is independent of passenger walking. Rebase the common
+/// translation only when holder coordinates move to another integer anchor.
+/datum/tadpole_scene_view/proc/sync_source_translation()
+	if(!scene || isnull(scene.source_to_x) || QDELETED(translation_relay) || source_revision == scene.source_revision)
+		return
+	var/matrix/target = matrix()
+	target.Translate((scene.source_anchor_x - scene.source_to_x) * world.icon_size, (scene.source_anchor_y - scene.source_to_y) * world.icon_size)
+	if(source_revision < 0 || !scene.source_duration || source_anchor_x != scene.source_anchor_x || source_anchor_y != scene.source_anchor_y)
+		var/list/current = scene.displayed_source_position()
+		var/matrix/from = matrix()
+		from.Translate((scene.source_anchor_x - current[1]) * world.icon_size, (scene.source_anchor_y - current[2]) * world.icon_size)
+		animate(translation_relay, transform = from, time = 0)
+	var/remaining = max(0, scene.source_duration - (world.time - scene.source_started))
+	animate(translation_relay, transform = target, time = remaining, easing = LINEAR_EASING)
+	source_revision = scene.source_revision
+	source_anchor_x = scene.source_anchor_x
+	source_anchor_y = scene.source_anchor_y
 
 /datum/tadpole_scene_view/proc/track_eye(atom/new_eye)
 	if(!ismovable(new_eye))
@@ -290,13 +317,13 @@
 	animation_started = world.time
 	animation_duration = animation_seconds * 10
 	last_camera = camera
-	var/atom/movable/target = capture_active ? rotation_relay : plate
+	var/atom/movable/target = rotation_relay
 	animate(target, transform = camera, time = animation_duration, easing = LINEAR_EASING)
 
 /// Match the LINEAR_EASING matrix interpolation currently visible to clients.
 /datum/tadpole_scene_view/proc/displayed_camera()
 	if(!last_camera)
-		var/atom/movable/target = capture_active ? rotation_relay : plate
+		var/atom/movable/target = rotation_relay
 		return target?.transform ? matrix(target.transform) : matrix()
 	var/progress = animation_duration ? clamp((world.time - animation_started) / animation_duration, 0, 1) : 1
 	if(!animation_from || progress >= 1)
@@ -328,6 +355,9 @@
 	var/source_to_y
 	var/source_started = 0
 	var/source_duration = 0
+	var/source_anchor_x
+	var/source_anchor_y
+	var/source_revision = 0
 	var/last_port_x
 	var/last_port_y
 	var/last_port_z
@@ -388,6 +418,8 @@
 		source_to_x = null
 		source_to_y = null
 		source_duration = 0
+		source_anchor_x = null
+		source_anchor_y = null
 		return
 	update_region(needed_radius, helm.eyeobj.z)
 	update_source_position(animation_seconds)
@@ -400,6 +432,7 @@
 	if(!eye || QDELETED(view.plate) || isnull(origin_x) || isnull(origin_y))
 		return
 	ensure_render_origin()
+	view.sync_source_translation()
 	var/angle = helm.flight_heading - dir2angle(helm.shuttle_port.dir)
 	var/turf/capture_eye = eye
 	var/px = render_origin.x - capture_eye.x
@@ -446,20 +479,41 @@
 		return FALSE
 	var/initialized = !isnull(source_to_x) && !isnull(source_to_y)
 	var/list/current = displayed_source_position()
+	// Keep the existing anchor until the common render offset exhausts its margin.
+	var/anchor_x = source_anchor_x
+	var/anchor_y = source_anchor_y
+	if(isnull(anchor_x) || max(abs(anchor_x - current[1]), abs(anchor_x - target[1])) > TADPOLE_SOURCE_GUARD)
+		anchor_x = round((current[1] + target[1]) / 2 + 0.5)
+	if(isnull(anchor_y) || max(abs(anchor_y - current[2]), abs(anchor_y - target[2])) > TADPOLE_SOURCE_GUARD)
+		anchor_y = round((current[2] + target[2]) / 2 + 0.5)
+	var/offset = max(abs(anchor_x - current[1]), abs(anchor_x - target[1]), abs(anchor_y - current[2]), abs(anchor_y - target[2]))
+	if(offset > TADPOLE_SOURCE_GUARD)
+		// Teleports/long server stalls must not animate unavailable source pixels.
+		current = target.Copy()
+		anchor_x = round(target[1] + 0.5)
+		anchor_y = round(target[2] + 0.5)
+		animation_seconds = 0
+	var/rebase = source_anchor_x != anchor_x || source_anchor_y != anchor_y || last_port_x != port.x || last_port_y != port.y || last_port_z != port.z
 	source_from_x = current[1]
 	source_from_y = current[2]
 	source_to_x = target[1]
 	source_to_y = target[2]
 	source_started = world.time
 	source_duration = initialized ? animation_seconds * 10 : 0
+	source_anchor_x = anchor_x
+	source_anchor_y = anchor_y
+	source_revision++
 	last_port_x = port.x
 	last_port_y = port.y
 	last_port_z = port.z
-	update_sources(FALSE)
-	for(var/key in sources)
-		var/obj/effect/abstract/tadpole_native_tile/holder = sources[key]
-		var/turf/tile = holder.source
-		holder.move_ground(port.x + tile.x - source_from_x, port.y + tile.y - source_from_y, port.x + tile.x - source_to_x, port.y + tile.y - source_to_y, port.z, source_duration)
+	update_sources(!rebase)
+	if(rebase)
+		var/offset_x = port.x - anchor_x
+		var/offset_y = port.y - anchor_y
+		for(var/key in sources)
+			var/obj/effect/abstract/tadpole_native_tile/holder = sources[key]
+			var/turf/tile = holder.source
+			holder.place(offset_x + tile.x, offset_y + tile.y, port.z)
 	return TRUE
 
 /// Discovery is separate from the five-Hz flight path. Existing viewers are
@@ -475,7 +529,7 @@
 
 /// Cover the normal visible window at every hull tile and every rotation.
 /// The source crop is hull-centered; the native viewport also needs the offset
-/// from a passenger to that crop, plus a tile for unfinished camera glide.
+/// from a passenger to that crop, plus a tile for shared source translation and camera glide.
 /// Logical observer zoom deliberately does not grow this shared geometry.
 /datum/tadpole_scene/proc/capture_geometry()
 	ensure_render_origin()
@@ -486,7 +540,7 @@
 	var/list/visible = getviewsize(CONFIG_GET(string/default_view))
 	var/radius = sqrt((visible[1] / 2 + dx) ** 2 + (visible[2] / 2 + dy) ** 2)
 	var/side = max(TADPOLE_CAPTURE_SIZE, 2 * CEILING(radius - 0.5, 1) + 1)
-	return list(side, side + 2 * (dx + 1), side + 2 * (dy + 1))
+	return list(side, side + 2 * (dx + TADPOLE_SOURCE_GUARD), side + 2 * (dy + TADPOLE_SOURCE_GUARD))
 
 /// One adjacent row around the shared hull crop; no per-passenger source set.
 /datum/tadpole_scene/proc/source_radius(list/size)
@@ -509,13 +563,15 @@
 /// Stream only the shared native capture and its current animation corridor.
 /// Holders leaving the window are detached before allocating incoming rows,
 /// allowing the same objects to serve the next source strip without GC bursts.
-/datum/tadpole_scene/proc/update_sources(move_new = TRUE)
+/datum/tadpole_scene/proc/update_sources(place_new = TRUE)
 	if(!source_z || !radius)
 		return FALSE
 	var/list/current = displayed_source_position()
 	var/target_x = isnull(source_to_x) ? current[1] : source_to_x
 	var/target_y = isnull(source_to_y) ? current[2] : source_to_y
-	var/remaining_time = max(0, source_duration - (world.time - source_started))
+	if(isnull(source_anchor_x) || isnull(source_anchor_y))
+		source_anchor_x = round(current[1] + 0.5)
+		source_anchor_y = round(current[2] + 0.5)
 	var/obj/docking_port/mobile/port = helm.shuttle_port
 	ensure_render_origin()
 	var/dx = render_origin.x - port.x
@@ -551,8 +607,8 @@
 				holder = new
 			holder.build(x, y, source_z)
 			sources[key] = holder
-			if(move_new)
-				holder.move_ground(port.x + x - current[1], port.y + y - current[2], port.x + x - target_x, port.y + y - target_y, port.z, remaining_time)
+			if(place_new)
+				holder.place(port.x + x - source_anchor_x, port.y + y - source_anchor_y, port.z)
 	// Keep a few spare strips, not a second complete visual map in nullspace.
 	while(length(source_pool) > 256)
 		var/obj/effect/abstract/tadpole_native_tile/extra = source_pool[length(source_pool)]

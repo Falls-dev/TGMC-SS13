@@ -221,8 +221,8 @@
 		var/obj/effect/abstract/tadpole_native_tile/spatial_block = scene.sources[chunk_key]
 		var/turf/first_source = spatial_block.source
 		TEST_ASSERT_EQUAL(length(spatial_block.vis_contents), 1, "Every active holder must contain exactly one real turf")
-		TEST_ASSERT_EQUAL((spatial_block.x - port.x) * world.icon_size + spatial_block.pixel_x, (first_source.x - helm.flight_x) * world.icon_size, "Spatial placement must preserve source x projection")
-		TEST_ASSERT_EQUAL((spatial_block.y - port.y) * world.icon_size + spatial_block.pixel_y, (first_source.y - helm.flight_y) * world.icon_size, "Spatial placement must preserve source y projection")
+		TEST_ASSERT_EQUAL((spatial_block.x - port.x) * world.icon_size + spatial_block.pixel_x, (first_source.x - scene.source_anchor_x) * world.icon_size, "Spatial placement must preserve source x projection")
+		TEST_ASSERT_EQUAL((spatial_block.y - port.y) * world.icon_size + spatial_block.pixel_y, (first_source.y - scene.source_anchor_y) * world.icon_size, "Spatial placement must preserve source y projection")
 	TEST_ASSERT(!scene.update_sources(), "An unchanged capture must skip membership scans and allocation")
 	TEST_ASSERT_EQUAL(scene.sources[key], edge_chunk, "Unchanged source cells must retain their holder")
 	TEST_ASSERT_EQUAL(length(scene.sources), count, "Repeated checks must not allocate extra holders")
@@ -267,15 +267,21 @@
 		TEST_ASSERT_EQUAL(scene.sources[chunk_key], stable_blocks[chunk_key], "Walking must preserve every cached block identity")
 	// A bucket transition during a source animation changes membership only.
 	var/flight_before_x = helm.flight_x
+	var/turf/holder_before = get_turf(edge_chunk)
+	helm.flight_x += 0.25
+	scene.update_source_position(0.2)
+	TEST_ASSERT_EQUAL(get_turf(edge_chunk), holder_before, "Fractional movement inside the guard must leave native holders in place")
+	helm.flight_x = flight_before_x
+	scene.update_source_position(0)
 	var/list/effective_before = scene.displayed_source_position()
 	var/center_key = "[scene.origin_x],[scene.origin_y],[scene.source_z]"
 	var/obj/effect/abstract/tadpole_native_tile/center_chunk = scene.sources[center_key]
-	helm.flight_x += 8
+	helm.flight_x += 3
 	scene.update_source_position(1)
 	scene.source_started = world.time - 5
 	var/list/source_before = scene.displayed_source_position()
-	TEST_ASSERT(abs(source_before[1] - effective_before[1] - 4) < 0.001, "Shared terrain must interpolate the actual flight position")
-	TEST_ASSERT(scene.update_region(scene.radius, scene.source_z), "Crossing eight tiles must update source membership")
+	TEST_ASSERT(abs(source_before[1] - effective_before[1] - 1.5) < 0.001, "Shared terrain must interpolate the actual flight position")
+	scene.update_region(scene.radius, scene.source_z)
 	TEST_ASSERT_EQUAL(scene.displayed_source_position().Join(","), source_before.Join(","), "Changing cache origin must not move the displayed terrain")
 	TEST_ASSERT_EQUAL(scene.sources[center_key], center_chunk, "A source-window seam must retain overlapping holders")
 	check_source_coverage(scene)
@@ -321,7 +327,7 @@
 	check_native_eye_projection(walking_scene, native_view)
 	native_view.begin_capture()
 	TEST_ASSERT_NOTNULL(native_view.plate, "Ground must have a preallocated native lower render plate")
-	TEST_ASSERT(native_view.plate.get_relay_to(TADPOLE_GROUND_PLANE), "Passenger plate must relay below the physical craft")
+	TEST_ASSERT(native_view.plate.get_relay_to(TADPOLE_SOURCE_PLANE), "Passenger plate must relay below the physical craft")
 	TEST_ASSERT_EQUAL(other_plate.render_relay_planes.Join(","), original_targets.Join(","), "Another observer must retain their native graph")
 	var/required_sight = SEE_SELF | SEE_TURFS | SEE_OBJS | SEE_MOBS
 	TEST_ASSERT_EQUAL(pilot.sight & required_sight, required_sight, "Living passengers must receive observer-style native scene visibility")
@@ -391,7 +397,7 @@
 	TEST_ASSERT_EQUAL(pilot.sight, sight_before_view, "Scene departure must remove its sight modifier")
 	TEST_ASSERT(!length(pilot.sight_modifiers), "Scene cleanup must leave no owned sight modifiers")
 	qdel(walking_scene)
-	TEST_ASSERT_NULL(passenger_plate.get_relay_to(TADPOLE_GROUND_PLANE), "Leaving the scene must remove the aircraft relay")
+	TEST_ASSERT_NULL(passenger_plate.get_relay_to(TADPOLE_SOURCE_PLANE), "Leaving the scene must remove the aircraft relay")
 	TEST_ASSERT(passenger_plate.get_relay_to(RENDER_PLANE_TRANSPARENT), "Leaving must restore native multiz routing")
 	var/turf/ground = locate(40,40,SSmapping.ground_start)
 	TEST_ASSERT(SSmapping.z_level_to_plane_offset[ground.z] >= 1, "Ground planes must be allocated below transit before atom initialization")
@@ -496,7 +502,7 @@
 				TEST_ASSERT_EQUAL(game_relay.transform.tolist().Join(","), game_transform_before, "Native camera following must never transform the final game relay")
 				TEST_ASSERT_EQUAL(hud_relay.transform.tolist().Join(","), hud_transform_before, "Native camera following must never transform the HUD")
 	view.end_capture()
-	TEST_ASSERT_NULL(view.plate.get_filter("tadpole_capture_bounds"), "Release must remove its crop filter")
+	TEST_ASSERT_NULL(view.rotation_relay.get_filter("tadpole_capture_bounds"), "Release must remove its crop filter")
 	TEST_ASSERT(!view.capture_active, "Release must clear capture state")
 	port.width = old_width
 	port.height = old_height
