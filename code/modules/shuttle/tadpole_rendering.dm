@@ -285,7 +285,7 @@
 	eye_to_y = eye.y
 	eye_started = world.time
 	eye_duration = duration
-	scene.update_view(src, eye, duration / 10, eye_step = TRUE)
+	scene.update_view(src, eye, duration / 10)
 
 /// Approximate the native camera glide using the eye's pixel speed.
 /datum/tadpole_scene_view/proc/displayed_eye(at_time = world.time)
@@ -294,7 +294,7 @@
 
 /// Both motion and heading live in this matrix. If a block was relocated,
 /// convert the current transform to the new input coordinates before tweening.
-/datum/tadpole_scene_view/proc/update_camera(matrix/camera, offset_x, offset_y, transit_z, animation_seconds, eye_step = FALSE)
+/datum/tadpole_scene_view/proc/update_camera(matrix/camera, offset_x, offset_y, transit_z, animation_seconds)
 	if(QDELETED(plate))
 		return
 	var/rebased = projected_offset_x != offset_x || projected_offset_y != offset_y || projected_z != transit_z
@@ -336,9 +336,8 @@
 		animate(plate)
 		plate.transform = camera
 		return
-	if(rebased || eye_step)
-		// Native walking and the ground correction must start the new step
-		// together. Do not blend out an interrupted correction from an old step.
+	if(rebased)
+		// Stop the old animation before changing its coordinate basis.
 		animate(plate)
 		plate.transform = animation_from
 	animate(plate, transform = animation_midpoint || camera, time = animation_first_duration, easing = LINEAR_EASING, flags = ANIMATION_LINEAR_TRANSFORM)
@@ -448,7 +447,7 @@
 		view.viewport?.sync_hud()
 		update_view(view, get_turf(display.eye), animation_seconds)
 
-/datum/tadpole_scene/proc/update_view(datum/tadpole_scene_view/view, turf/eye, animation_seconds, eye_step = FALSE)
+/datum/tadpole_scene/proc/update_view(datum/tadpole_scene_view/view, turf/eye, animation_seconds)
 	if(!eye || isnull(source_offset_x))
 		return
 	var/obj/docking_port/mobile/port = helm.shuttle_port
@@ -460,7 +459,7 @@
 	var/input_y = helm.flight_y + source_offset_y - eye.y
 	camera.c = (port.x - eye.x - camera.a * input_x - camera.b * input_y) * world.icon_size
 	camera.f = (port.y - eye.y - camera.d * input_x - camera.e * input_y) * world.icon_size
-	view.update_camera(camera, source_offset_x, source_offset_y, source_transit_z, animation_seconds, eye_step)
+	view.update_camera(camera, source_offset_x, source_offset_y, source_transit_z, animation_seconds)
 
 /datum/tadpole_scene/proc/ensure_render_origin()
 	var/obj/docking_port/mobile/port = helm.shuttle_port
