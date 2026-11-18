@@ -1,16 +1,16 @@
 /mob/living/carbon/xenomorph/add_to_all_mob_huds()
-	for(var/h in GLOB.huds)
-		if(!istype(h, /datum/atom_hud/xeno))
+	for(var/hud_key, hud in GLOB.huds)
+		if(!istype(hud, /datum/atom_hud/xeno))
 			continue
-		var/datum/atom_hud/hud = h
-		hud.add_to_hud(src)
+		var/datum/atom_hud/atom_hud = hud
+		atom_hud.add_to_hud(src)
 
 /mob/living/carbon/xenomorph/remove_from_all_mob_huds()
-	for(var/h in GLOB.huds)
-		if(!istype(h, /datum/atom_hud/xeno))
+	for(var/hud_key, hud in GLOB.huds)
+		if(!istype(hud, /datum/atom_hud/xeno))
 			continue
-		var/datum/atom_hud/hud = h
-		hud.remove_from_hud(src)
+		var/datum/atom_hud/atom_hud = hud
+		atom_hud.remove_from_hud(src)
 
 /mob/living/carbon/xenomorph/med_hud_set_health()
 	if(hud_used?.healths)
