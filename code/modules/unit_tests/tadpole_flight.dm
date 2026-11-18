@@ -290,6 +290,11 @@
 	pilot.set_glide_size(8)
 	TEST_ASSERT(pilot.Move(walking_end, SOUTH), "Walking camera fixture must move through the ordinary Move path")
 	TEST_ASSERT_EQUAL(native_view.last_camera.f - old_projection_y, 2 * world.icon_size, "A half-turn must compensate a southward eye step in the lower plane")
+	var/step_duration = native_view.eye_duration
+	helm.flight_heading += 15
+	walking_scene.update_view(native_view, walking_end, step_duration / 20)
+	TEST_ASSERT_NOTNULL(native_view.animation_midpoint, "A flight update during a walk must preserve the remaining glide")
+	TEST_ASSERT_EQUAL(native_view.animation_duration, step_duration, "Flight interpolation must not shorten the walking correction")
 	TEST_ASSERT_EQUAL(get_turf(walking_scene.render_origin), fixed_eye_before, "Walking must leave the hull render origin fixed")
 	TEST_ASSERT(pilot.Move(walking_start, NORTH), "Walking fixture must reverse through the ordinary movement path")
 	TEST_ASSERT(pilot.Move(walking_end, SOUTH), "Walking fixture must return inside the ship before testing exit")

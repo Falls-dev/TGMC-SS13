@@ -75,6 +75,14 @@
 	var/matrix/animation_from
 	var/animation_started = 0
 	var/animation_duration = 0
+	var/matrix/animation_midpoint
+	var/animation_first_duration
+	var/eye_from_x
+	var/eye_from_y
+	var/eye_to_x
+	var/eye_to_y
+	var/eye_started
+	var/eye_duration = 0
 	var/list/unscaled_planes = list()
 	var/capture_active = FALSE
 	var/client/capture_client
@@ -210,6 +218,8 @@
 	if(tracked_eye)
 		UnregisterSignal(tracked_eye, COMSIG_MOVABLE_MOVED)
 	tracked_eye = new_eye
+	eye_duration = 0
+	eye_to_x = null
 	if(tracked_eye)
 		RegisterSignal(tracked_eye, COMSIG_MOVABLE_MOVED, PROC_REF(on_eye_move))
 
@@ -228,12 +238,26 @@
 		bind_visibility(hud.mymob)
 		start_capture(hud.mymob.client)
 	var/duration = 0
+	var/list/current_eye = list(old_loc?.x, old_loc?.y)
 	if(!forced && isturf(old_loc) && old_loc.z == eye.z && get_dist(old_loc, eye) == 1)
-		var/dx = abs(eye.x - old_loc.x)
-		var/dy = abs(eye.y - old_loc.y)
+		if(eye_to_x == old_loc.x && eye_to_y == old_loc.y)
+			current_eye = displayed_eye()
+		var/dx = abs(eye.x - current_eye[1])
+		var/dy = abs(eye.y - current_eye[2])
 		var/distance = (source.appearance_flags & LONG_GLIDE) ? max(dx, dy) : sqrt(dx ** 2 + dy ** 2)
-		duration = distance * world.icon_size / max(source.glide_size, 1) * world.tick_lag / 10
-	scene.update_view(src, eye, duration)
+		duration = distance * world.icon_size / max(source.glide_size, 1) * world.tick_lag
+	eye_from_x = current_eye[1]
+	eye_from_y = current_eye[2]
+	eye_to_x = eye.x
+	eye_to_y = eye.y
+	eye_started = world.time
+	eye_duration = duration
+	scene.update_view(src, eye, duration / 10)
+
+/// Approximate the native camera glide using the eye's pixel speed.
+/datum/tadpole_scene_view/proc/displayed_eye(at_time = world.time)
+	var/progress = eye_duration ? clamp((at_time - eye_started) / eye_duration, 0, 1) : 1
+	return list(eye_from_x + (eye_to_x - eye_from_x) * progress, eye_from_y + (eye_to_y - eye_from_y) * progress)
 
 /// Both motion and heading live in this matrix. If a block was relocated,
 /// convert the current transform to the new input coordinates before tweening.
@@ -257,8 +281,22 @@
 	projected_offset_y = offset_y
 	projected_z = transit_z
 	animation_started = world.time
-	animation_duration = animation_seconds * 10
+	animation_first_duration = animation_seconds * 10
+	animation_duration = animation_first_duration
+	animation_midpoint = null
 	last_camera = camera
+	// If the next flight update finishes before the eye glide, reach the
+	// flight target using the eye position at that instant. Finish the
+	// remaining walk separately instead of speeding it up to the flight tick.
+	var/eye_remaining = eye_started + eye_duration - world.time
+	if(animation_first_duration > 0 && eye_remaining > animation_first_duration)
+		var/list/intermediate_eye = displayed_eye(world.time + animation_first_duration)
+		var/dx = (eye_to_x - intermediate_eye[1]) * world.icon_size
+		var/dy = (eye_to_y - intermediate_eye[2]) * world.icon_size
+		animation_midpoint = matrix(camera)
+		animation_midpoint.c += dx - camera.a * dx - camera.b * dy
+		animation_midpoint.f += dy - camera.d * dx - camera.e * dy
+		animation_duration = eye_remaining
 	// The lower master uses a screen-centered surface. Its output relay
 	// is anchored at SCREEN_SOUTHWEST on BYOND 516 and only composites it.
 	if(animation_duration <= 0)
@@ -269,22 +307,36 @@
 		// Stop the old animation before changing its coordinate basis.
 		animate(plate)
 		plate.transform = animation_from
-	animate(plate, transform = camera, time = animation_duration, easing = LINEAR_EASING, flags = ANIMATION_LINEAR_TRANSFORM)
+	animate(plate, transform = animation_midpoint || camera, time = animation_first_duration, easing = LINEAR_EASING, flags = ANIMATION_LINEAR_TRANSFORM)
+	if(animation_midpoint)
+		animate(transform = camera, time = animation_duration - animation_first_duration, easing = LINEAR_EASING, flags = ANIMATION_LINEAR_TRANSFORM)
 
 /// Match the LINEAR_EASING matrix interpolation currently visible to clients.
 /datum/tadpole_scene_view/proc/displayed_camera()
 	if(!last_camera)
 		return plate?.transform ? matrix(plate.transform) : matrix()
-	var/progress = animation_duration ? clamp((world.time - animation_started) / animation_duration, 0, 1) : 1
-	if(!animation_from || progress >= 1)
+	var/elapsed = max(0, world.time - animation_started)
+	if(!animation_from || elapsed >= animation_duration)
 		return matrix(last_camera)
+	var/matrix/from = animation_from
+	var/matrix/endpoint = last_camera
+	var/duration = animation_duration
+	if(animation_midpoint)
+		if(elapsed < animation_first_duration)
+			endpoint = animation_midpoint
+			duration = animation_first_duration
+		else
+			from = animation_midpoint
+			elapsed -= animation_first_duration
+			duration -= animation_first_duration
+	var/progress = elapsed / duration
 	var/matrix/result = matrix()
-	result.a = animation_from.a + (last_camera.a - animation_from.a) * progress
-	result.b = animation_from.b + (last_camera.b - animation_from.b) * progress
-	result.c = animation_from.c + (last_camera.c - animation_from.c) * progress
-	result.d = animation_from.d + (last_camera.d - animation_from.d) * progress
-	result.e = animation_from.e + (last_camera.e - animation_from.e) * progress
-	result.f = animation_from.f + (last_camera.f - animation_from.f) * progress
+	result.a = from.a + (endpoint.a - from.a) * progress
+	result.b = from.b + (endpoint.b - from.b) * progress
+	result.c = from.c + (endpoint.c - from.c) * progress
+	result.d = from.d + (endpoint.d - from.d) * progress
+	result.e = from.e + (endpoint.e - from.e) * progress
+	result.f = from.f + (endpoint.f - from.f) * progress
 	return result
 
 /datum/tadpole_scene
