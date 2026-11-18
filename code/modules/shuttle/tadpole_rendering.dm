@@ -83,8 +83,6 @@
 	var/atom/movable/screen/plane_master/translated_plate
 	var/atom/movable/render_plane_relay/translation_relay
 	var/source_revision = -1
-	var/source_anchor_x
-	var/source_anchor_y
 	var/matrix/last_camera
 	var/matrix/animation_from
 	var/animation_started = 0
@@ -264,16 +262,16 @@
 		return
 	var/matrix/target = matrix()
 	target.Translate((scene.source_anchor_x - scene.source_to_x) * world.icon_size, (scene.source_anchor_y - scene.source_to_y) * world.icon_size)
-	if(source_revision < 0 || !scene.source_duration || source_anchor_x != scene.source_anchor_x || source_anchor_y != scene.source_anchor_y)
-		var/list/current = scene.displayed_source_position()
-		var/matrix/from = matrix()
-		from.Translate((scene.source_anchor_x - current[1]) * world.icon_size, (scene.source_anchor_y - current[2]) * world.icon_size)
-		animate(translation_relay, transform = from, time = 0)
+	// Replace the old timeline explicitly. A rebase changes the meaning of
+	// every pixel offset, so the old animation must never resume afterwards.
+	var/list/current = scene.displayed_source_position()
+	var/matrix/from = matrix()
+	from.Translate((scene.source_anchor_x - current[1]) * world.icon_size, (scene.source_anchor_y - current[2]) * world.icon_size)
 	var/remaining = max(0, scene.source_duration - (world.time - scene.source_started))
-	animate(translation_relay, transform = target, time = remaining, easing = LINEAR_EASING)
+	animate(translation_relay, transform = from, time = 0, flags = ANIMATION_END_NOW)
+	if(remaining)
+		animate(transform = target, time = remaining, easing = LINEAR_EASING, flags = ANIMATION_LINEAR_TRANSFORM)
 	source_revision = scene.source_revision
-	source_anchor_x = scene.source_anchor_x
-	source_anchor_y = scene.source_anchor_y
 
 /datum/tadpole_scene_view/proc/track_eye(atom/new_eye)
 	if(!ismovable(new_eye))
@@ -582,6 +580,7 @@
 	var/max_y = min(world.maxy, CEILING(max(current[2], target_y) + dy + radius, 1))
 	if(source_bounds && source_bounds[1] == min_x && source_bounds[2] == min_y && source_bounds[3] == max_x && source_bounds[4] == max_y && source_bounds[5] == source_z)
 		return FALSE
+	var/list/previous_bounds = source_bounds
 	source_bounds = list(min_x, min_y, max_x, max_y, source_z)
 	var/list/retired = list()
 	for(var/key in sources)
@@ -595,10 +594,12 @@
 	for(var/key in retired)
 		sources -= key
 	for(var/x in min_x to max_x)
-		for(var/y in min_y to max_y)
-			var/key = "[x],[y],[source_z]"
-			if(sources[key])
+		var/has_overlap = previous_bounds && previous_bounds[5] == source_z && x >= previous_bounds[1] && x <= previous_bounds[3]
+		for(var/y = min_y; y <= max_y; y++)
+			if(has_overlap && y >= previous_bounds[2] && y <= previous_bounds[4])
+				y = previous_bounds[4]
 				continue
+			var/key = "[x],[y],[source_z]"
 			var/obj/effect/abstract/tadpole_native_tile/holder
 			if(length(source_pool))
 				holder = source_pool[length(source_pool)]
