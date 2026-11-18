@@ -151,7 +151,6 @@
 			/obj/item/ammo_magazine/pistol/derringer = -1,
 		),
 		"Гранаты" = list(
-			/obj/item/explosive/grenade/cagenade = 30,
 			/obj/item/explosive/grenade/ionplasma = 20,
 			/obj/item/weapon/gun/grenade_launcher/single_shot = 6,
 			/obj/item/weapon/gun/grenade_launcher/multinade_launcher/unloaded = 2,
