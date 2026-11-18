@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;structure&#x2F;table - byond</title>
+</head>
+<body>
+<header>
+    <a href="index.html">byond</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/structure/table.html#var">Var Details</a> - <a href="obj/structure/table.html#proc">Proc Details</a></header>
+<main>
+<h1>table <aside>/<a href="obj.html">obj</a>/<a href="obj/structure.html">structure</a>/<a href="obj/structure/table.html">table</a></aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/game/objects/structures/table.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;structures&#x2F;table.dm 4"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/structure/table.html#var/dropmetal">dropmetal</a></th><td>Determines if we drop sheet_type on deconstruction</td></tr>
+            <tr><th><a href="obj/structure/table.html#var/flip_cooldown">flip_cooldown</a></th><td>If flip cooldown exists, don't allow flipping or putting back. This carries a WORLD.TIME value</td></tr>
+            <tr><th><a href="obj/structure/table.html#var/flipped">flipped</a></th><td>Is the table flipped?</td></tr>
+            <tr><th><a href="obj/structure/table.html#var/parts">parts</a></th><td>What part will we drop on deconstruct?</td></tr>
+            <tr><th><a href="obj/structure/table.html#var/reinforced">reinforced</a></th><td>Is the table reinforced?</td></tr>
+            <tr><th><a href="obj/structure/table.html#var/sheet_type">sheet_type</a></th><td>What type of resource will we drop on destroy?</td></tr>
+            <tr><th><a href="obj/structure/table.html#var/table_status">table_status</a></th><td>Used for deconstructing reinforced tables</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/structure/table.html#proc/on_cross">on_cross</a></th><td>Snowflake check to let ravagers kill tables</td></tr>
+            <tr><th><a href="obj/structure/table.html#proc/on_icon_smoothed">on_icon_smoothed</a></th><td>The flip() proc HAS to be run after smooth_icon() is completed or else we will get runtimes.</td></tr>
+            <tr><th><a href="obj/structure/table.html#proc/update_adjacent">update_adjacent</a></th><td>Updates connected tables when required</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/dropmetal"><aside class="declaration">var </aside>dropmetal
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/game/objects/structures/table.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;structures&#x2F;table.dm 24"/></a></h3>
+        <p>Determines if we drop sheet_type on deconstruction</p><h3 id="var/flip_cooldown"><aside class="declaration">var </aside>flip_cooldown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/game/objects/structures/table.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;structures&#x2F;table.dm 36"/></a></h3>
+        <p>If flip cooldown exists, don't allow flipping or putting back. This carries a WORLD.TIME value</p><h3 id="var/flipped"><aside class="declaration">var </aside>flipped
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/game/objects/structures/table.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;structures&#x2F;table.dm 34"/></a></h3>
+        <p>Is the table flipped?</p><h3 id="var/parts"><aside class="declaration">var </aside>parts
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/game/objects/structures/table.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;structures&#x2F;table.dm 26"/></a></h3>
+        <p>What part will we drop on deconstruct?</p><h3 id="var/reinforced"><aside class="declaration">var </aside>reinforced
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/game/objects/structures/table.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;structures&#x2F;table.dm 32"/></a></h3>
+        <p>Is the table reinforced?</p><h3 id="var/sheet_type"><aside class="declaration">var </aside>sheet_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/game/objects/structures/table.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;structures&#x2F;table.dm 30"/></a></h3>
+        <p>What type of resource will we drop on destroy?</p><h3 id="var/table_status"><aside class="declaration">var </aside>table_status
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/game/objects/structures/table.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;structures&#x2F;table.dm 28"/></a></h3>
+        <p>Used for deconstructing reinforced tables</p><h2 id="proc">Proc Details</h2><h3 id="proc/on_cross"><aside class="declaration">proc </aside>on_cross<aside>(/<a href="datum.html">datum</a>/source, /<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/O, oldloc, oldlocs) 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/game/objects/structures/table.dm#L165">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;structures&#x2F;table.dm 165"/></a></aside>
+        </h3>
+        <p>Snowflake check to let ravagers kill tables</p><h3 id="proc/on_icon_smoothed"><aside class="declaration">proc </aside>on_icon_smoothed<aside>() 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/game/objects/structures/table.dm#L309">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;structures&#x2F;table.dm 309"/></a></aside>
+        </h3>
+        <p>The flip() proc HAS to be run after smooth_icon() is completed or else we will get runtimes.</p><h3 id="proc/update_adjacent"><aside class="declaration">proc </aside>update_adjacent<aside>(location) 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/game/objects/structures/table.dm#L157">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;structures&#x2F;table.dm 157"/></a></aside>
+        </h3>
+        <p>Updates connected tables when required</p></main>
+<footer>
+    tgmc.dme
+    <a href="https://github.com/Falls-dev/TGMC-SS13/tree/3f43c8617fe6b02596c28b182876e26a4edf905d">3f43c86</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

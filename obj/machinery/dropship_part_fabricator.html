@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;dropship_part_fabricator - byond</title>
+</head>
+<body>
+<header>
+    <a href="index.html">byond</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/dropship_part_fabricator.html#var">Var Details</a> - <a href="obj/machinery/dropship_part_fabricator.html#proc">Proc Details</a></header>
+<main>
+<h1>dropship_part_fabricator <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/dropship_part_fabricator.html">dropship_part_fabricator</a></aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/game/objects/machinery/dropship_part_fabricator.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;machinery&#x2F;dropship_part_fabricator.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/dropship_part_fabricator.html#var/busy">busy</a></th><td>Whether the fabricator is currently printing something or not</td></tr>
+            <tr><th><a href="obj/machinery/dropship_part_fabricator.html#var/printing">printing</a></th><td>Current item being printed</td></tr>
+            <tr><th><a href="obj/machinery/dropship_part_fabricator.html#var/queue">queue</a></th><td>List of everything in queue</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/dropship_part_fabricator.html#proc/build_category">build_category</a></th><td>Builds the item list tgui data for every buildable type under base_type</td></tr>
+            <tr><th><a href="obj/machinery/dropship_part_fabricator.html#proc/build_dropship_part">build_dropship_part</a></th><td>Starts the printing process, does point calculations</td></tr>
+            <tr><th><a href="obj/machinery/dropship_part_fabricator.html#proc/do_build_dropship_part">do_build_dropship_part</a></th><td>Finishes up printing, checks for next in queue, prints the actual part</td></tr>
+            <tr><th><a href="obj/machinery/dropship_part_fabricator.html#proc/get_categories">get_categories</a></th><td>Returns a list of categories (name + items) available to build on this fabricator</td></tr>
+            <tr><th><a href="obj/machinery/dropship_part_fabricator.html#proc/get_cost">get_cost</a></th><td>Gets the cost of the product we want to make</td></tr>
+            <tr><th><a href="obj/machinery/dropship_part_fabricator.html#proc/next_queue">next_queue</a></th><td>Processes next item in queue, if queue has not finished already</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/busy"><aside class="declaration">var </aside>busy
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/game/objects/machinery/dropship_part_fabricator.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;machinery&#x2F;dropship_part_fabricator.dm 17"/></a></h3>
+        <p>Whether the fabricator is currently printing something or not</p><h3 id="var/printing"><aside class="declaration">var </aside>printing
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/structure.html">structure</a></aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/game/objects/machinery/dropship_part_fabricator.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;machinery&#x2F;dropship_part_fabricator.dm 15"/></a></h3>
+        <p>Current item being printed</p><h3 id="var/queue"><aside class="declaration">var </aside>queue
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/game/objects/machinery/dropship_part_fabricator.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;machinery&#x2F;dropship_part_fabricator.dm 13"/></a></h3>
+        <p>List of everything in queue</p><h2 id="proc">Proc Details</h2><h3 id="proc/build_category"><aside class="declaration">proc </aside>build_category<aside>(category_name, base_type) 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/game/objects/machinery/dropship_part_fabricator.dm#L59">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;machinery&#x2F;dropship_part_fabricator.dm 59"/></a></aside>
+        </h3>
+        <p>Builds the item list tgui data for every buildable type under base_type</p><h3 id="proc/build_dropship_part"><aside class="declaration">proc </aside>build_dropship_part<aside>(part_type, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/game/objects/machinery/dropship_part_fabricator.dm#L75">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;machinery&#x2F;dropship_part_fabricator.dm 75"/></a></aside>
+        </h3>
+        <p>Starts the printing process, does point calculations</p><h3 id="proc/do_build_dropship_part"><aside class="declaration">proc </aside>do_build_dropship_part<aside>(part_type) 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/game/objects/machinery/dropship_part_fabricator.dm#L116">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;machinery&#x2F;dropship_part_fabricator.dm 116"/></a></aside>
+        </h3>
+        <p>Finishes up printing, checks for next in queue, prints the actual part</p><h3 id="proc/get_categories"><aside class="declaration">proc </aside>get_categories<aside>() 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/game/objects/machinery/dropship_part_fabricator.dm#L52">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;machinery&#x2F;dropship_part_fabricator.dm 52"/></a></aside>
+        </h3>
+        <p>Returns a list of categories (name + items) available to build on this fabricator</p><h3 id="proc/get_cost"><aside class="declaration">proc </aside>get_cost<aside>(build_type) 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/game/objects/machinery/dropship_part_fabricator.dm#L101">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;machinery&#x2F;dropship_part_fabricator.dm 101"/></a></aside>
+        </h3>
+        <p>Gets the cost of the product we want to make</p><h3 id="proc/next_queue"><aside class="declaration">proc </aside>next_queue<aside>() 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/game/objects/machinery/dropship_part_fabricator.dm#L124">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;machinery&#x2F;dropship_part_fabricator.dm 124"/></a></aside>
+        </h3>
+        <p>Processes next item in queue, if queue has not finished already</p></main>
+<footer>
+    tgmc.dme
+    <a href="https://github.com/Falls-dev/TGMC-SS13/tree/3f43c8617fe6b02596c28b182876e26a4edf905d">3f43c86</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

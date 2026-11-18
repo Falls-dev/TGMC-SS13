@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;xeno_mutation&#x2F;leveled - byond</title>
+</head>
+<body>
+<header>
+    <a href="index.html">byond</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/xeno_mutation/leveled.html#var">Var Details</a> - <a href="datum/xeno_mutation/leveled.html#proc">Proc Details</a></header>
+<main>
+<h1>leveled <aside>/<a href="datum.html">datum</a>/<a href="datum/xeno_mutation.html">xeno_mutation</a>/<a href="datum/xeno_mutation/leveled.html">leveled</a></aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/datums/xeno_mutations_leveled.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;xeno_mutations_leveled.dm 13"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/xeno_mutation/leveled.html#var/level_buff_descs">level_buff_descs</a></th><td>Short description of the numbers of each level, shown in the menu and on the status alert.</td></tr>
+            <tr><th><a href="datum/xeno_mutation/leveled.html#var/level_costs">level_costs</a></th><td>Biomass cost of each level. The number of entries is the level cap.</td></tr>
+            <tr><th><a href="datum/xeno_mutation/leveled.html#var/level_descs">level_descs</a></th><td>Description of each level. If a level has no entry, <code>desc</code> is used.</td></tr>
+            <tr><th><a href="datum/xeno_mutation/leveled.html#var/level_effect_types">level_effect_types</a></th><td>Status effect type of each level. Must have the same number of entries as level_costs.</td></tr>
+            <tr><th><a href="datum/xeno_mutation/leveled.html#var/level_names">level_names</a></th><td>Display names of the levels. If a level has no entry, &quot;[name] [roman numeral]&quot; is used.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/xeno_mutation/leveled.html#proc/build_levels">build_levels</a></th><td>Builds the registered per-level mutations of this template. Returns an empty list for abstract templates and invalid definitions.</td></tr>
+            <tr><th><a href="datum/xeno_mutation/leveled.html#proc/get_level_name">get_level_name</a></th><td>Returns the display name of the given level.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/level_buff_descs"><aside class="declaration">var </aside>level_buff_descs
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/datums/xeno_mutations_leveled.dm#L25">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;xeno_mutations_leveled.dm 25"/></a></h3>
+        <p>Short description of the numbers of each level, shown in the menu and on the status alert.</p><h3 id="var/level_costs"><aside class="declaration">var </aside>level_costs
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/datums/xeno_mutations_leveled.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;xeno_mutations_leveled.dm 19"/></a></h3>
+        <p>Biomass cost of each level. The number of entries is the level cap.</p><h3 id="var/level_descs"><aside class="declaration">var </aside>level_descs
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/datums/xeno_mutations_leveled.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;xeno_mutations_leveled.dm 23"/></a></h3>
+        <p>Description of each level. If a level has no entry, <code>desc</code> is used.</p><h3 id="var/level_effect_types"><aside class="declaration">var </aside>level_effect_types
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/datums/xeno_mutations_leveled.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;xeno_mutations_leveled.dm 21"/></a></h3>
+        <p>Status effect type of each level. Must have the same number of entries as level_costs.</p><h3 id="var/level_names"><aside class="declaration">var </aside>level_names
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/datums/xeno_mutations_leveled.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;xeno_mutations_leveled.dm 17"/></a></h3>
+        <p>Display names of the levels. If a level has no entry, &quot;[name] [roman numeral]&quot; is used.</p><h2 id="proc">Proc Details</h2><h3 id="proc/build_levels"><aside class="declaration">proc </aside>build_levels<aside>() 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/datums/xeno_mutations_leveled.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;xeno_mutations_leveled.dm 35"/></a></aside>
+        </h3>
+        <p>Builds the registered per-level mutations of this template. Returns an empty list for abstract templates and invalid definitions.</p><h3 id="proc/get_level_name"><aside class="declaration">proc </aside>get_level_name<aside>(level) 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/datums/xeno_mutations_leveled.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;xeno_mutations_leveled.dm 28"/></a></aside>
+        </h3>
+        <p>Returns the display name of the given level.</p></main>
+<footer>
+    tgmc.dme
+    <a href="https://github.com/Falls-dev/TGMC-SS13/tree/3f43c8617fe6b02596c28b182876e26a4edf905d">3f43c86</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

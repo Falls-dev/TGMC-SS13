@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;status_effect&#x2F;drone&#x2F;scout - byond</title>
+</head>
+<body>
+<header>
+    <a href="index.html">byond</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/status_effect/drone/scout.html#var">Var Details</a> - <a href="datum/status_effect/drone/scout.html#proc">Proc Details</a></header>
+<main>
+<h1>scout <aside>/<a href="datum.html">datum</a>/<a href="datum/status_effect.html">status_effect</a>/<a href="datum/status_effect/drone.html">drone</a>/<a href="datum/status_effect/drone/scout.html">scout</a></aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/modules/mob/living/carbon/xenomorph/castes/drone/mutations_drone.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;drone&#x2F;mutations_drone.dm 32"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/status_effect/drone/scout.html#var/attached_armor">attached_armor</a></th><td>The attached armor that been given, if any.</td></tr>
+            <tr><th><a href="datum/status_effect/drone/scout.html#var/timer_id">timer_id</a></th><td>Timer ID for a proc that revokes the armor given when it times out.</td></tr>
+            <tr><th><a href="datum/status_effect/drone/scout.html#var/timer_length">timer_length</a></th><td>How long should the armor be given?</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/status_effect/drone/scout.html#proc/grant_armor">grant_armor</a></th><td>Grants armor and removes the timer.</td></tr>
+            <tr><th><a href="datum/status_effect/drone/scout.html#proc/on_movement">on_movement</a></th><td>Grant armor if they are on weeds. Remove armor if they leave weeds.</td></tr>
+            <tr><th><a href="datum/status_effect/drone/scout.html#proc/revoke_armor">revoke_armor</a></th><td>Removes armor and the timer.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/attached_armor"><aside class="declaration">var </aside>attached_armor
+            <aside>&ndash; /<a href="datum.html">datum</a>/armor</aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/modules/mob/living/carbon/xenomorph/castes/drone/mutations_drone.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;drone&#x2F;mutations_drone.dm 38"/></a></h3>
+        <p>The attached armor that been given, if any.</p><h3 id="var/timer_id"><aside class="declaration">var </aside>timer_id
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/modules/mob/living/carbon/xenomorph/castes/drone/mutations_drone.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;drone&#x2F;mutations_drone.dm 40"/></a></h3>
+        <p>Timer ID for a proc that revokes the armor given when it times out.</p><h3 id="var/timer_length"><aside class="declaration">var </aside>timer_length
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/modules/mob/living/carbon/xenomorph/castes/drone/mutations_drone.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;drone&#x2F;mutations_drone.dm 42"/></a></h3>
+        <p>How long should the armor be given?</p><h2 id="proc">Proc Details</h2><h3 id="proc/grant_armor"><aside class="declaration">proc </aside>grant_armor<aside>() 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/modules/mob/living/carbon/xenomorph/castes/drone/mutations_drone.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;drone&#x2F;mutations_drone.dm 60"/></a></aside>
+        </h3>
+        <p>Grants armor and removes the timer.</p><h3 id="proc/on_movement"><aside class="declaration">proc </aside>on_movement<aside>(/<a href="datum.html">datum</a>/source, /<a href="atom.html">atom</a>/old_loc, movement_dir, forced, /list/old_locs) 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/modules/mob/living/carbon/xenomorph/castes/drone/mutations_drone.dm#L81">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;drone&#x2F;mutations_drone.dm 81"/></a></aside>
+        </h3>
+        <p>Grant armor if they are on weeds. Remove armor if they leave weeds.</p><h3 id="proc/revoke_armor"><aside class="declaration">proc </aside>revoke_armor<aside>() 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/3f43c8617fe6b02596c28b182876e26a4edf905d/code/modules/mob/living/carbon/xenomorph/castes/drone/mutations_drone.dm#L71">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;drone&#x2F;mutations_drone.dm 71"/></a></aside>
+        </h3>
+        <p>Removes armor and the timer.</p></main>
+<footer>
+    tgmc.dme
+    <a href="https://github.com/Falls-dev/TGMC-SS13/tree/3f43c8617fe6b02596c28b182876e26a4edf905d">3f43c86</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>
