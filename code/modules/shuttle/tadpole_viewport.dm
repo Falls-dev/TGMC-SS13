@@ -58,7 +58,6 @@
 	var/list/geometry = owner?.scene?.capture_geometry() || list(TADPOLE_CAPTURE_SIZE, TADPOLE_CAPTURE_SIZE, TADPOLE_CAPTURE_SIZE)
 	render_width = geometry[2]
 	render_height = geometry[3]
-	owner?.set_capture_size(geometry[1], geometry[1])
 	var/bounds_width = max(render_width, logical_width)
 	var/bounds_height = max(render_height, logical_height)
 	if(!(bounds_width % 2))

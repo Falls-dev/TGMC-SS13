@@ -79,15 +79,14 @@
 
 
 	// Scene relays real turfs and keeps source appearance/planes untouched.
-	var/obj/effect/abstract/tadpole_native_tile/chunk = allocate(/obj/effect/abstract/tadpole_native_tile)
+	var/obj/effect/abstract/tadpole_native_chunk/chunk = allocate(/obj/effect/abstract/tadpole_native_chunk)
 	var/original_picture = start.appearance
 	var/original_plane = start.plane
 	chunk.build(start.x, start.y, start.z)
-	TEST_ASSERT_EQUAL(chunk.source, start, "A native holder must own exactly one real turf")
+	TEST_ASSERT_EQUAL(chunk.tiles[1], start, "Block begins at its actual ground origin")
 	TEST_ASSERT(start in chunk.vis_contents, "Native scene must share the actual turf")
-	TEST_ASSERT_EQUAL(length(chunk.vis_contents), 1, "A holder must expose one turf instead of a whole 8x8 subtree")
-	TEST_ASSERT(!(get_step(start, EAST) in chunk.vis_contents), "Neighbor turfs must have independent spatial holders")
-	TEST_ASSERT(!(get_step(start, NORTH) in chunk.vis_contents), "A source holder must not retain a neighbor subtree")
+	TEST_ASSERT_EQUAL(length(chunk.vis_contents), 16, "Use one holder per 4x4 source block")
+	TEST_ASSERT(get_step(start, EAST) in chunk.vis_contents, "Adjacent ground turfs share the block")
 	for(var/atom/source as anything in chunk.vis_contents)
 		TEST_ASSERT(isturf(source), "Holders must reference the actual turf, not appearance or movable copies")
 	TEST_ASSERT_EQUAL(start.appearance, original_picture, "Native relay must not rewrite source geometry")
@@ -96,7 +95,7 @@
 	var/turf/destination = get_step(start, EAST)
 	item.forceMove(destination)
 	TEST_ASSERT(start in chunk.vis_contents, "Object movement must not rebuild the terrain relay")
-	TEST_ASSERT_EQUAL(length(chunk.vis_contents), 1, "Object movement must allocate no motion proxies")
+	TEST_ASSERT_EQUAL(length(chunk.vis_contents), 16, "Object movement must allocate no motion proxies")
 	var/old_type = start.type
 	start = start.ChangeTurf(/turf/open/floor/plating)
 	sleep(world.tick_lag)
@@ -112,17 +111,8 @@
 	TEST_ASSERT_EQUAL(chunk.x, 1, "World-edge relays must retain a valid spatial anchor")
 	TEST_ASSERT_EQUAL(chunk.x * world.icon_size + chunk.pixel_x, -3 * world.icon_size, "Clamping must preserve the displayed x coordinate")
 	TEST_ASSERT_EQUAL(chunk.y * world.icon_size + chunk.pixel_y, -2 * world.icon_size, "Clamping must preserve the displayed y coordinate")
-	chunk.build(destination.x, destination.y, destination.z)
-	chunk.reconnect(start)
-	TEST_ASSERT_EQUAL(chunk.source, destination, "A reused holder must retain its new source")
-	TEST_ASSERT(destination in chunk.vis_contents, "An old turf callback must retain the new visual link")
-	TEST_ASSERT(!(start in chunk.vis_contents), "An old turf callback must not restore its previous source")
-	chunk.clear_source()
-	TEST_ASSERT_NULL(chunk.loc, "An idle pool entry must have no spatial location")
-	TEST_ASSERT_NULL(chunk.source, "An idle pool entry must release its source")
-	TEST_ASSERT_EQUAL(length(chunk.vis_contents), 0, "An idle pool entry must expose no turf tree")
 	qdel(chunk)
-	TEST_ASSERT_EQUAL(chunk.source, null, "Scene deletion must release source subscriptions")
+	TEST_ASSERT_EQUAL(length(chunk.tiles), 0, "Scene deletion must release source subscriptions")
 	TEST_ASSERT_EQUAL(length(chunk.vis_contents), 0, "Scene deletion must release native visual links")
 	// Exercise the actual transit-enter signal and delayed fall callback.
 	var/turf/fall_floor = locate(110, 110, start.z)
@@ -202,95 +192,36 @@
 	helm.abstract_move(relay_center)
 	port.abstract_move(relay_center)
 	var/datum/tadpole_scene/scene = new(helm)
-	TEST_ASSERT_EQUAL(scene.source_radius(list(19, 15)), scene.source_radius(list(61, 57)), "Ghost zoom must not enlarge the shared terrain cache")
-	scene.source_z = SSmapping.ground_start
-	scene.origin_x = FLOOR(helm.flight_x / 8, 1) * 8
-	scene.origin_y = FLOOR(helm.flight_y / 8, 1) * 8
-	scene.radius = scene.source_radius(list(19, 15))
-	scene.update_sources()
-	var/key = "[round(helm.flight_x)],[round(helm.flight_y)],[scene.source_z]"
-	var/obj/effect/abstract/tadpole_native_tile/edge_chunk = scene.sources[key]
-	TEST_ASSERT_NOTNULL(edge_chunk, "The native window must contain the central source turf")
-	var/count = length(scene.sources)
-	TEST_ASSERT(count <= 1024, "An idle 25x25 capture must not attach thousands of prefetched turfs")
-	var/nearby_blocks = 0
-	for(var/obj/effect/abstract/tadpole_native_tile/nearby in range(5, helm))
-		nearby_blocks++
-	TEST_ASSERT(nearby_blocks > 0 && nearby_blocks < count / 2, "Source holders must be distributed spatially, not piled on the helm")
-	for(var/chunk_key in scene.sources)
-		var/obj/effect/abstract/tadpole_native_tile/spatial_block = scene.sources[chunk_key]
-		var/turf/first_source = spatial_block.source
-		TEST_ASSERT_EQUAL(length(spatial_block.vis_contents), 1, "Every active holder must contain exactly one real turf")
-		TEST_ASSERT_EQUAL((spatial_block.x - port.x) * world.icon_size + spatial_block.pixel_x, (first_source.x - scene.source_anchor_x) * world.icon_size, "Spatial placement must preserve source x projection")
-		TEST_ASSERT_EQUAL((spatial_block.y - port.y) * world.icon_size + spatial_block.pixel_y, (first_source.y - scene.source_anchor_y) * world.icon_size, "Spatial placement must preserve source y projection")
-	TEST_ASSERT(!scene.update_sources(), "An unchanged capture must skip membership scans and allocation")
-	TEST_ASSERT_EQUAL(scene.sources[key], edge_chunk, "Unchanged source cells must retain their holder")
-	TEST_ASSERT_EQUAL(length(scene.sources), count, "Repeated checks must not allocate extra holders")
-	// Scroll exactly one source tile. Retiring the outgoing strip before
-	// attaching the incoming strip must reuse objects rather than create a burst.
-	var/list/before_scroll = scene.sources.Copy()
-	var/list/allocated = list()
-	for(var/source_key in before_scroll)
-		allocated += before_scroll[source_key]
-	scene.source_from_x = helm.flight_x + 1
-	scene.source_to_x = helm.flight_x + 1
-	scene.source_from_y = helm.flight_y
-	scene.source_to_y = helm.flight_y
-	scene.source_duration = 0
-	scene.update_sources()
-	TEST_ASSERT_EQUAL(length(scene.sources), count, "A one-tile scroll must retain the active window size")
-	for(var/source_key in scene.sources)
-		TEST_ASSERT(scene.sources[source_key] in allocated, "Incoming strips must reuse outgoing holders without creating new atoms")
-	scene.source_from_x = null
-	scene.source_to_x = null
-	scene.source_to_y = null
-	scene.update_sources()
 	var/old_width = port.width
 	var/old_height = port.height
 	port.width = 7
 	port.height = 9
-	var/list/viewport = list(26, 26)
-	scene.origin_x = FLOOR(helm.flight_x / 8, 1) * 8
-	scene.origin_y = FLOOR(helm.flight_y / 8, 1) * 8
-	scene.radius = scene.source_radius(viewport)
-	scene.update_sources()
-	TEST_ASSERT(length(scene.sources) <= 1600, "A hull-centered idle capture must not restore the retired several-thousand-turf prefetch")
+	var/ground_z = SSmapping.ground_start
+	var/radius = scene.source_radius()
+	TEST_ASSERT(scene.update_sources(radius, ground_z), "Initial capture builds its window")
+	TEST_ASSERT(length(scene.sources) > 0 && length(scene.sources) <= 144, "Only a bounded window of 4x4 blocks may be attached")
+	TEST_ASSERT(!scene.update_sources(radius, ground_z), "Stationary flight must skip the source sweep")
 	var/list/stable_blocks = scene.sources.Copy()
-	var/turf/pilot_start = get_turf(pilot)
-	scene.update_source_position(0)
-	for(var/i in 1 to 4)
-		pilot.forceMove(i % 2 ? get_step(pilot_start, EAST) : pilot_start)
-		TEST_ASSERT(!scene.update_region(scene.source_radius(viewport), scene.source_z), "Passenger movement must not trigger a terrain rebuild")
-		TEST_ASSERT(!scene.update_source_position(0.2), "Walking must not restart shared terrain movement")
-	TEST_ASSERT_EQUAL(length(scene.sources), length(stable_blocks), "Walking must retain the same block count")
-	for(var/chunk_key in stable_blocks)
-		TEST_ASSERT_EQUAL(scene.sources[chunk_key], stable_blocks[chunk_key], "Walking must preserve every cached block identity")
-	// A bucket transition during a source animation changes membership only.
 	var/flight_before_x = helm.flight_x
-	var/turf/holder_before = get_turf(edge_chunk)
 	helm.flight_x += 0.25
-	scene.update_source_position(0.2)
-	TEST_ASSERT_EQUAL(get_turf(edge_chunk), holder_before, "Fractional movement inside the guard must leave native holders in place")
-	helm.flight_x = flight_before_x
-	scene.update_source_position(0)
-	var/list/effective_before = scene.displayed_source_position()
-	var/center_key = "[scene.origin_x],[scene.origin_y],[scene.source_z]"
-	var/obj/effect/abstract/tadpole_native_tile/center_chunk = scene.sources[center_key]
+	TEST_ASSERT(!scene.update_sources(radius, ground_z), "Subtile flight within the margin must skip the source sweep")
 	helm.flight_x += 3
-	scene.update_source_position(1)
-	scene.source_started = world.time - 5
-	var/list/source_before = scene.displayed_source_position()
-	TEST_ASSERT(abs(source_before[1] - effective_before[1] - 1.5) < 0.001, "Shared terrain must interpolate the actual flight position")
-	scene.update_region(scene.radius, scene.source_z)
-	TEST_ASSERT_EQUAL(scene.displayed_source_position().Join(","), source_before.Join(","), "Changing cache origin must not move the displayed terrain")
-	TEST_ASSERT_EQUAL(scene.sources[center_key], center_chunk, "A source-window seam must retain overlapping holders")
-	check_source_coverage(scene)
+	TEST_ASSERT(scene.update_sources(radius, ground_z), "Crossing the margin must rebase the window")
+	var/overlap = 0
+	for(var/key in scene.sources)
+		var/obj/effect/abstract/tadpole_native_chunk/holder = scene.sources[key]
+		var/turf/source = holder.tiles[1]
+		TEST_ASSERT_EQUAL(holder.x * world.icon_size + holder.pixel_x, (source.x + scene.source_offset_x) * world.icon_size, "Block x must match the common projection offset")
+		TEST_ASSERT_EQUAL(holder.y * world.icon_size + holder.pixel_y, (source.y + scene.source_offset_y) * world.icon_size, "Block y must match the common projection offset")
+		if(stable_blocks[key])
+			overlap++
+			TEST_ASSERT_EQUAL(holder, stable_blocks[key], "Overlapping blocks retain their roots across a rebase")
+	TEST_ASSERT(overlap > 0, "Nearby capture windows must share blocks")
 	helm.flight_x = flight_before_x
-	pilot.forceMove(pilot_start)
 	port.width = old_width
 	port.height = old_height
 	qdel(scene)
-	TEST_ASSERT_EQUAL(length(scene.sources), 0, "Scene deletion must release all native blocks")
+	TEST_ASSERT_EQUAL(length(scene.sources), 0, "Scene deletion must release every block")
 	helm.abstract_move(old_helm_location)
 	port.abstract_move(old_port_location)
 	// Flight-specific graph edits must be local to one HUD and reversible.
@@ -299,8 +230,6 @@
 	var/atom/movable/screen/plane_master/other_plate = other_display.get_plane_master(GET_NEW_PLANE(RENDER_PLANE_MASTER, 1))
 	var/list/original_targets = other_plate.render_relay_planes.Copy()
 	var/datum/tadpole_scene/walking_scene = new(helm)
-	walking_scene.origin_x = FLOOR(helm.flight_x / 8, 1) * 8
-	walking_scene.origin_y = FLOOR(helm.flight_y / 8, 1) * 8
 	// Temporary visibility must survive equipment updates without overwriting
 	// the underlying sight or another owner's modifier.
 	var/mob/living/carbon/human/sight_subject = allocate(/mob/living/carbon/human)
@@ -327,7 +256,7 @@
 	check_native_eye_projection(walking_scene, native_view)
 	native_view.begin_capture()
 	TEST_ASSERT_NOTNULL(native_view.plate, "Ground must have a preallocated native lower render plate")
-	TEST_ASSERT(native_view.plate.get_relay_to(TADPOLE_SOURCE_PLANE), "Passenger plate must relay below the physical craft")
+	TEST_ASSERT(native_view.plate.get_relay_to(TADPOLE_GROUND_PLANE), "Passenger plate must relay below the physical craft")
 	TEST_ASSERT_EQUAL(other_plate.render_relay_planes.Join(","), original_targets.Join(","), "Another observer must retain their native graph")
 	var/required_sight = SEE_SELF | SEE_TURFS | SEE_OBJS | SEE_MOBS
 	TEST_ASSERT_EQUAL(pilot.sight & required_sight, required_sight, "Living passengers must receive observer-style native scene visibility")
@@ -356,13 +285,12 @@
 	native_view.track_eye(pilot)
 	walking_scene.update_view(native_view, walking_start, 0)
 	var/old_camera_values = native_view.last_camera.tolist().Join(",")
-	var/old_capture_y = native_view.capture_y
+	var/old_projection_y = native_view.last_camera.f
 	var/turf/fixed_eye_before = get_turf(walking_scene.render_origin)
 	pilot.set_glide_size(8)
 	TEST_ASSERT(pilot.Move(walking_end, SOUTH), "Walking camera fixture must move through the ordinary Move path")
-	TEST_ASSERT_EQUAL(native_view.capture_y - old_capture_y, world.icon_size, "A southward step must move the source crop north in screen coordinates, regardless of heading")
+	TEST_ASSERT_EQUAL(native_view.last_camera.f - old_projection_y, 2 * world.icon_size, "A half-turn must compensate a southward eye step in the lower plane")
 	TEST_ASSERT_EQUAL(get_turf(walking_scene.render_origin), fixed_eye_before, "Walking must leave the hull render origin fixed")
-	TEST_ASSERT_EQUAL(native_view.last_camera.f, 2 * native_view.capture_y, "Half-turn projection must rotate about the current screen position of the hull")
 	TEST_ASSERT(pilot.Move(walking_start, NORTH), "Walking fixture must reverse through the ordinary movement path")
 	TEST_ASSERT(pilot.Move(walking_end, SOUTH), "Walking fixture must return inside the ship before testing exit")
 	TEST_ASSERT_EQUAL(length(walking_scene.sources), 0, "Walking projection must not allocate or update terrain membership")
@@ -380,24 +308,26 @@
 	native_view.track_eye(null)
 	helm.flight_heading = walking_heading
 	helm.ground_tiles = old_ground_tiles
-	// Translation belongs to source geometry, before the plane's viewport
-	// crop. The completed plate must never pan by a chunk-origin residual.
-	walking_scene.update_view(native_view, get_turf(pilot), 0)
-	old_camera_values = native_view.last_camera.tolist().Join(",")
-	var/projection_flight_x = helm.flight_x
-	helm.flight_x += 0.5
-	walking_scene.update_view(native_view, get_turf(pilot), 0.2)
-	TEST_ASSERT_EQUAL(native_view.last_camera.tolist().Join(","), old_camera_values, "Flight translation must not shift the already cropped output plate")
-	walking_scene.origin_x += 8
-	walking_scene.update_view(native_view, get_turf(pilot), 0.2)
-	TEST_ASSERT_EQUAL(native_view.last_camera.tolist().Join(","), old_camera_values, "A chunk boundary must not translate or rebase the output plate")
-	helm.flight_x = projection_flight_x
+	// Change the input coordinates while a turn is in progress. The same
+	// physical ground point must retain its screen position at the seam.
+	var/turf/test_eye = get_turf(pilot)
+	walking_scene.update_view(native_view, test_eye, 0)
+	helm.flight_heading += 30
+	walking_scene.update_view(native_view, test_eye, 1)
+	native_view.animation_started = world.time - 5
+	var/matrix/before_rebase = native_view.displayed_camera()
+	walking_scene.source_offset_x -= 3
+	walking_scene.update_view(native_view, test_eye, 0.2)
+	var/matrix/after_rebase = native_view.animation_from
+	TEST_ASSERT(abs(after_rebase.c - after_rebase.a * 3 * world.icon_size - before_rebase.c) < 0.001, "Changing holder coordinates must not jump the rendered ground in x")
+	TEST_ASSERT(abs(after_rebase.f - after_rebase.d * 3 * world.icon_size - before_rebase.f) < 0.001, "Changing holder coordinates must not jump the rendered ground in y")
+	helm.flight_heading = walking_heading
 	var/atom/movable/screen/plane_master/passenger_plate = native_view.plate
 	qdel(native_view)
 	TEST_ASSERT_EQUAL(pilot.sight, sight_before_view, "Scene departure must remove its sight modifier")
 	TEST_ASSERT(!length(pilot.sight_modifiers), "Scene cleanup must leave no owned sight modifiers")
 	qdel(walking_scene)
-	TEST_ASSERT_NULL(passenger_plate.get_relay_to(TADPOLE_SOURCE_PLANE), "Leaving the scene must remove the aircraft relay")
+	TEST_ASSERT_NULL(passenger_plate.get_relay_to(TADPOLE_GROUND_PLANE), "Leaving the scene must remove the aircraft relay")
 	TEST_ASSERT(passenger_plate.get_relay_to(RENDER_PLANE_TRANSPARENT), "Leaving must restore native multiz routing")
 	var/turf/ground = locate(40,40,SSmapping.ground_start)
 	TEST_ASSERT(SSmapping.z_level_to_plane_offset[ground.z] >= 1, "Ground planes must be allocated below transit before atom initialization")
@@ -423,26 +353,6 @@
 
 /// Headless renderer/state test. Actual client eye assignment and mouse-hit
 /// rasterization require a connected-client check, not a matrix assertion.
-/datum/unit_test/tadpole_flight/proc/check_source_coverage(datum/tadpole_scene/scene)
-	var/old_heading = scene.helm.flight_heading
-	for(var/angle in list(0, 37, 90, 180, 270))
-		scene.helm.flight_heading = dir2angle(scene.helm.shuttle_port.dir) + angle
-		scene.update_source_position(0.2)
-		var/dx = scene.render_origin.x - scene.helm.shuttle_port.x
-		var/dy = scene.render_origin.y - scene.helm.shuttle_port.y
-		var/list/geometry = scene.capture_geometry()
-		var/half_side = geometry[1] / 2
-		for(var/phase in list(0, 0.5, 1))
-			var/cx = scene.source_from_x + (scene.source_to_x - scene.source_from_x) * phase + dx
-			var/cy = scene.source_from_y + (scene.source_to_y - scene.source_from_y) * phase + dy
-			for(var/sx in list(-half_side, half_side))
-				for(var/sy in list(-half_side, half_side))
-					var/tx = FLOOR(cx + sx, 1)
-					var/ty = FLOOR(cy + sy, 1)
-					TEST_ASSERT_NOTNULL(scene.sources["[tx],[ty],[scene.source_z]"], "Source strips must cover the shared hull crop throughout flight interpolation and rotation")
-	scene.helm.flight_heading = old_heading
-	scene.update_source_position(0)
-
 /datum/unit_test/tadpole_flight/proc/check_native_eye_projection(datum/tadpole_scene/scene, datum/tadpole_scene_view/view)
 	var/obj/docking_port/mobile/port = scene.helm.shuttle_port
 	var/old_width = port.width
@@ -464,50 +374,47 @@
 	adapter.owner = view
 	adapter.frame = allocate(/atom/movable/screen/background/tadpole_view_bounds)
 	TEST_ASSERT_EQUAL(adapter.configure("19x15"), "[geometry[2]]x[geometry[3]]", "Native character camera must allocate the calculated hull margin")
-	TEST_ASSERT_EQUAL(view.capture_width, geometry[1], "Viewport setup must install the shared hull crop")
 	TEST_ASSERT_EQUAL(adapter.configure("61x57"), "[geometry[2]]x[geometry[3]]", "Observer zoom must not expand the hull source window")
 	qdel(adapter)
-	var/icon/mask = view.capture_mask(geometry[1], geometry[1])
-	TEST_ASSERT_EQUAL(mask.Width(), geometry[1] * world.icon_size, "Source crop must cover the hull-centered rotation buffer")
 	var/list/hull = port.return_coords(port.x, port.y, port.dir)
 	var/list/visible = getviewsize(CONFIG_GET(string/default_view))
 	for(var/angle in list(0, 37, 90, 180, 270))
 		scene.helm.flight_heading = dir2angle(port.dir) + angle
-		scene.update_source_position(0)
-		var/list/source = scene.displayed_source_position()
+		scene.update_sources(scene.source_radius(), SSmapping.ground_start)
 		for(var/ex in list(hull[1], anchor_before.x, hull[3]))
 			for(var/ey in list(hull[2], anchor_before.y, hull[4]))
 				var/turf/eye = locate(ex, ey, port.z)
 				scene.update_view(view, eye, 0)
 				var/matrix/camera = view.last_camera
-				var/raw_x = (port.x + scene.helm.flight_x + 2 - source[1] - eye.x) * world.icon_size
-				var/raw_y = (port.y + scene.helm.flight_y - 3 - source[2] - eye.y) * world.icon_size
+				var/raw_x = (scene.helm.flight_x + 2 + scene.source_offset_x - eye.x) * world.icon_size
+				var/raw_y = (scene.helm.flight_y - 3 + scene.source_offset_y - eye.y) * world.icon_size
 				var/projected_x = camera.a * raw_x + camera.b * raw_y + camera.c
 				var/projected_y = camera.d * raw_x + camera.e * raw_y + camera.f
 				var/expected_x = (port.x - eye.x + camera.a * 2 - camera.b * 3) * world.icon_size
 				var/expected_y = (port.y - eye.y + camera.d * 2 - camera.e * 3) * world.icon_size
 				TEST_ASSERT(abs(projected_x - expected_x) < 0.001 && abs(projected_y - expected_y) < 0.001, "Native-eye projection must retain actual ground/landing coordinates at every hull edge and heading")
-				TEST_ASSERT_EQUAL(view.capture_x, (anchor_before.x - ex) * world.icon_size, "Crop center must follow the hull in screen space")
-				TEST_ASSERT_EQUAL(view.capture_y, (anchor_before.y - ey) * world.icon_size, "Crop y must follow the hull independently of heading")
 				for(var/sx in list(-visible[1] / 2, visible[1] / 2))
 					for(var/sy in list(-visible[2] / 2, visible[2] / 2))
-						var/dx = anchor_before.x - ex
-						var/dy = anchor_before.y - ey
-						// Inverse of an orthogonal rotation is its transpose.
-						var/crop_x = camera.a * (sx - dx) + camera.d * (sy - dy)
-						var/crop_y = camera.b * (sx - dx) + camera.e * (sy - dy)
-						TEST_ASSERT(abs(crop_x) <= geometry[1] / 2 && abs(crop_y) <= geometry[1] / 2, "Rotated hull crop must cover every normal-window corner at every hull edge")
-						TEST_ASSERT(abs(crop_x + dx) <= geometry[2] / 2 && abs(crop_y + dy) <= geometry[3] / 2, "Native viewport must contain the entire required source before rotation")
-				TEST_ASSERT_EQUAL(scene.displayed_source_position().Join(","), source.Join(","), "Walking must not restart shared source movement")
+						var/dx = sx - camera.c / world.icon_size
+						var/dy = sy - camera.f / world.icon_size
+						var/input_x = camera.a * dx + camera.d * dy
+						var/input_y = camera.b * dx + camera.e * dy
+						TEST_ASSERT(abs(input_x) <= geometry[2] / 2 && abs(input_y) <= geometry[3] / 2, "Native viewport must contain the source of each visible corner")
+						var/ground_x = input_x + eye.x - scene.source_offset_x
+						var/ground_y = input_y + eye.y - scene.source_offset_y
+						var/list/bounds = scene.source_bounds
+						TEST_ASSERT(ground_x >= bounds[1] - 0.5 && ground_x <= bounds[3] + 0.5 && ground_y >= bounds[2] - 0.5 && ground_y <= bounds[4] + 0.5, "Each visible corner must have a streamed ground block")
 				TEST_ASSERT_EQUAL(game_relay.transform.tolist().Join(","), game_transform_before, "Native camera following must never transform the final game relay")
 				TEST_ASSERT_EQUAL(hud_relay.transform.tolist().Join(","), hud_transform_before, "Native camera following must never transform the HUD")
 	view.end_capture()
-	TEST_ASSERT_NULL(view.rotation_relay.get_filter("tadpole_capture_bounds"), "Release must remove its crop filter")
 	TEST_ASSERT(!view.capture_active, "Release must clear capture state")
 	port.width = old_width
 	port.height = old_height
 	scene.helm.flight_heading = old_heading
 	scene.ensure_render_origin()
+	QDEL_LIST_ASSOC_VAL(scene.sources)
+	scene.source_anchor_x = null
+	scene.source_anchor_y = null
 
 /datum/unit_test/tadpole_flight/proc/check_movable_searchlight(turf/ground)
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/flight_test/helm = allocate(/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/flight_test)
