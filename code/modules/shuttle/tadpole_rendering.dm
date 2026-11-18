@@ -279,13 +279,17 @@
 		var/dy = abs(eye.y - current_eye[2])
 		var/distance = (source.appearance_flags & LONG_GLIDE) ? max(dx, dy) : sqrt(dx ** 2 + dy ** 2)
 		duration = distance * world.icon_size / max(source.glide_size, 1) * world.tick_lag
+	var/client/display = hud?.mymob?.client
+	// Dream Seeker has already advanced the native camera one display tick
+	// when the matching plane animation starts. Use the viewer's frame rate.
+	var/step_lead = duration && display ? min(duration, display.tick_lag || world.tick_lag) : 0
 	eye_from_x = current_eye[1]
 	eye_from_y = current_eye[2]
 	eye_to_x = eye.x
 	eye_to_y = eye.y
-	eye_started = world.time
+	eye_started = world.time - step_lead
 	eye_duration = duration
-	scene.update_view(src, eye, duration / 10)
+	scene.update_view(src, eye, duration / 10, step_lead)
 
 /// Approximate the native camera glide using the eye's pixel speed.
 /datum/tadpole_scene_view/proc/displayed_eye(at_time = world.time)
@@ -294,7 +298,7 @@
 
 /// Both motion and heading live in this matrix. If a block was relocated,
 /// convert the current transform to the new input coordinates before tweening.
-/datum/tadpole_scene_view/proc/update_camera(matrix/camera, offset_x, offset_y, transit_z, animation_seconds)
+/datum/tadpole_scene_view/proc/update_camera(matrix/camera, offset_x, offset_y, transit_z, animation_seconds, step_lead = 0)
 	if(QDELETED(plate))
 		return
 	var/rebased = projected_offset_x != offset_x || projected_offset_y != offset_y || projected_z != transit_z
@@ -304,6 +308,7 @@
 	animation_from = displayed_camera()
 	if(!last_camera || projected_z != transit_z || max(abs(projected_offset_x - offset_x), abs(projected_offset_y - offset_y)) > 2 * TADPOLE_SOURCE_GUARD)
 		animation_seconds = 0
+		step_lead = 0
 	else if(rebased)
 		var/dx = (projected_offset_x - offset_x) * world.icon_size
 		var/dy = (projected_offset_y - offset_y) * world.icon_size
@@ -313,7 +318,7 @@
 	projected_offset_x = offset_x
 	projected_offset_y = offset_y
 	projected_z = transit_z
-	animation_started = world.time
+	animation_started = world.time - step_lead
 	animation_first_duration = animation_seconds * 10
 	animation_duration = animation_first_duration
 	animation_midpoint = null
@@ -321,9 +326,9 @@
 	// If the next flight update finishes before the eye glide, reach the
 	// flight target using the eye position at that instant. Finish the
 	// remaining walk separately instead of speeding it up to the flight tick.
-	var/eye_remaining = eye_started + eye_duration - world.time
+	var/eye_remaining = eye_started + eye_duration - animation_started
 	if(animation_first_duration > 0 && eye_remaining > animation_first_duration)
-		var/list/intermediate_eye = displayed_eye(world.time + animation_first_duration)
+		var/list/intermediate_eye = displayed_eye(animation_started + animation_first_duration)
 		var/dx = (eye_to_x - intermediate_eye[1]) * world.icon_size
 		var/dy = (eye_to_y - intermediate_eye[2]) * world.icon_size
 		animation_midpoint = matrix(camera)
@@ -340,7 +345,7 @@
 		// Stop the old animation before changing its coordinate basis.
 		animate(plate)
 		plate.transform = animation_from
-	animate(plate, transform = animation_midpoint || camera, time = animation_first_duration, easing = LINEAR_EASING, flags = ANIMATION_LINEAR_TRANSFORM)
+	animate(plate, transform = animation_midpoint || camera, time = animation_first_duration, delay = -step_lead, easing = LINEAR_EASING, flags = ANIMATION_LINEAR_TRANSFORM)
 	if(animation_midpoint)
 		animate(transform = camera, time = animation_duration - animation_first_duration, easing = LINEAR_EASING, flags = ANIMATION_LINEAR_TRANSFORM)
 
@@ -447,7 +452,7 @@
 		view.viewport?.sync_hud()
 		update_view(view, get_turf(display.eye), animation_seconds)
 
-/datum/tadpole_scene/proc/update_view(datum/tadpole_scene_view/view, turf/eye, animation_seconds)
+/datum/tadpole_scene/proc/update_view(datum/tadpole_scene_view/view, turf/eye, animation_seconds, step_lead = 0)
 	if(!eye || isnull(source_offset_x))
 		return
 	var/obj/docking_port/mobile/port = helm.shuttle_port
@@ -459,7 +464,7 @@
 	var/input_y = helm.flight_y + source_offset_y - eye.y
 	camera.c = (port.x - eye.x - camera.a * input_x - camera.b * input_y) * world.icon_size
 	camera.f = (port.y - eye.y - camera.d * input_x - camera.e * input_y) * world.icon_size
-	view.update_camera(camera, source_offset_x, source_offset_y, source_transit_z, animation_seconds)
+	view.update_camera(camera, source_offset_x, source_offset_y, source_transit_z, animation_seconds, step_lead)
 
 /datum/tadpole_scene/proc/ensure_render_origin()
 	var/obj/docking_port/mobile/port = helm.shuttle_port

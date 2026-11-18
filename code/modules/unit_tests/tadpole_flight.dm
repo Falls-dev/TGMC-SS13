@@ -306,6 +306,16 @@
 	walking_scene.update_view(native_view, walking_end, step_duration / 20)
 	TEST_ASSERT_NOTNULL(native_view.animation_midpoint, "A flight update during a walk must preserve the remaining glide")
 	TEST_ASSERT_EQUAL(native_view.animation_duration, step_duration, "Flight interpolation must not shorten the walking correction")
+	// A connected client advances its native scroll before drawing the first
+	// animation frame. Reproduce that lead in the headless projection fixture.
+	var/step_lead = step_duration / 4
+	native_view.eye_started = world.time - step_lead
+	helm.flight_heading += 5
+	walking_scene.update_view(native_view, walking_end, step_duration / 10, step_lead)
+	TEST_ASSERT_EQUAL(native_view.animation_started, native_view.eye_started, "The projection timeline must include the client's step lead")
+	helm.flight_heading += 5
+	walking_scene.update_view(native_view, walking_end, step_duration / 20)
+	TEST_ASSERT_EQUAL(native_view.animation_duration, step_duration - step_lead, "A flight update must retain just the unplayed part of a phase-aligned step")
 	TEST_ASSERT_EQUAL(get_turf(walking_scene.render_origin), fixed_eye_before, "Walking must leave the hull render origin fixed")
 	TEST_ASSERT(pilot.Move(walking_start, NORTH), "Walking fixture must reverse through the ordinary movement path")
 	TEST_ASSERT(pilot.Move(walking_end, SOUTH), "Walking fixture must return inside the ship before testing exit")
