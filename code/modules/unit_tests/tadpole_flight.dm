@@ -369,6 +369,8 @@
 	var/atom/movable/render_plane_relay/hud_relay = hud_plane.get_relay_to(RENDER_PLANE_NON_GAME)
 	var/hud_transform_before = hud_relay.transform.tolist().Join(",")
 	view.begin_capture()
+	var/atom/movable/render_plane_relay/ground_relay = view.plate.get_relay_to(TADPOLE_GROUND_PLANE)
+	var/relay_transform_before = ground_relay.transform.tolist().Join(",")
 	var/list/geometry = scene.capture_geometry()
 	var/datum/tadpole_viewport/adapter = allocate(/datum/tadpole_viewport)
 	adapter.owner = view
@@ -385,7 +387,8 @@
 			for(var/ey in list(hull[2], anchor_before.y, hull[4]))
 				var/turf/eye = locate(ex, ey, port.z)
 				scene.update_view(view, eye, 0)
-				var/matrix/camera = view.last_camera
+				var/matrix/camera = view.plate.transform
+				TEST_ASSERT_EQUAL(ground_relay.transform.tolist().Join(","), relay_transform_before, "The corner-anchored output relay must stay untransformed")
 				var/raw_x = (scene.helm.flight_x + 2 + scene.source_offset_x - eye.x) * world.icon_size
 				var/raw_y = (scene.helm.flight_y - 3 + scene.source_offset_y - eye.y) * world.icon_size
 				var/projected_x = camera.a * raw_x + camera.b * raw_y + camera.c

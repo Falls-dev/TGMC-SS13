@@ -79,8 +79,6 @@
 	var/capture_active = FALSE
 	var/client/capture_client
 	var/datum/tadpole_viewport/viewport
-	var/atom/movable/render_plane_relay/rotation_relay
-	var/matrix/original_rotation_transform
 	var/atom/movable/screen/plane_master/emissive_plate
 	var/had_emissive_relay = FALSE
 	var/datum/tadpole_scene/scene
@@ -98,8 +96,6 @@
 	plate.remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_TRANSPARENT, depth - 1))
 	output_plane = GET_NEW_PLANE(TADPOLE_GROUND_PLANE, hud.current_plane_offset)
 	plate.add_relay_to(output_plane)
-	rotation_relay = plate.get_relay_to(output_plane)
-	original_rotation_transform = rotation_relay.transform || matrix()
 	var/datum/plane_master_group/group = hud.get_plane_group(PLANE_GROUP_MAIN)
 	for(var/key in group.plane_masters)
 		var/atom/movable/screen/plane_master/master = group.plane_masters[key]
@@ -199,8 +195,9 @@
 	if(!capture_active)
 		return
 	capture_active = FALSE
-	if(!QDELETED(rotation_relay))
-		animate(rotation_relay, transform = original_rotation_transform, time = 0, flags = ANIMATION_END_NOW)
+	if(!QDELETED(plate))
+		animate(plate)
+		plate.transform = original_transform
 	last_camera = null
 	animation_from = null
 	animation_duration = 0
@@ -241,7 +238,7 @@
 /// Both motion and heading live in this matrix. If a block was relocated,
 /// convert the current transform to the new input coordinates before tweening.
 /datum/tadpole_scene_view/proc/update_camera(matrix/camera, offset_x, offset_y, transit_z, animation_seconds)
-	if(QDELETED(rotation_relay))
+	if(QDELETED(plate))
 		return
 	var/rebased = projected_offset_x != offset_x || projected_offset_y != offset_y || projected_z != transit_z
 	if(!rebased && last_camera && last_camera.a == camera.a && last_camera.b == camera.b && last_camera.c == camera.c && last_camera.d == camera.d && last_camera.e == camera.e && last_camera.f == camera.f)
@@ -262,17 +259,22 @@
 	animation_started = world.time
 	animation_duration = animation_seconds * 10
 	last_camera = camera
+	// The lower master uses a screen-centered surface. Its output relay
+	// is anchored at SCREEN_SOUTHWEST on BYOND 516 and only composites it.
 	if(animation_duration <= 0)
-		animate(rotation_relay, transform = camera, time = 0, flags = ANIMATION_END_NOW)
+		animate(plate)
+		plate.transform = camera
 		return
-	animate(rotation_relay, transform = animation_from, time = 0, flags = ANIMATION_END_NOW)
-	animate(transform = camera, time = animation_duration, easing = LINEAR_EASING, flags = ANIMATION_LINEAR_TRANSFORM)
+	if(rebased)
+		// Stop the old animation before changing its coordinate basis.
+		animate(plate)
+		plate.transform = animation_from
+	animate(plate, transform = camera, time = animation_duration, easing = LINEAR_EASING, flags = ANIMATION_LINEAR_TRANSFORM)
 
 /// Match the LINEAR_EASING matrix interpolation currently visible to clients.
 /datum/tadpole_scene_view/proc/displayed_camera()
 	if(!last_camera)
-		var/atom/movable/target = rotation_relay
-		return target?.transform ? matrix(target.transform) : matrix()
+		return plate?.transform ? matrix(plate.transform) : matrix()
 	var/progress = animation_duration ? clamp((world.time - animation_started) / animation_duration, 0, 1) : 1
 	if(!animation_from || progress >= 1)
 		return matrix(last_camera)
