@@ -499,7 +499,7 @@
 
 	var/turf/tadpole_target = tadpole_mouse_target(object, control, modifiers)
 	if(tadpole_target)
-		return ..(tadpole_target, tadpole_target, control, list2params(modifiers))
+		return tadpole_target.Click(tadpole_target, control, list2params(modifiers))
 	return ..()
 
 ///checks if a client is afk, 3000 frames = 5 minutes

@@ -105,7 +105,9 @@
 	output_plane = GET_NEW_PLANE(TADPOLE_GROUND_PLANE, hud.current_plane_offset)
 	plate.add_relay_to(output_plane)
 	var/atom/movable/render_plane_relay/ground_relay = plate.get_relay_to(output_plane)
-	ground_relay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	// Let the relay receive the hit itself. Some composed pixels have no
+	// click-catcher behind them once the source's mouse hits are disabled.
+	ground_relay.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	ground_relay.appearance_flags &= ~PASS_MOUSE
 	var/datum/plane_master_group/group = hud.get_plane_group(PLANE_GROUP_MAIN)
 	for(var/key in group.plane_masters)
@@ -171,7 +173,9 @@
 /datum/tadpole_scene_view/proc/is_ground_mouse_target(atom/target, turf/eye)
 	if(!eye || !scene?.helm?.ground_tiles[eye])
 		return FALSE
-	if(istype(target, /atom/movable/screen/click_catcher))
+	if(!target || istype(target, /atom/movable/screen/click_catcher))
+		return TRUE
+	if(target == plate?.get_relay_to(output_plane))
 		return TRUE
 	var/turf/target_turf = get_turf(target)
 	return target_turf && target_turf.z != eye.z && target_turf.z == scene.helm.eyeobj?.z

@@ -34,8 +34,6 @@
 /client/MouseDown(atom/object, turf/location, control, params)
 	if(!control)
 		return
-	if(QDELETED(object)) //Yep, you can click on qdeleted things before they have time to nullspace. Fun.
-		return
 	if(tadpole_viewport?.active)
 		var/list/modifiers = params2list(params)
 		var/turf/target = tadpole_mouse_target(object, control, modifiers)
@@ -43,6 +41,8 @@
 			object = target
 			location = target
 			params = list2params(modifiers)
+	if(QDELETED(object)) //Yep, you can click on qdeleted things before they have time to nullspace. Fun.
+		return
 	if(SEND_SIGNAL(mob, COMSIG_MOB_MOUSEDOWN, object, location, control, params) & COMSIG_MOB_CLICK_CANCELED)
 		return
 	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDOWN, object, location, control, params)
