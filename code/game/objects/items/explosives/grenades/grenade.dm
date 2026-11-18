@@ -53,6 +53,9 @@
 /obj/item/explosive/grenade/attack_self(mob/user)
 	if(active)
 		return
+	if(HAS_TRAIT(user, TRAIT_KNIGHT))
+		balloon_alert(user, "blocked by knight module")
+		return
 
 	if(!user.dextrous)
 		balloon_alert(user, "not enough dexterity")
@@ -139,6 +142,9 @@
 	playsound(thrower, throw_sound, 25, 1, 6)
 
 /obj/item/explosive/grenade/throw_impact(atom/hit_atom, speed, bounce)
+	if(active && try_erp_ads_intercept(hit_atom, src, FLOOR(GLOB.ads_intercept_range / 2, 1), 0.1, 3))
+		qdel(src)
+		return
 	. = ..()
 	if(groundhit_sound_is_playable)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, pick(groundhit_sound), 20, 1, 9), 0.1 SECONDS)

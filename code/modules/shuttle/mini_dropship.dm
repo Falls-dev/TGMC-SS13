@@ -93,6 +93,15 @@
 	if(fly_state != SHUTTLE_IN_ATMOSPHERE)
 		return
 
+	var/obj/docking_port/mobile/marine_dropship/shuttle = shuttle_port
+	for(var/area/shuttle_area as anything in shuttle?.shuttle_areas)
+		for(var/obj/structure/dropship_equipment/shuttle/rappel_system/system in shuttle_area)
+			system.linked_shuttle = shuttle
+			var/datum/action/innate/rappel_designate/rappel_action = system.designate_action
+			rappel_action.target = user
+			rappel_action.give_action(user)
+			actions += rappel_action
+
 	if(rotate_action)
 		rotate_action.target = user
 		rotate_action.give_action(user)

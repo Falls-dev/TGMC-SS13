@@ -133,3 +133,8 @@
 		/obj/item/clothing/suit/storage/marine/robot/advanced/fire,
 	)
 	cost = 600
+
+/datum/supply_packs/armor/voidwalker
+	name = "NT Voidwalker Anti-Energy Shield System"
+	cost = 400
+	contains = list(/obj/item/armor_module/module/eshield/absorbant/energy)

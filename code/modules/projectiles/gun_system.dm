@@ -1342,10 +1342,13 @@
 					items_to_insert += mag
 				playsound(src, hand_reload_sound, 25, 1)
 			else
-				if((length(chamber_items) && !CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_ROTATES_CHAMBER)) || (CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_ROTATES_CHAMBER) && rounds))
+				if(!CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_MULTICLIP) && ((length(chamber_items) && !CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_ROTATES_CHAMBER)) || (CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_ROTATES_CHAMBER) && rounds)))
 					to_chat(user, span_warning("[src] must be completely empty to use the [mag]!"))
 					return FALSE
-				var/rounds_to_fill = mag.current_rounds < max_chamber_items ? mag.current_rounds : max_chamber_items
+				var/available_slots = max_chamber_items
+				if(CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_MULTICLIP))
+					available_slots -= length(chamber_items)
+				var/rounds_to_fill = min(mag.current_rounds, available_slots)
 				for(var/i = 0, i < rounds_to_fill, i++)
 					items_to_insert += mag.create_handful(null, 1)
 				playsound(src, reload_sound, 25, 1)
@@ -1683,6 +1686,9 @@
 /obj/item/weapon/gun/proc/able_to_fire(mob/user)
 	if(!user || user.incapacitated()  || user.lying_angle || !isturf(user.loc))
 		return
+	if(HAS_TRAIT(user, TRAIT_KNIGHT))
+		balloon_alert(user, "blocked by knight module")
+		return FALSE
 	if(rounds - rounds_per_shot < 0 && rounds)
 		to_chat(user, span_warning("There's not enough rounds left to fire."))
 		return FALSE

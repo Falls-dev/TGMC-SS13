@@ -136,3 +136,8 @@
 	containertype = null
 	cost = 200
 	crash_restricted = TRUE
+
+/datum/supply_packs/operations/rappel_rope
+	name = "Spare Tadpole rappel system cord"
+	cost = 20
+	contains = list(/obj/item/spare_cord)

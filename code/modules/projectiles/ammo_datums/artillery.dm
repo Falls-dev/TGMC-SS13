@@ -12,12 +12,16 @@
 	bullet_color = COLOR_VERY_SOFT_YELLOW
 
 /datum/ammo/mortar/drop_nade(turf/target_turf)
+	if(try_erp_ads_intercept(target_turf, src, GLOB.ads_intercept_range))
+		return
 	cell_explosion(target_turf, 90, 30)
 
 /datum/ammo/mortar/do_at_max_range(turf/target_turf, atom/movable/projectile/proj)
 	drop_nade(target_turf)
 
 /datum/ammo/mortar/incend/drop_nade(turf/target_turf)
+	if(try_erp_ads_intercept(target_turf, src, GLOB.ads_intercept_range))
+		return
 	cell_explosion(target_turf, 45, 20)
 	flame_radius(4, target_turf)
 	playsound(target_turf, 'sound/weapons/guns/fire/flamethrower2.ogg', 35, 1, 4)
@@ -28,6 +32,8 @@
 	shell_speed = 0.75
 
 /datum/ammo/mortar/knee/drop_nade(turf/target_turf)
+	if(try_erp_ads_intercept(target_turf, src, GLOB.ads_intercept_range))
+		return
 	cell_explosion(target_turf, 80, 30)
 
 /datum/ammo/mortar/smoke
@@ -35,6 +41,8 @@
 	var/datum/effect_system/smoke_spread/smoketype = /datum/effect_system/smoke_spread/tactical
 
 /datum/ammo/mortar/smoke/drop_nade(turf/target_turf)
+	if(try_erp_ads_intercept(target_turf, src, GLOB.ads_intercept_range))
+		return
 	var/datum/effect_system/smoke_spread/smoke = new smoketype()
 	cell_explosion(target_turf, 15, 5)
 	playsound(target_turf, 'sound/effects/smoke.ogg', 25, 1, 4)
@@ -45,6 +53,8 @@
 	smoketype = /datum/effect_system/smoke_spread/plasmaloss
 
 /datum/ammo/mortar/flare/drop_nade(turf/target_turf)
+	if(try_erp_ads_intercept(target_turf, src, GLOB.ads_intercept_range))
+		return
 	new /obj/effect/temp_visual/above_flare(target_turf)
 	playsound(target_turf, 'sound/weapons/guns/fire/flare.ogg', 50, 1, 4)
 
@@ -53,9 +63,13 @@
 	icon_state = "howi"
 
 /datum/ammo/mortar/howi/drop_nade(turf/target_turf)
+	if(try_erp_ads_intercept(target_turf, src, GLOB.ads_intercept_range))
+		return
 	cell_explosion(target_turf, 350, 75)
 
 /datum/ammo/mortar/howi/incend/drop_nade(turf/target_turf)
+	if(try_erp_ads_intercept(target_turf, src, GLOB.ads_intercept_range))
+		return
 	cell_explosion(target_turf, 100, 30)
 	flame_radius(6, target_turf)
 	playsound(target_turf, 'sound/weapons/guns/fire/flamethrower2.ogg', 35, 1, 4)
@@ -68,6 +82,8 @@
 	smoketype = /datum/effect_system/smoke_spread/phosphorus
 
 /datum/ammo/mortar/smoke/howi/wp/drop_nade(turf/target_turf)
+	if(try_erp_ads_intercept(target_turf, src, GLOB.ads_intercept_range))
+		return
 	var/datum/effect_system/smoke_spread/smoke = new smoketype()
 	cell_explosion(target_turf, 15, 15)
 	playsound(target_turf, 'sound/effects/smoke.ogg', 25, 1, 4)
@@ -80,6 +96,8 @@
 	smoketype = /datum/effect_system/smoke_spread/plasmaloss
 
 /datum/ammo/mortar/smoke/howi/plasmaloss/drop_nade(turf/target_turf)
+	if(try_erp_ads_intercept(target_turf, src, GLOB.ads_intercept_range))
+		return
 	var/datum/effect_system/smoke_spread/smoke = new smoketype()
 	cell_explosion(target_turf, 75, 25)
 	playsound(target_turf, 'sound/effects/smoke.ogg', 25, 1, 4)
@@ -92,14 +110,20 @@
 	shell_speed = 1.5
 
 /datum/ammo/mortar/rocket/drop_nade(turf/target_turf)
+	if(try_erp_ads_intercept(target_turf, src, GLOB.ads_intercept_range))
+		return
 	cell_explosion(target_turf, 175, 75)
 
 /datum/ammo/mortar/rocket/incend/drop_nade(turf/target_turf)
+	if(try_erp_ads_intercept(target_turf, src, GLOB.ads_intercept_range))
+		return
 	cell_explosion(target_turf, 50, 20)
 	flame_radius(6, target_turf)
 	playsound(target_turf, 'sound/weapons/guns/fire/flamethrower2.ogg', 35, 1, 4)
 
 /datum/ammo/mortar/rocket/minelayer/drop_nade(turf/target_turf)
+	if(try_erp_ads_intercept(target_turf, src, GLOB.ads_intercept_range))
+		return
 	var/obj/item/explosive/mine/mine = new /obj/item/explosive/mine(target_turf)
 	mine.deploy_mine(null, TGMC_LOYALIST_IFF)
 
@@ -108,6 +132,8 @@
 	var/datum/effect_system/smoke_spread/smoketype = /datum/effect_system/smoke_spread/tactical
 
 /datum/ammo/mortar/rocket/smoke/drop_nade(turf/target_turf)
+	if(try_erp_ads_intercept(target_turf, src, GLOB.ads_intercept_range))
+		return
 	var/datum/effect_system/smoke_spread/smoke = new smoketype()
 	cell_explosion(target_turf, 15, 15)
 	playsound(target_turf, 'sound/effects/smoke.ogg', 25, 1, 4)
@@ -118,6 +144,8 @@
 	shell_speed = 3
 
 /datum/ammo/mortar/rocket/mlrs/drop_nade(turf/target_turf)
+	if(try_erp_ads_intercept(target_turf, src, GLOB.ads_intercept_range))
+		return
 	cell_explosion(target_turf, 70, 25)
 
 /datum/ammo/mortar/rocket/smoke/mlrs
@@ -125,6 +153,8 @@
 	smoketype = /datum/effect_system/smoke_spread/mustard
 
 /datum/ammo/mortar/rocket/smoke/mlrs/drop_nade(turf/target_turf)
+	if(try_erp_ads_intercept(target_turf, src, GLOB.ads_intercept_range))
+		return
 	var/datum/effect_system/smoke_spread/smoke = new smoketype()
 	cell_explosion(target_turf, 30, 15)
 	playsound(target_turf, 'sound/effects/smoke.ogg', 25, 1, 4)
@@ -137,6 +167,8 @@
 	smoketype = /datum/effect_system/smoke_spread/plasmaloss
 
 /datum/ammo/mortar/rocket/smoke/mlrs/tangle/drop_nade(turf/target_turf)
+	if(try_erp_ads_intercept(target_turf, src, GLOB.ads_intercept_range))
+		return
 	var/datum/effect_system/smoke_spread/smoke = new smoketype()
 	cell_explosion(target_turf, 10, 2)
 	playsound(target_turf, 'sound/effects/smoke.ogg', 25, 1, 4)

@@ -330,3 +330,6 @@ GLOBAL_LIST_INIT(traits_to_pass_flags, list(
 	TRAIT_PASS_WALKOVER = PASS_WALKOVER,
 	TRAIT_PASS_TANK = PASS_TANK,
 ))
+
+/// Prevents firearm and grenade use while the Magni module is worn.
+#define TRAIT_KNIGHT "knight"

@@ -60,6 +60,8 @@
 /obj/item/clothing/suit/modular/xenonauten/shield
 	starting_attachments = list(
 		/obj/item/armor_module/module/eshield,
+		/obj/item/armor_module/module/eshield/absorbant/energy,
+		/obj/item/armor_module/module/knight,
 		/obj/item/armor_module/storage/medical,
 	)
 
@@ -79,6 +81,8 @@
 /obj/item/clothing/suit/modular/xenonauten/light/shield
 	starting_attachments = list(
 		/obj/item/armor_module/module/eshield,
+		/obj/item/armor_module/module/eshield/absorbant/energy,
+		/obj/item/armor_module/module/knight,
 		/obj/item/armor_module/storage/medical,
 	)
 
@@ -146,6 +150,8 @@
 /obj/item/clothing/suit/modular/xenonauten/heavy/shield
 	starting_attachments = list(
 		/obj/item/armor_module/module/eshield,
+		/obj/item/armor_module/module/eshield/absorbant/energy,
+		/obj/item/armor_module/module/knight,
 		/obj/item/armor_module/storage/medical,
 	)
 
@@ -379,5 +385,7 @@
 /obj/item/clothing/suit/modular/xenonauten/heavy/leader/shield
 	starting_attachments = list(
 		/obj/item/armor_module/module/eshield,
+		/obj/item/armor_module/module/eshield/absorbant/energy,
+		/obj/item/armor_module/module/knight,
 		/obj/item/armor_module/storage/medical,
 	)

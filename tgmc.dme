@@ -2593,5 +2593,9 @@
 #include "interface\fonts\pixellari.dm"
 #include "interface\fonts\spess_font.dm"
 #include "interface\fonts\tiny_unicode.dm"
+#include "code\game\objects\structures\rappel_system.dm"
+#include "code\game\objects\items\explosives\grenades\erp_grenades.dm"
+#include "code\modules\projectiles\guns\erp_sentries.dm"
+#include "code\modules\projectiles\guns\erp_imports.dm"
 #include "interface\fonts\vcr_osd_mono.dm"
 // END_INCLUDE

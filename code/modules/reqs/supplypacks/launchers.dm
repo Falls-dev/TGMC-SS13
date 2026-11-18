@@ -134,3 +134,8 @@
 	name = "GL-70 grenade launcher"
 	contains = list(/obj/item/weapon/gun/grenade_launcher/multinade_launcher/unloaded)
 	cost = 300
+
+/datum/supply_packs/launchers/rpos
+	name = "RPO-S Disposable Incendiary Rocket Launcher"
+	cost = 50
+	contains = list(/obj/item/weapon/gun/launcher/rocket/oneuse/thermobaric)
