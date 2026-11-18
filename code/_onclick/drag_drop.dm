@@ -36,6 +36,13 @@
 		return
 	if(QDELETED(object)) //Yep, you can click on qdeleted things before they have time to nullspace. Fun.
 		return
+	if(tadpole_viewport?.active)
+		var/list/modifiers = params2list(params)
+		var/turf/target = tadpole_mouse_target(object, control, modifiers)
+		if(target)
+			object = target
+			location = target
+			params = list2params(modifiers)
 	if(SEND_SIGNAL(mob, COMSIG_MOB_MOUSEDOWN, object, location, control, params) & COMSIG_MOB_CLICK_CANCELED)
 		return
 	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDOWN, object, location, control, params)
@@ -58,6 +65,11 @@
 	if(over_control != "mapwindow.map") //You can drag the mouse to the stat panel, in which case this variable will be "statwindow.stat"
 		return
 	var/list/L = params2list(params)
+	var/turf/target = tadpole_mouse_target(over_object, over_control, L)
+	if(target)
+		over_object = target
+		over_location = target
+		params = list2params(L)
 	if(L["middle"])
 		if(src_object && src_location != over_location)
 			middragtime = world.time
@@ -70,10 +82,14 @@
 	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDRAG, src_object, over_object, src_location, over_location, src_control, over_control, params)
 
 /client/MouseDrop(src_object, over_object, src_location, over_location, src_control, over_control, params)
-	if(prefs.toggles_gameplay & TOGGLE_CLICKDRAG)
-		usr.ClickOn(over_object, over_location, params)
-		return
-	if(src_object == over_object)
+	if((prefs.toggles_gameplay & TOGGLE_CLICKDRAG) || src_object == over_object)
+		if(tadpole_viewport?.active)
+			var/list/modifiers = params2list(params)
+			var/turf/target = tadpole_mouse_target(over_object, over_control, modifiers)
+			if(target)
+				over_object = target
+				over_location = target
+				params = list2params(modifiers)
 		usr.ClickOn(over_object, over_location, params)
 		return
 	if(middragatom == src_object)

@@ -497,6 +497,9 @@
 			to_chat(src, span_danger("Your previous click was ignored because you've done too many in a second"))
 			return
 
+	var/turf/tadpole_target = tadpole_mouse_target(object, control, modifiers)
+	if(tadpole_target)
+		return ..(tadpole_target, tadpole_target, control, list2params(modifiers))
 	return ..()
 
 ///checks if a client is afk, 3000 frames = 5 minutes

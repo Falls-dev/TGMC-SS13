@@ -104,6 +104,9 @@
 	plate.remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_TRANSPARENT, depth - 1))
 	output_plane = GET_NEW_PLANE(TADPOLE_GROUND_PLANE, hud.current_plane_offset)
 	plate.add_relay_to(output_plane)
+	var/atom/movable/render_plane_relay/ground_relay = plate.get_relay_to(output_plane)
+	ground_relay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	ground_relay.appearance_flags &= ~PASS_MOUSE
 	var/datum/plane_master_group/group = hud.get_plane_group(PLANE_GROUP_MAIN)
 	for(var/key in group.plane_masters)
 		var/atom/movable/screen/plane_master/master = group.plane_masters[key]
@@ -162,6 +165,32 @@
 	SIGNAL_HANDLER
 	track_eye(null)
 	bind_visibility(null)
+
+/// Route background hits to the real transit map, in screen coordinates.
+/// Onboard objects and other camera controls keep their native mouse targets.
+/datum/tadpole_scene_view/proc/is_ground_mouse_target(atom/target, turf/eye)
+	if(!eye || !scene?.helm?.ground_tiles[eye])
+		return FALSE
+	if(istype(target, /atom/movable/screen/click_catcher))
+		return TRUE
+	var/turf/target_turf = get_turf(target)
+	return target_turf && target_turf.z != eye.z && target_turf.z == scene.helm.eyeobj?.z
+
+/client/proc/tadpole_mouse_target(atom/target, control, list/modifiers)
+	if(control != "mapwindow.map" || !tadpole_viewport?.active)
+		return
+	var/turf/origin = get_turf(eye)
+	if(!tadpole_viewport.owner?.is_ground_mouse_target(target, origin))
+		return
+	var/screen_loc = modifiers["screen-loc"]
+	var/turf/destination = params2turf(screen_loc, origin, src)
+	if(!destination)
+		return
+	var/list/pixel = params2screenpixel(screen_loc)
+	modifiers["icon-x"] = num2text(ABS_PIXEL_TO_REL(pixel[1]))
+	modifiers["icon-y"] = num2text(ABS_PIXEL_TO_REL(pixel[2]))
+	modifiers["catcher"] = "1"
+	return destination
 
 /// Keep the native camera on the character. Only the ground output is rotated;
 /// no final game/FOV/ghost relay receives a synthetic camera animation.

@@ -280,6 +280,13 @@
 	helm.ground_tiles = list()
 	helm.ground_tiles[walking_start] = TRUE
 	helm.ground_tiles[walking_end] = TRUE
+	var/turf/ground_mouse_target = locate(walking_start.x, walking_start.y, SSmapping.ground_start)
+	var/turf/old_eye_turf = get_turf(helm.eyeobj)
+	helm.eyeobj.abstract_move(ground_mouse_target)
+	TEST_ASSERT(native_view.is_ground_mouse_target(ground_mouse_target, walking_start), "Ground below the Tadpole must be treated like the background")
+	TEST_ASSERT(!native_view.is_ground_mouse_target(walking_end, walking_start), "Onboard targets must keep their original click behavior")
+	TEST_ASSERT(!native_view.is_ground_mouse_target(ground_mouse_target, get_step(walking_start, NORTH)), "Ground clicks must only be redirected for viewers aboard")
+	helm.eyeobj.abstract_move(old_eye_turf)
 	var/walking_heading = helm.flight_heading
 	helm.flight_heading = dir2angle(port.dir) + 180
 	native_view.track_eye(pilot)
