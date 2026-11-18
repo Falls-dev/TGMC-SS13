@@ -36,6 +36,9 @@
 
 	var/squads_max_num = 4
 
+	///How many dropship (CAS fabricator) points the round starts with on this ship map
+	var/starting_dropship_points = 0
+
 /proc/load_map_config(filename, default, delete_after, error_if_missing = TRUE)
 	var/datum/map_config/config = new
 	if(default)
@@ -151,6 +154,13 @@
 		squads_max_num = temp
 	else if(!isnull(temp))
 		log_world("map_config squads_max_num is not a number!")
+		return
+
+	temp = json["starting_dropship_points"]
+	if(isnum(temp))
+		starting_dropship_points = temp
+	else if(!isnull(temp))
+		log_world("map_config starting_dropship_points is not a number!")
 		return
 
 	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE

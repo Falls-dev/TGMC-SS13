@@ -50,6 +50,7 @@
 
 /obj/item/plantable_flag/Destroy()
 	origin_point = null
+	QDEL_NULL(current_aura)
 	return ..()
 
 /obj/item/plantable_flag/deconstruct(disassembled = TRUE, mob/living/blame_mob)

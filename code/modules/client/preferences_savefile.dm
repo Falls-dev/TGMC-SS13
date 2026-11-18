@@ -173,6 +173,8 @@
 	READ_FILE(S["mute_others_combat_messages"], mute_others_combat_messages)
 	READ_FILE(S["show_xeno_rank"], show_xeno_rank)
 
+	READ_FILE(S["stim_sequences"], stim_sequences)
+
 	// Runechat options
 	READ_FILE(S["chat_on_map"], chat_on_map)
 	READ_FILE(S["max_chat_length"], max_chat_length)
@@ -248,6 +250,10 @@
 	mute_self_combat_messages = sanitize_integer(mute_self_combat_messages, FALSE, TRUE, initial(mute_self_combat_messages))
 	mute_others_combat_messages = sanitize_integer(mute_others_combat_messages, FALSE, TRUE, initial(mute_others_combat_messages))
 	show_xeno_rank = sanitize_integer(show_xeno_rank, FALSE, TRUE, initial(show_xeno_rank))
+
+	stim_sequences = sanitize_islist(stim_sequences, list())
+	for(var/spell_sequence in stim_sequences)
+		stim_sequences[spell_sequence] = sanitize_islist(stim_sequences[spell_sequence], list(), null, TRUE, GLOB.stim_type_lookup)
 
 	chat_on_map = sanitize_integer(chat_on_map, FALSE, TRUE, initial(chat_on_map))
 	max_chat_length = sanitize_integer(max_chat_length, 1, CHAT_MESSAGE_MAX_LENGTH, initial(max_chat_length))
@@ -333,6 +339,10 @@
 	slot_draw_order_pref = sanitize_islist(slot_draw_order_pref, SLOT_DRAW_ORDER, length(SLOT_DRAW_ORDER), TRUE, SLOT_DRAW_ORDER)
 	status_toggle_flags = sanitize_integer(status_toggle_flags, NONE, MAX_BITFLAG, initial(status_toggle_flags))
 
+	stim_sequences = sanitize_islist(stim_sequences, list())
+	for(var/spell_sequence in stim_sequences)
+		stim_sequences[spell_sequence] = sanitize_islist(stim_sequences[spell_sequence], list(), null, TRUE, GLOB.stim_type_lookup)
+
 	// Runechat
 	chat_on_map = sanitize_integer(chat_on_map, FALSE, TRUE, initial(chat_on_map))
 	max_chat_length = sanitize_integer(max_chat_length, 1, CHAT_MESSAGE_MAX_LENGTH, initial(max_chat_length))
@@ -403,6 +413,8 @@
 	WRITE_FILE(S["mute_others_combat_messages"], mute_others_combat_messages)
 	WRITE_FILE(S["show_xeno_rank"], show_xeno_rank)
 
+	WRITE_FILE(S["stim_sequences"], stim_sequences)
+
 	// Runechat options
 	WRITE_FILE(S["chat_on_map"], chat_on_map)
 	WRITE_FILE(S["max_chat_length"], max_chat_length)
@@ -458,10 +470,10 @@
 
 	READ_FILE(S["synthetic_name"], synthetic_name)
 	READ_FILE(S["synthetic_type"], synthetic_type)
-	READ_FILE(S["squad_robot_name"], squad_robot_name)
 	READ_FILE(S["squad_robot_type"], squad_robot_type)
 	READ_FILE(S["xeno_name"], xeno_name)
 	READ_FILE(S["ai_name"], ai_name)
+	READ_FILE(S["names_by_species"], names_by_species)
 
 //RUTGMC EDIT
 	READ_FILE(S["pred_name"], predator_name)
@@ -540,10 +552,10 @@
 
 	synthetic_name = reject_bad_name(synthetic_name, TRUE)
 	synthetic_type = sanitize_inlist(synthetic_type, SYNTH_TYPES, initial(synthetic_type))
-	squad_robot_name = reject_bad_name(squad_robot_name, TRUE)
 	squad_robot_type = sanitize_inlist(squad_robot_type, ROBOT_TYPES, initial(squad_robot_type))
 	xeno_name = reject_bad_name(xeno_name)
 	ai_name = reject_bad_name(ai_name, TRUE)
+	names_by_species = sanitize_islist(names_by_species, list())
 
 	real_name = reject_bad_name(real_name, TRUE)
 	random_name = sanitize_integer(random_name, TRUE, TRUE, initial(random_name))
@@ -606,8 +618,6 @@
 	exploit_record = sanitize_text(exploit_record, initial(exploit_record))
 	flavor_text = sanitize_text(flavor_text, initial(flavor_text))
 
-	if(!squad_robot_name)
-		squad_robot_name = "Toaster"
 	if(!synthetic_name)
 		synthetic_name = "David"
 	if(!xeno_name)
@@ -638,7 +648,6 @@
 
 	synthetic_name = reject_bad_name(synthetic_name, TRUE)
 	synthetic_type = sanitize_inlist(synthetic_type, SYNTH_TYPES, initial(synthetic_type))
-	squad_robot_name = reject_bad_name(squad_robot_name, TRUE)
 	squad_robot_type = sanitize_inlist(squad_robot_type, ROBOT_TYPES, initial(squad_robot_type))
 	xeno_name = reject_bad_name(xeno_name)
 	ai_name = reject_bad_name(ai_name, TRUE)
@@ -725,10 +734,10 @@
 
 	WRITE_FILE(S["synthetic_name"], synthetic_name)
 	WRITE_FILE(S["synthetic_type"], synthetic_type)
-	WRITE_FILE(S["squad_robot_name"], squad_robot_name)
 	WRITE_FILE(S["squad_robot_type"], squad_robot_type)
 	WRITE_FILE(S["xeno_name"], xeno_name)
 	WRITE_FILE(S["ai_name"], ai_name)
+	WRITE_FILE(S["names_by_species"], names_by_species)
 
 //RUTGMC EDIT
 	WRITE_FILE(S["pred_name"], predator_name)

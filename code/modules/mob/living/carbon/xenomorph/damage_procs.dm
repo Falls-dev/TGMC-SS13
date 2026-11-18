@@ -28,16 +28,6 @@
 	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_MOB_EX_ACT))
 		return
 
-	if(lying_angle)
-		severity *= EXPLOSION_PRONE_MULTIPLIER
-
-	if(severity >= max(health, EXPLOSION_THRESHOLD_GIB + get_soft_armor(BOMB) * 2))
-		var/oldloc = loc
-		gib()
-		if(mob_size > MOB_SIZE_SMALL) // cause the size of 0 will cause errors
-			create_shrapnel(oldloc, rand(4, 8) * mob_size, direction, shrapnel_type = /datum/ammo/bullet/shrapnel/light/xeno)
-		return
-
 	var/sunder_amount = severity * 0.125
 	adjust_sunder(sunder_amount)
 
@@ -71,10 +61,9 @@
 		return FALSE
 
 	if(damage > 12) //Light damage won't splash.
-		check_blood_splash(damage, damagetype, 0, sharp, edge)
+		addtimer(CALLBACK(src, PROC_REF(check_blood_splash), damage, damagetype, 0, sharp, edge), 0.1 SECONDS)
 
-	SEND_SIGNAL(src, COMSIG_XENOMORPH_TAKING_DAMAGE, damage)
-
+	addtimer(CALLBACK(src, PROC_REF(apply_damage_effects), damage, damagetype, def_zone, blocked, sharp, edge, updating_health, penetration), 0.15 SECONDS)
 	if(stat == DEAD)
 		return FALSE
 
@@ -85,16 +74,28 @@
 			adjust_fire_loss(damage)
 
 	last_damage_source = usr
+	regen_power = -xeno_caste.regen_delay //Remember, this is in deciseconds.
+
+	return damage
+
+// Deleyed effects call to prevent stacking sounds and visual effects in one tick. Timing is around ~1.5 decisecodns after taking damage
+/mob/living/carbon/xenomorph/proc/apply_damage_effects(damage = 0, damagetype = BRUTE, def_zone, blocked = 0, sharp = FALSE, edge = FALSE, updating_health = FALSE, penetration)
+	PRIVATE_PROC(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	if(QDELETED(src))
+		return
+
+	SEND_SIGNAL(src, COMSIG_XENOMORPH_TAKING_DAMAGE, damage)
+
+	if(stat == DEAD)
+		return
 
 	if(updating_health)
 		update_health()
 
-	regen_power = -xeno_caste.regen_delay //Remember, this is in deciseconds.
-
 	if(isobj(pulling))
 		stop_pulling()
-
-	return damage
 
 /// Handles overheal for xeno receiving damage
 /mob/living/carbon/xenomorph/proc/handle_overheal(amount)
@@ -152,6 +153,9 @@
 
 ///Splashes living mob in 1 tile radius with acid, spawns
 /mob/living/carbon/xenomorph/proc/check_blood_splash(damage = 0, damtype = BRUTE, chancemod = 0, sharp = FALSE, edge = FALSE)
+	if(QDELETED(src))
+		return FALSE
+
 	if(!damage)
 		return FALSE
 

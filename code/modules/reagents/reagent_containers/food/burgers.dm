@@ -282,7 +282,7 @@
 
 /obj/item/reagent_containers/food/snacks/burger/packaged_burger/attack_self(mob/user as mob)
 	if (package)
-		playsound(src.loc,'sound/effects/pageturn2.ogg', 15, 1)
+		playsound(src.loc,'sound/effects/pageturn2.ogg', 15, 1, SHORT_SOUND_RANGE)
 		to_chat(user, span_notice("You pull off the wrapping from the squishy hamburger!"))
 		package = FALSE
 		icon = 'icons/obj/items/food/burgers.dmi'
@@ -331,7 +331,7 @@
 /obj/item/reagent_containers/food/snacks/burger/bun/attackby(obj/item/I, mob/user, params)
 	. = ..()
 	if(.)
-		return 
+		return
 	// Bun + meatball = burger
 	if(istype(I, /obj/item/reagent_containers/food/snacks/meatball))
 		new /obj/item/reagent_containers/food/snacks/burger/plain(src)

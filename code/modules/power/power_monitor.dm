@@ -78,7 +78,7 @@
 
 	var/list/areas = list()
 	if(powernet)
-		for(var/obj/machinery/power/terminal/term AS in powernet.nodes)
+		for(var/obj/machinery/power/terminal/term in powernet.nodes)
 			var/obj/machinery/power/apc/apc = term.master
 			if(!istype(apc))
 				continue
@@ -127,7 +127,7 @@
 	. = ..()
 	if(!circuit)
 		return
-	playsound(loc, 'sound/items/screwdriver.ogg', 25, 1)
+	playsound(loc, 'sound/items/screwdriver.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	if(!do_after(user, 2 SECONDS, NONE, src, BUSY_ICON_BUILD))
 		return
 

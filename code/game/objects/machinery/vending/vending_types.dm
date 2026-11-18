@@ -163,7 +163,6 @@
 			/obj/item/storage/pill_bottle/imialky = -1,
 			/obj/item/storage/pill_bottle/hypervene = 6,
 			/obj/item/storage/pill_bottle/quickclot = 4,
-			/obj/item/storage/pill_bottle/russian_red = 4,
 		),
 		"Hypospray" = list (
 			/obj/item/reagent_containers/hypospray/autoinjector/dexalinplus = 10,
@@ -274,7 +273,6 @@
 			/obj/item/storage/pill_bottle/imialky = -1,
 			/obj/item/storage/pill_bottle/quickclot = -1,
 			/obj/item/storage/pill_bottle/hypervene = -1,
-			/obj/item/storage/pill_bottle/russian_red = -1,
 		),
 		"Heal Pack" = list(
 			/obj/item/stack/medical/heal_pack/advanced/bruise_pack = -1,
@@ -328,6 +326,7 @@
 			/obj/item/reagent_containers/glass/bottle/toxin = -1,
 			/obj/item/reagent_containers/glass/bottle/doctor_delight = -1,
 			/obj/item/alien_embryo = -1,
+			/obj/item/storage/pill_bottle/russian_red = -1,
 		),
 	)
 

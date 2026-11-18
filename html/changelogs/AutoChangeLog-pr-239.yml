@@ -1,0 +1,4 @@
+author: "LoneAsket"
+delete-after: True
+changes:
+  - balance: "навык медицины >2 теперь авто-сортирует конечности по уровню повреждений"

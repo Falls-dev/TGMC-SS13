@@ -44,7 +44,7 @@
 /obj/structure/rack/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
 	deconstruct(TRUE)
-	playsound(loc, 'sound/items/ratchet.ogg', 25, 1)
+	playsound(loc, 'sound/items/ratchet.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	return TRUE
 
 /obj/structure/rack/proc/on_cross(datum/source, atom/movable/O, oldloc, oldlocs)

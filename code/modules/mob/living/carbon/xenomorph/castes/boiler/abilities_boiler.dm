@@ -264,7 +264,7 @@ GLOBAL_LIST_INIT(boiler_glob_image_list, list(
 	var/atom/movable/projectile/P = new /atom/movable/projectile(xeno_owner.loc)
 	P.generate_bullet(xeno_owner.ammo)
 	P.fire_at(target, xeno_owner, xeno_owner, xeno_owner.ammo.max_range, xeno_owner.ammo.shell_speed)
-	playsound(xeno_owner, 'sound/effects/blobattack.ogg', 25, 1)
+	playsound(xeno_owner, 'sound/effects/blobattack.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	GLOB.round_statistics.boiler_acid_smokes++
 	SSblackbox.record_feedback(FEEDBACK_TALLY, "round_statistics", 1, "boiler_acid_smokes")
 	xeno_owner.corrosive_ammo--
