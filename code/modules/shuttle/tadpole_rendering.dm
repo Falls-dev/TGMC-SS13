@@ -86,6 +86,8 @@
 	var/list/unscaled_planes = list()
 	var/capture_active = FALSE
 	var/client/capture_client
+	var/original_client_glide
+	var/camera_glide_size
 	var/datum/tadpole_viewport/viewport
 	var/atom/movable/screen/plane_master/emissive_plate
 	var/had_emissive_relay = FALSE
@@ -206,6 +208,9 @@
 	if(!scene?.helm.ground_tiles[get_turf(display.eye)])
 		return
 	capture_client = display
+	original_client_glide = display.glide_size
+	camera_glide_size = null
+	sync_camera_glide(tracked_eye.glide_size)
 	RegisterSignal(display, COMSIG_CLIENT_SET_EYE, PROC_REF(on_client_eye_change))
 	begin_capture()
 	viewport = new
@@ -214,7 +219,10 @@
 /datum/tadpole_scene_view/proc/release_capture()
 	if(capture_client)
 		UnregisterSignal(capture_client, COMSIG_CLIENT_SET_EYE)
+		if(capture_client.glide_size == camera_glide_size)
+			capture_client.glide_size = original_client_glide
 	capture_client = null
+	camera_glide_size = null
 	QDEL_NULL(viewport)
 	end_capture()
 
@@ -249,12 +257,38 @@
 	if(tracked_eye == new_eye)
 		return
 	if(tracked_eye)
-		UnregisterSignal(tracked_eye, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(tracked_eye, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE))
 	tracked_eye = new_eye
 	eye_duration = 0
 	eye_to_x = null
 	if(tracked_eye)
 		RegisterSignal(tracked_eye, COMSIG_MOVABLE_MOVED, PROC_REF(on_eye_move))
+		RegisterSignal(tracked_eye, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, PROC_REF(on_eye_glide_change))
+
+/// Use the same requested speed for native scrolling and lower-plane interpolation.
+/datum/tadpole_scene_view/proc/sync_camera_glide(speed)
+	if(capture_client?.eye != tracked_eye || !capture_client)
+		return
+	if(!isnull(camera_glide_size) && capture_client.glide_size != camera_glide_size)
+		original_client_glide = capture_client.glide_size
+	camera_glide_size = max(speed, 1)
+	capture_client.glide_size = camera_glide_size
+
+/datum/tadpole_scene_view/proc/on_eye_glide_change(atom/movable/source, speed)
+	SIGNAL_HANDLER
+	var/previous_speed = camera_glide_size
+	sync_camera_glide(speed)
+	if(isnull(previous_speed) || previous_speed == camera_glide_size || world.time >= eye_started + eye_duration)
+		return
+	var/turf/eye = get_turf(source)
+	if(!eye || eye.x != eye_to_x || eye.y != eye_to_y || !scene?.helm.ground_tiles[eye])
+		return
+	var/list/current = displayed_eye()
+	eye_from_x = current[1]
+	eye_from_y = current[2]
+	eye_duration = (eye_started + eye_duration - world.time) * previous_speed / camera_glide_size
+	eye_started = world.time
+	scene.update_view(src, eye, eye_duration / 10, retime = TRUE)
 
 /// React in the movement tick, not up to 0.2 seconds later in flight processing.
 /// Only ground projection/cropping changes; native camera and mob glide are untouched.
@@ -270,6 +304,7 @@
 	if(source == hud?.mymob)
 		bind_visibility(hud.mymob)
 		start_capture(hud.mymob.client)
+	sync_camera_glide(source.glide_size)
 	var/duration = 0
 	var/list/current_eye = list(old_loc?.x, old_loc?.y)
 	if(!forced && isturf(old_loc) && old_loc.z == eye.z && get_dist(old_loc, eye) == 1)
@@ -278,7 +313,7 @@
 		var/dx = abs(eye.x - current_eye[1])
 		var/dy = abs(eye.y - current_eye[2])
 		var/distance = (source.appearance_flags & LONG_GLIDE) ? max(dx, dy) : sqrt(dx ** 2 + dy ** 2)
-		duration = distance * world.icon_size / max(source.glide_size, 1) * world.tick_lag
+		duration = distance * world.icon_size / (camera_glide_size || max(source.glide_size, 1)) * world.tick_lag
 	eye_from_x = current_eye[1]
 	eye_from_y = current_eye[2]
 	eye_to_x = eye.x
@@ -294,11 +329,11 @@
 
 /// Both motion and heading live in this matrix. If a block was relocated,
 /// convert the current transform to the new input coordinates before tweening.
-/datum/tadpole_scene_view/proc/update_camera(matrix/camera, offset_x, offset_y, transit_z, animation_seconds)
+/datum/tadpole_scene_view/proc/update_camera(matrix/camera, offset_x, offset_y, transit_z, animation_seconds, retime = FALSE)
 	if(QDELETED(plate))
 		return
 	var/rebased = projected_offset_x != offset_x || projected_offset_y != offset_y || projected_z != transit_z
-	if(!rebased && last_camera && last_camera.a == camera.a && last_camera.b == camera.b && last_camera.c == camera.c && last_camera.d == camera.d && last_camera.e == camera.e && last_camera.f == camera.f)
+	if(!retime && !rebased && last_camera && last_camera.a == camera.a && last_camera.b == camera.b && last_camera.c == camera.c && last_camera.d == camera.d && last_camera.e == camera.e && last_camera.f == camera.f)
 		return
 
 	animation_from = displayed_camera()
@@ -447,7 +482,7 @@
 		view.viewport?.sync_hud()
 		update_view(view, get_turf(display.eye), animation_seconds)
 
-/datum/tadpole_scene/proc/update_view(datum/tadpole_scene_view/view, turf/eye, animation_seconds)
+/datum/tadpole_scene/proc/update_view(datum/tadpole_scene_view/view, turf/eye, animation_seconds, retime = FALSE)
 	if(!eye || isnull(source_offset_x))
 		return
 	var/obj/docking_port/mobile/port = helm.shuttle_port
@@ -459,7 +494,7 @@
 	var/input_y = helm.flight_y + source_offset_y - eye.y
 	camera.c = (port.x - eye.x - camera.a * input_x - camera.b * input_y) * world.icon_size
 	camera.f = (port.y - eye.y - camera.d * input_x - camera.e * input_y) * world.icon_size
-	view.update_camera(camera, source_offset_x, source_offset_y, source_transit_z, animation_seconds)
+	view.update_camera(camera, source_offset_x, source_offset_y, source_transit_z, animation_seconds, retime)
 
 /datum/tadpole_scene/proc/ensure_render_origin()
 	var/obj/docking_port/mobile/port = helm.shuttle_port
