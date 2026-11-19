@@ -750,8 +750,19 @@
 	icon_state = "console2"
 	possible_destinations = "lz1;lz2;alamo;normandy"
 
+/obj/machinery/door/poddoor/shutters/transit/Initialize(mapload)
+	// Initialize as open so the pilot can board before reaching the console.
+	// Do this before the parent establishes collision and door appearance.
+	if(istype(get_area(src), /area/shuttle/minidropship))
+		density = FALSE
+		opacity = FALSE
+	return ..()
+
 /obj/machinery/door/poddoor/shutters/transit/after_shuttle_move(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
+	// Tadpole shutters are operated manually by its pilot in every flight phase.
+	if(istype(get_area(src), /area/shuttle/minidropship))
+		return
 	if(SSmapping.level_has_any_trait(z, list(ZTRAIT_MARINE_MAIN_SHIP, ZTRAIT_GROUND)))
 		open()
 	else

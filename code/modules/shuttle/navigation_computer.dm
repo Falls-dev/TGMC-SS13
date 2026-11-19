@@ -206,6 +206,14 @@
 	my_port.setDir(the_eye.dir)
 	my_port.forceMove(locate(eyeobj.x - x_offset, eyeobj.y - y_offset, eyeobj.z))
 
+	show_landing_spot()
+	return TRUE
+
+/// Camera consoles display their designated footprint. A physical helm may
+/// still use the docking validation without showing camera-only images.
+/obj/machinery/computer/camera_advanced/shuttle_docker/proc/show_landing_spot()
+	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
+
 	if(current_user.client)
 		current_user.client.images -= the_eye.placed_images
 
@@ -231,7 +239,7 @@
 	return TRUE
 
 /// Handles the rotation of the shuttle
-/obj/machinery/computer/camera_advanced/shuttle_docker/proc/rotateLandingSpot()
+/obj/machinery/computer/camera_advanced/shuttle_docker/proc/rotateLandingSpot(validate = TRUE)
 	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
 	var/list/image_cache = the_eye.placement_images
 	the_eye.setDir(turn(the_eye.dir, -90))
@@ -245,7 +253,8 @@
 	var/Tmp = x_offset
 	x_offset = y_offset
 	y_offset = -Tmp
-	checkLandingSpot()
+	if(validate)
+		checkLandingSpot()
 
 /// Checks if the currently hovered area is accessible by the shuttle
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/check_hovering_spot(turf/next_turf)
@@ -360,6 +369,10 @@
 	return ..()
 
 /mob/camera/aiEye/remote/shuttle_docker/relaymove(mob/user, direct)
+	if(istype(origin, /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship))
+		// Continuous flight is integrated by the flight controller, not by
+		// repeated tile movement events. Held keys are read from the client.
+		return
 	var/turf/T = get_turf(get_step(src, direct))
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/console = origin
 	if(console.check_hovering_spot(T) != nvg_vision_possible) //Cannot see in caves
@@ -371,9 +384,15 @@
 /mob/camera/aiEye/remote/shuttle_docker/setLoc(T)
 	. = ..()
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/console = origin
-	console?.checkLandingSpot()
+	if(istype(console, /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship))
+		var/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/helm = console
+		helm.update_ground_view()
+	else
+		console?.checkLandingSpot()
 
 /mob/camera/aiEye/remote/shuttle_docker/update_remote_sight(mob/living/user)
+	if(istype(origin, /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship))
+		return FALSE
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/console = origin
 	if(nvg_vision_possible && console?.nvg_vision_mode)
 		user.set_sight(BLIND|SEE_TURFS)

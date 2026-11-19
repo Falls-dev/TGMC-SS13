@@ -1,4 +1,8 @@
 //shuttle mode defines
+/// Minimum hull-centered capture side; rotation/walking margins are added.
+#define TADPOLE_CAPTURE_SIZE 25
+/// Maximum common source offset inside the native capture buffer, in tiles.
+#define TADPOLE_SOURCE_GUARD 2
 #define SHUTTLE_IDLE "idle"
 #define SHUTTLE_IGNITING "igniting"
 #define SHUTTLE_RECALL "recalled"

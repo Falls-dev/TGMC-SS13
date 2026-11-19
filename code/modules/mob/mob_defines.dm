@@ -11,6 +11,10 @@
 	// we never want to hide a turf because it's not lit
 	// We can rely on the lighting plane to handle that for us
 	see_in_dark = 1e6
+	/// Temporary additive sight flags, keyed by the owner of each modifier.
+	var/tmp/list/sight_modifiers
+	/// Requested sight before temporary modifiers; equipment can still update it.
+	var/tmp/sight_without_modifiers = NONE
 
 	//Mob
 	///Whether a mob is alive or dead. TODO: Move this to living - Nodrak

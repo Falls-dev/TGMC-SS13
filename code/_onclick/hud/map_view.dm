@@ -63,11 +63,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 	var/datum/weakref/hud_ref = viewers_to_huds[client_ref]
 	var/datum/hud/our_hud = hud_ref?.resolve()
 	if(our_hud)
+		refresh_source_planes()
 		return our_hud.get_plane_group(PLANE_GROUP_POPUP_WINDOW(src))
 
 	// Generate a new plane group for this case
 	var/datum/plane_master_group/popup/pop_planes = new(PLANE_GROUP_POPUP_WINDOW(src), assigned_map)
 	viewers_to_huds[client_ref] = WEAKREF(show_to.mob.hud_used)
+	pop_planes.source_plane_offset = source_depth()
 	pop_planes.attach_to(show_to.mob.hud_used)
 
 	return pop_planes
@@ -91,3 +93,21 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 
 	var/datum/plane_master_group/popup/pop_planes = clear_from.get_plane_group(PLANE_GROUP_POPUP_WINDOW(src))
 	qdel(pop_planes)
+
+/// A remote map can show a different level from its viewer (or a nullspace
+/// preview). Its native graph must follow the content, not the player's z.
+/atom/movable/screen/map_view/proc/source_depth()
+	for(var/atom/content as anything in vis_contents)
+		if(content.z)
+			return SSmapping.z_level_to_plane_offset[content.z]
+	return 0
+
+/atom/movable/screen/map_view/proc/refresh_source_planes()
+	for(var/datum/weakref/client_ref as anything in viewers_to_huds)
+		var/datum/weakref/hud_ref = viewers_to_huds[client_ref]
+		var/datum/hud/display = hud_ref?.resolve()
+		var/datum/plane_master_group/popup/group = display?.get_plane_group(PLANE_GROUP_POPUP_WINDOW(src))
+		if(!group || group.source_plane_offset == source_depth())
+			continue
+		group.source_plane_offset = source_depth()
+		group.build_planes_offset(display, group.source_plane_offset, FALSE)

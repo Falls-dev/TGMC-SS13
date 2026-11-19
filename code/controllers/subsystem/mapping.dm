@@ -599,7 +599,7 @@ SUBSYSTEM_DEF(mapping)
 
 	// Now we check if this plane is offset or not
 	var/below_offset = new_z.traits[ZTRAIT_DOWN]
-	if(below_offset)
+	if(below_offset || new_z.traits[ZTRAIT_GROUND])
 		update_plane_tracking(new_z)
 
 	if(contain_turfs)
@@ -626,7 +626,9 @@ SUBSYSTEM_DEF(mapping)
 
 /datum/controller/subsystem/mapping/proc/update_plane_tracking(datum/space_level/update_with)
 	// We're essentially going to walk down the stack of connected z levels, and set their plane offset as we go
-	var/plane_offset = 0
+	// Reserve visual depth zero for aircraft above the ground. Set this before
+	// map atoms initialize; never migrate live source appearances for a flight.
+	var/plane_offset = update_with.traits[ZTRAIT_GROUND] ? 1 : 0
 	var/datum/space_level/current_z = update_with
 	var/list/datum/space_level/levels_checked = list()
 	var/list/z_stack = list()

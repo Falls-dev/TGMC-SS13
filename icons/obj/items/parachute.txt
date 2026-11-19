@@ -1,0 +1,13 @@
+Parachute pack sprites
+
+Source: CM-SS13 active development team, CC BY-SA 3.0.
+https://github.com/cmss13-devs/cmss13
+https://creativecommons.org/licenses/by-sa/3.0/
+
+The MOLLEbackpack state was extracted unchanged and renamed parachute:
+- icons/obj/items/clothing/backpack/backpacks.dmi -> icons/obj/items/parachute.dmi
+- icons/mob/humans/onmob/clothing/back/backpacks.dmi -> icons/mob/clothing/parachute.dmi
+- icons/mob/humans/onmob/inhands/clothing/backpacks_lefthand.dmi -> icons/mob/inhands/equipment/parachute_left.dmi
+- icons/mob/humans/onmob/inhands/clothing/backpacks_righthand.dmi -> icons/mob/inhands/equipment/parachute_right.dmi
+
+The deployed canopy uses the existing TGMC Fulton balloon asset.

@@ -11,7 +11,7 @@
 	icon = 'icons/obj/items/projectiles.dmi'
 	icon_state = "muzzle_flash"
 	layer = MOB_BELOW_PIGGYBACK_LAYER
-	plane = GAME_PLANE // todo we can make these emissive
+	vis_flags = VIS_INHERIT_PLANE
 	appearance_flags = KEEP_APART|TILE_BOUND
 	var/applied = FALSE
 
@@ -22,6 +22,7 @@
 
 /atom/movable/vis_obj/fulton_balloon
 	appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
+	vis_flags = VIS_INHERIT_PLANE
 	icon = 'icons/obj/items/fulton_balloon.dmi'
 	icon_state = "fulton_noballoon"
 	pixel_y = 10

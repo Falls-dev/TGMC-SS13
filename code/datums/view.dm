@@ -43,12 +43,20 @@
 
 ///Resets the format type
 /datum/view_data/proc/assert_format()
+	if(chief?.tadpole_viewport?.active)
+		zoom = 0
+		chief.tadpole_viewport.set_zoom(0)
+		return
 	winset(chief, "mapwindow.map", "zoom=0")
 	zoom = 0
 
 ///applies the current clients preferred pixel size setting
 /datum/view_data/proc/update_pixel_format()
 	zoom = chief?.prefs.pixel_size
+	if(chief?.tadpole_viewport?.active)
+		chief.tadpole_viewport.set_zoom(zoom)
+		chief.attempt_auto_fit_viewport()
+		return
 	winset(chief, "mapwindow.map", "zoom=[zoom]")
 	chief?.attempt_auto_fit_viewport() // If you change zoom mode, fit the viewport
 

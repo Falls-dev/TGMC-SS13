@@ -32,6 +32,8 @@
 	var/move_delay = 0
 	var/area = null
 	var/atom/movable/screen/click_catcher/void = null
+	/// Temporary padded viewport for hull-centered ground composition.
+	var/datum/tadpole_viewport/tadpole_viewport
 	var/list/char_render_holders			//Should only be a key-value list of north/south/east/west = atom/movable/screen.
 	var/mouse_up_icon = null
 	var/mouse_down_icon = null

@@ -507,8 +507,12 @@
 	set category = "OOC.Fix"
 	set desc = "Fit the width of the map window to match the viewport"
 
+	fit_viewport_size()
+	tadpole_viewport?.apply_zoom()
+
+/client/proc/fit_viewport_size()
 	// Fetch aspect ratio
-	var/view_size = getviewsize(view)
+	var/view_size = getviewsize(tadpole_viewport?.logical_size || view)
 	var/aspect_ratio = view_size[1] / view_size[2]
 
 	// Calculate desired pixel width using window size and aspect ratio
@@ -576,6 +580,8 @@
 /// Attempt to automatically fit the viewport, assuming the user wants it
 /client/proc/attempt_auto_fit_viewport()
 	if (!prefs.auto_fit_viewport)
+		if(tadpole_viewport?.active)
+			INVOKE_ASYNC(tadpole_viewport, TYPE_PROC_REF(/datum/tadpole_viewport, apply_zoom))
 		return
 	if(fully_created)
 		INVOKE_ASYNC(src, VERB_REF(fit_viewport))

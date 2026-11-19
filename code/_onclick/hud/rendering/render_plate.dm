@@ -48,7 +48,7 @@
 	// show_to can be called twice successfully with no hide_from call. Ensure no runtimes off the registers from this
 	if(hud)
 		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change), override = TRUE)
-	offset_change(hud?.current_plane_offset || 0)
+	offset_change(home.view_offset(hud?.current_plane_offset || 0))
 
 /atom/movable/screen/plane_master/rendering_plate/master/hide_from(mob/oldmob)
 	. = ..()
@@ -60,7 +60,7 @@
 
 /atom/movable/screen/plane_master/rendering_plate/master/proc/on_offset_change(datum/source, old_offset, new_offset)
 	SIGNAL_HANDLER
-	offset_change(new_offset)
+	offset_change(home.view_offset(new_offset))
 
 /atom/movable/screen/plane_master/rendering_plate/master/proc/offset_change(new_offset)
 	if(new_offset == offset) // If we're on our own z layer, relay to nothing, just draw
@@ -260,7 +260,7 @@
 	// show_to can be called twice successfully with no hide_from call. Ensure no runtimes off the registers from this
 	if(hud)
 		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change), override = TRUE)
-	offset_change(hud?.current_plane_offset || 0)
+	offset_change(home.view_offset(hud?.current_plane_offset || 0))
 	set_light_cutoff(mymob.lighting_cutoff, mymob.lighting_color_cutoffs)
 
 
@@ -274,7 +274,7 @@
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/proc/on_offset_change(datum/source, old_offset, new_offset)
 	SIGNAL_HANDLER
-	offset_change(new_offset)
+	offset_change(home.view_offset(new_offset))
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/proc/offset_change(mob_offset)
 	// Offsets stack down remember. This implies that we're above the mob's view plane, and shouldn't render
@@ -429,7 +429,7 @@
 	if(!length(relays) && !initial(render_target))
 		render_target = OFFSET_RENDER_TARGET(get_plane_master_render_base(name), offset)
 	if(!relay_loc)
-		relay_loc = (show_to?.byond_version > 515) ? "1,1" : "CENTER"
+		relay_loc = home?.relay_loc == "SCREEN_SOUTHWEST" ? home.relay_loc : ((show_to?.byond_version > 515) ? "1,1" : "CENTER")
 		// If we're using a submap (say for a popup window) make sure we draw onto it
 		if(home?.map)
 			relay_loc = "[home.map]:[relay_loc]"

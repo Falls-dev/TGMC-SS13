@@ -16,7 +16,7 @@
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship
 	name = "Tadpole navigation computer"
-	desc = "Used to designate a precise transit location for the Tadpole."
+	desc = "Flight controls for the Tadpole. Hold W/S for forward/reverse thrust and A/D to turn gradually. The aircraft coasts after releasing the controls. Land to touch down at the current position."
 	icon_state = "shuttlecomputer"
 	screen_overlay = "shuttlecomputer_screen"
 	req_access = list(ACCESS_MARINE_TADPOLE)
@@ -30,6 +30,7 @@
 	x_offset = 0
 	y_offset = 0
 	open_prompt = FALSE
+	rotate_action = null
 	nvg_vision_mode = FALSE
 	/// Action of landing to a custom zone
 	var/datum/action/innate/shuttledocker_land/land_action
@@ -47,7 +48,20 @@
 	var/mob/living/ui_user
 	/// How long before you can launch tadpole after a landing
 	var/launching_delay = 10 SECONDS
-	///Minimap for use while in landing cam mode
+	/// Native lower-level scene. No per-object appearance snapshots.
+	var/datum/tadpole_scene/flight_scene
+	var/datum/tadpole_transit_animation/transit_animation
+	var/obj/effect/abstract/tadpole_searchlight/ground_searchlight
+	var/list/ground_tiles = list()
+	/// Continuous coordinates in tiles, velocity in tiles/second, heading in degrees.
+	var/flight_x
+	var/flight_y
+	var/flight_heading = 0
+	var/flight_velocity_x = 0
+	var/flight_velocity_y = 0
+	var/flight_turn_velocity = 0
+	var/datum/tadpole_flight_controller/flight_controller
+	///Minimap for use while piloting
 	var/datum/action/minimap/marine/external/tadmap
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/Initialize(mapload)
@@ -55,10 +69,17 @@
 	start_processing()
 	set_light(3,3, LIGHT_COLOR_RED)
 	land_action = new
+	flight_controller = new(src)
 	tadmap = new
+	off_action.name = "Release flight controls"
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/Destroy()
+	if(current_user)
+		remove_eye_control(current_user)
+	QDEL_NULL(transit_animation)
+	clear_ground_view()
+	QDEL_NULL(flight_controller)
 	QDEL_NULL(land_action)
 	QDEL_NULL(tadmap)
 	return ..()
@@ -66,6 +87,9 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/CreateEye()
 	. = ..()
 	tadmap.override_locator(eyeobj)
+	if(eyeobj)
+		// Reuse the remote input/perspective plumbing, never move the actual shuttle in flight.
+		eyeobj.name = "Tadpole flight controls"
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/LateInitialize()
 	shuttle_port = SSshuttle.getShuttle(shuttle_id)
@@ -93,11 +117,6 @@
 	if(fly_state != SHUTTLE_IN_ATMOSPHERE)
 		return
 
-	if(rotate_action)
-		rotate_action.target = user
-		rotate_action.give_action(user)
-		actions += rotate_action
-
 	if(land_action)
 		land_action.target = user
 		land_action.give_action(user)
@@ -106,9 +125,21 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/shuttle_arrived()
 	if(fly_state == next_fly_state)
 		return
+	var/previous_fly_state = fly_state
+	clear_ground_view()
 	fly_state = next_fly_state
+	if(fly_state != SHUTTLE_IN_ATMOSPHERE && current_user)
+		remove_eye_control(current_user)
 	if(fly_state == SHUTTLE_IN_SPACE)
 		shuttle_port.assigned_transit.reserved_area.set_turf_type(/turf/open/space/transit)
+		if(previous_fly_state == SHUTTLE_IN_ATMOSPHERE && transit_animation?.returning)
+			transit_animation.fade_to_space()
+		else
+			QDEL_NULL(transit_animation)
+			if(previous_fly_state == SHUTTLE_ON_SHIP && destination_fly_state == SHUTTLE_IN_ATMOSPHERE)
+				transit_animation = new(src, FALSE)
+	else if(fly_state != SHUTTLE_IN_ATMOSPHERE)
+		QDEL_NULL(transit_animation)
 	if(to_transit)
 		to_transit = FALSE
 		next_fly_state = destination_fly_state
@@ -118,11 +149,16 @@
 	if(fly_state != SHUTTLE_IN_ATMOSPHERE)
 		return
 	shuttle_port.assigned_transit.reserved_area.set_turf_type(/turf/open/space/transit/atmos)
+	transit_animation?.reveal_ground()
 	open_prompt = TRUE
+	initialize_flight_position()
+	build_ground_view()
 
 ///The action of taking off and sending the shuttle to the atmosphere
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/proc/take_off()
 	shuttle_port = SSshuttle.getShuttle(shuttle_id)
+	if((fly_state != SHUTTLE_ON_SHIP && fly_state != SHUTTLE_ON_GROUND) || shuttle_port?.mode != SHUTTLE_IDLE)
+		return
 	#ifndef TESTING
 	if(!(shuttle_port.shuttle_flags & GAMEMODE_IMMUNE) && world.time < SSticker.round_start_time + SSticker.mode.deploy_time_lock)
 		to_chat(ui_user, span_warning("The mothership is too far away from the theatre of operation, we cannot take off."))
@@ -167,15 +203,50 @@
 ///The action of sending the shuttle back to its shuttle port on main ship
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/proc/return_to_ship()
 	shuttle_port = SSshuttle.getShuttle(shuttle_id)
+	if(fly_state != SHUTTLE_IN_ATMOSPHERE || shuttle_port?.mode != SHUTTLE_IDLE)
+		return
+	var/obj/docking_port/stationary/hangar = SSshuttle.getDock(origin_port_id)
+	if(!hangar || !shuttle_port.check_dock(hangar, TRUE))
+		return
 	shuttle_port.shuttle_computer = src
+	SSshuttle.moveShuttleToDock(shuttle_id, hangar, TRUE)
+	if(shuttle_port.mode != SHUTTLE_IGNITING || shuttle_port.destination != hangar)
+		return
 	to_transit = TRUE
 	next_fly_state = SHUTTLE_IN_SPACE
 	destination_fly_state = SHUTTLE_ON_SHIP
-	if(!origin_port_id)
-		return
 	open_prompt = FALSE
 	clean_ui_user()
-	SSshuttle.moveShuttle(shuttle_id, origin_port_id, TRUE)
+	var/initial_scale = transit_animation?.ground_scale() || 1
+	QDEL_NULL(transit_animation)
+	transit_animation = new(src, TRUE, initial_scale)
+
+/obj/docking_port/mobile/marine_dropship/minidropship/check()
+	. = ..()
+	var/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/helm = shuttle_computer
+	if(!istype(helm) || !helm.transit_animation)
+		return
+	if(!helm.transit_animation.revealing_ground && (mode == SHUTTLE_IDLE || mode == SHUTTLE_RECALL))
+		QDEL_NULL(helm.transit_animation)
+		return
+	helm.transit_animation.refresh_viewers()
+
+/// Manual only: moving the shuttle never changes the chosen shutter state.
+/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/proc/toggle_shutters()
+	if(!shuttle_port)
+		return
+	var/list/shutters = list()
+	var/should_open = FALSE
+	for(var/turf/tile as anything in shuttle_port.return_turfs())
+		for(var/obj/machinery/door/poddoor/shutters/transit/shutter in tile)
+			shutters |= shutter
+			if(shutter.density)
+				should_open = TRUE
+	for(var/obj/machinery/door/poddoor/shutters/transit/shutter as anything in shutters)
+		if(should_open)
+			INVOKE_ASYNC(shutter, TYPE_PROC_REF(/obj/machinery/door/poddoor, open))
+		else
+			INVOKE_ASYNC(shutter, TYPE_PROC_REF(/obj/machinery/door/poddoor, close))
 
 /// Toggle the vision between small nightvision and turf vision
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/proc/toggle_nvg()
@@ -278,6 +349,8 @@
 			return_to_ship()
 		if("toggle_nvg")
 			toggle_nvg()
+		if("toggle_shutters")
+			toggle_shutters()
 		if("equip_interact")
 			var/base_tag = text2num(params["equip_interact"])
 			var/obj/docking_port/mobile/marine_dropship/shuttle = shuttle_port
@@ -291,9 +364,15 @@
 	action_icon_state = "land"
 
 /datum/action/innate/shuttledocker_land/Activate()
-	var/mob/C = target
+	var/mob/living/C = target
+	if(!istype(C))
+		return
 	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
+	if(!istype(remote_eye))
+		return
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/origin = remote_eye.origin
+	if(!istype(origin) || origin.current_user != C)
+		return
 	if(origin.shuttle_port.mode != SHUTTLE_IDLE)
 		to_chat(owner, span_warning("The shuttle is not ready to land yet!"))
 		return
@@ -312,6 +391,9 @@
 	SStgui.close_user_uis(C, origin)
 	origin.shuttle_port.set_mode(SHUTTLE_CALL)
 	origin.last_valid_ground_port = origin.my_port
+	// Keep the terrain and light visible throughout the landing countdown.
+	// shuttle_arrived() removes them once the real shuttle reaches the ground.
+	origin.remove_eye_control(C)
 	SSshuttle.moveShuttleToDock(origin.shuttle_id, origin.my_port, TRUE)
 
 /obj/docking_port/mobile/marine_dropship/minidropship/canMove()

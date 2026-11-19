@@ -11,6 +11,7 @@
 	vis_contents += mask
 	held_mask = mask
 	mask.mask_holder = src
+	mask.sync_plane()
 
 /obj/effect/lighting_mask_holder/Destroy(force)
 	vis_contents -= held_mask
@@ -19,4 +20,5 @@
 
 /obj/effect/lighting_mask_holder/Moved(atom/OldLoc, Dir)
 	. = ..()
+	held_mask?.sync_plane()
 	held_mask?.queue_mask_update()//held mask can be null when it is deleted

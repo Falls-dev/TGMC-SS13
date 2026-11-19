@@ -79,6 +79,8 @@
 #include "spawn_xenos.dm"
 #include "subsystem_init.dm"
 #include "tgui_create_message.dm"
+#include "tadpole_flight.dm"
+#include "parachute.dm"
 #include "timer_sanity.dm"
 #include "unit_test.dm"
 #include "verify_emoji_names.dm"

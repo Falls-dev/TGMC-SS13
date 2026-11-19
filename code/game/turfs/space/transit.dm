@@ -53,14 +53,48 @@
 	if(isxenohivemind(crosser))
 		return
 
+	// Capture before the throw/timer: the craft can move or land meanwhile.
+	var/turf/drop_origin = tadpole_airdrop_origin(get_turf(source))
 	var/throw_direction = pick(GLOB.alldirs)
 	if(crosser.dir == REVERSE_DIR(throw_direction)) // if mobs step in the reversed from transit turf direction, they will otherwise get smacked 2 times in a row.
 		throw_direction = crosser.dir
 	var/turf/projected = get_ranged_target_turf(crosser.loc, throw_direction, 10)
 	INVOKE_ASYNC(crosser, TYPE_PROC_REF(/atom/movable, throw_at), projected, 5, 2, null, TRUE, TRUE, TRUE)
-	addtimer(CALLBACK(crosser, GLOBAL_PROC_REF(handle_crosser), crosser), 0.5 SECONDS, TIMER_UNIQUE)
+	addtimer(CALLBACK(crosser, GLOBAL_PROC_REF(handle_crosser), crosser, drop_origin), 0.5 SECONDS, TIMER_UNIQUE)
 
-/proc/handle_crosser(atom/movable/crosser)
+/// Several craft may share a transit z. Match the actual reservation.
+/proc/tadpole_airdrop_origin(turf/transit_turf)
+	var/datum/turf_reservation/reservation = SSmapping.used_turfs[transit_turf]
+	if(!reservation)
+		return
+	for(var/obj/docking_port/stationary/transit/dock as anything in SSshuttle.transit_docking_ports)
+		if(dock.reserved_area != reservation || !istype(dock.owner, /obj/docking_port/mobile/marine_dropship/minidropship))
+			continue
+		var/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/helm = dock.owner.shuttle_computer
+		if(!istype(helm) || helm.fly_state != SHUTTLE_IN_ATMOSPHERE || isnull(helm.flight_x) || !helm.eyeobj?.z)
+			return
+		return locate(round(helm.flight_x + 0.5), round(helm.flight_y + 0.5), helm.eyeobj.z)
+
+/// Use the same safe outdoor restrictions as ordinary transit falls.
+/proc/tadpole_airdrop_target(turf/origin)
+	var/list/candidates = list()
+	for(var/turf/open/tile in range(12, origin))
+		var/area/region = tile.loc
+		if(!region.outside || region.area_flags & NO_DROPPOD || isspacearea(region) || isspaceturf(tile) || is_blocked_turf(tile))
+			continue
+		candidates += tile
+	if(length(candidates))
+		return pick(candidates)
+
+/proc/handle_crosser(atom/movable/crosser, turf/drop_origin)
+	// Recheck after the timer: rescued items and inventory must not fall.
+	if(QDELETED(crosser) || !istype(crosser.loc, /turf/open/space/transit))
+		return
+	if(drop_origin)
+		var/turf/nearby = tadpole_airdrop_target(drop_origin)
+		if(nearby)
+			INVOKE_ASYNC(crosser, TYPE_PROC_REF(/atom/movable, handle_airdrop), nearby)
+			return
 	//find a random spot to drop them
 	var/list/area/potential_areas = shuffle(SSmapping.areas_in_z["[SSmapping.levels_by_trait(ZTRAIT_GROUND)[1]]"])
 	for(var/area/potential_area as anything in potential_areas)
@@ -130,6 +164,11 @@
 	playsound(loc, 'sound/weapons/smash.ogg', 35, 1)
 
 /mob/living/handle_airdrop(turf/target_turf)
+	if(ishuman(src))
+		var/mob/living/carbon/human/jumper = src
+		var/obj/item/parachute/chute = jumper.back
+		if(istype(chute) && chute.deploy(jumper, target_turf))
+			return TRUE
 	. = ..()
 	remove_status_effect(/datum/status_effect/spacefreeze)
 
@@ -150,6 +189,8 @@
 
 /mob/living/carbon/human/handle_airdrop(turf/target_turf)
 	. = ..()
+	if(.) // A parachute landing is not an impact; do not detonate a boom vest.
+		return .
 	if(istype(wear_suit, /obj/item/clothing/suit/storage/marine/boomvest))
 		var/obj/item/clothing/suit/storage/marine/boomvest/vest = wear_suit
 		vest.boom(src)

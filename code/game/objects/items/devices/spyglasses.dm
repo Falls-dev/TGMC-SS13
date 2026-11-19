@@ -69,6 +69,7 @@
 	cam_screen.vis_contents.Cut()
 	for(var/turf/visible_turf in view(1,get_turf(src)))//fuck you usr
 		cam_screen.vis_contents += visible_turf
+	cam_screen.refresh_source_planes()
 
 //it needs to be linked, hence a kit.
 /obj/item/storage/box/rxglasses/spyglasskit

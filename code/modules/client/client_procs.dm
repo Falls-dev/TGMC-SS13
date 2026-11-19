@@ -497,6 +497,9 @@
 			to_chat(src, span_danger("Your previous click was ignored because you've done too many in a second"))
 			return
 
+	var/turf/tadpole_target = tadpole_mouse_target(object, control, modifiers)
+	if(tadpole_target)
+		return tadpole_target.Click(tadpole_target, control, list2params(modifiers))
 	return ..()
 
 ///checks if a client is afk, 3000 frames = 5 minutes
@@ -923,11 +926,14 @@
 		CRASH("change_view called with a number argument. Use the string format instead.")
 	if(prefs && !prefs.widescreenpref && new_size == CONFIG_GET(string/default_view))
 		new_size = CONFIG_GET(string/default_view_square)
+	if(tadpole_viewport?.active)
+		new_size = tadpole_viewport.configure(new_size)
 
 	view = new_size
 	SEND_SIGNAL(src, COMSIG_VIEW_SET, new_size)
 	apply_clickcatcher()
 	mob.reload_fullscreens()
+	tadpole_viewport?.sync_hud()
 	attempt_auto_fit_viewport()
 
 ///Change the fullscreen setting of the client

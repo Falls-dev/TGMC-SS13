@@ -20,6 +20,10 @@
 /// See [code\__DEFINES\sight.dm] for more details
 /mob/proc/set_sight(new_value)
 	SHOULD_CALL_PARENT(TRUE)
+	if(length(sight_modifiers))
+		sight_without_modifiers = new_value
+		for(var/source in sight_modifiers)
+			new_value |= sight_modifiers[source]
 	if(sight == new_value)
 		return
 	var/old_sight = sight
@@ -28,10 +32,28 @@
 	SEND_SIGNAL(src, COMSIG_MOB_SIGHT_CHANGE, new_value, old_sight)
 
 /mob/proc/add_sight(new_value)
-	set_sight(sight | new_value)
+	set_sight((length(sight_modifiers) ? sight_without_modifiers : sight) | new_value)
 
 /mob/proc/clear_sight(new_value)
-	set_sight(sight & ~new_value)
+	set_sight((length(sight_modifiers) ? sight_without_modifiers : sight) & ~new_value)
+
+/// Keep temporary vision separate from equipment's regularly recomputed sight.
+/mob/proc/add_sight_modifier(source, flags)
+	if(!flags || LAZYACCESS(sight_modifiers, source) == flags)
+		return
+	if(!length(sight_modifiers))
+		sight_without_modifiers = sight
+	LAZYSET(sight_modifiers, source, flags)
+	set_sight(sight_without_modifiers)
+
+/mob/proc/remove_sight_modifier(source)
+	if(!LAZYACCESS(sight_modifiers, source))
+		return
+	var/base_sight = sight_without_modifiers
+	LAZYREMOVE(sight_modifiers, source)
+	set_sight(base_sight)
+	if(!length(sight_modifiers))
+		sight_without_modifiers = NONE
 
 /// see invisibility is the mob's capability to see things that ought to be hidden from it
 /// Can think of it as a primitive version of changing the alpha of planes

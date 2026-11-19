@@ -446,3 +446,9 @@
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_MASTER)
 	offsetting_flags = BLOCKS_PLANE_OFFSETTING|OFFSET_RELAYS_MATCH_HIGHEST
+
+/atom/movable/screen/plane_master/tadpole_ground
+	name = "Tadpole ground level"
+	documentation = "Renders the ground z level beneath the real Tadpole in transit, below its floors and occupants."
+	plane = TADPOLE_GROUND_PLANE
+	render_relay_planes = list(RENDER_PLANE_GAME, LIGHT_MASK_PLANE)
