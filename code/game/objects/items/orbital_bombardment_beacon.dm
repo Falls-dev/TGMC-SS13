@@ -3,6 +3,10 @@
 	desc = "A bulky device that fires a beam up to an orbiting vessel to send local coordinates."
 	icon = 'icons/obj/items/beacon.dmi'
 	icon_state = "motion4"
+	worn_icon_list = list(
+		slot_l_hand_str = 'icons/mob/inhands/items/beacon_left.dmi',
+		slot_r_hand_str = 'icons/mob/inhands/items/beacon_right.dmi',
+	)
 	w_class = WEIGHT_CLASS_SMALL
 	/// If this beacon is activated
 	var/activated = FALSE

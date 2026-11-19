@@ -158,6 +158,7 @@
 	singular_name = "medical gauze"
 	desc = "Some sterile gauze to wrap around bloody stumps."
 	icon_state = "brutepack"
+	worn_icon_state = "brutepack"
 	heal_brute = 3
 	number_of_extra_variants = 2
 	heal_flags = BANDAGE
@@ -175,6 +176,7 @@
 	gender = PLURAL
 	singular_name = "ointment"
 	icon_state = "ointment"
+	worn_icon_state = "ointment"
 	heal_burn = 3
 	number_of_extra_variants = 2
 	heal_flags = SALVE
