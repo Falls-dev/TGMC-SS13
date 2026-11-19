@@ -9,6 +9,7 @@
 	INVOKE_ASYNC(jumper, TYPE_PROC_REF(/atom/movable, handle_airdrop), landing)
 	TEST_ASSERT_EQUAL(chute.descending_wearer, jumper, "The real airdrop entry point must deploy the worn chute")
 	TEST_ASSERT(chute.used && chute.canopy in jumper.vis_contents, "The Fulton canopy must appear during descent")
+	TEST_ASSERT(chute.canopy.vis_flags & VIS_INHERIT_PLANE, "The canopy must use the wearer's plane at the landing depth")
 	TEST_ASSERT(HAS_TRAIT(jumper, TRAIT_IMMOBILE), "Descent must prevent ground movement while visually airborne")
 	TEST_ASSERT(!jumper.temporarilyRemoveItemFromInventory(chute), "The deployed harness must not be removable during descent")
 	sleep(3.2 SECONDS)

@@ -171,6 +171,18 @@
 	proj_max_range = ammo.max_range
 	projectile_speed = ammo.shell_speed
 
+/// The launch can put a freshly generated projectile on a turf by assigning
+/// loc directly. Synchronize both the sprite and its movable light in that case.
+/atom/movable/projectile/proc/set_launch_location(atom/launch_location)
+	var/turf/previous_turf = get_turf(src)
+	if(launch_location)
+		loc = launch_location
+	if(!isturf(loc))
+		forceMove(get_turf(src))
+	starting_turf = loc
+	if(SSmapping.max_plane_offset && starting_turf && PLANE_TO_OFFSET(plane) != GET_TURF_PLANE_OFFSET(starting_turf))
+		on_changed_z_level(previous_turf, starting_turf, FALSE)
+
 //Target, firer, shot from. Ie the gun
 /atom/movable/projectile/proc/fire_at(atom/target, mob/living/shooter, atom/source, range, speed, angle, recursivity, suppress_light = FALSE, atom/loc_override = source, scan_loc = FALSE)
 	if(!isnull(speed))
@@ -192,11 +204,7 @@
 		firer = shooter
 	if(source)
 		shot_from = source
-	if(loc_override)
-		loc = loc_override
-	if(!isturf(loc))
-		forceMove(get_turf(src))
-	starting_turf = loc
+	set_launch_location(loc_override)
 
 	if(target)
 		original_target = target
@@ -950,11 +958,7 @@ So if we are on the 32th absolute pixel coordinate we are on tile 1, but if we a
 		firer = shooter
 	if(source)
 		shot_from = source
-	if(loc_override)
-		loc = loc_override
-	if(!isturf(loc))
-		forceMove(get_turf(src))
-	starting_turf = loc
+	set_launch_location(loc_override)
 
 	if(target)
 		original_target = target

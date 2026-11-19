@@ -391,6 +391,15 @@
 	var/turf/ground = locate(40,40,SSmapping.ground_start)
 	TEST_ASSERT(SSmapping.z_level_to_plane_offset[ground.z] >= 1, "Ground planes must be allocated below transit before atom initialization")
 	check_movable_searchlight(ground)
+	var/atom/movable/projectile/ground_plane_test/projectile = new
+	allocated += projectile
+	projectile.generate_bullet(/datum/ammo/bullet/pistol)
+	projectile.fire_at(null, null, ground, angle = 90, recursivity = TRUE)
+	TEST_ASSERT_EQUAL(projectile.plane, GET_NEW_PLANE(GAME_PLANE, GET_TURF_PLANE_OFFSET(ground)), "A projectile fired from nullspace must draw on the launch turf's plane")
+	var/datum/component/overlay_lighting/projectile_light = projectile.GetComponent(/datum/component/overlay_lighting)
+	TEST_ASSERT_NOTNULL(projectile_light, "A projectile must keep its movable light component")
+	TEST_ASSERT_EQUAL(projectile_light.visible_mask.plane, GET_NEW_PLANE(O_LIGHTING_VISUAL_PLANE, GET_TURF_PLANE_OFFSET(ground)), "The projectile light must follow the launch turf's plane")
+	qdel(projectile)
 	var/obj/effect/lighting_mask_holder/light_holder = allocate(/obj/effect/lighting_mask_holder, ground)
 	var/atom/movable/lighting_mask/light = new
 	light_holder.assign_mask(light)
@@ -567,3 +576,7 @@
 	area_flags = NONE
 
 /area/shuttle/minidropship/tadpole_shutter_test
+
+/// Stop the shot after placement so the fixture can inspect a live projectile.
+/atom/movable/projectile/ground_plane_test/projectile_batch_move(required_moves)
+	return PROJECTILE_FROZEN
