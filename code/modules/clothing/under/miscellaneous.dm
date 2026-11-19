@@ -210,3 +210,9 @@
 	worn_icon_state = "tp_bodyrobes"
 	armor_protection_flags = CHEST|GROIN|LEGS|ARMS
 
+/obj/item/clothing/under/dress/maid
+	name = "Maid costume"
+	icon_state = "maid"
+	worn_icon_state = "maid"
+	desc = "Maid in China."
+	armor_protection_flags = CHEST|GROIN

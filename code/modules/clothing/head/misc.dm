@@ -253,3 +253,19 @@
 	inv_hide_flags = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEALLHAIR
 	armor_protection_flags = HEAD|FACE|EYES
 	species_exception = list(/datum/species/robot)
+
+/obj/item/clothing/head/kitty
+	name = "kitty ears"
+	desc = "A pair of kitty ears. Meow!"
+	icon_state = "kitty"
+	color = "#999999"
+	worn_icon_state = "kitty"
+	armor_features_flags = ARMOR_NO_DECAP
+	species_exception = list(/datum/species/robot)
+	soft_armor = list(MELEE = 55, BULLET = 70, LASER = 70, ENERGY = 60, BOMB = 55, BIO = 50, FIRE = 45, ACID = 60)
+
+/obj/item/clothing/head/kitty/equipped(mob/living/carbon/human/user, slot)
+
+	. = ..()
+	if(slot == SLOT_HEAD && ishuman(user))
+		color = rgb(user.r_hair, user.g_hair, user.b_hair)
