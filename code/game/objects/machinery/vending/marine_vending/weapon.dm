@@ -151,7 +151,6 @@
 			/obj/item/ammo_magazine/pistol/derringer = -1,
 		),
 		"Гранаты" = list(
-			/obj/item/explosive/grenade/ionplasma = 20,
 			/obj/item/weapon/gun/grenade_launcher/single_shot = 6,
 			/obj/item/weapon/gun/grenade_launcher/multinade_launcher/unloaded = 2,
 			/obj/item/weapon/gun/rifle/tx54 = 2,
@@ -163,6 +162,7 @@
 			/obj/item/explosive/grenade/m15 = 15,
 			/obj/item/explosive/grenade/sticky = 5,
 			/obj/item/explosive/grenade/sticky/trailblazer = 5,
+			/obj/item/explosive/grenade/ionplasma = 5,
 			/obj/item/explosive/grenade/incendiary = 20,
 			/obj/item/explosive/grenade/bullet/laser = 10,
 			/obj/item/explosive/grenade/bullet/hefa = 10,

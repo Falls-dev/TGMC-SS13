@@ -23,6 +23,7 @@ GLOBAL_LIST_INIT(leader_gear_listed_products, list(
 	/obj/item/explosive/plastique/detpack = list(CAT_LEDSUP, "Detonation pack", 2, "orange3"),
 	/obj/item/explosive/grenade/smokebomb/cloak = list(CAT_LEDSUP, "Cloak grenade", 1, "orange3"),
 	/obj/item/explosive/grenade/incendiary = list(CAT_LEDSUP, "M40 HIDP incendiary grenade", 1, "orange3"),
+	/obj/item/explosive/grenade/ionplasma = list(CAT_LEDSUP, "M55 plasmafire grenade", 2, "orange3"),
 	/obj/item/explosive/grenade/cagenade = list(CAT_LEDSUP, "CG1 capture grenade", 10, "orange3"),
 	/obj/item/explosive/grenade/phosphorus = list(CAT_LEDSUP, "M40 HPDP phosphorous grenade", 5, "orange3"),
 	/obj/item/explosive/grenade/sticky/trailblazer/phosphorus = list(CAT_LEDSUP, "M45 Phosphorus trailblazer grenade", 5, "orange3"),

@@ -38,7 +38,7 @@
 		/obj/item/ammo_magazine/packet/p10x24mm = 1,
 		/obj/item/explosive/plastique = 2,
 		/obj/item/explosive/grenade/smokebomb/cloak = 1,
-		/obj/item/explosive/grenade/incendiary = 1,
+		/obj/item/explosive/grenade/ionplasma = 1,
 		/obj/item/storage/box/mre = 1,
 		/obj/item/ammo_magazine/pistol/vp70 = 2,
 		/obj/item/weapon/gun/pistol/vp70/tactical = 1,
@@ -103,7 +103,7 @@
 	webbing_contents = list(
 		/obj/item/explosive/grenade = 2,
 		/obj/item/explosive/grenade/m15 = 1,
-		/obj/item/explosive/grenade/incendiary = 1,
+		/obj/item/explosive/grenade/ionplasma = 1,
 		/obj/item/binoculars/fire_support/campaign = 1,
 	)
 

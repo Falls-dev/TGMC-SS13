@@ -246,12 +246,14 @@
 	loot = list(
 		/obj/item/explosive/grenade = 7,
 		/obj/item/explosive/grenade/incendiary = 2,
+		/obj/item/explosive/grenade/ionplasma = 1,
 		/obj/item/explosive/grenade/m15 = 1,
 	)
 
 /obj/effect/spawner/random/weaponry/explosive/grenade/incendiaryweighted
 	loot = list(
 		/obj/item/explosive/grenade/incendiary = 7,
+		/obj/item/explosive/grenade/ionplasma = 4,
 		/obj/item/explosive/grenade = 2,
 		/obj/item/explosive/grenade/m15 = 1,
 	)

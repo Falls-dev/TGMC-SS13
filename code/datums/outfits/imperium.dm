@@ -31,7 +31,7 @@
 
 	suit_contents = list(
 		/obj/item/explosive/grenade = 1,
-		/obj/item/explosive/grenade/incendiary = 1,
+		/obj/item/explosive/grenade/ionplasma = 1,
 	)
 
 	backpack_contents = list(
@@ -79,7 +79,7 @@
 
 	suit_contents = list(
 		/obj/item/explosive/grenade = 1,
-		/obj/item/explosive/grenade/incendiary = 1,
+		/obj/item/explosive/grenade/ionplasma = 1,
 	)
 
 	backpack_contents = list(

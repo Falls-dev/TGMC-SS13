@@ -641,6 +641,13 @@
 	spawn_type = /obj/item/explosive/grenade/incendiary
 	closed_overlay = "grenade_box_overlay_hidp"
 
+/obj/item/storage/box/visual/grenade/plasmafire
+	name = "\improper M55 plasmafire grenade box"
+	desc = "A secure box holding 25 M55 plasmafire grenades. Warning: highly flammable!!."
+	spawn_number = 25
+	spawn_type = /obj/item/explosive/grenade/ionplasma
+	closed_overlay = "grenade_box_overlay_plasmafire"
+
 /obj/item/storage/box/visual/grenade/cloaker
 	name = "\improper M45 Cloaker grenade box"
 	desc = "A secure box holding 25 M45 Cloaker greandes. Warning: causes cancer!!!"

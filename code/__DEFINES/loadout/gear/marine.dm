@@ -9,6 +9,7 @@ GLOBAL_LIST_INIT(marine_gear_listed_products, list(
 	/obj/item/explosive/grenade = list(CAT_MARINE, "M40 HEDP grenade", 2, "orange3"),
 	/obj/item/explosive/grenade/sticky = list(CAT_MARINE, "M40 adhesive charge grenade", 2, "orange3"),
 	/obj/item/explosive/grenade/incendiary = list(CAT_MARINE, "M40 HIDP incendiary grenade", 2, "orange3"),
+	/obj/item/explosive/grenade/ionplasma = list(CAT_MARINE, "M55 plasmafire grenade", 4, "orange3"),
 	/obj/item/explosive/grenade/m15 = list(CAT_MARINE, "M15 fragmentation grenade", 3, "orange3"),
 	/obj/item/explosive/grenade/smokebomb/drain = list(CAT_MARINE, "M40-T smoke grenade", 25, "orange3"),
 	/obj/item/explosive/grenade/sticky/cloaker/tangle = list(CAT_MARINE, "M45-T tanglefoot grenade", 20, "orange3"),
