@@ -4,6 +4,40 @@
 /datum/atom_hud/medical
 	hud_icons = list(HEALTH_HUD, STATUS_HUD)
 
+///A public mob overlay, not a subscription to a medical HUD. hud_list only stores the source image.
+/mob/living/carbon/human/proc/kinesis_hud_set_charge(amount, max_amount)
+	set waitfor = FALSE
+	if(max_amount <= 0)
+		return
+	var/image/holder = hud_list?[KINESIS_HUD]
+	if(isnull(holder))
+		return
+	//Overlays copy appearances: remove the old appearance before changing the source image.
+	cut_overlay(holder)
+	holder.icon = 'icons/mob/hud/kinesis.dmi'
+	holder.pixel_y = 32
+	holder.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	holder.layer = FLOAT_LAYER
+	holder.plane = FLOAT_PLANE
+	var/percentage = round(100 * amount / max_amount)
+	var/state = "0"
+	if(percentage > 75)
+		state = "100"
+	else if(percentage > 50)
+		state = "50"
+	else if(percentage > 25)
+		state = "25"
+	holder.icon_state = state
+	add_overlay(holder)
+
+/mob/living/carbon/human/proc/kinesis_hud_clear_charge()
+	set waitfor = FALSE
+	var/image/holder = hud_list?[KINESIS_HUD]
+	if(isnull(holder))
+		return
+	cut_overlay(holder)
+	holder.icon_state = ""
+
 //med hud used by silicons, only shows humans with a uniform with sensor mode activated.
 /datum/atom_hud/medical/basic
 

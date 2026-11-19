@@ -54,6 +54,7 @@ GLOBAL_LIST_INIT(synthetic_gear_listed_products, list(
 	/obj/item/reagent_containers/hypospray/autoinjector/neuraline = list(CAT_SYNTH, "Injector (Neuraline)", 7, "cyan"),
 	/obj/item/clothing/gloves/healthanalyzer = list(CAT_SYNTH, "Health scanner gloves", 2, "yellow"),
 	/obj/item/clothing/gloves/defibrillator = list(CAT_SYNTH, "Advanced medical gloves", 4, "yellow"),
+	/obj/item/clothing/gloves/kinesis/ds13 = list(CAT_SYNTH, "TK-5 telekinesis gauntlets", 20, "blue"),
 	/obj/item/defibrillator/advanced = list(CAT_SYNTH, "advanced emergency defibrillator", 4, "yellow"),
 	/obj/item/tweezers_advanced = list(CAT_SYNTH, "Advanced Tweezers", 8, "yellow"),
 	/obj/effect/vendor_bundle/stretcher = list(CAT_SYNTH, "Medivac Stretcher", 20, "yellow"),

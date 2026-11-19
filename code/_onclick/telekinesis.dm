@@ -19,6 +19,9 @@ To add TK to a living mob, just make it register this proc on ranged attacks and
 Redefine as needed.
 */
 /mob/living/proc/on_ranged_attack_tk(mob/user, atom/target)
+	//A held grab already handles this click through afterattack.
+	if(istype(user.get_active_held_item(), /obj/item/tk_grab))
+		return
 	target.attack_tk(user)
 
 
@@ -30,11 +33,19 @@ Redefine as needed.
 	add_fingerprint(user, "attack_tk")
 
 
+//Interact with turfs remotely; they cannot be held in a tk_grab.
+/turf/attack_tk(mob/user)
+	if(user.incapacitated() || !tkMaxRangeCheck(user, src))
+		return FALSE
+	new /obj/effect/temp_visual/telekinesis(get_turf(src))
+	attack_hand(user)
+	add_fingerprint(user, "attack_tk")
+
+
+
 /obj/attack_tk(mob/user)
 	if(user.incapacitated())
 		return FALSE
-	if(anchored)
-		return ..()
 	attack_tk_grab(user)
 
 
@@ -44,7 +55,8 @@ Redefine as needed.
 	attack_tk_grab(user)
 
 
-/obj/proc/attack_tk_grab(mob/user)
+
+/atom/movable/proc/attack_tk_grab(mob/user)
 	var/obj/item/tk_grab/O = new(src)
 	O.tk_user = user
 	if(O.focus_object(src))
@@ -53,7 +65,9 @@ Redefine as needed.
 
 
 /mob/attack_tk(mob/user)
-	return
+	if(user.incapacitated())
+		return FALSE
+	attack_tk_grab(user)
 
 /*
 	This is similar to item attack_self, but applies to anything
@@ -181,7 +195,7 @@ Redefine as needed.
 	return
 
 
-/obj/item/tk_grab/proc/focus_object(obj/target)
+/obj/item/tk_grab/proc/focus_object(atom/movable/target)
 	if(!check_if_focusable(target))
 		return FALSE
 	focus = target
@@ -190,11 +204,12 @@ Redefine as needed.
 	return TRUE
 
 
-/obj/item/tk_grab/proc/check_if_focusable(obj/target)
+/obj/item/tk_grab/proc/check_if_focusable(atom/movable/target)
 	if(!istype(tk_user) || QDELETED(target) || !istype(target) || !CHECK_BITFIELD(tk_user.status_flags, TK_USER))
 		qdel(src)
 		return FALSE
-	if(!tkMaxRangeCheck(tk_user, target) || target.anchored || !isturf(target.loc))
+	//TK-7 allows anchored objects, living mobs and vehicles; TK-5 uses separate rules.
+	if(!tkMaxRangeCheck(tk_user, target) || !isturf(target.loc))
 		qdel(src)
 		return FALSE
 	return TRUE

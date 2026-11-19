@@ -42,6 +42,30 @@
 	*/
 	var/default_click = FALSE
 
+///TK-5 charge indicator with four levels.
+/atom/movable/screen/kinesis_charge
+	name = "kinesis charge"
+	icon = 'icons/mob/hud/kinesis.dmi'
+	screen_loc = ui_kinesis_charge
+	///Last displayed state, used to skip unchanged updates.
+	var/last_shown = ""
+
+/atom/movable/screen/kinesis_charge/proc/set_charge(amount, max_amount)
+	if(max_amount <= 0)
+		return
+	var/percentage = round(100 * amount / max_amount)
+	var/state = "0"
+	if(percentage > 75)
+		state = "100"
+	else if(percentage > 50)
+		state = "50"
+	else if(percentage > 25)
+		state = "25"
+	if(state == last_shown)
+		return
+	last_shown = state
+	icon_state = state
+
 /atom/movable/screen/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	if(isnull(hud_owner)) //some screens set their hud owners on /new, this prevents overriding them with null post atoms init

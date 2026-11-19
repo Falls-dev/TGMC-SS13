@@ -37,6 +37,12 @@
 	ears = /obj/item/radio/headset/mainship/spatial
 	implants = list(/obj/item/implant/sandevistan)
 
+	// The TK-7 is an admin/debug tool. Keep it in the Spatial Agent's backpack
+	// instead of equipping it, so the agent can choose when to use it.
+	backpack_contents = list(
+		/obj/item/clothing/gloves/kinesis = 1,
+	)
+
 /datum/outfit/job/other/spatial_agent/galaxy_red
 	w_uniform = /obj/item/clothing/under/liaison_suit/galaxy_red
 	belt = null

@@ -15,3 +15,10 @@
 	description = "Toggles your blink drive on, allowing you to instantly teleport short distances."
 	keybind_signal = COMSIG_ITEM_TOGGLE_BLINKDRIVE
 	hotkey_keys = list("G")
+
+/datum/keybinding/item/kinesis_grab
+	name = "Telekinesis grab"
+	full_name = "Telekinesis grab"
+	description = "With telekinesis gauntlets powered on, takes hold of what you are looking at. Press again to let go, which throws whatever you were moving."
+	keybind_signal = COMSIG_ITEM_KINESIS_GRAB
+	hotkey_keys = list("R")
