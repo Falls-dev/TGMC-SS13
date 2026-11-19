@@ -81,6 +81,7 @@
 #define SPECIES_TRAIT "species" // /datum/species innate trait
 #define CRYOPOD_TRAIT "cryopod"
 #define XENO_TRAIT "xeno"
+#define SUPERSOLDIER_TRAIT "supersoldier"
 #define ARMOR_TRAIT "armor"
 #define STAT_TRAIT "stat"
 #define NECKGRAB_TRAIT "neckgrab"
@@ -110,6 +111,8 @@
 #define ZERO_FORM_BEAM_ABILITY_TRAIT "zero_form_beam_ability_trait"
 #define DRAGON_ABILITY_TRAIT "dragon_ability_trait"
 #define WIDOW_ABILITY_TRAIT "widow_ability_trait"
+#define BULL_ABILITY_TRAIT "bull_ability_trait"
+#define HIVELORD_ABILITY_TRAIT "hivelord_ability_trait"
 #define VALHALLA_TRAIT "valhalla"
 #define WEIGHTBENCH_TRAIT "weightbench"
 #define BOILER_ROOTED_TRAIT "boiler_rooted"
@@ -132,6 +135,8 @@
 #define CURRENTLY_TYPING_TRAIT "currently_typing"
 /// Makes you way too tall. Like just too much, dude, it's kind of creepy. Humanoid only.
 #define TRAIT_TOO_TALL "too_tall"
+///massively decreases human MANUAL get up time
+#define TRAIT_QUICK_GETUP "quick_getup"
 #define TRAIT_MOVE_VENTCRAWLING "move_ventcrawling"
 #define VENTCRAWLING_TRAIT "ventcrawling_trait"
 
@@ -220,6 +225,7 @@
 #define TRAIT_FAKEDEATH "fakedeath" //Makes the owner appear as dead to most forms of medical examination
 #define TRAIT_LEGLESS "legless" //Has lost all the appendages needed to stay standing up.
 #define TRAIT_NOPLASMAREGEN "noplasmaregen"//xeno plasma wont recharge
+#define TRAIT_INNATE_HEALING "innate_healing" //xeno can regenerate health without being on weeds
 #define TRAIT_UNDEFIBBABLE "undefibbable"//human can't be revived
 #define TRAIT_IMMEDIATE_DEFIB "immediate_defib"//immediately revives when defibbed, rather than just healing
 #define TRAIT_IS_RELOADING "is_reloading"
@@ -238,8 +244,6 @@
 #define TRAIT_STAGGER_RESISTANT	"stagger_resistant" //Resistance to certain sources of stagger
 #define TRAIT_SLOWDOWNIMMUNE "slowdown_immunity" //Immunity to slowdown
 #define TRAIT_EARDAMAGE_IMMUNE "eardmgimmune" //immune to getting deaf through ear dmg
-///massively decreases human MANUAL get up time
-#define TRAIT_QUICK_GETUP "quick_getup"
 #define TRAIT_SEE_IN_DARK "see_in_dark" //Able to see in dark
 #define TRAIT_MUTED "muted" //target is mute and can't speak
 #define TRAIT_STEALTH "stealth" //mob is in stealth, it means that turrets and ai ignore it, also you can't bump it

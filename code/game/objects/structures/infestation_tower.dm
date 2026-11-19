@@ -141,7 +141,7 @@
 	var/datum/game_mode/infestation/distress/points_defence/mode = SSticker.mode
 	mode.sensors_activated += 1
 
-	playsound(src, 'sound/machines/ping.ogg', 25, 1)
+	playsound(src, 'sound/machines/ping.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	balloon_alert_to_viewers("[src] has finished activation!")
 
 	//marines

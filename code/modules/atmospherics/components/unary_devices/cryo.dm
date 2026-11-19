@@ -220,7 +220,7 @@
 	if(istype(I, /obj/item/reagent_containers/glass))
 
 		for(var/datum/reagent/X in I.reagents.reagent_list)
-			if(X.medbayblacklist)
+			if(X.medbayblacklist || X.cryoblacklist)
 				to_chat(user, span_warning("The cryo cell's automatic safety features beep softly, they must have detected a harmful substance in the beaker."))
 				return
 
@@ -448,10 +448,10 @@
 	if(xeno_attacker.status_flags & INCORPOREAL || xeno_attacker.do_actions)
 		return
 	visible_message(span_warning("[xeno_attacker] begins to pry the [src]'s cover!"), 3)
-	playsound(src,'sound/effects/metal_creaking.ogg', 25, 1)
+	playsound(src,'sound/effects/metal_creaking.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	if(!do_after(xeno_attacker, 2 SECONDS))
 		return
-	playsound(loc, 'sound/effects/metal_creaking.ogg', 25, 1)
+	playsound(loc, 'sound/effects/metal_creaking.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	go_out()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/set_pipenet(datum/pipeline/reference, obj/machinery/atmospherics/A)

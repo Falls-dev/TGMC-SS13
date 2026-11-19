@@ -88,9 +88,15 @@
 	trigger_size = 2
 	///What type of hugger are produced here
 	var/hugger_type = /obj/item/clothing/mask/facehugger
+	///The amount to multiply the hand attach time of the created hugger by.
+	var/hand_attach_time_multiplier = 1
 
-/obj/alien/egg/facehugger/Initialize(mapload, hivenumber)
+/obj/alien/egg/facehugger/Initialize(mapload, hivenumber, new_hugger_type, new_hand_attach_time_multiplier)
 	. = ..()
+	if(new_hugger_type)
+		hugger_type = new_hugger_type
+	if(new_hand_attach_time_multiplier)
+		hand_attach_time_multiplier = new_hand_attach_time_multiplier
 	GLOB.xeno_egg_hugger += src
 
 /obj/alien/egg/facehugger/Destroy()
@@ -162,13 +168,14 @@
 		playsound(loc, 'sound/effects/alien/egg_burst.ogg', 30)
 		flick("egg exploding", src)
 		return
-	playsound(src.loc, 'sound/effects/alien/egg_move.ogg', 25)
+	playsound(src.loc, 'sound/effects/alien/egg_move.ogg', 25, FALSE, MEDIUM_SOUND_RANGE)
 	flick("egg opening", src)
 	addtimer(CALLBACK(src, PROC_REF(spawn_hugger), loc), 1 SECONDS)
 
 /obj/alien/egg/facehugger/proc/spawn_hugger()
 	var/obj/item/clothing/mask/facehugger/hugger = new hugger_type(get_turf(src), hivenumber)
 	hugger_type = null
+	hugger.hand_attach_time = initial(hugger.hand_attach_time) * hand_attach_time_multiplier
 	hugger.go_active()
 
 /obj/alien/egg/facehugger/attack_alien(mob/living/carbon/xenomorph/xenomorph, damage_amount = xenomorph.xeno_caste.melee_damage, damage_type = BRUTE, damage_flag = MELEE, effects = TRUE, armor_penetration = 0, isrightclick = FALSE)
@@ -193,7 +200,7 @@
 		if(3, 4)
 			xenomorph.visible_message(span_xenonotice("\The [xenomorph] clears the hatched egg."), \
 			span_xenonotice("We clear the hatched egg."))
-			playsound(loc, SFX_ALIEN_RESIN_BREAK, 25)
+			playsound(loc, SFX_ALIEN_RESIN_BREAK, 25, FALSE, MEDIUM_SOUND_RANGE)
 			qdel(src)
 
 /obj/alien/egg/facehugger/attackby(obj/item/I, mob/user, params)
@@ -280,7 +287,7 @@
 		flick("egg gas exploding", src)
 		spread = EGG_GAS_KILL_SPREAD
 	else
-		playsound(src.loc, 'sound/effects/alien/egg_move.ogg', 25)
+		playsound(src.loc, 'sound/effects/alien/egg_move.ogg', 25, FALSE, MEDIUM_SOUND_RANGE)
 		flick("egg gas opening", src)
 	spread += gas_size_bonus
 
@@ -292,7 +299,7 @@
 	if(maturity_stage > stage_ready_to_burst)
 		xenomorph.visible_message(span_xenonotice("\The [xenomorph] clears the hatched egg."), \
 		span_xenonotice("We clear the broken egg."))
-		playsound(loc, SFX_ALIEN_RESIN_BREAK, 25)
+		playsound(loc, SFX_ALIEN_RESIN_BREAK, 25, FALSE, MEDIUM_SOUND_RANGE)
 		qdel(src)
 
 	if(!issamexenohive(xenomorph) || xenomorph.a_intent != INTENT_HELP)

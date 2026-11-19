@@ -47,11 +47,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(loc, 'sound/weapons/smash.ogg', 25, 1)
+				playsound(loc, 'sound/weapons/smash.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			else
-				playsound(loc, 'sound/weapons/tap.ogg', 25, 1)
+				playsound(loc, 'sound/weapons/tap.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 25, 1)
+			playsound(loc, 'sound/items/welder.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 
 /obj/ex_act(severity, direction)
 	if(CHECK_BITFIELD(resistance_flags, INDESTRUCTIBLE))
@@ -129,7 +129,7 @@
 		xeno_attacker.visible_message(span_danger("[xeno_attacker] has slashed [src]!"),
 		span_danger("We slash [src]!"))
 		xeno_attacker.do_attack_animation(src, ATTACK_EFFECT_CLAW)
-		playsound(loc, SFX_ALIEN_CLAW_METAL, 25)
+		playsound(loc, SFX_ALIEN_CLAW_METAL, 25, FALSE, MEDIUM_SOUND_RANGE)
 	attack_generic(xeno_attacker, damage_amount, damage_type, damage_flag, effects, armor_penetration)
 	return TRUE
 

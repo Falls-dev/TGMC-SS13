@@ -5,7 +5,6 @@
 		slot_r_hand_str = 'icons/mob/inhands/gun/rifle_righthand_1.dmi',
 	)
 	reload_sound = 'sound/weapons/guns/interact/rifle_reload.ogg'
-	cocked_sound = 'sound/weapons/guns/interact/cocked.ogg'
 	silenced_sound = 'sound/weapons/guns/rifles/AR-12/AR12_SIL.ogg'
 	wield_sound =    'sound/weapons/guns/rifles/Deploy_Wave_RIFLES.ogg'
 	equip_slot_flags = ITEM_SLOT_BACK

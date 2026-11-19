@@ -12,6 +12,111 @@
 	contains = list(/obj/item/shotgunbox/clf_heavyrifle)
 	cost = 100
 
+/datum/supply_packs/imports/nt_halter
+	name = "NT Halter Bullpup Rifle"
+	cost = 100
+	contains = list(/obj/item/weapon/gun/rifle/nt_halter)
+
+/datum/supply_packs/imports/nt_halter_cqb
+	name = "NT Halter CQB Rifle"
+	cost = 75
+	contains = list(/obj/item/weapon/gun/rifle/nt_halter/cqb)
+
+/datum/supply_packs/imports/nt_vortex
+	name = "NT Vortex SMG"
+	cost = 50
+	contains = list(/obj/item/weapon/gun/smg/vortex)
+
+/datum/supply_packs/imports/nt_halter_mag
+	name = "NT Halter Standard Magazine"
+	cost = 20
+	contains = list(/obj/item/ammo_magazine/rifle/nt_halter)
+
+/datum/supply_packs/imports/nt_halter_mag_extended
+	name = "NT Halter Extended Magazine"
+	cost = 30
+	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/extended)
+
+/datum/supply_packs/imports/nt_halter_mag_drum
+	name = "NT Halter Drum Magazine"
+	cost = 40
+	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/drum)
+
+/datum/supply_packs/imports/nt_halter_mag_charged
+	name = "NT Halter Charged Magazine"
+	cost = 45
+	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/charged)
+
+/datum/supply_packs/imports/nt_halter_mag_smart
+	name = "NT Halter Smart Magazine"
+	cost = 35
+	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/smart)
+
+/datum/supply_packs/imports/nt_halter_mag_foxfire
+	name = "NT Halter Foxfire Magazine"
+	cost = 45
+	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/foxfire)
+
+/datum/supply_packs/imports/nt_halter_mag_laser
+	name = "NT Halter Laser Magazine"
+	cost = 25
+	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/laser)
+
+/datum/supply_packs/imports/nt_halter_mag_laser_extended
+	name = "NT Halter Extended Laser Magazine"
+	cost = 35
+	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/laser/extended)
+
+/datum/supply_packs/imports/nt_halter_mag_laser_drum
+	name = "NT Halter Laser Drum Magazine"
+	cost = 45
+	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/laser/drum)
+
+/datum/supply_packs/imports/nt_halter_mag_rubber
+	name = "NT Halter Rubber Magazine"
+	cost = 15
+	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/rubber)
+
+/datum/supply_packs/imports/nt_halter_mag_rubber_extended
+	name = "NT Halter Extended Rubber Magazine"
+	cost = 25
+	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/rubber/extended)
+
+/datum/supply_packs/imports/vortex_mag
+	name = "NT Vortex Standard Magazine"
+	cost = 15
+	contains = list(/obj/item/ammo_magazine/smg/vortex)
+
+/datum/supply_packs/imports/vortex_mag_ap
+	name = "NT Vortex AP Magazine"
+	cost = 25
+	contains = list(/obj/item/ammo_magazine/smg/vortex/ap)
+
+/datum/supply_packs/imports/vortex_mag_squashhead
+	name = "NT Vortex Squashhead Magazine"
+	cost = 20
+	contains = list(/obj/item/ammo_magazine/smg/vortex/squashhead)
+
+/datum/supply_packs/imports/vortex_mag_rubber
+	name = "NT Vortex Rubber Magazine"
+	cost = 10
+	contains = list(/obj/item/ammo_magazine/smg/vortex/rubber)
+
+/datum/supply_packs/imports/vortex_mag_incendiary
+	name = "NT Vortex Incendiary Magazine"
+	cost = 25
+	contains = list(/obj/item/ammo_magazine/smg/vortex/incendiary)
+
+/datum/supply_packs/imports/vortex_mag_extended
+	name = "NT Vortex Extended Magazine"
+	cost = 25
+	contains = list(/obj/item/ammo_magazine/smg/vortex/extended)
+
+/datum/supply_packs/imports/vortex_mag_taser
+	name = "NT Vortex Taser Magazine"
+	cost = 30
+	contains = list(/obj/item/ammo_magazine/smg/vortex/taser)
+
 /datum/supply_packs/imports/m41a
 	name = "PR-11 Pulse Rifle"
 	contains = list(/obj/item/weapon/gun/rifle/m41a)
@@ -334,126 +439,3 @@
 	notes = "Contains a random, but curated set of items, these packs are valued around 150 to 200 points. Some items can only be acquired from these. Spend responsibly."
 	contains = list(/obj/item/loot_box/tgmclootbox)
 	cost = 1000
-
-/datum/supply_packs/imports/mini_pig
-	name = "Mini pig"
-	containertype = /obj/structure/closet/crate
-	contains = list(/mob/living/simple_animal/pig/mini)
-	cost = 300
-
-/datum/supply_packs/imports/pig
-	name = "Pig"
-	containertype = /obj/structure/closet/crate
-	contains = list(/mob/living/simple_animal/pig)
-	cost = 500
-
-/datum/supply_packs/imports/horse
-	name = "Horse"
-	containertype = /obj/structure/closet/crate
-	contains = list(/mob/living/simple_animal/horse)
-	cost = 1000
-
-/datum/supply_packs/imports/nt_halter
-	name = "NT Halter Bullpup Rifle"
-	cost = 100
-	contains = list(/obj/item/weapon/gun/rifle/nt_halter)
-
-/datum/supply_packs/imports/nt_halter_cqb
-	name = "NT Halter CQB Rifle"
-	cost = 75
-	contains = list(/obj/item/weapon/gun/rifle/nt_halter/cqb)
-
-/datum/supply_packs/imports/nt_vortex
-	name = "NT Vortex SMG"
-	cost = 50
-	contains = list(/obj/item/weapon/gun/smg/vortex)
-
-/datum/supply_packs/imports/nt_halter_mag
-	name = "NT Halter Standard Magazine"
-	cost = 20
-	contains = list(/obj/item/ammo_magazine/rifle/nt_halter)
-
-/datum/supply_packs/imports/nt_halter_mag_extended
-	name = "NT Halter Extended Magazine"
-	cost = 30
-	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/extended)
-
-/datum/supply_packs/imports/nt_halter_mag_drum
-	name = "NT Halter Drum Magazine"
-	cost = 40
-	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/drum)
-
-/datum/supply_packs/imports/nt_halter_mag_charged
-	name = "NT Halter Charged Magazine"
-	cost = 45
-	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/charged)
-
-/datum/supply_packs/imports/nt_halter_mag_smart
-	name = "NT Halter Smart Magazine"
-	cost = 35
-	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/smart)
-
-/datum/supply_packs/imports/nt_halter_mag_foxfire
-	name = "NT Halter Foxfire Magazine"
-	cost = 45
-	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/foxfire)
-
-/datum/supply_packs/imports/nt_halter_mag_laser
-	name = "NT Halter Laser Magazine"
-	cost = 25
-	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/laser)
-
-/datum/supply_packs/imports/nt_halter_mag_laser_extended
-	name = "NT Halter Extended Laser Magazine"
-	cost = 35
-	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/laser/extended)
-
-/datum/supply_packs/imports/nt_halter_mag_laser_drum
-	name = "NT Halter Laser Drum Magazine"
-	cost = 45
-	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/laser/drum)
-
-/datum/supply_packs/imports/nt_halter_mag_rubber
-	name = "NT Halter Rubber Magazine"
-	cost = 15
-	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/rubber)
-
-/datum/supply_packs/imports/nt_halter_mag_rubber_extended
-	name = "NT Halter Extended Rubber Magazine"
-	cost = 25
-	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/rubber/extended)
-
-/datum/supply_packs/imports/vortex_mag
-	name = "NT Vortex Standard Magazine"
-	cost = 15
-	contains = list(/obj/item/ammo_magazine/smg/vortex)
-
-/datum/supply_packs/imports/vortex_mag_ap
-	name = "NT Vortex AP Magazine"
-	cost = 25
-	contains = list(/obj/item/ammo_magazine/smg/vortex/ap)
-
-/datum/supply_packs/imports/vortex_mag_squashhead
-	name = "NT Vortex Squashhead Magazine"
-	cost = 20
-	contains = list(/obj/item/ammo_magazine/smg/vortex/squashhead)
-
-/datum/supply_packs/imports/vortex_mag_rubber
-	name = "NT Vortex Rubber Magazine"
-	cost = 10
-	contains = list(/obj/item/ammo_magazine/smg/vortex/rubber)
-
-/datum/supply_packs/imports/vortex_mag_incendiary
-	name = "NT Vortex Incendiary Magazine"
-	cost = 25
-	contains = list(/obj/item/ammo_magazine/smg/vortex/incendiary)
-
-/datum/supply_packs/imports/vortex_mag_extended
-	name = "NT Vortex Extended Magazine"
-	cost = 25
-	contains = list(/obj/item/ammo_magazine/smg/vortex/extended)
-
-/datum/supply_packs/imports/vortex_mag_taser
-	name = "NT Vortex Taser Magazine"
-	cost = 30
-	contains = list(/obj/item/ammo_magazine/smg/vortex/taser)

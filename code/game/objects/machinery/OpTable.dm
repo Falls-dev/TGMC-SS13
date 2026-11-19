@@ -79,7 +79,7 @@
 	if(anes_tank)
 		user.put_in_active_hand(anes_tank)
 		to_chat(user, span_notice("You remove \the [anes_tank] from \the [src]."))
-		playsound(loc, 'sound/effects/air_release.ogg', 25, 1)
+		playsound(loc, 'sound/effects/air_release.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 		anes_tank = null
 
 /obj/machinery/optable/user_buckle_mob(mob/living/buckling_mob, mob/user, check_loc = TRUE, silent)
@@ -259,7 +259,7 @@
 		return FALSE
 
 	return TRUE
-	
+
 /obj/machinery/optable/yautja
 	icon = 'icons/obj/machines/yautja_machines.dmi'
 

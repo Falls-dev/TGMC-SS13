@@ -111,12 +111,14 @@
 
 ///Ask the shooter to fire and schedule the next shot if need
 /datum/component/automatedfire/autofire/process_shot()
-	if(!shooting)
+	if(QDELETED(src) || !shooting)
 		return
 	if(next_fire > world.time)//This mean duplication somewhere, we abort now
 		return
-	if(!(callback_fire.Invoke() & AUTOFIRE_CONTINUE))//reset fire if we want to stop
+	if(!(callback_fire?.Invoke() & AUTOFIRE_CONTINUE))//reset fire if we want to stop
 		hard_reset()
+		return
+	if(QDELETED(src))
 		return
 	switch(fire_mode)
 		if(GUN_FIREMODE_BURSTFIRE)

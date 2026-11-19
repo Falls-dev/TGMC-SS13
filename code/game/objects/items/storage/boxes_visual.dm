@@ -128,6 +128,7 @@
 		pickup(H)
 		deployed = FALSE
 		update_icon()
+		storage_datum.close(H)
 
 /obj/item/storage/box/visual/update_icon_state()
 	. = ..()

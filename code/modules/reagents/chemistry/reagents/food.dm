@@ -420,6 +420,7 @@
 	color = "#66801e"
 	taste_description = "burning"
 	reagent_ui_priority = REAGENT_UI_TOXINS
+	cryoblacklist = TRUE
 
 /datum/reagent/consumable/larvajelly/on_mob_life(mob/living/L, metabolism)
 	L.adjust_brute_loss(-0.5*effect_str)

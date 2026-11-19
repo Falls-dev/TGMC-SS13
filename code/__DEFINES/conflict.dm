@@ -77,6 +77,7 @@
 ///Used to identify ammo from sentry guns and other other automated sources
 #define AMMO_SENTRY (1<<17)
 #define AMMO_SKIPS_ZOMBIE (1<<18)
+#define AMMO_BLOCKED_BY_GLASS (1<<19)
 
 //Gun defines for gun related thing. More in the projectile folder.
 //gun_features_flags
@@ -152,9 +153,9 @@
 #define SLOWDOWN_ARMOR_VERY_HEAVY 1
 
 //Marine armor defines
-#define MARINE_ARMOR_LIGHT list(MELEE = 35, BULLET = 50, LASER = 50, ENERGY = 40, BOMB = 10, BIO = 40, FIRE = 35, ACID = 40)
-#define MARINE_ARMOR_MEDIUM list(MELEE = 45, BULLET = 60, LASER = 60, ENERGY = 50, BOMB = 20, BIO = 45, FIRE = 40, ACID = 50)
-#define MARINE_ARMOR_HEAVY list(MELEE = 55, BULLET = 70, LASER = 70, ENERGY = 60, BOMB = 30, BIO = 50, FIRE = 45, ACID = 60)
+#define MARINE_ARMOR_LIGHT list(MELEE = 35, BULLET = 50, LASER = 50, ENERGY = 40, BOMB = 45, BIO = 40, FIRE = 35, ACID = 40)
+#define MARINE_ARMOR_MEDIUM list(MELEE = 45, BULLET = 60, LASER = 60, ENERGY = 50, BOMB = 50, BIO = 45, FIRE = 40, ACID = 50)
+#define MARINE_ARMOR_HEAVY list(MELEE = 55, BULLET = 70, LASER = 70, ENERGY = 60, BOMB = 55, BIO = 50, FIRE = 45, ACID = 60)
 #define MARINE_HAT_ARMOR list(MELEE = 15, BULLET = 15, LASER = 15, ENERGY = 15, BOMB = 10, BIO = 5, FIRE = 35, ACID = 20)
 
 //=================================================

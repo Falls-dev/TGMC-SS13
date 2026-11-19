@@ -187,9 +187,9 @@
 /mob/new_player/proc/view_manifest()
 	GLOB.crew_manifest.open_ui(src)
 
-/// Proc for lobby button "View Hive" to see current leader/queen status.
+/// Shows the normal hive roster from the lobby.
 /mob/new_player/proc/view_xeno_manifest()
-	open_hive_leaders_tgui(src)
+	GLOB.xeno_manifest.ui_interact(src)
 
 /mob/new_player/proc/view_lore()
 	var/output = "<div align='center'>"

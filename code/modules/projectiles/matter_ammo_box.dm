@@ -54,7 +54,7 @@
 		var/transfer_amount = min(matter_amount, matter_box.max_matter_amount - matter_box.matter_amount)
 		matter_box.matter_amount += transfer_amount
 		matter_amount -= transfer_amount
-		playsound(loc, 'sound/weapons/guns/interact/revolver_load.ogg', 25, 1)
+		playsound(loc, 'sound/weapons/guns/interact/revolver_load.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 		to_chat(user, span_notice("You transfer universal ammunition from [src] to [matter_box]."))
 		matter_box.update_icon()
 		update_icon()
@@ -80,7 +80,7 @@
 			if(use_delay && !do_after(user, use_delay, NONE, src, BUSY_ICON_GENERIC))
 				return
 
-			playsound(loc, 'sound/weapons/guns/interact/revolver_load.ogg', 25, 1)
+			playsound(loc, 'sound/weapons/guns/interact/revolver_load.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			var/rounds_to_add = min(trunc(matter_amount / ammo_magazine.default_ammo.matter_cost), ammo_magazine.max_rounds - ammo_magazine.current_rounds)
 			var/matter_used = rounds_to_add * ammo_magazine.default_ammo.matter_cost
 
@@ -99,7 +99,7 @@
 				to_chat(user, span_warning("[src] is full!"))
 				return
 
-			playsound(loc, 'sound/weapons/guns/interact/revolver_load.ogg', 25, 1)
+			playsound(loc, 'sound/weapons/guns/interact/revolver_load.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 			var/rounds_to_remove = min(ammo_magazine.current_rounds, trunc((max_matter_amount - matter_amount) / ammo_magazine.default_ammo.matter_cost))
 			var/matter_gained = rounds_to_remove * ammo_magazine.default_ammo.matter_cost
 
@@ -127,7 +127,7 @@
 		var/transfer_amount = min(matter_amount, other_box.max_matter_amount - other_box.matter_amount)
 		other_box.matter_amount += transfer_amount
 		matter_amount -= transfer_amount
-		playsound(loc, 'sound/weapons/guns/interact/revolver_load.ogg', 25, 1)
+		playsound(loc, 'sound/weapons/guns/interact/revolver_load.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 		to_chat(user, span_notice("You transfer universal ammunition from [src] to [other_box]."))
 		other_box.update_icon()
 		update_icon()

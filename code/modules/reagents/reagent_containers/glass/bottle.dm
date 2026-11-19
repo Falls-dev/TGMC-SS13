@@ -226,20 +226,22 @@
 	name = "\improper Meralyne bottle"
 	desc = "A small bottle. Contains meralyne - used as a potent treatment against brute damage."
 	icon_state = "bottle14"
-	list_reagents = list(/datum/reagent/medicine/meralyne = 240)
+	volume = 120
+	list_reagents = list(/datum/reagent/medicine/meralyne = 120)
 
 /obj/item/reagent_containers/glass/bottle/dermaline
 	name = "\improper Dermaline bottle"
 	desc = "A small bottle. Contains dermaline - used as a potent treatment against burns."
 	icon_state = "bottle15"
-	list_reagents = list(/datum/reagent/medicine/dermaline = 240)
+	volume = 120
+	list_reagents = list(/datum/reagent/medicine/dermaline = 120)
 
 /obj/item/reagent_containers/glass/bottle/meraderm
 	name = "\improper Meraderm bottle"
 	desc = "A small bottle. Contains meralylne and dermaline - used as a potent treatment against physical injuries."
 	icon_state = "bottle19"
-	volume = 60
-	list_reagents = list(/datum/reagent/medicine/dermaline = 30, /datum/reagent/medicine/meralyne = 30)
+	volume = 120
+	list_reagents = list(/datum/reagent/medicine/dermaline = 60, /datum/reagent/medicine/meralyne = 60)
 
 /obj/item/reagent_containers/glass/bottle/nanoblood
 	name = "\improper Nanoblood bottle"

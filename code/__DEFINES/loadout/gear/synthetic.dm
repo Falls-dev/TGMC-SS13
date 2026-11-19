@@ -24,7 +24,7 @@ GLOBAL_LIST_INIT(synthetic_gear_listed_products, list(
 	/obj/item/cell/rtg/small = list(CAT_SYNTH, "Recharger powercell", 2, "yellow"),
 	/obj/item/cell/rtg/large = list(CAT_SYNTH, "Large recharger powercell", 5, "yellow"),
 	//medic stuff
-	/obj/item/reagent_containers/glass/bottle/lemoline/doctor = list(CAT_SYNTH, "Lemoline bottle", 14, "orange"),
+	/obj/item/reagent_containers/glass/bottle/lemoline/doctor = list(CAT_SYNTH, "Lemoline bottle", 12, "orange"),
 	/obj/item/storage/pill_bottle/meralyne = list(CAT_SYNTH, "Meralyne pills", 14, "orange"),
 	/obj/item/storage/pill_bottle/dermaline = list(CAT_SYNTH, "Dermaline pills", 14, "orange"),
 	/obj/item/storage/pill_bottle/russian_red = list(CAT_SYNTH, "Red Russian pills", 12, "orange"),
@@ -34,9 +34,9 @@ GLOBAL_LIST_INIT(synthetic_gear_listed_products, list(
 	/obj/item/stack/medical/heal_pack/advanced/burn_combat_pack = list(CAT_SYNTH, "Combat Burn Kit", 3, "orange"),
 	/obj/item/reagent_containers/hypospray/advanced = list(CAT_SYNTH, "Hypospray", 1, "yellow"),
 	/obj/item/reagent_containers/hypospray/advanced/big = list(CAT_SYNTH, "Big hypospray", 2, "yellow"),
-	/obj/item/storage/syringe_case/meralyne = list(CAT_SYNTH, "syringe Case (120u Meralyne)", 14, "blue"),
-	/obj/item/storage/syringe_case/dermaline = list(CAT_SYNTH, "syringe Case (120u Dermaline)", 14, "blue"),
-	/obj/item/storage/syringe_case/meraderm = list(CAT_SYNTH, "syringe Case (120u Meraderm)", 14, "blue"),
+	/obj/item/storage/syringe_case/meralyne = list(CAT_SYNTH, "syringe Case (240u Meralyne)", 14, "blue"),
+	/obj/item/storage/syringe_case/dermaline = list(CAT_SYNTH, "syringe Case (240u Dermaline)", 14, "blue"),
+	/obj/item/storage/syringe_case/meraderm = list(CAT_SYNTH, "syringe Case (240u Meraderm)", 14, "blue"),
 	/obj/item/storage/syringe_case/nanoblood = list(CAT_SYNTH, "syringe Case (120u Nanoblood)", 4, "blue"),
 	/obj/item/reagent_containers/hypospray/advanced/meralyne = list(CAT_SYNTH, "Hypospray (120u Meralyne)", 14, "cyan"), //half the units of the mera case half the price
 	/obj/item/reagent_containers/hypospray/advanced/dermaline = list(CAT_SYNTH, "Hypospray (120u dermaline)", 14, "cyan"), //half the units of the derm case half the price
@@ -58,5 +58,4 @@ GLOBAL_LIST_INIT(synthetic_gear_listed_products, list(
 	/obj/item/tweezers_advanced = list(CAT_SYNTH, "Advanced Tweezers", 8, "yellow"),
 	/obj/effect/vendor_bundle/stretcher = list(CAT_SYNTH, "Medivac Stretcher", 20, "yellow"),
 	/obj/item/deployable_optable = list(CAT_SYNTH, "Deployable Operating Table", 12, "yellow"),
-	/obj/item/storage/briefcase/t312 = list(CAT_MEDSUP, "R-312 'Albedo' Revolver", 25, "red"), // can buy for other, why not
 ))

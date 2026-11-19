@@ -101,11 +101,11 @@
 	ready = !ready
 	user.visible_message(span_notice("[user] turns [src] [ready? "on and opens the cover" : "off and closes the cover"]."),
 	span_notice("You turn [src] [ready? "on and open the cover" : "off and close the cover"]."))
-	playsound(get_turf(src), SFX_SPARKS, 25, TRUE, 4)
+	playsound(get_turf(src), SFX_SPARKS, 25, TRUE, SUPPRESSED_SOUND_RANGE)
 	if(ready)
-		playsound(get_turf(src), 'sound/items/defib_safetyOn.ogg', 45, 0)
+		playsound(get_turf(src), 'sound/items/defib_safetyOn.ogg', 45, FALSE, SHORT_SOUND_RANGE)
 	else
-		playsound(get_turf(src), 'sound/items/defib_safetyOff.ogg', 45, 0)
+		playsound(get_turf(src), 'sound/items/defib_safetyOff.ogg', 45, FALSE, SHORT_SOUND_RANGE)
 	update_icon()
 
 ///Wrapper to guarantee powercells are properly nulled and avoid hard deletes.
@@ -199,7 +199,7 @@
 
 	user.visible_message(span_notice("[user] starts setting up the paddles on [patient]'s chest."),
 	span_notice("You start setting up the paddles on [patient]'s chest."))
-	playsound(get_turf(src),'sound/items/defib_charge.ogg', 45, 0) // Don't vary this, it should be exactly 7 seconds
+	playsound(get_turf(src),'sound/items/defib_charge.ogg', 45) // Don't vary this, it should be exactly 7 seconds
 
 	if(!do_after(user, shock_time, NONE, patient, BUSY_ICON_FRIENDLY, BUSY_ICON_MEDICAL))
 		to_chat(user, span_warning("You stop setting up the paddles on [patient]'s chest."))
@@ -213,7 +213,7 @@
 	sparks.start()
 	dcell.use(charge_cost)
 	update_icon()
-	playsound(get_turf(src), 'sound/items/defib_release.ogg', 45, 1)
+	playsound(get_turf(src), 'sound/items/defib_release.ogg', 45, TRUE)
 	user.visible_message(span_notice("[user] shocks [patient] with the paddles."),
 	span_notice("You shock [patient] with the paddles."))
 	patient.visible_message(span_warning("[patient]'s body convulses a bit."))
@@ -230,7 +230,7 @@
 		patient.set_oxy_loss(0)
 		patient.update_health()
 
-		var/heal_target = patient.get_death_threshold() - patient.health + 1
+		var/heal_target = patient.get_crit_threshold() - patient.health + 1
 		var/all_loss = patient.get_brute_loss() + patient.get_fire_loss() + patient.get_tox_loss()
 		if(all_loss && (heal_target > 0))
 			var/brute_ratio = patient.get_brute_loss() / all_loss
@@ -239,6 +239,9 @@
 			if(tox_ratio)
 				patient.adjust_tox_loss(-(tox_ratio * heal_target))
 			patient.heal_overall_damage(brute_ratio*heal_target, burn_ratio * heal_target, TRUE) // explicitly also heals robot parts
+		if(HAS_TRAIT_FROM(patient, TRAIT_IMMEDIATE_DEFIB, SUPERSOLDIER_TRAIT))
+			if(heart && !advanced)
+				heart.take_damage(15)
 
 	else if(!issynth(patient)) // TODO make me a trait :)
 		patient.adjust_brute_loss(-defib_heal_amt)
@@ -265,7 +268,7 @@
 
 	if(fail_reason)
 		user.visible_message(span_warning("[icon2html(src, viewers(user))] \The [src] buzzes: Resuscitation failed - [fail_reason]"))
-		playsound(src, 'sound/items/defib_failed.ogg', 45, FALSE)
+		playsound(src, 'sound/items/defib_failed.ogg', 45)
 		return
 
 	ghost = patient.get_ghost(TRUE)
@@ -277,7 +280,7 @@
 
 	to_chat(patient, span_notice("<i><font size=4>You suddenly feel a spark and your consciousness returns, dragging you back to the mortal plane...</font></i>"))
 	user.visible_message(span_notice("[icon2html(src, viewers(user))] \The [src] beeps: Resuscitation successful."))
-	playsound(get_turf(src), 'sound/items/defib_success.ogg', 45, 0)
+	playsound(get_turf(src), 'sound/items/defib_success.ogg', 45)
 	patient.update_health()
 	patient.resuscitate() // time for a smoke
 	patient.emote("gasp")

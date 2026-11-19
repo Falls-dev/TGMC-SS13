@@ -1,12 +1,12 @@
 GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 /atom/proc/remove_alt_appearance(key)
-	if(alternate_appearances)
-		for(var/K in alternate_appearances)
-			var/datum/atom_hud/alternate_appearance/AA = alternate_appearances[K]
-			if(AA.appearance_key == key)
-				AA.remove_from_hud(src)
-				break
+	var/datum/atom_hud/alternate_appearance/appearance_to_remove = LAZYACCESS(alternate_appearances, key)
+	if(!appearance_to_remove)
+		return
+	appearance_to_remove.remove_from_hud(src)
+	if(!QDELETED(appearance_to_remove) && !length(appearance_to_remove.hudatoms))
+		qdel(appearance_to_remove)
 
 /atom/proc/add_alt_appearance(type, key, ...)
 	if(!type || !key)
@@ -49,6 +49,8 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		A.alternate_appearances[appearance_key] = src
 
 /datum/atom_hud/alternate_appearance/remove_from_hud(atom/A)
+	if(!(A in hudatoms))
+		return FALSE
 	. = ..()
 	if(.)
 		LAZYREMOVE(A.alternate_appearances, appearance_key)
@@ -95,8 +97,10 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 /datum/atom_hud/alternate_appearance/basic/remove_from_hud(atom/A)
 	. = ..()
+	if(!.)
+		return
 	A.hud_list -= appearance_key
-	if(. && !QDELETED(src))
+	if(!length(hudatoms) && !QDELETED(src))
 		qdel(src)
 
 /datum/atom_hud/alternate_appearance/basic/copy_overlays(atom/other, cut_old)
