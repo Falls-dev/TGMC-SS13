@@ -67,6 +67,7 @@
 #include "drink_icons.dm"
 #include "focus_only_tests.dm"
 #include "font_awesome_icons.dm"
+#include "gunslinger.dm"
 #include "implanting.dm"
 #include "item_variant_test.dm"
 #include "keybinding_init.dm"

@@ -478,6 +478,15 @@ GLOBAL_LIST_INIT(sentry_ignore_List, set_sentry_ignore_List())
 	if(world.time >= (last_fire + 20 SECONDS))
 		playsound(loc, 'sound/items/turrets/turret_fire.ogg', 50, TRUE, 20)
 		sleep(5) //yes, its sleeping a bit before fire
+		if(QDELETED(src) || QDELETED(gun))
+			return
+		if(machine_stat & (KNOCKED_DOWN|EMPED) || !(gun.turret_flags & TURRET_ON) || !gun.rounds || !scan())
+			sentry_stop_fire()
+			return
+		target = get_target()
+		if(!target)
+			sentry_stop_fire()
+			return
 
 	if(CHECK_BITFIELD(gun.turret_flags, TURRET_RADIAL))
 		setDir(get_cardinal_dir(src, target))
