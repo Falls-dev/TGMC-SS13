@@ -390,6 +390,7 @@
 	TEST_ASSERT(passenger_plate.get_relay_to(RENDER_PLANE_TRANSPARENT), "Leaving must restore native multiz routing")
 	var/turf/ground = locate(40,40,SSmapping.ground_start)
 	TEST_ASSERT(SSmapping.z_level_to_plane_offset[ground.z] >= 1, "Ground planes must be allocated below transit before atom initialization")
+	check_z_transition(start, ground)
 	check_movable_searchlight(ground)
 	var/atom/movable/projectile/ground_plane_test/projectile = new
 	allocated += projectile
@@ -418,6 +419,34 @@
 	qdel(display)
 	qdel(other_display)
 	helm.eyeobj = null
+
+/datum/unit_test/tadpole_flight/proc/check_z_transition(turf/transit, turf/ground)
+	var/transit_depth = GET_TURF_PLANE_OFFSET(transit)
+	var/ground_depth = GET_TURF_PLANE_OFFSET(ground)
+	TEST_ASSERT_EQUAL(transit_depth, 0, "Transit must use depth zero")
+	TEST_ASSERT(ground_depth > transit_depth, "The observer test must cross render depths")
+	var/obj/reused = allocate(/obj, ground)
+	TEST_ASSERT_EQUAL(reused.plane, GET_NEW_PLANE(GAME_PLANE, ground_depth), "The reusable object must start on a ground plane")
+	reused.moveToNullspace()
+	reused.forceMove(transit)
+	TEST_ASSERT_EQUAL(reused.plane, GAME_PLANE, "Returning from nullspace must rebase an object's plane to transit depth")
+
+	var/mob/dead/observer/spectator = allocate(/mob/dead/observer, transit)
+	var/datum/hud/display = allocate(/datum/hud, spectator)
+	// Direct ghost jumps and orbit both move the observer through abstract_move.
+	display.on_eye_change(null, null, spectator)
+	var/datum/plane_master_group/group = display.get_plane_group(PLANE_GROUP_MAIN)
+	spectator.abstract_move(ground)
+	var/depth_after_jump = display.current_plane_offset
+	var/plane_group_after_jump = group.active_offset
+	spectator.forceMove(transit)
+	var/depth_after_return = display.current_plane_offset
+	var/plane_group_after_return = group.active_offset
+	qdel(display)
+	TEST_ASSERT_EQUAL(depth_after_jump, ground_depth, "Ghost jumps must switch the HUD to the arrival depth")
+	TEST_ASSERT_EQUAL(plane_group_after_jump, ground_depth, "Ground plane masters must activate after the jump")
+	TEST_ASSERT_EQUAL(depth_after_return, transit_depth, "Forced ghost movement must restore the transit depth")
+	TEST_ASSERT_EQUAL(plane_group_after_return, transit_depth, "Transit plane masters must reactivate on return")
 
 /// Headless renderer/state test. Actual client eye assignment and mouse-hit
 /// rasterization require a connected-client check, not a matrix assertion.

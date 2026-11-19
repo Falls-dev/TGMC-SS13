@@ -240,14 +240,30 @@
 	return overlays
 
 /**
- * meant for movement with zero side effects. only use for objects that are supposed to move "invisibly" (like camera mobs or ghosts)
- * if you want something to move onto a tile with a beartrap or recycler or tripmine or mouse without that object knowing about it at all, use this
- * most of the time you want forceMove()
+ * Move without turf or area entry and exit callbacks. Use forceMove for ordinary
+ * gameplay movement. Callers such as shuttle moves can handle z changes separately.
  */
-/atom/movable/proc/abstract_move(atom/new_loc)
+/atom/movable/proc/abstract_move(atom/new_loc, track_z = FALSE)
 	var/atom/old_loc = loc
-	loc = new_loc
+	if(track_z)
+		set_loc_with_z_tracking(new_loc)
+	else
+		loc = new_loc
 	Moved(old_loc)
+
+/// Assign loc without movement callbacks, while keeping z-level listeners and
+/// plane depths synchronized. The new location must be visible to those listeners.
+/atom/movable/proc/set_loc_with_z_tracking(atom/destination)
+	var/turf/old_turf = get_turf(src)
+	loc = destination
+	var/turf/new_turf = get_turf(src)
+	if(old_turf?.z != new_turf?.z)
+		notify_z_transition(old_turf, new_turf)
+
+/// An atom in nullspace can still carry the render depth of its last turf.
+/atom/movable/proc/notify_z_transition(turf/old_turf, turf/new_turf)
+	var/old_depth = old_turf ? GET_TURF_PLANE_OFFSET(old_turf) : (SSmapping.max_plane_offset ? PLANE_TO_OFFSET(plane) : 0)
+	on_changed_z_level(old_turf, new_turf, old_depth == GET_TURF_PLANE_OFFSET(new_turf))
 
 /**
  * The move proc is responsible for (in order):
@@ -492,11 +508,10 @@
 				oldloc.Exited(src, movement_dir)
 				if(old_area && old_area != destarea)
 					old_area.Exited(src, movement_dir)
-			var/turf/oldturf = get_turf(oldloc)
-			var/turf/destturf = get_turf(destination)
-			if(oldturf?.z != destturf?.z)
-				var/same_z_layer = (GET_TURF_PLANE_OFFSET(oldturf) == GET_TURF_PLANE_OFFSET(destturf))
-				on_changed_z_level(oldturf, destturf, same_z_layer)
+			var/turf/old_turf = get_turf(oldloc)
+			var/turf/new_turf = get_turf(destination)
+			if(old_turf?.z != new_turf?.z)
+				notify_z_transition(old_turf, new_turf)
 			destination.Entered(src, oldloc)
 			if(destarea && old_area != destarea)
 				destarea.Entered(src, oldloc)

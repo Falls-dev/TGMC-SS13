@@ -47,8 +47,6 @@
 	ADD_TRAIT(src, TRAIT_NODROP, REF(src))
 	canopy = new
 	canopy.icon_state = "fulton_balloon"
-	// The canopy is a nullspace visual. Follow the wearer's plane across the drop.
-	canopy.vis_flags |= VIS_INHERIT_PLANE
 	canopy.appearance_flags |= KEEP_APART
 	canopy.layer = ABOVE_MOB_LAYER
 	jumper.vis_contents += canopy
