@@ -123,7 +123,12 @@
 	var/datum/ammo/xeno/acid/heavy/scatter/scatter_spit = GLOB.ammo_list[/datum/ammo/xeno/acid/heavy/scatter]
 
 	var/atom/movable/projectile/newspit = new /atom/movable/projectile(get_turf(xeno_owner))
-	newspit.generate_bullet(scatter_spit, scatter_spit.damage * (should_get_upgrade_bonus ? SPIT_UPGRADE_BONUS(xeno_owner) : 0))
+	var/scatter_damage = scatter_spit.damage * (should_get_upgrade_bonus ? SPIT_UPGRADE_BONUS(xeno_owner) : 0)
+	if(xeno_owner.is_hivemind_ai_minion())
+		scatter_damage *= HIVEMIND_MINION_RANGED_DAMAGE_MULTIPLIER
+	newspit.generate_bullet(scatter_spit, scatter_damage)
+	if(xeno_owner.is_hivemind_ai_minion() && ishuman(target))
+		newspit.accuracy = max(5, newspit.accuracy - HIVEMIND_MINION_SCATTER_ACCURACY_PENALTY)
 	newspit.def_zone = xeno_owner.get_limbzone_target()
 
 	newspit.fire_at(target, xeno_owner, xeno_owner, newspit.ammo.max_range)

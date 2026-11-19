@@ -61,6 +61,8 @@
 #define KEYBINDING_NORMAL "normal_trigger"
 /// Alternate keybinding , calls alternate_ability_activation
 #define KEYBINDING_ALTERNATE "alternate_trigger"
+/// Extra action-specific binding slot; actions must route it in keybind_trigger().
+#define KEYBINDING_SECONDARY "secondary_trigger"
 
 /* Defines for layering action overlays
 Numbers closer to 0 get drawn above everything thats smaller

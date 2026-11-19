@@ -34,7 +34,8 @@
 
 	actions = list(
 		/datum/action/ability/xeno_action/xeno_resting,
-		/datum/action/ability/activable/xeno/secrete_resin,
+		/datum/action/ability/activable/xeno/secrete_resin/nymph,
 		/datum/action/ability/activable/xeno/plant_weeds,
-		/datum/action/ability/activable/xeno/place_pattern,
+		/datum/action/ability/activable/xeno/transfer_plasma/nymph,
+		/datum/action/ability/activable/xeno/psychic_cure/nymph_salve,
 	)

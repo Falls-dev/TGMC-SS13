@@ -23,8 +23,8 @@
 	///What xeno created this well
 	var/mob/living/carbon/xenomorph/creator = null
 
-/obj/structure/xeno/acidwell/Initialize(mapload, _creator)
-	. = ..()
+/obj/structure/xeno/acidwell/Initialize(mapload, mob/living/carbon/xenomorph/_creator)
+	. = ..(mapload, _creator?.hivenumber)
 	creator = _creator
 	RegisterSignal(creator, COMSIG_QDELETING, PROC_REF(clear_creator))
 	START_PROCESSING(SSslowprocess, src)
@@ -123,16 +123,20 @@
 		deconstruct(TRUE, xeno_attacker)
 		return
 
+	fill_charge(xeno_attacker)
+
+/// Fill one charge with plasma from xeno_attacker. TRUE on success. Also used by RTS/AI minions
+/obj/structure/xeno/acidwell/proc/fill_charge(mob/living/carbon/xenomorph/xeno_attacker)
 	if(charges >= XENO_ACID_WELL_MAX_CHARGES)
 		balloon_alert(xeno_attacker, "Already full")
-		return
+		return FALSE
 	if(charging)
 		balloon_alert(xeno_attacker, "Already being filled")
-		return
+		return FALSE
 
 	if(xeno_attacker.plasma_stored < XENO_ACID_WELL_FILL_COST) //You need to have enough plasma to attempt to fill the well
 		balloon_alert(xeno_attacker, "Need [XENO_ACID_WELL_FILL_COST - xeno_attacker.plasma_stored] more plasma")
-		return
+		return FALSE
 
 	charging = TRUE
 
@@ -140,12 +144,12 @@
 	if(!do_after(xeno_attacker, XENO_ACID_WELL_FILL_TIME, IGNORE_HELD_ITEM, src, BUSY_ICON_BUILD))
 		charging = FALSE
 		balloon_alert(xeno_attacker, "Aborted refilling")
-		return
+		return FALSE
 
 	if(xeno_attacker.plasma_stored < XENO_ACID_WELL_FILL_COST)
 		charging = FALSE
 		balloon_alert(xeno_attacker, "Need [XENO_ACID_WELL_FILL_COST - xeno_attacker.plasma_stored] more plasma")
-		return
+		return FALSE
 
 	xeno_attacker.plasma_stored -= XENO_ACID_WELL_FILL_COST
 	charges++
@@ -153,6 +157,7 @@
 	update_icon()
 	balloon_alert(xeno_attacker, "Now has [charges] / [XENO_ACID_WELL_MAX_CHARGES] charges")
 	to_chat(xeno_attacker,span_xenonotice("We add acid to [src]. It is currently has <b>[charges] / [XENO_ACID_WELL_MAX_CHARGES] charges</b>.") )
+	return TRUE
 
 /obj/structure/xeno/acidwell/proc/on_cross(datum/source, atom/movable/A, oldloc, oldlocs)
 	SIGNAL_HANDLER
