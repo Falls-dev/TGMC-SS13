@@ -8,7 +8,7 @@
 	icon_off = "xeno_cage"
 	icon_opened = "xeno_cage_open"
 	max_integrity = 500
-	icon = 'icons/tgmc_erp/obj/structures/xeno_cage.dmi'
+	icon = 'icons/obj/structures/xeno_cage.dmi'
 	max_mob_size = MOB_SIZE_BIG
 	drag_delay = 0 //wheels yay
 	anchored = FALSE
@@ -45,8 +45,9 @@
 
 /obj/item/explosive/grenade/cagenade
 	name = "CG1 widerange species capture grenade"
-	icon = 'icons/tgmc_erp/obj/items/cage_grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "grenade_sticky_pmc"
+	worn_icon_state = "grenade_sticky_pmc"
 	desc = "Unfolds into a xeno containment device when thrown, Gotta catch em all. Use on a stunned target, it does not stick and only catch things it's right on top of after the timer is up."
 	hitsound = null
 
@@ -100,9 +101,9 @@
 /obj/item/explosive/grenade/ionplasma
 	name = "\improper M55 plasmafire grenade"
 	desc = "The M55 plasmafire grenade, nickamed 'GOBLIN' has a grenade casing design similar to the M15 model but disperses ionizing plasma fire in a tight radius. This grenade is used to cut off tight bottlenecks and enforce prolonged area denial compared to the M40 HIDP incendiary grenade. It is set to detonate in 3 seconds."
-	icon = 'icons/tgmc_erp/obj/items/grenade.dmi'
+	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "grenade_ionplasma"
-	worn_icon_state = "grenade_ionplasma"
+	worn_icon_state = "grenade_fire"
 	hud_state = "electrothermal"
 	det_time = 3 SECONDS
 	icon_state_mini = "grenade_green"

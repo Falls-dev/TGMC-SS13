@@ -505,7 +505,7 @@
 	name = "SG-153 spotting rifle"
 	desc = "An underslung spotting rifle, generally found ontop of another gun."
 	icon_state = "sg153"
-	icon = 'icons/obj/items/guns/marksman64.dmi'
+	icon = 'icons/obj/items/gun/marksman64.dmi'
 	fire_sound =  'sound/weapons/guns/fire/spottingrifle.ogg'
 	caliber = CALIBER_12X7
 	slot = ATTACHMENT_SLOT_UNDER
@@ -547,7 +547,7 @@
 /obj/item/ammo_magazine/standard_gpmg/big
 	name = "\improper MG-60 GPMG quadruple box magazine (10x26mm)"
 	desc = "A series of 4 belt boxes linked together for the MG-60 general purpose machinegun, incredibly impractical to use undeployed."
-	icon = 'icons/obj/items/ammo/campaign_magazines.dmi'
+	icon = 'icons/obj/items/ammo/magazine.dmi'
 	icon_state = "t60b"
 	w_class = WEIGHT_CLASS_BULKY
 	reload_delay = 8 SECONDS
@@ -592,7 +592,7 @@
 /obj/item/ammo_magazine/rifle/standard_carbine/ap
 	name = "\improper AR-18 AP magazine (10x24mm)"
 	desc = "A 10mm assault carbine magazine, loaded with light armor piercing rounds."
-	icon = 'icons/obj/items/ammo/campaign_magazines.dmi'
+	icon = 'icons/obj/items/ammo/magazine.dmi'
 	icon_state = "t18_ap"
 	icon_state_mini = "mag_rifle_big_green"
 	default_ammo = /datum/ammo/bullet/rifle/hv
@@ -604,7 +604,7 @@
 /obj/item/ammo_magazine/rifle/standard_assaultrifle/ap
 	name = "\improper AR-12 AP magazine (10x24mm)"
 	desc = "A 10mm assault rifle magazine, loaded with light armor piercing rounds."
-	icon = 'icons/obj/items/ammo/campaign_magazines.dmi'
+	icon = 'icons/obj/items/ammo/magazine.dmi'
 	icon_state = "t12_ap"
 	icon_state_mini = "mag_rifle_big_green"
 	default_ammo = /datum/ammo/bullet/rifle/hv

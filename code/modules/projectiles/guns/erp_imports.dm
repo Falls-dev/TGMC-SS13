@@ -1,16 +1,16 @@
 //halter bullpup rifle
 /obj/item/weapon/gun/rifle/nt_halter
 	//Abomination of AR-21, PR-412, AR-18 and MPI-KM
-	name = "\improper NT 'Halter' assault rifle"
-	desc = "The standardized NTC bullpup AR design made to be used as their default primary firearm Chambered in 7.62x39mm."
-	icon = 'icons/tgmc_erp/obj/items/guns/rifles64.dmi'
+	name = "\improper NT 'Yadot' assault rifle"
+	desc = "An NTC bullpup rifle chambered in 7.62x39mm. Named for Yadot, a decorated marine who left TerraGov after an alleged dispute with command."
+	icon = 'icons/obj/items/gun/rifle64.dmi'
 	icon_state = "halter"
 	worn_icon_state = "halter"
 	worn_icon_list = list(
-		slot_l_hand_str = 'icons/tgmc_erp/mob/inhands/guns/rifles_left_64.dmi',
-		slot_r_hand_str = 'icons/tgmc_erp/mob/inhands/guns/rifles_right_64.dmi',
-		slot_s_store_str = 'icons/tgmc_erp/mob/clothing/back.dmi',
-		slot_back_str = 'icons/tgmc_erp/mob/clothing/back.dmi',
+		slot_l_hand_str = 'icons/mob/inhands/gun/rifle_lefthand_64.dmi',
+		slot_r_hand_str = 'icons/mob/inhands/gun/rifle_righthand_64.dmi',
+		slot_s_store_str = 'icons/mob/clothing/back.dmi',
+		slot_back_str = 'icons/mob/clothing/back.dmi',
 	)
 	inhand_x_dimension = 64
 	inhand_y_dimension = 32
@@ -86,9 +86,9 @@
 
 /obj/item/weapon/gun/rifle/nt_halter/cqb
 	//more accurate but less AP version of v34 basically without stock option since its a bullpup, it IS the stock.
-	name = "\improper NT 'Halter-CQB' carbine"
-	desc = "A variant of Halter series standardized NTC bullpup AR design made into a carbine, Chambered in 7.62x39mm. This one is altered for close combat. The smaller frame make it lighter and easier to handle in close range encounters but it suffers from range reduction and overall accuracy."
-	icon = 'icons/tgmc_erp/obj/items/guns/rifles64.dmi'
+	name = "\improper NT 'Yadot-CQB' carbine"
+	desc = "A compact carbine based on the NT 'Yadot' rifle, named for a decorated marine who left TerraGov after an alleged dispute with command. Its shorter barrel trades range and accuracy for easier handling in close quarters. Chambered in 7.62x39mm."
+	icon = 'icons/obj/items/gun/rifle64.dmi'
 	attachable_offset = list("muzzle_x" = 39, "muzzle_y" = 19,"rail_x" = 19, "rail_y" = 23, "under_x" = 29, "under_y" = 13, "stock_x" = 0, "stock_y" = 13)
 	icon_state = "haltercqb"
 	worn_icon_state = "haltercqb"
@@ -107,11 +107,11 @@
 
 //standard mag
 /obj/item/ammo_magazine/rifle/nt_halter
-	name = "\improper NT 'Halter' magazine (7.62x39mm)"
-	desc = "A magazine filled with 7.62x39mm rifle rounds for the Halter series of firearms."
+	name = "\improper NT 'Yadot' magazine (7.62x39mm)"
+	desc = "A magazine filled with 7.62x39mm rifle rounds for the Yadot series of firearms."
 	caliber = CALIBER_762X39
 	icon_state = "halter"
-	icon = 'icons/tgmc_erp/obj/items/ammo/rifle.dmi'
+	icon = 'icons/obj/items/ammo/magazine.dmi'
 	bonus_overlay = "halter_mag"
 	default_ammo = /datum/ammo/bullet/rifle/heavy/halter
 	max_rounds = 36
@@ -126,8 +126,8 @@
 
 //extended mag
 /obj/item/ammo_magazine/rifle/nt_halter/extended
-	name = "\improper NT 'Halter' extended magazine (7.62x39mm)"
-	desc = "An extended magazine filled with 7.62x39mm rifle rounds for the Halter series of firearms."
+	name = "\improper NT 'Yadot' extended magazine (7.62x39mm)"
+	desc = "An extended magazine filled with 7.62x39mm rifle rounds for the Yadot series of firearms."
 	max_rounds = 58 //close to mpi-km roughly
 	icon_state = "halter_ex"
 	bonus_overlay = "halter_ex"
@@ -137,8 +137,8 @@
 
 //drum mag
 /obj/item/ammo_magazine/rifle/nt_halter/drum
-	name = "\improper NT 'Halter' drum magazine (7.62x39mm)"
-	desc = "An drum magazine filled with 7.62x39mm rifle rounds for the Halter series of firearms."
+	name = "\improper NT 'Yadot' drum magazine (7.62x39mm)"
+	desc = "A drum magazine filled with 7.62x39mm rifle rounds for the Yadot series of firearms."
 	max_rounds = 80
 	icon_state = "halter_drum"
 	bonus_overlay = "halter_drum"
@@ -149,8 +149,8 @@
 
 //emp mag
 /obj/item/ammo_magazine/rifle/nt_halter/charged
-	name = "\improper NT 'Halter' taser magazine (7.62x39mm Taser)"
-	desc = "A magazine filled with specialized 7.62x39mm rifle rounds to deliver a powerful shock ontop of blunt force, for the Halter series of firearms. This has a 15% chance per shot to deliver an EM pulse."
+	name = "\improper NT 'Yadot' taser magazine (7.62x39mm Taser)"
+	desc = "A magazine filled with specialized 7.62x39mm rifle rounds to deliver a powerful shock ontop of blunt force, for the Yadot series of firearms. This has a 15% chance per shot to deliver an EM pulse."
 	icon_state = "halter_charged"
 	bonus_overlay = "halter_charged"
 	default_ammo = /datum/ammo/bullet/rifle/heavy/halter/charged
@@ -194,8 +194,8 @@
 
 //smart mag
 /obj/item/ammo_magazine/rifle/nt_halter/smart
-	name = "\improper NT 'Halter' smart magazine (7.62x39mm Smart)"
-	desc = "A magazine filled with specialized 7.62x39mm rifle rounds that slightly sways to avoid friendlies but loses overall power, for the Halter series of firearms."
+	name = "\improper NT 'Yadot' smart magazine (7.62x39mm Smart)"
+	desc = "A magazine filled with specialized 7.62x39mm rifle rounds that slightly sways to avoid friendlies but loses overall power, for the Yadot series of firearms."
 	icon_state = "halter_smart"
 	bonus_overlay = "halter_smart"
 	default_ammo = /datum/ammo/bullet/rifle/heavy/halter/smart
@@ -209,8 +209,8 @@
 
 //foxfire mag
 /obj/item/ammo_magazine/rifle/nt_halter/foxfire
-	name = "\improper NT 'Halter' foxfire magazine (7.62x39mm AP-I)"
-	desc = "A magazine filled with specialized 7.62x39mm AP-I rifle rounds that pierce armor and ignite targets, for the Halter series of firearms."
+	name = "\improper NT 'Yadot' foxfire magazine (7.62x39mm AP-I)"
+	desc = "A magazine filled with specialized 7.62x39mm AP-I rifle rounds that pierce armor and ignite targets, for the Yadot series of firearms."
 	icon_state = "halter_foxfire"
 	bonus_overlay = "halter_foxfire"
 	default_ammo = /datum/ammo/bullet/rifle/heavy/ap/foxfire
@@ -235,7 +235,7 @@
 
 //laser mag
 /obj/item/ammo_magazine/rifle/nt_halter/laser
-	name = "\improper NT 'Halter' laser magazine (7.62x39mm LE)"
+	name = "\improper NT 'Yadot' laser magazine (7.62x39mm LE)"
 	desc = "A magazine filled with specialized 7.62x39mm single shot laser emitter rounds that shoots laser bolts instead of a standard round."
 	icon_state = "halter_laser"
 	bonus_overlay = "halter_laser"
@@ -243,14 +243,14 @@
 
 /datum/ammo/energy/lasgun/halter
 	//slightly less damage than regular bullets but except laser standard sundering and bullet speed.
-	name = "halter laser bolt"
+	name = "Yadot laser bolt"
 	penetration = 15
 	bullet_color = COLOR_RED_LIGHT
 
 //extended mag
 /obj/item/ammo_magazine/rifle/nt_halter/laser/extended
-	name = "\improper NT 'Halter' extended laser magazine (7.62x39mm LE)"
-	desc = "An extended magazine filled with 7.62x39mm laser emitter rounds for the Halter series of firearms."
+	name = "\improper NT 'Yadot' extended laser magazine (7.62x39mm LE)"
+	desc = "An extended magazine filled with 7.62x39mm laser emitter rounds for the Yadot series of firearms."
 	max_rounds = 58
 	icon_state = "halter_laser_ex"
 	bonus_overlay = "halter_laser_ex"
@@ -261,8 +261,8 @@
 
 //extended mag
 /obj/item/ammo_magazine/rifle/nt_halter/laser/drum
-	name = "\improper NT 'Halter' drum laser magazine (7.62x39mm)"
-	desc = "An drum magazine filled with 7.62x39mm laser emitter rounds for the Halter series of firearms."
+	name = "\improper NT 'Yadot' drum laser magazine (7.62x39mm)"
+	desc = "A drum magazine filled with 7.62x39mm laser emitter rounds for the Yadot series of firearms."
 	max_rounds = 80
 	icon_state = "halter_laser_drum"
 	bonus_overlay = "halter_laser_drum"
@@ -273,10 +273,10 @@
 
 //rubber mags
 /obj/item/ammo_magazine/rifle/nt_halter/rubber
-	name = "\improper NT 'Halter' rubber magazine (7.62x39mm rub)"
-	desc = "A magazine filled with 7.62x39mm rubber rifle rounds for the Halter series of firearms."
+	name = "\improper NT 'Yadot' rubber magazine (7.62x39mm rub)"
+	desc = "A magazine filled with 7.62x39mm rubber rifle rounds for the Yadot series of firearms."
 	icon_state = "halter_rub"
-	icon = 'icons/tgmc_erp/obj/items/ammo/rifle.dmi'
+	icon = 'icons/obj/items/ammo/magazine.dmi'
 	bonus_overlay = "halter_rub_mag"
 	default_ammo = /datum/ammo/bullet/rifle/heavy/rubber
 
@@ -285,24 +285,25 @@
 	sundering = 1.75
 
 /obj/item/ammo_magazine/rifle/nt_halter/rubber/extended
-	name = "\improper NT 'Halter' extended rubber magazine (7.62x39mm rub)"
-	desc = "An extended magazine filled with 7.62x39mm rubber rounds for the Halter series of firearms."
+	name = "\improper NT 'Yadot' extended rubber magazine (7.62x39mm rub)"
+	desc = "An extended magazine filled with 7.62x39mm rubber rounds for the Yadot series of firearms."
 	max_rounds = 58
 	icon_state = "halter_rub_ex"
 	bonus_overlay = "halter_rub_ex"
 
-//The Dragoon rapid engagement rifle.
+//The Deferson rapid engagement rifle.
 /obj/item/weapon/gun/rifle/dragoon
-	name = "\improper Dragoon Mk1 Rapid Engagement Rifle"
-	desc = "The Dragoon Rapid Engagement rifle is a powerful, above-average capacity and agile rifle designed to be used in situations requiring frequent relocation and short engagements. Triangular casings allow it to hold a greater amount of ammo compared to similar rifles. Unfortunately it has not seen widespread adoption due to the lack of detachable magazine and a complex, delicate feeding mechanism that requires users to put additional care into every reload, lest the newly-loaded cartridges end up pushed right back up into the stripper clip. Fires an exotic 9.8x22mm cartridge with great penetration capabilities."
-	icon = 'icons/tgmc_erp/obj/items/guns/dragoon.dmi'
+	name = "\improper Deferson Mk1 rapid engagement rifle"
+	desc = "A compact semi-automatic rifle built for short engagements and quick repositioning. Its integral magazine feeds from stripper clips and takes proprietary 9.8x22mm cartridges with triangular cases."
+	icon = 'icons/obj/items/gun/marksman64.dmi'
 	icon_state = "dragoon"
 	worn_icon_state = "dragoon"
+	worn_worn_icon_state_slots = list(slot_back_str = "garand")
 	inhand_x_dimension = 64
 	inhand_y_dimension = 32
 	worn_icon_list = list(
-		slot_l_hand_str = 'icons/tgmc_erp/mob/inhands/dragoon_left.dmi',
-		slot_r_hand_str = 'icons/tgmc_erp/mob/inhands/dragoon_right.dmi',
+		slot_l_hand_str = 'icons/mob/inhands/gun/marksman_lefthand_64.dmi',
+		slot_r_hand_str = 'icons/mob/inhands/gun/marksman_righthand_64.dmi',
 	)
 	fire_sound = 'sound/weapons/guns/fire/mp38_1.ogg'
 	dry_fire_sound = 'sound/weapons/guns/fire/sniper_empty.ogg'
@@ -431,15 +432,16 @@
 /obj/item/weapon/gun/rifle/plasma_dmr
 	name = "\improper PMR-14 plasma marksman rifle"
 	desc = "An experimental weapon designed to set the terrain and targets on fire. It hums with power as magnetic fields coil round each other. This is the Designated Marksman Rifle variant of the series with twenty bolts and higher projectile velocity."
-	icon = 'icons/tgmc_erp/obj/items/guns/energy64.dmi'
+	icon = 'icons/obj/items/gun/energy64.dmi'
 	icon_state = "lamplighter"
 	worn_icon_state = "lamplighter"
+	worn_worn_icon_state_slots = list(slot_back_str = "plasmarifle")
 	ammo_level_icon = ""
 	inhand_x_dimension = 64
 	inhand_y_dimension = 32
 	worn_icon_list = list(
-		slot_l_hand_str = 'icons/tgmc_erp/mob/inhands/guns/energy_left_64.dmi',
-		slot_r_hand_str = 'icons/tgmc_erp/mob/inhands/guns/energy_right_64.dmi',
+		slot_l_hand_str = 'icons/mob/inhands/gun/energy_lefthand_64.dmi',
+		slot_r_hand_str = 'icons/mob/inhands/gun/energy_righthand_64.dmi',
 	)
 	gun_firemode_list = list(GUN_FIREMODE_AUTOMATIC)
 	caliber = CALIBER_PLASMA
@@ -494,7 +496,7 @@
 /obj/item/ammo_magazine/rifle/plasma_dmr
 	name = "\improper PMR-14 plasma cell"
 	desc = "An energy cell for the PMR-14 plasma marksman rifle."
-	icon = 'icons/tgmc_erp/obj/items/ammo/rifle.dmi'
+	icon = 'icons/obj/items/ammo/magazine.dmi'
 	caliber = CALIBER_PLASMA
 	icon_state = "lamplighter"
 	max_rounds = 20
@@ -503,19 +505,20 @@
 	magazine_flags = NONE
 	icon_state_mini = "mag_plasma"
 /obj/item/weapon/gun/pistol/xmdivider/ntc
-	name = "\improper NT/105 'Unity' Revolver"
-	desc = "NTC's special production replica of Intertech's one of a kind 'Divider' revolver, named Unity after reverse engineering a sample. Fires .357 and .357 Foxfire rounds, This model has no burst fire but it has greater stopping power than it's original. They indeed let it get into enemy hands."
-	icon = 'icons/tgmc_erp/obj/items/guns/pistols.dmi'
-	icon_state = "nt105"
-	worn_icon_state = "nt105"
+	name = "\improper T105 Unity revolver"
+	desc = "An NTC revolver reverse-engineered from Intertech's Divider. The T105 trades burst fire for more stopping power per shot and accepts standard .357 and Foxfire rounds."
+	icon = 'icons/obj/items/gun/pistol64.dmi'
+	icon_state = "t105"
+	worn_icon_state = "t105"
+	fire_animation = null
 	worn_icon_list = list(
-		slot_l_hand_str = 'icons/tgmc_erp/mob/inhands/guns/pistols_left_1.dmi',
-		slot_r_hand_str = 'icons/tgmc_erp/mob/inhands/guns/pistols_right_1.dmi',
+		slot_l_hand_str = 'icons/mob/inhands/gun/pistol_lefthand_1.dmi',
+		slot_r_hand_str = 'icons/mob/inhands/gun/pistol_righthand_1.dmi',
 	)
 	caliber = CALIBER_357 //codex
 	max_shells = 6
 	default_ammo_type = /obj/item/ammo_magazine/pistol/ntunity
-	allowed_ammo_types = list(/obj/item/ammo_magazine/pistol/xmdivider, /obj/item/ammo_magazine/pistol/xmdivider, /obj/item/ammo_magazine/pistol/ntunity)
+	allowed_ammo_types = list(/obj/item/ammo_magazine/pistol/xmdivider, /obj/item/ammo_magazine/pistol/ntunity)
 	force = 8
 	attachable_allowed = list(
 		/obj/item/attachable/bayonet/converted,
@@ -544,15 +547,15 @@
 
 //XM104 cylinder placed in pistols
 /obj/item/ammo_magazine/pistol/ntunity
-	name = "\improper NT105 'Unity' Foxfire cylinder (.357)"
-	desc = "CC/104 cylinder loaded with custom .357 armor-piercing incendiary rounds."
-	icon = 'icons/tgmc_erp/obj/items/ammo/pistol.dmi' //same icon as parent so using that mag wont fuck the color illusion
+	name = "\improper T105 Unity Foxfire cylinder (.357)"
+	desc = "A T105 Unity cylinder loaded with .357 Foxfire armor-piercing incendiary rounds."
+	icon = 'icons/obj/items/ammo/pistol.dmi'
 	default_ammo = /datum/ammo/bullet/revolver/heavy/foxfire
 	max_rounds = 6
 	caliber = CALIBER_357
-	icon_state = "nt105"
+	icon_state = "t105"
 	icon_state_mini = "mag_pistol"
-	bonus_overlay = "nt105_fox"
+	bonus_overlay = "t105_fox"
 
 /datum/ammo/bullet/revolver/heavy/foxfire
 	name = "armor-piercing foxfire heavy revolver bullet"
@@ -571,22 +574,22 @@
 //NT-VORTEX
 
 /obj/item/weapon/gun/smg/vortex
-	name = "\improper NT Vortex rapid-fire EM SMG"
-	desc = "The Ninetails Vortex electromagnetic submachinegun is the specialized weapon made by commission for Novamed Trauma Teams, calibered in 9x19mm Parabellum but it uses special rounds without a primer or anything for it's electromagnetic operation. Made to be used by hospital security and combat medics. Though much like other new-world design weapons, this lacks fire-modes and it is always on full-auto. - With it's foldable design, it is easily carried around in satchels until need arises. It is designed in such a way it retains great accuracy in rapid fire but the accuracy quickly decays on sustained fire and must be rested a little while to let heatsinks do it's work, and since it is firing electromagnetically, it does not have muzzle flash or much sound... But it is rather muzzle attachment-unfriendly due to being packable. Use Unique action key to deploy/undeploy it."
+	name = "\improper Appolo submachine gun"
+	desc = "A pirate-made submachine gun cobbled together from a Vector and converted to electromagnetic operation. Takes 9x19mm magazines and heats up under sustained fire. Use the unique action to unfold it before firing."
 	icon_state = "vortex"
-	icon = 'icons/tgmc_erp/obj/items/guns/submachineguns64.dmi'
+	icon = 'icons/obj/items/gun/submachinegun64.dmi'
 	worn_icon_list = list(
-		slot_l_hand_str = 'icons/tgmc_erp/mob/inhands/guns/submachineguns_left_1.dmi',
-		slot_r_hand_str = 'icons/tgmc_erp/mob/inhands/guns/submachineguns_right_1.dmi',
+		slot_l_hand_str = 'icons/mob/inhands/gun/submachinegun_lefthand_1.dmi',
+		slot_r_hand_str = 'icons/mob/inhands/gun/submachinegun_righthand_1.dmi',
 	)
 	worn_icon_state = "vortex"
+	worn_worn_icon_state_slots = list(slot_back_str = "v21")
 	caliber = CALIBER_9X19
 	max_shells = 60
 	w_class = WEIGHT_CLASS_NORMAL
 	equip_slot_flags = ITEM_SLOT_BACK
 	type_of_casings = null
 	default_ammo_type = /obj/item/ammo_magazine/smg/vortex
-	icon = 'icons/tgmc_erp/obj/items/ammo/vortex.dmi'
 	allowed_ammo_types = list(
 		/obj/item/ammo_magazine/smg/vortex,
 		/obj/item/ammo_magazine/smg/vortex/rubber,
@@ -595,7 +598,6 @@
 		/obj/item/ammo_magazine/smg/vortex/extended,
 		/obj/item/ammo_magazine/smg/vortex/taser,
 		/obj/item/ammo_magazine/smg/vortex/squashhead,
-		/obj/item/attachable/suppressor/unremovable/invisible,
 	)
 	fire_sound = 'sound/weapons/guns/fire/vector_fire.ogg'
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_DEPLOYED_FIRE_ONLY
@@ -679,7 +681,7 @@
 
 
 /obj/item/ammo_magazine/smg/vortex
-	name = "\improper NT Vortex SMG magazine (9x19mm Parabellum)"
+	name = "\improper Appolo SMG magazine (9x19mm Parabellum)"
 	desc = "A 9x19mm Parabellum SMG magazine."
 	caliber = CALIBER_9X19
 	icon_state = "v21"
@@ -688,33 +690,33 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/ammo_magazine/smg/vortex/ap
-	name = "\improper NT Vortex AP SMG magazine (9x19mm Parabellum)"
+	name = "\improper Appolo AP SMG magazine (9x19mm Parabellum)"
 	desc = "A 9x19mm Parabellum SMG magazine, loaded in armor piercing rounds."
 	icon_state = "v21_ap"
 	default_ammo = /datum/ammo/bullet/smg/ap
 	icon_state_mini = "mag_smg_green"
 
 /obj/item/ammo_magazine/smg/vortex/squashhead
-	name = "\improper NT Vortex squash-head SMG magazine (9x19mm Parabellum)"
+	name = "\improper Appolo squash-head SMG magazine (9x19mm Parabellum)"
 	desc = "A 9x19mm Parabellum caseless SMG magazine, loaded in squash-head explosive rounds. Will shred the armor off of basically anything."
 	icon_state = "v21_ap"
 	default_ammo = /datum/ammo/bullet/smg/squash
 	icon_state_mini = "mag_smg_green"
 
 /obj/item/ammo_magazine/smg/vortex/rubber
-	name = "\improper NT Vortex rubber SMG magazine (9x19mm Parabellum)"
+	name = "\improper Appolo rubber SMG magazine (9x19mm Parabellum)"
 	desc = "A 9x19mm Parabellum caseless SMG magazine, loaded in rubber rounds. Non-lethal."
 	default_ammo = /datum/ammo/bullet/smg/vortex_rubber
 
 /obj/item/ammo_magazine/smg/vortex/incendiary
-	name = "\improper NT Vortex incendiary SMG magazine (9x19mm Parabellum)"
+	name = "\improper Appolo incendiary SMG magazine (9x19mm Parabellum)"
 	desc = "A 9x19mm Parabellum caseless SMG magazine, loaded in incendiary rounds."
 	icon_state = "v21_incend"
 	default_ammo = /datum/ammo/bullet/smg/incendiary
 	icon_state_mini = "mag_smg_red"
 
 /obj/item/ammo_magazine/smg/vortex/extended
-	name = "\improper NT Vortex extended SMG magazine (9x19mm Parabellum)"
+	name = "\improper Appolo extended SMG magazine (9x19mm Parabellum)"
 	desc = "An extended 9x19mm Parabellum caseless SMG magazine."
 	icon_state = "v21_extended"
 	max_rounds = 90
@@ -723,7 +725,7 @@
 	aim_speed_mod = 0.1
 
 /obj/item/ammo_magazine/smg/vortex/taser
-	name = "\improper NT Vortex HC SMG magazine (9x19mm Parabellum)"
+	name = "\improper Appolo HC SMG magazine (9x19mm Parabellum)"
 	desc = "A 9x19mm Parabellum caseless SMG magazine, loaded with HC rounds. It uses High-Conductive projectiles charged by the EM gun itself. This has a 5% chance per shot to deliver an EM pulse."
 	icon_state = "v21_rad"
 	default_ammo = /datum/ammo/bullet/smg/taser
@@ -774,26 +776,27 @@
 /obj/item/weapon/gun/launcher/rocket/oneuse/thermobaric
 	name = "\improper RPO-S Disposable Incendiary Rocket Launcher"
 	desc = "An old design still in circulation after being produced by the millions back in the day as the relatively simple, inexpensive design allowed it to be issued in mass and thrown around like candy."
-	icon = 'icons/tgmc_erp/obj/items/guns/special64.dmi'
+	icon = 'icons/obj/items/gun/special64.dmi'
 	icon_state = "rpo"
 	worn_icon_state = "rpo"
 	worn_icon_list = list(
-		slot_l_hand_str = 'icons/tgmc_erp/mob/inhands/rpo_left.dmi',
-		slot_r_hand_str = 'icons/tgmc_erp/mob/inhands/rpo_right.dmi',
+		slot_l_hand_str = 'icons/mob/inhands/gun/special_lefthand_1.dmi',
+		slot_r_hand_str = 'icons/mob/inhands/gun/special_righthand_1.dmi',
 	)
 	caliber = CALIBER_93MM //codex
 	default_ammo_type = /obj/item/ammo_magazine/rocket/oneuse/thermobaric
 	allowed_ammo_types = list(/obj/item/ammo_magazine/rocket/oneuse/thermobaric)
 
 /obj/item/attachable/stock/dragoon
-	icon = 'icons/tgmc_erp/obj/items/guns/dragoon_stock.dmi'
-	name ="\improper Dragoon stock"
-	desc = "A irremovable Dragoon stock"
+	icon = 'icons/obj/items/attachments/attachments.dmi'
+	name = "\improper Deferson stock"
+	desc = "An integral stock for the Deferson Mk1."
 	icon_state = "dragoon"
+	attach_features_flags = ATTACH_SAME_ICON
 	pixel_shift_x = 32
 	pixel_shift_y = 13
 /obj/item/ammo_magazine/rifle/boltclip/dragoon
-	icon = 'icons/tgmc_erp/obj/items/ammo/dragoon.dmi'
+	icon = 'icons/obj/items/ammo/magazine.dmi'
 	name = "clip of 9.8x22mm rifle rounds"
 	desc = "A Disposible Stripper clip filled with exotic rifle bullets."
 	icon_state = "clipdragoon"

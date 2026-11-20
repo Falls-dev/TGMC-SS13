@@ -90,7 +90,7 @@
 
 /obj/item/ammo_magazine/handful/tracker
 	name = "handful of shotgun tracker shells (12g)"
-	icon = 'icons/tgmc_erp/obj/items/ammo/shotgun_handful.dmi'
+	icon = 'icons/obj/items/ammo/handful.dmi'
 	icon_state = "shotgun_flechette"
 	current_rounds = 5
 	default_ammo = /datum/ammo/bullet/shotgun/tracker
@@ -98,7 +98,7 @@
 
 /obj/item/ammo_magazine/handful/beanbag
 	name = "handful of beanbag slugs (12g)"
-	icon = 'icons/tgmc_erp/obj/items/ammo/shotgun_handful.dmi'
+	icon = 'icons/obj/items/ammo/handful.dmi'
 	icon_state = "beanbag_slug"
 	current_rounds = 5
 	default_ammo = /datum/ammo/bullet/shotgun/beanbag
@@ -106,7 +106,7 @@
 
 /obj/item/ammo_magazine/handful/rubber_pellet
 	name = "handful of shotgun rubber pellet shells (12g)"
-	icon = 'icons/tgmc_erp/obj/items/ammo/shotgun_handful.dmi'
+	icon = 'icons/obj/items/ammo/handful.dmi'
 	icon_state = "shotgun_flechette"
 	current_rounds = 5
 	default_ammo = /datum/ammo/bullet/shotgun/flechette/rubber
@@ -115,7 +115,7 @@
 /obj/item/ammo_magazine/handful/heavy_flechette
 	name = "handful of shotgun flechette shells (6g)"
 	icon_state = "heavy_shotgun_flechette"
-	icon = 'icons/tgmc_erp/obj/items/ammo/handful.dmi'
+	icon = 'icons/obj/items/ammo/handful.dmi'
 	current_rounds = 5
 	default_ammo = /datum/ammo/bullet/shotgun/heavy_flechette
 	caliber = CALIBER_6G

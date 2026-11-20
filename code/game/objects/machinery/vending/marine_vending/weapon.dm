@@ -111,7 +111,6 @@
 			/obj/item/ammo_magazine/hmg08/small = 10,
 		),
 		"Ближний бой" = list(
-			/obj/item/weapon/energy/sword/ntc = -1,
 			/obj/item/weapon/combat_knife = -1,
 			/obj/item/attachable/bayonetknife = -1,
 			/obj/item/stack/throwing_knife = -1,
@@ -130,8 +129,6 @@
 			/obj/item/weapon/combat_knife/harvester = -1,
 		),
 		"Пистолеты" = list(
-			/obj/item/weapon/gun/pistol/xmdivider/ntc = 5,
-			/obj/item/ammo_magazine/pistol/ntunity = 20,
 			/obj/item/weapon/gun/revolver/r44 = 5,
 			/obj/item/ammo_magazine/revolver/r44 = -1,
 			/obj/item/storage/briefcase/t500 = 10,

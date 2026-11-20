@@ -148,10 +148,11 @@
 	standing.overlays.Add(emissive_overlay)
 
 /obj/item/weapon/energy/sword/ntc
-	name = "NTC Energy blade"
-	icon = 'icons/tgmc_erp/obj/items/weapons/energy.dmi'
-	icon_state = "sword"
-	desc = "A NTC energy sword, it should cut through anything."
+	name = "esable"
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "esword"
+	worn_icon_state = "sword"
+	desc = "An NTC energy saber with a collapsible red blade designed to cut through armor."
 	force_activated = 50
 	sword_color = "red"
 
@@ -161,12 +162,9 @@
 
 /obj/item/weapon/energy/sword/ntc/switch_state(datum/source, mob/living/user)
 	. = ..()
+	worn_icon_state = active ? "sword_red" : "sword"
 	if(active)
+		icon_state = "esword-red"
 		set_light_on(TRUE)
 	else
 		set_light_on(FALSE)
-
-/obj/item/weapon/energy/sword/ntc/apply_custom(mutable_appearance/standing, inhands, icon_used, state_used)
-	. = ..()
-	var/mutable_appearance/emissive_overlay = emissive_appearance(icon_used, "[state_used]_emissive", src)
-	standing.overlays.Add(emissive_overlay)

@@ -232,3 +232,27 @@
 	current_rounds += liquid_transfer_amount
 	playsound(user, 'sound/effects/refill.ogg', 25, 1, 3)
 	to_chat(user, span_notice("You refill [src] with [lowertext(caliber)]."))
+
+/obj/item/ammo_magazine/flamer_tank/vsd
+	name = "large CC/21 flamethrower tank"
+	desc = "A large tank for the CC/21 flamethrower, filled with thick napthal fuel."
+	icon_state = "flametank_vsd_orange"
+	max_rounds = 150
+	current_rounds = 150
+	reload_delay = 4 SECONDS
+	default_ammo = /datum/ammo/flamethrower
+	icon_state_mini = "tank_orange"
+	bonus_overlay = "c21_otank"
+
+/obj/item/ammo_magazine/flamer_tank/vsd/blue
+	name = "large CC/21 flamethrower tank (X)"
+	desc = "A large tank for the CC/21 flamethrower, filled with thick napthal X fuel."
+	icon_state = "flametank_vsd"
+	max_rounds = 150
+	current_rounds = 150
+	reload_delay = 4 SECONDS
+	default_ammo = /datum/ammo/flamethrower/blue
+
+	icon_state_mini = "tank_blue"
+	bonus_overlay = "c21_btank"
+	dispenser_type = /obj/structure/reagent_dispensers/fueltank/xfuel

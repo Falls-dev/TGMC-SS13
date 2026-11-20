@@ -83,8 +83,8 @@
 /obj/vehicle/sealed/armored/multitile/mrap/logi
 	name = "\improper TransCO 'Roadmaster' Logistics Truck"
 	desc = "A lightly armored logistic transport vehicle designed to transport trade goods across the earth wherever necessary while being able to outrun and take a few shots from the usual raider interception. It comes after-market equipped with tesla coils due to the xenomorph threats."
-	icon = 'icons/tgmc_erp/obj/vehicles/transport_truck.dmi'
-	damage_icon_path = 'icons/tgmc_erp/obj/vehicles/transport_truck.dmi'
+	icon = 'icons/obj/vehicles/mrap_transport.dmi'
+	damage_icon_path = 'icons/obj/vehicles/mrap_transport.dmi'
 	icon_state = "truck_enclosed"
 	hitbox = /obj/hitbox/two_three
 	interior = /datum/interior/armored/logi
@@ -112,8 +112,8 @@
 /obj/vehicle/sealed/armored/multitile/mrap/logi/treads
 	name = "\improper TransCO 'Roughauler' Treaded Military Truck"
 	desc = "A treaded, armored logistic transport vehicle, designed to transport troops and supplies wherever necessary, relatively quickly and hopefully in one piece thanks to it's ballistic plating. It's threads make it possible to turn on spot, be immune to flat tires, resist side-shots and traverse rough terrain, probably.  It comes after-market equipped with tesla coils due to the xenomorph threats."
-	icon = 'icons/tgmc_erp/obj/vehicles/large_truck.dmi'
-	damage_icon_path = 'icons/tgmc_erp/obj/vehicles/large_truck.dmi'
+	icon = 'icons/obj/vehicles/mrap.dmi'
+	damage_icon_path = 'icons/obj/vehicles/mrap.dmi'
 	icon_state = "truck_enclosed_treads"
 	hitbox = /obj/hitbox/medium
 	max_integrity = 800

@@ -440,7 +440,7 @@ Note that this means that snipers will have a slowdown of 3, due to the scope
 /obj/item/weapon/gun/minigun/brassback
 	name = "\improper MG-27U rotary machine gun"
 	desc = "A heavy rotary gun with a low cyclic rate, long spin-up and high-impact shots. Uses standard MG-27 caseless ammunition boxes."
-	icon = 'icons/obj/items/gun/brassback.dmi'
+	icon = 'icons/obj/items/gun/machinegun64.dmi'
 	icon_state = "brassback"
 	worn_icon_state = "brassback"
 	worn_icon_state_worn = TRUE
@@ -1019,7 +1019,7 @@ Note that this means that snipers will have a slowdown of 3, due to the scope
 //VSD RPG
 /obj/item/weapon/gun/launcher/rocket/vsd
 	name = "\improper C153 shoulder launcher"
-	desc = "An Anti-personnel Rocket Launcher made by Crash Core. Used mainly by V.S.D specialists, it can fire three specialized rounds. High Explosive, Incendiary Explosive, and a Chemical Capped High Explosive."
+	desc = "An Anti-personnel Rocket Launcher made by Crash Core. Used mainly by V.S.D specialists, it can fire high-explosive, incendiary, chemical and HEAT rockets."
 	icon = 'icons/obj/items/gun/special64.dmi'
 	icon_state = "c153"
 	worn_icon_state = "c153"
@@ -1037,6 +1037,7 @@ Note that this means that snipers will have a slowdown of 3, due to the scope
 		/obj/item/ammo_magazine/rocket/vsd/he,
 		/obj/item/ammo_magazine/rocket/vsd/incendiary,
 		/obj/item/ammo_magazine/rocket/vsd/chemical,
+		/obj/item/ammo_magazine/rocket/vsd/heat,
 	)
 	wield_delay = 1 SECONDS
 	aim_slowdown = 1
@@ -1152,3 +1153,95 @@ Note that this means that snipers will have a slowdown of 3, due to the scope
 	allowed_ammo_types = list(/obj/item/ammo_magazine/rocket/oneuse/anti_tank)
 
 //SOM RPG
+
+/obj/item/weapon/gun/minigun/vsd_autocannon
+	name = "\improper CC/AT32 Handheld Autocannon"
+	desc = "A Kaizoku Corporation portable autocannon. It fires 20mm high-velocity or solid-shot rounds and can load 40mm explosive ammunition. Its weight makes it hard to shoot accurately on the move."
+	icon = 'icons/obj/items/gun/special64.dmi'
+	icon_state = "at32"
+	worn_icon_state = "at32"
+	worn_icon_list = list(
+		slot_s_store_str = 'icons/mob/suit_slot.dmi',
+		slot_back_str = 'icons/mob/clothing/back.dmi',
+		slot_l_hand_str = 'icons/mob/inhands/gun/special_lefthand_1.dmi',
+		slot_r_hand_str = 'icons/mob/inhands/gun/special_righthand_1.dmi',
+	)
+	equip_slot_flags = ITEM_SLOT_BACK
+	fire_animation = "at32"
+	max_shells = 30 //codex
+	caliber = CALIBER_20 //codex
+	load_method = MAGAZINE //codex
+	fire_sound = 'sound/weapons/guns/fire/autocannon_1.ogg'
+	unload_sound = 'sound/weapons/guns/interact/sniper_heavy_unload.ogg'
+	reload_sound = 'sound/weapons/guns/interact/sniper_heavy_reload.ogg'
+	cocked_sound = 'sound/weapons/guns/interact/minigun_cocked.ogg'
+	default_ammo_type = /obj/item/ammo_magazine/rifle/vsd_autocannon
+	allowed_ammo_types = list(
+		/obj/item/ammo_magazine/rifle/vsd_autocannon,
+		/obj/item/ammo_magazine/rifle/vsd_autocannon/explosive,
+		/obj/item/ammo_magazine/rifle/vsd_autocannon/at,
+	)
+	attachable_allowed = list(/obj/item/attachable/flashlight, /obj/item/attachable/magnetic_harness, /obj/item/attachable/motiondetector, /obj/item/attachable/foldable/bipod, /obj/item/attachable/lasersight)
+	attachable_offset = list("muzzle_x" = 33, "muzzle_y" = 19,"rail_x" = 13, "rail_y" = 22, "under_x" = 24, "under_y" = 14, "stock_x" = 24, "stock_y" = 12)
+
+	fire_delay = 0.4 SECONDS
+	wield_delay = 2 SECONDS
+	aim_slowdown = 3
+	accuracy_mult = 0.8 //0.9 with lasersight
+	recoil = 1
+	recoil_unwielded = 5
+	accuracy_mult_unwielded = 0.8
+	movement_acc_penalty_mult = 8
+	damage_falloff_mult = 1.25
+	scatter = 2
+
+	item_flags = TWOHANDED
+
+/obj/item/weapon/gun/rifle/sniper/pmc_railgun
+	name = "\improper SRX-42 anti-tank rail rifle"
+	desc = "A high end mag-rail heavy sniper rifle from Ninetails chambered in the heaviest ammo available. Trigger discipline is highly recommended."
+	icon = 'icons/obj/items/gun/special64.dmi'
+	icon_state = "m42r"
+	worn_icon_state = "m42r"
+	worn_icon_list = list(
+		slot_back_str = 'icons/mob/clothing/back.dmi',
+		slot_l_hand_str = 'icons/mob/inhands/gun/marksman_lefthand_64.dmi',
+		slot_r_hand_str = 'icons/mob/inhands/gun/marksman_righthand_64.dmi',
+	)
+	inhand_x_dimension = 64
+	inhand_y_dimension = 32
+	max_shells = 4 //codex
+	caliber = CALIBER_RAILGUN
+	fire_sound = 'sound/weapons/guns/fire/sniper_heavy.ogg'
+	dry_fire_sound = 'sound/weapons/guns/fire/sniper_empty.ogg'
+	unload_sound = 'sound/weapons/guns/interact/sniper_heavy_unload.ogg'
+	reload_sound = 'sound/weapons/guns/interact/sniper_heavy_reload.ogg'
+	cocked_sound = 'sound/weapons/guns/interact/sniper_heavy_cocked.ogg'
+	default_ammo_type = /obj/item/ammo_magazine/railgun/pmc
+	allowed_ammo_types = list(/obj/item/ammo_magazine/railgun/pmc, /obj/item/ammo_magazine/railgun/pmc/smart, /obj/item/ammo_magazine/railgun/pmc/hvap)
+	force = 35
+	equip_slot_flags = ITEM_SLOT_BACK
+	attachable_allowed = list(
+		/obj/item/attachable/foldable/bipod,
+		/obj/item/attachable/lasersight,
+		/obj/item/attachable/scope/antimaterial,
+		/obj/item/attachable/buildasentry,
+		/obj/item/attachable/sniperbarrel,
+		/obj/item/attachable/scope/nightvision
+	)
+	starting_attachment_types = list(/obj/item/attachable/scope/antimaterial, /obj/item/attachable/sniperbarrel)
+
+	gun_features_flags = GUN_WIELDED_FIRING_ONLY|GUN_WIELDED_STABLE_FIRING_ONLY|GUN_AMMO_COUNTER
+	reciever_flags = AMMO_RECIEVER_MAGAZINES|AMMO_RECIEVER_AUTO_EJECT|AMMO_RECIEVER_CYCLE_ONLY_BEFORE_FIRE
+	attachable_offset = list("muzzle_x" = 32, "muzzle_y" = 18,"rail_x" = 18, "rail_y" = 25, "under_x" = 32, "under_y" = 14, "stock_x" = 20, "stock_y" = 15)
+	actions_types = list(/datum/action/item_action/aim_mode)
+	aim_fire_delay = 1 SECONDS
+	aim_speed_modifier = 2
+
+	windup_delay = 0.5 SECONDS
+	windup_sound = 'sound/weapons/guns/fire/laser_charge_up.ogg'
+	fire_delay = 2 SECONDS
+	accuracy_mult = 1.2
+	recoil = 3
+	burst_amount = 1
+	movement_acc_penalty_mult = 7

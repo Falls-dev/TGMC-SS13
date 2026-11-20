@@ -160,7 +160,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/fullscreen)
 	icon_state = "noise"
 
 /atom/movable/screen/fullscreen/high
-	icon = 'icons/tgmc_erp/mob/screen/full/druggy.dmi'
+	icon = 'icons/mob/screen/full/druggy.dmi'
 	icon_state = "druggy"
 	alpha = 255
 	plane = LIGHTING_PLANE
@@ -270,11 +270,11 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/fullscreen)
 	show_when_dead = TRUE
 
 /atom/movable/screen/fullscreen/robot_glitch
-	icon = 'icons/tgmc_erp/mob/screen/full/misc.dmi'
+	icon = 'icons/mob/screen/full/misc.dmi'
 	alpha = 180
 	icon_state = "glitch_robot"
 	blend_mode = BLEND_OVERLAY
 
 /atom/movable/screen/fullscreen/dead/robot
-	icon = 'icons/tgmc_erp/mob/screen/full/misc.dmi'
+	icon = 'icons/mob/screen/full/misc.dmi'
 	icon_state = "dead_robot"

@@ -9,12 +9,13 @@
 	name = "\improper NUT drone"
 	desc = "The Ninetails Unmanned Turret drone is a portable, automated drone attack system utilised by the NTC. It is activated in hand then thrown into place before it deploys, where it begins to hover, making it a difficult target to accurately hit. Equipped with a compact rotating small caliber weapon system with limited ammo and basic AI, It can work up to 5 minutes on it's battery and self destructs if it's out of ammo or it's battery lifetime is up... Those are fabricated in a factorio."
 	icon_state = "nut"
-	icon = 'icons/tgmc_erp/obj/machines/deployable/sentry/nut.dmi'
+	icon = 'icons/obj/machines/deployable/sentry/nut.dmi'
 	worn_icon_list = list(
 		slot_l_hand_str = 'icons/mob/inhands/weapons/grenades_left.dmi',
 		slot_r_hand_str = 'icons/mob/inhands/weapons/grenades_right.dmi',
 	)
 	worn_icon_state = "grenade"
+	worn_worn_icon_state_slots = list(slot_l_hand_str = "grenade", slot_r_hand_str = "grenade")
 	max_integrity = 60
 	deploy_time = 1 SECONDS
 	deploy_flags = IS_DEPLOYABLE|DEPLOYED_NO_PICKUP
@@ -289,8 +290,13 @@ GLOBAL_VAR_INIT(ads_intercept_range, 9)
 /obj/item/weapon/gun/sentry/ads_system
 	name = "\improper Archercorp ACADS01 Air Defense Sentry"
 	desc = "An air defense sentry developed to protect bases and shuttles against air strikes and alike. Even when manually controlled this only shoots into the air and cannot hit ground targets. Uses about varying amounts of rounds per shell or grenade shot down. Grenades are not far up in the air and tiny therefore it can shoot them down only in half the range. Alt + RClick to briefly display it's range."
-	icon = 'icons/tgmc_erp/obj/machines/deployable/point-defense/point_defense.dmi'
+	icon = 'icons/obj/machines/deployable/point-defense/point_defense.dmi'
 	icon_state = "pointdef"
+	worn_icon_state = "turret"
+	worn_icon_list = list(
+		slot_l_hand_str = 'icons/mob/inhands/gun/special_lefthand_1.dmi',
+		slot_r_hand_str = 'icons/mob/inhands/gun/special_righthand_1.dmi',
+	)
 	burst_amount = 5
 	turret_flags = TURRET_HAS_CAMERA|TURRET_ALERTS
 	max_integrity = 300 //hopefully will withstand a strafe or so cause its stupidly easy to cheese
@@ -357,11 +363,11 @@ GLOBAL_VAR_INIT(ads_intercept_range, 9)
 /obj/effect/overlay/blinking_laser/ads_range
 	name = "ads range"
 	layer = WALL_OBJ_LAYER
-	icon = 'icons/tgmc_erp/effects/lases.dmi'
+	icon = 'icons/effects/lases.dmi'
 	icon_state = "ads_range"
 
 /obj/effect/overlay/blinking_laser/ads_grenade_range
 	name = "ads grenade range"
 	layer = WALL_OBJ_LAYER
-	icon = 'icons/tgmc_erp/effects/lases.dmi'
+	icon = 'icons/effects/lases.dmi'
 	icon_state = "ads_grenade_range"

@@ -13,107 +13,107 @@
 	cost = 100
 
 /datum/supply_packs/imports/nt_halter
-	name = "NT Halter Bullpup Rifle"
+	name = "NT Yadot Bullpup Rifle"
 	cost = 100
 	contains = list(/obj/item/weapon/gun/rifle/nt_halter)
 
 /datum/supply_packs/imports/nt_halter_cqb
-	name = "NT Halter CQB Rifle"
+	name = "NT Yadot CQB Rifle"
 	cost = 75
 	contains = list(/obj/item/weapon/gun/rifle/nt_halter/cqb)
 
 /datum/supply_packs/imports/nt_vortex
-	name = "NT Vortex SMG"
+	name = "Appolo SMG"
 	cost = 50
 	contains = list(/obj/item/weapon/gun/smg/vortex)
 
 /datum/supply_packs/imports/nt_halter_mag
-	name = "NT Halter Standard Magazine"
+	name = "NT Yadot Standard Magazine"
 	cost = 20
 	contains = list(/obj/item/ammo_magazine/rifle/nt_halter)
 
 /datum/supply_packs/imports/nt_halter_mag_extended
-	name = "NT Halter Extended Magazine"
+	name = "NT Yadot Extended Magazine"
 	cost = 30
 	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/extended)
 
 /datum/supply_packs/imports/nt_halter_mag_drum
-	name = "NT Halter Drum Magazine"
+	name = "NT Yadot Drum Magazine"
 	cost = 40
 	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/drum)
 
 /datum/supply_packs/imports/nt_halter_mag_charged
-	name = "NT Halter Charged Magazine"
+	name = "NT Yadot Charged Magazine"
 	cost = 45
 	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/charged)
 
 /datum/supply_packs/imports/nt_halter_mag_smart
-	name = "NT Halter Smart Magazine"
+	name = "NT Yadot Smart Magazine"
 	cost = 35
 	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/smart)
 
 /datum/supply_packs/imports/nt_halter_mag_foxfire
-	name = "NT Halter Foxfire Magazine"
+	name = "NT Yadot Foxfire Magazine"
 	cost = 45
 	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/foxfire)
 
 /datum/supply_packs/imports/nt_halter_mag_laser
-	name = "NT Halter Laser Magazine"
+	name = "NT Yadot Laser Magazine"
 	cost = 25
 	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/laser)
 
 /datum/supply_packs/imports/nt_halter_mag_laser_extended
-	name = "NT Halter Extended Laser Magazine"
+	name = "NT Yadot Extended Laser Magazine"
 	cost = 35
 	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/laser/extended)
 
 /datum/supply_packs/imports/nt_halter_mag_laser_drum
-	name = "NT Halter Laser Drum Magazine"
+	name = "NT Yadot Laser Drum Magazine"
 	cost = 45
 	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/laser/drum)
 
 /datum/supply_packs/imports/nt_halter_mag_rubber
-	name = "NT Halter Rubber Magazine"
+	name = "NT Yadot Rubber Magazine"
 	cost = 15
 	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/rubber)
 
 /datum/supply_packs/imports/nt_halter_mag_rubber_extended
-	name = "NT Halter Extended Rubber Magazine"
+	name = "NT Yadot Extended Rubber Magazine"
 	cost = 25
 	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/rubber/extended)
 
 /datum/supply_packs/imports/vortex_mag
-	name = "NT Vortex Standard Magazine"
+	name = "Appolo Standard Magazine"
 	cost = 15
 	contains = list(/obj/item/ammo_magazine/smg/vortex)
 
 /datum/supply_packs/imports/vortex_mag_ap
-	name = "NT Vortex AP Magazine"
+	name = "Appolo AP Magazine"
 	cost = 25
 	contains = list(/obj/item/ammo_magazine/smg/vortex/ap)
 
 /datum/supply_packs/imports/vortex_mag_squashhead
-	name = "NT Vortex Squashhead Magazine"
+	name = "Appolo Squashhead Magazine"
 	cost = 20
 	contains = list(/obj/item/ammo_magazine/smg/vortex/squashhead)
 
 /datum/supply_packs/imports/vortex_mag_rubber
-	name = "NT Vortex Rubber Magazine"
+	name = "Appolo Rubber Magazine"
 	cost = 10
 	contains = list(/obj/item/ammo_magazine/smg/vortex/rubber)
 
 /datum/supply_packs/imports/vortex_mag_incendiary
-	name = "NT Vortex Incendiary Magazine"
+	name = "Appolo Incendiary Magazine"
 	cost = 25
 	contains = list(/obj/item/ammo_magazine/smg/vortex/incendiary)
 
 /datum/supply_packs/imports/vortex_mag_extended
-	name = "NT Vortex Extended Magazine"
+	name = "Appolo Extended Magazine"
 	cost = 25
 	contains = list(/obj/item/ammo_magazine/smg/vortex/extended)
 
 /datum/supply_packs/imports/vortex_mag_taser
-	name = "NT Vortex Taser Magazine"
+	name = "Appolo Taser Magazine"
 	cost = 30
 	contains = list(/obj/item/ammo_magazine/smg/vortex/taser)
 

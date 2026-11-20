@@ -353,3 +353,7 @@
 
 /obj/machinery/deployable/mounted/moveable/fast
 	drag_delay = 1
+
+/obj/machinery/deployable/mounted/at45/Initialize(mapload, _internal_item, deployer)
+	. = ..()
+	icon = 'icons/obj/machines/deployable/at45.dmi'
