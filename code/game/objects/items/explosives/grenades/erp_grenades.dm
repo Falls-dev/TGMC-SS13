@@ -1,5 +1,5 @@
 /obj/structure/closet/secure_closet/xeno_cage
-	name = "NTC specialised containment cage"
+	name = "TerraGov specialised containment cage"
 	desc = "A secure container designed to contain dangerous lifeforms such as xenomorphs. It will heal whatever comes in it out of critical but does not stasis."
 	icon_state = "xeno_cage_locked"
 	icon_closed = "xeno_cage"

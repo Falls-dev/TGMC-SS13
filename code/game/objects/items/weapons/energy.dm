@@ -152,7 +152,7 @@
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "esword"
 	worn_icon_state = "sword"
-	desc = "An NTC energy saber with a collapsible red blade designed to cut through armor."
+	desc = "A TerraGov energy saber with a collapsible red blade designed to cut through armor."
 	force_activated = 50
 	sword_color = "red"
 

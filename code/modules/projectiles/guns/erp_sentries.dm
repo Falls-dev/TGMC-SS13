@@ -1,4 +1,4 @@
-//thrown NTC assist drone
+// Thrown TerraGov assist drone
 /obj/item/weapon/gun/rifle/drone
 	name = "deployable drone"
 	var/det_time = 2 SECONDS
@@ -7,7 +7,7 @@
 
 /obj/item/weapon/gun/rifle/drone/nut
 	name = "\improper NUT drone"
-	desc = "The Ninetails Unmanned Turret drone is a portable, automated drone attack system utilised by the NTC. It is activated in hand then thrown into place before it deploys, where it begins to hover, making it a difficult target to accurately hit. Equipped with a compact rotating small caliber weapon system with limited ammo and basic AI, It can work up to 5 minutes on it's battery and self destructs if it's out of ammo or it's battery lifetime is up... Those are fabricated in a factorio."
+	desc = "TerraGov's NUT is a portable, automated sentry drone. It is activated in hand then thrown into place before it deploys, where it begins to hover, making it a difficult target to accurately hit. Equipped with a compact rotating small caliber weapon system with limited ammo and basic AI, It can work up to 5 minutes on it's battery and self destructs if it's out of ammo or it's battery lifetime is up... Those are fabricated in a factorio."
 	icon_state = "nut"
 	icon = 'icons/obj/machines/deployable/sentry/nut.dmi'
 	worn_icon_list = list(

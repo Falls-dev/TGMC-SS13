@@ -1,8 +1,8 @@
 //halter bullpup rifle
 /obj/item/weapon/gun/rifle/nt_halter
 	//Abomination of AR-21, PR-412, AR-18 and MPI-KM
-	name = "\improper NT 'Yadot' assault rifle"
-	desc = "An NTC bullpup rifle chambered in 7.62x39mm. Named for Yadot, a decorated marine who left TerraGov after an alleged dispute with command."
+	name = "\improper TGR 'Satoru' assault rifle"
+	desc = "A TerraGov bullpup rifle chambered in 7.62x39mm. Named for Satoru, a decorated marine who left TerraGov after an alleged dispute with command."
 	icon = 'icons/obj/items/gun/rifle64.dmi'
 	icon_state = "halter"
 	worn_icon_state = "halter"
@@ -86,8 +86,8 @@
 
 /obj/item/weapon/gun/rifle/nt_halter/cqb
 	//more accurate but less AP version of v34 basically without stock option since its a bullpup, it IS the stock.
-	name = "\improper NT 'Yadot-CQB' carbine"
-	desc = "A compact carbine based on the NT 'Yadot' rifle, named for a decorated marine who left TerraGov after an alleged dispute with command. Its shorter barrel trades range and accuracy for easier handling in close quarters. Chambered in 7.62x39mm."
+	name = "\improper TGR 'Satoru-CQB' carbine"
+	desc = "A compact carbine based on the TGR 'Satoru' rifle, named for a decorated marine who left TerraGov after an alleged dispute with command. Its shorter barrel trades range and accuracy for easier handling in close quarters. Chambered in 7.62x39mm."
 	icon = 'icons/obj/items/gun/rifle64.dmi'
 	attachable_offset = list("muzzle_x" = 39, "muzzle_y" = 19,"rail_x" = 19, "rail_y" = 23, "under_x" = 29, "under_y" = 13, "stock_x" = 0, "stock_y" = 13)
 	icon_state = "haltercqb"
@@ -107,8 +107,8 @@
 
 //standard mag
 /obj/item/ammo_magazine/rifle/nt_halter
-	name = "\improper NT 'Yadot' magazine (7.62x39mm)"
-	desc = "A magazine filled with 7.62x39mm rifle rounds for the Yadot series of firearms."
+	name = "\improper TGR 'Satoru' magazine (7.62x39mm)"
+	desc = "A magazine filled with 7.62x39mm rifle rounds for the Satoru series of firearms."
 	caliber = CALIBER_762X39
 	icon_state = "halter"
 	icon = 'icons/obj/items/ammo/magazine.dmi'
@@ -126,8 +126,8 @@
 
 //extended mag
 /obj/item/ammo_magazine/rifle/nt_halter/extended
-	name = "\improper NT 'Yadot' extended magazine (7.62x39mm)"
-	desc = "An extended magazine filled with 7.62x39mm rifle rounds for the Yadot series of firearms."
+	name = "\improper TGR 'Satoru' extended magazine (7.62x39mm)"
+	desc = "An extended magazine filled with 7.62x39mm rifle rounds for the Satoru series of firearms."
 	max_rounds = 58 //close to mpi-km roughly
 	icon_state = "halter_ex"
 	bonus_overlay = "halter_ex"
@@ -137,8 +137,8 @@
 
 //drum mag
 /obj/item/ammo_magazine/rifle/nt_halter/drum
-	name = "\improper NT 'Yadot' drum magazine (7.62x39mm)"
-	desc = "A drum magazine filled with 7.62x39mm rifle rounds for the Yadot series of firearms."
+	name = "\improper TGR 'Satoru' drum magazine (7.62x39mm)"
+	desc = "A drum magazine filled with 7.62x39mm rifle rounds for the Satoru series of firearms."
 	max_rounds = 80
 	icon_state = "halter_drum"
 	bonus_overlay = "halter_drum"
@@ -149,8 +149,8 @@
 
 //emp mag
 /obj/item/ammo_magazine/rifle/nt_halter/charged
-	name = "\improper NT 'Yadot' taser magazine (7.62x39mm Taser)"
-	desc = "A magazine filled with specialized 7.62x39mm rifle rounds to deliver a powerful shock ontop of blunt force, for the Yadot series of firearms. This has a 15% chance per shot to deliver an EM pulse."
+	name = "\improper TGR 'Satoru' taser magazine (7.62x39mm Taser)"
+	desc = "A magazine filled with specialized 7.62x39mm rifle rounds to deliver a powerful shock ontop of blunt force, for the Satoru series of firearms. This has a 15% chance per shot to deliver an EM pulse."
 	icon_state = "halter_charged"
 	bonus_overlay = "halter_charged"
 	default_ammo = /datum/ammo/bullet/rifle/heavy/halter/charged
@@ -194,8 +194,8 @@
 
 //smart mag
 /obj/item/ammo_magazine/rifle/nt_halter/smart
-	name = "\improper NT 'Yadot' smart magazine (7.62x39mm Smart)"
-	desc = "A magazine filled with specialized 7.62x39mm rifle rounds that slightly sways to avoid friendlies but loses overall power, for the Yadot series of firearms."
+	name = "\improper TGR 'Satoru' smart magazine (7.62x39mm Smart)"
+	desc = "A magazine filled with specialized 7.62x39mm rifle rounds that slightly sways to avoid friendlies but loses overall power, for the Satoru series of firearms."
 	icon_state = "halter_smart"
 	bonus_overlay = "halter_smart"
 	default_ammo = /datum/ammo/bullet/rifle/heavy/halter/smart
@@ -209,8 +209,8 @@
 
 //foxfire mag
 /obj/item/ammo_magazine/rifle/nt_halter/foxfire
-	name = "\improper NT 'Yadot' foxfire magazine (7.62x39mm AP-I)"
-	desc = "A magazine filled with specialized 7.62x39mm AP-I rifle rounds that pierce armor and ignite targets, for the Yadot series of firearms."
+	name = "\improper TGR 'Satoru' foxfire magazine (7.62x39mm AP-I)"
+	desc = "A magazine filled with specialized 7.62x39mm AP-I rifle rounds that pierce armor and ignite targets, for the Satoru series of firearms."
 	icon_state = "halter_foxfire"
 	bonus_overlay = "halter_foxfire"
 	default_ammo = /datum/ammo/bullet/rifle/heavy/ap/foxfire
@@ -235,7 +235,7 @@
 
 //laser mag
 /obj/item/ammo_magazine/rifle/nt_halter/laser
-	name = "\improper NT 'Yadot' laser magazine (7.62x39mm LE)"
+	name = "\improper TGR 'Satoru' laser magazine (7.62x39mm LE)"
 	desc = "A magazine filled with specialized 7.62x39mm single shot laser emitter rounds that shoots laser bolts instead of a standard round."
 	icon_state = "halter_laser"
 	bonus_overlay = "halter_laser"
@@ -243,14 +243,14 @@
 
 /datum/ammo/energy/lasgun/halter
 	//slightly less damage than regular bullets but except laser standard sundering and bullet speed.
-	name = "Yadot laser bolt"
+	name = "Satoru laser bolt"
 	penetration = 15
 	bullet_color = COLOR_RED_LIGHT
 
 //extended mag
 /obj/item/ammo_magazine/rifle/nt_halter/laser/extended
-	name = "\improper NT 'Yadot' extended laser magazine (7.62x39mm LE)"
-	desc = "An extended magazine filled with 7.62x39mm laser emitter rounds for the Yadot series of firearms."
+	name = "\improper TGR 'Satoru' extended laser magazine (7.62x39mm LE)"
+	desc = "An extended magazine filled with 7.62x39mm laser emitter rounds for the Satoru series of firearms."
 	max_rounds = 58
 	icon_state = "halter_laser_ex"
 	bonus_overlay = "halter_laser_ex"
@@ -261,8 +261,8 @@
 
 //extended mag
 /obj/item/ammo_magazine/rifle/nt_halter/laser/drum
-	name = "\improper NT 'Yadot' drum laser magazine (7.62x39mm)"
-	desc = "A drum magazine filled with 7.62x39mm laser emitter rounds for the Yadot series of firearms."
+	name = "\improper TGR 'Satoru' drum laser magazine (7.62x39mm)"
+	desc = "A drum magazine filled with 7.62x39mm laser emitter rounds for the Satoru series of firearms."
 	max_rounds = 80
 	icon_state = "halter_laser_drum"
 	bonus_overlay = "halter_laser_drum"
@@ -273,8 +273,8 @@
 
 //rubber mags
 /obj/item/ammo_magazine/rifle/nt_halter/rubber
-	name = "\improper NT 'Yadot' rubber magazine (7.62x39mm rub)"
-	desc = "A magazine filled with 7.62x39mm rubber rifle rounds for the Yadot series of firearms."
+	name = "\improper TGR 'Satoru' rubber magazine (7.62x39mm rub)"
+	desc = "A magazine filled with 7.62x39mm rubber rifle rounds for the Satoru series of firearms."
 	icon_state = "halter_rub"
 	icon = 'icons/obj/items/ammo/magazine.dmi'
 	bonus_overlay = "halter_rub_mag"
@@ -285,8 +285,8 @@
 	sundering = 1.75
 
 /obj/item/ammo_magazine/rifle/nt_halter/rubber/extended
-	name = "\improper NT 'Yadot' extended rubber magazine (7.62x39mm rub)"
-	desc = "An extended magazine filled with 7.62x39mm rubber rounds for the Yadot series of firearms."
+	name = "\improper TGR 'Satoru' extended rubber magazine (7.62x39mm rub)"
+	desc = "An extended magazine filled with 7.62x39mm rubber rounds for the Satoru series of firearms."
 	max_rounds = 58
 	icon_state = "halter_rub_ex"
 	bonus_overlay = "halter_rub_ex"
@@ -320,7 +320,6 @@
 	attachable_allowed = list(
 		/obj/item/attachable/magnetic_harness,
 		/obj/item/attachable/suppressor/unremovable/invisible,
-		/obj/item/attachable/stock/dragoon,
 		/obj/item/attachable/angledgrip,
 		/obj/item/attachable/verticalgrip,
 		/obj/item/attachable/motiondetector,
@@ -328,7 +327,7 @@
 		/obj/item/attachable/flashlight,
 		/obj/item/attachable/foldable/bipod
 	)
-	starting_attachment_types = list(/obj/item/attachable/suppressor/unremovable/invisible, /obj/item/attachable/stock/dragoon)
+	starting_attachment_types = list(/obj/item/attachable/suppressor/unremovable/invisible)
 
 	gun_features_flags = GUN_WIELDED_FIRING_ONLY|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES
 	reciever_flags = AMMO_RECIEVER_HANDFULS|AMMO_RECIEVER_MULTICLIP
@@ -506,7 +505,7 @@
 	icon_state_mini = "mag_plasma"
 /obj/item/weapon/gun/pistol/xmdivider/ntc
 	name = "\improper T105 Unity revolver"
-	desc = "An NTC revolver reverse-engineered from Intertech's Divider. The T105 trades burst fire for more stopping power per shot and accepts standard .357 and Foxfire rounds."
+	desc = "A TerraGov revolver reverse-engineered from Intertech's Divider. The T105 trades burst fire for more stopping power per shot and accepts standard .357 and Foxfire rounds."
 	icon = 'icons/obj/items/gun/pistol64.dmi'
 	icon_state = "t105"
 	worn_icon_state = "t105"
@@ -787,14 +786,6 @@
 	default_ammo_type = /obj/item/ammo_magazine/rocket/oneuse/thermobaric
 	allowed_ammo_types = list(/obj/item/ammo_magazine/rocket/oneuse/thermobaric)
 
-/obj/item/attachable/stock/dragoon
-	icon = 'icons/obj/items/attachments/attachments.dmi'
-	name = "\improper Deferson stock"
-	desc = "An integral stock for the Deferson Mk1."
-	icon_state = "dragoon"
-	attach_features_flags = ATTACH_SAME_ICON
-	pixel_shift_x = 32
-	pixel_shift_y = 13
 /obj/item/ammo_magazine/rifle/boltclip/dragoon
 	icon = 'icons/obj/items/ammo/magazine.dmi'
 	name = "clip of 9.8x22mm rifle rounds"

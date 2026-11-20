@@ -13,13 +13,13 @@
 	cost = 100
 
 /datum/supply_packs/imports/nt_halter
-	name = "NT Yadot Bullpup Rifle"
+	name = "TGR Satoru Bullpup Rifle"
 	cost = 100
 	contains = list(/obj/item/weapon/gun/rifle/nt_halter)
 
 /datum/supply_packs/imports/nt_halter_cqb
-	name = "NT Yadot CQB Rifle"
-	cost = 75
+	name = "TGR Satoru CQB Rifle"
+	cost = 50
 	contains = list(/obj/item/weapon/gun/rifle/nt_halter/cqb)
 
 /datum/supply_packs/imports/nt_vortex
@@ -28,57 +28,57 @@
 	contains = list(/obj/item/weapon/gun/smg/vortex)
 
 /datum/supply_packs/imports/nt_halter_mag
-	name = "NT Yadot Standard Magazine"
+	name = "TGR Satoru Standard Magazine"
 	cost = 20
 	contains = list(/obj/item/ammo_magazine/rifle/nt_halter)
 
 /datum/supply_packs/imports/nt_halter_mag_extended
-	name = "NT Yadot Extended Magazine"
+	name = "TGR Satoru Extended Magazine"
 	cost = 30
 	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/extended)
 
 /datum/supply_packs/imports/nt_halter_mag_drum
-	name = "NT Yadot Drum Magazine"
+	name = "TGR Satoru Drum Magazine"
 	cost = 40
 	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/drum)
 
 /datum/supply_packs/imports/nt_halter_mag_charged
-	name = "NT Yadot Charged Magazine"
+	name = "TGR Satoru Charged Magazine"
 	cost = 45
 	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/charged)
 
 /datum/supply_packs/imports/nt_halter_mag_smart
-	name = "NT Yadot Smart Magazine"
+	name = "TGR Satoru Smart Magazine"
 	cost = 35
 	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/smart)
 
 /datum/supply_packs/imports/nt_halter_mag_foxfire
-	name = "NT Yadot Foxfire Magazine"
+	name = "TGR Satoru Foxfire Magazine"
 	cost = 45
 	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/foxfire)
 
 /datum/supply_packs/imports/nt_halter_mag_laser
-	name = "NT Yadot Laser Magazine"
+	name = "TGR Satoru Laser Magazine"
 	cost = 25
 	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/laser)
 
 /datum/supply_packs/imports/nt_halter_mag_laser_extended
-	name = "NT Yadot Extended Laser Magazine"
+	name = "TGR Satoru Extended Laser Magazine"
 	cost = 35
 	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/laser/extended)
 
 /datum/supply_packs/imports/nt_halter_mag_laser_drum
-	name = "NT Yadot Laser Drum Magazine"
+	name = "TGR Satoru Laser Drum Magazine"
 	cost = 45
 	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/laser/drum)
 
 /datum/supply_packs/imports/nt_halter_mag_rubber
-	name = "NT Yadot Rubber Magazine"
+	name = "TGR Satoru Rubber Magazine"
 	cost = 15
 	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/rubber)
 
 /datum/supply_packs/imports/nt_halter_mag_rubber_extended
-	name = "NT Yadot Extended Rubber Magazine"
+	name = "TGR Satoru Extended Rubber Magazine"
 	cost = 25
 	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/rubber/extended)
 
