@@ -8,6 +8,7 @@
 	)
 	icon_state = "firstaid"
 	base_icon_state = "firstaid"
+	storage_type = /datum/storage/firstaid
 	w_class = WEIGHT_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 8

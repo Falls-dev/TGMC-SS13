@@ -111,3 +111,59 @@
 
 /datum/storage/backpack/duffelbag/saddle
 	max_storage_space = 18
+
+/datum/storage/firstaid
+
+/datum/storage/firstaid/proc/update_firstaid_weight()
+	var/obj/item/storage/firstaid/firstaid = parent
+	if(!istype(firstaid))
+		return
+	var/total_contents_weight = 0
+	for(var/obj/item/stored_item in firstaid.contents)
+		total_contents_weight += stored_item.w_class
+	var/fill_ratio = clamp(total_contents_weight / max_storage_space, 0, 1)
+	var/base_weight = initial(firstaid.w_class)
+	var/new_weight = base_weight * (1 + (1.5 * fill_ratio))
+	if(firstaid.w_class == new_weight)
+		return
+	firstaid.w_class = new_weight
+	firstaid.loc?.recalculate_storage_space()
+
+/datum/storage/firstaid/handle_item_insertion(obj/item/item, prevent_warning = FALSE, mob/user)
+	. = ..()
+	if(.)
+		update_firstaid_weight()
+
+/datum/storage/firstaid/remove_from_storage(obj/item/item, atom/new_location, mob/user, silent = FALSE, bypass_delay = FALSE, move_item = TRUE)
+	. = ..()
+	if(.)
+		update_firstaid_weight()
+
+/datum/storage/firstaid/handle_access_delay(obj/item/accessed, mob/user, taking_out = TRUE, alert_user = TRUE)
+	var/obj/item/storage/firstaid/firstaid = parent
+	var/obj/item/storage/backpack/marine/corpsman/medical_backpack = firstaid.loc
+	if(istype(medical_backpack))
+		return medical_backpack.storage_datum.handle_access_delay(accessed, user, taking_out, alert_user)
+	return ..()
+
+/datum/storage/firstaid/on_attack_hand_alternate(datum/source, mob/living/user)
+	SIGNAL_HANDLER_DOES_SLEEP
+	var/obj/item/storage/backpack/marine/corpsman/medical_backpack = parent.loc
+	if(istype(medical_backpack))
+		if(!do_after(user, 1.5 SECONDS, IGNORE_USER_LOC_CHANGE, medical_backpack))
+			return
+		open(user)
+		return
+	return ..()
+
+/datum/storage/backpack/satchel/medical/New(atom/parent)
+	. = ..()
+	set_holdable(storage_type_limits_list = list(
+		/obj/item/storage/firstaid,
+	))
+
+/datum/storage/backpack/medical/New(atom/parent)
+	. = ..()
+	set_holdable(storage_type_limits_list = list(
+		/obj/item/storage/firstaid,
+	))

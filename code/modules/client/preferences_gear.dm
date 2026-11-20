@@ -262,8 +262,8 @@ GLOBAL_LIST_INIT(gear_datums, populate_gear_list())
 	squad = "Bravo"
 
 /datum/gear/delta_tomahawk
-	display_name = "Delta Tomahawk"
-	path = /obj/item/weapon/sword/tomahawk/classic
+	display_name = "Delta Tomahawk (in holster)"
+	path = /obj/item/storage/holster/blade/tomahawk/classic/full
 	cost = 4
 	slot = SLOT_R_HAND
 	squad = "Delta"
