@@ -24,6 +24,11 @@
 	contains = list(/obj/item/fulton_extraction_pack)
 	cost = 50
 
+/datum/supply_packs/operations/rappel_rope
+	name = "Spare Tadpole rappel system cord"
+	cost = 20
+	contains = list(/obj/item/spare_cord)
+
 /datum/supply_packs/operations/autominer
 	name = "Autominer upgrade"
 	contains = list(/obj/item/minerupgrade/automatic)
@@ -136,8 +141,3 @@
 	containertype = null
 	cost = 200
 	crash_restricted = TRUE
-
-/datum/supply_packs/operations/rappel_rope
-	name = "Spare Tadpole rappel system cord"
-	cost = 20
-	contains = list(/obj/item/spare_cord)
