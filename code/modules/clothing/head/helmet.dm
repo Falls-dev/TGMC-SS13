@@ -152,6 +152,7 @@
 		/obj/item/clothing/glasses/meson/enggoggles = "enggoggles",
 		/obj/item/clothing/glasses/meson/enggoggles/prescription = "enggoggles",
 		/obj/item/clothing/head/hairflower = "flower_pin",
+		/obj/item/clothing/head/kitty = "kitty_ears",
 	)
 
 /obj/item/clothing/head/helmet/marine/Initialize(mapload)

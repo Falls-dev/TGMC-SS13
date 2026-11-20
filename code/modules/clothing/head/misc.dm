@@ -260,9 +260,8 @@
 	icon_state = "kitty"
 	color = "#999999"
 	worn_icon_state = "kitty"
-	armor_features_flags = ARMOR_NO_DECAP
+	w_class = WEIGHT_CLASS_TINY
 	species_exception = list(/datum/species/robot)
-	soft_armor = list(MELEE = 55, BULLET = 70, LASER = 70, ENERGY = 60, BOMB = 55, BIO = 50, FIRE = 45, ACID = 60)
 
 /obj/item/clothing/head/kitty/equipped(mob/living/carbon/human/user, slot)
 

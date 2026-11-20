@@ -143,7 +143,6 @@
 			/obj/item/clothing/head/serviceberet = -1,
 			/obj/item/clothing/head/servicecap = -1,
 			/obj/item/clothing/head/strawhat = -1,
-			/obj/item/clothing/head/kitty = -1,
 		),
 		"Headwear" = list(
 			/obj/item/clothing/head/modular/style/beret = -1,
@@ -244,7 +243,6 @@
 			/obj/item/clothing/head/serviceushanka = -1,
 			/obj/item/clothing/head/servicecap = -1,
 			/obj/item/clothing/under/marine/black_suit = -1,
-			/obj/item/clothing/under/dress/maid = -1,
 		),
 	)
 

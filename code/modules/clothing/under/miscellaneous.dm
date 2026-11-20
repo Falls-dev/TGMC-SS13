@@ -216,3 +216,7 @@
 	worn_icon_state = "maid"
 	desc = "Maid in China."
 	armor_protection_flags = CHEST|GROIN
+
+/obj/item/clothing/under/dress/maid/old
+	icon_state = "maid_old"
+	worn_icon_state = "maid_old"

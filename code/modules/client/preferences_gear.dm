@@ -282,6 +282,13 @@ GLOBAL_LIST_INIT(gear_datums, populate_gear_list())
 	slot = SLOT_W_UNIFORM
 	squad = "Charlie"
 
+/datum/gear/charlie_kitty_ears
+	display_name = "The Charlie Kitty ears"
+	path = /obj/item/clothing/head/kitty
+	cost = 3
+	slot = SLOT_R_HAND
+	squad = "Charlie"
+
 /datum/gear/bravo_turtleneck
 	display_name = "The TGMC Bravo turtleneck"
 	path = /obj/item/clothing/under/marine/squad/neck/bravo
