@@ -359,6 +359,7 @@
 	icon_state = "marinesatm"
 	worn_icon_state = "marinesatm"
 	cell = /obj/item/cell/apc
+	storage_type = /datum/storage/backpack/satchel
 
 /obj/item/storage/backpack/marine/tech
 	name = "\improper TGMC technician backpack"
