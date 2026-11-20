@@ -457,6 +457,51 @@
 	return COMPONENT_DRIVER_BLOCK_MOVE
 
 //Some hover specific stuff for the SOM tank
+/obj/hitbox/rectangle/som_tank/Initialize(mapload, obj/vehicle/new_root)
+	. = ..()
+	owner_turned(new_root, 0, new_root.dir)
+
+/obj/hitbox/rectangle/som_tank/on_attempt_drive(atom/movable/movable_parent, mob/living/user, direction)
+	if(!(direction in GLOB.cardinals))
+		return COMPONENT_DRIVER_BLOCK_MOVE
+	var/obj/vehicle/sealed/armored/armor = root
+	var/turning = direction != root.dir && direction != REVERSE_DIR(root.dir) && (!armor.strafe || user.client?.keys_held["Alt"])
+	var/turf/destination = turning ? get_turf(root) : get_step(root, direction)
+	if(!destination)
+		return COMPONENT_DRIVER_BLOCK_MOVE
+
+	// Check the entire new footprint; the chassis itself moves with forceMove.
+	var/facing = turning ? direction : root.dir
+	var/offset_x = facing == WEST ? -2 : -1
+	var/offset_y = facing == SOUTH ? -2 : -1
+	var/vertical = facing == NORTH || facing == SOUTH
+	var/tiles_wide = (vertical ? vehicle_width : vehicle_length) / 32
+	var/tiles_high = (vertical ? vehicle_length : vehicle_width) / 32
+	var/list/previous_tiles = locs.Copy()
+	var/can_move = TRUE
+	for(var/dx in 0 to tiles_wide - 1)
+		for(var/dy in 0 to tiles_high - 1)
+			var/turf/tile = locate(destination.x + offset_x + dx, destination.y + offset_y + dy, destination.z)
+			if(!tile)
+				can_move = FALSE
+				continue
+			if(tile in previous_tiles)
+				continue
+			if(!tile.Enter(root, direction))
+				can_move = FALSE
+			for(var/atom/movable/obstacle AS in tile.contents)
+				if(obstacle.CanPass(root))
+					continue
+				root.Bump(obstacle)
+				can_move = FALSE
+
+	if(!can_move)
+		return COMPONENT_DRIVER_BLOCK_MOVE
+	if(turning)
+		root.setDir(direction)
+		return COMPONENT_DRIVER_BLOCK_MOVE
+	return NONE
+
 /obj/hitbox/rectangle/som_tank/get_projectile_loc(obj/item/armored_weapon/weapon)
 	return get_step(get_step(src, root.dir), root.dir)
 

@@ -244,3 +244,10 @@
 	melee_mod = 10
 	pixel_shift_x = 0
 	pixel_shift_y = 0
+
+/obj/item/attachable/stock/at45stock
+	name = "\improper CC/AT45 stock"
+	desc = "A stock for a CC/AT45."
+	icon_state = "at45"
+	pixel_shift_x = 0
+	pixel_shift_y = 0

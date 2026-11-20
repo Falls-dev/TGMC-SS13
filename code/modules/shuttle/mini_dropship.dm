@@ -90,6 +90,8 @@
 		tadmap.give_action(user)
 		actions += tadmap
 
+	give_rappel_actions(user)
+
 	if(fly_state != SHUTTLE_IN_ATMOSPHERE)
 		return
 

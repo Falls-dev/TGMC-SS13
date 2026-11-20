@@ -14,6 +14,23 @@
 	velocity = list(50, 0)
 	friction = generator(GEN_NUM, 0.3, 0.6)
 
+/particles/energy_beam_particles
+	icon = 'icons/effects/particles/generic_particles.dmi'
+	icon_state = "snow"
+	color = "#FF3333"
+	width = 32
+	height = 48
+	count = 50
+	spawning = 2
+	gravity = list(0, 4)
+	lifespan = 0.5 SECONDS
+	fade = 0.2 SECONDS
+	fadein = 0.1 SECONDS
+	grow = -0.01
+	position = generator(GEN_BOX, list(-8, -16), list(8, 0), UNIFORM_RAND)
+	scale = generator(GEN_VECTOR, list(0.3, 0.3), list(1, 1), NORMAL_RAND)
+	drift = generator(GEN_VECTOR, list(0, -0.2), list(0, 0.2))
+
 /particles/overheat_smoke
 	icon = 'icons/effects/particles/smoke.dmi'
 	icon_state = list("smoke_1" = 1, "smoke_2" = 1, "smoke_3" = 2)

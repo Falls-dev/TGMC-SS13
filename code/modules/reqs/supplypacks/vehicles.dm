@@ -73,6 +73,12 @@
 	contains = list(/obj/vehicle/ridden/motorbike)
 	containertype = null
 
+/datum/supply_packs/vehicles/assault_motorbike
+	name = "TerraGov assault motorbike"
+	cost = 800
+	contains = list(/obj/vehicle/ridden/big_bike)
+	containertype = null
+
 /datum/supply_packs/vehicles/sidecar
 	name = "Sidecar motorbike upgrade"
 	cost = 200
@@ -296,3 +302,15 @@
 	cost = 50
 	crash_restricted = TRUE
 	containertype = /obj/structure/closet/crate/ammo
+
+/datum/supply_packs/vehicles/logistics_truck
+	name = "TransCO Roadmaster Logistics Truck"
+	cost = 1200
+	contains = list(/obj/vehicle/sealed/armored/multitile/mrap/logi)
+	containertype = null
+
+/datum/supply_packs/vehicles/military_truck
+	name = "TransCO Roughauler Treaded Military Truck"
+	cost = 1500
+	contains = list(/obj/vehicle/sealed/armored/multitile/mrap/logi/treads)
+	containertype = null

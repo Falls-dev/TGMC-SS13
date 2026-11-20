@@ -12,6 +12,111 @@
 	contains = list(/obj/item/shotgunbox/clf_heavyrifle)
 	cost = 100
 
+/datum/supply_packs/imports/nt_halter
+	name = "TGR Satoru Bullpup Rifle"
+	cost = 100
+	contains = list(/obj/item/weapon/gun/rifle/nt_halter)
+
+/datum/supply_packs/imports/nt_halter_cqb
+	name = "TGR Satoru CQB Rifle"
+	cost = 50
+	contains = list(/obj/item/weapon/gun/rifle/nt_halter/cqb)
+
+/datum/supply_packs/imports/nt_vortex
+	name = "Appolo SMG"
+	cost = 50
+	contains = list(/obj/item/weapon/gun/smg/vortex)
+
+/datum/supply_packs/imports/nt_halter_mag
+	name = "TGR Satoru Standard Magazine"
+	cost = 20
+	contains = list(/obj/item/ammo_magazine/rifle/nt_halter)
+
+/datum/supply_packs/imports/nt_halter_mag_extended
+	name = "TGR Satoru Extended Magazine"
+	cost = 30
+	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/extended)
+
+/datum/supply_packs/imports/nt_halter_mag_drum
+	name = "TGR Satoru Drum Magazine"
+	cost = 40
+	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/drum)
+
+/datum/supply_packs/imports/nt_halter_mag_charged
+	name = "TGR Satoru Charged Magazine"
+	cost = 45
+	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/charged)
+
+/datum/supply_packs/imports/nt_halter_mag_smart
+	name = "TGR Satoru Smart Magazine"
+	cost = 35
+	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/smart)
+
+/datum/supply_packs/imports/nt_halter_mag_foxfire
+	name = "TGR Satoru Foxfire Magazine"
+	cost = 45
+	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/foxfire)
+
+/datum/supply_packs/imports/nt_halter_mag_laser
+	name = "TGR Satoru Laser Magazine"
+	cost = 25
+	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/laser)
+
+/datum/supply_packs/imports/nt_halter_mag_laser_extended
+	name = "TGR Satoru Extended Laser Magazine"
+	cost = 35
+	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/laser/extended)
+
+/datum/supply_packs/imports/nt_halter_mag_laser_drum
+	name = "TGR Satoru Laser Drum Magazine"
+	cost = 45
+	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/laser/drum)
+
+/datum/supply_packs/imports/nt_halter_mag_rubber
+	name = "TGR Satoru Rubber Magazine"
+	cost = 15
+	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/rubber)
+
+/datum/supply_packs/imports/nt_halter_mag_rubber_extended
+	name = "TGR Satoru Extended Rubber Magazine"
+	cost = 25
+	contains = list(/obj/item/ammo_magazine/rifle/nt_halter/rubber/extended)
+
+/datum/supply_packs/imports/vortex_mag
+	name = "Appolo Standard Magazine"
+	cost = 15
+	contains = list(/obj/item/ammo_magazine/smg/vortex)
+
+/datum/supply_packs/imports/vortex_mag_ap
+	name = "Appolo AP Magazine"
+	cost = 25
+	contains = list(/obj/item/ammo_magazine/smg/vortex/ap)
+
+/datum/supply_packs/imports/vortex_mag_squashhead
+	name = "Appolo Squashhead Magazine"
+	cost = 20
+	contains = list(/obj/item/ammo_magazine/smg/vortex/squashhead)
+
+/datum/supply_packs/imports/vortex_mag_rubber
+	name = "Appolo Rubber Magazine"
+	cost = 10
+	contains = list(/obj/item/ammo_magazine/smg/vortex/rubber)
+
+/datum/supply_packs/imports/vortex_mag_incendiary
+	name = "Appolo Incendiary Magazine"
+	cost = 25
+	contains = list(/obj/item/ammo_magazine/smg/vortex/incendiary)
+
+/datum/supply_packs/imports/vortex_mag_extended
+	name = "Appolo Extended Magazine"
+	cost = 25
+	contains = list(/obj/item/ammo_magazine/smg/vortex/extended)
+
+/datum/supply_packs/imports/vortex_mag_taser
+	name = "Appolo Taser Magazine"
+	cost = 30
+	contains = list(/obj/item/ammo_magazine/smg/vortex/taser)
+
 /datum/supply_packs/imports/m41a
 	name = "PR-11 Pulse Rifle"
 	contains = list(/obj/item/weapon/gun/rifle/m41a)

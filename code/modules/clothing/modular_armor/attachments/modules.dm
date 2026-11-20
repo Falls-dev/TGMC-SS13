@@ -1044,3 +1044,173 @@
 	var/datum/component/health_stealth/health_stealth = parent?.GetComponent(/datum/component/health_stealth)
 	health_stealth?.RemoveComponent()
 	return ..()
+
+/obj/item/armor_module/module/eshield/overclocked
+	max_shield_health = 75
+	damaged_shield_cooldown = 5 SECONDS
+	shield_color_low = COLOR_MAROON
+	shield_color_mid = LIGHT_COLOR_RED_ORANGE
+	shield_color_full = LIGHT_COLOR_ELECTRIC_CYAN
+
+//original Martian design, donutsteel
+
+/obj/item/armor_module/module/eshield/som/overclocked
+	max_shield_health = 75
+	damaged_shield_cooldown = 5 SECONDS
+	shield_color_low = COLOR_MAROON
+	shield_color_mid = LIGHT_COLOR_RED_ORANGE
+	shield_color_full = LIGHT_COLOR_ELECTRIC_CYAN
+
+/*
+	Loki illusion projection
+*/
+
+/obj/item/armor_module/module/eshield/absorbant
+	name = "Absorbent shield"
+	desc = "An energy-absorbing armor shield."
+	slot = ATTACHMENT_SLOT_MODULE
+	var/list/blocked_attack_types = list()
+
+	max_shield_health = 40 //less than standard e shield by base
+	var/overcharge_max_health = 345
+
+	//pale ass but black-white absorbing/deflect light and shit like that.
+	shield_color_low = COLOR_DARK_RED
+	shield_color_mid = COLOR_DARK_RED
+	shield_color_full = COLOR_GRAY
+	damaged_shield_cooldown = 20 SECONDS
+	var/shield_color_overmax_full = COLOR_WHITE
+	var/shield_color_overmax_full_danger = COLOR_VIVID_RED
+	var/last_warning_time
+	var/explode_on_overload = TRUE
+	///percent chance to go off without exploding.
+	var/auto_release_chance = 75
+
+/obj/item/armor_module/module/eshield/absorbant/energy
+	name = "NT Voidwalker Anti-Energy Shield System"
+	desc = "A modified Svalinn shield that absorbs laser and energy attacks. It can explode if overcharged."
+	blocked_attack_types = list(LASER, ENERGY)
+	soft_armor = list(MELEE = -10, BULLET = 0, LASER = -5, ENERGY = -5, BOMB = 0, BIO = -5, FIRE = 10, ACID = -5)
+
+/obj/item/armor_module/module/eshield/absorbant/intercept_damage(attack_type, incoming_damage, damage_type, silent)
+	if(attack_type != COMBAT_PROJ_ATTACK && attack_type != COMBAT_MELEE_ATTACK)
+		return incoming_damage
+	if(incoming_damage <= 0)
+		return 0
+	var/mob/living/affected = parent?.loc
+	if(!isliving(affected))
+		return incoming_damage
+
+	var/absorbed_energy = (damage_type in blocked_attack_types)
+	var/shield_left = shield_health + (absorbed_energy ? incoming_damage : -incoming_damage)
+	STOP_PROCESSING(SSobj, src)
+	deltimer(recharge_timer)
+	if(shield_left >= overcharge_max_health)
+		shield_health = 0
+		affected.remove_filter("eshield")
+		recharge_timer = addtimer(CALLBACK(src, PROC_REF(begin_recharge)), damaged_shield_cooldown * 1.2, TIMER_STOPPABLE)
+		if(!explode_on_overload || prob(auto_release_chance))
+			balloon_alert_to_viewers("emergency release!")
+			playsound(affected, 'sound/effects/airhiss.ogg', 40)
+		else
+			balloon_alert_to_viewers("shield break!")
+			cell_explosion(get_turf(affected), 90, 30)
+		return shield_left - overcharge_max_health
+
+	shield_health = max(0, shield_left)
+	recharge_timer = addtimer(CALLBACK(src, PROC_REF(begin_recharge)), damaged_shield_cooldown, TIMER_STOPPABLE)
+	if(!shield_health)
+		affected.remove_filter("eshield")
+		return -shield_left
+	update_shield_outline(affected)
+	spark_system.start()
+	if(shield_health > (max_shield_health + overcharge_max_health) / 2 && world.time > last_warning_time + 2 SECONDS)
+		last_warning_time = world.time
+		balloon_alert_to_viewers("overloading! [shield_health]/[overcharge_max_health]")
+		playsound(affected, 'sound/machines/beepalert.ogg', 40)
+	return 0
+
+/obj/item/armor_module/module/eshield/absorbant/on_detach(obj/item/detaching_from, mob/user)
+	var/mob/living/carbon/human/wearer = parent?.loc
+	if(ishuman(wearer) && wearer.wear_suit == parent)
+		handle_unequip(parent, wearer, SLOT_WEAR_SUIT)
+	deltimer(recharge_timer)
+	recharge_timer = null
+	return ..()
+
+/obj/item/armor_module/module/eshield/absorbant/on_attach(obj/item/attaching_to, mob/user)
+	. = ..()
+	var/mob/living/carbon/human/wearer = parent?.loc
+	if(ishuman(wearer) && wearer.wear_suit == parent)
+		handle_equip(parent, wearer, SLOT_WEAR_SUIT)
+
+/obj/item/armor_module/module/eshield/absorbant/proc/update_shield_outline(mob/living/wearer)
+	var/level = shield_health / max_shield_health
+	if(shield_health > max_shield_health)
+		level = 1 + (shield_health - max_shield_health) / (overcharge_max_health - max_shield_health)
+	current_color = gradient(0, shield_color_low, 0.5, shield_color_mid, 1, shield_color_full, 1.5, shield_color_overmax_full, 2, shield_color_overmax_full_danger, space = COLORSPACE_HCY, index = level)
+	wearer.add_filter("eshield", 2, outline_filter(1, current_color))
+
+/obj/item/armor_module/module/eshield/absorbant/process()
+	var/mob/living/carbon/human/wearer = parent?.loc
+	if(!ishuman(wearer) || wearer.wear_suit != parent)
+		return PROCESS_KILL
+	if(shield_health < max_shield_health)
+		shield_health = min(shield_health + recharge_rate, max_shield_health)
+	else if(shield_health > max_shield_health)
+		shield_health = max(shield_health - recharge_rate, max_shield_health)
+	update_shield_outline(wearer)
+	if(shield_health == max_shield_health)
+		return PROCESS_KILL
+
+/obj/item/armor_module/module/knight
+	name = "\improper Magni Knight System"
+	desc = "An armor module that improves melee combat and protection. The module prevents the wearer from firing guns and priming grenades."
+	icon = 'icons/mob/modular/modular_armor_modules.dmi'
+	icon_state = "mod_armor"
+	worn_icon_state = "mod_armor_a"
+	attachment_layer = COLLAR_LAYER
+	soft_armor = list(MELEE = 15, BULLET = 15, LASER = 15, ENERGY = 15, BOMB = 15, BIO = 15, FIRE = 15, ACID = 15)
+	slot = ATTACHMENT_SLOT_MODULE
+	/// Current wearer, so detaching the module also removes its effects.
+	var/mob/living/carbon/human/wearer
+
+/obj/item/armor_module/module/knight/on_attach(obj/item/attaching_to, mob/user)
+	. = ..()
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_suit_equip))
+	RegisterSignal(parent, COMSIG_ITEM_UNEQUIPPED, PROC_REF(on_suit_unequip))
+	if(ishuman(parent.loc))
+		var/mob/living/carbon/human/human = parent.loc
+		if(human.wear_suit == parent)
+			on_suit_equip(parent, human, SLOT_WEAR_SUIT)
+
+/obj/item/armor_module/module/knight/on_detach(obj/item/detaching_from, mob/user)
+	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_UNEQUIPPED))
+	remove_knight()
+	return ..()
+
+/obj/item/armor_module/module/knight/Destroy()
+	remove_knight()
+	return ..()
+
+/obj/item/armor_module/module/knight/proc/on_suit_equip(datum/source, mob/equipper, slot)
+	SIGNAL_HANDLER
+	if(slot != SLOT_WEAR_SUIT || !ishuman(equipper) || wearer == equipper)
+		return
+	remove_knight()
+	wearer = equipper
+	ADD_TRAIT(wearer, TRAIT_KNIGHT, src)
+	wearer.set_skills(wearer.skills.modifyRating(unarmed = 1, melee_weapons = 1, stamina = 1))
+
+/obj/item/armor_module/module/knight/proc/on_suit_unequip(datum/source, mob/unequipper, slot)
+	SIGNAL_HANDLER
+	if(wearer == unequipper && slot == SLOT_WEAR_SUIT)
+		remove_knight()
+
+/obj/item/armor_module/module/knight/proc/remove_knight()
+	if(!wearer)
+		return
+	REMOVE_TRAIT(wearer, TRAIT_KNIGHT, src)
+	if(wearer.skills)
+		wearer.set_skills(wearer.skills.modifyRating(unarmed = -1, melee_weapons = -1, stamina = -1))
+	wearer = null

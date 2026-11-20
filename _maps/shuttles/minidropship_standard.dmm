@@ -236,6 +236,7 @@
 /area/shuttle/minidropship)
 "Y" = (
 /obj/effect/attach_point/crew_weapon/minidropship,
+/obj/structure/dropship_equipment/shuttle/rappel_system,
 /turf/open/floor/plating/plating_catwalk,
 /area/shuttle/minidropship)
 
