@@ -3301,9 +3301,11 @@
 /obj/item/weapon/gun/rifle/lok
 	name = "\improper Lok-0.5 Smart Rifle"
 	desc = "A high-end PDW fitted with a semi-intelligent AI core and several sophisticated tracking systems. Hold right-click to lock targets, release to fire guided rounds."
-	icon = 'icons/obj/items/gun/rifle64.dmi'
+	icon = 'icons/obj/items/gun/lok64.dmi'
 	icon_state = "lok"
 	worn_icon_list = list(
+		slot_back_str = 'icons/mob/clothing/lok_back.dmi',
+		slot_s_store_str = 'icons/mob/lok_suit_slot.dmi',
 		slot_l_hand_str = 'icons/mob/inhands/gun/rifle_lefthand_1.dmi',
 		slot_r_hand_str = 'icons/mob/inhands/gun/rifle_righthand_1.dmi',
 	)

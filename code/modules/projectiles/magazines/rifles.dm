@@ -793,6 +793,7 @@
 	name = "\improper Lok-0.5 Smart Rifle magazine"
 	desc = "Magazine from the smart rifle Lok-0.5"
 	caliber = CALIBER_GUIDE_ROUNDS
+	icon = 'icons/obj/items/ammo/lok.dmi'
 	icon_state = "lok"
 	icon_state_mini = "mag_lok"
 	w_class = WEIGHT_CLASS_NORMAL
