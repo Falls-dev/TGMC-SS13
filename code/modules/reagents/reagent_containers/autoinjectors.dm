@@ -1,7 +1,8 @@
 /obj/item/reagent_containers/hypospray/autoinjector
 	name = "generic autoinjector"
 	desc = "An autoinjector containing... table salt? <i>\"For any client assistance, please contact the coderbus\" is written on the back.</i>"
-	icon_state = "autoinjector"
+	icon = 'icons/obj/items/syringe.dmi'
+	icon_state = "autoinjector-13"
 	worn_icon_state = "hypo"
 	w_class = WEIGHT_CLASS_TINY
 	skilllock = 0
@@ -10,10 +11,18 @@
 	volume = 45
 	possible_transfer_amounts = list(1, 3, 5, 10, 15, 20, 30, 45)
 	list_reagents = list(/datum/reagent/consumable/sodiumchloride = 45)
+	greyscale_config = /datum/greyscale_config/autoinjector_13
 	///For keeping the initial name of the autoinjector, and not setting back to general autoinjector
 	var/base_name
+	/// Цвет наконечника
+	var/tip_color = "#3ad1f0"
+	/// Цвет средней части
+	var/mid_color = "#ffffff"
+	/// Цвет нижней части и кнопки
+	var/down_color = "#F1A344"
 
 /obj/item/reagent_containers/hypospray/autoinjector/Initialize(mapload)
+	greyscale_colors = "[tip_color][mid_color][down_color]"
 	base_icon_state = icon_state
 	base_name = name
 	return ..() // some incomprehensible power of shitcode makes penals first update icon_state and only then set base_icon_state, works fine for simple autoinjectors tho
@@ -46,14 +55,15 @@
 /obj/item/reagent_containers/hypospray/autoinjector/tricordrazine
 	name = "tricordrazine autoinjector"
 	desc = "An autoinjector loaded with 3 doses of tricordrazine, a weak general use medicine for treating damage."
-	icon_state = "autoinjector-4"
+	tip_color = "#E38B1A"
 	list_reagents = list(/datum/reagent/medicine/tricordrazine = 45)
 	description_overlay = "Ti"
 
 /obj/item/reagent_containers/hypospray/autoinjector/combat
 	name = "combat autoinjector"
 	desc = "An autoinjector loaded with 3 doses of healing and painkilling chemicals. Intended for use in active combat."
-	icon_state = "RedGreen"
+	tip_color = "#FFB27B"
+	down_color = "#FFB27B"
 	amount_per_transfer_from_this = 15
 	list_reagents = list(
 		/datum/reagent/medicine/bicaridine = 15,
@@ -66,7 +76,8 @@
 /obj/item/reagent_containers/hypospray/autoinjector/combat_advanced
 	name = "advanced combat autoinjector"
 	desc = "An autoinjector loaded with 3 doses of advanced healing and painkilling chemicals. Intended for use in active combat."
-	icon_state = "Lilac"
+	tip_color = "#FF7F7F"
+	down_color = "#FF7F7F"
 	amount_per_transfer_from_this = 15
 	list_reagents = list(
 		/datum/reagent/medicine/meralyne = 15,
@@ -78,14 +89,14 @@
 /obj/item/reagent_containers/hypospray/autoinjector/quickclot
 	name = "quick-clot autoinjector"
 	desc = "An autoinjector loaded with 3 doses of quick-clot, a chemical designed to pause all bleeding. Renew doses as needed."
-	icon_state = "autoinjector-7"
+	tip_color = "#a70a72"
 	list_reagents = list(/datum/reagent/medicine/quickclot = 45)
 	description_overlay = "Qk"
 
 /obj/item/reagent_containers/hypospray/autoinjector/quickclotplus
 	name = "quick-clot plus autoinjector"
 	desc = "An autoinjector loaded with 3 uses of quick-clot plus, a chemical designed to remove internal bleeding. Use with antitoxin. !DO NOT USE IN ACTIVE COMBAT!"
-	icon_state = "autoinjector-7"
+	tip_color = "#e6119f"
 	amount_per_transfer_from_this = 5
 	volume = 15
 	list_reagents = list(/datum/reagent/medicine/quickclotplus = 15)
@@ -94,7 +105,7 @@
 /obj/item/reagent_containers/hypospray/autoinjector/dexalinplus
 	name = "dexalin plus autoinjector"
 	desc = "An autoinjector loaded with 3 uses of dexalin plus, designed to immediately oxygenate the entire body."
-	icon_state = "autoinjector-2"
+	tip_color = "#3b79db"
 	amount_per_transfer_from_this = 1
 	volume = 3
 	list_reagents = list(/datum/reagent/medicine/dexalinplus = 3)
@@ -103,7 +114,7 @@
 /obj/item/reagent_containers/hypospray/autoinjector/sleeptoxin
 	name = "anesthetic autoinjector"
 	desc = "An autoinjector loaded with 10 units of sleeping agent. Good to quickly pacify someone, for surgery of course."
-	icon_state = "autoinjector-8"
+	tip_color = "#f0e8f3"
 	amount_per_transfer_from_this = 10
 	volume = 10
 	list_reagents = list(
@@ -114,7 +125,7 @@
 /obj/item/reagent_containers/hypospray/autoinjector/dylovene
 	name = "dylovene autoinjector"
 	desc = "An auto-injector loaded with 3 doses of dylovene, an anti-toxin agent useful in cases of poisoning, overdoses and toxin build-up."
-	icon_state = "autoinjector-1"
+	tip_color = "#17b611"
 	list_reagents = list(/datum/reagent/medicine/dylovene = 45)
 	description_overlay = "Dy"
 	amount_per_transfer_from_this = 3
@@ -122,14 +133,15 @@
 /obj/item/reagent_containers/hypospray/autoinjector/tramadol
 	name = "tramadol autoinjector"
 	desc = "An auto-injector loaded with 3 doses of tramadol, an effective painkiller for normal wounds."
-	icon_state = "autoinjector-10"
+	tip_color = "#8438b1"
 	list_reagents = list(/datum/reagent/medicine/tramadol = 45)
 	description_overlay = "Ta"
 
 /obj/item/reagent_containers/hypospray/autoinjector/oxycodone
 	name = "oxycodone autoinjector"
 	desc = "An auto-injector loaded with 2 doses of oxycodone, a powerful pankiller intended for life-threatening situations."
-	icon_state = "autoinjector-6"
+	tip_color = "#272524"
+	down_color = "#3b3532"
 	volume = 20
 	amount_per_transfer_from_this = 10
 	list_reagents = list(/datum/reagent/medicine/oxycodone = 20)
@@ -138,21 +150,21 @@
 /obj/item/reagent_containers/hypospray/autoinjector/kelotane
 	name = "kelotane autoinjector"
 	desc = "An auto-injector loaded with 3 doses of kelotane, a common burn medicine."
-	icon_state = "autoinjector-5"
+	tip_color = "#ebb513"
 	list_reagents = list(/datum/reagent/medicine/kelotane = 45)
 	description_overlay = "Ke"
 
 /obj/item/reagent_containers/hypospray/autoinjector/bicaridine
 	name = "bicaridine autoinjector"
 	desc = "An auto-injector loaded with 3 doses of bicaridine, a common brute and circulatory damage medicine."
-	icon_state = "autoinjector-3"
+	tip_color = "#DA0000"
 	list_reagents = list(/datum/reagent/medicine/bicaridine = 45)
 	description_overlay = "Bi"
 
 /obj/item/reagent_containers/hypospray/autoinjector/inaprovaline
 	name = "inaprovaline autoinjector"
 	desc = "An auto-injector loaded with 3 doses of inaprovaline, an emergency stabilization medicine for patients in critical condition."
-	icon_state = "autoinjector-9"
+	tip_color = "#b67af1"
 	amount_per_transfer_from_this = 15
 	list_reagents = list(/datum/reagent/medicine/inaprovaline = 45)
 	description_overlay = "In"
@@ -160,7 +172,7 @@
 /obj/item/reagent_containers/hypospray/autoinjector/dexalin
 	name = "dexalin autoinjector"
 	desc = "An auto-injector loaded with 3 doses of dexalin, a medicine that oxygenates the body helping those with respiratory issues or low blood."
-	icon_state = "autoinjector-2"
+	tip_color = "#3b79db"
 	volume = 15
 	amount_per_transfer_from_this = 5
 	list_reagents = list(/datum/reagent/medicine/dexalin = 15)
@@ -169,7 +181,7 @@
 /obj/item/reagent_containers/hypospray/autoinjector/spaceacillin
 	name = "spaceacillin autoinjector"
 	desc = "An auto-injector loaded with 9 doses of spaceacillin, an antibiotic medicine that helps combat infection and fight necrosis."
-	icon_state = "autoinjector-1"
+	tip_color = "#19d6b0"
 	amount_per_transfer_from_this = 5
 	list_reagents = list(/datum/reagent/medicine/spaceacillin = 45)
 	description_overlay = "Sp"
@@ -177,7 +189,7 @@
 /obj/item/reagent_containers/hypospray/autoinjector/alkysine
 	name = "alkysine autoinjector"
 	desc = "An auto-injector loaded with 9 doses of alkysine, long-living medicine for fixing brain and ear damage."
-	icon_state = "autoinjector-12"
+	tip_color = "#409EB1"
 	amount_per_transfer_from_this = 5
 	list_reagents = list(/datum/reagent/medicine/alkysine = 45)
 	description_overlay = "Al"
@@ -185,7 +197,7 @@
 /obj/item/reagent_containers/hypospray/autoinjector/imidazoline
 	name = "imidazoline autoinjector"
 	desc = "An auto-injector loaded with 6 doses of imidazoline, medicine for fixing eyesight."
-	icon_state = "autoinjector-5"
+	tip_color = "#3ac98d"
 	amount_per_transfer_from_this = 7.5
 	list_reagents = list(/datum/reagent/medicine/imidazoline = 45)
 	description_overlay = "Im"
@@ -193,7 +205,8 @@
 /obj/item/reagent_containers/hypospray/autoinjector/hypervene
 	name = "hypervene autoinjector"
 	desc = "An auto-injector loaded with 15 uses of hypervene, an emergency medicine that rapidly purges chems. Causes pain and vomiting."
-	icon_state = "Toxic"
+	tip_color = "#3dff02"
+	down_color = "#4ccc25"
 	amount_per_transfer_from_this = 3
 	list_reagents = list(/datum/reagent/hypervene = 45)
 	description_overlay = "Hy"
@@ -201,7 +214,6 @@
 /obj/item/reagent_containers/hypospray/autoinjector/virilyth //not accessible during normal play, only for valhalla
 	name = "virilyth autoinjector"
 	desc = "A large auto-injector freshly loaded with virilynth."
-	icon_state = "autoinjector-8"
 	amount_per_transfer_from_this = 10
 	volume = 50
 	list_reagents = list(
@@ -211,7 +223,6 @@
 /obj/item/reagent_containers/hypospray/autoinjector/rezadone //not accessible during normal play, only for valhalla
 	name = "rezadone autoinjector"
 	desc = "A large auto-injector freshly loaded with rezadone."
-	icon_state = "autoinjector-8"
 	amount_per_transfer_from_this = 10
 	volume = 50
 	list_reagents = list(
@@ -221,7 +232,8 @@
 /obj/item/reagent_containers/hypospray/autoinjector/synaptizine
 	name = "synaptizine autoinjector"
 	desc = "An auto-injector freshly loaded with a safe-to-use synaptizine mix."
-	icon_state = "Mystery"
+	tip_color = "#7300EF"
+	down_color = "#6d19c7"
 	amount_per_transfer_from_this = 3
 	volume = 18
 	list_reagents = list(
@@ -233,7 +245,7 @@
 /obj/item/reagent_containers/hypospray/autoinjector/synaptizine_expired
 	name = "expired synaptizine autoinjector"
 	desc = "An auto-injector said to be loaded with a safe-to-use synaptizine mix, 3 months past it's expiration date."
-	icon_state = "autoinjector-1"
+	tip_color = "#548175"
 	amount_per_transfer_from_this = 2
 	volume = 6
 	list_reagents = list(
@@ -245,7 +257,8 @@
 /obj/item/reagent_containers/hypospray/autoinjector/neuraline
 	name = "neuraline autoinjector"
 	desc = "An auto-injector loaded with 3 doses of neuraline, an extremely powerful stimulant. !DO NOT USE MORE THAN ONCE AT A TIME!"
-	icon_state = "RedWhite"
+	tip_color = "#f10687"
+	down_color = "#df067d"
 	amount_per_transfer_from_this = 4
 	volume = 12
 	list_reagents = list(/datum/reagent/medicine/neuraline = 12)
@@ -256,14 +269,13 @@
 	desc = "An auto-injector loaded with 3 doses of Peridaxon, a chemical that removes the consequences from organs !DO NOT USE MORE THAN ONCE AT A TIME!"
 	amount_per_transfer_from_this = 5
 	volume = 15
-	icon_state = "VioWhite"
+	tip_color = "#6c5ce7"
 	list_reagents = list(/datum/reagent/medicine/peridaxon = 15)
 	description_overlay = "Pe"
 
 /obj/item/reagent_containers/hypospray/autoinjector/peridaxon_plus
 	name = "peridaxon Plus autoinjector"
 	desc = "An auto-injector loaded with 3 doses of Peridaxon Plus, a chemical that heals organs while causing a buildup of toxins. Use with antitoxin. !DO NOT USE IN ACTIVE COMBAT!"
-	icon_state = "VioWhite"
 	amount_per_transfer_from_this = 3
 	volume = 9
 	list_reagents = list(
@@ -275,7 +287,7 @@
 /obj/item/reagent_containers/hypospray/autoinjector/antitox_mix
 	name = "Anti-toxin mix 4"
 	desc = "An auto-injector loaded a cocktail of chemicals intended for rapid treatment of severe toxin damage. Do not use without proper medical supervision."
-	icon_state = "Toxic"
+	tip_color = "#00b894"
 	amount_per_transfer_from_this = 15
 	list_reagents = list(
 		/datum/reagent/medicine/hyronalin = 7.5,
@@ -288,7 +300,8 @@
 /obj/item/reagent_containers/hypospray/autoinjector/russian_red
 	name = "emergency autoinjector"
 	desc = "An autoinjector loaded with 3 doses of Russian Red. Restores a significant amount of stamina and heals a large amount of damage, but causes slight permanent damage."
-	icon_state = "Redwood"
+	tip_color = "#ff2600"
+	down_color = "#eb3d08"
 	amount_per_transfer_from_this = 10
 	list_reagents = list(
 		/datum/reagent/medicine/russian_red = 30,
@@ -299,7 +312,7 @@
 /obj/item/reagent_containers/hypospray/autoinjector/polyhexanide
 	name = "polyhexanide autoinjector"
 	desc = "An auto-injector loaded with a dose of Polyhexanide, a sterilizer for internal surgical use."
-	icon_state = "autoinjector-10"
+	tip_color = "#55efc4"
 	amount_per_transfer_from_this = 5
 	volume = 20
 	list_reagents = list(/datum/reagent/medicine/polyhexanide = 20)
@@ -307,7 +320,7 @@
 /obj/item/reagent_containers/hypospray/autoinjector/isotonic
 	name = "isotonic solution autoinjector"
 	desc = "An auto-injector loaded with 3 doses of isotonic solution, formulated to quickly recover fluid volume after blood loss or trauma."
-	icon_state = "autoinjector-8"
+	tip_color = "#8fb5db"
 	amount_per_transfer_from_this = 15
 	list_reagents = list(
 		/datum/reagent/medicine/saline_glucose = 45,
@@ -317,7 +330,6 @@
 /obj/item/reagent_containers/hypospray/autoinjector/roulettium
 	name = "roulettium autoinjector"
 	desc = "An auto-injector loaded with one shot of roulettium, an extremely powerful panacea. !THIS HAS A CHANCE OF UNRECOVERABLE DEATH!"
-	icon_state = "autoinjector-6"
 	amount_per_transfer_from_this = 1
 	volume = 1
 	list_reagents = list(/datum/reagent/medicine/roulettium = 1)
@@ -325,7 +337,6 @@
 /obj/item/reagent_containers/hypospray/autoinjector/elite //only deathsquad should be able to get this
 	name = "elite autoinjector"
 	desc = "An elite auto-injector loaded with a strong and versatile combination of chemicals, healing most types of damage. Issued almost excusively to the infamous Nanotrasen deathsquads"
-	icon_state = "autoinjector-7"
 	volume = 37.5
 	amount_per_transfer_from_this = 12.4
 	list_reagents = list(
@@ -336,7 +347,7 @@
 /obj/item/reagent_containers/hypospray/autoinjector/medicalnanites
 	name = "nanomachines autoinjector"
 	desc = "An auto-injector loaded with medical nanites. A potent new method of healing that that reproduces using a subject's blood and has a brief but potentially dangerous activation period! Beware of Neurotoxin!"
-	icon_state = "autoinjector-6"
+	tip_color = "#1b4e4e"
 	amount_per_transfer_from_this = 1
 	volume = 1
 	list_reagents = list(/datum/reagent/medicalnanites = 1)
@@ -348,6 +359,7 @@
 	desc = "An auto-injector loaded with sulfasalazine, an agent that restores itself at the expense of other reagents and purge them, but has a great healing effect. WARNING: It embeds itself into the deepest tissues of the body, making it impossible to remove from the user after administration"
 	amount_per_transfer_from_this = 1
 	volume = 1
+	tip_color = "#71c208"
 	reagent_flags = NONE
 	list_reagents = list(/datum/reagent/medicine/sulfasalazine = 1)
 	free_refills = FALSE
@@ -365,14 +377,13 @@
 
 /obj/item/reagent_containers/hypospray/autoinjector/sulfasalazine/update_icon_state()
 	if(!reagents?.total_volume)
-		icon_state = "autoinjector-6X"
+		icon_state = "[base_icon_state]X"
 	else
-		icon_state = "autoinjector-6"
+		icon_state = base_icon_state
 
 /obj/item/reagent_containers/hypospray/autoinjector/pain //made for debugging
 	name = "liquid pain autoinjector"
 	desc = "An auto-injector loaded with liquid pain. Ow."
-	icon_state = "autoinjector-6"
 	amount_per_transfer_from_this = 20
 	volume = 100
 	list_reagents = list(/datum/reagent/toxin/pain = 100)
@@ -380,7 +391,6 @@
 /obj/item/reagent_containers/hypospray/autoinjector/spacedrugs //CL goodie
 	name = "space drugs autoinjector"
 	desc = "An auto-injector loaded with sweet, sweet space drugs... Hard to get as a marine."
-	icon_state = "autoinjector-1"
 	amount_per_transfer_from_this = 25
 	volume = 25
 	list_reagents = list(/datum/reagent/space_drugs = 25)
@@ -388,7 +398,6 @@
 /obj/item/reagent_containers/hypospray/autoinjector/mindbreaker //made for debugging
 	name = "mindbreaker toxin autoinjector"
 	desc = "An auto-injector loaded with the hardest, deadliest drug around. May cure PTSD. May cause it."
-	icon_state = "Toxic"
 	amount_per_transfer_from_this = 30
 	volume = 30
 	list_reagents = list(/datum/reagent/toxin/mindbreaker = 30)
@@ -415,40 +424,10 @@
 /obj/item/reagent_containers/hypospray/autoinjector/regrow
 	name = "Re-Grow autoinjector"
 	desc = "An auto-injector loaded with Re-Grow - able to rapidly regrow missing limbs."
-	icon_state = "AngelLight"
+	tip_color = "#00cec9"
+	mid_color = "#55efc4"
 	amount_per_transfer_from_this = 5
 	list_reagents = list(
 		/datum/reagent/medicine/regrow = 30,
 	)
 	description_overlay = "Grw"
-
-/obj/item/reagent_containers/hypospray/autoinjector/custom
-	name = "custom autoinjector"
-	desc = "A recolorable autoinjector."
-	icon = 'icons/obj/items/syringe.dmi'
-	icon_state = "autoinjector-13"
-	base_icon_state = "autoinjector-13"
-	greyscale_config = /datum/greyscale_config/autoinjector_13
-
-	/// Цвет наконечника
-	var/tip_color = "#3ad1f0"
-	/// Цвет средней части
-	var/mid_color = "#ffffff"
-	/// Цвет нижней части и кнопки
-	var/down_color = "#F1A344"
-
-/obj/item/reagent_containers/hypospray/autoinjector/custom/Initialize(mapload)
-	greyscale_colors = "[tip_color][mid_color][down_color]"
-	. = ..()
-	base_icon_state = "autoinjector-13"
-
-/obj/item/reagent_containers/hypospray/autoinjector/custom/update_icon_state()
-	. = ..()
-	if(!reagents?.total_volume && is_drawable())
-		icon_state = "[base_icon_state]X"
-		name = "expended [initial(name)]"
-		DISABLE_BITFIELD(reagents.reagent_flags, DRAWABLE)
-	else if(reagents?.total_volume && !CHECK_BITFIELD(reagents.reagent_flags, DRAWABLE))
-		icon_state = base_icon_state
-		name = initial(name)
-		ENABLE_BITFIELD(reagents.reagent_flags, DRAWABLE)
