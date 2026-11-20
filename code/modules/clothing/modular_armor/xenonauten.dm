@@ -61,7 +61,6 @@
 	starting_attachments = list(
 		/obj/item/armor_module/module/eshield,
 		/obj/item/armor_module/module/eshield/absorbant/energy,
-		/obj/item/armor_module/module/knight,
 		/obj/item/armor_module/storage/medical,
 	)
 
@@ -82,7 +81,6 @@
 	starting_attachments = list(
 		/obj/item/armor_module/module/eshield,
 		/obj/item/armor_module/module/eshield/absorbant/energy,
-		/obj/item/armor_module/module/knight,
 		/obj/item/armor_module/storage/medical,
 	)
 
@@ -151,7 +149,6 @@
 	starting_attachments = list(
 		/obj/item/armor_module/module/eshield,
 		/obj/item/armor_module/module/eshield/absorbant/energy,
-		/obj/item/armor_module/module/knight,
 		/obj/item/armor_module/storage/medical,
 	)
 
@@ -386,6 +383,5 @@
 	starting_attachments = list(
 		/obj/item/armor_module/module/eshield,
 		/obj/item/armor_module/module/eshield/absorbant/energy,
-		/obj/item/armor_module/module/knight,
 		/obj/item/armor_module/storage/medical,
 	)
