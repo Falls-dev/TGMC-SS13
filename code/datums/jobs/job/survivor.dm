@@ -145,33 +145,13 @@ Good luck, but do not expect to survive."})
 	skills_type = /datum/skills/civilian/survivor/master
 	outfit = /datum/outfit/job/survivor/rambo
 	job_points_needed = 4
-	job_flags = JOB_FLAG_ROUNDSTARTJOINABLE|JOB_FLAG_LATEJOINABLE
-	jobworth = list(
-		/datum/job/xenomorph = LARVA_POINTS_MINOR,
-	)
+	job_flags = JOB_FLAG_ROUNDSTARTJOINABLE
 	html_description = {"
 		<b>Difficulty</b>: Astonishing<br /><br />
 		<b>Gamemode Availability</b>: Distress Signal, Nuclear War<br /><br /><br />
 		<b>Duty</b>: Survive with the resources you have against the swarms of xenomorphs intil help arrives.
 	"}
 	job_desc = "Выживайте теми ресурсами что у вас есть, пока не подоспеет помощь."
-
-/datum/job/survivor/return_spawn_turf(mob/living/new_character, client/player)
-	var/list/ground_turfs = list()
-	var/list/sources = list(
-		GLOB.spawns_by_job[type],
-		GLOB.spawns_by_job[/datum/job/survivor/rambo],
-		GLOB.spawns_by_job[/datum/job/survivor],
-	)
-	for(var/list/turf_list in sources)
-		if(!length(turf_list))
-			continue
-		for(var/turf/T in turf_list)
-			if(T && !is_mainship_level(T.z))
-				ground_turfs |= T
-	if(length(ground_turfs))
-		return pick(ground_turfs)
-	return ..()
 
 // Чтобы нельзя было плавить быстро кады сюрва(
 #define SURVIVOR_ACID_PROTECT_RANGE 10

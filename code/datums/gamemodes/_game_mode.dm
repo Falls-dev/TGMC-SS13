@@ -642,12 +642,6 @@ GLOBAL_LIST_INIT(bioscan_locations, list(
 	log_manifest(player.new_character.ckey, player.new_character.mind, player.new_character, latejoin = TRUE)
 	var/datum/job/job = player.assigned_role
 	job.on_late_spawn(player.new_character)
-	if(istype(job, /datum/job/survivor))
-		var/turf/current_turf = get_turf(player.new_character)
-		if(!current_turf || is_mainship_level(current_turf.z))
-			var/turf/target_turf = job.return_spawn_turf(player.new_character, player.client)
-			if(isturf(target_turf))
-				player.new_character.forceMove(target_turf)
 	player.new_character.client?.init_verbs()
 	var/area/A = get_area(player.new_character)
 	deadchat_broadcast(span_game("has woken at [span_name("[A?.name]")]."), span_game("[span_name("[player.new_character.real_name]")] ([job.title])"), follow_target = player.new_character, message_type = DEADCHAT_ARRIVALRATTLE)
