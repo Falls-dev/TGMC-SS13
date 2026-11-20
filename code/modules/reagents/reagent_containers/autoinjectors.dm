@@ -341,6 +341,7 @@
 	volume = 1
 	list_reagents = list(/datum/reagent/medicalnanites = 1)
 	free_refills = FALSE
+	description_overlay = "Na"
 
 /obj/item/reagent_containers/hypospray/autoinjector/sulfasalazine
 	name = "sulfasalazine autoinjector"
@@ -350,6 +351,7 @@
 	reagent_flags = NONE
 	list_reagents = list(/datum/reagent/medicine/sulfasalazine = 1)
 	free_refills = FALSE
+	description_overlay = "Su"
 
 /obj/item/reagent_containers/hypospray/autoinjector/sulfasalazine/afterattack(atom/A, mob/living/user)
 	if(!ishuman(A))
@@ -427,12 +429,18 @@
 	icon_state = "autoinjector-13"
 	base_icon_state = "autoinjector-13"
 	greyscale_config = /datum/greyscale_config/autoinjector_13
-	greyscale_colors = "#409EB1"
+
+	/// Цвет наконечника
+	var/tip_color = "#3ad1f0"
+	/// Цвет средней части
+	var/mid_color = "#ffffff"
+	/// Цвет нижней части и кнопки
+	var/down_color = "#F1A344"
 
 /obj/item/reagent_containers/hypospray/autoinjector/custom/Initialize(mapload)
+	greyscale_colors = "[tip_color][mid_color][down_color]"
 	. = ..()
 	base_icon_state = "autoinjector-13"
-	update_icon()
 
 /obj/item/reagent_containers/hypospray/autoinjector/custom/update_icon_state()
 	. = ..()
@@ -444,15 +452,3 @@
 		icon_state = base_icon_state
 		name = initial(name)
 		ENABLE_BITFIELD(reagents.reagent_flags, DRAWABLE)
-
-/obj/item/reagent_containers/hypospray/autoinjector/custom/sulfa
-	greyscale_colors = "#4CFF00"
-
-/obj/item/reagent_containers/hypospray/autoinjector/custom/rr
-	greyscale_colors = "#EE4847"
-
-/obj/item/reagent_containers/hypospray/autoinjector/custom/meral
-	greyscale_colors = "#F6E322"
-
-/obj/item/reagent_containers/hypospray/autoinjector/custom/misery
-	greyscale_colors = "#B200FF"
