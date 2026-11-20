@@ -90,6 +90,8 @@
 		tadmap.give_action(user)
 		actions += tadmap
 
+	give_rappel_actions(user)
+
 	if(fly_state != SHUTTLE_IN_ATMOSPHERE)
 		return
 
@@ -102,15 +104,6 @@
 		land_action.target = user
 		land_action.give_action(user)
 		actions += land_action
-
-	var/obj/docking_port/mobile/marine_dropship/shuttle = shuttle_port
-	for(var/area/shuttle_area as anything in shuttle?.shuttle_areas)
-		for(var/obj/structure/dropship_equipment/shuttle/rappel_system/system in shuttle_area)
-			system.linked_shuttle = shuttle
-			var/datum/action/innate/rappel_designate/rappel_action = system.designate_action
-			rappel_action.target = user
-			rappel_action.give_action(user)
-			actions += rappel_action
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/shuttle_arrived()
 	if(fly_state == next_fly_state)

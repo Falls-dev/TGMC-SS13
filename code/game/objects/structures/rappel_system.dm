@@ -13,6 +13,21 @@
 #define RAPPEL_STATE_USABLE 2
 #define RAPPEL_STATE_IN_USE 3
 
+/// Gives the pilot control of the rappel hatch from the Tadpole's active console.
+/obj/machinery/computer/camera_advanced/shuttle_docker/minidropship/proc/give_rappel_actions(mob/living/user)
+	if(fly_state != SHUTTLE_IN_ATMOSPHERE || QDELETED(shuttle_port))
+		return
+
+	var/obj/docking_port/mobile/marine_dropship/shuttle = shuttle_port
+	shuttle.shuttle_computer = src
+	for(var/area/shuttle_area as anything in shuttle.shuttle_areas)
+		for(var/obj/structure/dropship_equipment/shuttle/rappel_system/system in shuttle_area)
+			system.linked_shuttle = shuttle
+			var/datum/action/innate/rappel_designate/rappel_action = system.designate_action
+			rappel_action.target = user
+			rappel_action.give_action(user)
+			actions += rappel_action
+
 //Rappel target selection action
 /datum/action/innate/rappel_designate
 	name = "Designate rappel point"
@@ -162,10 +177,11 @@
 		if(istype(target_floor, /turf/open/floor))
 			target_floor.ceiling_debris_check(2)
 
-	flick("rappel_hatch_closing", src)
-	rappel_state = RAPPEL_STATE_USABLE
-	update_icon_state()
-	rope.update_icon_state()
+	if(rappel_state == RAPPEL_STATE_IN_USE)
+		flick("rappel_hatch_closing", src)
+		rappel_state = RAPPEL_STATE_USABLE
+		update_icon_state()
+		rope.update_icon_state()
 
 	user.reset_perspective()
 
