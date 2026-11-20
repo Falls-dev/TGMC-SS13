@@ -271,7 +271,6 @@
 	desc = "The standard-issue backpack worn by TGMC corpsmen. You can recharge defibrillators by plugging them in."
 	icon_state = "marinepackm"
 	worn_icon_state = "marinepackm"
-	storage_type = /datum/storage/backpack/medical
 	//. Starts with a high capacity energy cell.
 	var/obj/item/cell/high/cell
 	var/icon_skin
@@ -360,7 +359,6 @@
 	icon_state = "marinesatm"
 	worn_icon_state = "marinesatm"
 	cell = /obj/item/cell/apc
-	storage_type = /datum/storage/backpack/satchel/medical
 
 /obj/item/storage/backpack/marine/tech
 	name = "\improper TGMC technician backpack"
