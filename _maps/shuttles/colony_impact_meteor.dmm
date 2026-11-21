@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/turf/closed/shuttle/colony_impact,
+/turf/closed/wall/huntership/destructible,
 /area/shuttle/colony_impact)
 "c" = (
 /turf/open/shuttle/colony_impact,
@@ -18,33 +18,42 @@
 /area/shuttle/colony_impact)
 "f" = (
 /obj/machinery/door/poddoor/shutters/colony_impact,
-/turf/open/shuttle/colony_impact,
+/turf/open/floor/corsat,
+/area/shuttle/colony_impact)
+"I" = (
+/turf/open/floor/corsat,
+/area/shuttle/colony_impact)
+"R" = (
+/obj/machinery/door/poddoor/shutters/colony_impact{
+	dir = 2
+	},
+/turf/open/floor/corsat,
 /area/shuttle/colony_impact)
 
 (1,1,1) = {"
 a
 a
-a
+b
 b
 b
 f
-a
+b
 a
 a
 "}
 (2,1,1) = {"
 a
-a
+b
 b
 c
-c
-c
+I
+I
 b
-a
+b
 a
 "}
 (3,1,1) = {"
-a
+b
 b
 c
 b
@@ -56,7 +65,7 @@ a
 "}
 (4,1,1) = {"
 b
-c
+I
 d
 c
 c
@@ -67,19 +76,19 @@ a
 "}
 (5,1,1) = {"
 b
-c
+I
 d
 c
 e
 c
 d
-f
-c
+R
+I
 "}
 (6,1,1) = {"
 b
-c
-c
+I
+I
 c
 c
 b
@@ -88,35 +97,35 @@ b
 a
 "}
 (7,1,1) = {"
-a
 b
-c
 b
-c
-c
-c
+I
+b
+I
+I
+I
 b
 a
 "}
 (8,1,1) = {"
 a
-a
 b
-c
-c
-c
 b
-a
+I
+I
+I
+b
+b
 a
 "}
 (9,1,1) = {"
 a
 a
-a
+b
 b
 f
 b
-a
+b
 a
 a
 "}
