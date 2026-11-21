@@ -11,6 +11,7 @@
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	taste_description = "bitterness"
 	taste_multi = 1.2
+	cryoblacklist = TRUE
 	reagent_ui_priority = REAGENT_UI_TOXINS
 
 /datum/reagent/toxin/on_mob_life(mob/living/L, metabolism)
@@ -416,6 +417,7 @@
 	color = COLOR_TOXIN_NANITES
 	custom_metabolism = REAGENTS_METABOLISM * 5
 	medbayblacklist = TRUE
+	cryoblacklist = TRUE
 	reactindeadmob = FALSE
 	reagent_ui_priority = REAGENT_UI_IMMEDIATE
 

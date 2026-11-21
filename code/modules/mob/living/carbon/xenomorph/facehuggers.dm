@@ -565,7 +565,7 @@
 			hugsound = SFX_PRED_HUGGED
 		else
 			hugsound = user.gender == FEMALE ? SFX_FEMALE_HUGGED : SFX_MALE_HUGGED
-		playsound(loc, hugsound, 25, 0)
+		playsound(loc, hugsound, 25, 0, MEDIUM_SOUND_RANGE)
 	if(!sterile && !issynth(user))
 		var/stamina_dmg = user.maxHealth + user.max_stamina
 		user.apply_damage(stamina_dmg, STAMINA) // complete winds the target
@@ -599,7 +599,7 @@
 		kill_hugger()
 	else
 		reset_attach_status(as_planned)
-		playsound(loc, 'sound/voice/alien/facehugger_dies.ogg', 25, 1)
+		playsound(loc, 'sound/voice/alien/facehugger_dies.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 		activetimer = addtimer(CALLBACK(src, PROC_REF(go_active)), activate_time, TIMER_STOPPABLE|TIMER_UNIQUE)
 		update_icon()
 
@@ -638,7 +638,7 @@
 	remove_danger_overlay() //Remove the danger overlay
 
 	update_icon()
-	playsound(loc, 'sound/voice/alien/facehugger_dies.ogg', 25, 1)
+	playsound(loc, 'sound/voice/alien/facehugger_dies.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 
 	layer = BELOW_MOB_LAYER //so dead hugger appears below live hugger if stacked on same tile.
 
@@ -764,7 +764,7 @@
 	do_attack_animation(M)
 	M.apply_damage(1, BRUTE, sharp = TRUE, updating_health = TRUE) //Token brute for the injection
 	M.reagents.add_reagent(injected_chemical_type, amount_injected, no_overdose = TRUE)
-	playsound(M, 'sound/effects/spray3.ogg', 25, 1)
+	playsound(M, 'sound/effects/spray3.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	M.visible_message(span_danger("[src] penetrates [M] with its sharp probscius!"), span_danger("[src] penetrates you with a sharp probscius before falling down!"))
 	leaping = FALSE
 	go_idle() //We're a bit slow on the recovery
@@ -876,7 +876,7 @@
 
 	var/mob/living/victim = M
 	do_attack_animation(M, ATTACK_EFFECT_REDSLASH)
-	playsound(loc, SFX_ALIEN_CLAW_FLESH, 25, 1)
+	playsound(loc, SFX_ALIEN_CLAW_FLESH, 25, 1, MEDIUM_SOUND_RANGE)
 	var/affecting = ran_zone(null, 0)
 	if(!affecting) //Still nothing??
 		affecting = BODY_ZONE_CHEST //Gotta have a torso?!

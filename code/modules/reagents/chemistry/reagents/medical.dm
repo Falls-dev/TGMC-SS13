@@ -657,6 +657,7 @@
 	overdose_threshold = REAGENTS_OVERDOSE * 0.5   //so it makes the OD threshold effectively 15 so two pills is too much but one is fine
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL / 2.5 //and this makes the Critical OD 20
 	reagent_ui_priority = REAGENT_UI_IMMEDIATE
+	cryoblacklist = TRUE
 
 /datum/reagent/medicine/russian_red/on_mob_add(mob/living/L, metabolism)
 	var/mob/living/carbon/human/H = L
@@ -1177,6 +1178,7 @@
 	custom_metabolism = REAGENTS_METABOLISM * 2
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL
 	reagent_ui_priority = REAGENT_UI_TOXINS
+	cryoblacklist = TRUE
 
 /datum/reagent/medicine/polyhexanide/on_mob_life(mob/living/L, metabolism)
 	switch(current_cycle)
@@ -1232,6 +1234,7 @@
 	overdose_threshold = REAGENTS_OVERDOSE
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL
 	reagent_ui_priority = REAGENT_UI_BASE
+	cryoblacklist = TRUE
 
 /datum/reagent/medicine/ethylredoxrazine/on_mob_life(mob/living/L, metabolism)
 	L.dizzy(-1)
@@ -1292,6 +1295,7 @@
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	taste_description = "Poor life choices"
 	reagent_ui_priority = REAGENT_UI_TOXINS
+	cryoblacklist = TRUE
 
 /datum/reagent/medicine/roulettium/on_mob_life(mob/living/L, metabolism)
 	L.reagent_shock_modifier += PAIN_REDUCTION_VERY_HEAVY * 4
@@ -1419,6 +1423,7 @@
 	overdose_threshold = REAGENTS_OVERDOSE * 1.2 //slight buffer to keep you safe
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL * 1.7
 	reagent_ui_priority = REAGENT_UI_UNIQUE
+	cryoblacklist = TRUE
 	purge_rate = 5
 	purge_list = list(
 		/datum/reagent/medicine/bicaridine,
@@ -1518,6 +1523,7 @@
 	description = "A chemical designed to boost running by driving your body beyond it's normal limits. Can have unpredictable side effects, caution recommended."
 	color = COLOR_REAGENT_STIMULON
 	custom_metabolism = 0
+	cryoblacklist = TRUE
 
 /datum/reagent/medicine/research/stimulon/on_mob_add(mob/living/L, metabolism)
 	to_chat(L, span_userdanger("You feel jittery and fast! Time to MOVE!"))
@@ -1646,6 +1652,7 @@
 	description = "Histamine is an organic nitrogenous compound involved in local immune responses communication"
 	color = COLOR_REAGENT_BICARIDINE
 	custom_metabolism = 0.4
+	cryoblacklist = TRUE
 	overdose_threshold = REAGENTS_OVERDOSE * 0.5
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL * 0.5
 	purge_list = list(
@@ -1685,6 +1692,7 @@
 	custom_metabolism = REAGENTS_METABOLISM * 2
 	overdose_threshold = REAGENTS_OVERDOSE * 0.5
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL * 0.5
+	cryoblacklist = TRUE
 
 /datum/reagent/medicine/ifosfamide/on_mob_life(mob/living/L, metabolism)
 
@@ -1766,19 +1774,21 @@
 /datum/reagent/medicine/experimental_medical_salve/on_mob_life(mob/living/L, metabolism)
 	L.reagent_shock_modifier += PAIN_REDUCTION_HEAVY
 	switch(current_cycle)
-		if(1 to 5) // big burst of healing + stamina initially
+		if(1 to 8) // big burst of healing + stamina initially
 			if(!particle_holder)
 				particle_holder = new(L, /particles/healing_cross)
 			L.heal_overall_damage(4*effect_str, 4*effect_str)
 			L.adjust_stamina_loss(-4*effect_str)
-		if(6 to 25) // smaller gradual healing
+		if(9 to 25) // smaller gradual healing
 			L.heal_overall_damage(1.5*effect_str, 1.5*effect_str)
-		if(26 to INFINITY) // purges itself quickly
-			if(particle_holder)
-				qdel(particle_holder)
-				particle_holder = null
-			holder.remove_reagent(/datum/reagent/medicine/experimental_medical_salve, 10)
-	return ..()
+	. = ..()
+	if(current_cycle < 26)
+		return
+	if(particle_holder)
+		qdel(particle_holder)
+		particle_holder = null
+	if(holder) // purges itself quickly
+		holder.remove_reagent(/datum/reagent/medicine/experimental_medical_salve, 10)
 
 /datum/reagent/medicine/experimental_medical_salve/on_mob_delete(mob/living/L, metabolism)
 	if(particle_holder)

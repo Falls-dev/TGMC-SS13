@@ -50,7 +50,7 @@
 		return
 	if(!M.density)
 		return
-	playsound(src, 'sound/effects/barbed_wire_movement.ogg', 25, 1)
+	playsound(src, 'sound/effects/barbed_wire_movement.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	var/def_zone = ran_zone()
 	M.apply_damage(RAZORWIRE_BASE_DAMAGE, BRUTE, def_zone, MELEE, TRUE, updating_health = TRUE)
 	razorwire_tangle(M)
@@ -85,7 +85,7 @@
 		return
 	do_razorwire_untangle(entangled)
 	visible_message(span_danger("[entangled] disentangles from [src]!"))
-	playsound(src, 'sound/effects/barbed_wire_movement.ogg', 25, TRUE)
+	playsound(src, 'sound/effects/barbed_wire_movement.ogg', 25, TRUE, MEDIUM_SOUND_RANGE)
 	var/def_zone = ran_zone()
 	entangled.apply_damage(RAZORWIRE_BASE_DAMAGE * RAZORWIRE_MIN_DAMAGE_MULT_MED, BRUTE, def_zone, MELEE, TRUE, updating_health = TRUE) //Apply damage as we tear free
 	return TRUE
@@ -145,7 +145,7 @@
 	M.apply_damage(RAZORWIRE_BASE_DAMAGE, BRUTE, def_zone, MELEE, TRUE, updating_health = TRUE)
 	user.visible_message(span_danger("[user] throws [M] on [src]."),
 	span_danger("You throw [M] on [src]."))
-	playsound(src, 'sound/effects/barbed_wire_movement.ogg', 25, 1)
+	playsound(src, 'sound/effects/barbed_wire_movement.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 
 /obj/structure/razorwire/wirecutter_act(mob/living/user, obj/item/I)
 	user.visible_message(span_notice("[user] starts disassembling [src]."),
@@ -157,7 +157,7 @@
 
 	user.visible_message(span_notice("[user] disassembles [src]."),
 	span_notice("You disassemble [src]."))
-	playsound(loc, 'sound/items/wirecutter.ogg', 25, 1)
+	playsound(loc, 'sound/items/wirecutter.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	deconstruct(TRUE)
 	return TRUE
 
@@ -205,6 +205,6 @@
 	span_danger("The barbed wire slices into you!"), null, 5)
 	charger.Paralyze(0.5 SECONDS)
 	charger.apply_damage(RAZORWIRE_BASE_DAMAGE * RAZORWIRE_MIN_DAMAGE_MULT_MED, BRUTE, sharp = TRUE, updating_health = TRUE	) //Armor is being ignored here.
-	playsound(src, 'sound/effects/barbed_wire_movement.ogg', 25, 1)
+	playsound(src, 'sound/effects/barbed_wire_movement.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	update_icon()
 	return PRECRUSH_ENTANGLED //Let's return this so that the charger may enter the turf in where it's entangled, if it survived the wounds without gibbing.

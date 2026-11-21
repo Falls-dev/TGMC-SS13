@@ -88,6 +88,11 @@
 
 	var/unskilled_penalty = (user.skills.getRating(SKILL_MEDICAL) < skill_level_needed) ? 0.5 : 1
 	var/list/patient_limbs = patient.limbs.Copy()
+	if (user.skills.getRating(SKILL_MEDICAL) > SKILL_MEDICAL_PRACTICED)
+		if	(src.heal_brute > 0)
+			patient_limbs = sortTim(patient_limbs, cmp = GLOBAL_PROC_REF(cmp_datum_numeric_dsc), associative = FALSE, fromIndex = 1, toIndex = length(patient_limbs), sortkey = "brute_dam")
+		if	(src.heal_burn > 0)
+			patient_limbs = sortTim(patient_limbs, cmp = GLOBAL_PROC_REF(cmp_datum_numeric_dsc), associative = FALSE, fromIndex = 1, toIndex = length(patient_limbs), sortkey = "burn_dam")
 	patient_limbs -= affecting
 	while(affecting && amount)
 		if(!do_after(user, SKILL_TASK_VERY_EASY / (unskilled_penalty ** 2), NONE, patient, BUSY_ICON_FRIENDLY, BUSY_ICON_MEDICAL, extra_checks = CALLBACK(src, PROC_REF(can_affect_limb), affecting)))

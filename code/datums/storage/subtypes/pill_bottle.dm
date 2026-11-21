@@ -18,7 +18,7 @@
 /datum/storage/pill_bottle/remove_from_storage(obj/item/item, atom/new_location, mob/user, silent = FALSE, bypass_delay = FALSE)
 	. = ..()
 	if(!silent && . && user)
-		playsound(user, 'sound/items/pills.ogg', 15, 1)
+		playsound(user, 'sound/items/pills.ogg', 15, 1, SHORT_SOUND_RANGE)
 
 /datum/storage/pill_bottle/packet
 	storage_slots = 8

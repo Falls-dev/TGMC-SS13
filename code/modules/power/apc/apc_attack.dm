@@ -6,7 +6,7 @@
 		X.do_attack_animation(src, ATTACK_EFFECT_CLAW)
 		X.visible_message(span_danger("[X] slashes \the [src]!"), \
 		span_danger("We slash \the [src]!"), null, 5)
-		playsound(loc, SFX_ALIEN_CLAW_METAL, 25, 1)
+		playsound(loc, SFX_ALIEN_CLAW_METAL, 25, 1, MEDIUM_SOUND_RANGE)
 
 	var/allcut = wires.is_all_cut()
 
@@ -108,7 +108,7 @@
 			return
 
 		balloon_alert_to_viewers("starts wiring [src]")
-		playsound(loc, 'sound/items/deconstruct.ogg', 25, 1)
+		playsound(loc, 'sound/items/deconstruct.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 
 		if(!do_after(user, 20, NONE, src, BUSY_ICON_BUILD) || terminal || !opened || has_electronics == APC_ELECTRONICS_SECURED)
 			return
@@ -135,7 +135,7 @@
 				return
 
 		balloon_alert_to_viewers("Tries to insert APC board into [src]")
-		playsound(loc, 'sound/items/deconstruct.ogg', 25, 1)
+		playsound(loc, 'sound/items/deconstruct.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 
 		if(!do_after(user, 15, NONE, src, BUSY_ICON_BUILD))
 			return
