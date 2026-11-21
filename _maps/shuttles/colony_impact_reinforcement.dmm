@@ -1,0 +1,335 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/shuttle/dropship_white/backhatch{
+	dir = 4
+	},
+/area/shuttle/colony_impact/reinforcement)
+"b" = (
+/turf/closed/shuttle/dropship_white/backwall,
+/area/shuttle/colony_impact/reinforcement)
+"c" = (
+/turf/closed/shuttle/ert/engines/left/three{
+	dir = 1
+	},
+/area/shuttle/colony_impact/reinforcement)
+"d" = (
+/obj/docking_port/mobile/colony_impact/reinforcement,
+/turf/closed/shuttle/dropship_white/backwall,
+/area/shuttle/colony_impact/reinforcement)
+"e" = (
+/turf/open/shuttle/dropship/floor,
+/area/shuttle/colony_impact/reinforcement)
+"f" = (
+/obj/effect/landmark/colony_impact_spawn,
+/turf/open/shuttle/dropship/floor,
+/area/shuttle/colony_impact/reinforcement)
+"g" = (
+/obj/machinery/vending/armor_supply,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/shuttle/dropship/floor,
+/area/shuttle/colony_impact/reinforcement)
+"h" = (
+/obj/machinery/vending/uniform_supply,
+/turf/open/shuttle/dropship/floor,
+/area/shuttle/colony_impact/reinforcement)
+"i" = (
+/obj/machinery/marine_selector/gear/smartgun,
+/turf/open/shuttle/dropship/floor,
+/area/shuttle/colony_impact/reinforcement)
+"j" = (
+/obj/machinery/vending/medical/shipside,
+/turf/open/shuttle/dropship/three,
+/area/shuttle/colony_impact/reinforcement)
+"k" = (
+/obj/machinery/marine_selector/gear/marine,
+/turf/open/shuttle/dropship/floor,
+/area/shuttle/colony_impact/reinforcement)
+"l" = (
+/obj/machinery/marine_selector/gear/robo,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/shuttle/dropship/floor,
+/area/shuttle/colony_impact/reinforcement)
+"m" = (
+/obj/machinery/vending/engivend/nopower,
+/turf/open/shuttle/dropship/floor,
+/area/shuttle/colony_impact/reinforcement)
+"n" = (
+/obj/machinery/vending/weapon/crash,
+/turf/closed/shuttle/dropship_white/top_corner,
+/area/shuttle/colony_impact/reinforcement)
+"o" = (
+/obj/machinery/vending/weapon/crash,
+/turf/closed/shuttle/dropship_white/top_corner{
+	dir = 1
+	},
+/area/shuttle/colony_impact/reinforcement)
+"p" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/shuttle/dropship/floor,
+/area/shuttle/colony_impact/reinforcement)
+"q" = (
+/turf/closed/shuttle/ert/engines/right/three{
+	dir = 1
+	},
+/area/shuttle/colony_impact/reinforcement)
+"r" = (
+/obj/effect/landmark/colony_impact_spawn,
+/turf/open/shuttle/dropship/three,
+/area/shuttle/colony_impact/reinforcement)
+"s" = (
+/turf/closed/shuttle/ert/engines/right/two{
+	dir = 1
+	},
+/area/shuttle/colony_impact/reinforcement)
+"t" = (
+/turf/closed/shuttle/dropship_white/backhatch{
+	dir = 1
+	},
+/area/shuttle/colony_impact/reinforcement)
+"u" = (
+/turf/closed/shuttle/dropship_white/top_corner/alt,
+/area/shuttle/colony_impact/reinforcement)
+"v" = (
+/obj/item/loot_box/marine,
+/turf/open/shuttle/dropship/three,
+/area/shuttle/colony_impact/reinforcement)
+"w" = (
+/obj/machinery/vending/MarineMed/Blood,
+/turf/open/shuttle/dropship/three,
+/area/shuttle/colony_impact/reinforcement)
+"x" = (
+/obj/machinery/marine_selector/clothes/medic,
+/turf/open/shuttle/dropship/floor,
+/area/shuttle/colony_impact/reinforcement)
+"y" = (
+/obj/machinery/vending/tool,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/shuttle/dropship/floor,
+/area/shuttle/colony_impact/reinforcement)
+"z" = (
+/obj/machinery/vending/marineFood,
+/turf/open/shuttle/dropship/floor,
+/area/shuttle/colony_impact/reinforcement)
+"A" = (
+/obj/machinery/quick_vendor/beginner,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/shuttle/dropship/three,
+/area/shuttle/colony_impact/reinforcement)
+"B" = (
+/obj/machinery/door/poddoor/shutters/transit/open{
+	dir = 2
+	},
+/obj/machinery/door/airlock/mainship/generic/ert{
+	dir = 2
+	},
+/turf/open/shuttle/dropship/floor,
+/area/shuttle/colony_impact/reinforcement)
+"D" = (
+/turf/closed/shuttle/dropship_white/engine_corner,
+/area/shuttle/colony_impact/reinforcement)
+"E" = (
+/obj/machinery/marine_selector/clothes/leader,
+/turf/open/shuttle/dropship/floor,
+/area/shuttle/colony_impact/reinforcement)
+"F" = (
+/obj/structure/closet/secure_closet/guncabinet/canterbury,
+/obj/effect/landmark/weapon_spawn/tier3_weapon_spawn,
+/turf/open/shuttle/dropship/floor,
+/area/shuttle/colony_impact/reinforcement)
+"G" = (
+/obj/machinery/vending/cigarette,
+/turf/open/shuttle/dropship/floor,
+/area/shuttle/colony_impact/reinforcement)
+"I" = (
+/obj/machinery/marine_selector/gear/medic,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/shuttle/dropship/floor,
+/area/shuttle/colony_impact/reinforcement)
+"K" = (
+/obj/machinery/marine_selector/clothes/robo,
+/turf/open/shuttle/dropship/floor,
+/area/shuttle/colony_impact/reinforcement)
+"L" = (
+/obj/machinery/marine_selector/clothes,
+/turf/open/shuttle/dropship/floor,
+/area/shuttle/colony_impact/reinforcement)
+"M" = (
+/turf/closed/shuttle/dropship_white/cockpit_window{
+	opacity = 0
+	},
+/area/shuttle/colony_impact/reinforcement)
+"N" = (
+/turf/closed/shuttle/ert/engines/left{
+	dir = 1
+	},
+/area/shuttle/colony_impact/reinforcement)
+"O" = (
+/turf/closed/shuttle/dropship_white/backhatch,
+/area/shuttle/colony_impact/reinforcement)
+"P" = (
+/turf/closed/shuttle/dropship_white/top_corner/alt{
+	dir = 1
+	},
+/area/shuttle/colony_impact/reinforcement)
+"Q" = (
+/turf/open/shuttle/dropship/three,
+/area/shuttle/colony_impact/reinforcement)
+"R" = (
+/obj/machinery/marine_selector/gear/leader,
+/turf/open/shuttle/dropship/floor,
+/area/shuttle/colony_impact/reinforcement)
+"S" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/shuttle/dropship/floor,
+/area/shuttle/colony_impact/reinforcement)
+"T" = (
+/obj/machinery/vending/MarineMed,
+/turf/open/shuttle/dropship/three,
+/area/shuttle/colony_impact/reinforcement)
+"U" = (
+/turf/closed/shuttle/dropship_white/interior_wall{
+	dir = 8
+	},
+/area/shuttle/colony_impact/reinforcement)
+"V" = (
+/turf/closed/shuttle/ert/engines/right{
+	dir = 1
+	},
+/area/shuttle/colony_impact/reinforcement)
+"W" = (
+/obj/machinery/marine_selector/clothes/smartgun,
+/turf/open/shuttle/dropship/floor,
+/area/shuttle/colony_impact/reinforcement)
+"X" = (
+/turf/closed/shuttle/dropship_white/interior_wall,
+/area/shuttle/colony_impact/reinforcement)
+"Y" = (
+/turf/closed/shuttle/dropship_white/engine_corner{
+	dir = 1
+	},
+/area/shuttle/colony_impact/reinforcement)
+"Z" = (
+/turf/closed/shuttle/ert/engines/left/two{
+	dir = 1
+	},
+/area/shuttle/colony_impact/reinforcement)
+
+(1,1,1) = {"
+P
+X
+X
+X
+X
+X
+X
+X
+X
+Y
+c
+Z
+N
+"}
+(2,1,1) = {"
+b
+m
+y
+G
+z
+i
+W
+l
+K
+n
+X
+X
+O
+"}
+(3,1,1) = {"
+M
+F
+f
+f
+f
+f
+f
+f
+f
+e
+p
+e
+B
+"}
+(4,1,1) = {"
+d
+A
+r
+w
+r
+j
+r
+T
+r
+Q
+Q
+v
+t
+"}
+(5,1,1) = {"
+M
+F
+f
+f
+f
+f
+f
+f
+f
+e
+S
+e
+B
+"}
+(6,1,1) = {"
+b
+h
+g
+R
+E
+k
+L
+I
+x
+o
+U
+U
+a
+"}
+(7,1,1) = {"
+u
+U
+U
+U
+U
+U
+U
+U
+U
+D
+q
+s
+V
+"}

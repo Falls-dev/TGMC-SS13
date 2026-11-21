@@ -35,6 +35,10 @@ map ice_colony_v2
 	minplayers 40
 endmap
 
+map colony_impact
+	voteweight 0
+endmap
+
 map prison_station_fop
 	minplayers 20
 	maxplayers 60

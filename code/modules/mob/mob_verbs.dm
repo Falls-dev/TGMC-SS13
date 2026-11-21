@@ -87,6 +87,11 @@
 	set name = "Respawn"
 	set category = "OOC.Ghost"
 
+	var/datum/game_mode/infestation/colony_impact/impact = SSticker.mode
+	if(isobserver(src) && istype(impact) && impact.reinforcements_open)
+		impact.player_respawn(src)
+		return
+
 	if(!GLOB.respawn_allowed && !check_rights(R_ADMIN, FALSE))
 		to_chat(usr, span_notice("Respawn is disabled."))
 		return

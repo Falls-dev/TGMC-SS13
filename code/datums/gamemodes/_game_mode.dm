@@ -633,6 +633,10 @@ GLOBAL_LIST_INIT(bioscan_locations, list(
 		return FALSE
 	return TRUE
 
+/// A mode can supply a spawn point when players deploy at roundstart or join later.
+/datum/game_mode/proc/get_job_spawn_turf(datum/job/job)
+	return null
+
 /datum/game_mode/proc/LateSpawn(mob/new_player/player)
 	player.close_spawn_windows()
 	player.spawning = TRUE

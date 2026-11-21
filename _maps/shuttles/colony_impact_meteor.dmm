@@ -1,0 +1,131 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/closed/wall/huntership/destructible,
+/area/shuttle/colony_impact)
+"c" = (
+/turf/open/shuttle/colony_impact,
+/area/shuttle/colony_impact)
+"d" = (
+/obj/effect/landmark/colony_impact_spawn,
+/turf/open/shuttle/colony_impact,
+/area/shuttle/colony_impact)
+"e" = (
+/obj/docking_port/mobile/colony_impact,
+/turf/open/shuttle/colony_impact,
+/area/shuttle/colony_impact)
+"f" = (
+/obj/machinery/door/poddoor/shutters/colony_impact,
+/turf/open/floor/corsat,
+/area/shuttle/colony_impact)
+"I" = (
+/turf/open/floor/corsat,
+/area/shuttle/colony_impact)
+"R" = (
+/obj/machinery/door/poddoor/shutters/colony_impact{
+	dir = 2
+	},
+/turf/open/floor/corsat,
+/area/shuttle/colony_impact)
+
+(1,1,1) = {"
+a
+a
+b
+b
+b
+f
+b
+a
+a
+"}
+(2,1,1) = {"
+a
+b
+b
+c
+I
+I
+b
+b
+a
+"}
+(3,1,1) = {"
+b
+b
+c
+b
+c
+c
+c
+b
+a
+"}
+(4,1,1) = {"
+b
+I
+d
+c
+c
+b
+c
+b
+a
+"}
+(5,1,1) = {"
+b
+I
+d
+c
+e
+c
+d
+R
+I
+"}
+(6,1,1) = {"
+b
+I
+I
+c
+c
+b
+d
+b
+a
+"}
+(7,1,1) = {"
+b
+b
+I
+b
+I
+I
+I
+b
+a
+"}
+(8,1,1) = {"
+a
+b
+b
+I
+I
+I
+b
+b
+a
+"}
+(9,1,1) = {"
+a
+a
+b
+b
+f
+b
+b
+a
+a
+"}
