@@ -36,6 +36,11 @@
 			/obj/item/weapon/gun/shotgun/pump/bolt = -1,
 			/obj/item/ammo_magazine/rifle/bolt = -1,
 			/obj/item/ammo_magazine/rifle/boltclip = -1,
+			/obj/item/weapon/gun/rifle/type63 = -1,
+			/obj/item/ammo_magazine/rifle/type16/m2 = -1,
+			/obj/item/weapon/gun/rifle/type53 = -1,
+			/obj/item/ammo_magazine/rifle/type53clip = -1,
+			/obj/item/ammo_magazine/rifle/type63clip = -1,
 
 		),
 		"Пистолеты-пулемёты" = list(
@@ -86,6 +91,8 @@
 		"Пулемёты" = list(
 			/obj/item/weapon/gun/rifle/mg42 = -1,
 			/obj/item/ammo_magazine/mg42 = -1,
+			/obj/item/weapon/gun/rifle/type81 = -1,
+			/obj/item/ammo_magazine/rifle/type81 = -1,
 			/obj/item/weapon/gun/rifle/mg60 = -1,
 			/obj/item/ammo_magazine/mg60 = -1,
 			/obj/item/weapon/gun/mg27 = 5,
@@ -286,6 +293,11 @@
 			/obj/item/weapon/gun/shotgun/pump/bolt = -1,
 			/obj/item/ammo_magazine/rifle/bolt = -1,
 			/obj/item/ammo_magazine/rifle/boltclip = -1,
+			/obj/item/weapon/gun/rifle/type63 = -1,
+			/obj/item/ammo_magazine/rifle/type16/m2 = -1,
+			/obj/item/weapon/gun/rifle/type53 = -1,
+			/obj/item/ammo_magazine/rifle/type53clip = -1,
+			/obj/item/ammo_magazine/rifle/type63clip = -1,
 		),
 		"Пистолеты-пулемёты" = list(
 			/obj/item/weapon/gun/smg/vector = -1,
@@ -334,6 +346,8 @@
 		"Пулемёты" = list(
 			/obj/item/weapon/gun/rifle/mg42 = -1,
 			/obj/item/ammo_magazine/mg42 = -1,
+			/obj/item/weapon/gun/rifle/type81 = -1,
+			/obj/item/ammo_magazine/rifle/type81 = -1,
 			/obj/item/weapon/gun/rifle/mg60 = -1,
 			/obj/item/ammo_magazine/mg60 = -1,
 			/obj/item/weapon/gun/mg27 = 5,
@@ -521,6 +535,12 @@
 			/obj/item/weapon/gun/shotgun/pump/bolt = -1,
 			/obj/item/ammo_magazine/rifle/bolt = -1,
 			/obj/item/ammo_magazine/rifle/boltclip = -1,
+			/obj/item/weapon/gun/rifle/type63 = -1,
+			/obj/item/ammo_magazine/rifle/type16/m2 = -1,
+			/obj/item/weapon/gun/rifle/type53 = -1,
+			/obj/item/ammo_magazine/rifle/type53clip = -1,
+			/obj/item/ammo_magazine/rifle/type63clip = -1,
+
 		),
 		"Пистолеты-пулемёты" = list(
 			/obj/item/weapon/gun/smg/vector = -1,
@@ -576,6 +596,8 @@
 		"Пулемёты" = list(
 			/obj/item/weapon/gun/rifle/mg42 = -1,
 			/obj/item/ammo_magazine/mg42 = -1,
+			/obj/item/weapon/gun/rifle/type81 = -1,
+			/obj/item/ammo_magazine/rifle/type81 = -1,
 			/obj/item/weapon/gun/rifle/mg60 = -1,
 			/obj/item/ammo_magazine/mg60 = -1,
 			/obj/item/weapon/gun/mg27 = -1,

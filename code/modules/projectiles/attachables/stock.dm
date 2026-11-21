@@ -7,6 +7,21 @@
 	pixel_shift_x = 30
 	pixel_shift_y = 14
 
+/obj/item/attachable/stock/type81
+	name = "Type-81 wooden stock"
+	desc = "A metallic stock with a wooden paint coating, made to fit the Type-81 and Type-63."
+	icon_state = "type81stock"
+
+/obj/item/attachable/stock/type53
+	name = "Type-53 stock"
+	desc = "A specialized stock for the Type-53."
+	icon_state = "type53stock"
+
+/obj/item/attachable/stock/type63
+	name = "Type-63 stock"
+	desc = "A specialized stock for the Type-63."
+	icon_state = "type63stock"
+
 /obj/item/attachable/stock/mosin
 	name = "mosin wooden stock"
 	desc = "A non-standard long wooden stock for Slavic firearms."
