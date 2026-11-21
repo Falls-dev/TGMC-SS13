@@ -39,7 +39,8 @@
 /obj/item/reagent_containers/hypospray/autoinjector/r_pouch //Custom empty autoinjector that we will manually fill the contents of
 	name = "custom autoinjector"
 	desc = "An autoinjector loaded with a custom mix. Useful whenever you need the rapid injection"
-	icon_state = "RedGreen"
+	tip_color = "#FFB27B"
+	down_color = "#FFB27B"
 	amount_per_transfer_from_this = 30
 	list_reagents = null //This injector gets filled up by the pouch on Initialize()
 

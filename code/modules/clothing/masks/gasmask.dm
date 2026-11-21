@@ -70,6 +70,11 @@
 	desc = "A gasmask worn by ICC personnel."
 	icon_state = "icc"
 
+/obj/item/clothing/mask/gas/icc/trophy
+	name = "\improper Captured Modelle/60 gas mask"
+	desc = "Captured gas mask used by ICC personnel."
+	icon_state = "icc_trophy"
+
 /obj/item/clothing/mask/gas/vsd
 	name = "\improper Vyacheslav armored commando balaclava"
 	desc = "Old balaclava's handed down to V.S.D."
