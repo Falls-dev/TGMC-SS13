@@ -1,7 +1,7 @@
 #define COLONY_IMPACT_MAP "Colony 1" // взято с ерп тгмс
 #define COLONY_IMPACT_SURVIVOR_WINDOW (6 MINUTES) // 6 минут на заход в игру а дальше прилёт
 #define COLONY_IMPACT_REINFORCEMENTS (10 MINUTES) // через 4 минуты после прилёта госты и челы в лобби могут зайти за шмаров
-#define COLONY_IMPACT_UNLOAD_TIME (1 MINUTES) // через минуту после приземления шмарошаттла он автоматом сьёбывает
+#define COLONY_IMPACT_UNLOAD_TIME (3 MINUTES) // время на высадку после приземления
 #define COLONY_IMPACT_LIMIT (60 MINUTES) // на весь раунд 60 минут, потом автоконец
 #define COLONY_IMPACT_DRAW "DRAW: Operation timed out"
 
@@ -150,6 +150,24 @@
 	SSpoints.add_psy_points(XENO_HIVE_NORMAL, SILO_PRICE)
 	priority_announce("Обнаружены масштабные повреждения. Запуск автоматических действий.", "Colony AI", type = ANNOUNCEMENT_PRIORITY, sound = 'sound/EVENT/alert_hoi.ogg')
 	log_game("ИВЕНТ: метеор приземлился на [impact_site.x], [impact_site.y].")
+	blackout_colony(impact_site.z)
+
+/datum/game_mode/infestation/colony_impact/proc/blackout_colony(ground_z)
+	playsound_z(ground_z, 'sound/effects/powerloss.ogg', 50)
+	for(var/obj/machinery/power/apc/area_controller as anything in GLOB.apcs_list)
+		if(area_controller.z != ground_z)
+			continue
+		if(area_controller.cell)
+			area_controller.cell.charge = 0
+		area_controller.set_broken()
+		CHECK_TICK
+
+	// Include fixtures in areas without an APC.
+	for(var/obj/machinery/light/fixture in GLOB.nightfall_toggleable_lights)
+		if(fixture.z != ground_z || fixture.status != LIGHT_OK)
+			continue
+		fixture.broken(TRUE)
+		CHECK_TICK
 
 /datum/game_mode/infestation/colony_impact/proc/open_reinforcements()
 	if(round_finished)
@@ -267,7 +285,7 @@
 		var/datum/job/marine_job = SSjob.GetJobType(job_type)
 		marine_job.set_job_positions(0)
 	SStgui.close_uis(GLOB.latejoin_menu)
-	priority_announce("Шаттл сел. Набор морпехов закрыт. До автоматического взлёта одна минута.", "Colony AI", type = ANNOUNCEMENT_PRIORITY)
+	priority_announce("Шаттл приземлился. До автоматического взлёта [COLONY_IMPACT_UNLOAD_TIME / (1 MINUTES)] мин.", "Colony AI", type = ANNOUNCEMENT_PRIORITY)
 	addtimer(CALLBACK(src, PROC_REF(depart_reinforcements)), COLONY_IMPACT_UNLOAD_TIME)
 	log_game("Colony Impact: reinforcement shuttle landed and boarding closed.")
 

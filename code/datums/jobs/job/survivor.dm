@@ -14,6 +14,7 @@
 
 	if(istype(SSticker.mode, /datum/game_mode/infestation/colony_impact) && ishuman(C))
 		var/mob/living/carbon/human/colonist = C
+		colonist.set_skills(colonist.skills.setRating(firearms = max(colonist.skills.firearms, SKILL_FIREARMS_TRAINED)))
 		if(!colonist.wear_id)
 			var/obj/item/card/id/colonist_id = new(colonist)
 			colonist.equip_to_slot_or_del(colonist_id, SLOT_WEAR_ID)
