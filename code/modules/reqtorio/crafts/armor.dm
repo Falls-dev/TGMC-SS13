@@ -10,13 +10,13 @@
 /datum/assembly_craft/armor/b18
 	name = "B18 armor set"
 	input = list(/obj/item/stack/sheet/plasteel = 50, /obj/item/armor_module/module/mimir_environment_protection/mimir_helmet = 1, /obj/item/armor_module/module/mimir_environment_protection = 1, /obj/item/armor_module/module/tyr_extra_armor = 1, /obj/item/armor_module/module/tyr_head/mark2 = 1, /obj/item/clothing/mask/gas/swat = 1, /obj/item/armor_module/module/valkyrie_autodoc = 1, /obj/item/stack/sheet/mineral/platinum = 20, /obj/item/stack/sheet/mineral/osmium = 50, /obj/item/stack/sheet/mineral/phoron = 30)
-	output = list(/datum/supply_packs/armor/b18)
+	output = list(/obj/item/clothing/suit/storage/marine/specialist = 1, /obj/item/clothing/head/helmet/marine/specialist = 1, /obj/item/clothing/gloves/marine/specialist = 1)
 	craft_time = 120 SECONDS
 
 /datum/assembly_craft/armor/b17
 	name = "B17 armor set"
 	input = list(/obj/item/stack/sheet/plasteel = 50, /obj/item/armor_module/module/mimir_environment_protection/mimir_helmet = 1, /obj/item/armor_module/module/mimir_environment_protection = 1, /obj/item/armor_module/module/tyr_extra_armor = 1, /obj/item/armor_module/module/tyr_head/mark2 = 1, /obj/item/clothing/suit/fire = 1, /obj/item/clothing/suit/radiation = 1, /obj/item/clothing/head/radiation = 1, /obj/item/storage/belt/grenade/b17 = 1, /obj/item/stack/sheet/mineral/platinum = 10, /obj/item/stack/sheet/mineral/osmium = 50, /obj/item/stack/sheet/mineral/phoron = 30)
-	output = list(/datum/supply_packs/armor/b17)
+	output = list(/obj/item/clothing/suit/storage/marine/B17 = 1, /obj/item/clothing/head/helmet/marine/grenadier = 1)
 	craft_time = 90 SECONDS
 
 /datum/assembly_craft/armor/valkyrie_autodoc
