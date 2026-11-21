@@ -1,5 +1,9 @@
 # Settings for modes. deploytimelock is in minutes
 
+mode Colony Impact
+	votable 0
+endmode
+
 mode Crash
 	requiredplayers 2
 	squadmaxnumber 1

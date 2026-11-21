@@ -9,6 +9,8 @@
 	var/round_stage = INFESTATION_MARINE_DEPLOYMENT
 	/// Timer used to calculate how long till the hive collapse due to no ruler
 	var/orphan_hive_timer
+	/// Whether to create the map-authored infestation props during round setup.
+	var/populate_infestation_on_start = TRUE
 	/// Time between two bioscan
 	var/bioscan_interval = 15 MINUTES
 	/// State of the nuke
@@ -20,6 +22,8 @@
 		return
 	if(bioscan_interval)
 		TIMER_COOLDOWN_START(src, COOLDOWN_BIOSCAN, bioscan_interval)
+	if(!populate_infestation_on_start)
+		return
 	var/weed_type
 	for(var/turf/T as anything in GLOB.xeno_weed_node_turfs)
 		weed_type = pickweight(GLOB.weed_prob_list)

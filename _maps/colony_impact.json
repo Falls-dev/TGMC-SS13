@@ -1,0 +1,22 @@
+{
+  "map_name": "Colony 1",
+  "map_path": "map_files/Colony1",
+  "map_file": "Colony1.dmm",
+  "environment_traits": {
+    "COLD": true
+  },
+  "disk_sets": {
+    "basic": 1
+  },
+  "parallax_icon": "ice",
+  "armor": "ice",
+  "quickbuilds": 2100,
+  "gamemodes": [
+    "Colony Impact"
+  ],
+  "traits": [
+    {
+      "weather_snowstorm": true
+    }
+  ]
+}

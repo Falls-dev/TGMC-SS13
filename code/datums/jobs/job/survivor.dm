@@ -12,6 +12,13 @@
 /datum/job/survivor/after_spawn(mob/living/carbon/C, mob/M, latejoin = FALSE)
 	. = ..()
 
+	if(istype(SSticker.mode, /datum/game_mode/infestation/colony_impact) && ishuman(C))
+		var/mob/living/carbon/human/colonist = C
+		if(!colonist.wear_id)
+			var/obj/item/card/id/colonist_id = new(colonist)
+			colonist.equip_to_slot_or_del(colonist_id, SLOT_WEAR_ID)
+			outfit?.handle_id(colonist, M?.client)
+
 	if(SSmapping.configs[GROUND_MAP].environment_traits[MAP_COLD])
 		C.equip_to_slot_or_del(new /obj/item/clothing/head/ushanka(C), SLOT_HEAD)
 		C.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/snow_suit(C), SLOT_WEAR_SUIT)

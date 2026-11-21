@@ -262,8 +262,8 @@ SUBSYSTEM_DEF(job)
 	new_character.apply_assigned_role_to_spawn(job, player.client, player.assigned_squad)
 
 	//If we joined at roundstart we should be positioned at our workstation
-	var/turf/spawn_turf
-	if(!joined_late || job.job_flags & JOB_FLAG_OVERRIDELATEJOINSPAWN)
+	var/turf/spawn_turf = SSticker.mode?.get_job_spawn_turf(job)
+	if(!spawn_turf && (!joined_late || job.job_flags & JOB_FLAG_OVERRIDELATEJOINSPAWN))
 		var/datum/job/terragov/squad/marine = job
 		var/mob/living/carbon/human/h = new_character
 		if(!ishuman(new_character) || !h.assigned_squad || !length_char(GLOB.start_squad_landmarks_list))

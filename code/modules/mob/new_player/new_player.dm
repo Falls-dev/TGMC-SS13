@@ -320,7 +320,7 @@
 	SSticker.mode.LateSpawn(src)
 	return TRUE
 
-/mob/new_player/proc/IsJobAvailable(datum/job/job, latejoin = FALSE, list/reasons)
+/mob/proc/IsJobAvailable(datum/job/job, latejoin = FALSE, list/reasons)
 	if(!job)
 		if(reasons)
 			reasons += "Invalid job."
