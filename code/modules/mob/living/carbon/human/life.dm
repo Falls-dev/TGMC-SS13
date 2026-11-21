@@ -29,7 +29,7 @@
 
 		else //Dead
 			dead_ticks ++
-			if(dead_ticks > TIME_BEFORE_DNR)
+			if(dead_ticks > get_dnr_limit())
 				set_undefibbable()
 			else
 				med_hud_set_status()

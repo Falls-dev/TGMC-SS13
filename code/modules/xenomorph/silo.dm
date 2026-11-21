@@ -122,3 +122,7 @@
 
 /obj/structure/xeno/silo/crash
 	resistance_flags = UNACIDABLE | DROPSHIP_IMMUNE | PLASMACUTTER_IMMUNE | INDESTRUCTIBLE
+
+/// Nuclear War spawn point: invulnerable, but still does not generate larva when MODE_SILO_NO_LARVA is active.
+/obj/structure/xeno/silo/nuclear_war
+	resistance_flags = UNACIDABLE | DROPSHIP_IMMUNE | PLASMACUTTER_IMMUNE | INDESTRUCTIBLE
