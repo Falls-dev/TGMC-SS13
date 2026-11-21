@@ -1601,7 +1601,6 @@
 	scatter_unwielded = -2
 	accuracy_mult = 1.15
 	aim_slowdown = 0.7
-	damage_falloff_mult = 5
 	recoil = 0.5
 	movement_acc_penalty_mult = 4
 
