@@ -50,6 +50,7 @@
 /obj/item/reagent_containers/hypospray/autoinjector/fillable
 	desc = "An autoinjector loaded with... something, consult the doctor who gave this to you."
 	amount_per_transfer_from_this = 45
+	greyscale_config = null
 	list_reagents = null
 
 /obj/item/reagent_containers/hypospray/autoinjector/tricordrazine
