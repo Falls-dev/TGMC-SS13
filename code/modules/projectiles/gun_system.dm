@@ -1358,7 +1358,7 @@
 					return FALSE
 				for(var/i = 0, i < rounds_to_fill, i++)
 					items_to_insert += mag.create_handful(null, 1)
-                playsound(src, reload_sound, 25, 1, MEDIUM_SOUND_RANGE)
+				playsound(src, reload_sound, 25, 1, MEDIUM_SOUND_RANGE)
 		else
 			items_to_insert += new_mag
 
