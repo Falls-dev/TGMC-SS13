@@ -131,6 +131,8 @@
 	var/datum/ammo/ammo_datum_type = /datum/ammo/bullet
 	///Default magazine to spawn with.
 	var/default_ammo_type = null
+	/// Clips used to refill an installed magazine without removing it.
+	var/list/allowed_clip_types = list()
 	///List of allowed specific types. If trying to reload with something in this list it will succeed. This is mainly for use in internal magazine weapons or scenarios where you do not want to inclue a whole subtype.
 	var/list/allowed_ammo_types = list(
 		/obj/item/ammo_magazine,
@@ -1243,6 +1245,10 @@
 /obj/item/weapon/gun/proc/reload(obj/item/new_mag, mob/living/user, force = FALSE)
 	if(HAS_TRAIT(src, TRAIT_GUN_BURST_FIRING) || user?.do_actions)
 		return
+	if(CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_MAGAZINES) && CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_CLIP_TOP_UP) && isammomagazine(new_mag))
+		var/obj/item/ammo_magazine/source_ammo = new_mag
+		if((source_ammo.type in allowed_clip_types) || CHECK_BITFIELD(source_ammo.magazine_flags, MAGAZINE_HANDFUL))
+			return reload_installed_magazine(source_ammo, user, force)
 	if(!(new_mag.type in allowed_ammo_types))
 		if(isammomagazine(new_mag) && CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_HANDFULS))
 			var/obj/item/ammo_magazine/mag = new_mag
@@ -1338,13 +1344,20 @@
 					items_to_insert += mag
 				playsound(src, hand_reload_sound, 25, 1)
 			else
-				if((length(chamber_items) && !CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_ROTATES_CHAMBER)) || (CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_ROTATES_CHAMBER) && rounds))
-					to_chat(user, span_warning("[src] must be completely empty to use the [mag]!"))
+				var/allow_clip_top_up = CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_CLIP_TOP_UP) && !CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_ROTATES_CHAMBER)
+				if(!allow_clip_top_up)
+					if((length(chamber_items) && !CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_ROTATES_CHAMBER)) || (CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_ROTATES_CHAMBER) && rounds))
+						to_chat(user, span_warning("[src] must be completely empty to use the [mag]!"))
+						return FALSE
+				var/free_capacity = max_chamber_items
+				if(allow_clip_top_up)
+					free_capacity -= length(chamber_items)
+				var/rounds_to_fill = min(mag.current_rounds, free_capacity)
+				if(rounds_to_fill <= 0)
 					return FALSE
-				var/rounds_to_fill = mag.current_rounds < max_chamber_items ? mag.current_rounds : max_chamber_items
 				for(var/i = 0, i < rounds_to_fill, i++)
 					items_to_insert += mag.create_handful(null, 1)
-				playsound(src, reload_sound, 25, 1)
+				playsound(src, reload_sound, 25, TRUE)
 		else
 			items_to_insert += new_mag
 
@@ -1892,3 +1905,82 @@
 		return
 	magharn.reequip_component.active = FALSE
 	addtimer(VARSET_CALLBACK(magharn.reequip_component, active, TRUE), 2 SECONDS)
+
+
+/// Tops up the selected magazine synchronously, without removing it or changing its ammunition type.
+/obj/item/weapon/gun/proc/reload_installed_magazine(obj/item/ammo_magazine/source_ammo, mob/living/user, force = FALSE)
+	var/is_loose_ammo = CHECK_BITFIELD(source_ammo.magazine_flags, MAGAZINE_HANDFUL)
+
+	// Clips and individual cartridges are processed here.
+	if(HAS_TRAIT(src, TRAIT_GUN_BURST_FIRING) || user?.do_actions)
+		return FALSE
+
+	if(CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_CLOSED) && !force)
+		to_chat(user, span_warning("[src] is closed!"))
+		return FALSE
+
+	if(!length(chamber_items))
+		to_chat(user, span_warning("Insert a magazine into [src] first!"))
+		return FALSE
+
+	if(current_chamber_position < 1 || current_chamber_position > length(chamber_items))
+		return FALSE
+	var/obj/item/ammo_magazine/installed_mag = chamber_items[current_chamber_position]
+	if(!istype(installed_mag) || installed_mag == source_ammo)
+		return FALSE
+
+	if(source_ammo.caliber != installed_mag.caliber)
+		to_chat(user, span_warning("These rounds do not match the loaded magazine's caliber!"))
+		return FALSE
+
+	// Do not mix different types of bullets inside the same magazine.
+
+
+	// In this initial implementation, another type cannot be loaded
+	// even to an empty store.
+	if(source_ammo.default_ammo != installed_mag.default_ammo)
+		to_chat(user, span_warning("These rounds do not match the loaded magazine's ammunition!"))
+		return FALSE
+
+	if(source_ammo.current_rounds <= 0)
+		to_chat(user, span_warning("[source_ammo] is empty!"))
+		return FALSE
+
+	var/free_capacity = installed_mag.max_rounds - installed_mag.current_rounds
+	if(free_capacity <= 0)
+		to_chat(user, span_notice("[installed_mag] is already full."))
+		return FALSE
+
+	// handful one bullets.
+	var/transfer_limit = is_loose_ammo ? 1 : source_ammo.current_rounds
+	var/rounds_to_transfer = min(
+		transfer_limit,
+		source_ammo.current_rounds,
+		free_capacity,
+	)
+
+	installed_mag.current_rounds += rounds_to_transfer
+	source_ammo.current_rounds -= rounds_to_transfer
+
+	to_chat(user, span_notice("You load [rounds_to_transfer] round(s) into [src]."))
+	playsound(src, reload_sound, 25, TRUE)
+
+	// An empty clip remains an object.
+	// An empty handy is deleted.
+	if(source_ammo.current_rounds <= 0 && is_loose_ammo)
+		user?.temporarilyRemoveItemFromInventory(source_ammo)
+		qdel(source_ammo)
+	else
+		source_ammo.update_icon()
+
+	installed_mag.update_icon()
+	if(!in_chamber \
+		&& !CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_REQUIRES_UNIQUE_ACTION) \
+		&& !CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_TOGGLES_OPEN) \
+		&& !CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_CYCLE_ONLY_BEFORE_FIRE))
+		cycle(user, FALSE)
+
+	get_ammo()
+	update_ammo_count()
+	update_icon()
+	return TRUE
