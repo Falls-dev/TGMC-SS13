@@ -22,6 +22,10 @@
 	var/point_cost = 0 //how many points it costs to build this with the fabricator, set to 0 if unbuildable.
 	///Type of ammo
 	var/ammo_type
+	///How strong the bullets is
+	var/bullet_damage = 0
+	///How strong penetration the bullets is
+	var/bullet_penetration = 0
 	///How strong the explosion is
 	var/explosion_power = 0
 	///How much the explosion will lose power per turf
@@ -197,6 +201,8 @@
 	max_ammo_count = 2000
 	transferable_ammo = TRUE
 	ammo_used_per_firing = 400
+	bullet_damage = 100
+	bullet_penetration = 40
 	point_cost = 85
 	///Radius of the square that the bullets will strafe
 	var/bullet_spread_range = 2
@@ -235,18 +241,17 @@
 
 ///Takes the top 3 turfs and miniguns them, then repeats until none left
 /obj/structure/ship_ammo/cas/heavygun/proc/strafe_turfs(list/strafelist)
-	var/turf/strafed
-	playsound(strafelist[1], get_sfx("explosion"), 40, 1, LOUD_SOUND_RANGE, falloff = 3)
-	for(var/i=1 to attack_width)
-		strafed = strafelist[1]
-		strafelist -= strafed
-		strafed.ex_act(EXPLODE_LIGHT)
-		new /obj/effect/temp_visual/heavyimpact(strafed)
-		for(var/atom/movable/AM AS in strafed)
-			if(QDELETED(AM))
-				continue
-			//This may seem a bit wacky as we're exploding the turf's content twice, but doing it another way would be even more wacky because of how hard it is to modify explosion damage without adding a whole other explosion type
-			AM.ex_act(EXPLODE_LIGHT)
+	var/turf/strafed = strafelist[1]
+	strafelist.Cut(1, 2)
+	playsound(strafed, get_sfx("explosion"), 40, 1, LOUD_SOUND_RANGE, falloff = 3)
+	new /obj/effect/temp_visual/heavyimpact(strafed)
+	for(var/mob/living/Target in strafed)
+		Target.apply_damage(bullet_damage, BRUTE, blocked = BULLET, penetration = bullet_penetration)
+	for(var/obj/Object in strafed)
+		Object.take_damage(bullet_damage, BRUTE, armour_penetration = bullet_penetration)
+	if(istype(strafed, /turf/closed/wall))
+		var/turf/closed/wall/wall_victim = strafed
+		wall_victim.take_damage(bullet_damage, BRUTE, armour_penetration = bullet_penetration)
 
 	if(length(strafelist))
 		addtimer(CALLBACK(src, PROC_REF(strafe_turfs), strafelist), 2)

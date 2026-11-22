@@ -9,7 +9,8 @@
 	if(ammo_type == CAS_30MM)
 		. += "Ammo count = [ammo_count].<br>"
 		. += "Ammo per firing = [ammo_used_per_firing].<br>"
-		. += "The force of the bullets = [EXPLODE_LIGHT].<br>"
+		. += "The force of the bullets = [bullet_damage].<br>"
+		. += "The penetration of the bullets = [bullet_penetration].<br>"
 	if(explosion_power)
 		. += "The force of the explosion = [explosion_power].<br>"
 	if(explosion_falloff)
