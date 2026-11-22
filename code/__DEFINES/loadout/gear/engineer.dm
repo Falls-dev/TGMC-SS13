@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(engineer_gear_listed_products, list(
 	/obj/item/explosive/plastique/trench = list(CAT_ENGSUP, "Trench charge", 2, "orange3"),
 	/obj/item/explosive/plastique/detpack/trench = list(CAT_ENGSUP, "Better Trench charge", 3, "orange3"),
 	/obj/item/tesla_turret = list(CAT_ENGSUP, "Tesla Turret", 20, "blue"),
-	/obj/item/gunslinger = list(CAT_ENGSUP, "Gunslinger", 20, "blue"),
+	/obj/item/gunslinger = list(CAT_ENGSUP, "Gunslinger", 35, "blue"),
 	/obj/item/weapon/gun/hsg102 = list(CAT_ENGSUP, "HSG-102", 35, "blue"),
 	/obj/item/weapon/gun/energy/lasgun/lasrifle/e50 = list(CAT_ENGSUP, "E-50 laser emitter", 40, "blue"),
 	/obj/item/ammo_magazine/hsg102 = list(CAT_ENGSUP, "HSG-102 Ammo box", 4, "orange2"),

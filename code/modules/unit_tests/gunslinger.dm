@@ -5,6 +5,8 @@
 	engineer.faction = FACTION_TERRAGOV
 	var/obj/machinery/marine_selector/gear/engi/vendor = allocate(/obj/machinery/marine_selector/gear/engi, run_loc_floor_top_right)
 	TEST_ASSERT(vendor.listed_products[/obj/item/gunslinger], "The engineer vendor does not stock the Gunslinger.")
+	var/list/product = vendor.listed_products[/obj/item/gunslinger]
+	TEST_ASSERT_EQUAL(product[3], 35, "The Gunslinger should cost 35 vendor points.")
 	var/obj/item/gunslinger/glove = allocate(/obj/item/gunslinger)
 	TEST_ASSERT(engineer.put_in_active_hand(glove), "Could not equip the Gunslinger.")
 	engineer.next_click = world.time - 1
@@ -68,13 +70,13 @@
 	TEST_ASSERT_EQUAL(first.get_amount(), 4, "An allied service hit must not consume the owner's metal.")
 
 	engineer.next_click = world.time - 1
-	engineer.ClickOn(site, site, "right=1")
+	engineer.ClickOn(sentry, site, "right=1")
 	TEST_ASSERT(QDELETED(sentry) && QDELETED(gun), "Recall should remove the sentry and its gun.")
 	TEST_ASSERT_NULL(glove.mini_sentry, "Recall should free the deployment slot.")
-	TEST_ASSERT_EQUAL(first.get_amount(), 17, "90% integrity and 20% ammunition should refund 13 sheets.")
+	TEST_ASSERT_EQUAL(first.get_amount(), 12, "90% integrity and 20% ammunition should refund 8 sheets.")
 	TEST_ASSERT(locate(/obj/effect/temp_visual/explosion) in site, "Recall should show an explosion at the sentry's tile.")
 
-	allocate(/obj/item/stack/sheet/metal, engineer, 10)
+	allocate(/obj/item/stack/sheet/metal, engineer, 14)
 	engineer.next_click = world.time - 1
 	engineer.ClickOn(site, site, "right=1")
 	sleep(1.2 SECONDS)
@@ -84,14 +86,15 @@
 	TEST_ASSERT_EQUAL(sentry.obj_integrity, 100, "The newly built sentry should have full integrity.")
 	TEST_ASSERT_EQUAL(gun.rounds, 100, "The newly built sentry should have a full magazine.")
 	engineer.next_click = world.time - 1
-	engineer.ClickOn(site, site, "right=1")
-	TEST_ASSERT_EQUAL(first.get_amount(), 27, "Recall at full integrity and ammo should refund all 25 sheets.")
+	engineer.ClickOn(sentry, site, "right=1")
+	TEST_ASSERT_EQUAL(first.get_amount(), 21, "Direct recall at full integrity and ammo should refund 20 sheets.")
 
+	TEST_ASSERT(first.add(5), "Could not restock the test engineer.")
 	engineer.next_click = world.time - 1
 	engineer.ClickOn(site, site, "right=1")
 	sleep(1.2 SECONDS)
 	sentry = glove.mini_sentry
-	TEST_ASSERT_NOTNULL(sentry, "Full refund should allow another build.")
+	TEST_ASSERT_NOTNULL(sentry, "The sentry should deploy again after restocking.")
 	gun = sentry.get_internal_item()
 	TEST_ASSERT(!sentry.scan(), "The sentry should ignore the nearby engineer.")
 	var/turf/hostile_site = get_step(site, EAST)
@@ -108,6 +111,8 @@
 	sentry.sentry_start_fire()
 	sleep(1 SECONDS)
 	TEST_ASSERT(gun.rounds < 100, "The sentry should fire using the built-in magazine.")
-	qdel(sentry)
-	TEST_ASSERT_NULL(glove.mini_sentry, "Destruction should free the deployment slot.")
-	TEST_ASSERT_EQUAL(first.get_amount(), 2, "A destroyed sentry should not refund metal.")
+	engineer.next_click = world.time - 1
+	engineer.ClickOn(start, start, "right=1")
+	TEST_ASSERT(QDELETED(sentry) && QDELETED(gun), "Clicking elsewhere should still recall the sentry.")
+	TEST_ASSERT_NULL(glove.mini_sentry, "Remote recall should free the deployment slot.")
+	TEST_ASSERT_EQUAL(first.get_amount(), 1, "Remote recall should not refund metal.")

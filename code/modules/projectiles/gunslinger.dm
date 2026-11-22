@@ -1,4 +1,5 @@
 #define GUNSLINGER_DEPLOY_COST 25
+#define GUNSLINGER_SALVAGE_COST 5
 #define GUNSLINGER_REPAIR_AMOUNT 20
 #define GUNSLINGER_RELOAD_AMOUNT 20
 
@@ -22,7 +23,7 @@
 
 /obj/item/gunslinger/examine(mob/user)
 	. = ..()
-	. += span_notice("Активируйте предмет в руке, чтобы закрепить его. ПКМ по соседней клетке устанавливает мини-турель за одну секунду и [GUNSLINGER_DEPLOY_COST] листов металла. Повторное ПКМ отзывает её и возвращает металл в зависимости от оставшихся прочности и боезапаса. Удар по своей или дружественной мини-турели тратит один лист на ремонт и пополнение боезапаса. Удар по живой цели вызывает краткое замедление и стаггер на одну секунду.")
+	. += span_notice("Активируйте предмет в руке, чтобы закрепить его. ПКМ по соседней клетке устанавливает мини-турель за одну секунду и [GUNSLINGER_DEPLOY_COST] листов металла. ПКМ по самой турели разбирает её и возвращает металл с учётом оставшихся прочности и боезапаса и вычетом [GUNSLINGER_SALVAGE_COST] листов. ПКМ в другом месте отзывает турель без возврата металла. Удар по своей или дружественной мини-турели тратит один лист на ремонт и пополнение боезапаса. Удар по живой цели вызывает краткое замедление и стаггер на одну секунду.")
 
 /obj/item/gunslinger/attack_self(mob/user)
 	. = ..()
@@ -54,7 +55,7 @@
 	if(!can_operate(user) || !isturf(user.loc) || user.in_throw_mode)
 		return
 	if(mini_sentry)
-		recall_sentry(user)
+		recall_sentry(user, target == mini_sentry)
 	else
 		INVOKE_ASYNC(src, PROC_REF(deploy_sentry), user, get_turf(target))
 	return COMSIG_MOB_CLICK_HANDLED
@@ -94,18 +95,23 @@
 		return FALSE
 	return TRUE
 
-/obj/item/gunslinger/proc/recall_sentry(mob/user)
-	var/obj/item/weapon/gun/gun = mini_sentry.get_internal_item()
+/obj/item/gunslinger/proc/recall_sentry(mob/user, salvage)
 	var/turf/recall_site = get_turf(mini_sentry)
-	var/integrity_fraction = clamp(mini_sentry.obj_integrity / mini_sentry.max_integrity, 0, 1)
-	var/ammo_fraction = gun?.max_rounds ? clamp(gun.rounds / gun.max_rounds, 0, 1) : 0
-	var/refund_amount = max(1, FLOOR(GUNSLINGER_DEPLOY_COST * (integrity_fraction + ammo_fraction) / 2, 1))
+	var/refund_amount = 0
+	if(salvage)
+		var/obj/item/weapon/gun/gun = mini_sentry.get_internal_item()
+		var/integrity_fraction = clamp(mini_sentry.obj_integrity / mini_sentry.max_integrity, 0, 1)
+		var/ammo_fraction = gun?.max_rounds ? clamp(gun.rounds / gun.max_rounds, 0, 1) : 0
+		refund_amount = max(0, FLOOR(GUNSLINGER_DEPLOY_COST * (integrity_fraction + ammo_fraction) / 2, 1) - GUNSLINGER_SALVAGE_COST)
 	log_combat(user, mini_sentry, "recalled", addition = "(refunded [refund_amount] metal sheets)")
 	QDEL_NULL(mini_sentry)
 	if(recall_site)
 		new /obj/effect/temp_visual/explosion(recall_site, 1, LIGHT_COLOR_LAVA, 15)
 		playsound(recall_site, 'sound/effects/explosion/micro1.ogg', 40, TRUE, SHORT_SOUND_RANGE)
 
+	if(!refund_amount)
+		user.balloon_alert(user, "Турель отозвана без возврата металла")
+		return
 	var/obj/item/stack/sheet/metal/refund = new(null, refund_amount)
 	for(var/obj/item/stack/sheet/metal/stack as anything in user.get_all_contents_type(/obj/item/stack/sheet/metal))
 		refund.merge(stack)
@@ -241,5 +247,6 @@
 	return TRUE
 
 #undef GUNSLINGER_DEPLOY_COST
+#undef GUNSLINGER_SALVAGE_COST
 #undef GUNSLINGER_REPAIR_AMOUNT
 #undef GUNSLINGER_RELOAD_AMOUNT
