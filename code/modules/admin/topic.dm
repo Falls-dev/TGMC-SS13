@@ -1417,7 +1417,8 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 			var/edit_log = query_get_message_edits.item[1]
 			if(!QDELETED(usr))
 				var/datum/browser/browser = new(usr, "Note edits", "Note edits")
-				browser.set_content(jointext(edit_log, ""))
+				browser.add_head_content(HTML_TEXT_CONTENT_POLICY)
+				browser.set_content(format_moderation_edit_log(edit_log))
 				browser.open()
 		qdel(query_get_message_edits)
 

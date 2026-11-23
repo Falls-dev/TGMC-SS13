@@ -116,9 +116,10 @@ ADMIN_VERB(note_panel, R_BAN, "Note Panel", "View a players notes panel", ADMIN_
 	qdel(query_create_message)
 	if(logged)
 		log_admin_private(pm)
-		message_admins("[header]:<br>[text]")
+		var/message_html = chat_text_to_html(text)
+		message_admins("[header]:<br>[message_html]")
 		admin_ticket_log(target_ckey, "<font color='blue'>[header]</font>")
-		admin_ticket_log(target_ckey, text)
+		admin_ticket_log(target_ckey, message_html)
 		if(!check_rights(R_BAN))
 			return
 		if(browse)
@@ -161,7 +162,7 @@ ADMIN_VERB(note_panel, R_BAN, "Note Panel", "View a players notes panel", ADMIN_
 	qdel(query_del_message)
 	if(logged)
 		var/m1 = "[user_key_name] has deleted a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for" : " made by"] [target_key]: [text]"
-		var/m2 = "[user_name_admin] has deleted a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for" : " made by"] [target_key]:<br>[text]"
+		var/m2 = "[user_name_admin] has deleted a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for" : " made by"] [target_key]:<br>[chat_text_to_html(text)]"
 		log_admin_private(m1)
 		message_admins(m2)
 		if(browse)
@@ -213,7 +214,7 @@ ADMIN_VERB(note_panel, R_BAN, "Note Panel", "View a players notes panel", ADMIN_
 			return
 		qdel(query_edit_message)
 		log_admin_private("[kn] has edited a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""] made by [admin_key] from [old_text] to [new_text]")
-		message_admins("[kna] has edited a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""] made by [admin_key] from<br>[old_text]<br>to<br>[new_text]")
+		message_admins("[kna] has edited a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""] made by [admin_key] from<br>[chat_text_to_html(old_text)]<br>to<br>[chat_text_to_html(new_text)]")
 		if(browse)
 			browse_messages("[type]")
 		else
@@ -407,7 +408,7 @@ ADMIN_VERB(note_panel, R_BAN, "Note Panel", "View a players notes panel", ADMIN_
 	navbar += "<br><form method='GET' name='search' action='?'>\
 	<input type='hidden' name='_src_' value='holder'>\
 	[HrefTokenFormField()]\
-	<input type='text' name='searchmessages' value='[index]'>\
+	<input type='text' name='searchmessages' value=\"[html_encode(index)]\">\
 	<input type='submit' value='Search'></form>"
 	if(!linkless)
 		output = navbar
@@ -470,7 +471,7 @@ ADMIN_VERB(note_panel, R_BAN, "Note Panel", "View a players notes panel", ADMIN_
 			output += " <a href='byond://?_src_=holder;[HrefToken()];editmessageempty=[id]'>Edit</a>"
 			if(editor_key)
 				output += " <font size='2'>Last edit by [editor_key] <a href='byond://?_src_=holder;[HrefToken()];messageedits=[id]'>(Click here to see edit log)</a></font>"
-			output += "<br>[text]<hr style='background:#000000; border:0; height:1px'>"
+			output += "<br>[chat_text_to_html(text)]<hr style='background:#000000; border:0; height:1px'>"
 		qdel(query_get_type_messages)
 	if(target_ckey)
 		var/target_key
@@ -561,7 +562,7 @@ ADMIN_VERB(note_panel, R_BAN, "Note Panel", "View a players notes panel", ADMIN_
 				if(editor_key)
 					data += " <font size='2'>Last edit by [editor_key] <a href='byond://?_src_=holder;[HrefToken()];messageedits=[id]'>(Click here to see edit log)</a></font>"
 			data += "</div></center>"
-			data += "<p style='[alphatext]'>[text]</p><hr style='background:#000000; border:0; height:1px; [alphatext]'>"
+			data += "<p style='[alphatext]'>[chat_text_to_html(text)]</p><hr style='background:#000000; border:0; height:1px; [alphatext]'>"
 			switch(type)
 				if("message")
 					messagedata += data
@@ -683,7 +684,7 @@ ADMIN_VERB(note_panel, R_BAN, "Note Panel", "View a players notes panel", ADMIN_
 		switch(type)
 			if("message")
 				output += "<font color='red' size='3'><b>Admin message left by [span_prefix("[admin_key]")] on [timestamp]</b></font>"
-				output += "<br><font color='red'>[text]</font><br>"
+				output += "<br><font color='red'>[chat_text_to_html(text)]</font><br>"
 				var/datum/db_query/query_message_read = SSdbcore.NewQuery(
 					"UPDATE [format_table_name("messages")] SET type = 'message sent' WHERE id = :id",
 					list("id" = message_id)
@@ -699,11 +700,15 @@ ADMIN_VERB(note_panel, R_BAN, "Note Panel", "View a players notes panel", ADMIN_
 				output += "[span_memo("Memo by <span class='prefix'>[admin_key]")] on [timestamp]"
 				if(editor_key)
 					output += "<br>[span_memoedit("Last edit by [editor_key] <A href='byond://?_src_=holder;[HrefToken()];messageedits=[message_id]'>(Click here to see edit log)</A>")]"
-				output += "<br>[text]</span><br>"
+				output += "<br>[chat_text_to_html(text)]</span><br>"
 	qdel(query_get_message_output)
 	return output
 
 
 /proc/print_watchlist(ckey, timestamp, text)
-	message_admins("<font color='red'><B>Notice: </B></font><span class='notice'>[ckey] has been on the watchlist since [timestamp] and has just connected - Reason: [text]</font>")
+	message_admins("<font color='red'><B>Notice: </B></font><span class='notice'>[ckey] has been on the watchlist since [timestamp] and has just connected - Reason: [chat_text_to_html(text)]</span>")
 	send2tgs_adminless_only("Watchlist", "[ckey] is on the watchlist and has just connected - Reason: [text]")
+
+/// Older edit histories store their separators as HTML. Only reproduce line breaks.
+/proc/format_moderation_edit_log(text)
+	return chat_text_to_html(replacetext(text, "<hr>", "\n\n"), allow_break_tag = TRUE)

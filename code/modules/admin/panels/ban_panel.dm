@@ -173,15 +173,15 @@ ADMIN_VERB(ban_panel, R_BAN, "Ban Panel", "Opens the Ban panel.", ADMIN_CATEGORY
 	<label class='inputlabel checkbox'>Key:
 	<input type='checkbox' id='keycheck' name='keycheck' value='1'[player_key ? " checked": ""]>
 	<div class='inputbox'></div></label>
-	<input type='text' name='keytext' size='26' value='[player_key]'>
+	<input type='text' name='keytext' size='26' value="[html_encode(player_key)]">
 	<label class='inputlabel checkbox'>IP:
 	<input type='checkbox' id='ipcheck' name='ipcheck' value='1'[isnull(duration) ? " checked" : ""]>
 	<div class='inputbox'></div></label>
-	<input type='text' name='iptext' size='18' value='[player_ip]'>
+	<input type='text' name='iptext' size='18' value="[html_encode(player_ip)]">
 	<label class='inputlabel checkbox'>CID:
 	<input type='checkbox' id='cidcheck' name='cidcheck' value='1' checked>
 	<div class='inputbox'></div></label>
-	<input type='text' name='cidtext' size='14' value='[player_cid]'>
+	<input type='text' name='cidtext' size='14' value="[html_encode(player_cid)]">
 	<br>
 	<label class='inputlabel checkbox'>Use IP and CID from last connection of key
 	<input type='checkbox' id='lastconn' name='lastconn' value='1' [(isnull(duration) && !player_ip) || (!player_cid) ? " checked": ""]>
@@ -246,7 +246,7 @@ ADMIN_VERB(ban_panel, R_BAN, "Ban Panel", "Opens the Ban panel.", ADMIN_CATEGORY
 		<div class='column'>
 			Reason
 			<br>
-			<textarea class='reason' name='reason'>[reason]</textarea>
+			<textarea class='reason' name='reason'>[html_encode(reason)]</textarea>
 		</div>
 	</div>
 	"}
@@ -255,14 +255,14 @@ ADMIN_VERB(ban_panel, R_BAN, "Ban Panel", "Opens the Ban panel.", ADMIN_CATEGORY
 		<input type='checkbox' id='mirroredit' name='mirroredit' value='1'>
 		<div class='inputbox'></div></label>
 		<input type='hidden' name='editid' value='[edit_id]'>
-		<input type='hidden' name='oldkey' value='[player_key]'>
-		<input type='hidden' name='oldip' value='[player_ip]'>
-		<input type='hidden' name='oldcid' value='[player_cid]'>
+		<input type='hidden' name='oldkey' value="[html_encode(player_key)]">
+		<input type='hidden' name='oldip' value="[html_encode(player_ip)]">
+		<input type='hidden' name='oldcid' value="[html_encode(player_cid)]">
 		<input type='hidden' name='oldapplies' value='[applies_to_admins]'>
 		<input type='hidden' name='oldduration' value='[duration]'>
-		<input type='hidden' name='oldreason' value='[reason]'>
+		<input type='hidden' name='oldreason' value="[html_encode(reason)]">
 		<input type='hidden' name='page' value='[page]'>
-		<input type='hidden' name='adminkey' value='[admin_key]'>
+		<input type='hidden' name='adminkey' value="[html_encode(admin_key)]">
 		<br>
 		When ticked, edits here will also affect bans created with matching ckey, IP, CID and time. Use this to edit all role bans which were made at the same time.
 		"}
@@ -563,7 +563,8 @@ ADMIN_VERB(ban_panel, R_BAN, "Ban Panel", "Opens the Ban panel.", ADMIN_CATEGORY
 	var/target = ban_target_string(player_key, player_ip, player_cid)
 	var/msg = "has created a [isnull(duration) ? "permanent" : "temporary [time_message]"] [applies_to_admins ? "admin " : ""][roles_to_ban[1] == "Server" ? "server ban" : "role ban from [length(roles_to_ban)] roles"] for [target]."
 	log_admin_private("[kn] [msg][roles_to_ban[1] == "Server" ? "" : " Roles: [roles_to_ban.Join(", ")]"] Reason: [reason]")
-	message_admins("[kna] [msg][roles_to_ban[1] == "Server" ? "" : " Roles: [roles_to_ban.Join("\n")]"]\nReason: [reason]")
+	var/reason_html = chat_text_to_html(reason)
+	message_admins("[kna] [msg][roles_to_ban[1] == "Server" ? "" : " Roles: [roles_to_ban.Join("\n")]"]<br>Reason: [reason_html]")
 	//if(!applies_to_admins)
 	send2chat("**BAN ALERT:** ROUND: [GLOB.round_id]. [kn] [msg] **Reason:** [reason] (Roles: [roles_to_ban.Join(", ")])", CONFIG_GET(string/discord_ban_channel))
 	if(player_ckey)
@@ -575,7 +576,7 @@ ADMIN_VERB(ban_panel, R_BAN, "Ban Panel", "Opens the Ban panel.", ADMIN_CATEGORY
 	var/is_admin = FALSE
 	if(C)
 		build_ban_cache(C)
-		to_chat(C, span_boldannounce("You have been [applies_to_admins ? "admin " : ""]banned by [usr.client.key] from [roles_to_ban[1] == "Server" ? "the server" : " Roles: [roles_to_ban.Join(", ")]"].\nReason: [reason]</span><br>[span_danger("This ban is [isnull(duration) ? "permanent." : "temporary, it will be removed in [time_message]."] The round ID is [GLOB.round_id].")]<br><span class='danger'>To appeal this ban go to [appeal_url]"))
+		to_chat(C, span_boldannounce("You have been [applies_to_admins ? "admin " : ""]banned by [usr.client.key] from [roles_to_ban[1] == "Server" ? "the server" : " Roles: [roles_to_ban.Join(", ")]"].<br>Reason: [reason_html]</span><br>[span_danger("This ban is [isnull(duration) ? "permanent." : "temporary, it will be removed in [time_message]."] The round ID is [GLOB.round_id].")]<br><span class='danger'>To appeal this ban go to [appeal_url]"))
 		if(GLOB.admin_datums[C.ckey] || GLOB.deadmins[C.ckey])
 			is_admin = TRUE
 		if(roles_to_ban[1] == "Server" && (!is_admin || (is_admin && applies_to_admins)))
@@ -585,7 +586,7 @@ ADMIN_VERB(ban_panel, R_BAN, "Ban Panel", "Opens the Ban panel.", ADMIN_CATEGORY
 	for(var/client/i in GLOB.clients - C)
 		if(i.address == player_ip || i.computer_id == player_cid)
 			build_ban_cache(i)
-			to_chat(i, span_boldannounce("You have been [applies_to_admins ? "admin " : ""]banned by [usr.client.key] from [roles_to_ban[1] == "Server" ? "the server" : " Roles: [roles_to_ban.Join(", ")]"].\nReason: [reason]</span><br>[span_danger("This ban is [isnull(duration) ? "permanent." : "temporary, it will be removed in [time_message]."] The round ID is [GLOB.round_id].")]<br><span class='danger'>To appeal this ban go to [appeal_url]"))
+			to_chat(i, span_boldannounce("You have been [applies_to_admins ? "admin " : ""]banned by [usr.client.key] from [roles_to_ban[1] == "Server" ? "the server" : " Roles: [roles_to_ban.Join(", ")]"].<br>Reason: [reason_html]</span><br>[span_danger("This ban is [isnull(duration) ? "permanent." : "temporary, it will be removed in [time_message]."] The round ID is [GLOB.round_id].")]<br><span class='danger'>To appeal this ban go to [appeal_url]"))
 			if(GLOB.admin_datums[i.ckey] || GLOB.deadmins[i.ckey])
 				is_admin = TRUE
 			if(roles_to_ban[1] == "Server" && (!is_admin || (is_admin && applies_to_admins)))
@@ -607,10 +608,10 @@ ADMIN_VERB(unban_panel, R_BAN, "Unban Panel", "Opens the Ban panel.", ADMIN_CATE
 	var/list/output = list("<div class='searchbar'>")
 	output += {"<form method='get' action='byond://?src=[REF(usr.client.holder)];[HrefToken()]'>[HrefTokenFormField()]
 	<input type='hidden' name='src' value='[REF(usr.client.holder)];[HrefToken()]'>
-	Key:<input type='text' name='searchunbankey' size='18' value='[player_key]'>
-	Admin Key:<input type='text' name='searchunbanadminkey' size='18' value='[admin_key]'>
-	IP:<input type='text' name='searchunbanip' size='12' value='[player_ip]'>
-	CID:<input type='text' name='searchunbancid' size='10' value='[player_cid]'>
+	Key:<input type='text' name='searchunbankey' size='18' value="[html_encode(player_key)]">
+	Admin Key:<input type='text' name='searchunbanadminkey' size='18' value="[html_encode(admin_key)]">
+	IP:<input type='text' name='searchunbanip' size='12' value="[html_encode(player_ip)]">
+	CID:<input type='text' name='searchunbancid' size='10' value="[html_encode(player_cid)]">
 	<input type='submit' value='Search'>
 	</form>
 	</div>
@@ -645,7 +646,7 @@ ADMIN_VERB(unban_panel, R_BAN, "Unban Panel", "Opens the Ban panel.", ADMIN_CATE
 			var/pagecount = 1
 			var/list/pagelist = list()
 			while(bancount > 0)
-				pagelist += "<a href='byond://?src=[REF(usr.client.holder)];[HrefToken()];unbanpagecount=[pagecount - 1];unbankey=[player_key];unbanadminkey=[admin_key];unbanip=[player_ip];unbancid=[player_cid]'>[pagecount == page ? "<b>\[[pagecount]\]</b>" : "\[[pagecount]\]"]</a>"
+				pagelist += "<a href='byond://?src=[REF(usr.client.holder)];[HrefToken()];unbanpagecount=[pagecount - 1];unbankey=[url_encode(player_key)];unbanadminkey=[url_encode(admin_key)];unbanip=[url_encode(player_ip)];unbancid=[url_encode(player_cid)]'>[pagecount == page ? "<b>\[[pagecount]\]</b>" : "\[[pagecount]\]"]</a>"
 				bancount -= bansperpage
 				pagecount++
 			output += pagelist.Join(" | ")
@@ -728,7 +729,7 @@ ADMIN_VERB(unban_panel, R_BAN, "Unban Panel", "Opens the Ban panel.", ADMIN_CATE
 				output += "Duration of <b>[DisplayTimeText(text2num(duration) MINUTES)]</b>, <b>[expired ? "expired" : "expires"]</b> on <b>[expiration_time]</b>."
 			if(unban_datetime)
 				output += "<br>Unbanned by <b>[unban_key]</b> on <b>[unban_datetime]</b> during round <b>#[unban_round_id]</b>."
-			output += "</div><div class='container'><div class='reason'>[reason]</div><div class='edit'>"
+			output += "</div><div class='container'><div class='reason'>[chat_text_to_html(reason)]</div><div class='edit'>"
 			if(!expired && !unban_datetime)
 				output += "<a href='byond://?src=[REF(usr.client.holder)];[HrefToken()];editbanid=[ban_id];editbankey=[player_key];editbanip=[player_ip];editbancid=[player_cid];editbanrole=[role];editbanduration=[duration];editbanadmins=[applies_to_admins];editbanreason=[url_encode(reason)];editbanpage=[page];editbanadminkey=[admin_key]'>Edit</a><br>[unban_href]"
 			if(edits)
@@ -736,6 +737,7 @@ ADMIN_VERB(unban_panel, R_BAN, "Unban Panel", "Opens the Ban panel.", ADMIN_CATE
 			output += "</div></div></div>"
 		qdel(query_unban_search_bans)
 		output += "</div>"
+	panel.add_head_content(HTML_FORM_CONTENT_POLICY)
 	panel.set_content(jointext(output, ""))
 	panel.open()
 
@@ -925,7 +927,8 @@ ADMIN_VERB(unban_panel, R_BAN, "Unban Panel", "Opens the Ban panel.", ADMIN_CATE
 	if(query_get_ban_edits.NextRow())
 		var/edits = query_get_ban_edits.item[1]
 		var/datum/browser/edit_log = new(usr, "baneditlog", "Ban edit log")
-		edit_log.set_content(edits)
+		edit_log.add_head_content(HTML_TEXT_CONTENT_POLICY)
+		edit_log.set_content(format_moderation_edit_log(edits))
 		edit_log.open()
 	qdel(query_get_ban_edits)
 
