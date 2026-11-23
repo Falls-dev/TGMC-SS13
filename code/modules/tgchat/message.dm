@@ -14,4 +14,18 @@
 /proc/message_to_html(message)
 	// Here it is possible to add a switch statement
 	// to custom-handle various message types.
-	return message["html"] || message["text"]
+	return message["html"] || chat_text_to_html(message["text"])
+
+/// Format plain chat text for an HTML output while retaining its line breaks.
+/proc/chat_text_to_html(text, allow_break_tag = FALSE)
+	if(!istext(text))
+		return ""
+	if(allow_break_tag)
+		var/static/regex/break_tag = regex(@"<br[ \t]*/?>", "gi")
+		text = break_tag.Replace(text, "\n")
+	text = replacetext(text, "\r\n", "\n")
+	text = replacetext(text, "\r", "\n")
+	var/list/lines = splittext(text, "\n")
+	for(var/index in 1 to length(lines))
+		lines[index] = html_encode(lines[index])
+	return lines.Join("<br>")

@@ -98,4 +98,4 @@
 
 // Spans that use embedded tgui components:
 // Sorted alphabetically
-#define span_tooltip(tip, main_text) ("<span data-component=\"Tooltip\" data-content=\"" + tip + "\" class=\"tooltip\">" + main_text + "</span>")
+#define span_tooltip(tip, main_text) ("<span title=\"" + html_encode(tip) + "\" class=\"tooltip\">" + main_text + "</span>")

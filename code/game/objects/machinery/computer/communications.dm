@@ -281,7 +281,7 @@
 			var/paygrade = sender.get_paygrade(0)
 			var/sender_rank = paygrade ? paygrade : sender.job.title
 			var/subtitle = "Sent by [sender_rank] [sender.real_name]"
-			priority_announce(replacetext(html_encode(input), "\n", "<br>"), subtitle = html_encode(subtitle), type = ANNOUNCEMENT_COMMAND)
+			priority_announce(chat_text_to_html(input, allow_break_tag = TRUE), subtitle = html_encode(subtitle), type = ANNOUNCEMENT_COMMAND)
 			message_admins("[ADMIN_TPMONTY(user)] has just sent a command announcement")
 			log_game("[key_name(user)] has just sent a command announcement.")
 			TIMER_COOLDOWN_START(user, COOLDOWN_HUD_ORDER, CIC_ORDER_COOLDOWN)

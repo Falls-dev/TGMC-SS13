@@ -3,6 +3,7 @@ import DOMPurify from 'dompurify';
 const CHAT_TAGS = [
   'a',
   'b',
+  'big',
   'blockquote',
   'br',
   'center',
@@ -13,6 +14,7 @@ const CHAT_TAGS = [
   'dl',
   'dt',
   'em',
+  'fieldset',
   'font',
   'h1',
   'h2',
@@ -24,6 +26,7 @@ const CHAT_TAGS = [
   'i',
   'img',
   'ins',
+  'legend',
   'li',
   'ol',
   'p',

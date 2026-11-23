@@ -3,6 +3,23 @@ import { describe, it } from 'vitest';
 import { sanitizeChatHtml } from './sanitize';
 
 describe('sanitizeChatHtml', () => {
+  it('keeps examine cards, tip headings, and explicit line breaks', ({
+    expect,
+  }) => {
+    const fragment = sanitizeChatHtml(
+      '<fieldset class="fieldset examine_block"><legend class="fieldset_legend">' +
+        '<big>Console</big></legend><i>Description</i><br>Second line</fieldset>',
+    );
+
+    const card = fragment.querySelector('fieldset.examine_block');
+    expect(
+      card?.querySelector('legend.fieldset_legend > big')?.textContent,
+    ).toBe('Console');
+    expect(card?.querySelector('br')?.nextSibling?.textContent).toBe(
+      'Second line',
+    );
+  });
+
   it('keeps chat formatting, BYOND links, and asset images', ({ expect }) => {
     const fragment = sanitizeChatHtml(
       '<span class="notice" style="color: red" data-component="Tooltip" data-content="More info">Внимание</span>' +
