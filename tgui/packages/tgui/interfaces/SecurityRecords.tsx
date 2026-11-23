@@ -798,10 +798,9 @@ const RecordView = (props: {
             )}
             {(record.comments ?? []).map((comment) => (
               <Box key={comment.index} mb={1}>
-                <Box
-                  dangerouslySetInnerHTML={{ __html: comment.text }}
-                  mb={0.5}
-                />
+                <Box mb={0.5} style={{ whiteSpace: 'pre-wrap' }}>
+                  {comment.text}
+                </Box>
                 <Button
                   compact
                   color="bad"

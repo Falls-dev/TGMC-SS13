@@ -40,14 +40,14 @@ GLOBAL_LIST_INIT(pencode_blocked_tags, list("*", "hr", "small", "/small", "list"
 	t = replacetext(t, "\[list\]", "<ul>")
 	t = replacetext(t, "\[/list\]", "</ul>")
 	t = replacetext(t, "\[*\]", "<li>")
-	t = replacetext(t, "\[table\]", "<table border='1' cellspacing='0' cellpadding='3 style='border: 1px solid black;'>")
+	t = replacetext(t, "\[table\]", "<table border='1' cellspacing='0' cellpadding='3' style='border: 1px solid black;'>")
 	t = replacetext(t, "\[/table\]", "</td></tr></table>")
 	t = replacetext(t, "\[grid\]", "<table>")
 	t = replacetext(t, "\[/grid\]", "</td></tr></table>")
 	t = replacetext(t, "\[row\]", "</td><tr>")
 	t = replacetext(t, "\[cell\]", "<td>")
 
-	t = replacetext(t, "\[sign\]", "<font face=\"[PAPER_SIGN_FONT]\"><i>[user ? user.real_name : "Anonymous"]</i></font>")
+	t = replacetext(t, "\[sign\]", "<font face=\"[PAPER_SIGN_FONT]\"><i>[user ? html_encode(html_decode(user.real_name)) : "Anonymous"]</i></font>")
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
 	t = replacetext(t, "\[logo\]", "<img src='[SSassets.transport.get_asset_url("tgmclogo.png")]' />")
 	t = replacetext(t, "\[ntlogo\]", "<img src='[SSassets.transport.get_asset_url("ntlogo.png")]' />")
@@ -57,6 +57,7 @@ GLOBAL_LIST_INIT(pencode_blocked_tags, list("*", "hr", "small", "/small", "list"
 	t = replacetext(t, "\[date\]", "[GAME_YEAR]-[time2text(world.realtime, "MM-DD")]")
 	t = replacetext(t, "\[time\]", "[worldtime2text()]")
 
-	t = "<font face='[font]' color='[P ? P.colour : "black"]'>[t]</font>"
+	var/color = P ? P.colour : "black"
+	t = "<font face='[font]' color=\"[html_encode(color)]\">[t]</font>"
 
 	return t

@@ -298,3 +298,12 @@ GLOBAL_DATUM_INIT(datacore, /datum/datacore, new)
 	if(isnull(final_record) && allow_record_creation)
 		final_record = create_medical_record(human)
 	return final_record
+
+/// Converts stored record comments into plain text for the UI.
+/proc/record_comment_text(encoded_comment)
+	return html_decode(replacetext(encoded_comment, "<br>", "\n"))
+
+/// Renders record text as HTML, including old entries that may contain raw markup.
+/proc/record_text_html(text, is_comment = FALSE)
+	var/plain_text = is_comment ? record_comment_text(text) : html_decode(text)
+	return replacetext(html_encode(plain_text), "\n", "<BR>")

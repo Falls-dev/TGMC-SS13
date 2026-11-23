@@ -128,7 +128,7 @@
 		while(active2.fields["com_[counter]"])
 			comments += list(list(
 				"index" = counter,
-				"text" = active2.fields["com_[counter]"],
+				"text" = record_comment_text(active2.fields["com_[counter]"]),
 			))
 			counter++
 		record_data["comments"] = comments
@@ -215,7 +215,7 @@
 			var/counter = 1
 			while(active2.fields["com_[counter]"])
 				counter++
-			active2.fields["com_[counter]"] = "Made by [authenticated]([rank]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [GAME_YEAR]<BR>[t1]"
+			active2.fields["com_[counter]"] = "Made by [html_encode(html_decode(authenticated))]([html_encode(html_decode(rank))]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [GAME_YEAR]<BR>[t1]"
 			return TRUE
 
 		if("delete_comment")
@@ -435,10 +435,10 @@
 		P.info += "<B>General Record Lost!</B><BR>"
 		P.name = "Medical Record"
 	if(record2)
-		P.info += "<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: [record2.fields["b_type"]]<BR>\nDNA: [record2.fields["b_dna"]]<BR>\n<BR>\nMinor Disabilities: [record2.fields["mi_dis"]]<BR>\nDetails: [record2.fields["mi_dis_d"]]<BR>\n<BR>\nMajor Disabilities: [record2.fields["ma_dis"]]<BR>\nDetails: [record2.fields["ma_dis_d"]]<BR>\n<BR>\nAllergies: [record2.fields["alg"]]<BR>\nDetails: [record2.fields["alg_d"]]<BR>\n<BR>\nCurrent Diseases: [record2.fields["cdi"]](per disease info placed in log/comment section)<BR>\nDetails: [record2.fields["cdi_d"]]<BR>\n<BR>\nImportant Notes:<BR>\n\t[decode(record2.fields["notes"])]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
+		P.info += "<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: [record2.fields["b_type"]]<BR>\nDNA: [record2.fields["b_dna"]]<BR>\n<BR>\nMinor Disabilities: [record2.fields["mi_dis"]]<BR>\nDetails: [record2.fields["mi_dis_d"]]<BR>\n<BR>\nMajor Disabilities: [record2.fields["ma_dis"]]<BR>\nDetails: [record2.fields["ma_dis_d"]]<BR>\n<BR>\nAllergies: [record2.fields["alg"]]<BR>\nDetails: [record2.fields["alg_d"]]<BR>\n<BR>\nCurrent Diseases: [record2.fields["cdi"]](per disease info placed in log/comment section)<BR>\nDetails: [record2.fields["cdi_d"]]<BR>\n<BR>\nImportant Notes:<BR>\n\t[record_text_html(record2.fields["notes"])]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
 		var/counter = 1
 		while(record2.fields["com_[counter]"])
-			P.info += "[record2.fields["com_[counter]"]]<BR>"
+			P.info += "[record_text_html(record2.fields["com_[counter]"], is_comment = TRUE)]<BR>"
 			counter++
 	else
 		P.info += "<B>Medical Record Lost!</B><BR>"

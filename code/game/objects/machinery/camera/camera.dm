@@ -111,10 +111,10 @@
 					to_chat(AI, "<b>[U]</b> holds <a href='byond://?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
 				else
 					to_chat(AI, "<b><a href='byond://?src=[REF(AI)];track=[html_encode(U.name)]'>[U]</a></b> holds <a href='byond://?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
-				AI.last_paper_seen = "<html><meta charset='UTF-8'><HEAD><TITLE>[itemname]</TITLE></HEAD><BODY><TT>[info]</TT></BODY></HTML>"
+				AI.last_paper_seen = HTML_STATIC_SKELETON_TITLE(itemname, "<tt>[info]</tt>")
 			else if(O.client && O.client.eye == src)
 				to_chat(O, "[U] holds \a [itemname] up to one of the cameras ...")
-				O << browse(HTML_SKELETON_TITLE(itemname, info), "window=[itemname]")
+				X.show_paper(O, info)
 
 /obj/machinery/camera/screwdriver_act(mob/living/user, obj/item/I)
 	. = ..()

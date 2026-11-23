@@ -6,7 +6,6 @@
 
 import { Store } from 'common/redux';
 import { storage, type StorageDiagnostic } from 'common/storage';
-import DOMPurify from 'dompurify';
 
 import {
   addHighlightSetting,
@@ -34,9 +33,6 @@ import { MAX_PERSISTED_MESSAGES, MESSAGE_SAVE_INTERVAL } from './constants';
 import { createMessage, serializeMessage } from './model';
 import { chatRenderer } from './renderer';
 import { selectChat, selectCurrentChatPage } from './selectors';
-
-// List of blacklisted tags
-const FORBID_TAGS = ['a', 'iframe', 'link', 'video'];
 
 const saveChatToStorage = async (store: Store) => {
   const state = selectChat(store.getState());
@@ -81,15 +77,8 @@ const loadChatFromStorage = async (store: Store) => {
     return;
   }
   if (messages) {
-    for (let message of messages) {
-      if (message.html) {
-        message.html = DOMPurify.sanitize(message.html, {
-          FORBID_TAGS,
-        });
-      }
-    }
     const batch = [
-      ...messages,
+      ...messages.map((message) => ({ ...message, fromHistory: true })),
       createMessage({
         type: 'internal/reconnected',
       }),

@@ -82,4 +82,21 @@ describe('captureExternalLinks', () => {
       url: 'https://www.example.com',
     });
   });
+
+  it('blocks external links with non-web schemes', ({ expect }) => {
+    const fileLink = {
+      tagName: 'A',
+      getAttribute: () => 'file:///document.txt',
+      parentElement: document.body,
+    };
+    const byond = { sendMessage: vi.fn() };
+    // @ts-ignore
+    global.Byond = byond;
+
+    const evt = { target: fileLink, preventDefault: vi.fn() };
+    clickHandler(evt);
+
+    expect(evt.preventDefault).toHaveBeenCalled();
+    expect(byond.sendMessage).not.toHaveBeenCalled();
+  });
 });

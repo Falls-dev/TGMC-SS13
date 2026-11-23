@@ -46,7 +46,7 @@
 	else
 		scan_name = "--------"
 
-	dat += "Confirm Identity: <a href='byond://?src=[text_ref(src)];scan=1'>[scan_name]</a><br>"
+	dat += "Confirm Identity: <a href='byond://?src=[text_ref(src)];scan=1'>[html_encode(html_decode(scan_name))]</a><br>"
 
 	if(authenticated)
 		dat += "<a href='byond://?src=[text_ref(src)];logout=1'>{Log Out}</a>"
@@ -63,7 +63,7 @@
 				dat += "<b>Transmitter arrays realigning. Please stand by.</b><br>"
 			else
 				dat += "<a href='byond://?src=[text_ref(src)];send=1'>Send</a><br>"
-				dat += "<b>Currently sending:</b> [message.name]<br>"
+				dat += "<b>Currently sending:</b> [html_encode(html_decode(message.name))]<br>"
 				dat += "<b>Sending to:</b> <a href='byond://?src=[text_ref(src)];dept=1'>[selected]</a><br>"
 		else
 			if(sendcooldown)
@@ -77,6 +77,7 @@
 			dat += "<a href ='byond://?src=[text_ref(src)];remove=1'>Remove Paper</a><br>"
 
 	var/datum/browser/popup = new(user, "fax", "<div align='center'>Fax Machine</div>")
+	popup.add_head_content(HTML_STATIC_CONTENT_POLICY)
 	popup.set_content(dat)
 	popup.open()
 

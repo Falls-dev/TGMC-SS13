@@ -108,7 +108,7 @@ GLOBAL_PROTECT(VVwarning)
 			return
 	log_world("### ListVarEdit by [src]: [(O ? O.type : "/list")] [objectvar]: ADDED=[var_value]")
 	log_admin("[key_name(src)] modified [original_name]'s [objectvar]: ADDED=[var_value]")
-	message_admins("[key_name_admin(src)] modified [original_name]'s [objectvar]: ADDED=[var_value]")
+	message_admins("[key_name_admin(src)] modified [html_encode("[original_name]")]'s [html_encode("[objectvar]")]: ADDED=[html_encode("[var_value]")]")
 
 /client/proc/mod_list(list/L, atom/O, original_name, objectvar, index, autodetect_class = FALSE)
 	if(!check_rights(R_VAREDIT))
@@ -205,7 +205,7 @@ GLOBAL_PROTECT(VVwarning)
 
 	to_chat(src, "Variable appears to be <b>[uppertext(default)]</b>.", confidential = TRUE)
 
-	to_chat(src, "Variable contains: [variable]", confidential = TRUE)
+	to_chat(src, text = "Variable contains: [variable]", confidential = TRUE)
 
 	if(default == VV_NUM)
 		var/dir_text = ""
@@ -253,7 +253,7 @@ GLOBAL_PROTECT(VVwarning)
 					return
 			log_world("### ListVarEdit by [src]: [O.type] [objectvar]: REMOVED=[html_encode("[original_var]")]")
 			log_admin("[key_name(src)] modified [original_name]'s [objectvar]: REMOVED=[original_var]")
-			message_admins("[key_name_admin(src)] modified [original_name]'s [objectvar]: REMOVED=[original_var]")
+			message_admins("[key_name_admin(src)] modified [html_encode("[original_name]")]'s [html_encode("[objectvar]")]: REMOVED=[html_encode("[original_var]")]")
 			return
 
 		if(VV_TEXT)
@@ -275,7 +275,7 @@ GLOBAL_PROTECT(VVwarning)
 			return
 	log_world("### ListVarEdit by [src]: [(O ? O.type : "/list")] [objectvar]: [original_var]=[new_var]")
 	log_admin("[key_name(src)] modified [original_name]'s [objectvar]: [original_var]=[new_var]")
-	message_admins("[key_name_admin(src)] modified [original_name]'s varlist [objectvar]: [original_var]=[new_var]")
+	message_admins("[key_name_admin(src)] modified [html_encode("[original_name]")]'s varlist [html_encode("[objectvar]")]: [html_encode("[original_var]")]=[html_encode("[new_var]")]")
 
 /proc/vv_varname_lockcheck(param_var_name)
 	if(param_var_name in GLOB.VVlocked)
@@ -334,7 +334,7 @@ GLOBAL_PROTECT(VVwarning)
 	else
 		to_chat(src, "Variable appears to be <b>[uppertext(default)]</b>.", confidential = TRUE)
 
-	to_chat(src, "Variable contains: [var_value]", confidential = TRUE)
+	to_chat(src, text = "Variable contains: [var_value]", confidential = TRUE)
 
 	if(default == VV_NUM)
 		var/dir_text = ""
@@ -392,7 +392,7 @@ GLOBAL_PROTECT(VVwarning)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_VAR_EDIT, args)
 	log_world("### VarEdit by [key_name(src)]: [O.type] [variable]=[var_value] => [var_new]")
 	log_admin("[key_name(src)] modified [original_name]'s [variable] from [html_encode("[var_value]")] to [html_encode("[var_new]")]")
-	var/msg = "[key_name_admin(src)] modified [original_name]'s [variable] from [var_value] to [var_new]"
+	var/msg = "[key_name_admin(src)] modified [html_encode("[original_name]")]'s [html_encode("[variable]")] from [html_encode("[var_value]")] to [html_encode("[var_new]")]"
 	message_admins(msg)
 	admin_ticket_log(O, msg)
 	return TRUE

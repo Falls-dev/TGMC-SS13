@@ -25,6 +25,7 @@ import {
 } from './constants';
 import { canPageAcceptType, createMessage, isSameMessage } from './model';
 import { highlightNode, linkifyNode } from './replaceInTextNode';
+import { sanitizeChatHtml } from './sanitize';
 
 const logger = createLogger('chatRenderer');
 
@@ -388,7 +389,7 @@ class ChatRenderer {
         }
         // Payload is HTML
         else if (message.html) {
-          node.innerHTML = message.html;
+          node.append(sanitizeChatHtml(message.html, message.fromHistory));
         } else {
           logger.error('Error: message is missing text payload', message);
         }
@@ -421,8 +422,9 @@ class ChatRenderer {
             canon_name = TGUI_CHAT_ATTRIBUTES_TO_PROPS[canon_name];
             outputProps[canon_name] = working_value;
           }
-          const oldHtml = { __html: childNode.innerHTML };
-          const Element = TGUI_CHAT_COMPONENTS[targetName];
+          const Element = Object.hasOwn(TGUI_CHAT_COMPONENTS, targetName)
+            ? TGUI_CHAT_COMPONENTS[targetName]
+            : undefined;
           if (!Element) {
             logger.error(
               `Error: unknown chat component "${targetName}" in message`,
@@ -432,18 +434,19 @@ class ChatRenderer {
             continue;
           }
 
-          while (childNode.firstChild) {
-            childNode.removeChild(childNode.firstChild);
-          }
+          const content = Array.from(childNode.childNodes);
+          childNode.replaceChildren();
 
           const reactRoot = createRoot(childNode);
 
-          /* eslint-disable react/no-danger */
           reactRoot.render(
             <Element {...outputProps}>
-              <span dangerouslySetInnerHTML={oldHtml} />
+              <span
+                ref={(element) => {
+                  if (element) element.append(...content);
+                }}
+              />
             </Element>,
-            childNode,
           );
         }
 

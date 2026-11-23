@@ -97,6 +97,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 				dat += "[span_adminnotice("<span class='adminhelp'>\[D\] #[AH.id] Admin Ticket")]: <A href='byond://?_src_=holder;[HrefToken()];ahelp=[REF(AH)];ahelp_action=ticket'>[AH.initiator_key_name]: [AH.name]</A></span><br>"
 
 	var/datum/browser/browser = new(usr, "ahelp_list[state]", "<div align='center'>[title]</div>", 600, 480)
+	browser.add_head_content(HTML_STATIC_CONTENT_POLICY)
 	browser.set_content(dat)
 	browser.open(FALSE)
 
@@ -700,6 +701,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		dat += "[I]<br>"
 
 	var/datum/browser/browser = new(usr, "ahelp[id]", "<div align='center'>Ticket #[id]</div>", 620, 480)
+	browser.add_head_content(HTML_STATIC_CONTENT_POLICY)
 	browser.set_content(dat)
 	browser.open(FALSE)
 

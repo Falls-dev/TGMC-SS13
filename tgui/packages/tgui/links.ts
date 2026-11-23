@@ -34,8 +34,11 @@ export const captureExternalLinks = () => {
     evt.preventDefault();
     // Normalize the URL
     let url = hrefAttr;
-    if (url.toLowerCase().startsWith('www')) {
+    if (url.toLowerCase().startsWith('www.')) {
       url = 'https://' + url;
+    }
+    if (!/^https?:\/\/[^\s\\]+$/i.test(url)) {
+      return;
     }
     // Open the link
     Byond.sendMessage({

@@ -59,12 +59,13 @@
 	var/dat
 
 	for(var/obj/item/paper/P in src)
-		dat += "<A href='byond://?src=[text_ref(src)];remove=[text_ref(P)]'>Remove</A> - <A href='byond://?src=[text_ref(src)];read=[text_ref(P)]'>[P.name]</A><BR>"
+		dat += "<A href='byond://?src=[text_ref(src)];remove=[text_ref(P)]'>Remove</A> - <A href='byond://?src=[text_ref(src)];read=[text_ref(P)]'>[html_encode(html_decode(P.name))]</A><BR>"
 	for(var/obj/item/photo/Ph in src)
-		dat += "<A href='byond://?src=[text_ref(src)];remove=[text_ref(Ph)]'>Remove</A> - <A href='byond://?src=[text_ref(src)];look=[text_ref(Ph)]'>[Ph.name]</A><BR>"
+		dat += "<A href='byond://?src=[text_ref(src)];remove=[text_ref(Ph)]'>Remove</A> - <A href='byond://?src=[text_ref(src)];look=[text_ref(Ph)]'>[html_encode(html_decode(Ph.name))]</A><BR>"
 	for(var/obj/item/paper_bundle/Pb in src)
-		dat += "<A href='byond://?src=[text_ref(src)];remove=[text_ref(Pb)]'>Remove</A> - <A href='byond://?src=[text_ref(src)];browse=[text_ref(Pb)]'>[Pb.name]</A><BR>"
+		dat += "<A href='byond://?src=[text_ref(src)];remove=[text_ref(Pb)]'>Remove</A> - <A href='byond://?src=[text_ref(src)];browse=[text_ref(Pb)]'>[html_encode(html_decode(Pb.name))]</A><BR>"
 	var/datum/browser/popup = new(user, "folder", "<div align='center'>[src]</div>")
+	popup.add_head_content(HTML_STATIC_CONTENT_POLICY)
 	popup.set_content(dat)
 	popup.open()
 
@@ -84,12 +85,7 @@
 		else if(href_list["read"])
 			var/obj/item/paper/P = locate(href_list["read"])
 			if(P && (P.loc == src) && istype(P))
-				if(!(ishuman(usr) || isobserver(usr) || issilicon(usr)))
-					usr << browse(HTML_SKELETON_TITLE(P.name, stars(P.info)+P.stamps), "window=[P.name]")
-					onclose(usr, "[P.name]")
-				else
-					usr << browse(HTML_SKELETON_TITLE(P.name, P.info+P.stamps), "window=[P.name]")
-					onclose(usr, "[P.name]")
+				P.show_paper(usr, (ishuman(usr) || isobserver(usr) || issilicon(usr) ? P.info : stars(P.info)) + P.stamps)
 		else if(href_list["look"])
 			var/obj/item/photo/P = locate(href_list["look"])
 			if(P && (P.loc == src) && istype(P))
@@ -98,7 +94,6 @@
 			var/obj/item/paper_bundle/P = locate(href_list["browse"])
 			if(P && (P.loc == src) && istype(P))
 				P.attack_self(usr)
-				onclose(usr, "[P.name]")
 
 		//Update everything
 		updateUsrDialog()
