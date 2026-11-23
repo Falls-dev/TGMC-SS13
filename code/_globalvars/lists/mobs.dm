@@ -136,6 +136,8 @@ GLOBAL_LIST_INIT(all_xeno_types, list(
 	/mob/living/carbon/xenomorph/baneling,
 	/mob/living/carbon/xenomorph/dragon,
 	/mob/living/carbon/xenomorph/dragon/primordial,
+	/mob/living/carbon/xenomorph/dragun,
+	/mob/living/carbon/xenomorph/dragun/primordial,
 ))
 
 GLOBAL_LIST_EMPTY_TYPED(hellhound_list, /mob/living/carbon/xenomorph/hellhound)
@@ -168,6 +170,7 @@ GLOBAL_LIST_INIT(xeno_types_tier_three, list(
 	/datum/xeno_caste/chimera,
 	/datum/xeno_caste/crusher,
 	/datum/xeno_caste/defiler,
+	/datum/xeno_caste/dragun,
 	/datum/xeno_caste/gorger,
 	/datum/xeno_caste/praetorian,
 	/datum/xeno_caste/ravager,

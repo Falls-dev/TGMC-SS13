@@ -444,6 +444,8 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 				newmob = M.change_mob_type(/mob/living/carbon/xenomorph/king, location, null, delmob)
 			if("dragon")
 				newmob = M.change_mob_type(/mob/living/carbon/xenomorph/dragon, location, null, delmob)
+			if("dragun")
+				newmob = M.change_mob_type(/mob/living/carbon/xenomorph/dragun, location, null, delmob)
 			if("pyrogen")
 				newmob = M.change_mob_type(/mob/living/carbon/xenomorph/pyrogen, location,null , delmob)
 			if("behemoth")

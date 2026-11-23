@@ -66,6 +66,7 @@ GLOBAL_LIST_INIT(pp_transformables, list(
 		list(name = "Behemoth", key = "behemoth", color = "purple"),
 		list(name = "Chimera", key = "chimera", color = "purple"),
 		list(name = "Dragon", key = "dragon", color = "purple"),
+		list(name = "Dragun", key = "dragun", color = "purple"),
 		list(name = "Pyrogen", key = "pyrogen", color = "purple"),
 	),
 
@@ -170,6 +171,8 @@ GLOBAL_LIST_INIT(pp_transformables, list(
 			new_mob = target.change_mob_type(/mob/living/carbon/xenomorph/king, location, null, delmob)
 		if("dragon")
 			new_mob = target.change_mob_type(/mob/living/carbon/xenomorph/dragon, location, null, delmob)
+		if("dragun")
+			new_mob = target.change_mob_type(/mob/living/carbon/xenomorph/dragun, location, null, delmob)
 		if("pyrogen")
 			new_mob = target.change_mob_type(/mob/living/carbon/xenomorph/pyrogen, location, null, delmob)
 		if("behemoth")
