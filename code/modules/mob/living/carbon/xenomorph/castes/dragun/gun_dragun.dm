@@ -21,7 +21,26 @@
 	aim_slowdown = 0.35
 	gun_skill_category = SKILL_RIFLES
 	/// Provisional cost until the caste's weapon balance is finalized.
-	var/plasma_cost = 10
+	var/plasma_cost = 25
+	var/charge_level = 0
+	/// Live ammunition is retained while ordinary acid mode is selected.
+	var/live_rounds = 0
+	var/live_mode = FALSE
+	var/bolt_loaded = FALSE
+	var/bone_shrapnel_loaded = FALSE
+	var/bolt_charge = 0
+
+/obj/item/weapon/gun/dragun/proc/get_shot_cost()
+	return live_mode ? 0 : plasma_cost
+
+/obj/item/weapon/gun/dragun/proc/reset_charge()
+	charge_level = 0
+	bolt_charge = 0
+	var/mob/living/carbon/xenomorph/dragun/dragun = loc
+	if(!istype(dragun))
+		return
+	var/datum/action/ability/xeno_action/dragun_charge/action = dragun.actions_by_path[/datum/action/ability/xeno_action/dragun_charge]
+	action?.update_button_icon()
 
 /// Use the complete unarmed interaction path, including intent, hive/host
 /// protection, barriers, posture, blocked hands, and the caste attack delay.
@@ -71,7 +90,10 @@
 	var/mob/living/carbon/xenomorph/dragun/owner = user
 	if(owner.hand_dragun != src || owner.get_active_held_item() != src)
 		return FALSE
-	if(owner.plasma_stored < plasma_cost)
+	if(live_mode && !live_rounds)
+		owner.balloon_alert(owner, "no Live rounds")
+		return FALSE
+	if(owner.plasma_stored < get_shot_cost())
 		to_chat(owner, span_warning("We need more plasma to fire our rifle!"))
 		return FALSE
 	return TRUE
@@ -102,9 +124,42 @@
 	if(!able_to_fire(gun_user))
 		return FALSE
 	var/mob/living/carbon/xenomorph/dragun/owner = gun_user
+	var/shot_cost = get_shot_cost()
+	var/atom/movable/projectile/projectile = object_to_fire
+	// Rebuild even a previously chambered round from the current charge.
+	// Never modify the shared ammo datum in GLOB.ammo_list.
+	var/ammo_type = charge_level >= 3 ? /datum/ammo/xeno/acid/heavy/passthrough : /datum/ammo/xeno/acid
+	var/firing_live = live_mode && !bolt_loaded
+	var/firing_bolt = bolt_loaded
+	if(firing_bolt && !bone_shrapnel_loaded && prob(owner.xeno_caste.upgrade == XENO_UPGRADE_PRIMO ? 25 : 35))
+		bone_shrapnel_loaded = TRUE
+		owner.balloon_alert(owner, "the bone bolt shattered")
+	if(firing_live)
+		ammo_type = /datum/ammo/xeno/acid/heavy/passthrough/dragun_live
+	else if(firing_bolt)
+		ammo_type = bone_shrapnel_loaded ? /datum/ammo/bullet/dragun_bone_shrapnel : /datum/ammo/bullet/dragun_bone_bolt
+	projectile.generate_bullet(GLOB.ammo_list[ammo_type])
+	projectile.icon = initial(projectile.icon)
+	if(firing_live || firing_bolt)
+		projectile.icon = 'icons/Xeno/dragun_item.dmi'
+		projectile.color = null
+	if(charge_level && !firing_live && !firing_bolt)
+		projectile.damage *= charge_level >= 3 ? charge_level - 1 : 2
+	if(firing_bolt)
+		if(!bone_shrapnel_loaded)
+			projectile.damage *= max(1, bolt_charge * 3)
+		projectile.dragun_bolt_charge = bolt_charge
 	. = ..()
 	if(.)
-		owner.use_plasma(plasma_cost)
+		if(firing_bolt)
+			bolt_loaded = FALSE
+			bone_shrapnel_loaded = FALSE
+			bolt_charge = 0
+		if(firing_live)
+			live_rounds--
+			owner.balloon_alert(owner, "Live [live_rounds]/3")
+		owner.use_plasma(shot_cost)
+		reset_charge()
 
 /obj/item/weapon/gun/dragun/reload(obj/item/new_mag, mob/living/user, force = FALSE)
 	return FALSE
@@ -119,3 +174,91 @@
 		return FALSE
 	set_target(target_turf)
 	return Fire()
+
+/obj/item/stack/dragun_bone
+	name = "harvested bones"
+	desc = "Bones that a Dragun can shape into living ammunition."
+	icon = 'icons/Xeno/dragun_item.dmi'
+	icon_state = "bone"
+	max_amount = 50
+	singular_name = "bone"
+
+/obj/item/stack/dragun_bone/attack_alien(mob/living/carbon/xenomorph/xeno_attacker, isrightclick = FALSE)
+	if(xeno_attacker.xeno_caste.can_flags & CASTE_CAN_HOLD_DRAGUN_BONES)
+		return attack_hand(xeno_attacker)
+	return FALSE
+
+/datum/ammo/xeno/acid/heavy/passthrough/dragun_live
+	name = "Live"
+	bullet_color = null
+	damage = 27
+	damage_falloff = 0
+	icon_state = "live_spire_1"
+	ammo_behavior_flags = AMMO_XENO|AMMO_SKIPS_ALIENS|AMMO_SPECIAL_PROCESS
+	shell_speed = 1
+	max_range = 15
+
+/datum/ammo/xeno/acid/heavy/passthrough/dragun_live/ammo_process(atom/movable/projectile/proj, damage)
+	proj.icon_state = "live_spire_[min(3, 1 + round(proj.distance_travelled / 2))]"
+	var/mob/living/nearest
+	var/nearest_distance = 8
+	for(var/mob/living/candidate in view(7, proj))
+		if(candidate.stat == DEAD || isxeno(candidate) || candidate == proj.firer || (candidate.status_flags & (GODMODE|INCORPOREAL)))
+			continue
+		var/distance = get_dist(proj, candidate)
+		if(distance < nearest_distance)
+			nearest = candidate
+			nearest_distance = distance
+	if(!nearest)
+		return
+	var/target_angle = Get_Angle(get_turf(proj), get_turf(nearest))
+	var/angle_delta = (target_angle - proj.dir_angle + 540) % 360 - 180
+	proj.dir_angle = (proj.dir_angle + clamp(angle_delta, -30, 30) + 360) % 360
+	proj.x_offset = round(sin(proj.dir_angle), 0.01)
+	proj.y_offset = round(cos(proj.dir_angle), 0.01)
+	var/matrix/rotation = matrix()
+	rotation.Turn(proj.dir_angle)
+	animate(proj, transform = rotation, time = SSprojectiles.wait)
+
+/datum/ammo/bullet/dragun_bone_bolt
+	name = "bone bolt"
+	damage = 50
+	penetration = 15
+	damage_falloff = 0
+	icon = 'icons/Xeno/dragun_item.dmi'
+	icon_state = "Bolt"
+	ammo_behavior_flags = AMMO_BALLISTIC
+	shell_speed = 2
+	max_range = 20
+	shrapnel_chance = 100
+	shrapnel_type = /obj/item/shard/shrapnel/bone_chips/xeno
+
+/datum/ammo/bullet/dragun_bone_shrapnel
+	name = "bone shrapnel"
+	damage = 35
+	penetration = 25
+	damage_falloff = 0
+	icon = 'icons/Xeno/dragun_item.dmi'
+	icon_state = "shrapneli"
+	shrapnel_chance = 0
+	shrapnel_type = /obj/item/shard/shrapnel/bone_chips/xeno
+	bonus_projectiles_amount = 1
+
+/datum/ammo/bullet/dragun_bone_shrapnel/fire_bonus_projectiles(atom/movable/projectile/main_proj, mob/living/shooter, atom/source, range, speed, angle, target, origin_override)
+	for(var/i in 1 to max(1, main_proj.dragun_bolt_charge))
+		var/atom/movable/projectile/pellet = new(main_proj.loc)
+		pellet.generate_bullet(src)
+		pellet.icon = icon
+		var/pellet_angle = angle + 8 * ((i % 2) ? -(i + 1) / 2 : i / 2)
+		pellet.fire_at(target, shooter, source, range, speed, pellet_angle, TRUE, loc_override = origin_override)
+
+/datum/ammo/bullet/dragun_bone_shrapnel/on_hit_mob(mob/target_mob, atom/movable/projectile/proj)
+	if(!ishuman(target_mob))
+		return
+	var/mob/living/carbon/human/victim = target_mob
+	var/list/zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	var/original_zone = proj.def_zone
+	for(var/i in 1 to 4)
+		proj.def_zone = pick(zones)
+		victim.embed_projectile_shrapnel(proj)
+	proj.def_zone = original_zone

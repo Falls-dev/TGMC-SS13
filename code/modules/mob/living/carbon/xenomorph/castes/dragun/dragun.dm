@@ -18,6 +18,43 @@
 	var/obj/item/weapon/gun/dragun/hand_dragun
 	/// Keep the bite animation visible for the duration of its hold.
 	var/biting = FALSE
+	/// Bones stored internally, separately from the hand slots.
+	var/stored_bones = 0
+	/// Healing budgets already scaled by heal_xeno_damage must not be scaled twice.
+	var/healing_budget_scaled = FALSE
+
+/mob/living/carbon/xenomorph/dragun/adjust_brute_loss(amount, updating_health = FALSE, passive = FALSE)
+	if(amount < 0 && !healing_budget_scaled)
+		amount *= 0.5
+	return ..(amount, updating_health, passive)
+
+/mob/living/carbon/xenomorph/dragun/adjust_fire_loss(amount, updating_health = FALSE, passive = FALSE)
+	if(amount < 0 && !healing_budget_scaled)
+		amount *= 0.5
+	return ..(amount, updating_health, passive)
+
+/// Scale before splitting between burns and brute so unused healing reaches the other damage type.
+/mob/living/carbon/xenomorph/dragun/heal_xeno_damage(amount, passive)
+	var/previous_scaled = healing_budget_scaled
+	if(!previous_scaled)
+		amount *= 0.5
+	healing_budget_scaled = TRUE
+	. = ..(amount, passive)
+	healing_budget_scaled = previous_scaled
+
+/// Bone healing has an explicit final budget, exempt from the ordinary healing penalty.
+/mob/living/carbon/xenomorph/dragun/proc/heal_from_bones()
+	var/previous_scaled = healing_budget_scaled
+	healing_budget_scaled = TRUE
+	heal_xeno_damage(maxHealth * 0.5, FALSE)
+	healing_budget_scaled = previous_scaled
+
+/mob/living/carbon/xenomorph/dragun/on_death()
+	// Use the normal death hook so gibbing also releases the reserve.
+	if(stored_bones)
+		new /obj/item/stack/dragun_bone(get_turf(src), stored_bones)
+		stored_bones = 0
+	return ..()
 
 /mob/living/carbon/xenomorph/dragun/Initialize(mapload, do_not_set_as_ruler)
 	. = ..()

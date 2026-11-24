@@ -286,6 +286,10 @@
 #define COMSIG_XENOABILITY_VAMPIRISM "xenoability_vampirism"
 
 #define COMSIG_XENOABILITY_RUNNER_POUNCE "xenoability_runner_pounce"
+#define COMSIG_XENOABILITY_DRAGUN_SLASH "xenoability_dragun_slash"
+#define COMSIG_XENOABILITY_DRAGUN_TARAN "xenoability_dragun_taran"
+#define COMSIG_XENOABILITY_DRAGUN_BITE "xenoability_dragun_bite"
+#define COMSIG_XENOABILITY_DRAGUN_CHARGE "xenoability_dragun_charge"
 #define COMSIG_XENOABILITY_HUNTER_POUNCE "xenoability_hunter_pounce"
 #define COMSIG_XENOABILITY_TOGGLE_SAVAGE "xenoability_toggle_savage"
 #define COMSIG_XENOABILITY_EVASION "xenoability_evasion"
