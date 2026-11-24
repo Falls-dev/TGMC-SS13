@@ -23,25 +23,20 @@
 	if(!islist(logging[smessage_type]))
 		logging[smessage_type] = list()
 
-	var/colored_message = message
-	if(color)
-		if(color[1] == "#")
-			colored_message = "<font color=[color]>[message]</font>"
-		else
-			colored_message = "<font color='[color]'>[message]</font>"
-
 	//This makes readability a bit better for admins.
+	var/prefix = ""
 	switch(message_type)
 		if(LOG_WHISPER)
-			colored_message = "(WHISPER) [colored_message]"
+			prefix = "(WHISPER) "
 		if(LOG_OOC)
-			colored_message = "(OOC) [colored_message]"
+			prefix = "(OOC) "
 		if(LOG_ASAY)
-			colored_message = "(ASAY) [colored_message]"
+			prefix = "(ASAY) "
 		if(LOG_EMOTE)
-			colored_message = "(EMOTE) [colored_message]"
+			prefix = "(EMOTE) "
 
-	var/list/timestamped_message = list("\[[time_stamp(format = "YYYY-MM-DD hh:mm:ss")]\] [key_name(src)] [loc_name(src)] (Event #[LAZYLEN(logging[smessage_type])])" = colored_message)
+	var/list/entry = list("message" = message, "color" = color, "prefix" = prefix)
+	var/list/timestamped_message = list("\[[time_stamp(format = "YYYY-MM-DD hh:mm:ss")]\] [key_name(src)] [loc_name(src)] (Event #[LAZYLEN(logging[smessage_type])])" = entry)
 
 	logging[smessage_type] += timestamped_message
 

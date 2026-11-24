@@ -75,6 +75,10 @@
   word-wrap: break-word;
 }
 
+.ChatMessage--plain {
+  white-space: pre-line;
+}
+
 .ChatMessage--highlighted {
   position: relative;
   border-left: math.div(1em, 6) solid hsl(50, 100%, 63.5%);

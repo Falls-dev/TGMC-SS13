@@ -15,7 +15,7 @@
 				target.Cut(target_index, target_index+1)
 				log_world("### ListVarEdit by [src]: /list's contents: REMOVED=[html_encode("[variable]")]")
 				log_admin("[key_name(src)] modified list's contents: REMOVED=[variable]")
-				message_admins("[key_name_admin(src)] modified list's contents: REMOVED=[variable]")
+				message_admins("[key_name_admin(src)] modified list's contents: REMOVED=[html_encode("[variable]")]")
 		if(href_list[VV_HK_LIST_ADD])
 			mod_list_add(target, null, "list", "contents")
 		if(href_list[VV_HK_LIST_ERASE_DUPES])

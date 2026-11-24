@@ -70,14 +70,14 @@
 	. = list()
 	.["authenticated"] = authenticated
 	.["has_id"] = !!modify
-	.["id_name"] = modify ? modify.name : "--------"
-	.["id_rank"] = modify?.assignment ? modify.assignment : "Unassigned"
+	.["id_name"] = modify ? html_decode(modify.name) : "--------"
+	.["id_rank"] = modify?.assignment ? html_decode(modify.assignment) : "Unassigned"
 	.["id_owner"] = modify?.registered_name ? modify.registered_name : "--------"
 	var/list/card_access = modify?.access
 	.["access_on_card"] = card_access ? card_access.Copy() : list()
 	.["id_account"] = modify ? modify.associated_account_number : 0
 	.["has_auth_card"] = !!scan
-	.["auth_name"] = scan ? scan.name : "--------"
+	.["auth_name"] = scan ? html_decode(scan.name) : "--------"
 	.["paygrade"] = modify ? modify.paygrade : null
 	.["paygrade_name"] = modify ? get_paygrades(modify.paygrade) : null
 	.["can_modify_paygrade"] = modify ? (modify.paygrade in PAYGRADES_MARINE) : FALSE
@@ -201,36 +201,37 @@
 					. = TRUE
 
 		if("PRG_assign")
-			if(authenticated)
-				var/t1 = params["assign_target"]
-				if(t1 == "Custom")
-					var/temp_t = params["custom_name"]
-					if(!temp_t)
-						temp_t = stripped_input(user, "Enter a custom job assignment.", "Assignment")
-					if(temp_t && modify)
-						modify.assignment = temp_t
-						. = TRUE
-				else
-					var/datum/job/jobdatum
-					for(var/jobtype in typesof(/datum/job))
-						var/datum/job/J = new jobtype
-						if(ckey(J.title) == ckey(t1))
-							jobdatum = J
-							break
-
-					if(!jobdatum)
-						to_chat(user, span_warning("No log exists for this job."))
-						return FALSE
-
-					if(!modify)
-						to_chat(user, span_warning("No card to modify!"))
-						return FALSE
-
-					modify.access = jobdatum.get_access()
-					modify.paygrade = jobdatum.paygrade
-					modify.assignment = t1
-					modify.rank = t1
-					. = TRUE
+			if(!authenticated || !modify)
+				return FALSE
+			var/assignment = params["assign_target"]
+			if(!istext(assignment))
+				return FALSE
+			if(assignment == "Custom")
+				var/obj/item/card/id/target_card = modify
+				var/obj/item/card/id/auth_card = scan
+				var/custom_name = params["custom_name"]
+				if(isnull(custom_name))
+					custom_name = input(user, "Enter a custom job assignment.", "Assignment") as text|null
+				if(!istext(custom_name) || QDELETED(ui) || !authenticated || modify != target_card || scan != auth_card || ui_status(user, state) != UI_INTERACTIVE)
+					return FALSE
+				var/static/regex/control_characters = regex(@"[\x00-\x1f\x7f-\x9f]")
+				custom_name = trim(custom_name)
+				if(control_characters.Find(custom_name) || !reject_bad_text(custom_name, MAX_NAME_LEN, ascii_only = FALSE))
+					to_chat(user, span_warning("Enter a valid assignment of at most [MAX_NAME_LEN] characters."))
+					return FALSE
+				modify.assignment = html_encode(custom_name)
+			else
+				if(!(assignment in GLOB.jobs_regular_all) || assignment == SYNTHETIC || assignment == SILICON_AI)
+					return FALSE
+				var/datum/job/jobdatum = SSjob.GetJob(assignment)
+				if(!jobdatum)
+					to_chat(user, span_warning("This job is unavailable."))
+					return FALSE
+				modify.access = jobdatum.get_access()
+				modify.paygrade = jobdatum.paygrade
+				modify.assignment = jobdatum.title
+				modify.rank = jobdatum.title
+			. = TRUE
 
 		if("PRG_access")
 			if(authenticated && modify)

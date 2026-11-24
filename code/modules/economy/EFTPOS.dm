@@ -63,8 +63,9 @@
 
 /obj/item/eftpos/proc/print_reference()
 	var/obj/item/paper/R = new(src.loc)
-	R.name = "Reference: [eftpos_name]"
-	R.info = "<b>[eftpos_name] reference</b><br><br>"
+	var/terminal_name = html_encode(eftpos_name)
+	R.name = "Reference: [terminal_name]"
+	R.info = "<b>[terminal_name] reference</b><br><br>"
 	R.info += "Access code: [access_code]<br><br>"
 	R.info += "<b>Do not lose or misplace this code.</b><br>"
 
@@ -87,13 +88,15 @@
 		return
 
 	var/dat
-	dat += "<i>This terminal is</i> [machine_id]. <i>Report this code when contacting NanoTrasen IT Support</i><br>"
+	var/purpose_text = html_encode(transaction_purpose)
+	var/account_text = linked_account ? html_encode(linked_account.owner_name) : "None"
+	dat += "<i>This terminal is</i> [html_encode(machine_id)]. <i>Report this code when contacting NanoTrasen IT Support</i><br>"
 	if(transaction_locked)
 		dat += "<a href='byond://?src=[text_ref(src)];choice=toggle_lock'>Back[transaction_paid ? "" : " (authentication required)"]</a><br><br>"
 
-		dat += "Transaction purpose: <b>[transaction_purpose]</b><br>"
+		dat += "Transaction purpose: <b>[purpose_text]</b><br>"
 		dat += "Value: <b>$[transaction_amount]</b><br>"
-		dat += "Linked account: <b>[linked_account ? linked_account.owner_name : "None"]</b><hr>"
+		dat += "Linked account: <b>[account_text]</b><hr>"
 		if(transaction_paid)
 			dat += "<i>This transaction has been processed successfully.</i><hr>"
 		else
@@ -102,14 +105,15 @@
 	else
 		dat += "<a href='byond://?src=[text_ref(src)];choice=toggle_lock'>Lock in new transaction</a><br><br>"
 
-		dat += "Transaction purpose: <a href='byond://?src=[text_ref(src)];choice=trans_purpose'>[transaction_purpose]</a><br>"
+		dat += "Transaction purpose: <a href='byond://?src=[text_ref(src)];choice=trans_purpose'>[purpose_text]</a><br>"
 		dat += "Value: <a href='byond://?src=[text_ref(src)];choice=trans_value'>$[transaction_amount]</a><br>"
-		dat += "Linked account: <a href='byond://?src=[text_ref(src)];choice=link_account'>[linked_account ? linked_account.owner_name : "None"]</a><hr>"
+		dat += "Linked account: <a href='byond://?src=[text_ref(src)];choice=link_account'>[account_text]</a><hr>"
 		dat += "<a href='byond://?src=[text_ref(src)];choice=change_code'>Change access code</a><br>"
 		dat += "<a href='byond://?src=[text_ref(src)];choice=change_id'>Change EFTPOS ID</a><br>"
 		dat += "Scan card to reset access code <a href='byond://?src=[text_ref(src)];choice=reset'>\[------\]</a>"
 
-	var/datum/browser/popup = new(user, "etfpos", "<div align='center'>[eftpos_name]</div>")
+	var/datum/browser/popup = new(user, "etfpos", "<div align='center'>[html_encode(eftpos_name)]</div>")
+	popup.add_head_content(HTML_TEXT_CONTENT_POLICY)
 	popup.set_content(dat)
 	popup.open()
 

@@ -90,7 +90,7 @@
 							Fingerprint: <A href='byond://?src=[text_ref(src)];choice=Edit Field;field=fingerprint'>[active1.fields["fingerprint"]]</A><BR>\n	\
 							Physical Status: [active1.fields["p_stat"]]<BR>\n	\
 							Mental Status: [active1.fields["m_stat"]]<BR><BR>\n	\
-							Employment/skills summary:<BR> [decode(active1.fields["notes"])]<BR></td>	\
+							Employment/skills summary:<BR> [record_text_html(active1.fields["notes"])]<BR></td>	\
 							<td align = center valign = top>Photo:<br><img src=photo_front height=80 width=80 border=4>	\
 							<img src=photo_side height=80 width=80 border=4></td></tr></table>"
 					else
@@ -104,7 +104,7 @@
 							<table style="text-align:center;" cellspacing="0" width="100%">
 							<tr>
 						"}
-						dat += "<th>Search Results for '[tempname]':</th>"
+						dat += "<th>Search Results for '[html_encode(tempname)]':</th>"
 						dat += {"
 							</tr>
 							</table>
@@ -133,6 +133,7 @@
 			dat += "<A href='byond://?src=[text_ref(src)];choice=Log In'>{Log In}</A>"
 
 	var/datum/browser/popup = new(user, "secure_rec", "<div align='center'>Employment Records</div>", 600, 400)
+	popup.add_head_content(HTML_STATIC_CONTENT_POLICY)
 	popup.set_content(dat)
 	popup.open()
 
@@ -238,7 +239,7 @@ What a mess.*/
 				var/obj/item/paper/P = new /obj/item/paper(loc)
 				P.info = "<CENTER><B>Employment Record</B></CENTER><BR>"
 				if((istype(active1, /datum/data/record) && GLOB.datacore.general.Find(active1)))
-					P.info += "Name: [active1.fields["name"]] ID: [active1.fields["id"]]<BR>\nSex: [active1.fields["sex"]]<BR>\nAge: [active1.fields["age"]]<BR>\nFingerprint: [active1.fields["fingerprint"]]<BR>\nPhysical Status: [active1.fields["p_stat"]]<BR>\nMental Status: [active1.fields["m_stat"]]<BR>\nEmployment/Skills Summary:<BR>\n[decode(active1.fields["notes"])]<BR>"
+					P.info += "Name: [active1.fields["name"]] ID: [active1.fields["id"]]<BR>\nSex: [active1.fields["sex"]]<BR>\nAge: [active1.fields["age"]]<BR>\nFingerprint: [active1.fields["fingerprint"]]<BR>\nPhysical Status: [active1.fields["p_stat"]]<BR>\nMental Status: [active1.fields["m_stat"]]<BR>\nEmployment/Skills Summary:<BR>\n[record_text_html(active1.fields["notes"])]<BR>"
 					P.name = "Employment Record ([active1.fields["name"]])"
 				else
 					P.info += "<B>General Record Lost!</B><BR>"

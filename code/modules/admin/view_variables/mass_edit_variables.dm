@@ -194,7 +194,7 @@
 
 	log_world("### MassVarEdit by [src]: [target.type] (A/R [accepted]/[rejected]) [variable]=[html_encode("[target.vars[variable]]")]([list2params(value)])")
 	log_admin("[key_name(src)] mass modified [original_name]'s [variable] to [target.vars[variable]] ([accepted] objects modified)")
-	message_admins("[key_name_admin(src)] mass modified [original_name]'s [variable] to [target.vars[variable]] ([accepted] objects modified)")
+	message_admins("[key_name_admin(src)] mass modified [html_encode("[original_name]")]'s [html_encode("[variable]")] to [html_encode("[target.vars[variable]]")] ([accepted] objects modified)")
 
 //not using global lists as vv is a debug function and debug functions should rely on as less things as possible.
 /proc/get_all_of_type(T, subtypes = TRUE)

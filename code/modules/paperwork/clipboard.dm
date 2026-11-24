@@ -77,16 +77,17 @@
 	//The topmost paper. I don't think there's any way to organise contents in byond, so this is what we're stuck with.	-Pete
 	if(toppaper)
 		var/obj/item/paper/P = toppaper
-		dat += "<A href='byond://?src=[text_ref(src)];write=[text_ref(P)]'>Write</A> <A href='byond://?src=[text_ref(src)];remove=[text_ref(P)]'>Remove</A> - <A href='byond://?src=[text_ref(src)];read=[text_ref(P)]'>[P.name]</A><BR><HR>"
+		dat += "<A href='byond://?src=[text_ref(src)];write=[text_ref(P)]'>Write</A> <A href='byond://?src=[text_ref(src)];remove=[text_ref(P)]'>Remove</A> - <A href='byond://?src=[text_ref(src)];read=[text_ref(P)]'>[html_encode(html_decode(P.name))]</A><BR><HR>"
 
 	for(var/obj/item/paper/P in src)
 		if(P==toppaper)
 			continue
-		dat += "<A href='byond://?src=[text_ref(src)];remove=[text_ref(P)]'>Remove</A> - <A href='byond://?src=[text_ref(src)];read=[text_ref(P)]'>[P.name]</A><BR>"
+		dat += "<A href='byond://?src=[text_ref(src)];remove=[text_ref(P)]'>Remove</A> - <A href='byond://?src=[text_ref(src)];read=[text_ref(P)]'>[html_encode(html_decode(P.name))]</A><BR>"
 	for(var/obj/item/photo/Ph in src)
-		dat += "<A href='byond://?src=[text_ref(src)];remove=[text_ref(Ph)]'>Remove</A> - <A href='byond://?src=[text_ref(src)];look=[text_ref(Ph)]'>[Ph.name]</A><BR>"
+		dat += "<A href='byond://?src=[text_ref(src)];remove=[text_ref(Ph)]'>Remove</A> - <A href='byond://?src=[text_ref(src)];look=[text_ref(Ph)]'>[html_encode(html_decode(Ph.name))]</A><BR>"
 
 	var/datum/browser/popup = new(user, "clipboard", "<div align='center'>Clipboard</div>")
+	popup.add_head_content(HTML_STATIC_CONTENT_POLICY)
 	popup.set_content(dat)
 	popup.open()
 
@@ -142,13 +143,7 @@
 			var/obj/item/paper/P = locate(href_list["read"])
 
 			if(P && (P.loc == src) && istype(P, /obj/item/paper) )
-
-				if(!(ishuman(usr) || isobserver(usr) || issilicon(usr)))
-					usr << browse(HTML_SKELETON_TITLE(P.name, stars(P.info)+P.stamps), "window=[P.name]")
-					onclose(usr, "[P.name]")
-				else
-					usr << browse(HTML_SKELETON_TITLE(P.name, P.info+P.stamps), "window=[P.name]")
-					onclose(usr, "[P.name]")
+				P.show_paper(usr, (ishuman(usr) || isobserver(usr) || issilicon(usr) ? P.info : stars(P.info)) + P.stamps)
 
 		else if(href_list["look"])
 			var/obj/item/photo/P = locate(href_list["look"])
@@ -159,7 +154,7 @@
 			var/obj/item/P = locate(href_list["top"])
 			if(P && (P.loc == src) && istype(P, /obj/item/paper) )
 				toppaper = P
-				to_chat(usr, span_notice("You move [P.name] to the top."))
+				to_chat(usr, span_notice("You move [html_encode(html_decode(P.name))] to the top."))
 
 		//Update everything
 		attack_self(usr)

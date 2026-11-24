@@ -36,6 +36,8 @@
 		user.visible_message("[user] opens \"[title]\".")
 
 	var/datum/browser/popup = new(user, "book", "<div align='center'>Owner: [author]</div>", 800, 600)
+	if(!unique)
+		popup.add_head_content(HTML_STATIC_CONTENT_POLICY)
 	popup.set_content(dat)
 	popup.open()
 
@@ -107,7 +109,9 @@
 	if(user.zone_selected == "eyes")
 		user.visible_message(span_notice("You open up the book and show it to [M]."), \
 			span_notice("[user] opens up a book and shows it to [M]."))
-		M << browse(HTML_SKELETON_TITLE("Penned by [author].", dat), "window=book")
+		var/book_title = "Penned by [author]."
+		var/content = unique ? HTML_SKELETON_TITLE(book_title, dat) : HTML_STATIC_SKELETON_TITLE(book_title, dat)
+		M << browse(content, "window=book")
 
 /obj/item/book/codebook
 	name = "Ship Code Book"

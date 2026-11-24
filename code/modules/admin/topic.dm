@@ -866,11 +866,9 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 		if(!F)
 			return
 
-		var/dat = "<html><meta charset='UTF-8'><head><title>Fax Message: [F.title]</title></head>"
-		dat += "<body>[F.message]</body></html>"
-
 		var/datum/browser/browser = new(usr, "fax", "Fax")
-		browser.set_content(dat)
+		browser.add_head_content(HTML_STATIC_CONTENT_POLICY)
+		browser.set_content("<h4>Fax Message: [html_encode(html_decode(F.title))]</h4>[F.message]")
 		browser.open()
 
 	else if(href_list["faxmark"])
@@ -1419,7 +1417,8 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 			var/edit_log = query_get_message_edits.item[1]
 			if(!QDELETED(usr))
 				var/datum/browser/browser = new(usr, "Note edits", "Note edits")
-				browser.set_content(jointext(edit_log, ""))
+				browser.add_head_content(HTML_TEXT_CONTENT_POLICY)
+				browser.set_content(format_moderation_edit_log(edit_log))
 				browser.open()
 		qdel(query_get_message_edits)
 

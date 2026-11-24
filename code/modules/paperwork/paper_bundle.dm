@@ -59,7 +59,7 @@
 		qdel(I)
 
 	else if(istype(I, /obj/item/tool/pen) || istype(I, /obj/item/toy/crayon))
-		user << browse(null, "window=[name]") //Closes the dialog
+		user << browse(null, "window=paper_bundle_[REF(src)]")
 
 	update_icon()
 	attack_self(user) //Update the browsed page.
@@ -98,37 +98,39 @@
 		. += span_notice("It is too far away to read.")
 
 /obj/item/paper_bundle/attack_self(mob/user as mob)
-	if(ishuman(user))
+	if(ishuman(user) && page >= 1 && page <= length(contents))
 		var/mob/living/carbon/human/human_user = user
+		var/obj/item/document = contents[page]
+		var/is_paper = istype(document, /obj/item/paper)
+		var/window_id = "paper_bundle_[REF(src)]"
 		var/dat
 		switch(screen)
 			if(0)
 				dat+= "<DIV STYLE='float:left; text-align:left; width:33.33333%'></DIV>"
-				dat+= "<DIV STYLE='float:left; text-align:center; width:33.33333%'><A href='byond://?src=[text_ref(src)];remove=1'>Remove [(istype(page, /obj/item/paper)) ? "paper" : "photo"]</A></DIV>"
+				dat+= "<DIV STYLE='float:left; text-align:center; width:33.33333%'><A href='byond://?src=[text_ref(src)];remove=1'>Remove [is_paper ? "paper" : "photo"]</A></DIV>"
 				dat+= "<DIV STYLE='float:left; text-align:right; width:33.33333%'><A href='byond://?src=[text_ref(src)];next_page=1'>Next Page</A></DIV><BR><HR>"
 			if(1)
 				dat+= "<DIV STYLE='float:left; text-align:left; width:33.33333%'><A href='byond://?src=[text_ref(src)];prev_page=1'>Previous Page</A></DIV>"
-				dat+= "<DIV STYLE='float:left; text-align:center; width:33.33333%'><A href='byond://?src=[text_ref(src)];remove=1'>Remove [(istype(page, /obj/item/paper)) ? "paper" : "photo"]</A></DIV>"
+				dat+= "<DIV STYLE='float:left; text-align:center; width:33.33333%'><A href='byond://?src=[text_ref(src)];remove=1'>Remove [is_paper ? "paper" : "photo"]</A></DIV>"
 				dat+= "<DIV STYLE='float:left; text-align:right; width:33.33333%'><A href='byond://?src=[text_ref(src)];next_page=1'>Next Page</A></DIV><BR><HR>"
 			if(2)
 				dat+= "<DIV STYLE='float:left; text-align:left; width:33.33333%'><A href='byond://?src=[text_ref(src)];prev_page=1'>Previous Page</A></DIV>"
-				dat+= "<DIV STYLE='float:left; text-align:center; width:33.33333%'><A href='byond://?src=[text_ref(src)];remove=1'>Remove [(istype(page, /obj/item/paper)) ? "paper" : "photo"]</A></DIV><BR><HR>"
+				dat+= "<DIV STYLE='float:left; text-align:center; width:33.33333%'><A href='byond://?src=[text_ref(src)];remove=1'>Remove [is_paper ? "paper" : "photo"]</A></DIV><BR><HR>"
 				dat+= "<DIV STYLE='float;left; text-align:right; with:33.33333%'></DIV>"
-		if(istype(page, /obj/item/paper))
-			var/obj/item/paper/P = page
-			if(!(ishuman(usr) || isobserver(usr) || issilicon(usr)))
-				dat+= "<html><meta charset='UTF-8'><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY>[stars(P.info)][P.stamps]</BODY></HTML>"
-			else
-				dat+= "<html><meta charset='UTF-8'><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY>[P.info][P.stamps]</BODY></HTML>"
-			human_user << browse(dat, "window=[name]")
-		else if(istype(page, /obj/item/photo))
-			var/obj/item/photo/P = page
-			human_user << browse_rsc(P.picture.picture_icon, "tmp_photo.png")
-			human_user << browse(dat + "<html><meta charset='UTF-8'><head><title>[P.name]</title></head>" \
-			+ "<body style='overflow:hidden'>" \
-			+ "<div> <img src='tmp_photo.png' width = '180'" \
-			+ "[P.scribble ? "<div> Written on the back:<br><i>[P.scribble]</i>" : ""]"\
-			+ "</body></html>", "window=[name]")
+		if(is_paper)
+			var/obj/item/paper/P = document
+			var/datum/asset/paper_asset = get_asset_datum(/datum/asset/simple/paper)
+			paper_asset.send(human_user)
+			dat += P.info + P.stamps
+		else if(istype(document, /obj/item/photo))
+			var/obj/item/photo/P = document
+			if(P.picture?.picture_image)
+				human_user << browse_rsc(P.picture.picture_image, "tmp_photo.png")
+				dat += "<div><img src='tmp_photo.png' width='180'></div>"
+			if(P.scribble)
+				dat += "<div>Written on the back:<br><i>[html_encode(html_decode(P.scribble))]</i></div>"
+		human_user << browse(HTML_STATIC_SKELETON_TITLE(document.name, dat), "window=[window_id]")
+		onclose(human_user, window_id)
 		update_icon()
 
 /obj/item/paper_bundle/Topic(href, href_list)
@@ -173,7 +175,7 @@
 
 			update_icon()
 
-		src.attack_self(src.loc)
+		attack_self(usr)
 		updateUsrDialog()
 	else
 		to_chat(usr, span_notice("You need to hold it in hands!"))

@@ -366,7 +366,10 @@
 		if("close")
 			close(can_be_suspended = FALSE)
 		if("openLink")
-			client << link(href_list["url"])
+			var/static/regex/web_url = regex(@"^https?://[^\s\\]+$", "i")
+			var/url = href_list["url"]
+			if(istext(url) && web_url.Find(url))
+				client << link(url)
 		if("cacheReloaded")
 			reinitialize()
 		if("chat/resend")

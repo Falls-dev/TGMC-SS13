@@ -63,17 +63,17 @@
 /obj/item/paper/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user)) //You need to be next to the paper in order to read it.
-		var/datum/asset/paper_asset = get_asset_datum(/datum/asset/simple/paper)
-		paper_asset.send(user)
-		if(!(isobserver(user) || ishuman(user) || issilicon(user)))
-			// Show scrambled paper if they aren't a ghost, human, or silicone.
-			usr << browse(HTML_SKELETON_TITLE(name, stars(info)+stamps), "window=[name]")
-			onclose(user, "[name]")
-		else
-			user << browse(HTML_SKELETON_TITLE(name, info+stamps), "window=[name]")
-			onclose(user, "[name]")
+		show_paper(user, (isobserver(user) || ishuman(user) || issilicon(user) ? info : stars(info)) + stamps)
 	else
 		. += span_notice("It is too far away to read.")
+
+/// Shows paper content in a browser whose ID is independent of its label.
+/obj/item/paper/proc/show_paper(mob/user, content)
+	var/datum/asset/paper_asset = get_asset_datum(/datum/asset/simple/paper)
+	paper_asset.send(user)
+	var/window_id = "paper_[REF(src)]"
+	user << browse(HTML_STATIC_SKELETON_TITLE(name, content), "window=[window_id]")
+	onclose(user, window_id)
 
 /obj/item/paper/verb/rename()
 	set name = "Rename paper"
@@ -90,13 +90,7 @@
 		dist = get_dist(src, user.current)
 	else //cyborg or AI not seeing through a camera
 		dist = get_dist(src, user)
-	if(dist < 2)
-		usr << browse(HTML_SKELETON_TITLE(name, info+stamps), "window=[name]")
-		onclose(usr, "[name]")
-	else
-		//Show scrambled paper
-		usr << browse(HTML_SKELETON_TITLE(name, stars(info)+stamps), "window=[name]")
-		onclose(usr, "[name]")
+	show_paper(user, (dist < 2 ? info : stars(info)) + stamps)
 
 /obj/item/paper/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(user.zone_selected == "eyes")
@@ -271,7 +265,7 @@
 			info += t // Oh, he wants to edit to the end of the file, let him.
 			updateinfolinks()
 
-		usr << browse(HTML_SKELETON_TITLE(name, info_links+stamps), "window=[name]") // Update the window
+		show_paper(usr, info_links + stamps)
 
 		playsound(loc, pick('sound/items/write1.ogg','sound/items/write2.ogg'), 15, 1)
 
@@ -303,9 +297,7 @@
 		user.put_in_hands(B)
 
 	else if(istype(I, /obj/item/tool/pen) || istype(I, /obj/item/toy/crayon))
-		var/datum/browser/browser = new(usr, "goals", name)
-		browser.set_content(info_links + stamps)
-		browser.open()
+		show_paper(user, info_links + stamps)
 
 	else if(istype(I, /obj/item/tool/stamp))
 		if((!in_range(src, user) && loc != user && !(istype(loc, /obj/item/clipboard)) && loc.loc != user && user.get_active_held_item() != I))

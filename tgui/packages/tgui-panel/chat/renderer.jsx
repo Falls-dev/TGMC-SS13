@@ -4,9 +4,7 @@
  * @license MIT
  */
 
-import { createRoot } from 'react-dom/client';
 import { createLogger } from 'tgui/logging';
-import { Tooltip } from 'tgui-core/components';
 import { EventEmitter } from 'tgui-core/events';
 import { classes } from 'tgui-core/react';
 
@@ -25,24 +23,13 @@ import {
 } from './constants';
 import { canPageAcceptType, createMessage, isSameMessage } from './model';
 import { highlightNode, linkifyNode } from './replaceInTextNode';
+import { sanitizeChatHtml } from './sanitize';
 
 const logger = createLogger('chatRenderer');
 
 // We consider this as the smallest possible scroll offset
 // that is still trackable.
 const SCROLL_TRACKING_TOLERANCE = 24;
-
-// List of injectable component names to the actual type
-export const TGUI_CHAT_COMPONENTS = {
-  Tooltip,
-};
-
-// List of injectable attibute names mapped to their proper prop
-// We need this because attibutes don't support lowercase names
-export const TGUI_CHAT_ATTRIBUTES_TO_PROPS = {
-  position: 'position',
-  content: 'content',
-};
 
 const findNearestScrollableParent = (startingNode) => {
   const body = document.body;
@@ -384,67 +371,25 @@ class ChatRenderer {
         node = createMessageNode();
         // Payload is plain text
         if (message.text) {
+          node.classList.add('ChatMessage--plain');
           node.textContent = message.text;
         }
         // Payload is HTML
         else if (message.html) {
-          node.innerHTML = message.html;
+          node.append(sanitizeChatHtml(message.html, message.fromHistory));
         } else {
           logger.error('Error: message is missing text payload', message);
         }
-        // Get all nodes in this message that want to be rendered like jsx
-        const nodes = node.querySelectorAll('[data-component]');
-        for (let i = 0; i < nodes.length; i++) {
-          const childNode = nodes[i];
-          const targetName = childNode.getAttribute('data-component');
-          // Let's pull out the attibute info we need
-          let outputProps = {};
-          for (let j = 0; j < childNode.attributes.length; j++) {
-            const attribute = childNode.attributes[j];
-
-            let working_value = attribute.nodeValue;
-            // We can't do the "if it has no value it's truthy" trick
-            // Because getAttribute returns "", not null. Hate IE
-            if (working_value === '$true') {
-              working_value = true;
-            } else if (working_value === '$false') {
-              working_value = false;
-            } else if (!isNaN(working_value)) {
-              const parsed_float = parseFloat(working_value);
-              if (!isNaN(parsed_float)) {
-                working_value = parsed_float;
-              }
+        // Older saved messages used React components for these tooltips.
+        if (message.html?.includes('data-component')) {
+          for (const tooltip of node.querySelectorAll(
+            '[data-component="Tooltip"]',
+          )) {
+            const content = tooltip.getAttribute('data-content');
+            if (content !== null) {
+              tooltip.title = content;
             }
-
-            let canon_name = attribute.nodeName.replace('data-', '');
-            // html attributes don't support upper case chars, so we need to map
-            canon_name = TGUI_CHAT_ATTRIBUTES_TO_PROPS[canon_name];
-            outputProps[canon_name] = working_value;
           }
-          const oldHtml = { __html: childNode.innerHTML };
-          const Element = TGUI_CHAT_COMPONENTS[targetName];
-          if (!Element) {
-            logger.error(
-              `Error: unknown chat component "${targetName}" in message`,
-              message,
-            );
-            childNode.removeAttribute('data-component');
-            continue;
-          }
-
-          while (childNode.firstChild) {
-            childNode.removeChild(childNode.firstChild);
-          }
-
-          const reactRoot = createRoot(childNode);
-
-          /* eslint-disable react/no-danger */
-          reactRoot.render(
-            <Element {...outputProps}>
-              <span dangerouslySetInnerHTML={oldHtml} />
-            </Element>,
-            childNode,
-          );
         }
 
         // Highlight text
@@ -496,8 +441,8 @@ class ChatRenderer {
         this.visibleMessages.push(message);
       }
     }
-    if (node) {
-      const firstChild = this.rootNode.childNodes[0];
+    if (fragment.hasChildNodes()) {
+      const firstChild = this.rootNode.firstChild;
       if (prepend && firstChild) {
         this.rootNode.insertBefore(fragment, firstChild);
       } else {

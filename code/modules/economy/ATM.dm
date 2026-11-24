@@ -109,9 +109,9 @@ log transactions
 
 	var/dat
 	dat += "For all your monetary needs!<br>"
-	dat += "<i>This terminal is</i> [machine_id]. <i>Report this code when contacting Nanotrasen IT Support</i><br/>"
+	dat += "<i>This terminal is</i> [html_encode(machine_id)]. <i>Report this code when contacting Nanotrasen IT Support</i><br/>"
 
-	dat += "Card: <a href='byond://?src=[text_ref(src)];choice=insert_card'>[held_card ? held_card.name : "------"]</a><br><br>"
+	dat += "Card: <a href='byond://?src=[text_ref(src)];choice=insert_card'>[held_card ? html_encode(html_decode(held_card.name)) : "------"]</a><br><br>"
 
 	if(ticks_left_locked_down > 0)
 		dat += span_alert("Maximum number of pin attempts exceeded! Access to this ATM has been temporarily disabled.")
@@ -139,25 +139,7 @@ log transactions
 				if(VIEW_TRANSACTION_LOGS)
 					dat += "<b>Transaction logs</b><br>"
 					dat += "<A href='byond://?src=[text_ref(src)];choice=view_screen;view_screen=0'>Back</a>"
-					dat += "<table border=1 style='width:100%'>"
-					dat += "<tr>"
-					dat += "<td><b>Date</b></td>"
-					dat += "<td><b>Time</b></td>"
-					dat += "<td><b>Target</b></td>"
-					dat += "<td><b>Purpose</b></td>"
-					dat += "<td><b>Value</b></td>"
-					dat += "<td><b>Source terminal ID</b></td>"
-					dat += "</tr>"
-					for(var/datum/transaction/T in authenticated_account.transaction_log)
-						dat += "<tr>"
-						dat += "<td>[T.date]</td>"
-						dat += "<td>[T.time]</td>"
-						dat += "<td>[T.target_name]</td>"
-						dat += "<td>[T.purpose]</td>"
-						dat += "<td>$[T.amount]</td>"
-						dat += "<td>[T.source_terminal]</td>"
-						dat += "</tr>"
-					dat += "</table>"
+					dat += transaction_table_html(authenticated_account)
 					dat += "<A href='byond://?src=[text_ref(src)];choice=print_transaction'>Print</a><br>"
 				if(TRANSFER_FUNDS)
 					dat += "<b>Account balance:</b> $[authenticated_account.money]<br>"
@@ -171,7 +153,7 @@ log transactions
 					dat += "<input type='submit' value='Transfer funds'><br>"
 					dat += "</form>"
 				else
-					dat += "Welcome, <b>[authenticated_account.owner_name].</b><br/>"
+					dat += "Welcome, <b>[html_encode(authenticated_account.owner_name)].</b><br/>"
 					dat += "<b>Account balance:</b> $[authenticated_account.money]"
 					dat += "<form name='withdrawal' action='byond://?src=[text_ref(src)]' method='get'>"
 					dat += "<input type='hidden' name='src' value='\ref[src]'>"
@@ -193,8 +175,17 @@ log transactions
 		dat += "</form>"
 
 	var/datum/browser/popup = new(user, "atm", "<div align='center'>Nanotrasen Automatic Teller Machine</div>", 550, 650)
+	popup.add_head_content(HTML_FORM_CONTENT_POLICY)
 	popup.set_content(dat)
 	popup.open()
+
+/// The terminal and the printed statements both display the same plain-text transaction fields.
+/obj/machinery/atm/proc/transaction_table_html(datum/money_account/account)
+	var/list/rows = list("<table border=1 style='width:100%'><tr><th>Date</th><th>Time</th><th>Target</th><th>Purpose</th><th>Value</th><th>Source terminal ID</th></tr>")
+	for(var/datum/transaction/T in account.transaction_log)
+		rows += "<tr><td>[html_encode(T.date)]</td><td>[html_encode(T.time)]</td><td>[html_encode(T.target_name)]</td><td>[html_encode(T.purpose)]</td><td>$[html_encode("[T.amount]")]</td><td>[html_encode(T.source_terminal)]</td></tr>"
+	rows += "</table>"
+	return rows.Join()
 
 /obj/machinery/atm/Topic(href, href_list)
 	. = ..()
@@ -286,7 +277,7 @@ log transactions
 						T.time = worldtime2text()
 						authenticated_account.transaction_log.Add(T)
 
-						to_chat(usr, span_notice("[icon2html(src, usr)] Access granted. Welcome user '[authenticated_account.owner_name].'"))
+						to_chat(usr, span_notice("[icon2html(src, usr)] Access granted. Welcome user '[html_encode(authenticated_account.owner_name)].'"))
 
 					previous_account_number = tried_account_num
 			if("e_withdrawal")
@@ -343,13 +334,13 @@ log transactions
 			if("balance_statement")
 				if(authenticated_account)
 					var/obj/item/paper/R = new(src.loc)
-					R.name = "Account balance: [authenticated_account.owner_name]"
+					R.name = "Account balance: [html_encode(authenticated_account.owner_name)]"
 					R.info = "<b>NT Automated Teller Account Statement</b><br><br>"
-					R.info += "<i>Account holder:</i> [authenticated_account.owner_name]<br>"
+					R.info += "<i>Account holder:</i> [html_encode(authenticated_account.owner_name)]<br>"
 					R.info += "<i>Account number:</i> [authenticated_account.account_number]<br>"
 					R.info += "<i>Balance:</i> $[authenticated_account.money]<br>"
 					R.info += "<i>Date and time:</i> [worldtime2text()], [GLOB.current_date_string]<br><br>"
-					R.info += "<i>Service terminal ID:</i> [machine_id]<br>"
+					R.info += "<i>Service terminal ID:</i> [html_encode(machine_id)]<br>"
 
 					//stamp the paper
 					var/image/stampoverlay = image('icons/obj/items/paper.dmi')
@@ -367,31 +358,13 @@ log transactions
 			if ("print_transaction")
 				if(authenticated_account)
 					var/obj/item/paper/R = new(src.loc)
-					R.name = "Transaction logs: [authenticated_account.owner_name]"
+					R.name = "Transaction logs: [html_encode(authenticated_account.owner_name)]"
 					R.info = "<b>Transaction logs</b><br>"
-					R.info += "<i>Account holder:</i> [authenticated_account.owner_name]<br>"
+					R.info += "<i>Account holder:</i> [html_encode(authenticated_account.owner_name)]<br>"
 					R.info += "<i>Account number:</i> [authenticated_account.account_number]<br>"
 					R.info += "<i>Date and time:</i> [worldtime2text()], [GLOB.current_date_string]<br><br>"
-					R.info += "<i>Service terminal ID:</i> [machine_id]<br>"
-					R.info += "<table border=1 style='width:100%'>"
-					R.info += "<tr>"
-					R.info += "<td><b>Date</b></td>"
-					R.info += "<td><b>Time</b></td>"
-					R.info += "<td><b>Target</b></td>"
-					R.info += "<td><b>Purpose</b></td>"
-					R.info += "<td><b>Value</b></td>"
-					R.info += "<td><b>Source terminal ID</b></td>"
-					R.info += "</tr>"
-					for(var/datum/transaction/T in authenticated_account.transaction_log)
-						R.info += "<tr>"
-						R.info += "<td>[T.date]</td>"
-						R.info += "<td>[T.time]</td>"
-						R.info += "<td>[T.target_name]</td>"
-						R.info += "<td>[T.purpose]</td>"
-						R.info += "<td>$[T.amount]</td>"
-						R.info += "<td>[T.source_terminal]</td>"
-						R.info += "</tr>"
-					R.info += "</table>"
+					R.info += "<i>Service terminal ID:</i> [html_encode(machine_id)]<br>"
+					R.info += transaction_table_html(authenticated_account)
 
 					//stamp the paper
 					var/image/stampoverlay = image('icons/obj/items/paper.dmi')
@@ -432,7 +405,7 @@ log transactions
 			if(I)
 				authenticated_account = attempt_account_access(I.associated_account_number)
 				if(authenticated_account)
-					to_chat(human_user, span_notice("[icon2html(src, human_user)] Access granted. Welcome user '[authenticated_account.owner_name].'"))
+					to_chat(human_user, span_notice("[icon2html(src, human_user)] Access granted. Welcome user '[html_encode(authenticated_account.owner_name)].'"))
 
 					//create a transaction log entry
 					var/datum/transaction/T = new()

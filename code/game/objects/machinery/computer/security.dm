@@ -130,7 +130,7 @@
 		while(active2.fields["com_[counter]"])
 			comments += list(list(
 				"index" = counter,
-				"text" = active2.fields["com_[counter]"],
+				"text" = record_comment_text(active2.fields["com_[counter]"]),
 			))
 			counter++
 		record_data["comments"] = comments
@@ -213,7 +213,7 @@
 			var/counter = 1
 			while(active2.fields["com_[counter]"])
 				counter++
-			active2.fields["com_[counter]"] = "Made by [authenticated] ([rank]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [GAME_YEAR]<BR>[t1]"
+			active2.fields["com_[counter]"] = "Made by [html_encode(html_decode(authenticated))] ([html_encode(html_decode(rank))]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [GAME_YEAR]<BR>[t1]"
 			return TRUE
 
 		if("delete_comment")
@@ -422,10 +422,10 @@
 		P.info += "<B>General Record Lost!</B><BR>"
 		P.name = "Security Record"
 	if(record2)
-		P.info += "<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: [record2.fields["criminal"]]<BR>\n<BR>\nMinor Crimes: [record2.fields["mi_crim"]]<BR>\nDetails: [record2.fields["mi_crim_d"]]<BR>\n<BR>\nMajor Crimes: [record2.fields["ma_crim"]]<BR>\nDetails: [record2.fields["ma_crim_d"]]<BR>\n<BR>\nImportant Notes:<BR>\n\t[decode(record2.fields["notes"])]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
+		P.info += "<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: [record2.fields["criminal"]]<BR>\n<BR>\nMinor Crimes: [record2.fields["mi_crim"]]<BR>\nDetails: [record2.fields["mi_crim_d"]]<BR>\n<BR>\nMajor Crimes: [record2.fields["ma_crim"]]<BR>\nDetails: [record2.fields["ma_crim_d"]]<BR>\n<BR>\nImportant Notes:<BR>\n\t[record_text_html(record2.fields["notes"])]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
 		var/counter = 1
 		while(record2.fields["com_[counter]"])
-			P.info += "[record2.fields["com_[counter]"]]<BR>"
+			P.info += "[record_text_html(record2.fields["com_[counter]"], is_comment = TRUE)]<BR>"
 			counter++
 	else
 		P.info += "<B>Security Record Lost!</B><BR>"

@@ -135,12 +135,12 @@
 		to_chat(user, span_warning("[src] seems to be blank..."))
 		return
 	user << browse_rsc(picture.picture_image, "tmp_photo.png")
-	user << browse(HTML_SKELETON_TITLE(name, \
-		"<body style='overflow:hidden;margin:0;text-align:center'>" \
+	user << browse(HTML_STATIC_SKELETON_TITLE(name, \
+		"<div style='overflow:hidden;margin:0;text-align:center'>" \
 		+ "<img src='tmp_photo.png' width='480' style='-ms-interpolation-mode:nearest-neighbor' />" \
-		+ "[scribble ? "<br>Written on the back:<br><i>[scribble]</i>" : ""]")
+		+ "[scribble ? "<br>Written on the back:<br><i>[html_encode(html_decode(scribble))]</i>" : ""]</div>")
 		, "window=photo_showing;size=480x608")
-	onclose(user, "[name]")
+	onclose(user, "photo_showing")
 
 /obj/item/photo/verb/rename()
 	set name = "Rename Photo"

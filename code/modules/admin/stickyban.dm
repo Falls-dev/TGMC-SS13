@@ -51,7 +51,7 @@
 			SSstickyban.cache[ckey] = ban
 
 			log_admin_private("[key_name(usr)] has stickybanned [ckey].\nReason: [ban["message"]]")
-			message_admins(span_adminnotice("[ADMIN_TPMONTY(usr)] has stickybanned [ckey].\nReason: [ban["message"]]"))
+			message_admins(span_adminnotice("[ADMIN_TPMONTY(usr)] has stickybanned [ckey].<br>Reason: [chat_text_to_html(ban["message"])]"))
 
 		if("remove")
 			if(!data["ckey"])
@@ -161,7 +161,7 @@
 				qdel(query_edit_stickyban)
 
 			log_admin_private("[key_name(usr)] has edited [ckey]'s sticky ban reason from [oldreason] to [reason]")
-			message_admins(span_warning("[ADMIN_TPMONTY(usr)] has edited [ckey]'s sticky ban reason from [oldreason] to [reason]"))
+			message_admins(span_warning("[ADMIN_TPMONTY(usr)] has edited [ckey]'s sticky ban reason from [chat_text_to_html(oldreason)] to [chat_text_to_html(reason)]"))
 
 		if ("exempt")
 			if (!data["ckey"])
@@ -356,7 +356,7 @@
 		[timeout]
 		<b>[ckey]</b>
 		<br />"
-		[ban["message"]] <b><a href='byond://?src=[REF(usr.client.holder)];[HrefToken()];stickyban=edit&ckey=[ckey]'>Edit</a></b><br />
+		[chat_text_to_html(ban["message"])] <b><a href='byond://?src=[REF(usr.client.holder)];[HrefToken()];stickyban=edit&ckey=[ckey]'>Edit</a></b><br />
 	"})
 	if (ban["admin"])
 		. += "[ban["admin"]]<br />"
@@ -480,5 +480,6 @@ ADMIN_VERB(stickybanpanel, R_BAN, "Sticky Ban Panel", "Opens the Sticky Ban pane
 	"}
 
 	var/datum/browser/browser = new(user.mob, "stickybans", "<div align='center'>Sticky Bans</div>", 700, 400)
+	browser.add_head_content(HTML_TEXT_CONTENT_POLICY)
 	browser.set_content(html)
 	browser.open()

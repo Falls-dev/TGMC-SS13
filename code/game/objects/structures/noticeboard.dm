@@ -40,9 +40,10 @@
 
 	var/dat
 	for(var/obj/item/paper/P in src)
-		dat += "<A href='byond://?src=[text_ref(src)];read=[text_ref(P)]'>[P.name]</A> <A href='byond://?src=[text_ref(src)];write=[text_ref(P)]'>Write</A> <A href='byond://?src=[text_ref(src)];remove=[text_ref(P)]'>Remove</A><BR>"
+		dat += "<A href='byond://?src=[text_ref(src)];read=[text_ref(P)]'>[html_encode(html_decode(P.name))]</A> <A href='byond://?src=[text_ref(src)];write=[text_ref(P)]'>Write</A> <A href='byond://?src=[text_ref(src)];remove=[text_ref(P)]'>Remove</A><BR>"
 
 	var/datum/browser/popup = new(user, "noticeboard", "<div align='center'>Noticeboard</div>")
+	popup.add_head_content(HTML_STATIC_CONTENT_POLICY)
 	popup.set_content(dat)
 	popup.open()
 
@@ -72,9 +73,4 @@
 	if(href_list["read"])
 		var/obj/item/paper/P = locate(href_list["read"])
 		if((P?.loc == src))
-			if(!( ishuman(usr) ))
-				usr << browse(HTML_SKELETON_TITLE(P.name, stars(P.info)), "window=[P.name]")
-				onclose(usr, "[P.name]")
-			else
-				usr << browse(HTML_SKELETON_TITLE(P.name, P.info), "window=[P.name]")
-				onclose(usr, "[P.name]")
+			P.show_paper(usr, ishuman(usr) ? P.info : stars(P.info))

@@ -4,7 +4,7 @@
   "version": "6.0.0",
   "dependencies": {
     "common": "workspace:*",
-    "dompurify": "^3.2.5",
+    "dompurify": "^3.5.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "tgui": "workspace:*",
@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@types/react": "^19.1.0",
-    "@types/react-dom": "^19.1.2"
+    "@types/react-dom": "^19.1.2",
+    "vitest": "^3.1.1"
   }
 }

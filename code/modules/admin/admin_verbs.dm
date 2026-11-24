@@ -298,12 +298,27 @@ ADMIN_VERB(logs_folder, R_LOG, "Get Server Logs Folder", "Please use responsibly
 			if(islist(reversed))
 				reversed = reverseRange(reversed.Copy())
 				for(var/entry in reversed)
-					dat += "<font size=2px>[entry]<br>[reversed[entry]]</font><br>"
+					var/log_text = format_individual_log_entry(reversed[entry])
+					dat += "<font size=2px>[html_encode(html_decode(entry))]<br>[log_text]</font><br>"
 			dat += "<hr>"
 
-	var/datum/browser/browser = new(usr, "invidual_logging_[key_name(M)]", "<div align='center'>Logs</div>", 700, 550)
+	var/datum/browser/browser = new(usr, "invidual_logging_[REF(M)]", "<div align='center'>Logs</div>", 700, 550)
+	browser.add_head_content(HTML_TEXT_CONTENT_POLICY)
 	browser.set_content(dat)
 	browser.open(FALSE)
+
+
+/// Render individual logs as text, with the optional color supplied by the logger.
+/proc/format_individual_log_entry(entry)
+	if(!islist(entry))
+		return chat_text_to_html(istext(entry) ? html_decode(entry) : null)
+	var/list/log_data = entry
+	var/message = chat_text_to_html(html_decode(log_data["message"]))
+	var/color = log_data["color"]
+	var/static/regex/log_color = regex(@"^(?:#[0-9a-f]{3}(?:[0-9a-f]{3})?|[a-z]+)$", "i")
+	if(istext(color) && log_color.Find(color))
+		message = "<font color=\"[html_encode(color)]\">[message]</font>"
+	return "[html_encode(log_data["prefix"])][message]"
 
 
 /datum/admins/proc/individual_logging_panel_link(mob/M, log_type, log_src, label, selected_src, selected_type)
