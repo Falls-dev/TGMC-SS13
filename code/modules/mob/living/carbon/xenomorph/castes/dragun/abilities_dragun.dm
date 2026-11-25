@@ -310,9 +310,18 @@
 			hit_slash_target(target, damage)
 
 /datum/action/ability/activable/xeno/dragun_slash/proc/hit_slash_target(atom/movable/target, damage)
-	if(target in slash_hit_targets || target == xeno_owner || !(target.resistance_flags & XENO_DAMAGEABLE))
+	if(QDELETED(target) || QDELETED(xeno_owner))
+		return FALSE
+	if((target in slash_hit_targets) || target == xeno_owner || !(target.resistance_flags & XENO_DAMAGEABLE))
 		return TRUE
 	slash_hit_targets += target
+	// Reserve the phase's hit synchronously, but allow the attack chain to sleep.
+	INVOKE_ASYNC(src, PROC_REF(apply_slash_hit), target, damage)
+	return TRUE
+
+/datum/action/ability/activable/xeno/dragun_slash/proc/apply_slash_hit(atom/movable/target, damage)
+	if(QDELETED(target) || QDELETED(xeno_owner))
+		return FALSE
 	if(ishitbox(target) || isvehicle(target))
 		target.attack_alien(xeno_owner, damage)
 		return TRUE
