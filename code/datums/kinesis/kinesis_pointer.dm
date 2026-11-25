@@ -46,7 +46,7 @@
 	if(tether?.origin == near_end && tether?.target == far_end)
 		return
 	clear_tether()
-	tether = near_end.beam(far_end, icon_state = "kinesis_line", maxdistance = drop_range + 2)
+	tether = near_end.beam(far_end, icon_state = "kinesis_line", icon = 'icons/Mods-dmi/kinesis/Beam/beam.dmi', maxdistance = drop_range + 2)
 
 /datum/kinesis_field/proc/clear_tether()
 	QDEL_NULL(tether)

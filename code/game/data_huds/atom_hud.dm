@@ -14,7 +14,7 @@
 		return
 	//Overlays copy appearances: remove the old appearance before changing the source image.
 	cut_overlay(holder)
-	holder.icon = 'icons/mob/hud/kinesis.dmi'
+	holder.icon = 'icons/Mods-dmi/kinesis/kinesis.dmi'
 	holder.pixel_y = 32
 	holder.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	holder.layer = FLOAT_LAYER

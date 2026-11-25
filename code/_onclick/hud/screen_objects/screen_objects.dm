@@ -45,7 +45,7 @@
 ///TK-5 charge indicator with four levels.
 /atom/movable/screen/kinesis_charge
 	name = "kinesis charge"
-	icon = 'icons/mob/hud/kinesis.dmi'
+	icon = 'icons/Mods-dmi/kinesis/kinesis.dmi'
 	screen_loc = ui_kinesis_charge
 	///Last displayed state, used to skip unchanged updates.
 	var/last_shown = ""

@@ -2,7 +2,8 @@
 /obj/item/clothing/gloves/kinesis
 	name = "\improper TK-7 telekinesis gauntlets"
 	desc = "Engineered gauntlets that let the wearer hold and throw small objects without touching them. Must be switched on before use."
-	icon = 'icons/obj/clothing/gloves.dmi'
+	icon = 'icons/Mods-dmi/kinesis/Obj/kinesis.dmi'
+	worn_icon_list = list(slot_gloves_str = 'icons/Mods-dmi/kinesis/Mob/kinesis.dmi')
 	icon_state = "kinesis_gloves"
 	equip_slot_flags = ITEM_SLOT_GLOVES
 	actions_types = list(/datum/action/item_action/toggle)
