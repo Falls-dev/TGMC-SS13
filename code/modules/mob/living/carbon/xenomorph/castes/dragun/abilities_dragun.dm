@@ -436,10 +436,10 @@
 /datum/action/ability/activable/xeno/dragun_bite/proc/bite_collision(datum/source, mob/living/target)
 	SIGNAL_HANDLER
 	if(valid_victim(target))
-		finish_leap(target)
+		INVOKE_ASYNC(src, PROC_REF(finish_leap), target)
 		return TRUE
 	// Other bodies stop the leap, rather than allowing a bite through them.
-	finish_leap()
+	INVOKE_ASYNC(src, PROC_REF(finish_leap))
 	return TRUE
 
 /datum/action/ability/activable/xeno/dragun_bite/proc/bite_landed()
@@ -448,9 +448,9 @@
 		return
 	for(var/mob/living/carbon/human/target in get_turf(xeno_owner))
 		if(valid_victim(target) && xeno_owner.Adjacent(target))
-			finish_leap(target)
+			INVOKE_ASYNC(src, PROC_REF(finish_leap), target)
 			return
-	finish_leap()
+	INVOKE_ASYNC(src, PROC_REF(finish_leap))
 
 /datum/action/ability/activable/xeno/dragun_bite/proc/finish_leap(mob/living/carbon/human/target)
 	if(!leaping)
@@ -580,15 +580,24 @@
 
 /datum/action/ability/activable/xeno/dragun_taran/proc/obj_hit(datum/source, obj/target, speed)
 	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(handle_obj_hit), target, speed)
+	return TRUE
+
+/datum/action/ability/activable/xeno/dragun_taran/proc/handle_obj_hit(obj/target, speed)
 	if(istype(target, /obj/structure/table))
 		var/obj/structure/table/table = target
 		table.deconstruct(FALSE)
 		return TRUE
 	target.hitby(xeno_owner, speed)
-	charge_complete()
+	INVOKE_ASYNC(src, PROC_REF(charge_complete))
+	return TRUE
 
 /datum/action/ability/activable/xeno/dragun_taran/proc/mob_hit(datum/source, mob/living/target)
 	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(handle_mob_hit), target)
+	return TRUE
+
+/datum/action/ability/activable/xeno/dragun_taran/proc/handle_mob_hit(mob/living/target)
 	if(target.stat == DEAD || isxeno(target))
 		return TRUE
 	target.take_overall_damage(DRAGUN_SLASH_DAMAGE * xeno_owner.xeno_melee_damage_modifier, BRUTE, MELEE, max_limbs = 5, updating_health = TRUE)
@@ -604,6 +613,9 @@
 
 /datum/action/ability/activable/xeno/dragun_taran/proc/charge_complete()
 	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(complete_charge))
+
+/datum/action/ability/activable/xeno/dragun_taran/proc/complete_charge()
 	UnregisterSignal(xeno_owner, list(COMSIG_XENO_OBJ_THROW_HIT, COMSIG_XENOMORPH_LEAP_BUMP, COMSIG_MOVABLE_POST_THROW))
 	xeno_owner.xeno_flags &= ~XENO_LEAPING
 	var/mob/living/carbon/xenomorph/dragun/dragun_owner = xeno_owner
