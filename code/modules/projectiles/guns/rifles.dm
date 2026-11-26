@@ -3299,8 +3299,8 @@
 // Lok
 
 /obj/item/weapon/gun/rifle/lok
-	name = "\improper Lok-0.5 Smart Rifle"
-	desc = "A high-end PDW fitted with a semi-intelligent AI core and several sophisticated tracking systems. Hold right-click to lock targets, release to fire guided rounds."
+	name = "\improper Lok-0.5 Guide Rifle"
+	desc = "A high-end rifle fitted with a semi-intelligent AI core and several sophisticated tracking systems. Hold right-click to lock targets, release to fire guided rounds."
 	icon = 'icons/obj/items/gun/lok64.dmi'
 	icon_state = "lok"
 	worn_icon_list = list(
@@ -3325,7 +3325,6 @@
 	)
 	attachable_offset = list("rail_x" = 15, "rail_y" = 21)
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_AMMO_COUNTER|GUN_SMOKE_PARTICLES|GUN_WIELDED_FIRING_ONLY
-	gun_skill_category = SKILL_ENGINEER
 	fire_delay = 0.5 SECONDS
 	burst_delay = 0.15 SECONDS
 	accuracy_mult = 1.2
@@ -3351,7 +3350,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(user.skills.getRating(SKILL_ENGINEER) < SKILL_ENGINEER_ENGI)
+	if(user.skills.getRating(SKILL_LEADERSHIP) < SKILL_LEAD_EXPERT)
 		to_chat(user, span_warning("You don't seem to know how to use [src]..."))
 		return FALSE
 

@@ -790,8 +790,8 @@
 // Lok
 
 /obj/item/ammo_magazine/rifle/lok
-	name = "\improper Lok-0.5 Smart Rifle magazine"
-	desc = "Magazine from the smart rifle Lok-0.5"
+	name = "\improper Lok-0.5 Guide Rifle magazine"
+	desc = "Magazine from the guide rifle Lok-0.5"
 	caliber = CALIBER_GUIDE_ROUNDS
 	icon = 'icons/obj/items/ammo/lok.dmi'
 	icon_state = "lok"
