@@ -249,9 +249,6 @@
 			return FALSE
 	else
 		//Keep structures on the map for collision and interactions.
-		var/obj/structure/loose_thing = wanted
-		if(istype(loose_thing, /obj/structure))
-			loose_thing.anchored = FALSE
 		if(!istype(wanted, /obj))
 			wanted.loc = null
 	become_holo(wanted)
@@ -322,6 +319,11 @@
 	if(isnull(starting))
 		return FALSE
 	flung.forceMove(starting)
+	//take_back() restores the original anchored state for structures. A thrown
+	//structure must be loose or throw_at() will leave it in place.
+	if(istype(flung, /obj/structure))
+		var/obj/structure/thrown_structure = flung
+		thrown_structure.anchored = FALSE
 	var/turf/aimed = throw_turf()
 	if(isnull(aimed))
 		to_chat(user, span_notice("You let [flung] fall at your feet."))
