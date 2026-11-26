@@ -247,3 +247,15 @@
 	name = "\improper Crasher MT/41 'Hephaestus' helmet visor"
 	desc = "The visor attachment of the Crasher MT/41 series modular helmets. This one is designed for the 'Hephaestus' of helmet."
 	icon_state = "hephaestus_visor"
+
+/obj/item/armor_module/armor/icc_trophy_lenses
+	name = "ICC Trophy mask lenses"
+	desc = "A set of protective lenses for the ICC Trophy gas mask."
+	icon = 'icons/mob/modular/masks.dmi'
+	icon_state = "icc_trophy"
+	slot = ATTACHMENT_SLOT_VISOR
+	attach_features_flags = ATTACH_APPLY_ON_MOB|ATTACH_DIFFERENT_MOB_ICON_STATE
+	greyscale_config = /datum/greyscale_config/icc_trophy_lenses
+	greyscale_colors = "#ff0000"
+	colorable_allowed = COLOR_WHEEL_ALLOWED
+	secondary_color = TRUE

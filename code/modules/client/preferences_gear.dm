@@ -64,7 +64,7 @@ GLOBAL_LIST_INIT(gear_datums, populate_gear_list())
 	cost = 3
 	slot = SLOT_HEAD
 
-/datum/gear/beret_green
+/datum/gear/beret_red
 	display_name = "surplus beret (red)"
 	path = /obj/item/clothing/head/tgmcberet/red2
 	cost = 3
@@ -294,4 +294,11 @@ GLOBAL_LIST_INIT(gear_datums, populate_gear_list())
 	path = /obj/item/clothing/under/marine/squad/neck/alpha
 	cost = 2
 	slot = SLOT_W_UNIFORM
+	squad = "Alpha"
+
+/datum/gear/alpha_icc_mask
+	display_name = "Alpha trophy gas mask"
+	path = /obj/item/clothing/mask/gas/icc/trophy
+	cost = 4
+	slot = SLOT_WEAR_MASK
 	squad = "Alpha"

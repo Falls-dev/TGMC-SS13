@@ -1,0 +1,18 @@
+{
+	"icc_trophy": [
+		{
+			"type": "icon_state",
+			"icon_state": "icc_trophy",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	],
+	"icc_trophy_m": [
+		{
+			"type": "icon_state",
+			"icon_state": "icc_trophy_m",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	]
+}
