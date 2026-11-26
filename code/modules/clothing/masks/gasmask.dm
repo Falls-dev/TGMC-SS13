@@ -75,13 +75,13 @@
 	desc = "Captured gas mask used by ICC personnel."
 	icon_state = "icc_trophy"
 	attachments_by_slot = list(ATTACHMENT_SLOT_VISOR)
-	attachments_allowed = list(/obj/item/armor_module/armor/icc_trophy_lenses)
-	starting_attachments = list(/obj/item/armor_module/armor/icc_trophy_lenses)
+	attachments_allowed = list(/obj/item/armor_module/armor/visor/icc_trophy_lenses)
+	starting_attachments = list(/obj/item/armor_module/armor/visor/icc_trophy_lenses)
 
 /obj/item/clothing/mask/gas/icc/trophy/Initialize(mapload)
 	. = ..()
 	if(!length(attachments_by_slot[ATTACHMENT_SLOT_VISOR]))
-		var/obj/item/armor_module/armor/icc_trophy_lenses/lenses = new(src)
+		var/obj/item/armor_module/armor/visor/icc_trophy_lenses/lenses = new(src)
 		SEND_SIGNAL(src, COMSIG_LOADOUT_VENDOR_VENDED_ARMOR_ATTACHMENT, lenses)
 
 /obj/item/clothing/mask/gas/vsd
