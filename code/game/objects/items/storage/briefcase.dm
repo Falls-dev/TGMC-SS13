@@ -96,3 +96,22 @@
 		new /obj/item/inflatable/door(src)
 	for(var/i in 1 to 4)
 		new /obj/item/inflatable/wall(src)
+
+/obj/item/storage/briefcase/anime
+	name = "Anime AK-47 case"
+	desc = "В этом кейсе хранится явно что-то... странное."
+	icon_state = "briefcase_anime"
+	atom_flags = CONDUCT
+	force = 12
+	throw_speed = 1
+	throw_range = 4
+	w_class = WEIGHT_CLASS_BULKY
+
+/obj/item/storage/briefcase/anime/PopulateContents()
+	new /obj/item/weapon/gun/rifle/mpi_km/anime(src)
+	for(var/i in 1 to 8)
+		new /obj/item/ammo_magazine/rifle/mpi_km/anime(src)
+	for(var/i in 1 to 4)
+		new /obj/item/ammo_magazine/rifle/mpi_km/carbine/anime(src)
+	for(var/i in 1 to 3)
+		new /obj/item/ammo_magazine/rifle/mpi_km/extended/anime(src)

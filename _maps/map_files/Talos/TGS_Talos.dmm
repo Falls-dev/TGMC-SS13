@@ -1,4 +1,29 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aaa" = (
+/obj/effect/decal/cleanable/liquid_fuel,
+/obj/effect/turf_decal/warning_stripes/cargo,
+/turf/open/floor/mainship/metal,
+/area/mainship/hallways/hangar)
+"aab" = (
+/obj/machinery/camera/autoname{
+	dir = 8
+	},
+/obj/effect/turf_decal/warning_stripes/cargo,
+/obj/machinery/light/mainship{
+	dir = 4
+	},
+/turf/open/floor/mainship/metal,
+/area/mainship/hallways/hangar)
+"aac" = (
+/obj/machinery/light/mainship{
+	dir = 4
+	},
+/obj/machinery/camera/autoname{
+	dir = 8
+	},
+/obj/effect/turf_decal/warning_stripes/cargo,
+/turf/open/floor/mainship/metal,
+/area/mainship/hallways/hangar)
 "aaK" = (
 /obj/effect/decal/cleanable/liquid_fuel,
 /obj/structure/largecrate/random,
@@ -15884,7 +15909,9 @@
 /area/mainship/hull/starboard_hull)
 "jHL" = (
 /obj/structure/rack,
-/obj/item/tool/soap/nanotrasen,
+/obj/item/storage/briefcase/anime{
+	pixel_y = 19
+	},
 /turf/open/floor/plating,
 /area/mainship/hull/port_hull)
 "jIj" = (
@@ -40636,31 +40663,6 @@
 /turf/open/floor/mainship/metal/full,
 /area/mainship/hull/starboard_hull)
 
-"aaa" = (
-/obj/effect/decal/cleanable/liquid_fuel,
-/obj/effect/turf_decal/warning_stripes/cargo,
-/turf/open/floor/mainship/metal,
-/area/mainship/hallways/hangar)
-"aab" = (
-/obj/machinery/camera/autoname{
-	dir = 8
-	},
-/obj/effect/turf_decal/warning_stripes/cargo,
-/obj/machinery/light/mainship{
-	dir = 4
-	},
-/turf/open/floor/mainship/metal,
-/area/mainship/hallways/hangar)
-"aac" = (
-/obj/machinery/light/mainship{
-	dir = 4
-	},
-/obj/machinery/camera/autoname{
-	dir = 8
-	},
-/obj/effect/turf_decal/warning_stripes/cargo,
-/turf/open/floor/mainship/metal,
-/area/mainship/hallways/hangar)
 (1,1,1) = {"
 dBM
 dBM

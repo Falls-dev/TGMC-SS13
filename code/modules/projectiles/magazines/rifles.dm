@@ -130,6 +130,10 @@
 	aim_speed_mod = 0.1
 	wield_delay_mod = 0.1 SECONDS
 
+/obj/item/ammo_magazine/rifle/mpi_km/anime
+	icon_state = "ak_40_anime"
+	bonus_overlay = "ak_40_anime"
+
 /obj/item/ammo_magazine/rifle/mpi_km/plum
 	desc = "A 7.62x39mm magazine for the Kalashnikov series of firearms. This one had an old plum finish."
 	icon_state = "ak_40_plum"
@@ -153,6 +157,11 @@
 	aim_speed_mod = 0
 	wield_delay_mod = 0
 
+/obj/item/ammo_magazine/rifle/mpi_km/carbine/anime
+	desc = "A 30 round 7.62x39mm magazine for the Kalashnikov series of firearms. This one had an modern black polymer finish."
+	icon_state = "ak_30_anime"
+	bonus_overlay = "ak_30_anime"
+
 /obj/item/ammo_magazine/rifle/mpi_km/carbine/plum
 	desc = "A 30 round 7.62x39mm magazine for the Kalashnikov series of firearms. This one had an old plum finish."
 	icon_state = "ak_30_plum"
@@ -174,6 +183,12 @@
 	max_rounds = 60
 	aim_speed_mod = 0.2
 	wield_delay_mod = 0.2
+
+/obj/item/ammo_magazine/rifle/mpi_km/extended/anime
+	name = "\improper MPi-KM extended anime magazine (7.62x39mm)"
+	desc = "A 60 round 7.62x39mm Kalashnikov magazine. this one is notably heavy."
+	icon_state = "ak47_ext_anime"
+	bonus_overlay = "ak47_ex_anime"
 
 // Marine mags for AK
 /obj/item/ammo_magazine/rifle/type16
