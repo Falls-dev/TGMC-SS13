@@ -12,6 +12,8 @@
 	var/slot
 	///Icon sheet of the attachment overlays
 	var/attach_icon = null
+	/// Optional render layer for the mounted overlay.
+	var/attachment_layer
 	///Proc typepath that is called when this is attached to something.
 	var/on_attach = PROC_REF(on_attach)
 	///Proc typepath that is called when this is detached from something.
@@ -47,7 +49,7 @@
 
 /obj/item/vehicle_module/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/attachment, slot, attach_icon, on_attach, on_detach, null, can_attach, pixel_shift_x, pixel_shift_y, attach_features_flags, attach_delay, detach_delay)
+	AddElement(/datum/element/attachment, slot, attach_icon, on_attach, on_detach, null, can_attach, pixel_shift_x, pixel_shift_y, attach_features_flags, attach_delay, detach_delay, attachment_layer = attachment_layer)
 	AddComponent(/datum/component/attachment_handler, attachments_by_slot, attachments_allowed, starting_attachments = starting_attachments)
 	update_icon()
 

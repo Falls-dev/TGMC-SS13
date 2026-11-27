@@ -489,3 +489,95 @@
 	max_rounds = 5
 	reload_delay = 10
 	icon_state_mini = "mag_dmr"
+
+/obj/item/ammo_magazine/rocket/oneuse/anti_tank
+	default_ammo = /datum/ammo/rocket/recoilless/heat/mech
+
+//-------------------------------------------------------
+//M5 RPG'S MEAN FUCKING COUSIN
+
+/obj/item/ammo_magazine/bike_autocannon
+	name = "mounted AC-32 autocannon ammo rack"
+	desc = "A case filled to the brim with ammunition. Appears custom made to be slotted into a feeding system."
+	icon = 'icons/obj/items/ammo/misc.dmi'
+	icon_state = "minigun"
+	w_class = WEIGHT_CLASS_HUGE
+	default_ammo = /datum/ammo/bullet/bike_autocannon
+	current_rounds = 150
+	max_rounds = 150
+	reload_delay = 0.75 SECONDS
+
+// ICC coilgun
+
+/obj/item/ammo_magazine/bike_minigun
+	name = "mounted V-44 gatling gun ammo rack"
+	desc = "A case filled to the brim with ammunition. Appears custom made to be slotted into a feeding system."
+	icon = 'icons/obj/items/ammo/misc.dmi'
+	icon_state = "minigun"
+	w_class = WEIGHT_CLASS_HUGE
+	default_ammo = /datum/ammo/bullet/minigun_light
+	current_rounds = 750
+	max_rounds = 750
+	reload_delay = 0.75 SECONDS
+
+/obj/item/ammo_magazine/rocket/vsd/heat
+	name = "\improper 84mm HEAT rocket"
+	desc = "An 84mm high-explosive anti-tank rocket for the C153 shoulder launcher."
+	icon_state = "c153_at"
+	default_ammo = /datum/ammo/rocket/som/heat
+	bonus_overlay = "c153_at"
+
+/obj/item/ammo_magazine/railgun/pmc
+	name = "SRX-42 magazine (Armor Piercing Discarding Sabot)"
+	desc = "A magazine holding tungsten projectiles to be used inside a SRX-42 railgun. APDS is written across the magazine. This round will penetrate through most armor, but will not leave much of a hole."
+	icon = 'icons/obj/items/ammo/magazine.dmi'
+	icon_state = "m42r"
+	icon_state_mini = "mag_rifle_big"
+	max_rounds = 4
+
+/obj/item/ammo_magazine/railgun/pmc/smart
+	name = "SRX-42 magazine (Smart Armor Piercing)"
+	desc = "A magazine holding tungsten projectiles to be used inside a SRX-42 railgun. SAP is written across the magazine. This round has poor punching power due to low velocity for the smart ammunition, but will leave a target significantly staggered and stunned due to the impact."
+	icon_state = "m42r_smart"
+	icon_state_mini = "mag_rifle_big_green"
+	default_ammo = /datum/ammo/bullet/railgun/smart
+	bonus_overlay = "m42r_smart"
+
+/obj/item/ammo_magazine/railgun/pmc/hvap
+	name = "SRX-42 magazine (High Velocity Armor Piercing)"
+	desc = "A magazine holding tungsten projectiles to be used inside a SRX-42 railgun. HVAP is written across the magazine. This round has less punching power than other railgun canister types, but will leave a sizeable hole in the targets armor."
+	icon_state = "m42r_hvap"
+	icon_state_mini = "mag_rifle_big_blue"
+	default_ammo = /datum/ammo/bullet/railgun/hvap
+	bonus_overlay = "m42r_hvap"
+
+/obj/item/ammo_magazine/rifle/vsd_autocannon
+	name = "CC/AT32 Autocannon canister"
+	desc = "A canister of 20mm high-velocity rounds for the CC/AT32."
+	caliber = CALIBER_20
+	icon = 'icons/obj/items/ammo/stationary.dmi'
+	icon_state = "at32"
+	default_ammo = /datum/ammo/bullet/auto_cannon
+	max_rounds = 30
+	reload_delay = 25
+	icon_state_mini = "mag_dmr"
+
+/obj/item/ammo_magazine/rifle/vsd_autocannon/explosive
+	name = "CC/AT32 Autocannon High Explosive canister"
+	desc = "A canister of 40mm high-explosive rounds for the CC/AT32."
+	caliber = CALIBER_20
+	icon_state = "at32_he"
+	default_ammo = /datum/ammo/bullet/auto_cannon/flak
+	max_rounds = 30
+	reload_delay = 25
+	icon_state_mini = "mag_dmr"
+
+/obj/item/ammo_magazine/rifle/vsd_autocannon/at
+	name = "CC/AT32 Autocannon Solid Shot canister"
+	desc = "A canister of 20mm solid-shot rounds for the CC/AT32."
+	caliber = CALIBER_20
+	icon_state = "at32_at"
+	default_ammo = /datum/ammo/bullet/auto_cannon/anti_tank
+	max_rounds = 30
+	reload_delay = 25
+	icon_state_mini = "mag_dmr"

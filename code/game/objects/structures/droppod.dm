@@ -245,6 +245,15 @@ GLOBAL_LIST_INIT(blocked_droppod_tiles, typecacheof(list(/turf/open/space/transi
 /// Moves the droppod into its target turf, which it updates if needed
 /obj/structure/droppod/proc/finish_drop(mob/user)
 	var/turf/targetturf = locate(target_x, target_y, target_z)
+	if(try_erp_ads_intercept(targetturf, src, GLOB.ads_intercept_range))
+		if(user)
+			balloon_alert(user, "under fire, brace for impact!")
+		var/list/turf/new_landing_sites = list()
+		for(var/turf/site in range(15, targetturf))
+			if(site != targetturf && checklanding(null, site))
+				new_landing_sites += site
+		if(length(new_landing_sites))
+			targetturf = pick(new_landing_sites)
 	for(var/a in targetturf.contents)
 		var/atom/target = a
 		if(target.density)	//if theres something dense in the turf try to recalculate a new turf

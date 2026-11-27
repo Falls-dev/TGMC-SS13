@@ -331,6 +331,8 @@
 		var/pixel_shift_x = attachment_data[PIXEL_SHIFT_X] ? attachment_data[PIXEL_SHIFT_X] : 0 //This also is incase the attachments pixel_shift_x and y are null. If so it defaults to 0.
 		var/pixel_shift_y = attachment_data[PIXEL_SHIFT_Y] ? attachment_data[PIXEL_SHIFT_Y] : 0
 
+		if(isvehicle(parent_obj) && attachment_data[ATTACHMENT_LAYER])
+			overlay.layer = attachment_data[ATTACHMENT_LAYER]
 		overlay.pixel_x = slot_x - pixel_shift_x
 		overlay.pixel_y = slot_y - pixel_shift_y
 
@@ -369,7 +371,8 @@
 			else
 				icon = attachment_data[OVERLAY_ICON]
 				suffix = attachment.icon == icon ? "_a" : ""
-		var/mutable_appearance/new_overlay = mutable_appearance(icon, icon_state + suffix, attachment_data[ATTACHMENT_LAYER])
+		var/overlay_layer = attachment_data[ATTACHMENT_LAYER] || FLOAT_LAYER
+		var/mutable_appearance/new_overlay = mutable_appearance(icon, icon_state + suffix, overlay_layer)
 		if(CHECK_BITFIELD(attachment_data[FLAGS_ATTACH_FEATURES], ATTACH_SAME_ICON))
 			new_overlay.overlays += attachment.overlays
 		if(attachment_data[MOB_PIXEL_SHIFT_X])

@@ -146,3 +146,25 @@
 	. = ..()
 	var/mutable_appearance/emissive_overlay = emissive_appearance(icon_used, "[state_used]_emissive", src)
 	standing.overlays.Add(emissive_overlay)
+
+/obj/item/weapon/energy/sword/ntc
+	name = "esable"
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "esword"
+	worn_icon_state = "sword"
+	desc = "A TerraGov energy saber with a collapsible red blade designed to cut through armor."
+	force_activated = 50
+	sword_color = "red"
+
+/obj/item/weapon/energy/sword/ntc/Initialize(mapload)
+	. = ..()
+	set_light_range_power_color(2, 0.5, COLOR_RED)
+
+/obj/item/weapon/energy/sword/ntc/switch_state(datum/source, mob/living/user)
+	. = ..()
+	worn_icon_state = active ? "sword_red" : "sword"
+	if(active)
+		icon_state = "esword-red"
+		set_light_on(TRUE)
+	else
+		set_light_on(FALSE)

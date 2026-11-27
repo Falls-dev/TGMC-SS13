@@ -1,3 +1,64 @@
+/obj/item/command_tablet
+	name = "command tablet"
+	desc = "A portable Commanding Officer's Tablet. Opens a remote session on the ship's communications console."
+	icon = 'icons/obj/items/command_tablet.dmi'
+	icon_state = "Cotablet"
+	w_class = WEIGHT_CLASS_SMALL
+	equip_slot_flags = ITEM_SLOT_POCKET
+	resistance_flags = UNACIDABLE|INDESTRUCTIBLE
+	/// The physical console providing the communications session.
+	var/obj/machinery/computer/communications/linked_console
+
+/obj/item/command_tablet/attack_self(mob/user)
+	if(!has_command_access(user))
+		balloon_alert(user, "access denied")
+		return
+	ui_interact(user)
+
+/obj/item/command_tablet/proc/has_command_access(mob/living/carbon/human/user)
+	if(!ishuman(user) || !ismarinecaptainjob(user.job))
+		return FALSE
+	var/obj/item/card/id/id_card = user.get_idcard(hand_first = FALSE)
+	return id_card && (ACCESS_MARINE_CAPTAIN in id_card.access)
+
+/obj/item/command_tablet/ui_state(mob/user)
+	return GLOB.hands_state
+
+/obj/item/command_tablet/ui_status(mob/user, datum/ui_state/state)
+	if(!has_command_access(user) || QDELETED(linked_console) || !linked_console.is_operational())
+		return UI_CLOSE
+	return ..()
+
+/obj/item/command_tablet/ui_interact(mob/user, datum/tgui/ui)
+	if(!has_command_access(user))
+		return
+	if(QDELETED(linked_console) || !linked_console.is_operational())
+		linked_console = null
+		for(var/obj/machinery/computer/communications/console in GLOB.machines)
+			if(!console.is_operational() || !is_mainship_level(console.z))
+				continue
+			linked_console = console
+			break
+	if(!linked_console)
+		balloon_alert(user, "no communications link")
+		return
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "CommunicationsConsole", name)
+		ui.open()
+
+/obj/item/command_tablet/ui_static_data(mob/user)
+	return linked_console?.ui_static_data(user)
+
+/obj/item/command_tablet/ui_data(mob/user)
+	return linked_console?.ui_data(user)
+
+/obj/item/command_tablet/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(. || ui_status(ui.user, state) != UI_INTERACTIVE)
+		return TRUE
+	return linked_console.ui_act(action, params, ui, state)
+
 /obj/item/hud_tablet
 	name = "hud tablet"
 	desc = "A tablet with a live feed to a number of headset cameras"

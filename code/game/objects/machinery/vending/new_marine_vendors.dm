@@ -525,6 +525,9 @@
 
 /obj/effect/vendor_bundle/leader
 	gear_to_spawn = list(
+		/obj/item/weapon/gun/pistol/xmdivider/ntc,
+		/obj/item/ammo_magazine/pistol/ntunity,
+		/obj/item/ammo_magazine/pistol/ntunity,
 		/obj/item/explosive/plastique,
 		/obj/item/supply_beacon,
 		/obj/item/supply_beacon,

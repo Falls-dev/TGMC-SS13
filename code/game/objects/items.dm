@@ -15,7 +15,9 @@
 	/// e.g. most headsets have different icon_state but they all use the same sprite when shown on the mob's ears.
 	/// also useful for items with many icon_state values when you don't want to make an inhand sprite for each value.
 	var/worn_icon_state = null
-	/// The icon state used to represent this image in "icons/obj/items/items_mini.dmi" Used in /obj/item/storage/box/visual to display tiny items in the box
+	/// Icon file used to display this item inside a visual storage box.
+	var/icon_mini = 'icons/obj/items/items_mini.dmi'
+	/// Icon state used to display this item inside a visual storage box.
 	var/icon_state_mini = "item"
 	/// Byond tick delay between left click attacks
 	var/attack_speed = 11

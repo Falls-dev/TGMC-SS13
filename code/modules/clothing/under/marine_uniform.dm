@@ -691,3 +691,9 @@
 
 /obj/item/clothing/under/vsd/sleeveless/webbing
 	starting_attachments = list(/obj/item/armor_module/storage/uniform/black_vest)
+
+/obj/item/clothing/under/marine/medic/corpman_vest
+	starting_attachments = list(/obj/item/armor_module/storage/uniform/white_vest)
+
+/obj/item/clothing/under/marine/medic
+	parent_type = /obj/item/clothing/under/marine/corpsman

@@ -82,3 +82,5 @@
 #define SLOWDOWN_IMPEDE_JETPACK (1<<0) //Reduce the range of jetpack
 
 #define MOVESPEED_ID_YAUTJA_SHIELD "YAUTJA_SHIELD"
+
+#define MOVESPEED_ID_POXOMELANIN "TOX_POX"

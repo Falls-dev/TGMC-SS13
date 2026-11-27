@@ -848,7 +848,7 @@
 	belt_contents = list(
 		/obj/item/explosive/grenade = 3,
 		/obj/item/explosive/grenade/smokebomb = 2,
-		/obj/item/explosive/grenade/incendiary = 2,
+		/obj/item/explosive/grenade/ionplasma = 2,
 	)
 	// no backpack — cap in suit pockets
 	suit_contents = list(

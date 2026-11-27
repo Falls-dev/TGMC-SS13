@@ -91,3 +91,16 @@
 
 	var/mob/living/living_victim = target_mob
 	living_victim.apply_status_effect(STATUS_EFFECT_SHATTER, shatter_duration)
+
+/datum/ammo/bullet/auto_cannon/anti_tank
+	name = "autocannon solid-shot bullet"
+	hud_state = "railgun_hvap"
+	ammo_behavior_flags = AMMO_BALLISTIC|AMMO_TARGET_TURF
+	damage = 50
+	penetration = 30
+	sundering = 17.5
+	shrapnel_chance = 25
+	autocannon_wall_bonus = 100
+
+/datum/ammo/bullet/auto_cannon/anti_tank/on_hit_mob(mob/target_mob, atom/movable/projectile/proj)
+	staggerstun(target_mob, proj, stagger = 2.5 SECONDS, slowdown = 1.5)

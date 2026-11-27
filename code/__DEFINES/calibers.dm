@@ -98,3 +98,7 @@
 #define CALIBER_11X35 "11x35mm"
 #define CALIBER_ANTIMATTER "antimatter" //BFG
 #define CALIBER_105MM "105mm" //MBT Main Cannon
+
+#define CALIBER_93MM "93mm rocket"
+
+#define CALIBER_98x22 "9.8x22mm"

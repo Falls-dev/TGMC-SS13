@@ -48,6 +48,12 @@
 	contains = list(/obj/item/tool/handheld_charger)
 	cost = 80
 
+/datum/supply_packs/engineering/field_charger
+	name = "Terra Experimental cell field charger"
+	contains = list(/obj/machinery/vending/lasgun)
+	cost = 1000
+	containertype = null
+
 /datum/supply_packs/engineering/plasmacutter
 	name = "Plasma cutter"
 	contains = list(/obj/item/tool/pickaxe/plasmacutter/)
