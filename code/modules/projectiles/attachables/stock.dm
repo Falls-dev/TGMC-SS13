@@ -33,6 +33,12 @@
 	pixel_shift_x = 32
 	pixel_shift_y = 13
 
+/obj/item/attachable/stock/mpi_km/anime
+	name = "MPi-KM polymer stock"
+	desc = "A blue polymer stock, made to fit the MPi-KM."
+	icon_state = "ak47stock_anime"
+
+
 /obj/item/attachable/stock/mpi_km/black
 	name = "MPi-KM polymer stock"
 	desc = "A black polymer stock, made to fit the MPi-KM."
