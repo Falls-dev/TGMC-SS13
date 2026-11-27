@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;controller&#x2F;subsystem&#x2F;discord - byond</title>
+</head>
+<body>
+<header>
+    <a href="index.html">byond</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/controller/subsystem/discord.html#var">Var Details</a> - <a href="datum/controller/subsystem/discord.html#proc">Proc Details</a></header>
+<main>
+<h1>discord <aside>/<a href="datum.html">datum</a>/<a href="datum/controller/subsystem.html">controller/subsystem</a>/<a href="datum/controller/subsystem/discord.html">discord</a></aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/controllers/subsystem/discord.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;discord.dm 28"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/controller/subsystem/discord.html#var/account_link_cache">account_link_cache</a></th><td>List that holds accounts to link, used in conjunction with TGS</td></tr>
+            <tr><th><a href="datum/controller/subsystem/discord.html#var/boosty_cache">boosty_cache</a></th><td>list of people who tried to use Boosty styff, so we don't call the API every time</td></tr>
+            <tr><th><a href="datum/controller/subsystem/discord.html#var/boosty_overrides">boosty_overrides</a></th><td>Manual Boosty tier overrides from config/boosty.txt (ckey = tier)</td></tr>
+            <tr><th><a href="datum/controller/subsystem/discord.html#var/enabled">enabled</a></th><td>Is TGS enabled (If not we won't fire because otherwise this is useless)</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/controller/subsystem/discord.html#proc/aperture_api_get">aperture_api_get</a></th><td>ÐÑÐ¿Ð¾Ð»Ð½ÑÐµÑ GET-Ð·Ð°Ð¿ÑÐ¾Ñ Ðº KAIN API
+ÐÐ¾Ð·Ð²ÑÐ°ÑÐ°ÐµÑ http_response ÐµÑÐ»Ð¸ Ð¿ÑÐ¸ÑÑÐ» ÑÑÐ¿ÐµÑÐ½ÑÐ¹ Ð¾ÑÐ²ÐµÑ
+ÐÐ»Ð¸ Ð²Ð¾Ð·Ð²ÑÐ°ÑÐ°ÐµÑ null ÐµÑÐ»Ð¸ API Ð½Ðµ Ð½Ð°ÑÑÑÐ¾ÐµÐ½ Ð»Ð¸Ð±Ð¾ Ð·Ð°Ð¿ÑÐ¾Ñ Ð½Ðµ ÑÐ´Ð°Ð»ÑÑ</td></tr>
+            <tr><th><a href="datum/controller/subsystem/discord.html#proc/build_aperture_api_url">build_aperture_api_url</a></th><td>Ð¤Ð¾ÑÐ¼Ð¸ÑÑÐµÑ URL Ð°Ð´ÑÐµÑ Ð´Ð»Ñ GET-Ð·Ð°Ð¿ÑÐ¾ÑÐ° Ðº KAIN API</td></tr>
+            <tr><th><a href="datum/controller/subsystem/discord.html#proc/get_boosty_tier">get_boosty_tier</a></th><td>ÐÐ¾Ð·Ð²ÑÐ°ÑÐ°ÐµÑ ÑÑÐ¾Ð²ÐµÐ½Ñ Boosty
+ÐÑÐ»Ð¸ &quot;fail_null&quot; ÑÐ°Ð²ÐµÐ½ <code>TRUE</code> ÑÐ¾ Ð¿ÑÐ¸ Ð¾ÑÐ¸Ð±ÐºÐ°Ñ Ð²Ð¾Ð·Ð²ÑÐ°ÑÐ°ÐµÑÑÑ &quot;null&quot;, Ð¸Ð½Ð°ÑÐµ Ð²Ð¾Ð·Ð²ÑÐ°ÑÐ°ÐµÑÑÑ &quot;BOOSTY_TIER_0&quot;
+ÐÐµÐ»Ð°ÑÐµÐ»ÑÐ½Ð¾ &quot;fail_null&quot; ÑÑÐ°Ð²Ð¸ÑÑ Ð² Ð·Ð½Ð°ÑÐµÐ½Ð¸Ðµ &quot;FALSE&quot; ÑÑÐ¾Ð±Ñ Ð½Ðµ ÑÑÐ°Ð»Ð¾ Ð¾ÑÐ¸Ð±ÐºÐ°Ð¼Ð¸</td></tr>
+            <tr><th><a href="datum/controller/subsystem/discord.html#proc/is_aperture_api_configured">is_aperture_api_configured</a></th><td>Ð§ÐµÐºÐµÑ Ð½Ð° ÑÐ¾, Ð½Ð°ÑÑÑÐ¾ÐµÐ½ Ð»Ð¸ KAIN API</td></tr>
+            <tr><th><a href="datum/controller/subsystem/discord.html#proc/load_boosty_overrides">load_boosty_overrides</a></th><td>Loads manual Boosty tier overrides from config/boosty.txt</td></tr>
+            <tr><th><a href="datum/controller/subsystem/discord.html#proc/lookup_registration">lookup_registration</a></th><td>ÐÑÐ¿Ð¾Ð»Ð½ÑÐµÑ Ð¿Ð¾Ð¸ÑÐº ÑÐµÐ³Ð¸ÑÑÑÐ°ÑÐ¸Ð¸ Ð² Discord ÑÐµÑÐµÐ· Ð¿Ð¾ Ð°ÑÐ³ÑÐ¼ÐµÐ½ÑÑ/search
+ÐÐ°ÑÐ¸Ð°Ð½ÑÑ Ð¾ÑÐ²ÐµÑÐ°:</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/account_link_cache"><aside class="declaration">var </aside>account_link_cache
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/controllers/subsystem/discord.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;discord.dm 33"/></a></h3>
+        <p>List that holds accounts to link, used in conjunction with TGS</p><h3 id="var/boosty_cache"><aside class="declaration">var </aside>boosty_cache
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/controllers/subsystem/discord.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;discord.dm 35"/></a></h3>
+        <p>list of people who tried to use Boosty styff, so we don't call the API every time</p><h3 id="var/boosty_overrides"><aside class="declaration">var </aside>boosty_overrides
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/controllers/subsystem/discord.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;discord.dm 37"/></a></h3>
+        <p>Manual Boosty tier overrides from config/boosty.txt (ckey = tier)</p><h3 id="var/enabled"><aside class="declaration">var </aside>enabled
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/controllers/subsystem/discord.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;discord.dm 39"/></a></h3>
+        <p>Is TGS enabled (If not we won't fire because otherwise this is useless)</p><h2 id="proc">Proc Details</h2><h3 id="proc/aperture_api_get"><aside class="declaration">proc </aside>aperture_api_get<aside>(endpoint, lookup_ckey) 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/controllers/subsystem/discord.dm#L144">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;discord.dm 144"/></a></aside>
+        </h3>
+        <p>ÐÑÐ¿Ð¾Ð»Ð½ÑÐµÑ GET-Ð·Ð°Ð¿ÑÐ¾Ñ Ðº KAIN API
+ÐÐ¾Ð·Ð²ÑÐ°ÑÐ°ÐµÑ http_response ÐµÑÐ»Ð¸ Ð¿ÑÐ¸ÑÑÐ» ÑÑÐ¿ÐµÑÐ½ÑÐ¹ Ð¾ÑÐ²ÐµÑ
+ÐÐ»Ð¸ Ð²Ð¾Ð·Ð²ÑÐ°ÑÐ°ÐµÑ null ÐµÑÐ»Ð¸ API Ð½Ðµ Ð½Ð°ÑÑÑÐ¾ÐµÐ½ Ð»Ð¸Ð±Ð¾ Ð·Ð°Ð¿ÑÐ¾Ñ Ð½Ðµ ÑÐ´Ð°Ð»ÑÑ</p><h3 id="proc/build_aperture_api_url"><aside class="declaration">proc </aside>build_aperture_api_url<aside>(endpoint, lookup_ckey) 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/controllers/subsystem/discord.dm#L133">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;discord.dm 133"/></a></aside>
+        </h3>
+        <p>Ð¤Ð¾ÑÐ¼Ð¸ÑÑÐµÑ URL Ð°Ð´ÑÐµÑ Ð´Ð»Ñ GET-Ð·Ð°Ð¿ÑÐ¾ÑÐ° Ðº KAIN API</p><h3 id="proc/get_boosty_tier"><aside class="declaration">proc </aside>get_boosty_tier<aside>(ckey, fail_null) 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/controllers/subsystem/discord.dm#L194">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;discord.dm 194"/></a></aside>
+        </h3>
+        <p>ÐÐ¾Ð·Ð²ÑÐ°ÑÐ°ÐµÑ ÑÑÐ¾Ð²ÐµÐ½Ñ Boosty
+ÐÑÐ»Ð¸ &quot;fail_null&quot; ÑÐ°Ð²ÐµÐ½ <code>TRUE</code> ÑÐ¾ Ð¿ÑÐ¸ Ð¾ÑÐ¸Ð±ÐºÐ°Ñ Ð²Ð¾Ð·Ð²ÑÐ°ÑÐ°ÐµÑÑÑ &quot;null&quot;, Ð¸Ð½Ð°ÑÐµ Ð²Ð¾Ð·Ð²ÑÐ°ÑÐ°ÐµÑÑÑ &quot;BOOSTY_TIER_0&quot;
+ÐÐµÐ»Ð°ÑÐµÐ»ÑÐ½Ð¾ &quot;fail_null&quot; ÑÑÐ°Ð²Ð¸ÑÑ Ð² Ð·Ð½Ð°ÑÐµÐ½Ð¸Ðµ &quot;FALSE&quot; ÑÑÐ¾Ð±Ñ Ð½Ðµ ÑÑÐ°Ð»Ð¾ Ð¾ÑÐ¸Ð±ÐºÐ°Ð¼Ð¸</p><h3 id="proc/is_aperture_api_configured"><aside class="declaration">proc </aside>is_aperture_api_configured<aside>() 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/controllers/subsystem/discord.dm#L129">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;discord.dm 129"/></a></aside>
+        </h3>
+        <p>Ð§ÐµÐºÐµÑ Ð½Ð° ÑÐ¾, Ð½Ð°ÑÑÑÐ¾ÐµÐ½ Ð»Ð¸ KAIN API</p><h3 id="proc/load_boosty_overrides"><aside class="declaration">proc </aside>load_boosty_overrides<aside>(filename) 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/controllers/subsystem/discord.dm#L108">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;discord.dm 108"/></a></aside>
+        </h3>
+        <p>Loads manual Boosty tier overrides from config/boosty.txt</p><h3 id="proc/lookup_registration"><aside class="declaration">proc </aside>lookup_registration<aside>(lookup_ckey) 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/controllers/subsystem/discord.dm#L160">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;discord.dm 160"/></a></aside>
+        </h3>
+        <p>ÐÑÐ¿Ð¾Ð»Ð½ÑÐµÑ Ð¿Ð¾Ð¸ÑÐº ÑÐµÐ³Ð¸ÑÑÑÐ°ÑÐ¸Ð¸ Ð² Discord ÑÐµÑÐµÐ· Ð¿Ð¾ Ð°ÑÐ³ÑÐ¼ÐµÐ½ÑÑ/search
+ÐÐ°ÑÐ¸Ð°Ð½ÑÑ Ð¾ÑÐ²ÐµÑÐ°:</p>
+<ul>
+<li>ÐÑÐ»Ð¸ Ð½Ð¸ÑÐµÐ³Ð¾ Ð½Ðµ Ð½Ð°Ð¹Ð´ÐµÐ½Ð¾ ÑÐ¾ 0</li>
+<li>ÐÑÐ»Ð¸ Ð½Ð°Ð¹Ð´ÐµÐ½Ð¾ ÑÐ¾ ÑÐ¿Ð¸ÑÐ¾Ðº JSON</li>
+<li>ÐÑÐ»Ð¸ Ð¾ÑÐ¸Ð±ÐºÐ° ÑÐ¾ null</li>
+</ul></main>
+<footer>
+    tgmc.dme
+    <a href="https://github.com/Falls-dev/TGMC-SS13/tree/964f9fac822d409e7176d5673750f0473bb15ced">964f9fa</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

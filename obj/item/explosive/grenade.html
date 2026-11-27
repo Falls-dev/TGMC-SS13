@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;explosive&#x2F;grenade - byond</title>
+</head>
+<body>
+<header>
+    <a href="index.html">byond</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/explosive/grenade.html#var">Var Details</a> - <a href="obj/item/explosive/grenade.html#proc">Proc Details</a></header>
+<main>
+<h1>grenade <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/explosive/grenade.html">explosive/grenade</a></aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/game/objects/items/explosives/grenades/grenade.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;explosives&#x2F;grenades&#x2F;grenade.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/explosive/grenade.html#var/arm_sound">arm_sound</a></th><td>ÐÐ²ÑÐº ÑÐµÐºÐ¸ Ñ Ð³ÑÐ°Ð½Ð°ÑÑ</td></tr>
+            <tr><th><a href="obj/item/explosive/grenade.html#var/dangerous">dangerous</a></th><td>Does it make a danger overlay for humans? Can synths use it?</td></tr>
+            <tr><th><a href="obj/item/explosive/grenade.html#var/det_timer">det_timer</a></th><td>The actual timer for the grenade</td></tr>
+            <tr><th><a href="obj/item/explosive/grenade.html#var/falloff">falloff</a></th><td>Falloff of our explosion, aka distance, by the formula of power / falloff</td></tr>
+            <tr><th><a href="obj/item/explosive/grenade.html#var/groundhit_sound">groundhit_sound</a></th><td>ÐÐ²ÑÐº ÑÐ´Ð°ÑÐ° Ð³ÑÐ°Ð½Ð°ÑÑ Ð¾Ð± Ð»ÑÐ±Ð¾Ð¹ ÑÑÑÑ</td></tr>
+            <tr><th><a href="obj/item/explosive/grenade.html#var/groundhit_sound_is_playable">groundhit_sound_is_playable</a></th><td>ÐÑÐ´ÐµÑ Ð»Ð¸ Ð¿ÑÐ¾Ð¸Ð³ÑÑÐ²Ð°ÑÑÑÑ Ð·Ð²ÑÐº ÑÐ´Ð°ÑÐ° Ð¾Ð± Ð¿Ð¾Ð» (groundhit_sound)</td></tr>
+            <tr><th><a href="obj/item/explosive/grenade.html#var/launched">launched</a></th><td>if launched from a UGL/grenade launcher</td></tr>
+            <tr><th><a href="obj/item/explosive/grenade.html#var/launchforce">launchforce</a></th><td>bonus impact damage if launched from a UGL/grenade launcher</td></tr>
+            <tr><th><a href="obj/item/explosive/grenade.html#var/power">power</a></th><td>Power of the explosion</td></tr>
+            <tr><th><a href="obj/item/explosive/grenade.html#var/throw_sound">throw_sound</a></th><td>ÐÐ²ÑÐº Ð±ÑÐ¾ÑÐºÐ° Ð³ÑÐ°Ð½Ð°ÑÑ</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/explosive/grenade.html#proc/activate">activate</a></th><td>Activates the grenade</td></tr>
+            <tr><th><a href="obj/item/explosive/grenade.html#proc/launched_det_time">launched_det_time</a></th><td>Adjusts det time, used for grenade launchers</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/arm_sound"><aside class="declaration">var </aside>arm_sound
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/game/objects/items/explosives/grenades/grenade.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;explosives&#x2F;grenades&#x2F;grenade.dm 28"/></a></h3>
+        <p>ÐÐ²ÑÐº ÑÐµÐºÐ¸ Ñ Ð³ÑÐ°Ð½Ð°ÑÑ</p><h3 id="var/dangerous"><aside class="declaration">var </aside>dangerous
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/game/objects/items/explosives/grenades/grenade.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;explosives&#x2F;grenades&#x2F;grenade.dm 24"/></a></h3>
+        <p>Does it make a danger overlay for humans? Can synths use it?</p><h3 id="var/det_timer"><aside class="declaration">var </aside>det_timer
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/game/objects/items/explosives/grenades/grenade.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;explosives&#x2F;grenades&#x2F;grenade.dm 49"/></a></h3>
+        <p>The actual timer for the grenade</p><h3 id="var/falloff"><aside class="declaration">var </aside>falloff
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/game/objects/items/explosives/grenades/grenade.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;explosives&#x2F;grenades&#x2F;grenade.dm 44"/></a></h3>
+        <p>Falloff of our explosion, aka distance, by the formula of power / falloff</p><h3 id="var/groundhit_sound"><aside class="declaration">var </aside>groundhit_sound
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/game/objects/items/explosives/grenades/grenade.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;explosives&#x2F;grenades&#x2F;grenade.dm 37"/></a></h3>
+        <p>ÐÐ²ÑÐº ÑÐ´Ð°ÑÐ° Ð³ÑÐ°Ð½Ð°ÑÑ Ð¾Ð± Ð»ÑÐ±Ð¾Ð¹ ÑÑÑÑ</p><h3 id="var/groundhit_sound_is_playable"><aside class="declaration">var </aside>groundhit_sound_is_playable
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/game/objects/items/explosives/grenades/grenade.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;explosives&#x2F;grenades&#x2F;grenade.dm 26"/></a></h3>
+        <p>ÐÑÐ´ÐµÑ Ð»Ð¸ Ð¿ÑÐ¾Ð¸Ð³ÑÑÐ²Ð°ÑÑÑÑ Ð·Ð²ÑÐº ÑÐ´Ð°ÑÐ° Ð¾Ð± Ð¿Ð¾Ð» (groundhit_sound)</p><h3 id="var/launched"><aside class="declaration">var </aside>launched
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/game/objects/items/explosives/grenades/grenade.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;explosives&#x2F;grenades&#x2F;grenade.dm 19"/></a></h3>
+        <p>if launched from a UGL/grenade launcher</p><h3 id="var/launchforce"><aside class="declaration">var </aside>launchforce
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/game/objects/items/explosives/grenades/grenade.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;explosives&#x2F;grenades&#x2F;grenade.dm 21"/></a></h3>
+        <p>bonus impact damage if launched from a UGL/grenade launcher</p><h3 id="var/power"><aside class="declaration">var </aside>power
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/game/objects/items/explosives/grenades/grenade.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;explosives&#x2F;grenades&#x2F;grenade.dm 42"/></a></h3>
+        <p>Power of the explosion</p><h3 id="var/throw_sound"><aside class="declaration">var </aside>throw_sound
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/game/objects/items/explosives/grenades/grenade.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;explosives&#x2F;grenades&#x2F;grenade.dm 35"/></a></h3>
+        <p>ÐÐ²ÑÐº Ð±ÑÐ¾ÑÐºÐ° Ð³ÑÐ°Ð½Ð°ÑÑ</p><h2 id="proc">Proc Details</h2><h3 id="proc/activate"><aside class="declaration">proc </aside>activate<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/game/objects/items/explosives/grenades/grenade.dm#L94">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;explosives&#x2F;grenades&#x2F;grenade.dm 94"/></a></aside>
+        </h3>
+        <p>Activates the grenade</p><h3 id="proc/launched_det_time"><aside class="declaration">proc </aside>launched_det_time<aside>() 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/game/objects/items/explosives/grenades/grenade.dm#L134">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;explosives&#x2F;grenades&#x2F;grenade.dm 134"/></a></aside>
+        </h3>
+        <p>Adjusts det time, used for grenade launchers</p></main>
+<footer>
+    tgmc.dme
+    <a href="https://github.com/Falls-dev/TGMC-SS13/tree/964f9fac822d409e7176d5673750f0473bb15ced">964f9fa</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

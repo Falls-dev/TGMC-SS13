@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;door - byond</title>
+</head>
+<body>
+<header>
+    <a href="index.html">byond</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/door.html#var">Var Details</a> - <a href="obj/machinery/door.html#proc">Proc Details</a></header>
+<main>
+<h1>door <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/door.html">door</a></aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/game/objects/machinery/doors/door.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;machinery&#x2F;doors&#x2F;door.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/door.html#var/cycle_linked_airlock">cycle_linked_airlock</a></th><td>What airlock we are linked with</td></tr>
+            <tr><th><a href="obj/machinery/door.html#var/cyclelinkeddir">cyclelinkeddir</a></th><td>Bool for determining linked state</td></tr>
+            <tr><th><a href="obj/machinery/door.html#var/emergency">emergency</a></th><td>Used for determining emergency access</td></tr>
+            <tr><th><a href="obj/machinery/door.html#var/not_weldable">not_weldable</a></th><td>Stops people welding the door if true</td></tr>
+            <tr><th><a href="obj/machinery/door.html#var/openspeed">openspeed</a></th><td>How many seconds does it take to open it? Use only if you have long door opening animations</td></tr>
+            <tr><th><a href="obj/machinery/door.html#var/secondsElectrified">secondsElectrified</a></th><td>How many seconds remain until the door is no longer electrified. -1 if it is permanently electrified until someone fixes it.</td></tr>
+            <tr><th><a href="obj/machinery/door.html#var/unres_sides">unres_sides</a></th><td>Unrestricted sides. A bitflag for which direction (if any) can open the door with no access</td></tr>
+            <tr><th><a href="obj/machinery/door.html#var/width">width</a></th><td>Multi-tile doors</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/door.html#proc/unrestricted_side">unrestricted_side</a></th><td>Allows for specific sides of airlocks to be unrestricted (IE, can exit maint freely, but need access to enter)</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/cycle_linked_airlock"><aside class="declaration">var </aside>cycle_linked_airlock
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/door.html">door</a>/<a href="obj/machinery/door/airlock.html">airlock</a></aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/game/objects/machinery/doors/door.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;machinery&#x2F;doors&#x2F;door.dm 45"/></a></h3>
+        <p>What airlock we are linked with</p><h3 id="var/cyclelinkeddir"><aside class="declaration">var </aside>cyclelinkeddir
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/game/objects/machinery/doors/door.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;machinery&#x2F;doors&#x2F;door.dm 41"/></a></h3>
+        <p>Bool for determining linked state</p><h3 id="var/emergency"><aside class="declaration">var </aside>emergency
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/game/objects/machinery/doors/door.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;machinery&#x2F;doors&#x2F;door.dm 37"/></a></h3>
+        <p>Used for determining emergency access</p><h3 id="var/not_weldable"><aside class="declaration">var </aside>not_weldable
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/game/objects/machinery/doors/door.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;machinery&#x2F;doors&#x2F;door.dm 32"/></a></h3>
+        <p>Stops people welding the door if true</p><h3 id="var/openspeed"><aside class="declaration">var </aside>openspeed
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/game/objects/machinery/doors/door.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;machinery&#x2F;doors&#x2F;door.dm 34"/></a></h3>
+        <p>How many seconds does it take to open it? Use only if you have long door opening animations</p><h3 id="var/secondsElectrified"><aside class="declaration">var </aside>secondsElectrified
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/game/objects/machinery/doors/door.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;machinery&#x2F;doors&#x2F;door.dm 21"/></a></h3>
+        <p>How many seconds remain until the door is no longer electrified. -1 if it is permanently electrified until someone fixes it.</p><h3 id="var/unres_sides"><aside class="declaration">var </aside>unres_sides
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/game/objects/machinery/doors/door.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;machinery&#x2F;doors&#x2F;door.dm 27"/></a></h3>
+        <p>Unrestricted sides. A bitflag for which direction (if any) can open the door with no access</p><h3 id="var/width"><aside class="declaration">var </aside>width
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/game/objects/machinery/doors/door.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;machinery&#x2F;doors&#x2F;door.dm 39"/></a></h3>
+        <p>Multi-tile doors</p><h2 id="proc">Proc Details</h2><h3 id="proc/unrestricted_side"><aside class="declaration">proc </aside>unrestricted_side<aside>(/<a href="mob.html">mob</a>/opener) 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/game/objects/machinery/doors/door.dm#L120">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;machinery&#x2F;doors&#x2F;door.dm 120"/></a></aside>
+        </h3>
+        <p>Allows for specific sides of airlocks to be unrestricted (IE, can exit maint freely, but need access to enter)</p></main>
+<footer>
+    tgmc.dme
+    <a href="https://github.com/Falls-dev/TGMC-SS13/tree/964f9fac822d409e7176d5673750f0473bb15ced">964f9fa</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;automata_cell&#x2F;explosion - byond</title>
+</head>
+<body>
+<header>
+    <a href="index.html">byond</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/automata_cell/explosion.html#var">Var Details</a> - <a href="datum/automata_cell/explosion.html#proc">Proc Details</a></header>
+<main>
+<h1>explosion <aside>/<a href="datum.html">datum</a>/<a href="datum/automata_cell.html">automata_cell</a>/<a href="datum/automata_cell/explosion.html">explosion</a></aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/datums/autocells/explosion.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;autocells&#x2F;explosion.dm 34"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/automata_cell/explosion.html#var/delay">delay</a></th><td>Diagonal cells have a small delay when branching off from a non-diagonal cell. This helps the explosion look circular</td></tr>
+            <tr><th><a href="datum/automata_cell/explosion.html#var/direction">direction</a></th><td>Which direction is the explosion traveling?
+Note that this will be null for the epicenter</td></tr>
+            <tr><th><a href="datum/automata_cell/explosion.html#var/exploded_atoms">exploded_atoms</a></th><td>Workaround to account for the fact that this is subsystemized
+See on_turf_entered</td></tr>
+            <tr><th><a href="datum/automata_cell/explosion.html#var/falloff_shape">falloff_shape</a></th><td>Falloff shape is used to determines whether or not the falloff will change during the explosion traveling.</td></tr>
+            <tr><th><a href="datum/automata_cell/explosion.html#var/power">power</a></th><td>Power of the explosion at this cell</td></tr>
+            <tr><th><a href="datum/automata_cell/explosion.html#var/power_falloff">power_falloff</a></th><td>How much will the power drop off when the explosion propagates?</td></tr>
+            <tr><th><a href="datum/automata_cell/explosion.html#var/shockwave">shockwave</a></th><td>The visual effect of our explosion</td></tr>
+            <tr><th><a href="datum/automata_cell/explosion.html#var/should_merge">should_merge</a></th><td>Whether or not the explosion should merge with other explosions</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/automata_cell/explosion.html#proc/get_propagation_dirs">get_propagation_dirs</a></th><td>Get a list of all directions the explosion should propagate to before dying</td></tr>
+            <tr><th><a href="datum/automata_cell/explosion.html#proc/setup_new_cell">setup_new_cell</a></th><td>If you need to set vars on the new cell other than the basic ones</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/delay"><aside class="declaration">var </aside>delay
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/datums/autocells/explosion.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;autocells&#x2F;explosion.dm 46"/></a></h3>
+        <p>Diagonal cells have a small delay when branching off from a non-diagonal cell. This helps the explosion look circular</p><h3 id="var/direction"><aside class="declaration">var </aside>direction
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/datums/autocells/explosion.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;autocells&#x2F;explosion.dm 49"/></a></h3>
+        <p>Which direction is the explosion traveling?
+Note that this will be null for the epicenter</p><h3 id="var/exploded_atoms"><aside class="declaration">var </aside>exploded_atoms
+            <aside>&ndash; /list/atom</aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/datums/autocells/explosion.dm#L54">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;autocells&#x2F;explosion.dm 54"/></a></h3>
+        <p>Workaround to account for the fact that this is subsystemized
+See on_turf_entered</p><h3 id="var/falloff_shape"><aside class="declaration">var </aside>falloff_shape
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/datums/autocells/explosion.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;autocells&#x2F;explosion.dm 42"/></a></h3>
+        <p>Falloff shape is used to determines whether or not the falloff will change during the explosion traveling.</p><h3 id="var/power"><aside class="declaration">var </aside>power
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/datums/autocells/explosion.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;autocells&#x2F;explosion.dm 38"/></a></h3>
+        <p>Power of the explosion at this cell</p><h3 id="var/power_falloff"><aside class="declaration">var </aside>power_falloff
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/datums/autocells/explosion.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;autocells&#x2F;explosion.dm 40"/></a></h3>
+        <p>How much will the power drop off when the explosion propagates?</p><h3 id="var/shockwave"><aside class="declaration">var </aside>shockwave
+            <aside>&ndash; /<a href="obj.html">obj</a>/effect/particle_effect/shockwave</aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/datums/autocells/explosion.dm#L56">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;autocells&#x2F;explosion.dm 56"/></a></h3>
+        <p>The visual effect of our explosion</p><h3 id="var/should_merge"><aside class="declaration">var </aside>should_merge
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/datums/autocells/explosion.dm#L51">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;autocells&#x2F;explosion.dm 51"/></a></h3>
+        <p>Whether or not the explosion should merge with other explosions</p><h2 id="proc">Proc Details</h2><h3 id="proc/get_propagation_dirs"><aside class="declaration">proc </aside>get_propagation_dirs<aside>(reflected) 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/datums/autocells/explosion.dm#L105">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;autocells&#x2F;explosion.dm 105"/></a></aside>
+        </h3>
+        <p>Get a list of all directions the explosion should propagate to before dying</p><h3 id="proc/setup_new_cell"><aside class="declaration">proc </aside>setup_new_cell<aside>(/<a href="datum.html">datum</a>/<a href="datum/automata_cell.html">automata_cell</a>/<a href="datum/automata_cell/explosion.html">explosion</a>/our_explosion) 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/datums/autocells/explosion.dm#L121">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;autocells&#x2F;explosion.dm 121"/></a></aside>
+        </h3>
+        <p>If you need to set vars on the new cell other than the basic ones</p></main>
+<footer>
+    tgmc.dme
+    <a href="https://github.com/Falls-dev/TGMC-SS13/tree/964f9fac822d409e7176d5673750f0473bb15ced">964f9fa</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

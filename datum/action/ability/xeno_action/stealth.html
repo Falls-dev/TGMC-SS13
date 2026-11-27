@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;action&#x2F;ability&#x2F;xeno_action&#x2F;stealth - byond</title>
+</head>
+<body>
+<header>
+    <a href="index.html">byond</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/action/ability/xeno_action/stealth.html#var">Var Details</a> - <a href="datum/action/ability/xeno_action/stealth.html#proc">Proc Details</a></header>
+<main>
+<h1>stealth <aside>/<a href="datum.html">datum</a>/<a href="datum/action.html">action</a>/<a href="datum/action/ability.html">ability</a>/<a href="datum/action/ability/xeno_action.html">xeno_action</a>/<a href="datum/action/ability/xeno_action/stealth.html">stealth</a></aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/mob/living/carbon/xenomorph/castes/hunter/abilities_hunter.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;hunter&#x2F;abilities_hunter.dm 6"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/action/ability/xeno_action/stealth.html#var/blinding_stacks">blinding_stacks</a></th><td>How many stacks of blindness does a successful sneak attack cause?</td></tr>
+            <tr><th><a href="datum/action/ability/xeno_action/stealth.html#var/bonus_maximum_stealth_ap">bonus_maximum_stealth_ap</a></th><td>How much bonus armor piercing should sneak attack get if it was done at maximum stealth level?</td></tr>
+            <tr><th><a href="datum/action/ability/xeno_action/stealth.html#var/bonus_stealth_damage_multiplier">bonus_stealth_damage_multiplier</a></th><td>The multiplier added to the extra damage of Sneak Attack (the extra hit is 1x the slash damage, plus this).</td></tr>
+            <tr><th><a href="datum/action/ability/xeno_action/stealth.html#var/movement_cost_multiplier">movement_cost_multiplier</a></th><td>The multiplier of the amount of plasma to consume when moving while Stealth is active.</td></tr>
+            <tr><th><a href="datum/action/ability/xeno_action/stealth.html#var/sneak_attack_stun_duration">sneak_attack_stun_duration</a></th><td>How long in deciseconds should Sneak Attack paralyze for?</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/action/ability/xeno_action/stealth.html#proc/handle_stealth_move">handle_stealth_move</a></th><td>Handles moving while in stealth</td></tr>
+            <tr><th><a href="datum/action/ability/xeno_action/stealth.html#proc/is_at_maximum_stealth">is_at_maximum_stealth</a></th><td>Returns TRUE if stealth has been standing still long enough to be at its most hidden.</td></tr>
+            <tr><th><a href="datum/action/ability/xeno_action/stealth.html#proc/mob_hit">mob_hit</a></th><td>Callback for when a mob gets hit as part of a pounce</td></tr>
+            <tr><th><a href="datum/action/ability/xeno_action/stealth.html#proc/on_obj_attack">on_obj_attack</a></th><td>Signal wrapper to verify that an object is damageable before breaking stealth</td></tr>
+            <tr><th><a href="datum/action/ability/xeno_action/stealth.html#proc/sneak_attack_pounce">sneak_attack_pounce</a></th><td>Callback listening for a xeno_owner using the pounce ability</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/blinding_stacks"><aside class="declaration">var </aside>blinding_stacks
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/mob/living/carbon/xenomorph/castes/hunter/abilities_hunter.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;hunter&#x2F;abilities_hunter.dm 29"/></a></h3>
+        <p>How many stacks of blindness does a successful sneak attack cause?</p><h3 id="var/bonus_maximum_stealth_ap"><aside class="declaration">var </aside>bonus_maximum_stealth_ap
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/mob/living/carbon/xenomorph/castes/hunter/abilities_hunter.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;hunter&#x2F;abilities_hunter.dm 27"/></a></h3>
+        <p>How much bonus armor piercing should sneak attack get if it was done at maximum stealth level?</p><h3 id="var/bonus_stealth_damage_multiplier"><aside class="declaration">var </aside>bonus_stealth_damage_multiplier
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/mob/living/carbon/xenomorph/castes/hunter/abilities_hunter.dm#L25">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;hunter&#x2F;abilities_hunter.dm 25"/></a></h3>
+        <p>The multiplier added to the extra damage of Sneak Attack (the extra hit is 1x the slash damage, plus this).</p><h3 id="var/movement_cost_multiplier"><aside class="declaration">var </aside>movement_cost_multiplier
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/mob/living/carbon/xenomorph/castes/hunter/abilities_hunter.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;hunter&#x2F;abilities_hunter.dm 23"/></a></h3>
+        <p>The multiplier of the amount of plasma to consume when moving while Stealth is active.</p><h3 id="var/sneak_attack_stun_duration"><aside class="declaration">var </aside>sneak_attack_stun_duration
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/mob/living/carbon/xenomorph/castes/hunter/abilities_hunter.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;hunter&#x2F;abilities_hunter.dm 21"/></a></h3>
+        <p>How long in deciseconds should Sneak Attack paralyze for?</p><h2 id="proc">Proc Details</h2><h3 id="proc/handle_stealth_move"><aside class="declaration">proc </aside>handle_stealth_move<aside>() 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/mob/living/carbon/xenomorph/castes/hunter/abilities_hunter.dm#L135">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;hunter&#x2F;abilities_hunter.dm 135"/></a></aside>
+        </h3>
+        <p>Handles moving while in stealth</p><h3 id="proc/is_at_maximum_stealth"><aside class="declaration">proc </aside>is_at_maximum_stealth<aside>() 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/mob/living/carbon/xenomorph/castes/hunter/abilities_hunter.dm#L214">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;hunter&#x2F;abilities_hunter.dm 214"/></a></aside>
+        </h3>
+        <p>Returns TRUE if stealth has been standing still long enough to be at its most hidden.</p><h3 id="proc/mob_hit"><aside class="declaration">proc </aside>mob_hit<aside>(/<a href="datum.html">datum</a>/source, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/living_target) 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/mob/living/carbon/xenomorph/castes/hunter/abilities_hunter.dm#L175">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;hunter&#x2F;abilities_hunter.dm 175"/></a></aside>
+        </h3>
+        <p>Callback for when a mob gets hit as part of a pounce</p><h3 id="proc/on_obj_attack"><aside class="declaration">proc </aside>on_obj_attack<aside>(/<a href="datum.html">datum</a>/source, /<a href="obj.html">obj</a>/attacked) 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/mob/living/carbon/xenomorph/castes/hunter/abilities_hunter.dm#L117">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;hunter&#x2F;abilities_hunter.dm 117"/></a></aside>
+        </h3>
+        <p>Signal wrapper to verify that an object is damageable before breaking stealth</p><h3 id="proc/sneak_attack_pounce"><aside class="declaration">proc </aside>sneak_attack_pounce<aside>() 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/mob/living/carbon/xenomorph/castes/hunter/abilities_hunter.dm#L164">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;hunter&#x2F;abilities_hunter.dm 164"/></a></aside>
+        </h3>
+        <p>Callback listening for a xeno_owner using the pounce ability</p></main>
+<footer>
+    tgmc.dme
+    <a href="https://github.com/Falls-dev/TGMC-SS13/tree/964f9fac822d409e7176d5673750f0473bb15ced">964f9fa</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

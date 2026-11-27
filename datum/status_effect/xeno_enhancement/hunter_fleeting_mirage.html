@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;status_effect&#x2F;xeno_enhancement&#x2F;hunter_fleeting_mirage - byond</title>
+</head>
+<body>
+<header>
+    <a href="index.html">byond</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/status_effect/xeno_enhancement/hunter_fleeting_mirage.html#var">Var Details</a> - <a href="datum/status_effect/xeno_enhancement/hunter_fleeting_mirage.html#proc">Proc Details</a></header>
+<main>
+<h1>hunter_fleeting_mirage <aside>/<a href="datum.html">datum</a>/<a href="datum/status_effect.html">status_effect</a>/<a href="datum/status_effect/xeno_enhancement.html">xeno_enhancement</a>/<a href="datum/status_effect/xeno_enhancement/hunter_fleeting_mirage.html">hunter_fleeting_mirage</a></aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/mob/living/carbon/xenomorph/castes/hunter/mutations_hunter.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;hunter&#x2F;mutations_hunter.dm 29"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/status_effect/xeno_enhancement/hunter_fleeting_mirage.html#var/can_be_activated">can_be_activated</a></th><td>The effect triggers again only after the health was full once.</td></tr>
+            <tr><th><a href="datum/status_effect/xeno_enhancement/hunter_fleeting_mirage.html#var/threshold_per_level">threshold_per_level</a></th><td>Per level, the fraction of maximum health at or below which the illusion appears.</td></tr>
+            <tr><th><a href="datum/status_effect/xeno_enhancement/hunter_fleeting_mirage.html#var/timer_id">timer_id</a></th><td>The timer that deletes the illusion.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/status_effect/xeno_enhancement/hunter_fleeting_mirage.html#proc/on_illusion_deleted">on_illusion_deleted</a></th><td>The illusion was deleted by something else, so Mirage must not keep a reference to it.</td></tr>
+            <tr><th><a href="datum/status_effect/xeno_enhancement/hunter_fleeting_mirage.html#proc/on_update_health">on_update_health</a></th><td>Activates the effect if the health is low enough, or allows it to be activated next time if the health is full.</td></tr>
+            <tr><th><a href="datum/status_effect/xeno_enhancement/hunter_fleeting_mirage.html#proc/remove_illusion">remove_illusion</a></th><td>Deletes the illusion.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/can_be_activated"><aside class="declaration">var </aside>can_be_activated
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/mob/living/carbon/xenomorph/castes/hunter/mutations_hunter.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;hunter&#x2F;mutations_hunter.dm 34"/></a></h3>
+        <p>The effect triggers again only after the health was full once.</p><h3 id="var/threshold_per_level"><aside class="declaration">var </aside>threshold_per_level
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/mob/living/carbon/xenomorph/castes/hunter/mutations_hunter.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;hunter&#x2F;mutations_hunter.dm 32"/></a></h3>
+        <p>Per level, the fraction of maximum health at or below which the illusion appears.</p><h3 id="var/timer_id"><aside class="declaration">var </aside>timer_id
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/mob/living/carbon/xenomorph/castes/hunter/mutations_hunter.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;hunter&#x2F;mutations_hunter.dm 38"/></a></h3>
+        <p>The timer that deletes the illusion.</p><h2 id="proc">Proc Details</h2><h3 id="proc/on_illusion_deleted"><aside class="declaration">proc </aside>on_illusion_deleted<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/mob/living/carbon/xenomorph/castes/hunter/mutations_hunter.dm#L76">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;hunter&#x2F;mutations_hunter.dm 76"/></a></aside>
+        </h3>
+        <p>The illusion was deleted by something else, so Mirage must not keep a reference to it.</p><h3 id="proc/on_update_health"><aside class="declaration">proc </aside>on_update_health<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/mob/living/carbon/xenomorph/castes/hunter/mutations_hunter.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;hunter&#x2F;mutations_hunter.dm 57"/></a></aside>
+        </h3>
+        <p>Activates the effect if the health is low enough, or allows it to be activated next time if the health is full.</p><h3 id="proc/remove_illusion"><aside class="declaration">proc </aside>remove_illusion<aside>() 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/mob/living/carbon/xenomorph/castes/hunter/mutations_hunter.dm#L86">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;hunter&#x2F;mutations_hunter.dm 86"/></a></aside>
+        </h3>
+        <p>Deletes the illusion.</p></main>
+<footer>
+    tgmc.dme
+    <a href="https://github.com/Falls-dev/TGMC-SS13/tree/964f9fac822d409e7176d5673750f0473bb15ced">964f9fa</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

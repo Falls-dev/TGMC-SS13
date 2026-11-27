@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;player_action - byond</title>
+</head>
+<body>
+<header>
+    <a href="index.html">byond</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/player_action.html#var">Var Details</a> - <a href="datum/player_action.html#proc">Proc Details</a></header>
+<main>
+<h1>player_action <aside>/<a href="datum.html">datum</a>/<a href="datum/player_action.html">player_action</a></aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/admin/panels/player_action.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;admin&#x2F;panels&#x2F;player_action.dm 15"/></a></h1>
+
+<p>A single action that can be invoked from the TGUI player panel.
+Subtypes should only ever call into EXISTING TGMC admin procs/verbs -
+this datum is a thin dispatch/permission layer, not a place to invent new
+admin mechanics.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/player_action.html#var/permissions_required">permissions_required</a></th><td>R_* bitflag(s) required to use this action - checked with check_rights_for() before act() is ever called.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/player_action.html#proc/act">act</a></th><td>Performs the action.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/permissions_required"><aside class="declaration">var </aside>permissions_required
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/admin/panels/player_action.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;admin&#x2F;panels&#x2F;player_action.dm 19"/></a></h3>
+        <p>R_* bitflag(s) required to use this action - checked with check_rights_for() before act() is ever called.</p><h2 id="proc">Proc Details</h2><h3 id="proc/act"><aside class="declaration">proc </aside>act<aside>(/<a href="client.html">client</a>/user, /<a href="mob.html">mob</a>/target, /list/params) 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/admin/panels/player_action.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;admin&#x2F;panels&#x2F;player_action.dm 31"/></a></aside>
+        </h3>
+        <p>Performs the action.</p>
+<p><code>user</code> is the client of the admin operating the panel (NOT the target).
+<code>target</code> is the mob the player panel is bound to.</p>
+<p>Note: <code>usr</code> is also correctly set to the admin's mob at this point, since this
+is always invoked from within <code>/datum/tgui</code>'s <code>on_message()</code>, itself only ever
+reached through <code>/client/Topic()</code>.</p></main>
+<footer>
+    tgmc.dme
+    <a href="https://github.com/Falls-dev/TGMC-SS13/tree/964f9fac822d409e7176d5673750f0473bb15ced">964f9fa</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

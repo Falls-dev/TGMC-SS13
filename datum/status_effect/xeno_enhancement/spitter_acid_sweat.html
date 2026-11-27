@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;status_effect&#x2F;xeno_enhancement&#x2F;spitter_acid_sweat - byond</title>
+</head>
+<body>
+<header>
+    <a href="index.html">byond</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/status_effect/xeno_enhancement/spitter_acid_sweat.html#var">Var Details</a> - <a href="datum/status_effect/xeno_enhancement/spitter_acid_sweat.html#proc">Proc Details</a></header>
+<main>
+<h1>spitter_acid_sweat <aside>/<a href="datum.html">datum</a>/<a href="datum/status_effect.html">status_effect</a>/<a href="datum/status_effect/xeno_enhancement.html">xeno_enhancement</a>/<a href="datum/status_effect/xeno_enhancement/spitter_acid_sweat.html">spitter_acid_sweat</a></aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/mob/living/carbon/xenomorph/castes/spitter/mutations_spitter.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;spitter&#x2F;mutations_spitter.dm 33"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/status_effect/xeno_enhancement/spitter_acid_sweat.html#var/cost_per_level">cost_per_level</a></th><td>Per level, the amount of plasma consumed.</td></tr>
+            <tr><th><a href="datum/status_effect/xeno_enhancement/spitter_acid_sweat.html#var/timer_id">timer_id</a></th><td>The ID of a timer that will check if the owner needs to be re-extinguished.</td></tr>
+            <tr><th><a href="datum/status_effect/xeno_enhancement/spitter_acid_sweat.html#var/timer_length">timer_length</a></th><td>How long is the timer?</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/status_effect/xeno_enhancement/spitter_acid_sweat.html#proc/on_ignited">on_ignited</a></th><td>Immediately after being set on fire, tries to extinguish the owner and qdel all fires underneath them if possible.</td></tr>
+            <tr><th><a href="datum/status_effect/xeno_enhancement/spitter_acid_sweat.html#proc/try_extinguish">try_extinguish</a></th><td>Extinguishes the owner and qdel all fires underneath them if possible.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/cost_per_level"><aside class="declaration">var </aside>cost_per_level
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/mob/living/carbon/xenomorph/castes/spitter/mutations_spitter.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;spitter&#x2F;mutations_spitter.dm 36"/></a></h3>
+        <p>Per level, the amount of plasma consumed.</p><h3 id="var/timer_id"><aside class="declaration">var </aside>timer_id
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/mob/living/carbon/xenomorph/castes/spitter/mutations_spitter.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;spitter&#x2F;mutations_spitter.dm 38"/></a></h3>
+        <p>The ID of a timer that will check if the owner needs to be re-extinguished.</p><h3 id="var/timer_length"><aside class="declaration">var </aside>timer_length
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/mob/living/carbon/xenomorph/castes/spitter/mutations_spitter.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;spitter&#x2F;mutations_spitter.dm 40"/></a></h3>
+        <p>How long is the timer?</p><h2 id="proc">Proc Details</h2><h3 id="proc/on_ignited"><aside class="declaration">proc </aside>on_ignited<aside>(/<a href="datum.html">datum</a>/source, fire_stacks) 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/mob/living/carbon/xenomorph/castes/spitter/mutations_spitter.dm#L79">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;spitter&#x2F;mutations_spitter.dm 79"/></a></aside>
+        </h3>
+        <p>Immediately after being set on fire, tries to extinguish the owner and qdel all fires underneath them if possible.</p><h3 id="proc/try_extinguish"><aside class="declaration">proc </aside>try_extinguish<aside>(timed_extinguished) 
+        
+    
+            <a href="https://github.com/Falls-dev/TGMC-SS13/blob/964f9fac822d409e7176d5673750f0473bb15ced/code/modules/mob/living/carbon/xenomorph/castes/spitter/mutations_spitter.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;xenomorph&#x2F;castes&#x2F;spitter&#x2F;mutations_spitter.dm 60"/></a></aside>
+        </h3>
+        <p>Extinguishes the owner and qdel all fires underneath them if possible.</p></main>
+<footer>
+    tgmc.dme
+    <a href="https://github.com/Falls-dev/TGMC-SS13/tree/964f9fac822d409e7176d5673750f0473bb15ced">964f9fa</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>
