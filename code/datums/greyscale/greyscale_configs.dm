@@ -379,3 +379,13 @@
 
 /datum/greyscale_config/xenonaut/helm/mk1
 	icon_file = 'icons/mob/modular/xenonauten_mk1.dmi'
+
+/datum/greyscale_config/autoinjector_13
+	icon_file = 'icons/obj/items/syringe.dmi'
+	json_config = 'code/datums/greyscale/json_configs/autoinjector_13.json'
+
+// Masks?
+
+/datum/greyscale_config/icc_trophy_lenses
+	icon_file = 'icons/mob/modular/masks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/masks.json'

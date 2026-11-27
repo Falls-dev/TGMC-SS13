@@ -423,7 +423,7 @@
 	desc = "A small canister for use with the miniature pepperball gun."
 	icon_state = "pepperball_mini"
 	default_ammo = /datum/ammo/bullet/pepperball/pepperball_mini
-	max_rounds = 20
+	max_rounds = 30
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/ammo_magazine/minigun_powerpack

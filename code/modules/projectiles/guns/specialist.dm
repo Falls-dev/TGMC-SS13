@@ -531,7 +531,7 @@ Note that this means that snipers will have a slowdown of 3, due to the scope
 
 	gun_firemode_list = list(GUN_FIREMODE_AUTOMATIC)
 	//actions_types = list(/datum/action/item_action/aim_mode) // RUTGMC DELETION
-	aim_fire_delay = 0.1 SECONDS
+	aim_fire_delay = 0.15 SECONDS
 	aim_speed_modifier = 0.1
 
 	gun_features_flags = GUN_AMMO_COUNTER
@@ -553,9 +553,14 @@ Note that this means that snipers will have a slowdown of 3, due to the scope
 /obj/item/weapon/gun/rifle/pepperball/pepperball_mini
 	name = "mini pepperball gun"
 	desc = "An attachable version of the PB-12 pepperball gun. It has a smaller magazine size and has a slower rate of fire."
+	icon = 'icons/obj/items/attachments/attachments.dmi'
 	icon_state = "pepperball_mini"
+	worn_icon_list = list(
+		slot_l_hand_str = 'icons/mob/inhands/items_lefthand_1.dmi',
+		slot_r_hand_str = 'icons/mob/inhands/items_righthand_1.dmi',
+	)
 	slot = ATTACHMENT_SLOT_UNDER
-	max_shells = 20
+	max_shells = 40
 	default_ammo_type = /obj/item/ammo_magazine/rifle/pepperball/pepperball_mini
 	allowed_ammo_types = list(/obj/item/ammo_magazine/rifle/pepperball/pepperball_mini)
 	force = 5

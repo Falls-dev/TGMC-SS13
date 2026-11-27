@@ -2,18 +2,18 @@
 #define STAMINA_RATIO_PAIN_HUD 0.25
 
 /mob/living/carbon/human/add_to_all_mob_huds()
-	for(var/h in GLOB.huds)
-		if(istype(h, /datum/atom_hud/xeno)) //this one is xeno only
+	for(var/hud_key, hud in GLOB.huds)
+		if(istype(hud, /datum/atom_hud/xeno)) //this one is xeno only
 			continue
-		var/datum/atom_hud/hud = h
-		hud.add_to_hud(src)
+		var/datum/atom_hud/atom_hud = hud
+		atom_hud.add_to_hud(src)
 
 /mob/living/carbon/human/remove_from_all_mob_huds()
-	for(var/h in GLOB.huds)
-		if(istype(h, /datum/atom_hud/xeno))
+	for(var/hud_key, hud in GLOB.huds)
+		if(istype(hud, /datum/atom_hud/xeno))
 			continue
-		var/datum/atom_hud/hud = h
-		hud.remove_from_hud(src)
+		var/datum/atom_hud/atom_hud = hud
+		atom_hud.remove_from_hud(src)
 
 /mob/living/carbon/human/proc/update_suit_sensors()
 	var/datum/atom_hud/medical/basic/B = GLOB.huds[DATA_HUD_MEDICAL_BASIC]

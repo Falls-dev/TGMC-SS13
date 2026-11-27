@@ -71,8 +71,8 @@
 	//and display them
 	add_to_all_mob_huds()
 
-	var/datum/atom_hud/hud_to_add = GLOB.huds[DATA_HUD_BASIC]
-	hud_to_add.add_hud_to(src)
+	var/datum/atom_hud/basic_hud = GLOB.huds[DATA_HUD_BASIC]
+	basic_hud.add_hud_to(src)
 
 /mob/living/carbon/human/register_init_signals()
 	. = ..()

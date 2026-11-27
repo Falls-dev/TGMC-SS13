@@ -8,6 +8,7 @@
 	)
 	icon_state = "firstaid"
 	base_icon_state = "firstaid"
+	storage_type = /datum/storage/firstaid
 	w_class = WEIGHT_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 8
@@ -626,6 +627,7 @@
 	icon = 'icons/obj/items/storage/firstaid.dmi'
 	volume = 30
 	reagent_flags = null
+	greyscale_config = null
 
 /obj/item/reagent_containers/hypospray/autoinjector/pen/tramadol
 	name = "Tramadol pen"
