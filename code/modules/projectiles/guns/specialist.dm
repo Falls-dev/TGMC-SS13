@@ -560,7 +560,7 @@ Note that this means that snipers will have a slowdown of 3, due to the scope
 		slot_r_hand_str = 'icons/mob/inhands/items_righthand_1.dmi',
 	)
 	slot = ATTACHMENT_SLOT_UNDER
-	max_shells = 30
+	max_shells = 40
 	default_ammo_type = /obj/item/ammo_magazine/rifle/pepperball/pepperball_mini
 	allowed_ammo_types = list(/obj/item/ammo_magazine/rifle/pepperball/pepperball_mini)
 	force = 5
