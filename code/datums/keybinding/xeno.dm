@@ -34,20 +34,6 @@
 	keybind_signal = COMSIG_XENOABILITY_DROP_WEEDS
 	hotkey_keys = list("V")
 
-/datum/keybinding/xeno/place_pattern
-	name = "place_pattern"
-	full_name = "Place Pattern"
-	description = "Place a template of hive walls."
-	keybind_signal = COMSIG_XENOABILITY_DROP_WEEDS
-	hotkey_keys = list("E")
-
-/datum/keybinding/xeno/select_pattern
-	name = "select_pattern"
-	full_name = "Select Pattern"
-	description = "Select the template to use when using Place Pattern"
-	keybind_signal = COMSIG_XENOABILITY_DROP_WEEDS
-	hotkey_keys = list("Q")
-
 /datum/keybinding/xeno/choose_weeds
 	name = "choose_weeds"
 	full_name = "Choose Weed"
@@ -60,7 +46,56 @@
 	full_name = "Secrete Resin"
 	description = "Builds whatever you've selected with (choose resin structure) on your tile."
 	keybind_signal = COMSIG_XENOABILITY_SECRETE_RESIN
+	build_mode_priority = TRUE
 	hotkey_keys = list("R")
+
+/datum/keybinding/xeno/secrete_resin_undo
+	name = "secrete_resin_undo"
+	full_name = "Undo Resin Construction"
+	description = "Undo the last resin construction edit while the construction UI is open."
+	keybind_signal = COMSIG_XENOABILITY_SECRETE_RESIN_UNDO
+	build_mode_priority = TRUE
+	hotkey_keys = list("CtrlZ")
+
+/datum/keybinding/xeno/secrete_resin_redo
+	name = "secrete_resin_redo"
+	full_name = "Redo Resin Construction"
+	description = "Redo the last undone resin construction edit while the construction UI is open."
+	keybind_signal = COMSIG_XENOABILITY_SECRETE_RESIN_REDO
+	build_mode_priority = TRUE
+	hotkey_keys = list("CtrlY")
+
+/datum/keybinding/xeno/secrete_resin_pattern_previous
+	name = "secrete_resin_pattern_previous"
+	full_name = "Previous Construction Pattern"
+	description = "Selects the previous blueprint placement pattern while the construction UI is open."
+	keybind_signal = COMSIG_XENOABILITY_SECRETE_RESIN_PATTERN_PREVIOUS
+	build_mode_priority = TRUE
+	hotkey_keys = list("AltQ")
+
+/datum/keybinding/xeno/secrete_resin_pattern_next
+	name = "secrete_resin_pattern_next"
+	full_name = "Next Construction Pattern"
+	description = "Selects the next blueprint placement pattern while the construction UI is open."
+	keybind_signal = COMSIG_XENOABILITY_SECRETE_RESIN_PATTERN_NEXT
+	build_mode_priority = TRUE
+	hotkey_keys = list("AltE")
+
+/datum/keybinding/xeno/secrete_resin_toggle_auto_rebuild
+	name = "secrete_resin_toggle_auto_rebuild"
+	full_name = "Toggle Construction Auto-Rebuild"
+	description = "Toggles auto-rebuild for placed blueprints while the construction UI is open."
+	keybind_signal = COMSIG_XENOABILITY_SECRETE_RESIN_TOGGLE_AUTO_REBUILD
+	build_mode_priority = TRUE
+	hotkey_keys = list("AltV")
+
+/datum/keybinding/xeno/secrete_resin_toggle_demolish
+	name = "secrete_resin_toggle_demolish"
+	full_name = "Toggle Construction Demolition Mode"
+	description = "Toggles demolition blueprint placement while the construction UI is open."
+	keybind_signal = COMSIG_XENOABILITY_SECRETE_RESIN_TOGGLE_DEMOLISH
+	build_mode_priority = TRUE
+	hotkey_keys = list("AltC")
 
 /datum/keybinding/xeno/recycle
 	name = "Recycle"
@@ -639,6 +674,151 @@
 	description = "Opens up the minimap which, when you click somewhere, tries to teleport you to the selected location"
 	keybind_signal = COMISG_XENOMORPH_HIVEMIND_TELEPORT
 	hotkey_keys = list("C")
+
+/datum/keybinding/xeno/rts_minion_control
+	name = "rts_minion_control"
+	full_name = "Hivemind: Minion RTS Control"
+	description = "Toggle RTS Minion Direct Selection & Control mode."
+	keybind_signal = COMSIG_XENOABILITY_RTS_MINION_CONTROL
+	hotkey_keys = list("AltG")
+
+/datum/keybinding/xeno/select_all_minions
+	name = "select_all_minions"
+	full_name = "Hivemind: Select All Minions"
+	description = "Selects all nearby minions in view."
+	keybind_signal = COMSIG_XENOABILITY_SELECT_ALL_MINIONS
+	hotkey_keys = list("ShiftQ")
+
+/datum/keybinding/xeno/stop_minions
+	name = "stop_minions"
+	full_name = "Hivemind: Stop Minions"
+	description = "Orders selected minions to halt and clear commands."
+	keybind_signal = COMSIG_XENOABILITY_STOP_MINIONS
+	hotkey_keys = list("AltB")
+
+/datum/keybinding/xeno/return_to_core
+	name = "return_to_core"
+	full_name = "Hivemind: Return to Core"
+	description = "Immediately snaps camera and location back to Hivemind Core."
+	keybind_signal = COMSIG_XENOABILITY_RETURN_TO_CORE
+	hotkey_keys = list("H")
+
+/datum/keybinding/xeno/psy_gain
+	name = "psy_gain"
+	full_name = "Hivemind: Psychic Focus"
+	description = "Generates psychic energy passively or bursts focus."
+	keybind_signal = COMSIG_XENOABILITY_PSY_GAIN
+	hotkey_keys = list("AltR")
+
+//
+// Hivemind Control Groups (1..5)
+//
+/datum/keybinding/xeno/control_group_1
+	name = "control_group_1"
+	full_name = "Hivemind: Select Group 1"
+	description = "Selects unit control group 1. Double tap to jump camera."
+	keybind_signal = COMSIG_XENOABILITY_CONTROL_GROUP_1
+	hotkey_keys = list("Alt1")
+
+/datum/keybinding/xeno/control_group_2
+	name = "control_group_2"
+	full_name = "Hivemind: Select Group 2"
+	description = "Selects unit control group 2. Double tap to jump camera."
+	keybind_signal = COMSIG_XENOABILITY_CONTROL_GROUP_2
+	hotkey_keys = list("Alt2")
+
+/datum/keybinding/xeno/control_group_3
+	name = "control_group_3"
+	full_name = "Hivemind: Select Group 3"
+	description = "Selects unit control group 3. Double tap to jump camera."
+	keybind_signal = COMSIG_XENOABILITY_CONTROL_GROUP_3
+	hotkey_keys = list("Alt3")
+
+/datum/keybinding/xeno/control_group_4
+	name = "control_group_4"
+	full_name = "Hivemind: Select Group 4"
+	description = "Selects unit control group 4. Double tap to jump camera."
+	keybind_signal = COMSIG_XENOABILITY_CONTROL_GROUP_4
+	hotkey_keys = list("Alt4")
+
+/datum/keybinding/xeno/control_group_5
+	name = "control_group_5"
+	full_name = "Hivemind: Select Group 5"
+	description = "Selects unit control group 5. Double tap to jump camera."
+	keybind_signal = COMSIG_XENOABILITY_CONTROL_GROUP_5
+	hotkey_keys = list("Alt5")
+
+// Create Group (Ctrl+1..5)
+/datum/keybinding/xeno/create_group_1
+	name = "create_group_1"
+	full_name = "Hivemind: Set Group 1"
+	description = "Assigns selected minions to control group 1."
+	keybind_signal = COMSIG_XENOABILITY_CREATE_GROUP_1
+	hotkey_keys = list("Ctrl1")
+
+/datum/keybinding/xeno/create_group_2
+	name = "create_group_2"
+	full_name = "Hivemind: Set Group 2"
+	description = "Assigns selected minions to control group 2."
+	keybind_signal = COMSIG_XENOABILITY_CREATE_GROUP_2
+	hotkey_keys = list("Ctrl2")
+
+/datum/keybinding/xeno/create_group_3
+	name = "create_group_3"
+	full_name = "Hivemind: Set Group 3"
+	description = "Assigns selected minions to control group 3."
+	keybind_signal = COMSIG_XENOABILITY_CREATE_GROUP_3
+	hotkey_keys = list("Ctrl3")
+
+/datum/keybinding/xeno/create_group_4
+	name = "create_group_4"
+	full_name = "Hivemind: Set Group 4"
+	description = "Assigns selected minions to control group 4."
+	keybind_signal = COMSIG_XENOABILITY_CREATE_GROUP_4
+	hotkey_keys = list("Ctrl4")
+
+/datum/keybinding/xeno/create_group_5
+	name = "create_group_5"
+	full_name = "Hivemind: Set Group 5"
+	description = "Assigns selected minions to control group 5."
+	keybind_signal = COMSIG_XENOABILITY_CREATE_GROUP_5
+	hotkey_keys = list("Ctrl5")
+
+// Add Group (Shift+1..5)
+/datum/keybinding/xeno/add_group_1
+	name = "add_group_1"
+	full_name = "Hivemind: Add Group 1 to Selection"
+	description = "Adds control group 1 to current selection."
+	keybind_signal = COMSIG_XENOABILITY_ADD_GROUP_1
+	hotkey_keys = list("Shift1")
+
+/datum/keybinding/xeno/add_group_2
+	name = "add_group_2"
+	full_name = "Hivemind: Add Group 2 to Selection"
+	description = "Adds control group 2 to current selection."
+	keybind_signal = COMSIG_XENOABILITY_ADD_GROUP_2
+	hotkey_keys = list("Shift2")
+
+/datum/keybinding/xeno/add_group_3
+	name = "add_group_3"
+	full_name = "Hivemind: Add Group 3 to Selection"
+	description = "Adds control group 3 to current selection."
+	keybind_signal = COMSIG_XENOABILITY_ADD_GROUP_3
+	hotkey_keys = list("Shift3")
+
+/datum/keybinding/xeno/add_group_4
+	name = "add_group_4"
+	full_name = "Hivemind: Add Group 4 to Selection"
+	description = "Adds control group 4 to current selection."
+	keybind_signal = COMSIG_XENOABILITY_ADD_GROUP_4
+	hotkey_keys = list("Shift4")
+
+/datum/keybinding/xeno/add_group_5
+	name = "add_group_5"
+	full_name = "Hivemind: Add Group 5 to Selection"
+	description = "Adds control group 5 to current selection."
+	keybind_signal = COMSIG_XENOABILITY_ADD_GROUP_5
+	hotkey_keys = list("Shift5")
 
 /datum/keybinding/xeno/hunter_pounce
 	name = "hunter_pounce"
@@ -1537,3 +1717,80 @@
 	description = "While flying, blast a line of fire in a direction."
 	keybind_signal = COMSIG_XENOABILITY_SCORCHED_LAND
 	hotkey_keys = list("G")
+
+
+// Group hotkeys are exclusive to Hivemind; regular xenomorphs keep their normal key layout.
+/datum/keybinding/xeno/control_group_1/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/control_group_2/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/control_group_3/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/control_group_4/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/control_group_5/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/create_group_1/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/create_group_2/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/create_group_3/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/create_group_4/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/create_group_5/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/add_group_1/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/add_group_2/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/add_group_3/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/add_group_4/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()
+
+/datum/keybinding/xeno/add_group_5/down(client/user)
+	if(!isxenohivemind(user.mob))
+		return FALSE
+	return ..()

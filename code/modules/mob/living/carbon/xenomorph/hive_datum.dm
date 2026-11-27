@@ -495,6 +495,7 @@
 
 	hive = HS
 	hivenumber = HS.hivenumber // just to be sure
+	update_blueprint_hud()
 	generate_name()
 
 	SSdirection.start_tracking(HS.hivenumber, src)
@@ -571,6 +572,7 @@
 		hive.update_ruler()
 
 	SSdirection.stop_tracking(hive.hivenumber, src)
+	clear_blueprint_hud()
 
 	var/datum/hive_status/reference_hive = hive
 	hive = null

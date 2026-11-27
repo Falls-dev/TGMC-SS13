@@ -80,6 +80,9 @@
 	for(var/i in damage_mod)
 		damage += i
 
+	if(X.is_hivemind_ai_minion())
+		damage *= HIVEMIND_MINION_MELEE_DAMAGE_MULTIPLIER
+
 	var/armor_pen = X.xeno_caste.melee_ap
 	for(var/i in armor_mod)
 		armor_pen += i
@@ -184,6 +187,14 @@
 			to_chat(X, span_warning("We disable whatever annoying lights the dead creature possesses."))
 		else
 			to_chat(X, span_warning("[src] is dead, why would we want to touch it?"))
+		return FALSE
+
+	// AI minions are less precise than player-controlled xenomorphs.
+	if(X.is_hivemind_ai_minion() && prob(HIVEMIND_MINION_MELEE_MISS_CHANCE))
+		X.do_attack_animation(src)
+		playsound(loc, 'sound/weapons/alien_claw_swipe.ogg', 25, TRUE)
+		X.visible_message(span_danger("[X] slashes at [src], but misses!"), span_warning("We slash at [src], but miss!"), null, 5)
+		log_combat(X, src, "slashed at", "(missed)")
 		return FALSE
 
 	if(check_predator_shields(X, X.xeno_caste.melee_damage * X.xeno_melee_damage_modifier + dam_bonus, dir))

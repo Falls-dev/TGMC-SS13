@@ -299,6 +299,8 @@ GLOBAL_LIST_INIT(strain_list, init_glob_strain_list())
 	var/datum/hive_status/hive
 	///Xeno mob specific flags
 	var/xeno_flags = NONE
+	///Set when this minion was created by a Widow or Puppeteer. Such minions are permanently personal to that Widow.
+	var/personal_minion = FALSE
 
 	///Used for keeping the effects icon of current skin, changeable with skin toggling
 	var/effects_icon = 'icons/Xeno/castes/larva/larva.dmi'

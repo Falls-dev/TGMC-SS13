@@ -106,6 +106,10 @@
 ///changes our current behavior with a define (order), optionally with a target, FALSE means fail and TRUE means success
 /datum/ai_behavior/spiderling/proc/change_order(mob/living/source, order, atom/target)
 	SIGNAL_HANDLER
+	// A Widow's personal spiderlings only accept orders from their own mother.
+	var/mob/living/carbon/xenomorph/widow/personal_widow = master_ref?.resolve()
+	if(source && personal_widow && source != personal_widow)
+		return FALSE
 	if(!order)
 		stack_trace("spiderling AI was somehow passed a null order")
 		return FALSE

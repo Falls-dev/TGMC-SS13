@@ -731,8 +731,34 @@
 	charge_datum.speed_down(1) //Lose one turf worth of speed.
 	return PRECRUSH_PLOWED
 
-/mob/living/carbon/xenomorph/ClickOn(atom/A, params)
+/mob/living/carbon/xenomorph/ClickOn(atom/A, location, params)
 	if(health_scan && scanner_functionality && isliving(A))
 		scanner_functionality.analyze_vitals(A, src)
 		return
+	if(blueprint_click(A, params) == COMSIG_MOB_CLICK_CANCELED)
+		return
 	return ..()
+
+/// Cached square portrait of a (possibly oversized, pixel-offset) xeno sprite: scaled down to fit and centered on the canvas.
+/proc/get_xeno_portrait_icon(icon_file, icon_state, canvas = 32)
+	var/static/list/portrait_cache = list()
+	var/key = "[icon_file]|[icon_state]|[canvas]"
+	if(portrait_cache[key])
+		return portrait_cache[key]
+	var/icon/portrait = icon(icon_file, icon_state, SOUTH, 1)
+	var/width = portrait.Width() || canvas
+	var/height = portrait.Height() || canvas
+	var/ratio = min(1, canvas / max(width, height))
+	var/new_width = max(1, round(width * ratio))
+	var/new_height = max(1, round(height * ratio))
+	if(ratio < 1)
+		portrait.Scale(new_width, new_height)
+	var/x1 = 1 - round((canvas - new_width) / 2)
+	var/y1 = 1 - round((canvas - new_height) / 2)
+	portrait.Crop(x1, y1, x1 + canvas - 1, y1 + canvas - 1)
+	portrait_cache[key] = portrait
+	return portrait
+
+/// Portrait image for a caste typepath, for radial menus and HUD cards.
+/proc/get_xeno_type_portrait(mob/living/carbon/xenomorph/xeno_type, icon_state, canvas = 32)
+	return image(get_xeno_portrait_icon(initial(xeno_type.icon), icon_state, canvas))

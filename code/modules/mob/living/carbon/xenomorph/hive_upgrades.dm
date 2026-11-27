@@ -255,6 +255,28 @@ GLOBAL_LIST_INIT(tier_to_primo_upgrade, list(
 	icon = "spawner"
 	building_type = /obj/structure/xeno/spawner
 
+
+/datum/hive_upgrade/building/spawner/melee
+	name = "Melee Minion Spawner"
+	desc = "Constructs a spawner that produces Mantis, Beetle, and Baneling assault minions."
+	psypoint_cost = HIVEMIND_MINION_MELEE_SPAWNER_COST
+	icon = "spawner"
+	building_type = /obj/structure/xeno/spawner/melee
+
+/datum/hive_upgrade/building/spawner/ranged
+	name = "Ranged Minion Spawner"
+	desc = "Constructs a spawner that produces Scorpion acid-support minions."
+	psypoint_cost = HIVEMIND_MINION_RANGED_SPAWNER_COST
+	icon = "spawner"
+	building_type = /obj/structure/xeno/spawner/ranged
+
+/datum/hive_upgrade/building/spawner/builder
+	name = "Builder Minion Spawner"
+	desc = "Constructs a spawner that produces Nymph builder minions."
+	psypoint_cost = HIVEMIND_MINION_BUILDER_SPAWNER_COST
+	icon = "spawner"
+	building_type = /obj/structure/xeno/spawner/builder
+
 /datum/hive_upgrade/defence
 	category = "Defences"
 

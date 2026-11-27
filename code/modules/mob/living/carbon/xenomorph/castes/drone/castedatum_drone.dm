@@ -53,6 +53,7 @@
 		/datum/action/ability/activable/xeno/secrete_resin,
 		/datum/action/ability/activable/xeno/neurotox_sting/ozelomelyn,
 		/datum/action/ability/xeno_action/place_acidwell,
+		/datum/action/ability/xeno_action/minion_call,
 		/datum/action/ability/activable/xeno/essence_link,
 		/datum/action/ability/activable/xeno/psychic_cure/acidic_salve,
 		/datum/action/ability/activable/xeno/transfer_plasma/drone,
@@ -63,7 +64,6 @@
 		/datum/action/ability/xeno_action/pheromones/emit_warding,
 		/datum/action/ability/xeno_action/pheromones/emit_frenzy,
 		/datum/action/ability/activable/xeno/recycle,
-		/datum/action/ability/activable/xeno/place_pattern,
 	)
 
 /datum/xeno_caste/drone/normal
@@ -84,6 +84,7 @@
 		/datum/action/ability/activable/xeno/secrete_resin,
 		/datum/action/ability/activable/xeno/neurotox_sting/ozelomelyn,
 		/datum/action/ability/xeno_action/place_acidwell,
+		/datum/action/ability/xeno_action/minion_call,
 		/datum/action/ability/activable/xeno/essence_link,
 		/datum/action/ability/activable/xeno/psychic_cure/acidic_salve,
 		/datum/action/ability/activable/xeno/transfer_plasma/drone,
@@ -96,5 +97,4 @@
 		/datum/action/ability/xeno_action/pheromones/emit_warding,
 		/datum/action/ability/xeno_action/pheromones/emit_frenzy,
 		/datum/action/ability/activable/xeno/recycle,
-		/datum/action/ability/activable/xeno/place_pattern,
 	)

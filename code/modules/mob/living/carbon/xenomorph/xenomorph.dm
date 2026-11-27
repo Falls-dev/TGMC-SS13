@@ -89,6 +89,14 @@
 	RegisterSignal(src, COMSIG_LIVING_WEEDS_ADJACENT_REMOVED, PROC_REF(handle_weeds_adjacent_removed))
 	RegisterSignal(src, COMSIG_LIVING_WEEDS_AT_LOC_CREATED, PROC_REF(handle_weeds_on_movement))
 
+///True only for AI-controlled castes explicitly marked as minions. Player-controlled minion-tier castes keep their normal stats.
+/mob/living/carbon/xenomorph/proc/is_hivemind_ai_minion()
+	if(!xeno_caste || !(xeno_caste.caste_flags & CASTE_IS_A_MINION))
+		return FALSE
+	if(client || ckey || key || (mind && mind.active))
+		return FALSE
+	return TRUE
+
 ///Change the caste of the xeno. If restore health is true, then health is set to the new max health
 /mob/living/carbon/xenomorph/proc/set_datum(restore_health_and_plasma = TRUE)
 	if(!caste_base_type)
@@ -109,6 +117,8 @@
 	xeno_caste = X
 	xeno_caste.on_caste_applied(src)
 	maxHealth = xeno_caste.max_health * GLOB.xeno_stat_multiplicator_buff
+	if(is_hivemind_ai_minion())
+		maxHealth *= HIVEMIND_MINION_HEALTH_MULTIPLIER
 	if(restore_health_and_plasma)
 		// xenos that manage plasma through special means shouldn't gain it for free on aging
 		set_plasma(max(plasma_stored, xeno_caste.plasma_max * xeno_caste.plasma_regen_limit))
@@ -121,7 +131,10 @@
 
 ///Will multiply the base max health of this xeno by GLOB.xeno_stat_multiplicator_buff while maintaining current health percent.
 /mob/living/carbon/xenomorph/proc/apply_health_stat_buff()
-	var/new_max_health = max(xeno_caste.max_health * GLOB.xeno_stat_multiplicator_buff, 10)
+	var/new_max_health = xeno_caste.max_health * GLOB.xeno_stat_multiplicator_buff
+	if(is_hivemind_ai_minion())
+		new_max_health *= HIVEMIND_MINION_HEALTH_MULTIPLIER
+	new_max_health = max(new_max_health, 10)
 	var/needed_healing = 0
 
 	if(health < 0) //In crit. Death threshold below 0 doesn't change with stat buff, so we can just apply damage equal to the max health change

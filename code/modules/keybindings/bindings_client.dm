@@ -63,6 +63,16 @@
 			//we ensure that they are capitalised also by DM so they match.
 			_key = capitalize(_key)
 			full_key = "[AltMod][CtrlMod][ShiftMod][_key]"
+	// Construction controls must win over shared caste keybindings while the
+	// resin construction UI is open. WEIGHT is for presentation only and is not
+	// consulted by the normal key dispatcher, so enforce this context explicitly.
+	for(var/kb_name in prefs.key_bindings[full_key])
+		var/datum/keybinding/priority_kb = GLOB.keybindings_by_name[kb_name]
+		if(!priority_kb || !priority_kb.is_build_mode_priority_active(src))
+			continue
+		priority_kb.down(src)
+		return
+
 	var/keycount = 0
 	for(var/kb_name in prefs.key_bindings[full_key])
 		keycount++

@@ -110,4 +110,4 @@
 
 /mob/living/carbon/xenomorph/nymph/ai/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/ai_controller, /datum/ai_behavior/xeno)
+	AddComponent(/datum/component/ai_controller, /datum/ai_behavior/xeno/nymph)

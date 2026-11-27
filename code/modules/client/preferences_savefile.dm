@@ -4,7 +4,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX 46
+#define SAVEFILE_VERSION_MAX 47
 
 /datum/preferences/proc/savefile_needs_update(savefile/S)
 	var/savefile_version
@@ -46,6 +46,7 @@
 				key_bindings[key] += list(kb_path)
 
 		to_chat(parent, span_userdanger("Forced keybindings for say (T), me (M), ooc (O), looc (L) have been applied."))
+
 
 //handles converting savefiles to new formats
 //MAKE SURE YOU KEEP THIS UP TO DATE!
@@ -166,6 +167,7 @@
 	READ_FILE(S["key_bindings"], key_bindings)
 	READ_FILE(S["slot_draw_order"], slot_draw_order_pref)
 	READ_FILE(S["custom_emotes"], custom_emotes)
+	ensure_hivemind_group_keybindings()
 	READ_FILE(S["chem_macros"], chem_macros)
 	READ_FILE(S["status_toggle_flags"], status_toggle_flags)
 
@@ -436,6 +438,98 @@
 	WRITE_FILE(S["show_ooc_country_flag"], show_ooc_country_flag)
 
 	return TRUE
+
+/// Ensures the Hivemind RTS and resin-construction shortcuts exist for old and new savefiles.
+/datum/preferences/proc/ensure_hivemind_group_keybindings()
+	if(!islist(key_bindings))
+		key_bindings = deep_copy_list(GLOB.hotkey_keybinding_list_by_key)
+	// Move old Hivemind defaults away from movement/intent/shared ability keys.
+	// Only the listed Hivemind binding is removed; other actions sharing that key stay bound.
+	var/list/legacy_binding_keys = list(
+		"control_group_1" = "1",
+		"control_group_2" = "2",
+		"control_group_3" = "3",
+		"control_group_4" = "4",
+		"control_group_5" = "5",
+		"rts_minion_control" = "G",
+		"stop_minions" = "S",
+		"psy_gain" = "R",
+	)
+	var/list/replacement_keys = list(
+		"control_group_1" = "Alt1",
+		"control_group_2" = "Alt2",
+		"control_group_3" = "Alt3",
+		"control_group_4" = "Alt4",
+		"control_group_5" = "Alt5",
+		"rts_minion_control" = "AltG",
+		"stop_minions" = "AltB",
+		"psy_gain" = "AltR",
+	)
+	var/list/default_bindings = list(
+		"Alt1" = "control_group_1",
+		"Alt2" = "control_group_2",
+		"Alt3" = "control_group_3",
+		"Alt4" = "control_group_4",
+		"Alt5" = "control_group_5",
+		"Ctrl1" = "create_group_1",
+		"Ctrl2" = "create_group_2",
+		"Ctrl3" = "create_group_3",
+		"Ctrl4" = "create_group_4",
+		"Ctrl5" = "create_group_5",
+		"Shift1" = "add_group_1",
+		"Shift2" = "add_group_2",
+		"Shift3" = "add_group_3",
+		"Shift4" = "add_group_4",
+		"Shift5" = "add_group_5",
+		"CtrlZ" = "secrete_resin_undo",
+		"CtrlY" = "secrete_resin_redo",
+		"AltQ" = "secrete_resin_pattern_previous",
+		"AltE" = "secrete_resin_pattern_next",
+		"AltV" = "secrete_resin_toggle_auto_rebuild",
+		"AltC" = "secrete_resin_toggle_demolish",
+		"AltG" = "rts_minion_control",
+		"AltB" = "stop_minions",
+		"AltR" = "psy_gain",
+	)
+	var/changed = FALSE
+	for(var/keybind_name in legacy_binding_keys)
+		var/legacy_key = legacy_binding_keys[keybind_name]
+		var/list/legacy_bindings = key_bindings[legacy_key]
+		if(islist(legacy_bindings) && (keybind_name in legacy_bindings))
+			legacy_bindings -= keybind_name
+			if(!length(legacy_bindings))
+				key_bindings -= legacy_key
+			changed = TRUE
+		var/already_bound = FALSE
+		for(var/existing_key in key_bindings)
+			var/list/existing_bindings = key_bindings[existing_key]
+			if(islist(existing_bindings) && (keybind_name in existing_bindings))
+				already_bound = TRUE
+				break
+		if(!already_bound)
+			var/replacement_key = replacement_keys[keybind_name]
+			if(!islist(key_bindings[replacement_key]))
+				key_bindings[replacement_key] = list()
+			key_bindings[replacement_key] += list(keybind_name)
+			changed = TRUE
+	for(var/default_key in default_bindings)
+		var/default_binding_name = default_bindings[default_key]
+		var/default_already_bound = FALSE
+		for(var/default_existing_key in key_bindings)
+			var/list/default_existing_bindings = key_bindings[default_existing_key]
+			if(islist(default_existing_bindings) && (default_binding_name in default_existing_bindings))
+				default_already_bound = TRUE
+				break
+		if(default_already_bound)
+			continue
+		if(!islist(key_bindings[default_key]))
+			key_bindings[default_key] = list()
+		key_bindings[default_key] += list(default_binding_name)
+		changed = TRUE
+	if(changed)
+		save_keybinds()
+		parent?.set_macros()
+	return changed
 
 /datum/preferences/proc/save_keybinds()
 	if(!path)
