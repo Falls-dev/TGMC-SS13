@@ -1677,6 +1677,10 @@
 				//						   	\\
 //----------------------------------------------------------
 
+/// Whether the user can operate this gun's controls.
+/obj/item/weapon/gun/proc/can_operate(mob/user)
+	return user.dextrous
+
 /obj/item/weapon/gun/proc/able_to_fire(mob/user)
 	if(!user || user.incapacitated()  || user.lying_angle || !isturf(user.loc))
 		return
@@ -1686,7 +1690,7 @@
 	if(!CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_CLOSED) && CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_TOGGLES_OPEN))
 		to_chat(user, span_warning("The chamber is open! Close it first."))
 		return FALSE
-	if(!user.dextrous)
+	if(!can_operate(user))
 		to_chat(user, span_warning("You don't have the dexterity to do this!"))
 		return FALSE
 	if(!(gun_features_flags & GUN_ALLOW_SYNTHETIC) && !CONFIG_GET(flag/allow_synthetic_gun_use) && issynth(user))

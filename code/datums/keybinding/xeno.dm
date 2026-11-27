@@ -925,6 +925,34 @@
 	keybind_signal = COMSIG_XENOABILITY_RUNNER_POUNCE
 	hotkey_keys = list("E")
 
+/datum/keybinding/xeno/dragun_slash
+	name = "dragun_slash"
+	full_name = "Dragun: Slash"
+	description = "Select Slash."
+	keybind_signal = COMSIG_XENOABILITY_DRAGUN_SLASH
+	hotkey_keys = list("F")
+
+/datum/keybinding/xeno/dragun_taran
+	name = "dragun_taran"
+	full_name = "Dragun: Taran"
+	description = "Select Taran."
+	keybind_signal = COMSIG_XENOABILITY_DRAGUN_TARAN
+	hotkey_keys = list("V")
+
+/datum/keybinding/xeno/dragun_bite
+	name = "dragun_bite"
+	full_name = "Dragun: Bite"
+	description = "Select Bite. Hold the ability mouse button to prepare the leap."
+	keybind_signal = COMSIG_XENOABILITY_DRAGUN_BITE
+	hotkey_keys = list("B")
+
+/datum/keybinding/xeno/dragun_charge
+	name = "dragun_charge"
+	full_name = "Dragun: Charge rifle"
+	description = "Purchase one rifle charge level."
+	keybind_signal = COMSIG_XENOABILITY_DRAGUN_CHARGE
+	hotkey_keys = list("H")
+
 /datum/keybinding/xeno/toggle_savage
 	name = "toggle_savage"
 	full_name = "Runner: Toggle Savage"

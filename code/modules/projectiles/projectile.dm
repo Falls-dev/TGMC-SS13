@@ -85,6 +85,8 @@
 	var/iff_signal = NONE
 	///How far the projectile has currently travelled
 	var/distance_travelled = 0
+	/// Charge level carried by a Dragun bone bolt.
+	var/dragun_bolt_charge = 0
 	///Tiles travelled per full tick
 	var/projectile_speed = 1
 	///armour type this projectile is checked against
