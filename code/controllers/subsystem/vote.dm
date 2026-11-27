@@ -8,6 +8,8 @@ SUBSYSTEM_DEF(vote)
 
 	/// Available choices in the vote
 	var/list/choices = list()
+	/// Optional descriptions keyed by the name of a map or game mode.
+	var/list/choice_descriptions = list()
 	/// What choices each player took, if any
 	var/list/choices_by_ckey = list()
 	/// Who started the vote
@@ -48,6 +50,7 @@ SUBSYSTEM_DEF(vote)
 /// Stop the current vote and reset everything
 /datum/controller/subsystem/vote/proc/reset()
 	choices.Cut()
+	choice_descriptions.Cut()
 	choices_by_ckey.Cut()
 	multiple_vote = FALSE
 	initiator = null
@@ -240,6 +243,8 @@ SUBSYSTEM_DEF(vote)
 					if(players < mode.required_players)
 						continue
 					choices.Add(mode.config_tag)
+					if(mode.vote_description)
+						choice_descriptions[mode.config_tag] = mode.vote_description
 			if("groundmap")
 				multiple_vote = TRUE
 				if(!lower_admin && SSmapping.groundmap_voted)
@@ -268,6 +273,8 @@ SUBSYSTEM_DEF(vote)
 						if(VM.config_min_users && players < VM.config_min_users)
 							continue
 					maps += VM.map_name
+					if(VM.vote_description)
+						choice_descriptions[VM.map_name] = VM.vote_description
 					shuffle_choices = TRUE
 				for(var/valid_map in maps)
 					choices.Add(valid_map)
@@ -363,10 +370,13 @@ SUBSYSTEM_DEF(vote)
 
 	var/choice_num = 1
 	for(var/key in choices)
-		data["choices"] += list(list(
+		var/list/choice_data = list(
 			"name" = key,
 			"num_index" = choice_num++
-		))
+		)
+		if(choice_descriptions[key])
+			choice_data["description"] = choice_descriptions[key]
+		data["choices"] += list(choice_data)
 		data["vote_counts"] += choices[key] || 0
 
 	if(shuffle_choices)

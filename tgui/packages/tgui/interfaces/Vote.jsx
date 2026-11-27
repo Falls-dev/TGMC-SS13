@@ -7,6 +7,7 @@ import {
   NoticeBox,
   Section,
   Stack,
+  Tooltip,
 } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
@@ -206,39 +207,49 @@ const ChoicesPanel = (props) => {
       <Section fill scrollable title="Choices">
         {choices.length !== 0 ? (
           <LabeledList>
-            {choices.map((choice, i) => (
-              <Box key={choice.num_index}>
-                <LabeledList.Item
-                  label={choice.name.replace(/^\w/, (c) => c.toUpperCase())}
-                  textAlign="right"
-                  buttons={
-                    <Button
-                      color={
-                        selected_choice.includes(choice.num_index)
-                          ? 'green'
-                          : 'orange'
-                      }
-                      onClick={() => {
-                        act('vote', { index: choice.num_index });
-                      }}
-                    >
-                      Vote
-                    </Button>
-                  }
-                >
-                  {selected_choice.includes(choice.num_index) && (
-                    <Icon
-                      alignSelf="right"
-                      mr={2}
-                      color="green"
-                      name="vote-yea"
-                    />
-                  )}
-                  {vote_counts[choice.num_index - 1]} Votes
-                </LabeledList.Item>
-                <LabeledList.Divider />
-              </Box>
-            ))}
+            {choices.map((choice) => {
+              const name = choice.name.replace(/^\w/, (c) => c.toUpperCase());
+              const label = choice.description ? (
+                <Tooltip content={choice.description}>
+                  <span>{name}</span>
+                </Tooltip>
+              ) : (
+                name
+              );
+              return (
+                <Box key={choice.num_index}>
+                  <LabeledList.Item
+                    label={label}
+                    textAlign="right"
+                    buttons={
+                      <Button
+                        color={
+                          selected_choice.includes(choice.num_index)
+                            ? 'green'
+                            : 'orange'
+                        }
+                        onClick={() => {
+                          act('vote', { index: choice.num_index });
+                        }}
+                      >
+                        Vote
+                      </Button>
+                    }
+                  >
+                    {selected_choice.includes(choice.num_index) && (
+                      <Icon
+                        alignSelf="right"
+                        mr={2}
+                        color="green"
+                        name="vote-yea"
+                      />
+                    )}
+                    {vote_counts[choice.num_index - 1]} Votes
+                  </LabeledList.Item>
+                  <LabeledList.Divider />
+                </Box>
+              );
+            })}
           </LabeledList>
         ) : (
           <NoticeBox>No choices available!</NoticeBox>

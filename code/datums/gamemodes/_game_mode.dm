@@ -6,6 +6,8 @@ GLOBAL_VAR(common_report) //Contains common part of roundend report
 /datum/game_mode
 	var/name = ""
 	var/config_tag = null
+	/// Optional description shown on the game mode ballot.
+	var/vote_description
 	var/esc_menu_name = null
 	var/votable = TRUE
 	var/required_players = 0

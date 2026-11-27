@@ -14,6 +14,8 @@
 
 	// Config actually from the JSON - default values
 	var/map_name = "Vapor Processing"
+	/// Optional description shown on the ground map ballot.
+	var/vote_description
 	var/map_path = "map_files/Vapor_Processing"
 	var/map_file = "Vapor_Processing.dmm"
 
@@ -99,6 +101,8 @@
 
 	CHECK_EXISTS("map_name")
 	map_name = json["map_name"]
+	var/description = json["description"]
+	vote_description = istext(description) ? trim(description) : null
 	CHECK_EXISTS("map_path")
 	map_path = json["map_path"]
 	parallax_icon = json["parallax_icon"]
