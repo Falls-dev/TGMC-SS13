@@ -106,6 +106,24 @@
 	input = list(/obj/item/stack/sheet/plasteel = 40, /obj/item/stack/sheet/mineral/osmium = 80, /obj/item/stack/sheet/mineral/platinum = 20) // 320 + 480 + 240 = 1040 points
 	output = list(/obj/item/weapon/gun/shotgun/zx76 = 1) // 1000 points
 
+/datum/assembly_craft/weapons/tash12
+	name = "Type 12-ASH"
+	craft_time = 15 SECONDS
+	input = list(
+		/obj/item/stack/sheet/plasteel = 15,
+		/obj/item/stack/sheet/mineral/osmium = 30,
+		/obj/item/stack/sheet/mineral/platinum = 5,
+		) // 120 + 180 + 60 = 360 points
+	output = list(/obj/item/weapon/gun/rifle/tash12 = 1)
+
+/datum/assembly_craft/weapons/tash12_buckshot
+	name = "Type 12-ASH buckshot magazine"
+	input = list(
+		/obj/item/stack/sheet/metal = 7,
+		/obj/item/stack/gun_powder = 5,
+	)
+	output = list(/obj/item/ammo_magazine/rifle/tash12 = 1)
+
 //-------------------------
 //shotgun ammo
 
