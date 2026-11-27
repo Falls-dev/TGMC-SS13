@@ -169,6 +169,9 @@
 */
 
 
+// Рубим нахуй
+#define SDQL2_DISABLED
+
 #define SDQL2_STATE_ERROR 0
 #define SDQL2_STATE_IDLE 1
 #define SDQL2_STATE_PRESEARCH 2
@@ -200,6 +203,7 @@
 		state = SDQL2_STATE_ERROR;\
 		CRASH("SDQL2 fatal error");};
 
+#ifndef SDQL2_DISABLED
 ADMIN_VERB(sdql2_query, R_DEBUG, "SDQL2 Query", "Run a SDQL2 query.", ADMIN_CATEGORY_DEBUG, query_text as message)
 	var/prompt = tgui_alert(user, "Run SDQL2 Query?", "SDQL2", list("Yes", "Cancel"))
 	if (prompt != "Yes")
@@ -209,8 +213,12 @@ ADMIN_VERB(sdql2_query, R_DEBUG, "SDQL2 Query", "Run a SDQL2 query.", ADMIN_CATE
 		for(var/I in 1 to 3)
 			to_chat(user, span_admin(results[I]))
 	SSblackbox.record_feedback(FEEDBACK_NESTED_TALLY, "SDQL query", 1, list(user.ckey, query_text))
+#endif
 
 /world/proc/SDQL2_query(query_text, log_entry1, log_entry2)
+#ifdef SDQL2_DISABLED
+	return null
+#else
 	var/query_log = "executed SDQL query(s): \"[query_text]\"."
 	message_admins("[log_entry1] [query_log]")
 	query_log = "[log_entry2] [query_log]"
@@ -305,6 +313,7 @@ ADMIN_VERB(sdql2_query, R_DEBUG, "SDQL2 Query", "Run a SDQL2 query.", ADMIN_CATE
 	return list(span_admin("SDQL query combined results: [query_text]"),\
 		span_admin("SDQL query completed: [objs_all] objects selected by path, and [selectors_used ? objs_eligible : objs_all] objects executed on after WHERE filtering/MAPping if applicable."),\
 		span_admin("SDQL combined querys took [DisplayTimeText(end_time_total)] to complete.")) + combined_refs
+#endif
 
 GLOBAL_LIST_INIT(sdql2_queries, GLOB.sdql2_queries || list())
 GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null, "VIEW VARIABLES (all)", null))
@@ -495,6 +504,9 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 	INVOKE_ASYNC(src, PROC_REF(Run))
 
 /datum/SDQL2_query/proc/Run()
+#ifdef SDQL2_DISABLED
+	return FALSE
+#else
 	if(SDQL2_IS_RUNNING)
 		return FALSE
 	if(query_tree["options"])
@@ -539,6 +551,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 	show_next_to_key = null
 	if(qdel_on_finish)
 		qdel(src)
+#endif
 
 /datum/SDQL2_query/proc/PreSearch()
 	SDQL2_HALT_CHECK
