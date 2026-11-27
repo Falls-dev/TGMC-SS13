@@ -4,6 +4,10 @@
 	icon = 'icons/obj/items/defibrillator.dmi'
 	icon_state = "defib"
 	worn_icon_state = "defib"
+	worn_icon_list = list(
+		slot_l_hand_str = 'icons/mob/inhands/equipment/medical_left.dmi',
+		slot_r_hand_str = 'icons/mob/inhands/equipment/medical_right.dmi',
+	)
 	atom_flags = CONDUCT
 	item_flags = NOBLUDGEON
 	equip_slot_flags = ITEM_SLOT_BELT
@@ -313,7 +317,7 @@
 	name = "emergency defibrillator"
 	desc = "A device that delivers powerful shocks to resuscitate incapacitated patients. This one appears to be a civillian model."
 	icon_state = "civ_defib"
-	worn_icon_state = "defib"
+	worn_icon_state = "civ_defib"
 
 ///used for advanced medical (defibrillator) gloves: defibrillator_gloves.dm
 /obj/item/defibrillator/internal
@@ -342,6 +346,7 @@
 	name = "advanced emergency defibrillator"
 	desc = "A device that delivers powerful shocks to resuscitate incapacitated patients. Allows to ignore armor, covering the heart, and doesn't damage the heat itself at the cost of increased charge consumption."
 	icon_state = "civ_defib"
+	worn_icon_state = "civ_defib"
 	charge_cost = 100
 	advanced = TRUE
 

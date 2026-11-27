@@ -19,30 +19,37 @@
 	var/visor_emissive_on = TRUE
 	///Whether or not the helmet is allowed to turn its emissive on or off.
 	var/allow_emissive = TRUE
+	///Какой слой оверлея моба используется для свечения
+	var/emissive_layer = HEAD_LAYER
+	///Какой icon_state использовать для emissive-оверлея (если пусто, то берется icon_state модуля)
+	var/emissive_icon_state
+
+/obj/item/armor_module/armor/visor/proc/get_emissive_state()
+	return emissive_icon_state || icon_state
 
 /obj/item/armor_module/armor/visor/on_attach(obj/item/attaching_to, mob/user)
 	. = ..()
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_ALTERNATE, PROC_REF(toggle_emissive))
 	if(visor_emissive_on)
-		parent.AddElement(/datum/element/special_clothing_overlay/modular_helmet_visor, HEAD_LAYER, icon_state, icon)
+		parent.AddElement(/datum/element/special_clothing_overlay/modular_helmet_visor, emissive_layer, get_emissive_state(), icon)
 	update_icon()
 
 /obj/item/armor_module/armor/visor/on_detach(obj/item/detaching_from, mob/user)
 	UnregisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_ALTERNATE)
-	parent.RemoveElement(/datum/element/special_clothing_overlay/modular_helmet_visor, HEAD_LAYER, icon_state, icon)
+	parent.RemoveElement(/datum/element/special_clothing_overlay/modular_helmet_visor, emissive_layer, get_emissive_state(), icon)
 	update_icon()
 	return ..()
 
 ///Toggles the visors emmisiveness if allowed.
 /obj/item/armor_module/armor/visor/proc/toggle_emissive(datum/source, mob/living/user)
 	SIGNAL_HANDLER
-	if(!allow_emissive|| (parent && user.get_inactive_held_item() != parent) || (!parent && user.get_inactive_held_item() != src))
+	if(!allow_emissive || (parent && user.get_inactive_held_item() != parent) || (!parent && user.get_inactive_held_item() != src))
 		return
 	visor_emissive_on = !visor_emissive_on
 	if(visor_emissive_on)
-		parent?.AddElement(/datum/element/special_clothing_overlay/modular_helmet_visor, HEAD_LAYER, icon_state, icon)
+		parent?.AddElement(/datum/element/special_clothing_overlay/modular_helmet_visor, emissive_layer, get_emissive_state(), icon)
 	else
-		parent?.RemoveElement(/datum/element/special_clothing_overlay/modular_helmet_visor, HEAD_LAYER, icon_state, icon)
+		parent?.RemoveElement(/datum/element/special_clothing_overlay/modular_helmet_visor, emissive_layer, get_emissive_state(), icon)
 	to_chat(user, span_notice("You turn [ visor_emissive_on ? "on" : "off" ] \the [src]'s internal lighting."))
 	update_icon()
 	parent.update_icon()
@@ -247,3 +254,17 @@
 	name = "\improper Crasher MT/41 'Hephaestus' helmet visor"
 	desc = "The visor attachment of the Crasher MT/41 series modular helmets. This one is designed for the 'Hephaestus' of helmet."
 	icon_state = "hephaestus_visor"
+
+/obj/item/armor_module/armor/visor/icc_trophy_lenses
+	name = "ICC Trophy mask lenses"
+	desc = "A set of protective lenses for the ICC Trophy gas mask."
+	icon = 'icons/mob/modular/masks.dmi'
+	icon_state = "icc_trophy"
+	slot = ATTACHMENT_SLOT_VISOR
+	attach_features_flags = ATTACH_APPLY_ON_MOB|ATTACH_DIFFERENT_MOB_ICON_STATE
+	greyscale_config = /datum/greyscale_config/icc_trophy_lenses
+	greyscale_colors = "#ff0000"
+	colorable_allowed = COLOR_WHEEL_ALLOWED
+	secondary_color = TRUE
+	emissive_layer = FACEMASK_LAYER
+	emissive_icon_state = "icc_trophy_m"

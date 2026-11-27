@@ -1,0 +1,52 @@
+{
+	"autoinjector-13": [
+		{
+			"type": "icon_state",
+			"icon_state": "autoinjector-13",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "autoinjector-13_1",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "autoinjector-13_2",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "autoinjector-13_3",
+			"blend_mode": "overlay",
+			"color_ids": [3]
+		}
+	],
+	"autoinjector-13X": [
+		{
+			"type": "icon_state",
+			"icon_state": "autoinjector-13X",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "autoinjector-13X_1",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "autoinjector-13X_2",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "autoinjector-13X_3",
+			"blend_mode": "overlay",
+			"color_ids": [3]
+		}
+	]
+}
