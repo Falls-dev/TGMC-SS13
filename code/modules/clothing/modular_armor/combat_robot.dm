@@ -288,3 +288,15 @@
 
 	icon_state = "robo_armor_fire"
 	worn_icon_state = "robo_armor_fire"
+
+/obj/item/clothing/suit/modular/robot/tyr_two
+	starting_attachments = list(
+		/obj/item/armor_module/module/tyr_extra_armor,
+		/obj/item/armor_module/storage/engineering,
+	)
+
+/obj/item/clothing/suit/modular/robot/shield_overclocked
+	starting_attachments = list(
+		/obj/item/armor_module/module/eshield/overclocked,
+		/obj/item/armor_module/storage/engineering,
+	)

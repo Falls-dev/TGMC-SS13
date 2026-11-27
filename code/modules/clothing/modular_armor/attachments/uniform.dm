@@ -95,3 +95,17 @@
 	desc = "A handgun holster. Made of expensive leather."
 	icon_state = "holster"
 	worn_icon_state = "holster_low"
+
+/obj/item/armor_module/storage/uniform/black_vest/sling
+	name = "black sling pouch"
+	icon_state = "webbing"
+	color = COLOR_ALMOST_BLACK
+
+/obj/item/armor_module/storage/uniform/brown_vest/sling
+	name = "brown sling pouch"
+	icon_state = "webbing"
+
+/obj/item/armor_module/storage/uniform/white_vest/sling
+	name = "white sling pouch"
+	icon_state = "webbing"
+	color = COLOR_SILVER

@@ -283,6 +283,8 @@
 	var/cool_amount = 5
 	///tracks overheat timer ref
 	var/overheat_timer
+	/// Sound played when the gun overheats.
+	var/overheat_sound = 'sound/weapons/guns/interact/gun_overheat.ogg'
 	///multiplier on cool amount to determine overheat time
 	var/overheat_multiplier = 1.1
 	///image we create to keep track of heat
@@ -803,6 +805,8 @@
 
 ///Wrapper proc to complete the whole firing process.
 /obj/item/weapon/gun/proc/Fire()
+	if(gun_fire_angle && target && get_between_angles(Get_Angle(get_turf(src), target), dir2angle(loc.dir)) > gun_fire_angle / 2)
+		return NONE
 	if(!target || !(gun_user || issentry(loc)) || !(CHECK_BITFIELD(deploy_flags, IS_DEPLOYED) || able_to_fire(gun_user)) || windup_checked == WEAPON_WINDUP_CHECKING)
 		return NONE
 	if(windup_delay && windup_checked == WEAPON_WINDUP_NOT_CHECKED)
@@ -869,7 +873,7 @@
 	if(heat_amount >= 100)
 		STOP_PROCESSING(SSprocessing, src)
 		var/obj/effect/abstract/particle_holder/overheat_smoke = new(src, /particles/overheat_smoke)
-		playsound(src, 'sound/weapons/guns/interact/gun_overheat.ogg', 25, 1, 5)
+		playsound(src, overheat_sound, 25, 1, 5)
 		//overheat gives either you a bonus or penalty depending on gun, by default it is +10% time.
 		var/overheat_time = (heat_amount / cool_amount * overheat_multiplier) SECONDS
 		overheat_timer = addtimer(CALLBACK(src, PROC_REF(complete_overheat), overheat_smoke), overheat_time, TIMER_STOPPABLE)
@@ -1339,10 +1343,13 @@
 					items_to_insert += mag
 				playsound(src, hand_reload_sound, 25, 1, MEDIUM_SOUND_RANGE)
 			else
-				if((length(chamber_items) && !CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_ROTATES_CHAMBER)) || (CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_ROTATES_CHAMBER) && rounds))
+				if(!CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_MULTICLIP) && ((length(chamber_items) && !CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_ROTATES_CHAMBER)) || (CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_ROTATES_CHAMBER) && rounds)))
 					to_chat(user, span_warning("[src] must be completely empty to use the [mag]!"))
 					return FALSE
-				var/rounds_to_fill = mag.current_rounds < max_chamber_items ? mag.current_rounds : max_chamber_items
+				var/available_slots = max_chamber_items
+				if(CHECK_BITFIELD(reciever_flags, AMMO_RECIEVER_MULTICLIP))
+					available_slots -= length(chamber_items)
+				var/rounds_to_fill = min(mag.current_rounds, available_slots)
 				for(var/i = 0, i < rounds_to_fill, i++)
 					items_to_insert += mag.create_handful(null, 1)
 				playsound(src, reload_sound, 25, 1, MEDIUM_SOUND_RANGE)
@@ -1680,6 +1687,9 @@
 /obj/item/weapon/gun/proc/able_to_fire(mob/user)
 	if(!user || user.incapacitated()  || user.lying_angle || !isturf(user.loc))
 		return
+	if(HAS_TRAIT(user, TRAIT_KNIGHT))
+		balloon_alert(user, "blocked by knight module")
+		return FALSE
 	if(rounds - rounds_per_shot < 0 && rounds)
 		to_chat(user, span_warning("There's not enough rounds left to fire."))
 		return FALSE
@@ -1893,3 +1903,6 @@
 		return
 	magharn.reequip_component.active = FALSE
 	addtimer(VARSET_CALLBACK(magharn.reequip_component, active, TRUE), 2 SECONDS)
+
+/obj/item/weapon/gun
+	var/gun_fire_angle

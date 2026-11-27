@@ -12,6 +12,11 @@
 	contains = list(/obj/item/shotgunbox/clf_heavyrifle)
 	cost = 100
 
+/datum/supply_packs/imports/t105_unity_ammo
+	name = "T105 Unity Foxfire cylinder (.357)"
+	cost = 15
+	contains = list(/obj/item/ammo_magazine/pistol/ntunity)
+
 /datum/supply_packs/imports/m41a
 	name = "PR-11 Pulse Rifle"
 	contains = list(/obj/item/weapon/gun/rifle/m41a)

@@ -19,6 +19,7 @@
 #define RAILGUN_AMMO 5
 #define CAS_BOMB 6
 #define CAS_UNGUIDED_ROCKET 7
+#define CAS_BOMBLET 8
 
 //Ammo impact type defines
 #define CAS_AMMO_EXPLOSIVE 1//Uses explosive ammo. Missiles/bombs, etc.

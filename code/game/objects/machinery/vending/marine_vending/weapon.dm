@@ -51,6 +51,9 @@
 
 	),
 		"Снайперские винтовки" = list(
+			/obj/item/weapon/gun/rifle/dragoon = -1,
+			/obj/item/ammo_magazine/rifle/boltclip/dragoon = -1,
+			/obj/item/ammo_magazine/rifle/boltclip/dragoon/pox = -1,
 			/obj/item/weapon/gun/rifle/dmr37 = -1,
 			/obj/item/ammo_magazine/rifle/dmr37 = -1,
 			/obj/item/weapon/gun/rifle/br64 = -1,
@@ -61,6 +64,8 @@
 			/obj/item/ammo_magazine/sniper/svd = -1,
 		),
 		"Энергетическое" = list(
+			/obj/item/weapon/gun/rifle/plasma_dmr = 2,
+			/obj/item/ammo_magazine/rifle/plasma_dmr = -1,
 			/obj/item/cell/lasgun/lasrifle = -1,
 			/obj/item/cell/lasgun/volkite/powerpack/marine = -1,
 			/obj/item/weapon/gun/energy/lasgun/lasrifle/standard_marine_rifle = -1,
@@ -71,6 +76,16 @@
 			/obj/item/weapon/gun/energy/lasgun/lasrifle/tesla = -1,
 		),
 		"Дробовики" = list(
+			/obj/item/ammo_magazine/handful/slug = -1,
+			/obj/item/ammo_magazine/handful/buckshot = -1,
+			/obj/item/ammo_magazine/handful/flechette = -1,
+			/obj/item/ammo_magazine/handful/incendiary = -1,
+			/obj/item/ammo_magazine/handful/tracker = 5,
+			/obj/item/ammo_magazine/handful/beanbag = -1,
+			/obj/item/ammo_magazine/handful/rubber_pellet = -1,
+			/obj/item/ammo_magazine/handful/heavy_buckshot = 8,
+			/obj/item/ammo_magazine/handful/heavy_flechette = 8,
+			/obj/item/ammo_magazine/handful/barrikada = 5,
 			/obj/item/weapon/gun/shotgun/pump/t35 = -1,
 			/obj/item/weapon/gun/shotgun/combat/standardmarine = -1,
 			/obj/item/weapon/gun/shotgun/combat/shq6 = -1,
@@ -144,6 +159,7 @@
 			/obj/item/explosive/grenade/m15 = 15,
 			/obj/item/explosive/grenade/sticky = 5,
 			/obj/item/explosive/grenade/sticky/trailblazer = 5,
+			/obj/item/explosive/grenade/ionplasma = 5,
 			/obj/item/explosive/grenade/incendiary = 20,
 			/obj/item/explosive/grenade/bullet/laser = 10,
 			/obj/item/explosive/grenade/bullet/hefa = 10,
@@ -157,6 +173,7 @@
 			/obj/item/storage/box/m94/cas = -1,
 		),
 		"Специализированное" = list(
+			/obj/item/storage/box/crate/drone/nut = 1,
 			/obj/item/storage/box/crate/sentry = 4,
 			/obj/item/weapon/gun/rifle/pepperball = 4,
 			/obj/item/ammo_magazine/rifle/pepperball = -1,

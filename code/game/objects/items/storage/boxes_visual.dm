@@ -188,7 +188,7 @@
 			var/imagepixel_z = overlay_pixel_y + min(amt_vertical - WRAP(current_iteration - 1, 0, amt_vertical) - 1, total_overlays - current_iteration) * shift_y
 			var/obj/item/relateditem = obj_typepath
 
-			var/mutable_appearance/new_overlay = mutable_appearance('icons/obj/items/items_mini.dmi', initial(relateditem.icon_state_mini))
+			var/mutable_appearance/new_overlay = mutable_appearance(initial(relateditem.icon_mini), initial(relateditem.icon_state_mini))
 			new_overlay.pixel_w = imagepixel_w
 			new_overlay.pixel_z = imagepixel_z
 			. += new_overlay
@@ -641,6 +641,13 @@
 	spawn_number = 25
 	spawn_type = /obj/item/explosive/grenade/incendiary
 	closed_overlay = "grenade_box_overlay_hidp"
+
+/obj/item/storage/box/visual/grenade/plasmafire
+	name = "\improper M55 plasmafire grenade box"
+	desc = "A secure box holding 25 M55 plasmafire grenades. Warning: highly flammable!!."
+	spawn_number = 25
+	spawn_type = /obj/item/explosive/grenade/ionplasma
+	closed_overlay = "grenade_box_overlay_plasmafire"
 
 /obj/item/storage/box/visual/grenade/cloaker
 	name = "\improper M45 Cloaker grenade box"

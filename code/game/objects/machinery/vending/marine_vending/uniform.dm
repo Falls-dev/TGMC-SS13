@@ -54,6 +54,9 @@
 			/obj/item/clothing/shoes/marine/white = -1,
 		),
 		"Webbings" = list(
+			/obj/item/armor_module/storage/uniform/black_vest/sling = -1,
+			/obj/item/armor_module/storage/uniform/brown_vest/sling = -1,
+			/obj/item/armor_module/storage/uniform/white_vest/sling = -1,
 			/obj/item/armor_module/storage/uniform/black_vest = -1,
 			/obj/item/armor_module/storage/uniform/brown_vest = -1,
 			/obj/item/armor_module/storage/uniform/white_vest = -1,

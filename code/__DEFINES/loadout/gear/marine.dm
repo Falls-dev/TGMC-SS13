@@ -9,6 +9,7 @@ GLOBAL_LIST_INIT(marine_gear_listed_products, list(
 	/obj/item/explosive/grenade = list(CAT_MARINE, "M40 HEDP grenade", 2, "orange3"),
 	/obj/item/explosive/grenade/sticky = list(CAT_MARINE, "M40 adhesive charge grenade", 2, "orange3"),
 	/obj/item/explosive/grenade/incendiary = list(CAT_MARINE, "M40 HIDP incendiary grenade", 2, "orange3"),
+	/obj/item/explosive/grenade/ionplasma = list(CAT_MARINE, "M55 plasmafire grenade", 4, "orange3"),
 	/obj/item/explosive/grenade/m15 = list(CAT_MARINE, "M15 fragmentation grenade", 3, "orange3"),
 	/obj/item/explosive/grenade/smokebomb/drain = list(CAT_MARINE, "M40-T smoke grenade", 25, "orange3"),
 	/obj/item/explosive/grenade/sticky/cloaker/tangle = list(CAT_MARINE, "M45-T tanglefoot grenade", 20, "orange3"),
@@ -22,4 +23,5 @@ GLOBAL_LIST_INIT(marine_gear_listed_products, list(
 	/obj/item/sidecar = list(CAT_MARINE, "Bike sidecar", 15, "blue"),
 	/obj/item/ammo_magazine/rifle/ar21/extended = list(CAT_MARINE, "AR-21 extended magazine", 15, "blue"),
 	/obj/item/storage/briefcase/standard_magnum = list(CAT_MARINE, "R-76 crate", 25, "blue"),
+	/obj/item/weapon/energy/sword/ntc = list(CAT_MARINE, "esable", 30, "blue"),
 ))

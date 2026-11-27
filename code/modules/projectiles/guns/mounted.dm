@@ -726,3 +726,70 @@
 	soft_armor = list(MELEE = 0, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 100, FIRE = 0, ACID = 20)
 
 	allowed_ammo_types = list(/obj/item/ammo_magazine/kord)
+
+/obj/item/weapon/gun/standard_mmg/machinegunner
+	starting_attachment_types = list(/obj/item/attachable/stock/t27, /obj/item/attachable/scope/unremovable/mg27)
+
+/obj/item/weapon/gun/standard_mmg/machinegunner/Initialize(mapload, spawn_empty)
+	attachable_allowed = attachable_allowed | /obj/item/attachable/stock/t27
+	return ..()
+
+/obj/item/weapon/gun/at45
+	name = "\improper CC/AT45 Heavy Smart Machine Gun"
+	desc = "A Kaizoku Corporation heavy smart machine gun chambered in 10x30mm caseless. Ctrl-click to deploy it before firing. A blowtorch can repair it while it is deployed."
+
+	w_class = WEIGHT_CLASS_HUGE
+	equip_slot_flags = ITEM_SLOT_BACK
+	icon = 'icons/obj/items/gun/special64.dmi'
+	icon_state = "at45"
+	worn_icon_list = list(
+		slot_back_str = 'icons/mob/clothing/back.dmi',
+		slot_l_hand_str = 'icons/mob/inhands/gun/special_lefthand_1.dmi',
+		slot_r_hand_str = 'icons/mob/inhands/gun/special_righthand_1.dmi',
+	)
+	worn_worn_icon_state_slots = list(slot_l_hand_str = "turret", slot_r_hand_str = "turret")
+
+	fire_sound = 'sound/weapons/guns/fire/autocannon_2.ogg'
+	reload_sound = 'sound/weapons/guns/interact/kt42_cocked.ogg'
+
+	caliber = CALIBER_10X30
+	default_ammo_type = /obj/item/ammo_magazine/at45
+	scatter = 10
+	deployed_scatter_change = -10
+	fire_delay = 0.35 SECONDS
+
+	burst_amount = 3
+	burst_delay = 0.1 SECONDS
+	extra_delay = 1 SECONDS
+	accuracy_mult = 1.2 //it's got a bipod
+	burst_accuracy_bonus = 1
+	burst_scatter_mult = 0
+
+	item_flags = TWOHANDED
+	deploy_flags = IS_DEPLOYABLE
+	gun_features_flags = GUN_AMMO_COUNTER|GUN_DEPLOYED_FIRE_ONLY|GUN_WIELDED_FIRING_ONLY|GUN_IFF|GUN_SMOKE_PARTICLES
+	gun_firemode_list = list(GUN_FIREMODE_AUTOMATIC)
+
+	allowed_ammo_types = list(
+		/obj/item/ammo_magazine/at45,
+	)
+
+	attachable_allowed = list(
+		/obj/item/attachable/at45barrel,
+		/obj/item/attachable/stock/at45stock,
+		/obj/item/attachable/motiondetector,
+	)
+
+	starting_attachment_types = list(
+		/obj/item/attachable/at45barrel,
+		/obj/item/attachable/stock/at45stock,
+		/obj/item/attachable/motiondetector,
+	)
+	attachable_offset = list("muzzle_x" = 56, "muzzle_y" = 16,"rail_x" = 18, "rail_y" = 24, "under_x" = 28, "under_y" = 13, "stock_x" = -11, "stock_y" = 0)
+
+	deploy_time = 5 SECONDS
+	undeploy_time = 3 SECONDS
+	deployable_item = /obj/machinery/deployable/mounted/at45
+
+	max_integrity = 200
+	soft_armor = list(MELEE = 0, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 100, FIRE = 0, ACID = 20)

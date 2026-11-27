@@ -114,6 +114,7 @@
 #define AMMO_RECIEVER_DO_NOT_EJECT_HANDFULS (1<<9)
 #define AMMO_RECIEVER_DO_NOT_EMPTY_ROUNDS_AFTER_FIRE (1<<10)
 #define AMMO_RECIEVER_CYCLE_ONLY_BEFORE_FIRE (1<<11) //The ammo stay in the magazine until the last moment
+#define AMMO_RECIEVER_MULTICLIP (1<<13) // Allow topping off the internal magazine using a stripper clip.
 #define AMMO_RECIEVER_AUTO_EJECT_LOCKED (1<<12) //Not allowed to turn automatic unloading off
 
 #define FLAMER_IS_LIT (1<<0)

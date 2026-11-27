@@ -128,6 +128,7 @@
 #define TRAIT_DWARF "dwarf"
 #define MOVEMENT_SWAP_TRAIT "movement_swap_trait"
 #define MANIFESTED_TRAIT "manifested_trait"
+#define BIGBIKE_TRAIT "bigbike_trait"
 #define HOVERBIKE_TRAIT "hoverbike_trait"
 #define MUTATION_TRAIT "mutation_trait"
 /// This trait comes from when a mob is currently typing.
@@ -333,3 +334,6 @@ GLOBAL_LIST_INIT(traits_to_pass_flags, list(
 	TRAIT_PASS_WALKOVER = PASS_WALKOVER,
 	TRAIT_PASS_TANK = PASS_TANK,
 ))
+
+/// Prevents firearm and grenade use while the Magni module is worn.
+#define TRAIT_KNIGHT "knight"

@@ -366,3 +366,44 @@
 
 	var/mob/living/living_victim = target_mob
 	living_victim.apply_status_effect(STATUS_EFFECT_SHATTER, 3 SECONDS)
+
+/datum/ammo/bullet/shotgun/flechette/rubber
+	name = "shotgun rubber pellet shell"
+	bonus_projectiles_type = /datum/ammo/bullet/shotgun/flechette/flechette_spread/rubber
+	damage = 55
+	damage_type = STAMINA
+	shrapnel_chance = 0
+
+/datum/ammo/bullet/shotgun/heavy_flechette
+	name = "heavy flechette shell"
+	handful_icon_state = "heavy_shotgun_flechette"
+	icon_state = "flechette"
+	hud_state = "shotgun_flechette"
+	ammo_behavior_flags = AMMO_BALLISTIC
+	bonus_projectiles_type = /datum/ammo/bullet/shotgun/flechette/heavy_flechette_spread
+	bonus_projectiles_amount = 2
+	bonus_projectiles_scatter = 3
+	max_range = 10
+	damage = 65
+	penetration = 25
+	sundering = 15
+
+/datum/ammo/bullet/shotgun/heavy_flechette/on_hit_obj(obj/target_obj, atom/movable/projectile/proj)
+	if(istype(target_obj, /obj/machinery/door))
+		var/obj/machinery/door/affected_door = target_obj
+		affected_door.take_damage(damage * 4, BRUTE, BULLET)
+
+/datum/ammo/bullet/shotgun/heavy_flechette/on_hit_turf(turf/target_turf, atom/movable/projectile/proj)
+	if(iswallturf(target_turf))
+		var/turf/closed/wall/affected_turf = target_turf
+		affected_turf.take_damage(damage * 4, BRUTE, BULLET)
+
+/datum/ammo/bullet/shotgun/flechette/heavy_flechette_spread
+	name = "additional flechette"
+	damage = 55
+
+/datum/ammo/bullet/shotgun/flechette/flechette_spread/rubber
+	name = "additional rubber pellet"
+	damage = 44
+	damage_type = STAMINA
+	shrapnel_chance = 0

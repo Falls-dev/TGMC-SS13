@@ -262,3 +262,10 @@
 	recoil_unwielded_mod = -1
 	accuracy_mod = 0
 	accuracy_unwielded_mod = 0.15
+
+/obj/item/attachable/at45barrel
+	name = "\improper CC/AT45 barrel"
+	icon_state = "at45barrel"
+	desc = "A heavy barrel. CANNOT BE REMOVED."
+	slot = ATTACHMENT_SLOT_MUZZLE
+	attach_features_flags = NONE

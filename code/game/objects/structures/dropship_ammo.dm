@@ -367,6 +367,8 @@
 	prediction_type = CAS_AMMO_EXPLOSIVE
 
 /obj/structure/ship_ammo/cas/rocket/detonate_on(turf/impact, attackdir = NORTH)
+	if(try_erp_ads_intercept(impact, src, GLOB.ads_intercept_range))
+		return
 	qdel(src)
 
 //this one is air-to-air only
@@ -382,6 +384,8 @@
 	cas_effect = /obj/effect/overlay/blinking_laser/widowmaker
 
 /obj/structure/ship_ammo/cas/rocket/widowmaker/detonate_on(turf/impact, attackdir = NORTH)
+	if(try_erp_ads_intercept(impact, src, GLOB.ads_intercept_range))
+		return
 	impact.ceiling_debris_check(3)
 	cell_explosion(impact, explosion_power, explosion_falloff)
 	qdel(src)
@@ -400,6 +404,8 @@
 	cas_effect = /obj/effect/overlay/blinking_laser/banshee
 
 /obj/structure/ship_ammo/cas/rocket/banshee/detonate_on(turf/impact, attackdir = NORTH)
+	if(try_erp_ads_intercept(impact, src, GLOB.ads_intercept_range))
+		return
 	impact.ceiling_debris_check(3)
 	cell_explosion(impact, explosion_power, explosion_falloff) //more spread out, with flames
 	flame_radius(fire_range, impact)
@@ -417,6 +423,8 @@
 	cas_effect = /obj/effect/overlay/blinking_laser/keeper
 
 /obj/structure/ship_ammo/cas/rocket/keeper/detonate_on(turf/impact, attackdir = NORTH)
+	if(try_erp_ads_intercept(impact, src, GLOB.ads_intercept_range))
+		return
 	impact.ceiling_debris_check(3)
 	cell_explosion(impact, explosion_power, explosion_falloff) //tighter blast radius, but more devastating near center
 	qdel(src)
@@ -433,6 +441,8 @@
 	cas_effect = /obj/effect/overlay/blinking_laser/fatty
 
 /obj/structure/ship_ammo/cas/rocket/fatty/detonate_on(turf/impact, attackdir = NORTH)
+	if(try_erp_ads_intercept(impact, src, GLOB.ads_intercept_range))
+		return
 	impact.ceiling_debris_check(2)
 	cell_explosion(impact, explosion_power, explosion_falloff) //first explosion is small to trick xenos into thinking its a minirocket.
 	addtimer(CALLBACK(src, PROC_REF(delayed_detonation), impact), 3 SECONDS)
@@ -467,6 +477,8 @@
 	cas_effect = /obj/effect/overlay/blinking_laser/incendiary
 
 /obj/structure/ship_ammo/cas/rocket/napalm/detonate_on(turf/impact, attackdir = NORTH)
+	if(try_erp_ads_intercept(impact, src, GLOB.ads_intercept_range))
+		return
 	impact.ceiling_debris_check(3)
 	cell_explosion(impact, explosion_power, explosion_falloff)
 	flame_radius(fire_range, impact, 30, 60) //cooking for a long time
@@ -496,6 +508,8 @@
 	cas_effect = /obj/effect/overlay/blinking_laser/minirocket
 
 /obj/structure/ship_ammo/cas/unguided_rocket/detonate_on(turf/impact, attackdir = NORTH)
+	if(try_erp_ads_intercept(impact, src, GLOB.ads_intercept_range))
+		return
 	impact.ceiling_debris_check(5)
 	cell_explosion(impact, explosion_power, explosion_falloff, adminlog = FALSE)
 	if(!ammo_count)
@@ -529,6 +543,8 @@
 	cas_effect = /obj/effect/overlay/blinking_laser/minirocket
 
 /obj/structure/ship_ammo/cas/minirocket/detonate_on(turf/impact, attackdir = NORTH)
+	if(try_erp_ads_intercept(impact, src, GLOB.ads_intercept_range))
+		return
 	impact.ceiling_debris_check(4)
 	cell_explosion(impact, explosion_power, explosion_falloff, adminlog = FALSE)//no messaging admin, that'd spam them.
 	if(!ammo_count)
@@ -552,6 +568,8 @@
 	cas_effect = /obj/effect/overlay/blinking_laser/incendiary
 
 /obj/structure/ship_ammo/cas/minirocket/incendiary/detonate_on(turf/impact, attackdir = NORTH)
+	if(try_erp_ads_intercept(impact, src, GLOB.ads_intercept_range))
+		return
 	. = ..()
 	flame_radius(fire_range, impact)
 
@@ -566,6 +584,8 @@
 	cas_effect = /obj/effect/overlay/blinking_laser/phosphorus // Enemies must know that something serious is coming at them
 
 /obj/structure/ship_ammo/cas/minirocket/phosphorus/detonate_on(turf/impact, attackdir = NORTH)
+	if(try_erp_ads_intercept(impact, src, GLOB.ads_intercept_range))
+		return
 	impact.ceiling_debris_check(2)
 	var/datum/effect_system/smoke_spread/phosphorus/smoke = new
 	playsound(loc, 'sound/effects/smoke.ogg', 25, 1, 4)
@@ -584,6 +604,8 @@
 	explosion_falloff = 15
 
 /obj/structure/ship_ammo/cas/minirocket/smoke/detonate_on(turf/impact, attackdir = NORTH)
+	if(try_erp_ads_intercept(impact, src, GLOB.ads_intercept_range))
+		return
 	impact.ceiling_debris_check(2)
 	cell_explosion(impact, explosion_power, explosion_falloff, adminlog = FALSE)//no messaging admin, that'd spam them.
 	var/datum/effect_system/smoke_spread/tactical/S = new
@@ -601,6 +623,8 @@
 	cas_effect = /obj/effect/overlay/blinking_laser/tfoot
 
 /obj/structure/ship_ammo/cas/minirocket/tangle/detonate_on(turf/impact, attackdir = NORTH)
+	if(try_erp_ads_intercept(impact, src, GLOB.ads_intercept_range))
+		return
 	impact.ceiling_debris_check(2)
 	cell_explosion(impact, explosion_power, explosion_falloff, adminlog = FALSE)//no messaging admin, that'd spam them.
 	var/datum/effect_system/smoke_spread/plasmaloss/S = new
@@ -626,3 +650,38 @@
 
 /obj/structure/ship_ammo/cas/minirocket/illumination/proc/drop_cas_flare(turf/impact)
 	new /obj/effect/temp_visual/above_flare(impact)
+
+/obj/structure/ship_ammo/cas/bomblet
+	name = "\improper AOE-50lb 'Dandelions' stack"
+	desc = "A rack of 50-pound explosive bomblets for the bomblet pod."
+	icon = 'icons/obj/structures/ship_bomblet_ammo.dmi'
+	icon_state = "bomb_50"
+	equipment_type = /obj/structure/dropship_equipment/cas/weapon/bomblet_pod
+	ammo_count = 40
+	max_ammo_count = 40
+	ammo_name = "bomblets"
+	travelling_time = 10 SECONDS
+	transferable_ammo = TRUE
+	point_cost = 150
+	ammo_type = CAS_BOMBLET
+	explosion_power = 80
+	explosion_falloff = 40
+	prediction_type = CAS_AMMO_EXPLOSIVE
+
+/obj/structure/ship_ammo/cas/bomblet/detonate_on(turf/impact, attackdir = NORTH)
+	if(try_erp_ads_intercept(impact, src, GLOB.ads_intercept_range))
+		return
+	impact.ceiling_debris_check(2)
+	cell_explosion(impact, explosion_power, explosion_falloff, adminlog = FALSE)
+	if(!ammo_count)
+		QDEL_IN(src, travelling_time)
+
+/obj/structure/ship_ammo/cas/bomblet/medium
+	name = "\improper AOE-75lb 'Poppies' stack"
+	desc = "A rack of 75-pound explosive bomblets for the bomblet pod."
+	icon_state = "bomb_75"
+	ammo_count = 20
+	max_ammo_count = 20
+	travelling_time = 12 SECONDS
+	point_cost = 175
+	explosion_power = 120
