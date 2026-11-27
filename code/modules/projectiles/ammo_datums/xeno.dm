@@ -375,6 +375,115 @@ GLOBAL_LIST_INIT(no_sticky_resin, typecacheof(list(
 	puddle_duration = 0.5 SECONDS
 	bonus_projectiles_amount = 3
 
+///For the Sizzler Boiler's Spit
+/datum/ammo/xeno/acid/smokescreen
+	name = "acid steam glob"
+	icon_state = "neurotoxin"
+	added_spit_delay = 1 SECONDS
+	spit_cost = 50
+	damage = 35
+	max_range = 6
+	stagger_duration = 2 SECONDS
+	slowdown_stacks = 3
+	ammo_behavior_flags = AMMO_XENO|AMMO_TARGET_TURF
+	bonus_projectiles_type = /datum/ammo/xeno/acid/smokescreen_bomblet
+	bonus_projectiles_scatter = 30
+	///How many projectiles we split into
+	var/bonus_projectile_quantity = 5
+	/// smoke type created when the projectile fails to reach max range
+	var/datum/effect_system/smoke_spread/smoketype_fail = /datum/effect_system/smoke_spread/xeno/acid/fast
+
+/datum/ammo/xeno/acid/smokescreen/drop_nade(turf/target_turf)
+	var/datum/effect_system/smoke_spread/smoke = new smoketype_fail()
+	playsound(target_turf, 'sound/effects/smoke.ogg', 10, 1, 2)
+	smoke.set_up(1, target_turf)
+	smoke.start()
+
+/datum/ammo/xeno/acid/smokescreen/on_hit_mob(mob/target_mob, atom/movable/projectile/proj)
+	var/turf/det_turf = get_step_towards(target_mob, proj)
+	fire_directionalburst(proj, proj.firer, proj.shot_from, bonus_projectile_quantity, Get_Angle(proj.starting_turf, target_mob), loc_override = det_turf)
+	if(iscarbon(target_mob))
+		var/mob/living/carbon/target_carbon = target_mob
+		if(target_carbon.issamexenohive(proj.firer))
+			return
+		target_carbon.adjust_stagger(stagger_duration)
+		target_carbon.add_slowdown(slowdown_stacks)
+
+///Hitting an object causes the bomblet to fail and release transparent fast-dissipating smoke
+/datum/ammo/xeno/acid/smokescreen/on_hit_obj(obj/target_object, atom/movable/projectile/proj)
+	drop_nade(target_object.density ? get_step_towards(target_object, proj) : get_turf(target_object))
+
+///Hitting a turf causes the bomblet to fail and release transparent fast-dissipating smoke
+/datum/ammo/xeno/acid/smokescreen/on_hit_turf(turf/target_turf, atom/movable/projectile/proj)
+	drop_nade(target_turf.density ? get_step_towards(target_turf, proj) : target_turf)
+
+/datum/ammo/xeno/acid/smokescreen/do_at_max_range(turf/target_turf, atom/movable/projectile/proj)
+	var/turf/det_turf = get_step_towards(target_turf, proj)
+	fire_directionalburst(proj, proj.firer, proj.shot_from, bonus_projectile_quantity, Get_Angle(proj.starting_turf, target_turf), loc_override = det_turf)
+
+///Extra projectiles made by /datum/ammo/xeno/acid/smokescreen
+/datum/ammo/xeno/acid/smokescreen_bomblet
+	name = "acid steam spatter"
+	icon_state = "neurotoxin"
+	ammo_behavior_flags = AMMO_XENO|AMMO_SKIPS_ALIENS|AMMO_PASS_THROUGH_MOB|AMMO_LEAVE_TURF
+	max_range = 5
+	shell_speed = 1
+	damage = 6
+	penetration = 0
+	/// smoke type created when the projectile detonates
+	var/datum/effect_system/smoke_spread/smoketype = /datum/effect_system/smoke_spread/xeno/acid/opaque
+	///radius this smoke will encompass
+	var/smoke_radius = 1
+	///duration the smoke will last
+	var/smoke_duration = 4
+	/// smoke type created when the projectile fails to reach max range
+	var/datum/effect_system/smoke_spread/smoketype_fail = /datum/effect_system/smoke_spread/xeno/acid/fast
+
+///Drops a smoke bomblet
+/datum/ammo/xeno/acid/smokescreen_bomblet/proc/drop_bomblet(turf/target_turf, max_range_reached = FALSE)
+	var/chosen_smoke = max_range_reached ? smoketype : smoketype_fail
+	var/datum/effect_system/smoke_spread/smoke = new chosen_smoke()
+	playsound(target_turf, 'sound/effects/smoke.ogg', 25, 1, 4)
+	smoke.set_up(smoke_radius, target_turf, smoke_duration)
+	smoke.start()
+
+///Hitting an object causes the bomblet to fail and release transparent fast-dissipating smoke
+/datum/ammo/xeno/acid/smokescreen_bomblet/on_hit_obj(obj/target_object, atom/movable/projectile/proj)
+	drop_bomblet(target_object.density ? get_step_towards(target_object, proj) : get_turf(target_object), FALSE)
+
+///Hitting a turf causes the bomblet to fail and release transparent fast-dissipating smoke
+/datum/ammo/xeno/acid/smokescreen_bomblet/on_hit_turf(turf/target_turf, atom/movable/projectile/proj)
+	drop_bomblet(target_turf.density ? get_step_towards(target_turf, proj) : target_turf, FALSE)
+
+///Reaching max range causes the bomblet to detonate and release opaque long-lasting smoke
+/datum/ammo/xeno/acid/smokescreen_bomblet/do_at_max_range(turf/target_turf, atom/movable/projectile/proj)
+	drop_bomblet(target_turf.density ? get_step_towards(target_turf, proj) : target_turf, TRUE)
+
+///For the Sizzler Boiler's primo
+/datum/ammo/xeno/acid/heavy/high_pressure_spit
+	name = "pressurized steam glob"
+	damage = 50
+	ammo_behavior_flags = AMMO_XENO|AMMO_SKIPS_ALIENS
+	max_range = 16
+	shell_speed = 1.5
+	stagger_duration = 2 SECONDS
+	slowdown_stacks = 3
+	///How long it knocks down the target
+	var/knockdown_duration = 2 SECONDS
+	///Knockback dealt on hit
+	var/knockback = 7
+	///shatter effection duration when hitting mobs
+	var/shatter_duration = 10 SECONDS
+
+/datum/ammo/xeno/acid/heavy/high_pressure_spit/on_hit_mob(mob/target_mob, atom/movable/projectile/proj)
+	if(!iscarbon(target_mob))
+		return
+	var/mob/living/carbon/target_carbon = target_mob
+	if(target_carbon.issamexenohive(proj.firer))
+		return
+	staggerstun(target_mob, proj, max_range, 0, knockdown_duration, stagger_duration, slowdown_stacks, knockback)
+	target_carbon.apply_status_effect(STATUS_EFFECT_SHATTER, shatter_duration)
+
 /datum/ammo/xeno/boiler_gas
 	name = "glob of gas"
 	icon_state = "boiler_gas2"
