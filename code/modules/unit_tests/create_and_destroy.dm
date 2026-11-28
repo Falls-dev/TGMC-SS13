@@ -68,12 +68,9 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 				original_baseturf_count = length(original_baseturfs)
 		else
 			var/atom/creation = new type_path(spawn_at)
-			if(QDELETED(creation))
-				continue
-			//Go all in
-			qdel(creation, force = TRUE)
-			//This will hold a ref to the last thing we process unless we set it to null
-			//Yes byond is fucking sinful
+			if(!QDELETED(creation))
+				qdel(creation, force = TRUE)
+			// Release the local reference even if Initialize already queued the atom for deletion.
 			creation = null
 
 		//There's a lot of stuff that either spawns stuff in on create, or removes stuff on destroy. Let's cut it all out so things are easier to deal with
