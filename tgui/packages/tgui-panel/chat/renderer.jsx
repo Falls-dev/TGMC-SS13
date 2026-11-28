@@ -9,6 +9,7 @@ import { EventEmitter } from 'tgui-core/events';
 import { classes } from 'tgui-core/react';
 
 import {
+  CHAT_RENDER_BATCH_SIZE,
   COMBINE_MAX_MESSAGES,
   COMBINE_MAX_TIME_WINDOW,
   IMAGE_RETRY_DELAY,
@@ -32,18 +33,15 @@ const logger = createLogger('chatRenderer');
 const SCROLL_TRACKING_TOLERANCE = 24;
 
 const findNearestScrollableParent = (startingNode) => {
-  const body = document.body;
   let node = startingNode;
-  while (node && node !== body) {
-    // This definitely has a vertical scrollbar, because it reduces
-    // scrollWidth of the element. Might not work if element uses
-    // overflow: hidden.
-    if (node.scrollWidth < node.offsetWidth) {
+  while (node) {
+    const { overflowY } = getComputedStyle(node);
+    if (overflowY === 'auto' || overflowY === 'scroll') {
       return node;
     }
-    node = node.parentNode;
+    node = node.parentElement;
   }
-  return window;
+  return document.scrollingElement || document.documentElement;
 };
 
 const createHighlightNode = (text, color) => {
@@ -113,6 +111,7 @@ class ChatRenderer {
     /** @type {HTMLElement} */
     this.rootNode = null;
     this.queue = [];
+    this.queueTimer = undefined;
     this.messages = [];
     this.visibleMessages = [];
     this.page = null;
@@ -121,17 +120,14 @@ class ChatRenderer {
     /** @type {HTMLElement} */
     this.scrollNode = null;
     this.scrollTracking = true;
-    this.lastScrollHeight = 0;
-    this.handleScroll = (type) => {
+    this.handleScroll = () => {
       const node = this.scrollNode;
       if (!node) {
         return;
       }
       const height = node.scrollHeight;
-      const bottom = node.scrollTop + node.offsetHeight;
-      const scrollTracking =
-        Math.abs(height - bottom) < SCROLL_TRACKING_TOLERANCE ||
-        this.lastScrollHeight === 0;
+      const bottom = node.scrollTop + node.clientHeight;
+      const scrollTracking = height - bottom < SCROLL_TRACKING_TOLERANCE;
       if (scrollTracking !== this.scrollTracking) {
         this.scrollTracking = scrollTracking;
         this.events.emit('scrollTrackingChanged', scrollTracking);
@@ -143,6 +139,9 @@ class ChatRenderer {
         this.scrollToBottom();
       }
     };
+    if (typeof ResizeObserver === 'function') {
+      this.resizeObserver = new ResizeObserver(this.ensureScrollTracking);
+    }
     // Periodic message pruning
     setInterval(() => this.pruneMessages(), MESSAGE_PRUNE_INTERVAL);
   }
@@ -153,7 +152,7 @@ class ChatRenderer {
 
   mount(node) {
     // Mount existing root node on top of the new node
-    if (this.rootNode) {
+    if (this.rootNode && this.rootNode !== node) {
       node.appendChild(this.rootNode);
     }
     // Initialize the root node
@@ -161,11 +160,13 @@ class ChatRenderer {
       this.rootNode = node;
     }
     // Find scrollable parent
+    this.resizeObserver?.disconnect();
+    this.scrollNode?.removeEventListener('scroll', this.handleScroll);
     this.scrollNode = findNearestScrollableParent(this.rootNode);
     this.scrollNode.addEventListener('scroll', this.handleScroll);
-    setTimeout(() => {
-      this.scrollToBottom();
-    });
+    this.resizeObserver?.observe(this.rootNode);
+    this.resizeObserver?.observe(this.scrollNode);
+    this.ensureScrollTracking();
     // Flush the queue
     this.tryFlushQueue();
   }
@@ -176,10 +177,33 @@ class ChatRenderer {
   }
 
   tryFlushQueue() {
-    if (this.isReady() && this.queue.length > 0) {
-      this.processBatch(this.queue);
-      this.queue = [];
+    if (
+      this.isReady() &&
+      this.queue.length > 0 &&
+      this.queueTimer === undefined
+    ) {
+      this.queueTimer = setTimeout(() => {
+        this.queueTimer = undefined;
+        this.renderBatch(this.queue.splice(0, CHAT_RENDER_BATCH_SIZE));
+        this.tryFlushQueue();
+      });
     }
+  }
+
+  flushStartupQueue() {
+    if (this.isReady() && this.queue.length) {
+      clearTimeout(this.queueTimer);
+      this.queueTimer = undefined;
+      const batch = this.queue;
+      this.queue = [];
+      this.renderBatch(batch);
+    }
+  }
+
+  getRecentMessages() {
+    const queued = this.queue.slice(-MAX_PERSISTED_MESSAGES);
+    const stored = MAX_PERSISTED_MESSAGES - queued.length;
+    return (stored ? this.messages.slice(-stored) : []).concat(queued);
   }
 
   assignStyle(style = {}) {
@@ -293,18 +317,15 @@ class ChatRenderer {
     this.visibleMessages = [];
     // Re-add message nodes
     const fragment = document.createDocumentFragment();
-    let node;
     for (let message of this.messages) {
       if (canPageAcceptType(page, message.type)) {
-        node = message.node;
-        fragment.appendChild(node);
+        fragment.appendChild(message.node);
         this.visibleMessages.push(message);
       }
     }
-    if (node) {
-      this.rootNode.appendChild(fragment);
-      node.scrollIntoView();
-    }
+    this.rootNode.appendChild(fragment);
+    this.scrollToBottom();
+    this.handleScroll();
   }
 
   getCombinableMessage(predicate) {
@@ -330,21 +351,22 @@ class ChatRenderer {
   }
 
   processBatch(batch, options = {}) {
-    const { prepend, notifyListeners = true } = options;
-    const now = Date.now();
     // Queue up messages until chat is ready
-    if (!this.isReady()) {
-      if (prepend) {
+    if (!this.isReady() || this.queue.length) {
+      if (options.prepend) {
         this.queue = [...batch, ...this.queue];
       } else {
-        this.queue = [...this.queue, ...batch];
+        this.queue.push(...batch);
       }
+      this.tryFlushQueue();
       return;
     }
-    // Store last scroll position
-    if (this.scrollNode) {
-      this.lastScrollHeight = this.scrollNode.scrollHeight;
-    }
+    this.renderBatch(batch, options);
+  }
+
+  renderBatch(batch, options = {}) {
+    const { prepend, notifyListeners = true } = options;
+    const now = Date.now();
     // Insert messages
     const fragment = document.createDocumentFragment();
     const countByType = {};
@@ -424,16 +446,18 @@ class ChatRenderer {
       message.node = node;
       // Query all possible selectors to find out the message type
       if (!message.type) {
-        const typeDef = MESSAGE_TYPES.find(
-          (typeDef) => typeDef.selector && node.querySelector(typeDef.selector),
-        );
+        const typeDef = message.html
+          ? MESSAGE_TYPES.find(
+              (typeDef) =>
+                typeDef.selector && node.querySelector(typeDef.selector),
+            )
+          : undefined;
         message.type = typeDef?.type || MESSAGE_TYPE_UNKNOWN;
       }
       updateMessageBadge(message);
-      if (!countByType[message.type]) {
-        countByType[message.type] = 0;
+      if (!message.fromHistory) {
+        countByType[message.type] = (countByType[message.type] || 0) + 1;
       }
-      countByType[message.type] += 1;
       // TODO: Detect duplicates
       this.messages.push(message);
       if (canPageAcceptType(this.page, message.type)) {
@@ -448,12 +472,10 @@ class ChatRenderer {
       } else {
         this.rootNode.appendChild(fragment);
       }
-      if (this.scrollTracking) {
-        setTimeout(() => this.scrollToBottom());
-      }
+      this.ensureScrollTracking();
     }
     // Notify listeners that we have processed the batch
-    if (notifyListeners) {
+    if (notifyListeners && Object.keys(countByType).length) {
       this.events.emit('batchProcessed', countByType);
     }
   }
@@ -505,6 +527,7 @@ class ChatRenderer {
     if (!this.isReady()) {
       return;
     }
+    this.flushStartupQueue();
     // Make a copy of messages
     const fromIndex = Math.max(
       0,
@@ -533,6 +556,7 @@ class ChatRenderer {
    * @license MIT
    */
   clearChat() {
+    this.flushStartupQueue();
     const messages = this.visibleMessages;
     this.visibleMessages = [];
     for (let i = 0; i < messages.length; i++) {
@@ -549,6 +573,7 @@ class ChatRenderer {
   }
 
   saveToDisk() {
+    this.flushStartupQueue();
     // Compile currently loaded stylesheets as CSS text
     let cssText = '';
     const styleSheets = document.styleSheets;

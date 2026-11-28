@@ -26,6 +26,7 @@ ADMIN_VERB(restart, R_SERVER, "Restart", "Restarts the server after a short paus
 // todo I don't think this works. update to tgsv6 api please
 ADMIN_VERB(shutdown_server, R_SERVER, "Shutdown Server", "Shuts the server down.", ADMIN_CATEGORY_SERVER)
 	var/static/shuttingdown = null
+	var/static/shutdown_sequence = 0
 	var/static/timeouts = list()
 	var/waitforroundend = FALSE
 	if(!CONFIG_GET(flag/allow_shutdown))
@@ -33,7 +34,10 @@ ADMIN_VERB(shutdown_server, R_SERVER, "Shutdown Server", "Shuts the server down.
 		return
 
 	if(shuttingdown)
+		var/request_to_cancel = shutdown_sequence
 		if(tgui_alert(usr, "Are you use you want to cancel the shutdown initiated by [shuttingdown]?", "Cancel the shutdown?", list("Yes", "No"), 0) != "Yes")
+			return
+		if(!shuttingdown || request_to_cancel != shutdown_sequence || !check_rights_for(user, R_SERVER))
 			return
 		message_admins("[ADMIN_TPMONTY(user.mob)] Cancelled the server shutdown that [shuttingdown] started.")
 		timeouts[shuttingdown] = world.time
@@ -60,22 +64,32 @@ ADMIN_VERB(shutdown_server, R_SERVER, "Shutdown Server", "Shuts the server down.
 				return
 			waitforroundend = TRUE
 
+	if(shuttingdown || !check_rights_for(user, R_SERVER))
+		return
 	to_chat(user, span_danger("Alert: Delayed confirmation required. You will be asked to confirm again in 30 seconds."))
 	message_admins("[ADMIN_TPMONTY(user.mob)] initiated the shutdown process. You may abort this by pressing the shutdown server button again.")
-	shuttingdown = user.ckey
+	var/initiator = user.ckey
+	shuttingdown = initiator
+	var/request = ++shutdown_sequence
 
 	sleep(30 SECONDS)
 
-	if(!shuttingdown || shuttingdown != user.ckey)
+	if(!shuttingdown || request != shutdown_sequence)
 		return
 
-	if(!user)
-		message_admins("[ADMIN_TPMONTY(user.mob)] left the server before they could finish confirming they wanted to shutdown the server.")
+	if(!check_rights_for(user, R_SERVER))
+		message_admins("The shutdown requested by [initiator] was cancelled because they lost server permissions or disconnected.")
 		shuttingdown = null
 		return
 
 	if(tgui_alert(user, "ARE YOU SURE YOU WANT TO SHUTDOWN THE SERVER? ONLY SOMEBODY WITH REMOTE ACCESS TO THE SERVER CAN TURN IT BACK ON.", "Shutdown Server?", list("Yes!", "Cancel."), 0) != "Yes!")
-		message_admins("[ADMIN_TPMONTY(user.mob)] decided against shutting down the server.")
+		if(shuttingdown && request == shutdown_sequence)
+			message_admins("[initiator] did not confirm the shutdown.")
+			shuttingdown = null
+		return
+	if(!shuttingdown || request != shutdown_sequence)
+		return
+	if(!check_rights_for(user, R_SERVER))
 		shuttingdown = null
 		return
 	to_chat(world, span_danger("Server shutting down [waitforroundend ? "after this round" : "in 30 seconds!"]</span> <span class='notice'>Initiated by: [usr.key]"))
@@ -86,7 +100,10 @@ ADMIN_VERB(shutdown_server, R_SERVER, "Shutdown Server", "Shuts the server down.
 		to_chat(world, span_notice("Server shutdown was aborted"))
 		return
 
-	if(shuttingdown != user.ckey) //somebody cancelled but then somebody started again.
+	if(request != shutdown_sequence) //somebody cancelled but then somebody started again.
+		return
+	if(!check_rights_for(user, R_SERVER) || !CONFIG_GET(flag/allow_shutdown))
+		shuttingdown = null
 		return
 
 	to_chat(world, span_danger("Server shutting down[waitforroundend ? " after this round. " : ""].</span> <span class='notice'>Initiated by: [shuttingdown]"))
@@ -355,6 +372,35 @@ ADMIN_VERB(change_ground_map, R_SERVER, "Change Ground Map", "Change Ground Map 
 
 	log_admin("[key_name(user)] changed the map to [VM.map_name].")
 	message_admins("[ADMIN_TPMONTY(user.mob)] changed the map to [VM.map_name].")
+
+ADMIN_VERB(change_ship_map, R_SERVER, "Change Ship Map", "Change Ship Map for the next round.", ADMIN_CATEGORY_SERVER)
+	var/list/ship_maps = config.maplist?[SHIP_MAP]
+	var/list/map_choices = list()
+	for(var/map_name in ship_maps)
+		var/datum/map_config/ship = ship_maps[map_name]
+		var/label = ship.map_name
+		if(ship == config.defaultmaps?[SHIP_MAP])
+			label += " (Default)"
+		if(ship.config_min_users > 0 || ship.config_max_users > 0)
+			label += " \[[max(0, ship.config_min_users)]-[ship.config_max_users > 0 ? ship.config_max_users : "inf"]\]"
+		map_choices[label] = ship
+
+	if(!length(map_choices))
+		to_chat(user, span_warning("No ship maps are configured."))
+		return
+
+	var/selected = tgui_input_list(user, "Choose the ship map for the next round.", "Change Ship Map", map_choices, timeout = 0)
+	if(!selected || !check_rights_for(user, R_SERVER))
+		return
+
+	var/datum/map_config/ship = map_choices[selected]
+	var/list/current_ship_maps = config.maplist?[SHIP_MAP]
+	if(!ship || current_ship_maps?[ship.map_name] != ship || !SSmapping.changemap(ship, SHIP_MAP))
+		to_chat(user, span_warning("Failed to change the ship map."))
+		return
+
+	log_admin("[key_name(user)] changed the ship map to [ship.map_name].")
+	message_admins("[ADMIN_TPMONTY(user.mob)] changed the ship map to [html_encode(ship.map_name)].")
 
 ADMIN_VERB(panic_bunker, R_SERVER, "Toggle Panic Bunker", "Toggle new players being permitted to join the server.", ADMIN_CATEGORY_SERVER)
 	if(!CONFIG_GET(flag/sql_enabled))

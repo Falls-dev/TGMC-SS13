@@ -1,4 +1,11 @@
-import { Button, LabeledList, NoticeBox, NumberInput, Section, Stack } from 'tgui-core/components';
+import {
+  Button,
+  LabeledList,
+  NoticeBox,
+  NumberInput,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -45,17 +52,29 @@ export const XenoBalancePanel = (props) => {
               <Stack>
                 <Stack.Item basis="50%">
                   <LabeledList>
-                    <LabeledList.Item label="Состояние">{state_name}</LabeledList.Item>
-                    <LabeledList.Item label="Очки">{current_points?.toFixed(1)}</LabeledList.Item>
-                    <LabeledList.Item label="Ксены + миньоны">{alive_xenos}</LabeledList.Item>
-                    <LabeledList.Item label="Закопанные лярвы">{burrowed}</LabeledList.Item>
+                    <LabeledList.Item label="Состояние">
+                      {state_name}
+                    </LabeledList.Item>
+                    <LabeledList.Item label="Очки">
+                      {current_points?.toFixed(1)}
+                    </LabeledList.Item>
+                    <LabeledList.Item label="Ксены + миньоны">
+                      {alive_xenos}
+                    </LabeledList.Item>
+                    <LabeledList.Item label="Закопанные лярвы">
+                      {burrowed}
+                    </LabeledList.Item>
                   </LabeledList>
                 </Stack.Item>
 
                 <Stack.Item basis="50%">
                   <LabeledList>
-                    <LabeledList.Item label="Марины на земле">{humans_on_ground}</LabeledList.Item>
-                    <LabeledList.Item label="Марины на корабле">{humans_on_ship}</LabeledList.Item>
+                    <LabeledList.Item label="Марины на земле">
+                      {humans_on_ground}
+                    </LabeledList.Item>
+                    <LabeledList.Item label="Марины на корабле">
+                      {humans_on_ship}
+                    </LabeledList.Item>
                   </LabeledList>
                 </Stack.Item>
               </Stack>

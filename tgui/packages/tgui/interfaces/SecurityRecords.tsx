@@ -260,9 +260,7 @@ export const SecurityRecords = () => {
         {searchModal && (
           <Modal width="400px">
             <Section title="Search Records">
-              <Box mb={1}>
-                Search by name, ID, fingerprints, or rank:
-              </Box>
+              <Box mb={1}>Search by name, ID, fingerprints, or rank:</Box>
               <Input
                 fluid
                 autoFocus
@@ -599,7 +597,9 @@ const RecordView = (props: {
                       }
                     />
                   </LabeledList.Item>
-                  <LabeledList.Item label="Rank">{record.rank}</LabeledList.Item>
+                  <LabeledList.Item label="Rank">
+                    {record.rank}
+                  </LabeledList.Item>
                   <LabeledList.Item label="Sex">
                     <EditableValue
                       value={record.sex}
@@ -819,12 +819,7 @@ const RecordView = (props: {
         <Section>
           <Stack>
             <Stack.Item grow>
-              <Button
-                fluid
-                icon="print"
-                disabled={printing}
-                onClick={onPrint}
-              >
+              <Button fluid icon="print" disabled={printing} onClick={onPrint}>
                 {printing ? 'Printing...' : 'Print Record'}
               </Button>
             </Stack.Item>
@@ -896,7 +891,6 @@ const EditModal = (props: {
             fluid
             autoFocus
             autoSelect
-            type={field.type === 'number' ? 'number' : 'text'}
             value={value}
             onChange={onChange}
             onEnter={() => onSave()}

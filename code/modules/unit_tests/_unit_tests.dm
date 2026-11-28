@@ -56,7 +56,9 @@
 #define TEST_DEL_WORLD INFINITY
 
 // BEGIN_INCLUDE
+#include "admin_ticket_security.dm"
 #include "apc_area_sanity.dm"
+#include "barsign_icons.dm"
 #include "bespoke_id.dm"
 #include "binary_insert.dm"
 #include "chat_filter.dm"
@@ -72,8 +74,13 @@
 #include "keybinding_init.dm"
 #include "map_templates.dm"
 #include "mapping.dm"
+#include "ooc_nickname.dm"
+#include "paperwork.dm"
 #include "plane_double_transform.dm"
+#include "sdql2_security.dm"
+#include "security_io.dm"
 #include "security_levels.dm"
+#include "shipmap_vote.dm"
 #include "spawn_guns.dm"
 #include "spawn_humans.dm"
 #include "spawn_xenos.dm"
@@ -85,6 +92,7 @@
 #include "weed_ability.dm"
 #include "weed_spread.dm"
 #include "xeno_logical_scaling.dm"
+#include "zombie_fade_cleanup.dm"
 // END_INCLUDE
 
 #ifdef REFERENCE_TRACKING //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter

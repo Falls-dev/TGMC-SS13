@@ -416,13 +416,13 @@
 	var/obj/item/paper/P = new /obj/item/paper(loc)
 	P.info = "<CENTER><B>Security Record</B></CENTER><BR>"
 	if(record1)
-		P.info += "Name: [record1.fields["name"]] ID: [record1.fields["id"]]<BR>\nSex: [record1.fields["sex"]]<BR>\nAge: [record1.fields["age"]]<BR>\nFingerprint: [record1.fields["fingerprint"]]<BR>\nPhysical Status: [record1.fields["p_stat"]]<BR>\nMental Status: [record1.fields["m_stat"]]<BR>"
+		P.info += "Name: [record_text_html(record1.fields["name"])] ID: [record_text_html(record1.fields["id"])]<BR>\nSex: [record_text_html(record1.fields["sex"])]<BR>\nAge: [record_text_html(record1.fields["age"])]<BR>\nFingerprint: [record_text_html(record1.fields["fingerprint"])]<BR>\nPhysical Status: [record_text_html(record1.fields["p_stat"])]<BR>\nMental Status: [record_text_html(record1.fields["m_stat"])]<BR>"
 		P.name = "Security Record ([record1.fields["name"]])"
 	else
 		P.info += "<B>General Record Lost!</B><BR>"
 		P.name = "Security Record"
 	if(record2)
-		P.info += "<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: [record2.fields["criminal"]]<BR>\n<BR>\nMinor Crimes: [record2.fields["mi_crim"]]<BR>\nDetails: [record2.fields["mi_crim_d"]]<BR>\n<BR>\nMajor Crimes: [record2.fields["ma_crim"]]<BR>\nDetails: [record2.fields["ma_crim_d"]]<BR>\n<BR>\nImportant Notes:<BR>\n\t[record_text_html(record2.fields["notes"])]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
+		P.info += "<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: [record_text_html(record2.fields["criminal"])]<BR>\n<BR>\nMinor Crimes: [record_text_html(record2.fields["mi_crim"])]<BR>\nDetails: [record_text_html(record2.fields["mi_crim_d"])]<BR>\n<BR>\nMajor Crimes: [record_text_html(record2.fields["ma_crim"])]<BR>\nDetails: [record_text_html(record2.fields["ma_crim_d"])]<BR>\n<BR>\nImportant Notes:<BR>\n\t[record_text_html(record2.fields["notes"])]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
 		var/counter = 1
 		while(record2.fields["com_[counter]"])
 			P.info += "[record_text_html(record2.fields["com_[counter]"], is_comment = TRUE)]<BR>"

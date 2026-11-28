@@ -152,11 +152,13 @@
 	permissions_required = R_ADMIN
 
 /datum/player_action/force_say/act(client/user, mob/target, list/params)
-	if(!params["to_say"])
+	var/message = normalize_admin_message(params["to_say"])
+	if(!message)
 		return
-	target.say(params["to_say"], sanitize = FALSE)
-	log_admin("[key_name(user)] made [key_name(target)] at [AREACOORD(target)] say \"[params["to_say"]]\"")
-	message_admins(span_adminnotice("[key_name_admin(user)] made [ADMIN_TPMONTY(target)] say \"[params["to_say"]]\""))
+	var/message_html = sanitize(message)
+	target.say(message_html, sanitize = FALSE)
+	log_admin("[key_name(user)] made [key_name(target)] at [AREACOORD(target)] say \"[message_html]\"")
+	message_admins(span_adminnotice("[key_name_admin(user)] made [ADMIN_TPMONTY(target)] say \"[message_html]\""))
 	return TRUE
 
 
@@ -166,11 +168,13 @@
 	permissions_required = R_ADMIN
 
 /datum/player_action/force_emote/act(client/user, mob/target, list/params)
-	if(!params["to_emote"])
+	var/message = normalize_admin_message(params["to_emote"])
+	if(!message)
 		return
-	target.emote("me", message = params["to_emote"])
-	log_admin("[key_name(user)] forced [key_name(target)] to emote: [params["to_emote"]]")
-	message_admins("[ADMIN_TPMONTY(user.mob)] forced [ADMIN_TPMONTY(target)] to emote: [params["to_emote"]]")
+	var/message_html = sanitize(message)
+	target.emote("me", message = message_html)
+	log_admin("[key_name(user)] forced [key_name(target)] to emote: [message_html]")
+	message_admins("[ADMIN_TPMONTY(user.mob)] forced [ADMIN_TPMONTY(target)] to emote: [message_html]")
 	return TRUE
 
 

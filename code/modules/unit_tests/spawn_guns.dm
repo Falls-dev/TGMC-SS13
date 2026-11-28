@@ -16,5 +16,10 @@
 			Fail("[gun] has a wield delay that is not a multiple of 0.5.")
 		if(gun.wield_penalty * 10 % 5)
 			Fail("[gun] has a wield penalty that is not a multiple of 0.5.")
-		if(gun.aim_fire_delay * 10 % 5)
-			Fail("[gun] has an aim fire delay that is not a multiple of 0.5.")
+		// Sight modifiers scale the base aim delay and can legitimately produce fractional values.
+		var/aim_delay_adjustment = 0
+		for(var/source in gun.aim_fire_delay_mods)
+			aim_delay_adjustment += gun.aim_fire_delay_mods[source]
+		var/expected_aim_delay = max(initial(gun.aim_fire_delay) + aim_delay_adjustment, 0)
+		if(!isnum(gun.aim_fire_delay) || gun.aim_fire_delay != expected_aim_delay)
+			Fail("[gun] has an aim fire delay of [gun.aim_fire_delay], expected [expected_aim_delay] from its base delay and modifiers.")

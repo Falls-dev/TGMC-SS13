@@ -71,22 +71,25 @@
  *
  */
 /datum/admins/proc/poll_list_panel()
+	if(!check_rights(R_POLLS))
+		return
 	var/list/output = list("Current and future polls<br>Note when editing polls or their options changes are not saved until you press Submit Poll.<br><a href='byond://?_src_=holder;[HrefToken()];newpoll=1'>New Poll</a><a href='byond://?_src_=holder;[HrefToken()];reloadpolls=1'>Reload Polls</a><hr>")
 	for(var/p in GLOB.polls)
 		var/datum/poll_question/poll = p
-		output += {"[poll.question]
+		output += {"[html_encode(poll.question)]
 		<a href='byond://?_src_=holder;[HrefToken()];editpoll=[REF(poll)]'> Edit</a>
 		<a href='byond://?_src_=holder;[HrefToken()];deletepoll=[REF(poll)]'> Delete</a>
 		"}
 		if(poll.subtitle)
-			output += "<br>[poll.subtitle]"
-		output += "<br>[poll.future_poll ? "Starts" : "Started"] at [poll.start_datetime] | Ends at [poll.end_datetime]"
+			output += "<br>[html_encode(poll.subtitle)]"
+		output += "<br>[poll.future_poll ? "Starts" : "Started"] at [html_encode(poll.start_datetime || "")] | Ends at [html_encode(poll.end_datetime || "")]"
 		if(poll.admin_only)
 			output += " | Admin only"
 		if(poll.dont_show)
 			output += " | Hidden from tracking until complete"
 		output += " | [poll.poll_votes] players have [poll.poll_type == POLLTYPE_TEXT ? "responded" : "voted"]<hr style='background:#000000; border:0; height:3px'>"
 	var/datum/browser/panel = new(usr, "plpanel", "Poll list Panel", 700, 400)
+	panel.add_head_content(HTML_TEXT_CONTENT_POLICY)
 	panel.set_content(jointext(output, ""))
 	panel.open()
 
@@ -95,6 +98,8 @@
  *
  */
 /datum/admins/proc/poll_management_panel(datum/poll_question/poll)
+	if(!check_rights(R_POLLS))
+		return
 	var/list/output = list("<form method='get' action='byond://?src=[REF(src)]'>[HrefTokenFormField()]")
 	output += {"<input type='hidden' name='src' value='[REF(src)]'>Poll type
 	<div class="select">
@@ -107,7 +112,7 @@
 		</select>
 	</div>
 	Question
-	<input type='text' name='question' size='34' value='[poll?.question]'>
+	<input type='text' name='question' size='34' value="[html_encode(poll?.question || "")]">
 	Multiple-choice options allowed
 	<input type='text' name='optionsallowed' size='2' value='[poll?.options_allowed]'>
 	<br>
@@ -136,7 +141,7 @@
 				<input type='radio' id='runfor' name='radioduration' value='runfor'[poll?.interval ? " checked" : ""]>
 				<div class='inputbox'></div>
 			</label>
-			<input type='text' name='duration' size='7'[poll?.interval ? " value='[poll?.duration]''" : ""]'>
+			<input type='text' name='duration' size='7' value="[poll?.interval ? html_encode("[poll.duration]") : ""]">
 			<div class="select">
 				<select name='durationtype'>
 					<option value='SECOND'[poll?.interval == "SECOND" ? " selected" : ""]>Seconds</option>
@@ -154,7 +159,7 @@
 				<input type='radio' id='rununtil' name='radioduration' value='rununtil' [!poll?.interval ? " checked" : ""]>
 				<div class='inputbox'></div>
 			</label>
-			<input type='text' name='enddatetimetext' size='24' value='[poll?.end_datetime ? "[poll.end_datetime]" : "YYYY-MM-DD HH:MM:SS"]'>
+			<input type='text' name='enddatetimetext' size='24' value="[poll?.end_datetime ? html_encode(poll.end_datetime) : "YYYY-MM-DD HH:MM:SS"]">
 		</div>
 		<div class='column'>
 			Start
@@ -171,13 +176,13 @@
 				<input type='radio' id='startdatetime' name='radiostart' value='startdatetime'[poll?.start_datetime ? " checked" : ""]>
 				<div class='inputbox'></div>
 			</label>
-			<input type='text' name='startdatetimetext' size='24' value='[poll?.start_datetime ? "[poll.start_datetime]" : "YYYY-MM-DD HH:MM:SS"]'>
+			<input type='text' name='startdatetimetext' size='24' value="[poll?.start_datetime ? html_encode(poll.start_datetime) : "YYYY-MM-DD HH:MM:SS"]">
 		</div></div>
 		<div class='row'>
 		<div class='column left'>
 			Subtitle (Optional)
 			<br>
-			<textarea class='textbox' name='subtitle'>[poll?.subtitle]</textarea>
+			<textarea class='textbox' name='subtitle'>[html_encode(poll?.subtitle || "")]</textarea>
 		</div>
 		<div class='column spacer'>
 		"}
@@ -192,7 +197,7 @@
 		<br>
 		Then add poll options and press Submit Poll to save and create the question and options. No options are required for Text Reply polls.
 		<br>
-		<a href='[CONFIG_GET(string/wikiurl)]/Guide_to_poll_types'>Which poll type should I use?</a>
+		<a href="[html_encode(CONFIG_GET(string/wikiurl))]/Guide_to_poll_types">Which poll type should I use?</a>
 		"}
 	else
 		output += "<input type='hidden' name='submitpoll' value='[REF(poll)]'><input type='submit' value='Submit poll'>"
@@ -218,16 +223,17 @@
 					output += {"Option [option_count]
 					<a href='byond://?_src_=holder;[HrefToken()];editpolloption=[REF(option)];parentpoll=[REF(poll)]'> Edit</a>
 					<a href='byond://?_src_=holder;[HrefToken()];deletepolloption=[REF(option)]'> Delete</a>
-					<br>[option.text]
+					<br>[html_encode(option.text)]
 					"}
 					if(poll.poll_type == POLLTYPE_RATING)
 						output += {"<br>Minimum value: [option.min_val] | Maximum value: [option.max_val]
-						<br>Minimum description: [option.desc_min]
-						<br>Middle description: [option.desc_mid]
-						<br>Maximum description: [option.desc_max]
+						<br>Minimum description: [html_encode(option.desc_min || "")]
+						<br>Middle description: [html_encode(option.desc_mid || "")]
+						<br>Maximum description: [html_encode(option.desc_max || "")]
 						"}
 					output += "<hr style='background:#000000; border:0; height:3px'>"
 	var/datum/browser/panel = new(usr, "pmpanel", "Poll Management Panel", 780, 640)
+	panel.add_head_content(HTML_FORM_CONTENT_POLICY)
 	panel.add_stylesheet("admin_panelscss", 'html/browser/admin_panels.css')
 	panel.add_stylesheet("admin_panelscss3", 'html/browser/admin_panels_css3.css')
 	panel.set_content(jointext(output, ""))
@@ -480,10 +486,12 @@
  *
  */
 /datum/admins/proc/poll_option_panel(datum/poll_question/poll, datum/poll_option/option)
+	if(!check_rights(R_POLLS) || !poll)
+		return
 	var/list/output = list("<form method='get' action='byond://?src=[REF(src)]'>[HrefTokenFormField()]")
-	output += {"<input type='hidden' name='src' value='[REF(src)]'>	Option for poll [poll.question]
+	output += {"<input type='hidden' name='src' value='[REF(src)]'>	Option for poll [html_encode(poll.question)]
 	<br>
-	<textarea class='textbox' name='optiontext'>[option?.text]</textarea>
+	<textarea class='textbox' name='optiontext'>[html_encode(option?.text || "")]</textarea>
 	<br>
 	"}
 	if(poll.poll_type == POLLTYPE_RATING)
@@ -506,11 +514,11 @@
 				<div class='inputbox'></div></label>
 			</div>
 			<div class='column'>
-				<input type='text' name='descmintext' size='26' value='[option?.desc_min]'>
+				<input type='text' name='descmintext' size='26' value="[html_encode(option?.desc_min || "")]">
 				<br>
-				<input type='text' name='descmidtext' size='26' value='[option?.desc_mid]'>
+				<input type='text' name='descmidtext' size='26' value="[html_encode(option?.desc_mid || "")]">
 				<br>
-				<input type='text' name='descmaxtext' size='26' value='[option?.desc_max]'>
+				<input type='text' name='descmaxtext' size='26' value="[html_encode(option?.desc_max || "")]">
 			</div>
 		</div>
 		"}
@@ -525,6 +533,7 @@
 	if(poll.poll_type == POLLTYPE_RATING)
 		panel_height = 320
 	var/datum/browser/panel = new(usr, "popanel", "Poll Option Panel", 370, panel_height)
+	panel.add_head_content(HTML_FORM_CONTENT_POLICY)
 	panel.add_stylesheet("admin_panelscss", 'html/browser/admin_panels.css')
 	panel.add_stylesheet("admin_panelscss3", 'html/browser/admin_panels_css3.css')
 	panel.set_content(jointext(output, ""))

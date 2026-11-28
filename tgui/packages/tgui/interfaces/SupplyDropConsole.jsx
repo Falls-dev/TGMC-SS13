@@ -59,7 +59,11 @@ export const SupplyDropConsole = (_props) => {
                     className="cargo-beacon-btn"
                     icon="broadcast-tower"
                     selected={Boolean(beacon.name)}
-                    tooltip={beacon.name ? `Выбран маяк: ${beacon.name}` : 'Выбрать активный радиомаяк в зоне операции'}
+                    tooltip={
+                      beacon.name
+                        ? `Выбран маяк: ${beacon.name}`
+                        : 'Выбрать активный радиомаяк в зоне операции'
+                    }
                     onClick={() => act('select_beacon')}
                     style={{ overflow: 'hidden' }}
                   >
@@ -147,8 +151,13 @@ export const SupplyDropConsole = (_props) => {
               <Stack vertical spacing={1}>
                 <Stack.Item>
                   <Box className="cargo-stat-badge">
-                    <Icon name="box" mr={1} color={hasSupplies ? 'good' : 'bad'} />
-                    <b>{data.supplies_count || 0}</b> предмет(ов) обнаружено на платформе.
+                    <Icon
+                      name="box"
+                      mr={1}
+                      color={hasSupplies ? 'good' : 'bad'}
+                    />
+                    <b>{data.supplies_count || 0}</b> предмет(ов) обнаружено на
+                    платформе.
                   </Box>
                 </Stack.Item>
 

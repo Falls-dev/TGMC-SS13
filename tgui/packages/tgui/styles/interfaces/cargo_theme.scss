@@ -1,11 +1,18 @@
 @keyframes cargo-pulse {
-  0% { box-shadow: 0 0 0 0 rgba(217, 119, 36, 0.4); }
-  70% { box-shadow: 0 0 0 8px rgba(217, 119, 36, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(217, 119, 36, 0); }
+  0% {
+    box-shadow: 0 0 0 0 rgba(217, 119, 36, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(217, 119, 36, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(217, 119, 36, 0);
+  }
 }
 
 @keyframes cargo-ready-glow {
-  0%, 100% {
+  0%,
+  100% {
     border-color: #4caf50;
     box-shadow: 0 0 6px rgba(76, 175, 80, 0.5);
   }
@@ -16,22 +23,68 @@
 }
 
 @keyframes glitchText {
-  0% { text-shadow: 2px 0 #ff0055, -2px 0 #00ffff; transform: translate(0); }
-  25% { text-shadow: -2px 1px #ff0055, 2px -1px #00ffff; transform: translate(-1px, 1px); }
-  50% { text-shadow: 2px -1px #ff0055, -2px 1px #00ffff; transform: translate(1px, -1px); }
-  75% { text-shadow: -1px 1px #ff0055, 1px -1px #00ffff; transform: translate(-1px, 0); }
-  100% { text-shadow: 2px 0 #ff0055, -2px 0 #00ffff; transform: translate(0); }
+  0% {
+    text-shadow:
+      2px 0 #ff0055,
+      -2px 0 #00ffff;
+    transform: translate(0);
+  }
+  25% {
+    text-shadow:
+      -2px 1px #ff0055,
+      2px -1px #00ffff;
+    transform: translate(-1px, 1px);
+  }
+  50% {
+    text-shadow:
+      2px -1px #ff0055,
+      -2px 1px #00ffff;
+    transform: translate(1px, -1px);
+  }
+  75% {
+    text-shadow:
+      -1px 1px #ff0055,
+      1px -1px #00ffff;
+    transform: translate(-1px, 0);
+  }
+  100% {
+    text-shadow:
+      2px 0 #ff0055,
+      -2px 0 #00ffff;
+    transform: translate(0);
+  }
 }
 
 @keyframes approvedGlow {
-  0%, 100% { text-shadow: 0 0 8px rgba(46, 204, 113, 0.6), 0 0 15px rgba(46, 204, 113, 0.4); }
-  50% { text-shadow: 0 0 15px rgba(46, 204, 113, 1), 0 0 25px rgba(46, 204, 113, 0.8), 0 0 35px rgba(46, 204, 113, 0.5); }
+  0%,
+  100% {
+    text-shadow:
+      0 0 8px rgba(46, 204, 113, 0.6),
+      0 0 15px rgba(46, 204, 113, 0.4);
+  }
+  50% {
+    text-shadow:
+      0 0 15px rgba(46, 204, 113, 1),
+      0 0 25px rgba(46, 204, 113, 0.8),
+      0 0 35px rgba(46, 204, 113, 0.5);
+  }
 }
 
 @keyframes stampIn {
-  0% { transform: scale(2.5); opacity: 0; filter: blur(4px); }
-  50% { transform: scale(0.95); opacity: 1; filter: blur(0px); }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(2.5);
+    opacity: 0;
+    filter: blur(4px);
+  }
+  50% {
+    transform: scale(0.95);
+    opacity: 1;
+    filter: blur(0px);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 @keyframes crtSwitch {
@@ -57,8 +110,15 @@
 }
 
 @keyframes personalGlow {
-  0%, 100% { box-shadow: 0 0 6px rgba(243, 156, 18, 0.4); border: 1px solid rgba(243, 156, 18, 0.5); }
-  50% { box-shadow: 0 0 14px rgba(243, 156, 18, 0.9); border: 1px solid rgba(243, 156, 18, 1); }
+  0%,
+  100% {
+    box-shadow: 0 0 6px rgba(243, 156, 18, 0.4);
+    border: 1px solid rgba(243, 156, 18, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 14px rgba(243, 156, 18, 0.9);
+    border: 1px solid rgba(243, 156, 18, 1);
+  }
 }
 
 .theme-cargo {
@@ -165,13 +225,20 @@
     color: #ebdcd3;
   }
 
-  .glitch-text { animation: glitchText 0.25s infinite ease-in-out; }
-  .approved-glow { animation: approvedGlow 2s ease-in-out infinite; }
+  .glitch-text {
+    animation: glitchText 0.25s infinite ease-in-out;
+  }
+  .approved-glow {
+    animation: approvedGlow 2s ease-in-out infinite;
+  }
 
   .delivery-text {
     opacity: 0;
-    animation: stampIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s forwards;
-    text-shadow: 0 0 10px rgba(243, 156, 18, 0.8), 0 0 20px rgba(243, 156, 18, 0.4);
+    animation: stampIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s
+      forwards;
+    text-shadow:
+      0 0 10px rgba(243, 156, 18, 0.8),
+      0 0 20px rgba(243, 156, 18, 0.4);
   }
 
   .crt-effect {
@@ -183,9 +250,33 @@
     animation: personalGlow 2s infinite ease-in-out;
   }
 
-  .overlay-approve { background: repeating-linear-gradient(45deg, rgba(46, 204, 113, 0.9), rgba(46, 204, 113, 0.9) 20px, transparent 20px, transparent 40px); }
-  .overlay-deny { background: repeating-linear-gradient(45deg, rgba(231, 76, 60, 0.9), rgba(231, 76, 60, 0.9) 20px, transparent 20px, transparent 40px); }
-  .overlay-delivery { background: repeating-linear-gradient(90deg, rgba(243, 156, 18, 0.9), rgba(243, 156, 18, 0.9) 20px, transparent 20px, transparent 40px); }
+  .overlay-approve {
+    background: repeating-linear-gradient(
+      45deg,
+      rgba(46, 204, 113, 0.9),
+      rgba(46, 204, 113, 0.9) 20px,
+      transparent 20px,
+      transparent 40px
+    );
+  }
+  .overlay-deny {
+    background: repeating-linear-gradient(
+      45deg,
+      rgba(231, 76, 60, 0.9),
+      rgba(231, 76, 60, 0.9) 20px,
+      transparent 20px,
+      transparent 40px
+    );
+  }
+  .overlay-delivery {
+    background: repeating-linear-gradient(
+      90deg,
+      rgba(243, 156, 18, 0.9),
+      rgba(243, 156, 18, 0.9) 20px,
+      transparent 20px,
+      transparent 40px
+    );
+  }
 
   .sci-fi-shit {
     transition: all 0.2s ease !important;
@@ -195,11 +286,13 @@
       padding-left: 12px !important;
       background-color: rgba(52, 152, 219, 0.15) !important;
 
-      &::before { opacity: 1; }
+      &::before {
+        opacity: 1;
+      }
     }
 
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       left: 0;
       top: 10%;

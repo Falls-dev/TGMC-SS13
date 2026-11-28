@@ -1,4 +1,9 @@
-import { Button, LabeledList, ProgressBar, Section } from 'tgui-core/components';
+import {
+  Button,
+  LabeledList,
+  ProgressBar,
+  Section,
+} from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
@@ -66,9 +71,7 @@ export const DisposalUnit = (props) => {
                 icon="power-off"
                 disabled={!!panel_open}
                 selected={!!pressure_charging}
-                onClick={() =>
-                  act(pressure_charging ? 'pump-0' : 'pump-1')
-                }
+                onClick={() => act(pressure_charging ? 'pump-0' : 'pump-1')}
               />
             </LabeledList.Item>
           </LabeledList>

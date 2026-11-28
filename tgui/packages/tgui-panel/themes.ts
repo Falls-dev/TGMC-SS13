@@ -16,7 +16,9 @@ let lastThemeName: string | undefined;
 let innerBgRetryBound = false;
 
 const canUseInnerBackground = () =>
-  Boolean((Byond as { supportsInnerBackground?: boolean }).supportsInnerBackground);
+  Boolean(
+    (Byond as { supportsInnerBackground?: boolean }).supportsInnerBackground,
+  );
 
 const withInnerBackground = (
   props: Record<string, string>,

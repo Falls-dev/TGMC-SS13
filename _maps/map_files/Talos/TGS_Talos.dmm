@@ -40635,7 +40635,6 @@
 	},
 /turf/open/floor/mainship/metal/full,
 /area/mainship/hull/starboard_hull)
-
 "aaa" = (
 /obj/effect/decal/cleanable/liquid_fuel,
 /obj/effect/turf_decal/warning_stripes/cargo,
@@ -40661,6 +40660,7 @@
 /obj/effect/turf_decal/warning_stripes/cargo,
 /turf/open/floor/mainship/metal,
 /area/mainship/hallways/hangar)
+
 (1,1,1) = {"
 dBM
 dBM

@@ -305,5 +305,5 @@ GLOBAL_DATUM_INIT(datacore, /datum/datacore, new)
 
 /// Renders record text as HTML, including old entries that may contain raw markup.
 /proc/record_text_html(text, is_comment = FALSE)
-	var/plain_text = is_comment ? record_comment_text(text) : html_decode(text)
+	var/plain_text = is_comment ? record_comment_text(text) : html_decode("[text]")
 	return replacetext(html_encode(plain_text), "\n", "<BR>")

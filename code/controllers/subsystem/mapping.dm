@@ -92,13 +92,15 @@ SUBSYSTEM_DEF(mapping)
 
 	for(var/i in ALL_MAPTYPES)
 		var/datum/map_config/MC = configs[i]
-		if(!MC.defaulted)
+		var/datum/map_config/default_config = global.config.defaultmaps?[i]
+		var/list/configured_ships = global.config.maplist?[SHIP_MAP]
+		var/removed_ship = i == SHIP_MAP && default_config && !configured_ships?[MC.map_name]
+		if(!MC.defaulted && !removed_ship)
 			continue
-		var/old_config = configs[i]
-		configs[i] = global.config.defaultmaps[i]
-		if(!configs || configs[i].defaulted)
+		if(!default_config || default_config.defaulted)
 			to_chat(world, span_boldannounce("Unable to load next or default map config, defaulting."))
-			configs[i] = old_config
+			continue
+		configs[i] = default_config
 
 	if(configs[GROUND_MAP])
 		for(var/datum/game_mode/M AS in config.votable_modes)
@@ -398,6 +400,7 @@ SUBSYSTEM_DEF(mapping)
 			return
 
 		next_map_configs[SHIP_MAP] = VM
+		shipmap_voted = TRUE
 		return TRUE
 
 /datum/controller/subsystem/mapping/proc/preloadTemplates(path = "_maps/templates/") //see master controller setup

@@ -165,7 +165,9 @@ export function PatientChemicals() {
                       ml={SPACING_PIXELS}
                     >
                       {chemical.od
-                        ? (chemical.amount > chemical.crit_od_threshold ? 'OD, CRIT' : 'OD')
+                        ? chemical.amount > chemical.crit_od_threshold
+                          ? 'OD, CRIT'
+                          : 'OD'
                         : 'HARMFUL'}
                     </MedBoxedTag>
                   </Tooltip>

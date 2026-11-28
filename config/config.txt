@@ -122,13 +122,11 @@ POPUP_ADMIN_PM
 # Addressed listed below are except from any incoming topic filering
 # TOPIC_FILTERING_WHITELIST 127.0.0.1
 
-## Play Internet Sound - yt-dlp (either key works; INVOKE_YOUTUBEDL is legacy alias)
-# INVOKE_YT_DLP yt-dlp
-# INVOKE_YOUTUBEDL yt-dlp
-
-## Play Internet Sound - cobalt.tools (used if set; preferred over yt-dlp when both are set)
-# COBALT_BASE_API https://api.cobalt.tools/
-# COBALT_API_KEY
+## Play Internet Sound uses your Cobalt API root. Leave it unset to disable internet audio.
+## Players must be able to reach the returned audio URL. Keep the API key in the server config.
+## Deployment guide: docs/cobalt.md
+#COBALT_BASE_API https://cobalt.example.org/
+#COBALT_API_KEY your-private-api-key
 
 ## OOC country flags (ip-api.com). Players can hide their flag in prefs.
 #OOC_COUNTRY_FLAGS

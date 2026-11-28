@@ -84,12 +84,15 @@
 	for(var/datum/asset/asset in assets)
 		var/mappings = asset.get_url_mappings()
 		for(var/name in mappings)
-			var/url = mappings[name]
-			// Not encoding since asset strings are considered safe
-			if(copytext(name, -4) == ".css")
-				inline_assets_str += "Byond.loadCss('[url]', true);\n"
-			else if(copytext(name, -3) == ".js")
-				inline_assets_str += "Byond.loadJs('[url]', true);\n"
+			var/is_script = copytext(name, -3) == ".js"
+			if(!is_script && copytext(name, -4) != ".css")
+				continue
+			// Escape the JavaScript string and prevent any HTML end tag in the script element.
+			var/url_literal = replacetextEx(json_encode(mappings[name]), "<", "\\u003c")
+			if(is_script)
+				inline_assets_str += "Byond.loadJs([url_literal], true);\n"
+			else
+				inline_assets_str += "Byond.loadCss([url_literal], true);\n"
 		asset.send(client)
 	if(length(inline_assets_str))
 		inline_assets_str = "<script>\n" + inline_assets_str + "</script>\n"

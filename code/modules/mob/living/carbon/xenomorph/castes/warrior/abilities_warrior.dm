@@ -694,7 +694,7 @@
 /datum/action/ability/activable/xeno/warrior/punch/jab/on_cooldown_finish()
 	xeno_owner.balloon_alert(xeno_owner, "Jab ready")
 	owner.playsound_local(owner, 'sound/effects/alien/newlarva.ogg', 25, 0, 1)
-	return ..()\
+	return ..()
 
 // ***************************************
 // *********** Encased Plates

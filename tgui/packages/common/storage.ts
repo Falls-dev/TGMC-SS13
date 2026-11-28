@@ -76,7 +76,7 @@ class IFrameIndexedDbBackend implements StorageBackend {
   private documentElement: HTMLIFrameElement;
   private iframeWindow: Window;
 
-  constructor() {
+  constructor(private readonly url: URL) {
     this.impl = IMPL_IFRAME_INDEXED_DB;
   }
 
@@ -84,12 +84,13 @@ class IFrameIndexedDbBackend implements StorageBackend {
     const iframe = document.createElement('iframe');
     iframe.style.display = 'none';
     iframe.allow = 'storage-access';
-    iframe.src = Byond.storageCdn;
+    iframe.src = this.url.href;
 
     const completePromise: Promise<boolean> = new Promise((resolve) => {
       const listener = (message: MessageEvent) => {
         if (
           message.source === iframe.contentWindow &&
+          message.origin === this.url.origin &&
           message.data === 'ready'
         ) {
           resolveReady(true);
@@ -105,7 +106,7 @@ class IFrameIndexedDbBackend implements StorageBackend {
         STORAGE_CDN_TIMEOUT,
       );
 
-      fetch(Byond.storageCdn, { method: 'HEAD' })
+      fetch(this.url.href, { method: 'HEAD', redirect: 'error' })
         .then((response) => {
           if (response.status !== 200) {
             resolveReady(false);
@@ -133,8 +134,8 @@ class IFrameIndexedDbBackend implements StorageBackend {
       const listener = (message: MessageEvent) => {
         if (
           message.source === this.iframeWindow &&
-          message.data.key &&
-          message.data.key === key
+          message.origin === this.url.origin &&
+          message.data?.key === key
         ) {
           clearTimeout(timeout);
           window.removeEventListener('message', listener);
@@ -149,26 +150,41 @@ class IFrameIndexedDbBackend implements StorageBackend {
       window.addEventListener('message', listener);
     });
 
-    this.iframeWindow.postMessage({ type: 'get', key: key }, '*');
+    this.iframeWindow.postMessage({ type: 'get', key }, this.url.origin);
     return promise;
   }
 
   async set(key: string, value: any): Promise<void> {
-    this.iframeWindow.postMessage({ type: 'set', key: key, value: value }, '*');
+    this.iframeWindow.postMessage({ type: 'set', key, value }, this.url.origin);
   }
 
   async remove(key: string): Promise<void> {
-    this.iframeWindow.postMessage({ type: 'remove', key: key }, '*');
+    this.iframeWindow.postMessage({ type: 'remove', key }, this.url.origin);
   }
 
   async clear(): Promise<void> {
-    this.iframeWindow.postMessage({ type: 'clear' }, '*');
+    this.iframeWindow.postMessage({ type: 'clear' }, this.url.origin);
   }
 
   async destroy(): Promise<void> {
     document.body.removeChild(this.documentElement);
   }
 }
+
+const parseStorageUrl = (value: string): URL | undefined => {
+  try {
+    const url = new URL(value);
+    if (
+      (url.protocol === 'https:' || url.protocol === 'http:') &&
+      !url.username &&
+      !url.password
+    ) {
+      return url;
+    }
+  } catch {
+    // An invalid URL falls back to BYOND storage.
+  }
+};
 
 /**
  * Web Storage Proxy object, which selects the best backend available
@@ -188,8 +204,9 @@ class StorageProxy implements StorageBackend {
       // Prefer the configured iframe storage when available. hubStorage may
       // already be enabled by another window/server, but the iframe origin is
       // the server-configured storage boundary.
-      if (Byond.storageCdn) {
-        const iframe = new IFrameIndexedDbBackend();
+      const storageUrl = parseStorageUrl(Byond.storageCdn);
+      if (storageUrl) {
+        const iframe = new IFrameIndexedDbBackend(storageUrl);
 
         if ((await iframe.ready()) === true) {
           this.log('info', `Using iframe storage (${Byond.storageCdn})`);
@@ -262,7 +279,7 @@ class StorageProxy implements StorageBackend {
         );
         iframe.destroy();
       } else {
-        this.log('info', 'No storage CDN configured');
+        this.log('info', 'No valid storage CDN URL configured');
       }
 
       if (testHubStorage()) {

@@ -10,6 +10,62 @@
 		prefix += country2chaticon(country, target ? list(target) : GLOB.clients)
 	return prefix
 
+/// Color an already-escaped display name and its optional server-generated link.
+/proc/format_ooc_nickname(nickname_html, rank_name, hidden_rank, custom_color_allowed, custom_color)
+	if(!rank_name || hidden_rank)
+		return nickname_html
+
+	var/static/regex/hex_color = regex(@"^#[0-9a-f]{6}$", "i")
+	if(custom_color_allowed && istext(custom_color) && length(custom_color) == 7 && hex_color.Find(custom_color))
+		return "<span class='ooc-nickname' style='color:[custom_color]'>[nickname_html]</span>"
+
+	var/rank_class
+	switch(rank_name)
+		if("Host")
+			rank_class = "hostooc"
+		if("Project Lead")
+			rank_class = "projleadooc"
+		if("Headcoder")
+			rank_class = "headcoderooc"
+		if("Headmin")
+			rank_class = "headminooc"
+		if("Headmentor")
+			rank_class = "headmentorooc"
+		if("Senior Admin")
+			rank_class = "senioradminooc"
+		if("Admin")
+			rank_class = "adminooc"
+		if("Trial Admin")
+			rank_class = "trialminooc"
+		if("Admin Candidate", "Admin Observer")
+			rank_class = "candiminooc"
+		if("Event Admin", "Event Staff")
+			rank_class = "eventminooc"
+		if("Mentor")
+			rank_class = "mentorooc"
+		if("Maintainer", "Art Maintainer")
+			rank_class = "maintainerooc"
+		if("Debugger", "Contributor")
+			rank_class = "contributorooc"
+		else
+			rank_class = "otherooc"
+	return "<span class='ooc-nickname [rank_class]'>[nickname_html]</span>"
+
+/client/proc/color_ooc_nickname(nickname_html)
+	var/use_custom_color = CONFIG_GET(flag/allow_admin_ooccolor) && check_rights_for(src, R_COLOR)
+	return format_ooc_nickname(nickname_html, holder?.rank?.name, holder?.fakekey, use_custom_color, prefs.ooccolor)
+
+/// Staff who hear OOC from elsewhere see the real identity and the existing moderation links.
+/client/proc/ooc_staff_display_name()
+	var/nickname_html = "<a href='byond://?priv_msg=[ckey]'>[html_encode(key)]</a>"
+	var/character_name = mob.real_name || mob.name
+	if(character_name)
+		nickname_html += "/([html_encode(character_name)])"
+	var/display_name = "[color_ooc_nickname(nickname_html)] [ADMIN_TPMONTY_NONAME(mob)]"
+	if(holder?.fakekey)
+		return "[span_tooltip("Stealth key", "'[html_encode(holder.fakekey)]'")] ([display_name])"
+	return display_name
+
 /client/verb/ooc(msg as text)
 	set name = "OOC"
 	set category = "OOC.Chat"
@@ -73,45 +129,6 @@
 
 	mob.log_talk(msg, LOG_OOC)
 
-	var/display_colour
-	var/display_class = "colorooc"
-	if(holder?.rank && !holder.fakekey)
-		switch(holder.rank.name)
-			if("Host")
-				display_class = "hostooc"
-			if("Project Lead")
-				display_class = "projleadooc"
-			if("Headcoder")
-				display_class = "headcoderooc"
-			if("Headmin")
-				display_class = "headminooc"
-			if("Headmentor")
-				display_class = "headmentorooc"
-			if("Senior Admin")
-				display_class = "senioradminooc"
-			if("Admin")
-				display_class = "adminooc"
-			if("Trial Admin")
-				display_class = "trialminooc"
-			if("Admin Candidate", "Admin Observer")
-				display_class = "candiminooc"
-			if("Event Admin", "Event Staff")
-				display_class = "eventminooc"
-			if("Mentor")
-				display_class = "mentorooc"
-			if("Maintainer")
-				display_class = "maintainerooc"
-			if("Art Maintainer")
-				display_class = "maintainerooc"
-			if("Debugger", "Contributor")
-				display_class = "contributorooc"
-			else
-				display_class = "otherooc"
-
-
-		if(CONFIG_GET(flag/allow_admin_ooccolor) && check_rights(R_COLOR, FALSE))
-			display_colour = prefs.ooccolor
-
 	var/keyname
 	var/boosty_tier = SSdiscord.get_boosty_tier(ckey)
 
@@ -134,15 +151,15 @@
 			else
 				display_name = holder.fakekey
 
+		var/nickname_html = html_encode(display_name)
 		// Admins open straight to player panel
 		if(check_other_rights(C, R_ADMIN, FALSE))
-			display_name = "<a class='hidelink' href='byond://?_src_=holder;[HrefToken(TRUE)];playerpanel=[REF(usr)]'>[display_name]</a>"
+			nickname_html = "<a class='hidelink' href='byond://?_src_=holder;[HrefToken(TRUE)];playerpanel=[REF(mob)]'>[nickname_html]</a>"
+		nickname_html = color_ooc_nickname(nickname_html)
 		var/avoid_highlight = C == src
 		var/ooc_prefix = handle_ooc_prefix(C)
-		if(display_colour)
-			to_chat(C, "<font color='[display_colour]'><EM>[keyname]</EM>[ooc_prefix][span_ooc("<span class='prefix'>OOC: [display_name]")]: <span class='message linkify'>[msg]</span></span></font>", avoid_highlighting = avoid_highlight)
-		else
-			to_chat(C, "<span class='[display_class]'><EM>[keyname]</EM>[ooc_prefix][span_prefix("OOC: [display_name]")]: <span class='message linkify'>[msg]</span></span>", avoid_highlighting = avoid_highlight)
+		to_chat(C, "<span class='colorooc'><em>[keyname]</em>[ooc_prefix][span_prefix("OOC: [nickname_html]")]: <span class='message linkify'>[msg]</span></span>", avoid_highlighting = avoid_highlight)
+
 
 /client/verb/xooc_wrapper()
 	set hidden = TRUE
@@ -220,6 +237,11 @@
 
 	mob.log_talk(msg, LOG_XOOC)
 
+	var/display_name = mob.name
+	if(!(mob in GLOB.xeno_mob_list) && admin)
+		display_name = holder?.fakekey ? "Administrator" : key
+	var/nickname_html = color_ooc_nickname(html_encode(display_name))
+
 	// Send chat message to non-admins
 	for(var/client/C AS in GLOB.clients)
 		if(!(C.prefs.toggles_chat & CHAT_OOC))
@@ -227,14 +249,10 @@
 		if(!(C.mob in GLOB.xeno_mob_list) && !(C.mob in GLOB.observer_list) || check_other_rights(C, R_ADMIN|R_MENTOR, FALSE)) // If the client is a xeno, an observer, and not staff.
 			continue
 
-		var/display_name = mob.name
-		var/display_key = (holder?.fakekey ? "Administrator" : mob.key)
-		if(!(mob in GLOB.xeno_mob_list) && admin) // If the verb caller is an admin and not a xeno mob, use their fakekey or key instead.
-			display_name = display_key
-
 		var/avoid_highlight = C == src
-		to_chat(C, "<font color='#6D2A6D'>[span_ooc("<span class='prefix'>XOOC: [display_name]")]: <span class='message linkify'>[msg]</span></span></font>", avoid_highlighting = avoid_highlight)
+		to_chat(C, "<span class='ooc' style='color:#6D2A6D'>[span_prefix("XOOC: [nickname_html]")]: <span class='message linkify'>[msg]</span></span>", avoid_highlighting = avoid_highlight)
 
+	var/staff_display_name = ooc_staff_display_name()
 	// Send chat message to admins
 	for(var/client/C AS in GLOB.admins)
 		if(!check_other_rights(C, R_ADMIN|R_MENTOR, FALSE)) // Check if the client is still an admin.
@@ -244,12 +262,9 @@
 		if(!(C.prefs.toggles_chat & CHAT_OOC))
 			continue
 
-		var/display_name = "[ADMIN_TPMONTY(mob)]"
-		if(holder?.fakekey) // Show their fakekey in addition to real key + buttons if they have one
-			display_name = "[span_tooltip("Stealth key", "'[holder.fakekey]'")] ([display_name])"
-
 		var/avoid_highlight = C == src
-		to_chat(C, "<font color='#6D2A6D'>[span_ooc("<span class='prefix'>[span_tooltip("You are seeing this because you are staff and have hearing OOC channels from anywhere enabled.", "XOOC")]: [display_name]")]: <span class='message linkify'>[msg]</span></span></font>", avoid_highlighting = avoid_highlight)
+		var/channel_label = span_tooltip("You are seeing this because you are staff and have hearing OOC channels from anywhere enabled.", "XOOC")
+		to_chat(C, "<span class='ooc' style='color:#6D2A6D'>[span_prefix("[channel_label]: [staff_display_name]")]: <span class='message linkify'>[msg]</span></span>", avoid_highlighting = avoid_highlight)
 
 
 /client/verb/mooc_wrapper()
@@ -326,6 +341,11 @@
 
 	mob.log_talk(msg, LOG_MOOC)
 
+	var/display_name = mob.name
+	if(!(mob in GLOB.human_mob_list) && !(mob in GLOB.ai_list) && admin)
+		display_name = holder?.fakekey ? "Administrator" : key
+	var/nickname_html = color_ooc_nickname(html_encode(display_name))
+
 	// Send chat message to non-admins
 	for(var/client/C AS in GLOB.clients)
 		if(!(C.prefs.toggles_chat & CHAT_OOC))
@@ -333,15 +353,10 @@
 		if(!(C.mob in GLOB.human_mob_list) && !(C.mob in GLOB.observer_list) && !(C.mob in GLOB.ai_list) || check_other_rights(C, R_ADMIN|R_MENTOR, FALSE)) // If the client is a human, an observer, and not staff.
 			continue
 
-		// If the verb caller is an admin and not a human mob, use their key, or if they're stealthmode, hide their key instead.
-		var/display_name = mob.name
-		var/display_key = (holder?.fakekey ? "Administrator" : mob.key)
-		if(!((mob in GLOB.human_mob_list) || (mob in GLOB.ai_list)) && admin)  // If the verb caller is an admin and not a human mob, use their fakekey or key instead.
-			display_name = display_key
-
 		var/avoid_highlight = C == src
-		to_chat(C, "<font color='#B75800'>[span_ooc("<span class='prefix'>MOOC: [display_name]")]: <span class='message linkify'>[msg]</span></span></font>", avoid_highlighting = avoid_highlight)
+		to_chat(C, "<span class='ooc' style='color:#B75800'>[span_prefix("MOOC: [nickname_html]")]: <span class='message linkify'>[msg]</span></span>", avoid_highlighting = avoid_highlight)
 
+	var/staff_display_name = ooc_staff_display_name()
 	// Send chat message to admins
 	for(var/client/C AS in GLOB.admins)
 		if(!check_other_rights(C, R_ADMIN|R_MENTOR, FALSE)) // Check if the client is still staff.
@@ -351,12 +366,10 @@
 		if(!(C.prefs.toggles_chat & CHAT_OOC))
 			continue
 
-		var/display_name = "[ADMIN_TPMONTY(mob)]"
-		if(holder?.fakekey) // Show their fakekey in addition to real key + buttons if they have one
-			display_name = "[span_tooltip("Stealth key", "'[holder.fakekey]'")] ([display_name])"
-
 		var/avoid_highlight = C == src
-		to_chat(C, "<font color='#B75800'>[span_ooc("<span class='prefix'>[span_tooltip("You are seeing this because you are staff and have hearing OOC channels from anywhere enabled.", "MOOC")]: [display_name]")]: <span class='message linkify'>[msg]</span></span></font>", avoid_highlighting = avoid_highlight)
+		var/channel_label = span_tooltip("You are seeing this because you are staff and have hearing OOC channels from anywhere enabled.", "MOOC")
+		to_chat(C, "<span class='ooc' style='color:#B75800'>[span_prefix("[channel_label]: [staff_display_name]")]: <span class='message linkify'>[msg]</span></span>", avoid_highlighting = avoid_highlight)
+
 
 /client/verb/looc_wrapper()
 	set hidden = TRUE
@@ -428,17 +441,15 @@
 
 	mob.log_talk(msg, LOG_LOOC)
 
-	var/message
-
+	var/display_name = mob.name
 	if(admin && isobserver(mob))
-		message = span_looc("[span_prefix("LOOC:")] [usr.client.holder.fakekey ? "Administrator" : usr.client.key]: [span_message("[msg]")]")
-		for(var/mob/M in range(mob))
-			to_chat(M, message)
-	else
-		message = span_looc("[span_prefix("LOOC:")] [mob.name]: [span_message("[msg]")]")
-		for(var/mob/M in range(mob))
-			to_chat(M, message)
+		display_name = holder?.fakekey ? "Administrator" : key
+	var/nickname_html = color_ooc_nickname(html_encode(display_name))
+	var/message = span_looc("[span_prefix("LOOC:")] [nickname_html]: [span_message(msg)]")
+	for(var/mob/M in range(mob))
+		to_chat(M, message)
 
+	var/staff_display_name = ooc_staff_display_name()
 	for(var/client/C AS in GLOB.admins)
 		if(!check_other_rights(C, R_ADMIN|R_MENTOR, FALSE))
 			continue
@@ -447,12 +458,9 @@
 		if(C.mob == mob)
 			continue
 
-		var/display_name = "[ADMIN_TPMONTY(mob)]"
-		if(holder?.fakekey) // Show their fakekey in addition to real key + buttons if they have one
-			display_name = "[span_tooltip("Stealth key", "'[holder.fakekey]'")] ([display_name])"
-
 		if(C.prefs.toggles_chat & CHAT_LOOC)
-			to_chat(C, span_ooc("<span class='prefix'>[span_tooltip("You are seeing this because you are staff and have hearing OOC channels from anywhere enabled.", "LOOC")]: [display_name]: [span_message("[msg]")]"))
+			var/channel_label = span_tooltip("You are seeing this because you are staff and have hearing OOC channels from anywhere enabled.", "LOOC")
+			to_chat(C, span_ooc("[span_prefix("[channel_label]: [staff_display_name]:")] [span_message(msg)]"))
 
 /client/verb/motd()
 	set name = "MOTD"

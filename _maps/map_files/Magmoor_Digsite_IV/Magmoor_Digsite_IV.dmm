@@ -7242,9 +7242,6 @@
 /turf/open/floor/prison/kitchen,
 /area/magmoor/engi/storage)
 "faq" = (
-/turf/closed/mineral/smooth/lavawall,
-/turf/closed/mineral/smooth/lavawall/indestructible,
-/turf/closed/mineral/smooth/lavawall/indestructible,
 /turf/closed/mineral/smooth/lavawall/indestructible,
 /area/magmoor/cave/rock)
 "fav" = (
@@ -12319,7 +12316,6 @@
 /turf/open/floor/tile/red/redtaupe,
 /area/magmoor/security/infocenter)
 "iVj" = (
-/turf/closed/mineral/smooth/lavawall,
 /turf/closed/mineral/smooth/lavawall/indestructible,
 /area/magmoor/cave/rock)
 "iVH" = (
@@ -12410,10 +12406,6 @@
 /turf/open/floor/prison/kitchen,
 /area/magmoor/civilian/cook)
 "iZq" = (
-/turf/closed/mineral/smooth/lavawall,
-/turf/closed/mineral/smooth/lavawall/indestructible,
-/turf/closed/mineral/smooth/lavawall/indestructible,
-/turf/closed/mineral/smooth/lavawall/indestructible,
 /turf/closed/mineral/smooth/lavawall/indestructible,
 /area/magmoor/cave/rock)
 "iZx" = (
@@ -17678,7 +17670,6 @@
 /area/magmoor/cargo/processing/south)
 "mNd" = (
 /turf/closed/mineral/smooth/lavawall/indestructible,
-/turf/closed/mineral/smooth/lavawall/indestructible,
 /area/magmoor/cave/rock)
 "mNx" = (
 /obj/structure/table/wood,
@@ -19362,8 +19353,6 @@
 /turf/open/floor/mainship/mono,
 /area/magmoor/engi/atmos)
 "ods" = (
-/turf/closed/mineral/smooth/lavawall/indestructible,
-/turf/closed/mineral/smooth/lavawall/indestructible,
 /turf/closed/mineral/smooth/lavawall/indestructible,
 /area/magmoor/cave/rock)
 "odB" = (
@@ -30643,8 +30632,6 @@
 /turf/open/floor/tile/bar,
 /area/magmoor/civilian/clean/shower)
 "vWS" = (
-/turf/closed/mineral/smooth/lavawall,
-/turf/closed/mineral/smooth/lavawall/indestructible,
 /turf/closed/mineral/smooth/lavawall/indestructible,
 /area/magmoor/cave/rock)
 "vWT" = (

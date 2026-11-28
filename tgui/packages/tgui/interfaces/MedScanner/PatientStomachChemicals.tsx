@@ -24,7 +24,10 @@ export function PatientStomachChemicals() {
   const { data } = useBackend<MedScannerData>();
   const { has_stomach_chemicals, stomach_chemicals_lists = {} } = data;
 
-  if (!has_stomach_chemicals || Object.keys(stomach_chemicals_lists).length === 0) {
+  if (
+    !has_stomach_chemicals ||
+    Object.keys(stomach_chemicals_lists).length === 0
+  ) {
     return null;
   }
 

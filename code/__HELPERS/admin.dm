@@ -37,7 +37,8 @@ params
 	if(GLOB.admin_approvals.Find(approval_id))
 		CRASH("approval_id: [approval_id] is already in use.")
 
-	GLOB.admin_approvals[approval_id] = -1
+	var/list/approval = list("rights" = rank_required, "options" = options.Copy(), "answer" = null)
+	GLOB.admin_approvals[approval_id] = approval
 	for(var/client/C in active_admins)
 		var/ref = "[REF(C.holder)];[HrefToken()]"
 		var/admin_specific_options = ""
@@ -54,6 +55,7 @@ params
 	while (world.time < endtime)
 		stoplag(1)
 
-		if(GLOB.admin_approvals[approval_id] != -1)
-			. = options[GLOB.admin_approvals[approval_id]]
+		if(!isnull(approval["answer"]))
+			. = options[approval["answer"]]
 			break
+	GLOB.admin_approvals -= approval_id

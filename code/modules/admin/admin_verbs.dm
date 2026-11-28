@@ -130,28 +130,62 @@ ADMIN_VERB(logs_current, R_LOG, "Get Current Logs", "View/retrieve logfiles for 
 	user.holder.browse_server_logs("[GLOB.log_directory]/")
 
 ADMIN_VERB(logs_folder, R_LOG, "Get Server Logs Folder", "Please use responsibly.", ADMIN_CATEGORY_MAIN)
+	if(!check_rights_for(user, R_ADMIN))
+		return
 	if(alert(user, "Due to the way BYOND handles files, you WILL need a click macro. This function is also recurive and prone to fucking up, especially if you select the wrong folder. Are you absolutely sure you want to proceed?", "WARNING", "Yes", "No") != "Yes")
 		return
 
-	var/path = user.holder.browse_folders()
+	var/path = user.holder?.browse_folders()
 	if(!path)
 		return
 
-	user.holder.recursive_download(path)
+	user.holder?.recursive_download(path)
+
+/// Log paths must stay under the same root on Windows and Linux.
+/proc/is_server_log_path(path)
+	if(!istext(path))
+		return FALSE
+	var/static/regex/log_path = regex(@{"^data/logs/(?:[^/\\:\x00-\x1f\x7f<>"|?*]+(?<![. ])(?:/|$))*$"})
+	return log_path.Find(path) && log_path.match == path
+
+/proc/is_server_log_file(path)
+	var/static/regex/valid_extension = regex(@"\.(?:txt|log|htm|html|json)$", "i")
+	return is_server_log_path(path) && !!valid_extension.Find(path)
+
+/datum/admins/proc/can_access_server_log(path)
+	var/client/user = usr?.client
+	if(IsAdminAdvancedProcCall() || user?.holder != src || !check_rights_for(user, R_LOG) || !is_server_log_path(path))
+		return FALSE
+	if(findtext("[path]/", "/secret/"))
+		return check_rights_for(user, R_ADMIN)
+	return TRUE
+
+/datum/admins/proc/server_log_choices(path)
+	var/list/choices = list()
+	if(!can_access_server_log(path))
+		return choices
+	for(var/entry in flist(path))
+		var/slash = findtext(entry, "/")
+		if(slash && slash != length(entry))
+			continue
+		if(can_access_server_log("[path][entry]"))
+			choices += entry
+	return choices
 
 /datum/admins/proc/browse_server_logs(path = "data/logs/")
-	if(!check_rights(R_LOG))
+	if(!can_access_server_log(path))
 		return
 
 	path = browse_files(path)
 	if(!path)
 		return
 
-	switch(tgui_alert(usr, "View (in game), Open (in your system's text editor), Download", path, list("View", "Open", "Download"), 0))
+	var/action = tgui_alert(usr, "View as plain text in game or download the log file.", path, list("View", "Download"), 0)
+	if(!can_access_server_log(path) || !is_server_log_file(path) || !fexists(path))
+		return
+	switch(action)
 		if("View")
 			usr << browse(HTML_SKELETON("<pre style='word-wrap: break-word;'>[html_encode(file2text(file(path)))]</pre>"), list2params(list("window" = "viewfile.[path]")))
-		if("Open")
-			DIRECT_OUTPUT(usr, run(file(path)))
 		if("Download")
 			DIRECT_OUTPUT(usr, ftp(file(path)))
 		else
@@ -160,28 +194,28 @@ ADMIN_VERB(logs_folder, R_LOG, "Get Server Logs Folder", "Please use responsibly
 	log_admin("[key_name(usr)] accessed file: [path].")
 	message_admins("[ADMIN_TPMONTY(usr)] accessed file: [path].")
 
-/datum/admins/proc/recursive_download(folder)
-	if(!check_rights(R_LOG))
+/datum/admins/proc/recursive_download(folder, remaining_depth = 20)
+	if(remaining_depth < 1 || !can_access_server_log(folder) || !check_rights(R_ADMIN) || copytext(folder, -1) != "/")
 		return
 
-	var/files = flist(folder)
-	for(var/next in files)
+	for(var/next in server_log_choices(folder))
+		var/path = folder + next
+		if(!can_access_server_log(path) || !check_rights(R_ADMIN, FALSE))
+			return
 		if(copytext(next, -1, 0) == "/")
-			to_chat(usr, "Going deeper: [folder][next]")
-			usr.client.holder.recursive_download(folder + next)
-		else
-			log_admin("[key_name(usr)] accessed file: [folder][next].")
-			to_chat(usr, "Downloading: [folder][next]")
-			var/fil = replacetext("[folder][next]", "/", "_")
-			DIRECT_OUTPUT(usr, ftp(file(folder + next), fil))
+			recursive_download(path, remaining_depth - 1)
+		else if(is_server_log_file(path) && fexists(path))
+			log_admin("[key_name(usr)] accessed file: [path].")
+			to_chat(usr, "Downloading: [html_encode(path)]")
+			DIRECT_OUTPUT(usr, ftp(file(path), pathflatten(path)))
 
 /datum/admins/proc/browse_folders(root = "data/logs/", max_iterations = 100)
-	if(!check_rights(R_ADMIN))
+	if(!can_access_server_log(root) || !check_rights(R_ADMIN))
 		return
 
 	var/path = root
 	for(var/i = 0, i < max_iterations, i++)
-		var/list/choices = flist(path)
+		var/list/choices = server_log_choices(path)
 		if(path != root)
 			choices.Insert(1, "/")
 		var/choice = tgui_input_list(usr, "Choose a folder to access:", "Server Logs", sortList(choices), timeout = 0)
@@ -191,6 +225,8 @@ ADMIN_VERB(logs_folder, R_LOG, "Get Server Logs Folder", "Please use responsibly
 			if("/")
 				path = root
 				continue
+		if(!(choice in choices) || !check_rights(R_ADMIN, FALSE))
+			return
 		path += choice
 
 		if(copytext(path, -1, 0) != "/")		//didn't choose a directory, no need to iterate again
@@ -203,15 +239,16 @@ ADMIN_VERB(logs_folder, R_LOG, "Get Server Logs Folder", "Please use responsibly
 				continue
 			if("Cancel")
 				return FALSE
-	return path
+	if(can_access_server_log(path) && check_rights(R_ADMIN, FALSE))
+		return path
 
-/datum/admins/proc/browse_files(root = "data/logs/", max_iterations = 20, list/valid_extensions = list("txt", "log", "htm", "html", "json"))
-	if(!check_rights(R_LOG))
+/datum/admins/proc/browse_files(root = "data/logs/", max_iterations = 20)
+	if(!can_access_server_log(root))
 		return
 
 	var/path = root
 	for(var/i = 0, i < max_iterations, i++)
-		var/list/choices = flist(path)
+		var/list/choices = server_log_choices(path)
 		if(path != root)
 			choices.Insert(1, "/")
 		var/choice = tgui_input_list(usr, "Choose a file to access:", "Download", sortList(choices), timeout = 0)
@@ -221,19 +258,13 @@ ADMIN_VERB(logs_folder, R_LOG, "Get Server Logs Folder", "Please use responsibly
 			if("/")
 				path = root
 				continue
+		if(!(choice in choices))
+			return
 		path += choice
 		if(copytext_char(path, -1) != "/")		//didn't choose a directory, no need to iterate again
 			break
-	var/extensions
-	for(var/i in valid_extensions)
-		if(extensions)
-			extensions += "|"
-		extensions += "[i]"
-	var/regex/valid_ext = new("\\.([extensions])$", "i")
-	if(!fexists(path) || !(valid_ext.Find(path)))
-		return FALSE
-
-	return path
+	if(can_access_server_log(path) && is_server_log_file(path) && fexists(path))
+		return path
 
 
 /datum/admins/proc/show_individual_logging_panel(mob/M, source = LOGSRC_CLIENT, type = INDIVIDUAL_ATTACK_LOG)
@@ -452,12 +483,13 @@ ADMIN_VERB(dsay, R_ADMIN, "dsay", "Speak as an admin in deadchat.", ADMIN_CATEGO
 			html = span_game("<span class='deadsay'>[span_prefix("DEAD: [rank_name]")] says, [span_message(msg)]</span>"))
 
 ADMIN_VERB_ONLY_CONTEXT_MENU(object_say, R_ADMIN, "Osay", atom/movable/target in world)
-	var/message = tgui_input_text(user, "What do you want the message to be?", "Make Sound", encode = FALSE)
-	if(!message)
+	var/message = normalize_admin_message(tgui_input_text(user, "What do you want the message to be?", "Make Sound", encode = FALSE))
+	if(!message || QDELETED(target) || !check_rights_for(user, R_ADMIN))
 		return
-	target.say(message, sanitize = FALSE)
-	log_admin("[key_name(user)] made [target] at [AREACOORD(target)] say \"[message]\"")
-	message_admins(span_adminnotice("[key_name_admin(user)] made [target] at [AREACOORD(target)]. say \"[message]\""))
+	var/message_html = sanitize(message)
+	target.say(message_html, sanitize = FALSE)
+	log_admin("[key_name(user)] made [target] at [AREACOORD(target)] say \"[message_html]\"")
+	message_admins(span_adminnotice("[key_name_admin(user)] made [html_encode("[target]")] at [html_encode(AREACOORD(target))] say \"[message_html]\""))
 
 ADMIN_VERB(jump, R_ADMIN, "Jump To", "Teleports you to a location", ADMIN_CATEGORY_MAIN)
 	if(isnewplayer(user.mob))
@@ -620,53 +652,45 @@ ADMIN_VERB(private_message_panel, R_ADMIN|R_MENTOR, "Private Message", "Private 
 
 	user.private_message(picked.client, null)
 
-/client/proc/ticket_reply(whom)
+/client/proc/ticket_reply(datum/admin_help/ticket)
+	if(!ticket?.can_access(src))
+		return
 	if(prefs.muted & MUTE_ADMINHELP || is_banned_from(ckey, "Adminhelp"))
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
 			html = span_warning("Error: You are unable to use admin PMs (muted)."))
 		return
 
-	var/client/C
-	if(istext(whom))
-		if(whom[1] == "@")
-			whom = find_stealth_key(whom)
-		C = GLOB.directory[whom]
-	else if(istype(whom, /client))
-		C = whom
-
-	if(!C)
-		if(holder)
-			to_chat(src, span_warning("Error: Client not found."))
+	var/client/recipient = ticket.initiator
+	if(!recipient || recipient.current_ticket != ticket)
+		to_chat(src, span_warning("Error: No connected client with this active ticket."))
 		return
 
-	var/datum/admin_help/AH = C.current_ticket
-
-	if(AH?.tier == TICKET_ADMIN && !check_rights(R_ADMINTICKET, FALSE))
+	var/marked_for_reply = !ticket.marked
+	if(marked_for_reply)
+		ticket.marked = key
+		var/notice = "[key_name_admin(src)] has marked and started replying to [key_name_admin(recipient, FALSE)]'s ticket."
+		if(ticket.tier == TICKET_MENTOR)
+			message_staff(notice)
+		else
+			message_admins(notice)
+	else if(ticket.marked != key)
+		to_chat(src, span_warning("This ticket has already been marked by [html_encode(ticket.marked)], click the mark button to replace them."))
 		return
-	if(AH && !AH.marked)
-		AH.marked = usr.client.key
-		if(AH.tier == TICKET_MENTOR)
-			message_staff("[key_name_admin(src)] has marked and started replying to [key_name_admin(C, FALSE, FALSE)]'s ticket.")
-		else if(AH.tier == TICKET_ADMIN)
-			if(!check_rights(R_ADMINTICKET, FALSE))
-				return
-			message_admins("[key_name_admin(src)] has marked and started replying to [key_name_admin(C, FALSE, FALSE)]'s ticket.")
-
-	else if(AH && AH.marked != usr.client.key)
-		to_chat(usr, span_warning("This ticket has already been marked by [AH.marked], click the mark button to replace them."))
+	var/msg = normalize_admin_message(tgui_input_text(src, "Message:", "Private message to [key_name(recipient, FALSE, FALSE)]", encode = FALSE, timeout = 0))
+	if(!recipient || recipient.current_ticket != ticket || !ticket.can_access(src) || ticket.marked != key)
 		return
-	var/msg = tgui_input_text(usr, "Message:", "Private message to [key_name(C, FALSE, FALSE)]", timeout = 0)
 	if(!msg)
-		if(AH)
-			if(AH.tier == TICKET_MENTOR)
-				message_staff("[key_name_admin(src)] has cancelled their reply to [key_name_admin(C, FALSE, FALSE)]'s ticket. Ticket has been unmarked.")
-			else if(AH.tier == TICKET_ADMIN)
-				message_admins("[key_name_admin(src)] has cancelled their reply to [key_name_admin(C, FALSE, FALSE)]'s ticket. Ticket has been unmarked")
-			AH.marked = null
+		if(marked_for_reply)
+			ticket.marked = null
+			var/notice = "[key_name_admin(src)] has cancelled their reply to [key_name_admin(recipient, FALSE)]'s ticket. Ticket has been unmarked."
+			if(ticket.tier == TICKET_MENTOR)
+				message_staff(notice)
+			else
+				message_admins(notice)
 		return
 
-	private_message(whom, msg)
+	private_message(recipient, msg)
 
 
 /client/proc/private_message(whom, msg)
@@ -676,14 +700,15 @@ ADMIN_VERB(private_message_panel, R_ADMIN|R_MENTOR, "Private Message", "Private 
 			html = span_warning("You are unable to use admin PMs (muted)."))
 		return
 
-	if(!holder && !current_ticket)
+	var/datum/admin_help/original_ticket = current_ticket
+	if(!holder && !original_ticket)
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
 			html = span_warning("You can no longer reply to this ticket, please open another one by using the Adminhelp verb if need be."))
 		if(msg)
 			to_chat(src,
 				type = MESSAGE_TYPE_ADMINPM,
-				html = span_notice("Message: [msg]"))
+				html = span_notice("Message: [sanitize(normalize_admin_message(msg))]"))
 		return
 
 	var/client/recipient
@@ -700,89 +725,68 @@ ADMIN_VERB(private_message_panel, R_ADMIN|R_MENTOR, "Private Message", "Private 
 		recipient = whom
 
 	if(external)
-		if(!externalreplyamount)	//to prevent people from spamming irc/discord
+		if(!externalreplyamount)
 			return
-
-		if(!msg)
-			msg = tgui_input_text(src, "Message:", "Private message to Administrator", timeout = 0)
-
-		if(!msg)
-			return
-
 		if(holder)
-			to_chat(src,
-				type = MESSAGE_TYPE_ADMINPM,
-				html = span_danger("Error: Use the admin IRC/Discord channel."))
+			to_chat(src, type = MESSAGE_TYPE_ADMINPM, html = span_danger("Error: Use the admin IRC/Discord channel."))
 			return
 
-	else
-		if(!recipient)
-			if(holder)
-				to_chat(src,
-					type = MESSAGE_TYPE_ADMINPM,
-					html = span_warning("Error: Client not found."))
-				if(msg)
-					to_chat(src,
-						type = MESSAGE_TYPE_ADMINPM,
-						html = msg)
-				return
-			else if(msg) // you want to continue if there's no message instead of returning now
-				current_ticket.MessageNoRecipient(msg)
-				return
+	if(!msg && (external || recipient || !holder))
+		var/prompt_title = external ? "Private message to Administrator" : "Private message to [key_name(recipient, FALSE, FALSE)]"
+		msg = tgui_input_text(src, "Message:", prompt_title, encode = FALSE, timeout = 0)
 
-		//get message text, limit it's length.and clean/escape html
-		if(!msg)
-			msg = tgui_input_text(usr, "Message:", "Private message to [key_name(recipient, FALSE, FALSE)]", timeout = 0)
-			msg = trim(msg)
-			if(!msg)
-				return
-
-			if(prefs.muted & MUTE_ADMINHELP || is_banned_from(ckey, "Adminhelp"))
-				to_chat(src,
-					type = MESSAGE_TYPE_ADMINPM,
-					html = span_warning("You are unable to use admin PMs (muted)."))
-				return
-
-			if(!recipient && !external)
-				if(holder)
-					to_chat(src,
-						type = MESSAGE_TYPE_ADMINPM,
-						html = "<br>[span_boldnotice("Client not found. Here's your message, copy-paste it if needed:")]")
-					to_chat(src,
-						type = MESSAGE_TYPE_ADMINPM,
-						html = "[span_notice("[msg]")]<br>")
-				else
-					current_ticket.MessageNoRecipient(msg)
-				return
-
-	if(handle_spam_prevention(msg, MUTE_ADMINHELP, MESSAGE_FLAG_MENTOR|MESSAGE_FLAG_ADMIN))
+	if(prefs.muted & MUTE_ADMINHELP || is_banned_from(ckey, "Adminhelp"))
+		to_chat(src, type = MESSAGE_TYPE_ADMINPM, html = span_warning("You are unable to use admin PMs (muted)."))
+		return
+	if(!holder && (!current_ticket || current_ticket != original_ticket))
+		to_chat(src, type = MESSAGE_TYPE_ADMINPM, html = span_warning("You can no longer reply to this ticket."))
+		return
+	if(external && !externalreplyamount)
 		return
 
-	//clean the message if it's not sent by a high-rank admin
-	if(!check_rights(R_SERVER|R_DEBUG, FALSE) || external)//no sending html to the poor bots
-		msg = sanitize(copytext_char(msg, 1, MAX_MESSAGE_LEN))
-		if(!msg)
-			return
+	var/rawmsg = normalize_admin_message(msg)
+	if(!external && !recipient)
+		if(holder)
+			to_chat(src, type = MESSAGE_TYPE_ADMINPM, html = span_warning("Error: Client not found."))
+			if(rawmsg)
+				to_chat(src, type = MESSAGE_TYPE_ADMINPM, text = rawmsg)
+		else if(rawmsg)
+			current_ticket.MessageNoRecipient(rawmsg)
+		return
 
-	var/rawmsg = msg
+	var/sender_handles_admin_tickets = check_rights_for(src, R_ADMINTICKET)
+	var/recipient_handles_admin_tickets = check_rights_for(recipient, R_ADMINTICKET)
+	var/sender_is_mentor = is_mentor(src)
+	var/recipient_is_mentor = is_mentor(recipient)
+	var/sender_is_staff = sender_handles_admin_tickets || sender_is_mentor
+	var/recipient_is_staff = recipient_handles_admin_tickets || recipient_is_mentor
+	if((!sender_is_staff && current_ticket && recipient_is_mentor && !current_ticket.can_access(recipient)) || (!recipient_is_staff && recipient?.current_ticket && sender_is_mentor && !recipient.current_ticket.can_access(src)))
+		to_chat(src, type = MESSAGE_TYPE_ADMINPM, html = span_warning("A mentor cannot participate in this admin ticket."))
+		return
+
+	if(!rawmsg)
+		return
+	msg = sanitize(rawmsg)
+	if(handle_spam_prevention(msg, MUTE_ADMINHELP, MESSAGE_FLAG_MENTOR|MESSAGE_FLAG_ADMIN))
+		return
 
 	var/keywordparsedmsg = keywords_lookup(msg)
 
 	if(external)
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
-			html = "[span_notice("PM to-<b>Staff</b>: <span class='linkify'>[rawmsg]")]</font>")
-		var/datum/admin_help/AH = admin_ticket_log(src, "<font color='#ff8c8c'>Reply PM from-<b>[key_name(src, TRUE, TRUE)] to <i>External</i>: [keywordparsedmsg]</font>")
+			html = span_notice("PM to-<b>Staff</b>: [span_linkify(msg)]"))
+		var/datum/admin_help/AH = admin_ticket_log(src, "<font color='#ff8c8c'>Reply PM from-<b>[key_name(src, TRUE, TRUE)]</b> to <i>External</i>: [keywordparsedmsg]</font>")
 		externalreplyamount--
 		send2adminchat("[AH ? "#[AH.id] " : ""]Reply: [ckey]", sanitizediscord(rawmsg))
 	else
-		if(check_other_rights(recipient, R_ADMINTICKET, FALSE) || is_mentor(recipient))
-			if(check_rights(R_ADMINTICKET, FALSE) || is_mentor(src)) //Both are staff
+		if(recipient_is_staff)
+			if(sender_is_staff)
 				if(!current_ticket && !recipient.current_ticket)
-					if(check_other_rights(recipient, R_ADMINTICKET, FALSE) || check_rights(R_ADMINTICKET, FALSE))
-						new /datum/admin_help(msg, recipient, TRUE, TICKET_ADMIN)
+					if(recipient_handles_admin_tickets || sender_handles_admin_tickets)
+						new /datum/admin_help(rawmsg, recipient, TRUE, TICKET_ADMIN)
 					else
-						new /datum/admin_help(msg, recipient, TRUE, TICKET_MENTOR)
+						new /datum/admin_help(rawmsg, recipient, TRUE, TICKET_MENTOR)
 
 				to_chat(recipient,
 					type = MESSAGE_TYPE_ADMINPM,
@@ -795,8 +799,9 @@ ADMIN_VERB(private_message_panel, R_ADMIN|R_MENTOR, "Private Message", "Private 
 				window_flash(src, TRUE)
 
 				var/interaction_message = "<font color='#cea7f1'>PM from-<b>[key_name(src, recipient, TRUE)]</b> to-<b>[key_name(recipient, src, TRUE)]</b>: [keywordparsedmsg]</font>"
-				admin_ticket_log(src, interaction_message)
-				if(recipient != src)
+				if(current_ticket?.can_access(recipient))
+					admin_ticket_log(src, interaction_message)
+				if(recipient != src && recipient.current_ticket?.can_access(src))
 					admin_ticket_log(recipient, interaction_message)
 
 			else //Recipient is a staff member, sender is not.
@@ -815,14 +820,14 @@ ADMIN_VERB(private_message_panel, R_ADMIN|R_MENTOR, "Private Message", "Private 
 				SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg', channel = CHANNEL_ADMIN, volume = recipient.prefs.volume_adminhelp))
 
 		else  //PM sender is mentor/admin, recipient is not -> big red text
-			if(check_rights(R_ADMINTICKET, FALSE) || is_mentor(src))
+			if(sender_is_staff)
 				if(!recipient.current_ticket)
-					if(check_rights(R_ADMINTICKET, FALSE))
-						new /datum/admin_help(msg, recipient, TRUE, TICKET_ADMIN)
-					else if(is_mentor(src))
-						new /datum/admin_help(msg, recipient, TRUE, TICKET_MENTOR)
+					if(sender_handles_admin_tickets)
+						new /datum/admin_help(rawmsg, recipient, TRUE, TICKET_ADMIN)
+					else if(sender_is_mentor)
+						new /datum/admin_help(rawmsg, recipient, TRUE, TICKET_MENTOR)
 
-				if(check_rights(R_ADMINTICKET, FALSE))
+				if(sender_handles_admin_tickets)
 					to_chat(recipient,
 						type = MESSAGE_TYPE_ADMINPM,
 						html = "<font color='red' size='4'><b>-- Administrator private message --</b></font>")
@@ -837,7 +842,7 @@ ADMIN_VERB(private_message_panel, R_ADMIN|R_MENTOR, "Private Message", "Private 
 						html = span_notice("<b>[holder.fakekey ? "Administrator" : holder.rank.name] PM</b> to-<b>[key_name(recipient, src, TRUE)]</b>: [span_linkify("[msg]")]"))
 					SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg', channel = CHANNEL_ADMIN))
 					window_flash(recipient, TRUE)
-				else if(is_mentor(src))
+				else if(sender_is_mentor)
 					to_chat(recipient,
 						type = MESSAGE_TYPE_ADMINPM,
 						html = span_mentorsay("<size='4'></b>-- Mentor private message --</b></font>"))
@@ -863,16 +868,16 @@ ADMIN_VERB(private_message_panel, R_ADMIN|R_MENTOR, "Private Message", "Private 
 				return
 
 	if(external)
-		log_admin_private("PM: [key_name(src)]->External: [rawmsg]")
+		log_admin_private("PM: [key_name(src)]->External: [msg]")
 		for(var/client/X in GLOB.admins)
 			if(check_other_rights(X, R_ADMINTICKET, FALSE))
 				to_chat(X,
 					type = MESSAGE_TYPE_ADMINPM,
 					html = span_notice("<B>PM: [key_name(src, X, FALSE)]-&gt;External:</B> [keywordparsedmsg]"))
 	else
-		log_admin_private("PM: [key_name(src)]->[key_name(recipient)]: [rawmsg]")
+		log_admin_private("PM: [key_name(src)]->[key_name(recipient)]: [msg]")
 		//Admins PMs go to admins, mentor PMs go to mentors and admins
-		if(check_rights(R_ADMINTICKET, FALSE))
+		if(sender_handles_admin_tickets)
 			for(var/client/X in GLOB.admins)
 				if(X.key == key || X.key == recipient.key)
 					continue
@@ -880,7 +885,7 @@ ADMIN_VERB(private_message_panel, R_ADMIN|R_MENTOR, "Private Message", "Private 
 					to_chat(X,
 						type = MESSAGE_TYPE_ADMINPM,
 						html = span_notice("<B>Admin PM: [key_name(src, X, FALSE)]-&gt;[key_name(recipient, X, FALSE)]:</B> [keywordparsedmsg]"))
-		else if(is_mentor(src))
+		else if(sender_is_mentor)
 			for(var/client/X in GLOB.admins)
 				if(X.key == key || X.key == recipient.key)
 					continue
@@ -913,7 +918,7 @@ ADMIN_VERB(private_message_panel, R_ADMIN|R_MENTOR, "Private Message", "Private 
 
 	var/datum/admin_help/ticket = C ? C.current_ticket : GLOB.ahelp_tickets.CKey2ActiveTicket(target)
 	var/compliant_msg = trim(lowertext(msg))
-	var/tgs_tagged = "[sender](TGS/External)"
+	var/tgs_tagged = "[sanitize(normalize_admin_message(sender))](TGS/External)"
 	var/list/splits = splittext(compliant_msg, " ")
 	if(length(splits) && splits[1] == "ticket")
 		if(length(splits) < 2)
@@ -946,7 +951,7 @@ ADMIN_VERB(private_message_panel, R_ADMIN|R_MENTOR, "Private Message", "Private 
 			if("tier")
 				if(ticket)
 					ticket.Tier(TRUE)
-					ticket.AddInteraction("<font color='#ff8c8c'>External interaction by: [sender].</font>")
+					ticket.AddInteraction("<font color='#ff8c8c'>External interaction by: [tgs_tagged].</font>")
 					message_admins("External interaction by: [tgs_tagged]")
 					var/ticket_type = (ticket.tier == TICKET_ADMIN) ? "an admin" : "a mentor"
 					return "Ticket #[ticket.id] successfully tiered as [ticket_type] ticket"
@@ -993,12 +998,12 @@ ADMIN_VERB(private_message_panel, R_ADMIN|R_MENTOR, "Private Message", "Private 
 	if(!stealthkey)
 		stealthkey = GenTgsStealthKey()
 
-	msg = sanitize(copytext_char(msg, 1, MAX_MESSAGE_LEN))
+	msg = sanitize(normalize_admin_message(msg))
 	if(!msg)
 		return "Error: No message"
 
 	log_admin_private("External PM: [tgs_tagged] -> [key_name(C)] : [msg]")
-	message_admins("External PM: [tgs_tagged] -> [key_name_admin(C, FALSE, FALSE)] : [msg]")
+	message_admins("External PM: [tgs_tagged] -> [key_name_admin(C, FALSE)] : [msg]")
 
 	to_chat(C,
 		type = MESSAGE_TYPE_ADMINPM,
@@ -1241,7 +1246,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(export_appearance, R_ADMIN, "Export Appearance", at
 		if(part_layer < 0)
 			if(part_layer <= -1000)
 				continue
-			part_layer = source.layer + part_layer / 1000 + (part in source.overlays ? 1 : 0)
+			part_layer = source.layer + part_layer / 1000 + ((part in source.overlays) ? 1 : 0)
 		var/insert_at = parts.len + 1
 		for(var/i in 1 to order.len)
 			if(part_layer < order[i])

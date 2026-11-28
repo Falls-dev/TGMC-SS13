@@ -41,8 +41,14 @@ const powerRank = (str: string) => {
 
 export const PowerMonitor = () => {
   const { data } = useBackend<Data>();
-  const { attached, supply, demand, supply_text, demand_text, areas = [] } =
-    data;
+  const {
+    attached,
+    supply,
+    demand,
+    supply_text,
+    demand_text,
+    areas = [],
+  } = data;
   const [sortByField, setSortByField] = useState<string | null>(null);
   const maxValue = Math.max(500000, supply, demand, 1);
 
@@ -129,14 +135,14 @@ export const PowerMonitor = () => {
                   <Table.Cell>Area</Table.Cell>
                   <Table.Cell collapsing>Charge</Table.Cell>
                   <Table.Cell textAlign="right">Draw</Table.Cell>
-                  <Table.Cell collapsing title="Equipment">
-                    Eqp
+                  <Table.Cell collapsing>
+                    <span title="Equipment">Eqp</span>
                   </Table.Cell>
-                  <Table.Cell collapsing title="Lighting">
-                    Lgt
+                  <Table.Cell collapsing>
+                    <span title="Lighting">Lgt</span>
                   </Table.Cell>
-                  <Table.Cell collapsing title="Environment">
-                    Env
+                  <Table.Cell collapsing>
+                    <span title="Environment">Env</span>
                   </Table.Cell>
                 </Table.Row>
                 {sortedAreas.map((area, i) => (
@@ -204,10 +210,11 @@ const AreaStatusColorBox = (props: { status: number }) => {
   const power = Boolean(status & 2);
   const mode = Boolean(status & 1);
   return (
-    <ColorBox
-      color={power ? 'good' : 'bad'}
-      content={mode ? undefined : 'M'}
-      title={`${power ? 'On' : 'Off'} [${mode ? 'auto' : 'manual'}]`}
-    />
+    <span title={`${power ? 'On' : 'Off'} [${mode ? 'auto' : 'manual'}]`}>
+      <ColorBox
+        color={power ? 'good' : 'bad'}
+        content={mode ? undefined : 'M'}
+      />
+    </span>
   );
 };

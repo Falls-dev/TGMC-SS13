@@ -138,6 +138,7 @@
 	var/key
 	var/ckey
 	var/fallback_name
+	var/encode_html = !!include_link
 
 	if(!whom)
 		return "*null*"
@@ -178,6 +179,8 @@
 
 		if(!swhom)
 			swhom = "*invalid*"
+		if(encode_html)
+			swhom = html_encode(swhom)
 
 		return "\[[swhom]\]"
 
@@ -194,7 +197,7 @@
 		else
 			if(include_link)
 				. += "<a href='byond://?priv_msg=[ckey]'>"
-			. += key
+			. += encode_html ? html_encode(key) : key
 		if(!C)
 			. += "\[DC\]"
 
@@ -204,13 +207,11 @@
 		. += "*no key*"
 
 	if(include_name)
+		var/display_name = fallback_name
 		if(M)
-			if(M.real_name)
-				. += "/([M.real_name])"
-			else if(M.name)
-				. += "/([M.name])"
-		else if(fallback_name)
-			. += "/([fallback_name])"
+			display_name = M.real_name || M.name
+		if(display_name)
+			. += "/([encode_html ? html_encode(display_name) : display_name])"
 
 	return .
 

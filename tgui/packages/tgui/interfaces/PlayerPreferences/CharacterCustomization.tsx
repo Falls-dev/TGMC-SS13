@@ -9,10 +9,7 @@ import {
 import { capitalize } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
-import {
-  SelectFieldPreference,
-  TextFieldPreference,
-} from './FieldPreferences';
+import { SelectFieldPreference, TextFieldPreference } from './FieldPreferences';
 import { ProfilePicture } from './ProfilePicture';
 
 export const CharacterCustomization = (props) => {

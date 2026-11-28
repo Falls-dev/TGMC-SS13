@@ -63,11 +63,10 @@ SUBSYSTEM_DEF(statpanels)
 			if(target.stat_tab == "Tickets" && num_fires % default_wait == 0)
 				set_tickets_tab(target)
 
-			if(!length(GLOB.sdql2_queries) && ("SDQL2" in target.panel_tabs))
-				target.stat_panel.send_message("remove_sdql2")
-
-			else if(length(GLOB.sdql2_queries) && (target.stat_tab == "SDQL2" || !("SDQL2" in target.panel_tabs)) && num_fires % default_wait == 0)
+			if(check_rights_for(target, R_DEBUG) && length(GLOB.sdql2_queries) && (target.stat_tab == "SDQL2" || !("SDQL2" in target.panel_tabs)) && num_fires % default_wait == 0)
 				set_SDQL2_tab(target)
+			else if(("SDQL2" in target.panel_tabs) && (!check_rights_for(target, R_DEBUG) || !length(GLOB.sdql2_queries)))
+				target.stat_panel.send_message("remove_sdql2")
 
 		if(target.mob)
 			var/mob/target_mob = target.mob
@@ -102,14 +101,14 @@ SUBSYSTEM_DEF(statpanels)
 	target.stat_panel.send_message("update_tickets", ahelp_tickets)
 
 /datum/controller/subsystem/statpanels/proc/set_SDQL2_tab(client/target)
-	var/list/sdql2A = list()
-	sdql2A[++sdql2A.len] = list("", "Access Global SDQL2 List", REF(GLOB.sdql2_vv_statobj))
-	var/list/sdql2B = list()
+	if(!check_rights_for(target, R_DEBUG))
+		return
+	var/list/entries = list(list("", "Access Global SDQL2 List", REF(GLOB.sdql2_vv_statobj)))
 	for(var/datum/SDQL2_query/query as anything in GLOB.sdql2_queries)
-		sdql2B = query.generate_stat()
-
-	sdql2A += sdql2B
-	target.stat_panel.send_message("update_sdql2", sdql2A)
+		var/list/query_entries = query.generate_stat()
+		if(length(query_entries))
+			entries += query_entries
+	target.stat_panel.send_message("update_sdql2", entries)
 
 /datum/controller/subsystem/statpanels/proc/set_turf_examine_tab(client/target, mob/target_mob)
 	if(!target.obj_window)
@@ -228,11 +227,10 @@ SUBSYSTEM_DEF(statpanels)
 		set_tickets_tab(target)
 		return TRUE
 
-	if(!length(GLOB.sdql2_queries) && ("SDQL2" in target.panel_tabs))
-		target.stat_panel.send_message("remove_sdql2")
-
-	else if(length(GLOB.sdql2_queries) && target.stat_tab == "SDQL2")
+	if(check_rights_for(target, R_DEBUG) && length(GLOB.sdql2_queries) && target.stat_tab == "SDQL2")
 		set_SDQL2_tab(target)
+	else if(("SDQL2" in target.panel_tabs) && (!check_rights_for(target, R_DEBUG) || !length(GLOB.sdql2_queries)))
+		target.stat_panel.send_message("remove_sdql2")
 
 /// Datum that holds and tracks info about a client's object window
 /// Really only exists because I want to be able to do logic with signals

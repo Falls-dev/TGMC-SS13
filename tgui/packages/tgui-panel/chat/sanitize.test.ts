@@ -1,4 +1,4 @@
-import { describe, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { sanitizeChatHtml } from './sanitize';
 
@@ -38,6 +38,49 @@ describe('sanitizeChatHtml', () => {
       'asset.123.png',
     );
   });
+
+  it('preserves legacy font colors with a single safe color token', ({
+    expect,
+  }) => {
+    const fragment = sanitizeChatHtml(
+      '<font color="#6D2A6D"><span class="ooc">XOOC: Hello</span></font>' +
+        '<font color="#6D2">Short hex</font><font color="red">Named</font>' +
+        '<font color="red blue">Invalid</font><span color="#6D2">Span</span>',
+    );
+    expect(
+      Array.from(fragment.querySelectorAll('font')).map((font) =>
+        font.getAttribute('color'),
+      ),
+    ).toEqual(['#6D2A6D', '#6D2', 'red', null]);
+    expect(fragment.querySelector('span[color]')).toBeNull();
+  });
+
+  it.each([false, true])(
+    'keeps the nickname formatting separate from the channel (history: %s)',
+    (fromHistory) => {
+      const fragment = sanitizeChatHtml(
+        '<span class="ooc" style="color:#B75800">MOOC: ' +
+          '<span class="ooc-nickname" style="color:#12ABF0">' +
+          '<a href="byond://?priv_msg=example">Anne O\'Neil &amp; Co</a></span>: ' +
+          '<span class="message linkify">Hello</span></span>' +
+          '<span class="colorooc">OOC: ' +
+          '<span class="ooc-nickname adminooc">Terry</span>: Hello</span>',
+        fromHistory,
+      );
+      const channel = fragment.querySelector<HTMLElement>('.ooc');
+      const nickname = channel?.querySelector<HTMLElement>('.ooc-nickname');
+      expect(channel?.style.color).toBe('rgb(183, 88, 0)');
+      expect(nickname?.style.color).toBe('rgb(18, 171, 240)');
+      expect(nickname?.textContent).toBe("Anne O'Neil & Co");
+      expect(channel?.querySelector('.message')?.textContent).toBe('Hello');
+      expect(fragment.querySelector('.colorooc .adminooc')?.textContent).toBe(
+        'Terry',
+      );
+      expect(nickname?.querySelector('a')?.getAttribute('href')).toBe(
+        fromHistory ? undefined : 'byond://?priv_msg=example',
+      );
+    },
+  );
 
   it('drops active elements, event attributes and non-chat styles', ({
     expect,

@@ -29,23 +29,22 @@ import {
   toggleAcceptedType,
   updateMessageCount,
 } from './actions';
-import { MAX_PERSISTED_MESSAGES, MESSAGE_SAVE_INTERVAL } from './constants';
+import {
+  CHAT_RENDER_BATCH_SIZE,
+  MAX_PERSISTED_MESSAGES,
+  MESSAGE_SAVE_INTERVAL,
+} from './constants';
 import { createMessage, serializeMessage } from './model';
 import { chatRenderer } from './renderer';
 import { selectChat, selectCurrentChatPage } from './selectors';
 
 const CHAT_BATCH_INTERVAL = 16;
-const CHAT_BATCH_SIZE = 64;
+// The server keeps five messages, including the newest one.
+const MAX_RESEND_DISTANCE = 4;
 
 const saveChatToStorage = async (store: Store) => {
   const state = selectChat(store.getState());
-  const fromIndex = Math.max(
-    0,
-    chatRenderer.messages.length - MAX_PERSISTED_MESSAGES,
-  );
-  const messages = chatRenderer.messages
-    .slice(fromIndex)
-    .map((message) => serializeMessage(message));
+  const messages = chatRenderer.getRecentMessages().map(serializeMessage);
   storage.set('chat-state', state);
   storage.set('chat-messages', messages);
 };
@@ -68,10 +67,14 @@ const surfaceStorageDiagnostics = (diagnostics: StorageDiagnostic[]) => {
 };
 
 const loadChatFromStorage = async (store: Store) => {
-  const [state, messages] = await Promise.all([
+  const [stateResult, messagesResult] = await Promise.allSettled([
     storage.get('chat-state'),
     storage.get('chat-messages'),
   ]);
+  const state =
+    stateResult.status === 'fulfilled' ? stateResult.value : undefined;
+  const messages =
+    messagesResult.status === 'fulfilled' ? messagesResult.value : undefined;
 
   surfaceStorageDiagnostics(storage.diagnostics);
   // Discard incompatible versions
@@ -79,11 +82,15 @@ const loadChatFromStorage = async (store: Store) => {
     store.dispatch(loadChat());
     return;
   }
-  if (messages) {
+  if (Array.isArray(messages)) {
     const batch = [
-      ...messages.map((message) => ({ ...message, fromHistory: true })),
+      ...messages.slice(-MAX_PERSISTED_MESSAGES).map((message) => ({
+        ...message,
+        fromHistory: true,
+      })),
       createMessage({
         type: 'internal/reconnected',
+        fromHistory: true,
       }),
     ];
     chatRenderer.processBatch(batch, {
@@ -104,7 +111,7 @@ export const chatMiddleware = (store: Store) => {
 
   const scheduleBatch = () => {
     batchTimer ??= setTimeout(
-      () => flushMessages(CHAT_BATCH_SIZE),
+      () => flushMessages(CHAT_RENDER_BATCH_SIZE),
       CHAT_BATCH_INTERVAL,
     );
   };
@@ -160,10 +167,19 @@ export const chatMiddleware = (store: Store) => {
 
       const wasRequested = sequencesRequested.delete(sequence);
       if (!wasRequested && highestSequence !== undefined) {
-        for (let missing = highestSequence + 1; missing < sequence; missing++) {
+        const firstRecoverable = Math.max(
+          highestSequence + 1,
+          sequence - MAX_RESEND_DISTANCE,
+        );
+        for (let missing = firstRecoverable; missing < sequence; missing++) {
           sequencesRequested.add(missing);
           Byond.sendMessage('chat/resend', missing);
         }
+        sequencesRequested.forEach((missing) => {
+          if (missing < sequence - MAX_RESEND_DISTANCE) {
+            sequencesRequested.delete(missing);
+          }
+        });
       }
       highestSequence = Math.max(highestSequence ?? sequence, sequence);
       sequences.add(sequence);

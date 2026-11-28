@@ -90,6 +90,9 @@
 	icon_state="cave"
 	ceiling = CEILING_NONE
 
+/area/outpost/caves/south_east/underground
+	ceiling = CEILING_UNDERGROUND
+
 /area/outpost/caves/south
 	name = "Southern Caves"
 	icon_state="cave"

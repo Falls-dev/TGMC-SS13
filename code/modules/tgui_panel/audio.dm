@@ -16,13 +16,13 @@
  * - start: the start time of the sound
  * - end: when the musics stops playing
  *
- * required url string Must be an https URL.
+ * required url string Must be an absolute HTTP(S) URL.
  * optional extra_data list Optional settings.
  */
 /datum/tgui_panel/proc/play_music(url, extra_data)
 	if(!is_ready())
 		return
-	if(!findtext(url, GLOB.is_http_protocol))
+	if(!is_internet_media_url(url))
 		return
 	var/list/payload = list()
 	if(length(extra_data) > 0)

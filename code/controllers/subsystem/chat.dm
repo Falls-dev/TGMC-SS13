@@ -32,12 +32,8 @@ SUBSYSTEM_DEF(chat)
 	client_history["[sequence]"] = payload
 
 	if(length(client_history) > CHAT_RELIABILITY_HISTORY_SIZE)
-		var/oldest = text2num(client_history[1])
-		for(var/index in 2 to length(client_history))
-			var/test = text2num(client_history[index])
-			if(test < oldest)
-				oldest = test
-		client_history -= "[oldest]"
+		// Sequences are inserted in order, and resending does not reinsert them.
+		client_history.Cut(1, 2)
 	return payload
 
 /datum/controller/subsystem/chat/proc/send_payload_to_client(client/target, datum/chat_payload/payload)

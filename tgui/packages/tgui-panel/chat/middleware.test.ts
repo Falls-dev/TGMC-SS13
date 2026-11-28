@@ -82,6 +82,19 @@ describe('chat message batching', () => {
     );
   });
 
+  it('only requests sequences the server may still have', ({ expect }) => {
+    const dispatch = createDispatch();
+    dispatch(incoming(0));
+    dispatch(incoming(10_000));
+
+    expect(vi.mocked(Byond.sendMessage).mock.calls).toEqual([
+      ['chat/resend', 9996],
+      ['chat/resend', 9997],
+      ['chat/resend', 9998],
+      ['chat/resend', 9999],
+    ]);
+  });
+
   it('handles queued messages before clearing the chat', ({ expect }) => {
     const dispatch = createDispatch();
     dispatch(incoming(0));

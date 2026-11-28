@@ -46,12 +46,13 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_select_equipment, R_FUN, "Select equipment", "Se
 		ui.set_autoupdate(FALSE)
 
 /datum/select_equipment/ui_state(mob/user)
-	return GLOB.admin_state
+	return GLOB.fun_state
 
 /datum/select_equipment/ui_status(mob/user, datum/ui_state/state)
-	if(QDELETED(target_mob))
+	var/client/viewer = user?.client
+	if(QDELETED(target_mob) || !viewer || viewer != src.user || !check_rights_for(viewer, R_FUN))
 		return UI_CLOSE
-	return ..()
+	return UI_INTERACTIVE
 
 /datum/select_equipment/ui_close(mob/user)
 	clear_human_dummy(dummy_key)
@@ -192,6 +193,8 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_select_equipment, R_FUN, "Select equipment", "Se
 			user.prefs.save_preferences()
 
 /client/proc/admin_apply_outfit(mob/target, dresscode)
+	if(!check_rights_for(src, R_FUN))
+		return
 	if(!ishuman(target) && !isobserver(target))
 		tgui_alert(usr,"Invalid mob")
 		return
@@ -211,6 +214,9 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_select_equipment, R_FUN, "Select equipment", "Se
 		if(human_target.l_store || human_target.r_store || human_target.s_store) //saves a lot of time for admins and coders alike
 			if(tgui_alert(usr,"Drop Items in Pockets? No will delete them.", "Robust quick dress shop", list("Yes", "No")) == "No")
 				delete_pocket = TRUE
+
+	if(QDELETED(human_target) || !check_rights_for(src, R_FUN))
+		return
 
 	for(var/obj/item/item in human_target.get_equipped_items(include_pockets = delete_pocket))
 		qdel(item)

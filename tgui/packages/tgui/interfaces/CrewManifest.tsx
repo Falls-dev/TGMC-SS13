@@ -87,9 +87,7 @@ export const CrewManifest = () => {
               (crew) =>
                 crew.name?.toLowerCase().includes(searchTerm) ||
                 crew.rank?.toLowerCase().includes(searchTerm) ||
-                (crew.paygrade_prefix || '')
-                  .toLowerCase()
-                  .includes(searchTerm),
+                (crew.paygrade_prefix || '').toLowerCase().includes(searchTerm),
             )
             .sort((a, b) => {
               const rankA = roleOrder.indexOf(a.rank);

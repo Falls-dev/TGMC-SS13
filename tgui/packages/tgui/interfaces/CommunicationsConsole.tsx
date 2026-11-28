@@ -250,11 +250,7 @@ const MainPage = () => {
                     Announcement recharging: {announceSecs} secs
                   </Button>
                 ) : (
-                  <Button
-                    fluid
-                    icon="bullhorn"
-                    onClick={() => act('announce')}
-                  >
+                  <Button fluid icon="bullhorn" onClick={() => act('announce')}>
                     Make an announcement
                   </Button>
                 )}
@@ -347,12 +343,7 @@ const MainPage = () => {
             )}
             {!!ert_allowed &&
               (!canDistress ? (
-                <Button
-                  disabled
-                  tooltip={distressReason}
-                  fluid
-                  icon="ban"
-                >
+                <Button disabled tooltip={distressReason} fluid icon="ban">
                   Distress Beacon disabled
                 </Button>
               ) : (
@@ -452,9 +443,7 @@ const AlertPage = () => {
           <Button
             key={level.ref}
             fluid
-            onClick={() =>
-              act('securitylevel', { newalertlevel: level.ref })
-            }
+            onClick={() => act('securitylevel', { newalertlevel: level.ref })}
           >
             {level.name}
           </Button>
@@ -605,9 +594,7 @@ const MessagesPage = () => {
         <Button
           key={entry.number}
           fluid
-          onClick={() =>
-            act('viewmessage', { 'message-num': entry.number })
-          }
+          onClick={() => act('viewmessage', { 'message-num': entry.number })}
         >
           {entry.title}
         </Button>
@@ -649,10 +636,7 @@ const ViewMessagePage = () => {
     >
       <Box>{current_message.text}</Box>
       <Box mt={1}>
-        <Button
-          icon="list"
-          onClick={() => act('messagelist')}
-        >
+        <Button icon="list" onClick={() => act('messagelist')}>
           Back to list
         </Button>
       </Box>

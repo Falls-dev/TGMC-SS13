@@ -212,10 +212,8 @@ ADMIN_VERB(sound_file, R_SOUND, "Play Imported Sound", "Play a sound imported fr
 	message_admins("[ADMIN_TPMONTY(user.mob)] played sound '[S]' for [heard_midi] player(s). [length(GLOB.clients) - heard_midi] player(s) [style == "Global" ? "have disabled admin midis" : "were out of view"].")
 
 ADMIN_VERB(sound_web, R_SOUND, "Play Internet Sound", "Play a sound using a link to a website.", ADMIN_CATEGORY_FUN)
-	var/ytdl = get_configured_yt_dlp()
-	var/cobalt = CONFIG_GET(string/cobalt_base_api)
-	if(!ytdl && !cobalt)
-		to_chat(user, span_warning("Neither yt-dlp nor cobalt.tools was configured, action unavailable."))
+	if(!CONFIG_GET(string/cobalt_base_api))
+		to_chat(user, span_warning("Configure a Cobalt endpoint to play internet audio."))
 		return
 
 	var/web_sound_input = input("Enter content URL (supported sites only)", "Play Internet Sound") as text|null
@@ -224,48 +222,21 @@ ADMIN_VERB(sound_web, R_SOUND, "Play Internet Sound", "Play a sound using a link
 
 	web_sound_input = trim(web_sound_input)
 
-	if(findtext(web_sound_input, ":") && !findtext(web_sound_input, GLOB.is_http_protocol))
-		to_chat(user, span_warning("Non-http(s) URIs are not allowed."))
-		to_chat(user, span_warning("For yt-dlp shortcuts like ytsearch: please use the appropriate full url from the website."))
+	if(!is_internet_media_url(web_sound_input))
+		to_chat(user, span_warning("Enter a complete HTTP(S) URL."))
 		return
 
-	var/datum/internet_media/backend
-	if(cobalt)
-		backend = new /datum/internet_media/cobalt()
-	else
-		backend = new /datum/internet_media/yt_dlp()
-
-	var/datum/media_response/media = backend.get_media(web_sound_input)
-	if(!media)
+	if(!check_rights_for(user, R_SOUND))
+		return
+	var/datum/internet_media/cobalt/backend = new
+	var/web_sound_url = backend.get_media_url(web_sound_input)
+	if(!check_rights_for(user, R_SOUND))
+		return
+	if(!web_sound_url)
 		to_chat(user, span_warning("[backend.error]"))
 		return
 
-	var/web_sound_url = media.url
-	var/title = media.title
-	var/list/music_extra_data = list()
-	var/show = FALSE
-
-	if(title)
-		music_extra_data["duration"] = media.start_time ? DisplayTimeText(media.start_time * 1 SECONDS) : null
-		music_extra_data["link"] = web_sound_input
-		switch(tgui_alert(user, "Show the title of and link to this song to the players?\n[title]", "Play Internet Sound", list("Yes", "No", "Cancel")))
-			if("Yes")
-				music_extra_data["title"] = title
-				show = TRUE
-			if("No")
-				music_extra_data["link"] = "Song Link Hidden"
-				music_extra_data["title"] = "Song Title Hidden"
-				show = FALSE
-			else
-				return
-	else
-		music_extra_data["link"] = web_sound_input
-
-	if(web_sound_url && !findtext(web_sound_url, GLOB.is_http_protocol))
-		to_chat(user, span_warning("BLOCKED: Content URL not using http(s) protocol"))
-		to_chat(user, span_warning("The media provider returned a content URL that isn't using the HTTP or HTTPS protocol"))
-		return
-
+	var/list/music_extra_data = list("link" = web_sound_input)
 	var/list/targets
 	var/style = tgui_input_list(user, "Do you want to play this globally or to the xenos/marines?", null, list("Globally", "Xenos", "Marines", "Locally"))
 	switch(style)
@@ -282,15 +253,13 @@ ADMIN_VERB(sound_web, R_SOUND, "Play Internet Sound", "Play a sound using a link
 
 	var/to_show_text
 	var/anon = tgui_alert(user, "Display who played the song?", "Credit Yourself?", list("No", "Yes", "Cancel"))
+	if(!check_rights_for(user, R_SOUND))
+		return
 	switch(anon)
 		if("Yes")
-			if(show)
-				to_show_text = "[user.ckey] played: <a href='[music_extra_data["link"]]'>[title]</a>"
-			else
-				to_show_text = "[user.ckey] played some music"
+			to_show_text = "[user.ckey] played some music"
 		if("No")
-			if(show)
-				to_show_text = "An admin played: <a href='[music_extra_data["link"]]'>[title]</a>"
+			to_show_text = null
 		else
 			return
 	for(var/i as anything in targets)
@@ -300,10 +269,11 @@ ADMIN_VERB(sound_web, R_SOUND, "Play Internet Sound", "Play a sound using a link
 			continue
 		if(C.prefs.volume_adminmusic)
 			C.tgui_panel?.play_music(web_sound_url, music_extra_data)
-			to_chat(C, span_boldannounce(to_show_text))
+			if(to_show_text)
+				to_chat(C, span_boldannounce(to_show_text))
 
-	log_admin("[key_name(user)] played web sound: [web_sound_input] - [title] - [style]")
-	message_admins("[ADMIN_TPMONTY(user.mob)] played web sound: [web_sound_input] - [title] - [style]")
+	log_admin("[key_name(user)] played web sound: [web_sound_input] - [style]")
+	message_admins("[ADMIN_TPMONTY(user.mob)] played web sound: [html_encode(web_sound_input)] - [style]")
 
 ADMIN_VERB(sound_stop, R_SOUND, "Stop Regular Sounds", "Stop all sounds currently playing.", ADMIN_CATEGORY_FUN)
 	for(var/mob/M in GLOB.player_list)

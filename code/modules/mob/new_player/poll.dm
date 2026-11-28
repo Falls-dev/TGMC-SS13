@@ -10,7 +10,7 @@
  *
  */
 /mob/new_player/proc/poll_player(datum/poll_question/poll)
-	if(!poll)
+	if(!poll || poll.future_poll || (poll.admin_only && !client?.holder))
 		return
 	if(!SSdbcore.Connect())
 		to_chat(src, span_danger("Failed to establish database connection."))
@@ -45,10 +45,10 @@
 	if(query_option_get_voted.NextRow())
 		voted_option_id = text2num(query_option_get_voted.item[1])
 	qdel(query_option_get_voted)
-	var/list/output = list("<div align='center'><B>Player poll</B><hr><b>Question: [poll.question]</b><br>")
+	var/list/output = list("<div align='center'><B>Player poll</B><hr><b>Question: [html_encode(poll.question)]</b><br>")
 	if(poll.subtitle)
-		output += "[poll.subtitle]<br>"
-	output += "<font size='2'>Poll runs from <b>[poll.start_datetime]</b> until <b>[poll.end_datetime]</b></font><br>"
+		output += "[html_encode(poll.subtitle)]<br>"
+	output += "<font size='2'>Poll runs from <b>[html_encode(poll.start_datetime)]</b> until <b>[html_encode(poll.end_datetime)]</b></font><br>"
 	if(poll.allow_revoting)
 		output += "<font size='2'>Revoting is enabled.</font>"
 	if(!voted_option_id || poll.allow_revoting)
@@ -64,12 +64,12 @@
 			output += " disabled"
 		if(voted_option_id == option.option_id)
 			output += " selected"
-		output += ">[option.text]</label><br>"
+		output += ">[html_encode(option.text)]</label><br>"
 	output += "</td></tr></table>"
 	if(!voted_option_id || poll.allow_revoting)
 		output += "<p><input type='submit' value='Vote'></form>"
 	output += "</div>"
-	src << browse(HTML_SKELETON(jointext(output, "")),"window=playerpoll;size=500x250")
+	src << browse(HTML_SKELETON_INTERNAL(HTML_FORM_CONTENT_POLICY, jointext(output, "")),"window=playerpoll;size=500x250")
 
 /**
  * Shows voting window for a text response type poll, listing its relevant details.
@@ -89,10 +89,10 @@
 	if(query_text_get_replytext.NextRow())
 		reply_text = query_text_get_replytext.item[1]
 	qdel(query_text_get_replytext)
-	var/list/output = list("<div align='center'><B>Player poll</B><hr><b>Question: [poll.question]</b><br>")
+	var/list/output = list("<div align='center'><B>Player poll</B><hr><b>Question: [html_encode(poll.question)]</b><br>")
 	if(poll.subtitle)
-		output += "[poll.subtitle]<br>"
-	output += "<font size='2'>Feedback gathering runs from <b>[poll.start_datetime]</b> until <b>[poll.end_datetime]</b></font><br>"
+		output += "[html_encode(poll.subtitle)]<br>"
+	output += "<font size='2'>Feedback gathering runs from <b>[html_encode(poll.start_datetime)]</b> until <b>[html_encode(poll.end_datetime)]</b></font><br>"
 	if(poll.allow_revoting)
 		output += "<font size='2'>Revoting is enabled.</font>"
 	if(!reply_text || poll.allow_revoting)
@@ -100,13 +100,13 @@
 		<input type='hidden' name='src' value='[REF(src)]'>
 		<input type='hidden' name='votepollref' value='[REF(poll)]'>
 		<font size='2'>Please provide feedback below. You can use any letters of the English alphabet, numbers and the symbols: . , ! ? : ; -</font><br>
-		<textarea name='replytext' cols='50' rows='14'>[reply_text]</textarea>
+		<textarea name='replytext' cols='50' rows='14'>[html_encode(reply_text)]</textarea>
 		<p><input type='submit' value='Submit'></form>
 		"}
 	else
-		output += "[reply_text]"
+		output += html_encode(reply_text)
 	output += "</div>"
-	src << browse(HTML_SKELETON(jointext(output, "")),"window=playerpoll;size=500x500")
+	src << browse(HTML_SKELETON_INTERNAL(HTML_FORM_CONTENT_POLICY, jointext(output, "")),"window=playerpoll;size=500x500")
 
 /**
  * Shows voting window for a rating type poll, listing its options and relevant details.
@@ -126,10 +126,10 @@
 	while(query_rating_get_votes.NextRow())
 		voted_ratings += list("[query_rating_get_votes.item[1]]" = query_rating_get_votes.item[2])
 	qdel(query_rating_get_votes)
-	var/list/output = list("<div align='center'><B>Player poll</B><hr><b>Question: [poll.question]</b><br>")
+	var/list/output = list("<div align='center'><B>Player poll</B><hr><b>Question: [html_encode(poll.question)]</b><br>")
 	if(poll.subtitle)
-		output += "[poll.subtitle]<br>"
-	output += "<font size='2'>Poll runs from <b>[poll.start_datetime]</b> until <b>[poll.end_datetime]</b></font><br>"
+		output += "[html_encode(poll.subtitle)]<br>"
+	output += "<font size='2'>Poll runs from <b>[html_encode(poll.start_datetime)]</b> until <b>[html_encode(poll.end_datetime)]</b></font><br>"
 	if(poll.allow_revoting)
 		output += "<font size='2'>Revoting is enabled.</font>"
 	if(!length(voted_ratings) || poll.allow_revoting)
@@ -141,7 +141,7 @@
 		var/datum/poll_option/option = o
 		var/mid_val = round((option.max_val + option.min_val) * 0.5)
 		var/selected_rating = text2num(voted_ratings["[option.option_id]"])
-		output += "<label><br>[option.text]: <select name='[REF(option)]'"
+		output += "<label><br>[html_encode(option.text)]: <select name='[REF(option)]'"
 		if(length(voted_ratings) && !poll.allow_revoting)
 			output += " disabled"
 		output += ">"
@@ -151,17 +151,17 @@
 				output += " selected"
 			output += ">[rating]"
 			if(option.desc_min && rating == option.min_val)
-				output += " ([option.desc_min])"
+				output += " ([html_encode(option.desc_min)])"
 			else if(option.desc_mid && rating == mid_val)
-				output += " ([option.desc_mid])"
+				output += " ([html_encode(option.desc_mid)])"
 			else if(option.desc_max && rating == option.max_val)
-				output += " ([option.desc_max])"
+				output += " ([html_encode(option.desc_max)])"
 			output += "</option>"
 		output += "</select></label>"
 	if(!length(voted_ratings) || poll.allow_revoting)
 		output += "<p><input type='submit' value='Submit'></form>"
 	output += "</div>"
-	src << browse(HTML_SKELETON(jointext(output, "")),"window=playerpoll;size=500x500")
+	src << browse(HTML_SKELETON_INTERNAL(HTML_FORM_CONTENT_POLICY, jointext(output, "")),"window=playerpoll;size=500x500")
 
 /**
  * Shows voting window for a multiple choice type poll, listing its options and relevant details.
@@ -181,10 +181,10 @@
 	while(query_multi_get_votes.NextRow())
 		voted_for += text2num(query_multi_get_votes.item[1])
 	qdel(query_multi_get_votes)
-	var/list/output = list("<div align='center'><B>Player poll</B><hr><b>Question: [poll.question]</b><br>")
+	var/list/output = list("<div align='center'><B>Player poll</B><hr><b>Question: [html_encode(poll.question)]</b><br>")
 	if(poll.subtitle)
-		output += "[poll.subtitle]<br>"
-	output += "You can select up to [poll.options_allowed] options. If you select more, the first [poll.options_allowed] will be saved.<br><font size='2'>Poll runs from <b>[poll.start_datetime]</b> until <b>[poll.end_datetime]</b></font><br>"
+		output += "[html_encode(poll.subtitle)]<br>"
+	output += "You can select up to [poll.options_allowed] options. If you select more, the first [poll.options_allowed] will be saved.<br><font size='2'>Poll runs from <b>[html_encode(poll.start_datetime)]</b> until <b>[html_encode(poll.end_datetime)]</b></font><br>"
 	if(poll.allow_revoting)
 		output += "<font size='2'>Revoting is enabled.</font>"
 	if(!length(voted_for) || poll.allow_revoting)
@@ -200,12 +200,12 @@
 			output += " disabled"
 		if(option.option_id in voted_for)
 			output += " checked"
-		output += ">[option.text]</label><br>"
+		output += ">[html_encode(option.text)]</label><br>"
 	output += "</td></tr></table>"
 	if(!length(voted_for) || poll.allow_revoting)
 		output += "<p><input type='submit' value='Vote'></form>"
 	output += "</div>"
-	src << browse(HTML_SKELETON(jointext(output, "")),"window=playerpoll;size=500x300")
+	src << browse(HTML_SKELETON_INTERNAL(HTML_FORM_CONTENT_POLICY, jointext(output, "")),"window=playerpoll;size=500x300")
 
 /**
  * Shows voting window for an IRV type poll, listing its options and relevant details.
@@ -244,8 +244,8 @@
 		prepared_options = shuffle(poll.options)
 	var/list/output = list({"<html><meta charset='UTF-8'><head><meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-	<script src="[SSassets.transport.get_asset_url("jquery.min.js")]"></script>
-	<script src="[SSassets.transport.get_asset_url("jquery-ui.custom-core-widgit-mouse-sortable-min.js")]"></script>
+	<script src="[html_encode(SSassets.transport.get_asset_url("jquery.min.js"))]"></script>
+	<script src="[html_encode(SSassets.transport.get_asset_url("jquery-ui.custom-core-widgit-mouse-sortable-min.js"))]"></script>
 	<style>
 		#sortable { list-style-type: none; margin: 0; padding: 2em; }
 		#sortable li { min-height: 1em; margin: 0px 1px 1px 1px; padding: 1px; border: 1px solid black; border-radius: 5px; background-color: white; cursor:move;}
@@ -271,10 +271,10 @@
 	</script>
 	</head>
 	<body>
-	<div align='center'><B>Player poll</B><hr><b>Question: [poll.question]</b><br>"})
+	<div align='center'><B>Player poll</B><hr><b>Question: [html_encode(poll.question)]</b><br>"})
 	if(poll.subtitle)
-		output += "[poll.subtitle]<br>"
-	output += "<font size='2'>Poll runs from <b>[poll.start_datetime]</b> until <b>[poll.end_datetime]</b></font><br>"
+		output += "[html_encode(poll.subtitle)]<br>"
+	output += "<font size='2'>Poll runs from <b>[html_encode(poll.start_datetime)]</b> until <b>[html_encode(poll.end_datetime)]</b></font><br>"
 	if(poll.allow_revoting)
 		output += "<font size='2'>Revoting is enabled.</font>"
 	output += "Please sort the options in the order of <b>most preferred</b> to <b>least preferred</b><br></div>"
@@ -287,7 +287,7 @@
 	output += "<div id='ballot' class='center'><b><center>Most Preferred</center></b><ol id='sortable' class='rankings' style='padding:0px'>"
 	for(var/o in prepared_options)
 		var/datum/poll_option/option = o
-		output += "<li optionref='[REF(option)]' class='ranking'>[span_grippy("")] [option.text]</li>\n"
+		output += "<li optionref='[REF(option)]' class='ranking'>[span_grippy("")] [html_encode(option.text)]</li>\n"
 	output += "</ol><b><center>Least Preferred</center></b><br>"
 	if(!length(voted_for) || poll.allow_revoting)
 		output += "<p><input type='submit' value='Vote'></form>"

@@ -140,7 +140,7 @@ GLOBAL_LIST_INIT(en_key_to_ru_key, list(
 
 //Filters out undesirable characters from names
 /proc/reject_bad_name(t_in, allow_numbers = FALSE, max_length = MAX_NAME_LEN, ascii_only = TRUE)
-	if(!t_in)
+	if(!istext(t_in) || !length(t_in))
 		return //Rejects the input if it is null
 
 	var/number_of_alphanumeric = 0

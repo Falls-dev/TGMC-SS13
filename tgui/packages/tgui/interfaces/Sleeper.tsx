@@ -32,7 +32,7 @@ const DAMAGE_RANGES = {
   good: [-Infinity, 0.25],
   average: [0.25, 0.5],
   bad: [0.5, Infinity],
-};
+} as const;
 
 const TEMP_COLORS = [
   'bad',

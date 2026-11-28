@@ -76,7 +76,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(istype(D) && D.display_icon(src))
 		languageicon = "[D.get_icon()] "
 
-	return "[spanpart1][spanpart2][CMSG_FREQPART][languageicon][CMSG_JOBPART][compose_name_href(namepart)][endspanpart][messagepart]"
+	return "[spanpart1][spanpart2][CMSG_FREQPART][languageicon][CMSG_JOBPART][compose_name_href(html_encode(namepart))][endspanpart][messagepart]"
 
 /**
 	Allows us to wrap the name for specific cases like AI tracking or observer tracking
@@ -89,7 +89,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 /atom/movable/proc/compose_freq(atom/movable/speaker, radio_freq)
 	var/job = speaker.GetJob()
-	return radio_freq ? "\[[get_radio_name(radio_freq)][job ? " ([job])": ""]\] " : ""
+	return radio_freq ? "\[[html_encode(get_radio_name(radio_freq))][job ? " ([html_encode(job)])": ""]\] " : ""
 
 
 /atom/movable/proc/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)

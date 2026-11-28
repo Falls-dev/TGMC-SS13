@@ -356,7 +356,6 @@
 /turf/open/floor/mainship/metal/full,
 /area/shuttle/canterbury)
 "bw" = (
-/obj/effect/landmark/start/job/crash/squadrobot,
 /obj/effect/turf_decal/warning_stripes/robot,
 /turf/open/floor/mainship/red/full,
 /area/shuttle/canterbury)
@@ -576,7 +575,6 @@
 /area/shuttle/canterbury/medical)
 "cv" = (
 /obj/structure/cable,
-/obj/effect/landmark/start/job/crash/squadrobot,
 /turf/open/floor/mainship/orange{
 	dir = 8
 	},
@@ -834,7 +832,6 @@
 /turf/open/floor/mainship/metal/full,
 /area/shuttle/canterbury)
 "KE" = (
-/obj/effect/landmark/start/job/crash/squadrobot,
 /turf/open/floor/mainship/metal,
 /area/shuttle/canterbury)
 "LM" = (
@@ -849,7 +846,6 @@
 /turf/open/floor/mainship/orange/full,
 /area/shuttle/canterbury)
 "Mr" = (
-/obj/effect/landmark/start/job/crash/squadrobot,
 /turf/open/floor/mainship/red{
 	dir = 9
 	},
@@ -872,7 +868,6 @@
 /turf/open/floor/mainship/metal/full,
 /area/shuttle/canterbury)
 "Wd" = (
-/obj/effect/landmark/start/job/crash/squadrobot,
 /turf/open/floor/mainship/red{
 	dir = 4
 	},
