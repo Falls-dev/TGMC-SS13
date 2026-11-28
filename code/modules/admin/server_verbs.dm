@@ -26,6 +26,7 @@ ADMIN_VERB(restart, R_SERVER, "Restart", "Restarts the server after a short paus
 // todo I don't think this works. update to tgsv6 api please
 ADMIN_VERB(shutdown_server, R_SERVER, "Shutdown Server", "Shuts the server down.", ADMIN_CATEGORY_SERVER)
 	var/static/shuttingdown = null
+	var/static/shutdown_sequence = 0
 	var/static/timeouts = list()
 	var/waitforroundend = FALSE
 	if(!CONFIG_GET(flag/allow_shutdown))
@@ -33,7 +34,10 @@ ADMIN_VERB(shutdown_server, R_SERVER, "Shutdown Server", "Shuts the server down.
 		return
 
 	if(shuttingdown)
+		var/request_to_cancel = shutdown_sequence
 		if(tgui_alert(usr, "Are you use you want to cancel the shutdown initiated by [shuttingdown]?", "Cancel the shutdown?", list("Yes", "No"), 0) != "Yes")
+			return
+		if(!shuttingdown || request_to_cancel != shutdown_sequence || !check_rights_for(user, R_SERVER))
 			return
 		message_admins("[ADMIN_TPMONTY(user.mob)] Cancelled the server shutdown that [shuttingdown] started.")
 		timeouts[shuttingdown] = world.time
@@ -60,22 +64,32 @@ ADMIN_VERB(shutdown_server, R_SERVER, "Shutdown Server", "Shuts the server down.
 				return
 			waitforroundend = TRUE
 
+	if(shuttingdown || !check_rights_for(user, R_SERVER))
+		return
 	to_chat(user, span_danger("Alert: Delayed confirmation required. You will be asked to confirm again in 30 seconds."))
 	message_admins("[ADMIN_TPMONTY(user.mob)] initiated the shutdown process. You may abort this by pressing the shutdown server button again.")
-	shuttingdown = user.ckey
+	var/initiator = user.ckey
+	shuttingdown = initiator
+	var/request = ++shutdown_sequence
 
 	sleep(30 SECONDS)
 
-	if(!shuttingdown || shuttingdown != user.ckey)
+	if(!shuttingdown || request != shutdown_sequence)
 		return
 
-	if(!user)
-		message_admins("[ADMIN_TPMONTY(user.mob)] left the server before they could finish confirming they wanted to shutdown the server.")
+	if(!check_rights_for(user, R_SERVER))
+		message_admins("The shutdown requested by [initiator] was cancelled because they lost server permissions or disconnected.")
 		shuttingdown = null
 		return
 
 	if(tgui_alert(user, "ARE YOU SURE YOU WANT TO SHUTDOWN THE SERVER? ONLY SOMEBODY WITH REMOTE ACCESS TO THE SERVER CAN TURN IT BACK ON.", "Shutdown Server?", list("Yes!", "Cancel."), 0) != "Yes!")
-		message_admins("[ADMIN_TPMONTY(user.mob)] decided against shutting down the server.")
+		if(shuttingdown && request == shutdown_sequence)
+			message_admins("[initiator] did not confirm the shutdown.")
+			shuttingdown = null
+		return
+	if(!shuttingdown || request != shutdown_sequence)
+		return
+	if(!check_rights_for(user, R_SERVER))
 		shuttingdown = null
 		return
 	to_chat(world, span_danger("Server shutting down [waitforroundend ? "after this round" : "in 30 seconds!"]</span> <span class='notice'>Initiated by: [usr.key]"))
@@ -86,7 +100,10 @@ ADMIN_VERB(shutdown_server, R_SERVER, "Shutdown Server", "Shuts the server down.
 		to_chat(world, span_notice("Server shutdown was aborted"))
 		return
 
-	if(shuttingdown != user.ckey) //somebody cancelled but then somebody started again.
+	if(request != shutdown_sequence) //somebody cancelled but then somebody started again.
+		return
+	if(!check_rights_for(user, R_SERVER) || !CONFIG_GET(flag/allow_shutdown))
+		shuttingdown = null
 		return
 
 	to_chat(world, span_danger("Server shutting down[waitforroundend ? " after this round. " : ""].</span> <span class='notice'>Initiated by: [shuttingdown]"))

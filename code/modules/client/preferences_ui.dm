@@ -539,8 +539,9 @@
 				return
 			names_by_species[species] = real_name
 			species = choice
-			if(names_by_species[species])
-				real_name = names_by_species[species]
+			var/saved_name = reject_bad_name(names_by_species[species], TRUE)
+			if(saved_name)
+				real_name = saved_name
 			else
 				var/datum/species/S = GLOB.all_species[species]
 				real_name = S.random_name(gender)

@@ -1,198 +1,43 @@
 ADMIN_VERB(player_panel, R_ADMIN, "Player Panel", "View the player panel", ADMIN_CATEGORY_MAIN)
-	var/dat = {"<html><meta charset='UTF-8'>
+	var/dat = {"
+		<script type='text/javascript'>
+			var openRow;
 
-		<head>
-			<script type='text/javascript'>
-
-				var locked_tabs = new Array();
-
-				function updateSearch(){
-
-
-					var filter_text = document.getElementById('filter');
-					var filter = filter_text.value.toLowerCase();
-
-					if(complete_list != null && complete_list != ""){
-						var mtbl = document.getElementById("maintable_data_archive");
-						mtbl.innerHTML = complete_list;
-					}
-
-					if(filter.value == ""){
-						return;
-					}else{
-
-						var maintable_data = document.getElementById('maintable_data');
-						var ltr = maintable_data.getElementsByTagName("tr");
-						for ( var i = 0; i < ltr.length; ++i )
-						{
-							try{
-								var tr = ltr\[i\];
-								if(tr.getAttribute("id").indexOf("data") != 0){
-									continue;
-								}
-								var ltd = tr.getElementsByTagName("td");
-								var td = ltd\[0\];
-								var lsearch = td.getElementsByClassName("filter_data");
-								var search = lsearch\[0\];
-								if ( search.innerText.toLowerCase().indexOf(filter) == -1 )
-								{
-									tr.innerHTML = "";
-									i--;
-								}
-							}catch(err) {   }
-						}
-					}
-
-					var count = 0;
-					var index = -1;
-					var debug = document.getElementById("debug");
-
-					locked_tabs = new Array();
+			function updateSearch() {
+				var filter = document.getElementById('player-filter').value.toLowerCase();
+				var rows = document.getElementById('player-rows').rows;
+				for (var i = 0; i < rows.length; i++) {
+					var search = rows\[i\].getElementsByClassName('filter_data')\[0\];
+					rows\[i\].style.display = search.textContent.toLowerCase().indexOf(filter) === -1 ? 'none' : '';
 				}
+			}
 
-				function expand(id, job, name, real_name, old_names, key, ip, cid, ref){
-
-					clearAll();
-
-					var span = document.getElementById(id);
-					var ckey = key.toLowerCase().replace(/\[^a-z@0-9\]+/g,"");
-
-					body = "<table><tr><td>";
-
-					body += "</td><td align='left'>";
-
-					body += "<font size='2'>"+job+" - "+name+"<br>Real name: "+real_name+"<br>"+key+" ("+ip+", "+cid+")<br>Old names: "+old_names+"</font>";
-
-					body += "</td><td align='center'>";
-
-					body += "<a href='byond://?_src_=holder;[HrefToken()];playerpanel="+ref+"'>PP</a> - "
-					body += "<a href='byond://?_src_=vars;[HrefToken()];vars="+ref+"'>VV</a> - "
-					body += "<a href='byond://?priv_msg="+ckey+"'>PM</a> - "
-					body += "<a href='byond://?_src_=holder;[HrefToken()];subtlemessage="+ref+"'>SM</a> - "
-					body += "<a href='byond://?_src_=holder;[HrefToken()];observejump="+ref+"'>JMP</a> - "
-					body += "<a href='byond://?_src_=holder;[HrefToken()];observefollow="+ref+"'>FLW</a> - "
-					body += "<a href='byond://?_src_=holder;[HrefToken()];individuallog="+ref+"'>LOGS</a><br>"
-
-					body += "</td></tr></table>";
-
-					span.innerHTML = body
+			function showDetails(row) {
+				if (row === openRow) {
+					return;
 				}
-
-				function clearAll(){
-					var spans = document.getElementsByTagName('span');
-					for(var i = 0; i < spans.length; i++){
-						var span = spans\[i\];
-
-						var id = span.getAttribute("id");
-
-						if(!id || !(id.indexOf("item")==0))
-							continue;
-
-						var pass = 1;
-
-						for(var j = 0; j < locked_tabs.length; j++){
-							if(locked_tabs\[j\]==id){
-								pass = 0;
-								break;
-							}
-						}
-
-						if(pass != 1)
-							continue;
-
-
-
-
-						span.innerHTML = "";
-					}
+				if (openRow && openRow.getAttribute('data-locked') !== 'true') {
+					openRow.getElementsByClassName('player-details')\[0\].style.display = 'none';
 				}
+				row.getElementsByClassName('player-details')\[0\].style.display = '';
+				openRow = row;
+			}
 
-				function addToLocked(id,link_id,notice_span_id){
-					var link = document.getElementById(link_id);
-					var decision = link.getAttribute("name");
-					if(decision == "1"){
-						link.setAttribute("name","2");
-					}else{
-						link.setAttribute("name","1");
-						removeFromLocked(id,link_id,notice_span_id);
-						return;
-					}
-
-					var pass = 1;
-					for(var j = 0; j < locked_tabs.length; j++){
-						if(locked_tabs\[j\]==id){
-							pass = 0;
-							break;
-						}
-					}
-					if(!pass)
-						return;
-					locked_tabs.push(id);
-					var notice_span = document.getElementById(notice_span_id);
-					notice_span.innerHTML = "<font color='#bc3c3c'>Locked</font> ";
-				}
-
-				function attempt(ab){
-					return ab;
-				}
-
-				function removeFromLocked(id,link_id,notice_span_id){
-					//document.write("a");
-					var index = 0;
-					var pass = 0;
-					for(var j = 0; j < locked_tabs.length; j++){
-						if(locked_tabs\[j\]==id){
-							pass = 1;
-							index = j;
-							break;
-						}
-					}
-					if(!pass)
-						return;
-					locked_tabs\[index\] = "";
-					var notice_span = document.getElementById(notice_span_id);
-					notice_span.innerHTML = "";
-				}
-
-				function selectTextField(){
-					var filter_text = document.getElementById('filter');
-					filter_text.focus();
-					filter_text.select();
-				}
-
-			</script>
-		</head>
-
-
+			function toggleDetails(row) {
+				var locked = row.getAttribute('data-locked') === 'true';
+				row.setAttribute('data-locked', locked ? 'false' : 'true');
+				row.getElementsByClassName('lock-notice')\[0\].style.display = locked ? 'none' : '';
+				showDetails(row);
+			}
+		</script>
+		<p align='center'>Hover over a line to see more information. Click to keep it open.</p>
+		<p align='center'><label for='player-filter'>Search</label>
+			<input type='text' id='player-filter' oninput='updateSearch()' autofocus style='width:300px;'>
+		</p>
+		<table width='650' align='center' cellspacing='0' cellpadding='5'>
+			<tbody id='player-rows'>
 	"}
-
-	//body tag start + onload and onkeypress (onkeyup) javascript event calls
-	dat += "<body onload='selectTextField(); updateSearch();' onkeyup='updateSearch();'>"
-
-	//title + search bar
-	dat += {"
-
-		<table width='650' align='center' cellspacing='0' cellpadding='5' id='maintable'>
-			<tr id='title_tr'>
-				<td align='center'>
-					Hover over a line to see more information.
-					<p>
-				</td>
-			</tr>
-			<tr id='search_tr'>
-				<td align='center'>
-					<b>Search:</b> <input type='text' id='filter' value='' style='width:300px;'>
-				</td>
-			</tr>
-	</table>
-
-	"}
-
-	//player table header
-	dat += {"
-		<span id='maintable_data_archive'>
-		<table width='650' align='center' cellspacing='0' cellpadding='5' id='maintable_data'>"}
-
+	var/ref = "[REF(user.holder)];[HrefToken()]"
 	var/i = 1
 	for(var/mob/M in sortmobs())
 		if(!M.ckey || !M.client)
@@ -254,38 +99,33 @@ ADMIN_VERB(player_panel, R_ADMIN, "Player Panel", "View the player panel", ADMIN
 			previous_names = P.played_names.Join(", ")
 		previous_names = html_encode(previous_names)
 
-		//output for each mob
 		dat += {"
-
-			<tr id='data[i]' name='[i]' onClick="addToLocked('item[i]','data[i]','notice_span[i]')">
+			<tr onmouseover='showDetails(this)'>
 				<td align='center' bgcolor='[color]'>
-					<span id='notice_span[i]'></span>
-					<a id='link[i]'
-					onmouseover='expand("item[i]","[M_job]","[M_name]","[M_rname]","[previous_names]","[M_key]","[M.ip_address]","[M.computer_id]","[REF(M)]")'
-					>
-					<b id='search[i]' style='font-weight:normal'>[M_name] - [M_rname] - [M_key] ([M_job])</b>
-					<span hidden class='filter_data'>[M_name] [M_rname] [M_key] [M_job] [M_cid] [M_ip] [previous_names]</span>
+					<span class='lock-notice' style='display:none;color:#bc3c3c'>Locked</span>
+					<a href='#' onclick='toggleDetails(this.parentNode.parentNode); return false'>
+						[M_name] - [M_rname] - [M_key] ([M_job])
 					</a>
-					<br><span id='item[i]'></span>
+					<span hidden class='filter_data'>[M_name] [M_rname] [M_key] [M_job] [M_cid] [M_ip] [previous_names]</span>
+					<div class='player-details' style='display:none'>
+						<table><tr><td align='left'>
+							<font size='2'>[M_job] - [M_name]<br>Real name: [M_rname]<br>[M_key] ([M_ip], [M_cid])<br>Old names: [previous_names]</font>
+						</td><td align='center'>
+							<a href='byond://?src=[ref];playerpanel=[REF(M)]'>PP</a> -
+							<a href='byond://?_src_=vars;[HrefToken()];vars=[REF(M)]'>VV</a> -
+							<a href='byond://?priv_msg=[M.ckey]'>PM</a> -
+							<a href='byond://?src=[ref];subtlemessage=[REF(M)]'>SM</a> -
+							<a href='byond://?src=[ref];observejump=[REF(M)]'>JMP</a> -
+							<a href='byond://?src=[ref];observefollow=[REF(M)]'>FLW</a> -
+							<a href='byond://?src=[ref];individuallog=[REF(M)]'>LOGS</a>
+						</td></tr></table>
+					</div>
 				</td>
 			</tr>
-
 		"}
-
 		i++
 
-
-	//player table ending
-	dat += {"
-		</table>
-		</span>
-
-		<script type='text/javascript'>
-			var maintable = document.getElementById("maintable_data_archive");
-			var complete_list = maintable.innerHTML;
-		</script>
-	</body></html>
-	"}
+	dat += "</tbody></table>"
 
 	log_admin("[key_name(usr)] opened the global player panel.")
 
@@ -301,12 +141,12 @@ ADMIN_VERB(player_panel_extended, R_ADMIN, "Player Panel Extended", "View the ex
 		if(!M.ckey)
 			continue
 
-		dat += "<tr><td>[(M.key ? "[M.key]" : "No Key")]</td>"
-		dat += "<td><a href='byond://?priv_msg=[M.ckey]'>[M.name]</a></td>"
+		dat += "<tr><td>[html_encode(M.key || "No Key")]</td>"
+		dat += "<td><a href='byond://?priv_msg=[M.ckey]'>[html_encode(M.name)]</a></td>"
 		if(isAI(M))
 			dat += "<td>AI</td>"
 		else if(ishuman(M))
-			dat += "<td>[M.real_name]</td>"
+			dat += "<td>[html_encode(M.real_name)]</td>"
 		else if(istype(M, /mob/new_player))
 			dat += "<td>New Player</td>"
 		else if(isobserver(M))
@@ -315,7 +155,7 @@ ADMIN_VERB(player_panel_extended, R_ADMIN, "Player Panel Extended", "View the ex
 			dat += "<td>Monkey</td>"
 		else if(isxeno(M))
 			if(M.client?.prefs?.xeno_name && M.client.prefs.xeno_name != "Undefined")
-				dat += "<td>alien - [M.client.prefs.xeno_name]</td>"
+				dat += "<td>alien - [html_encode(M.client.prefs.xeno_name)]</td>"
 			else
 				dat += "<td>alien</td>"
 		else
@@ -323,8 +163,8 @@ ADMIN_VERB(player_panel_extended, R_ADMIN, "Player Panel Extended", "View the ex
 
 
 		dat += {"<td align=center><a href='byond://?src=[ref];playerpanel=[REF(M)]'>PP</a></td>
-		<td>[M.computer_id]</td>
-		<td>[M.ip_address]</td>
+		<td>[html_encode(M.computer_id)]</td>
+		<td>[html_encode(M.ip_address)]</td>
 		<td><a href='byond://?src=[ref];observejump=[REF(M)]'>JMP</a></td>
 		<td><a href='byond://?src=[ref];observefollow=[REF(M)]'>FLW</a></td>
 		<td><a href='byond://?src=[ref];showmessageckey=[M.ckey]'>Notes</a></td>
@@ -337,6 +177,7 @@ ADMIN_VERB(player_panel_extended, R_ADMIN, "Player Panel Extended", "View the ex
 
 
 	var/datum/browser/browser = new(user.mob, "players", "<div align='center'>Player Panel Extended</div>", 800, 600)
+	browser.add_head_content(HTML_TEXT_CONTENT_POLICY)
 	browser.set_content(dat)
 	browser.open()
 
@@ -355,7 +196,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", mo
 	var/ref = "[REF(admin_client.holder)];[HrefToken()]"
 	var/body
 
-	body += "<b>[M.name]</b>"
+	body += "<b>[html_encode(M.name)]</b>"
 
 	if(M.client)
 		body += " played by <b>[M.client]</b> "
@@ -515,6 +356,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", mo
 
 	log_admin("[key_name(admin_client)] opened the legacy HTML player panel of [key_name(M)].")
 
-	var/datum/browser/browser = new(admin_client.mob, "player_panel_[key_name(M)]", "<div align='center'>Player Panel [key_name(M)]</div>", 575, 555)
+	var/datum/browser/browser = new(admin_client.mob, "player_panel_[REF(M)]", "<div align='center'>Player Panel [html_encode(key_name(M))]</div>", 575, 555)
+	browser.add_head_content(HTML_TEXT_CONTENT_POLICY)
 	browser.set_content(body)
 	browser.open()

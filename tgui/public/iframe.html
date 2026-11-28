@@ -49,23 +49,37 @@
       })();
 
       window.addEventListener('message', (messageEvent) => {
-        switch (messageEvent.data.type) {
+        if (
+          window.parent === window ||
+          messageEvent.source !== window.parent ||
+          !messageEvent.data
+        ) {
+          return;
+        }
+        const { type, key, value } = messageEvent.data;
+        // BYOND windows can have an opaque origin.
+        const targetOrigin =
+          messageEvent.origin === 'null' ? '*' : messageEvent.origin;
+        switch (type) {
           case 'ping':
-            messageEvent.source.postMessage(true, '*');
+            messageEvent.source.postMessage(true, targetOrigin);
             break;
           case 'get':
-            get(messageEvent.data.key).then((value) => {
-              messageEvent.source.postMessage(
-                { key: messageEvent.data.key, value: value },
-                '*',
-              );
-            });
+            if (typeof key === 'string') {
+              get(key).then((value) => {
+                messageEvent.source.postMessage({ key, value }, targetOrigin);
+              });
+            }
             break;
           case 'set':
-            set(messageEvent.data.key, messageEvent.data.value);
+            if (typeof key === 'string') {
+              set(key, value);
+            }
             break;
           case 'remove':
-            remove(messageEvent.data.key);
+            if (typeof key === 'string') {
+              remove(key);
+            }
             break;
           case 'clear':
             clear();

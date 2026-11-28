@@ -56,6 +56,7 @@
 #define TEST_DEL_WORLD INFINITY
 
 // BEGIN_INCLUDE
+#include "admin_ticket_security.dm"
 #include "apc_area_sanity.dm"
 #include "bespoke_id.dm"
 #include "binary_insert.dm"
@@ -72,7 +73,10 @@
 #include "keybinding_init.dm"
 #include "map_templates.dm"
 #include "mapping.dm"
+#include "paperwork.dm"
 #include "plane_double_transform.dm"
+#include "sdql2_security.dm"
+#include "security_io.dm"
 #include "security_levels.dm"
 #include "spawn_guns.dm"
 #include "spawn_humans.dm"

@@ -93,10 +93,13 @@ ADMIN_VERB(view_faxes, R_ADMIN|R_MENTOR, "View Faxes", "View or send faxes", ADM
 
 
 /proc/generate_templated_fax(to_department, subject, addressed_to, message_body, sent_by, sent_department)
+	var/ship_name = html_encode(SSmapping.configs[SHIP_MAP].map_name)
+	var/logo_url = html_encode(SSassets.transport.get_asset_url("tgmclogo.png"))
+	var/body_html = replacetext(html_encode(message_body || ""), "\n", "<br />")
 	var/fax_html = {"
 		<font face="Verdana" color="black" size="1">
 			<center>
-				<img src='[SSassets.transport.get_asset_url("tgmclogo.png")]' />
+				<img src="[logo_url]" />
 			</center>
 			<center>
 				Secure Communication SC-CLTMGC-01b
@@ -105,7 +108,7 @@ ADMIN_VERB(view_faxes, R_ADMIN|R_MENTOR, "View Faxes", "View or send faxes", ADM
 			<hr />
 
 			<b>Assignment detail</b><br />
-			Vessel: [SSmapping.configs[SHIP_MAP].map_name]
+			Vessel: [ship_name]
 			<br />
 			Date, Time: [GAME_YEAR]-[time2text(world.realtime, "MM-DD")] [worldtime2text()]<br />
 			Index: #001<br />
@@ -113,20 +116,20 @@ ADMIN_VERB(view_faxes, R_ADMIN|R_MENTOR, "View Faxes", "View or send faxes", ADM
 			<hr />
 
 			<br />
-			Recipient: [addressed_to] [to_department], [SSmapping.configs[SHIP_MAP].map_name].<br />
-			Subject: <b>[subject]</b>
+			Recipient: [html_encode(addressed_to || "")] [html_encode(to_department)], [ship_name].<br />
+			Subject: <b>[html_encode(subject)]</b>
 
 			<br /><br />
-			[message_body]
+			[body_html]
 			<br /><br />
 
 			Regards,<br />
-			<center>[sent_by] - [sent_department]</center>
+			<center>[html_encode(sent_by || "")] - [html_encode(sent_department)]</center>
 			<br />
 			<hr />
 			<font size ="1">
 				<i>
-					This message is intended only for the Corporate Liason aboard the [SSmapping.configs[SHIP_MAP].map_name],
+				This message is intended only for the Corporate Liason aboard the [ship_name],
 					all other suchs persons should not read, receive a copy, or be exposed to this communication in any form.
 					Failing to adhere to this warning will result in liquidation of division under Act 09.B-4.
 					By authoring a reply to this transmission, such person confirms they abide by the regulations as set forth to them.

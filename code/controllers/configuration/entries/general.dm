@@ -330,14 +330,7 @@ Master controller and performance related.
 
 /datum/config_entry/flag/tickcomp
 
-/*
-System command that invokes yt-dlp, used by Play Internet Sound.
-You can install yt-dlp with
-"pip install yt-dlp" if you have pip installed
-from https://github.com/yt-dlp/yt-dlp/releases
-or your package manager
-The default value assumes yt-dlp is in your system PATH
-*/
+// Accepted for compatibility with existing configs. Internet audio now uses COBALT_BASE_API.
 /datum/config_entry/string/invoke_yt_dlp
 	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN
 

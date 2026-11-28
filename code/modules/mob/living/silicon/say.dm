@@ -12,11 +12,11 @@
 		var/mob/living/S = src
 		desig = trim_left(S.job.title)
 	var/message_a = say_quote(message)
-	var/rendered = "Robotic Talk, [span_name("[name]")] [span_message("[message_a]")]"
+	var/rendered = "Robotic Talk, [span_name(html_encode(name))] [span_message("[message_a]")]"
 	for(var/mob/M in GLOB.player_list)
 		if(M.binarycheck())
 			if(isAI(M))
-				var/renderedAI = span_binarysay("Robotic Talk, <a href='byond://?src=[REF(M)];track=[html_encode(name)]'>[span_name("[name] ([desig])")]</a> [span_message("[message_a]")]")
+				var/renderedAI = span_binarysay("Robotic Talk, <a href='byond://?src=[REF(M)];track=[url_encode(name)]'>[span_name("[html_encode(name)] ([html_encode(desig)])")]</a> [span_message("[message_a]")]")
 				to_chat(M, renderedAI)
 			else
 				to_chat(M, span_binarysay("[rendered]"))

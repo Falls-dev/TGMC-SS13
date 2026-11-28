@@ -61,7 +61,7 @@ ADMIN_VERB(mode_panel, R_ADMIN, "Mode Panel", "View the gamemode panel", ADMIN_C
 		var/mob/living/carbon/human/H = i
 		if(!iscorporateliaisonjob(H.job))
 			continue
-		dat += "<tr><td><a href='byond://?priv_msg=[REF(H)]'>[H.real_name]</a>[H.client ? "" : " <i>(logged out)</i>"][H.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+		dat += "<tr><td><a href='byond://?priv_msg=[H.ckey]'>[html_encode(H.real_name)]</a>[H.client ? "" : " <i>(logged out)</i>"][H.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 		dat += "<td>[get_area(get_turf(H))]</td>"
 		dat += "<td><a href='byond://?src=[ref];playerpanel=[REF(H)]'>PP</A></td></TR>"
 		dat += "</table>"
@@ -71,7 +71,7 @@ ADMIN_VERB(mode_panel, R_ADMIN, "Mode Panel", "View the gamemode panel", ADMIN_C
 	dat += "<table cellspacing=5><tr><td><B>Aliens</B></td><td></td><td></td></tr>"
 	for(var/i in GLOB.alive_xeno_list_hive[XENO_HIVE_NORMAL])
 		var/mob/living/carbon/xenomorph/X = i
-		dat += "<tr><td><a href='byond://?priv_msg=[REF(X)]'>[X.real_name]</a>[X.client ? "" : " <i>(logged out)</i>"]</td>"
+		dat += "<tr><td><a href='byond://?priv_msg=[X.ckey]'>[html_encode(X.real_name)]</a>[X.client ? "" : " <i>(logged out)</i>"]</td>"
 		dat += "<td>[get_area(get_turf(X))]</td>"
 		dat += "<td><a href='byond://?src=[ref];playerpanel=[REF(X)]'>PP</A></td></TR>"
 	dat += "</table>"
@@ -82,7 +82,7 @@ ADMIN_VERB(mode_panel, R_ADMIN, "Mode Panel", "View the gamemode panel", ADMIN_C
 		var/mob/living/carbon/human/H = i
 		if(!issurvivorjob(H.job))
 			continue
-		dat += "<tr><td><a href='byond://?priv_msg=[REF(H)]'>[H.real_name]</a>[H.client ? "" : " <i>(logged out)</i>"][H.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+		dat += "<tr><td><a href='byond://?priv_msg=[H.ckey]'>[html_encode(H.real_name)]</a>[H.client ? "" : " <i>(logged out)</i>"][H.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 		dat += "<td>[get_area(get_turf(H))]</td>"
 		dat += "<td><a href='byond://?src=[ref];playerpanel=[REF(H)]'>PP</A></td></TR>"
 	dat += "</table>"
@@ -90,5 +90,6 @@ ADMIN_VERB(mode_panel, R_ADMIN, "Mode Panel", "View the gamemode panel", ADMIN_C
 	log_admin("[key_name(user)] opened the mode panel.")
 
 	var/datum/browser/browser = new(user.mob, "modepanel", "<div align='center'>Mode Panel</div>", 600, 500)
+	browser.add_head_content(HTML_TEXT_CONTENT_POLICY)
 	browser.set_content(dat)
 	browser.open()

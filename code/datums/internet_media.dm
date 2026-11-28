@@ -1,56 +1,18 @@
-/**
- * Generic implementation to get a URL that can be sent to
- * clients to play audio via [/datum/tgui_panel/proc/play_music], from a provided URL
- */
-/datum/internet_media
-	var/error
-
-/datum/internet_media/proc/get_media(url)
-	RETURN_TYPE(/datum/media_response)
-	CRASH("[type] does not override [nameof(__PROC__)].")
-
-/proc/get_configured_yt_dlp()
-	var/path = CONFIG_GET(string/invoke_yt_dlp)
-	if(!path)
-		path = CONFIG_GET(string/invoke_youtubedl)
-	return path
-
-/datum/internet_media/yt_dlp
-
-/datum/internet_media/yt_dlp/get_media(url)
-	var/ytdl = get_configured_yt_dlp()
-	if(!ytdl)
-		error = "yt-dlp FAILED: Not configured"
-		return
-
-	if(findtext(url, ":") && !findtext(url, GLOB.is_http_protocol))
-		error = "yt-dlp FAILED: Non-http(s) URIs are not allowed. For yt-dlp shortcuts like ytsearch: please use the appropriate full url from the website."
-		return
-
-	var/list/output = world.shelleo("[ytdl] --geo-bypass --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height<=360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist -- \"[shell_url_scrub(url)]\"")
-	var/errorlevel = output[SHELLEO_ERRORLEVEL]
-	var/stdout = output[SHELLEO_STDOUT]
-	var/stderr = output[SHELLEO_STDERR]
-
-	if(errorlevel)
-		error = "yt-dlp URL retrieval FAILED: [stderr]"
-		return
-
-	var/data
-	try
-		data = json_decode(stdout)
-	catch(var/exception/decode_error)
-		error = "yt-dlp JSON parsing FAILED: [decode_error]: [stdout]"
-		return
-
-	return new /datum/media_response(data["url"], data["title"], data["start_time"], data["end_time"])
+/// Accept an absolute HTTP(S) URL with a host and without credentials or control characters.
+/proc/is_internet_media_url(url)
+	if(!istext(url))
+		return FALSE
+	var/static/regex/media_url = regex(@{"^https?://(?:[a-z0-9.-]+|\[[0-9a-f:.]+\])(?::[0-9]{1,5})?(?:[/?#][^\x00-\x20\x7f\\]*)?$"}, "i")
+	return media_url.Find(url) && media_url.match == url
 
 /datum/internet_media/cobalt
+	var/error
 
-/datum/internet_media/cobalt/get_media(url)
+/// Resolve a supported source URL to a stream URL without running a local process.
+/datum/internet_media/cobalt/proc/get_media_url(url)
 	var/cobalt = CONFIG_GET(string/cobalt_base_api)
-	if(!cobalt)
-		error = "cobalt.tools FAILED: Not configured"
+	if(!is_internet_media_url(url) || !is_internet_media_url(cobalt))
+		error = "Internet audio requires a valid media URL and configured Cobalt endpoint."
 		return
 
 	var/list/headers = list()
@@ -59,6 +21,9 @@
 
 	var/auth_key = CONFIG_GET(string/cobalt_api_key)
 	if(auth_key)
+		if(!findtext(cobalt, "https://", 1, 9))
+			error = "Cobalt API credentials require an HTTPS endpoint."
+			return
 		headers["Authorization"] = "Api-Key [auth_key]"
 
 	var/datum/http_request/request = new
@@ -73,37 +38,19 @@
 
 	var/datum/http_response/response_raw = request.into_response()
 
-	if(response_raw.errored)
-		error = "cobalt.tools web request FAILED: [response_raw.error]"
+	if(response_raw.errored || response_raw.status_code != 200)
+		error = "The Cobalt request failed."
 		return
 
 	var/list/response
 	try
 		response = json_decode(response_raw.body)
-	catch(var/exception/decode_error)
-		error = "cobalt.tools JSON parsing FAILED: [decode_error]: [response_raw.body]"
+	catch
+		error = "Cobalt returned invalid JSON."
 		return
 
-	if(!(response["status"] in list("redirect", "tunnel")))
-		error = "cobalt.tools request FAILED - invalid response: [response_raw.body]"
+	if(!islist(response) || !(response["status"] in list("redirect", "tunnel")) || !is_internet_media_url(response["url"]))
+		error = "Cobalt did not return a valid HTTP(S) audio URL."
 		return
 
-	return new /datum/media_response(response["url"])
-
-/datum/media_response
-	var/url
-	var/title
-	var/start_time
-	var/end_time
-
-/datum/media_response/New(url, title, start_time, end_time)
-	if(isnull(url))
-		CRASH("/datum/media_response created without a URL field.")
-
-	src.url = url
-	src.title = title
-	src.start_time = start_time
-	src.end_time = end_time
-
-/datum/media_response/proc/get_list()
-	return list("url" = url, "title" = title, "start_time" = start_time, "end_time" = end_time)
+	return response["url"]

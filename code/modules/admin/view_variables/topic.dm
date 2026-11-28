@@ -12,8 +12,11 @@
 		vv_do_list(target, href_list)
 	if(href_list["vars"])
 		var/datum/vars_target = locate(href_list["vars"])
-		if(href_list["special_varname"]) // Some special vars can't be located even if you have their ref, you have to use this instead
-			vars_target = vars_target.vars[href_list["special_varname"]]
+		var/var_name = href_list["special_varname"]
+		if(var_name) // Some special vars can't be located directly using a reference.
+			if(!isdatum(vars_target) || !(var_name in vars_target.vars) || !vars_target.can_vv_get(var_name))
+				return
+			vars_target = vars_target.vars[var_name]
 		debug_variables(vars_target)
 
 //Stuff below aren't in dropdowns/etc.

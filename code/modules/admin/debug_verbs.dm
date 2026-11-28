@@ -325,7 +325,7 @@ ADMIN_VERB(debug_plane_masters, R_DEBUG, "Edit/Debug Planes", "Edit and visualiz
 	user.edit_plane_masters()
 
 /client/proc/edit_plane_masters(mob/debug_on)
-	if(!holder)
+	if(!check_rights_for(src, R_DEBUG))
 		return
 	if(debug_on)
 		holder.plane_debug.set_mirroring(TRUE)

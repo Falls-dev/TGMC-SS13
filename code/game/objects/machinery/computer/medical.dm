@@ -429,13 +429,13 @@
 	var/obj/item/paper/P = new /obj/item/paper(loc)
 	P.info = "<CENTER><B>Medical Record</B></CENTER><BR>"
 	if(record1)
-		P.info += "Name: [record1.fields["name"]] ID: [record1.fields["id"]]<BR>\nSex: [record1.fields["sex"]]<BR>\nAge: [record1.fields["age"]]<BR>\nFingerprint: [record1.fields["fingerprint"]]<BR>\nPhysical Status: [record1.fields["p_stat"]]<BR>\nMental Status: [record1.fields["m_stat"]]<BR>"
+		P.info += "Name: [record_text_html(record1.fields["name"])] ID: [record_text_html(record1.fields["id"])]<BR>\nSex: [record_text_html(record1.fields["sex"])]<BR>\nAge: [record_text_html(record1.fields["age"])]<BR>\nFingerprint: [record_text_html(record1.fields["fingerprint"])]<BR>\nPhysical Status: [record_text_html(record1.fields["p_stat"])]<BR>\nMental Status: [record_text_html(record1.fields["m_stat"])]<BR>"
 		P.name = "Medical Record([record1.fields["name"]])"
 	else
 		P.info += "<B>General Record Lost!</B><BR>"
 		P.name = "Medical Record"
 	if(record2)
-		P.info += "<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: [record2.fields["b_type"]]<BR>\nDNA: [record2.fields["b_dna"]]<BR>\n<BR>\nMinor Disabilities: [record2.fields["mi_dis"]]<BR>\nDetails: [record2.fields["mi_dis_d"]]<BR>\n<BR>\nMajor Disabilities: [record2.fields["ma_dis"]]<BR>\nDetails: [record2.fields["ma_dis_d"]]<BR>\n<BR>\nAllergies: [record2.fields["alg"]]<BR>\nDetails: [record2.fields["alg_d"]]<BR>\n<BR>\nCurrent Diseases: [record2.fields["cdi"]](per disease info placed in log/comment section)<BR>\nDetails: [record2.fields["cdi_d"]]<BR>\n<BR>\nImportant Notes:<BR>\n\t[record_text_html(record2.fields["notes"])]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
+		P.info += "<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: [record_text_html(record2.fields["b_type"])]<BR>\nDNA: [record_text_html(record2.fields["b_dna"])]<BR>\n<BR>\nMinor Disabilities: [record_text_html(record2.fields["mi_dis"])]<BR>\nDetails: [record_text_html(record2.fields["mi_dis_d"])]<BR>\n<BR>\nMajor Disabilities: [record_text_html(record2.fields["ma_dis"])]<BR>\nDetails: [record_text_html(record2.fields["ma_dis_d"])]<BR>\n<BR>\nAllergies: [record_text_html(record2.fields["alg"])]<BR>\nDetails: [record_text_html(record2.fields["alg_d"])]<BR>\n<BR>\nCurrent Diseases: [record_text_html(record2.fields["cdi"])](per disease info placed in log/comment section)<BR>\nDetails: [record_text_html(record2.fields["cdi_d"])]<BR>\n<BR>\nImportant Notes:<BR>\n\t[record_text_html(record2.fields["notes"])]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
 		var/counter = 1
 		while(record2.fields["com_[counter]"])
 			P.info += "[record_text_html(record2.fields["com_[counter]"], is_comment = TRUE)]<BR>"

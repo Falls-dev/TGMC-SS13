@@ -167,6 +167,8 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 
 
 	else if(href_list["observecoordjump"])
+		if(!check_rights(R_ADMIN|R_MENTOR))
+			return
 		var/x = text2num(href_list["X"])
 		var/y = text2num(href_list["Y"])
 		var/z = text2num(href_list["Z"])
@@ -182,6 +184,8 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 
 		var/mob/dead/observer/O = C.mob
 		var/turf/T = locate(x, y, z)
+		if(!isobserver(O) || !T)
+			return
 		O.forceMove(T)
 
 		if(message)
@@ -190,6 +194,8 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 
 
 	else if(href_list["observefollow"])
+		if(!check_rights(R_ADMIN|R_MENTOR))
+			return
 		var/atom/movable/AM = locate(href_list["observefollow"])
 		var/client/C = usr.client
 
@@ -205,6 +211,8 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 			message = TRUE
 
 		var/mob/dead/observer/O = C.mob
+		if(!isobserver(O))
+			return
 		O.ManualFollow(AM)
 
 		if(message)
@@ -213,10 +221,13 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 
 
 	else if(href_list["observejump"])
+		if(!check_rights(R_ADMIN|R_MENTOR))
+			return
 		var/atom/movable/AM = locate(href_list["observejump"])
 		var/client/C = usr.client
 
-		if(isnewplayer(usr) || isnewplayer(usr))
+		var/turf/destination = get_turf(AM)
+		if(!destination || isnewplayer(usr) || isnewplayer(AM))
 			return
 
 		var/message
@@ -225,7 +236,9 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 			message = TRUE
 
 		var/mob/dead/observer/O = C.mob
-		O.forceMove(get_turf(AM))
+		if(!isobserver(O))
+			return
+		O.forceMove(destination)
 
 		if(message)
 			log_admin("[key_name(O)] jumped to [key_name(AM)].")
@@ -233,6 +246,8 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 
 
 	else if(href_list["secrets"])
+		if(!check_rights(R_DEBUG))
+			return
 		var/turf/T = get_turf(usr)
 		switch(href_list["secrets"])
 			if("blackout")
@@ -640,23 +655,28 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 				D.traitor_panel()
 
 	else if(href_list["reply"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/mob/living/carbon/human/H = locate(href_list["reply"])
 
 		if(!istype(H))
 			return
 
 		var/input = tgui_input_text(usr, "Please enter a message to reply to [key_name(H)].", "Outgoing message from TGMC", timeout = 0)
-		if(!input)
+		if(!input || QDELETED(H) || !check_rights(R_ADMIN))
 			return
 
-		to_chat(H, span_boldnotice("Please stand by for a message from TGMC:<br/>[input]"))
+		var/encoded_input = html_encode(input)
+		to_chat(H, span_boldnotice("Please stand by for a message from TGMC:<br/>[encoded_input]"))
 		var/sound/S = sound('sound/effects/sos-morse-code.ogg', channel = CHANNEL_ADMIN)
 		SEND_SOUND(H, S)
 
 		log_admin("[key_name(usr)] replied to [ADMIN_TPMONTY(H)]'s TGMC message with: [input].")
-		message_admins("[ADMIN_TPMONTY(usr)] replied to [ADMIN_TPMONTY(H)]'s' TGMC message with: [input]")
+		message_admins("[ADMIN_TPMONTY(usr)] replied to [ADMIN_TPMONTY(H)]'s' TGMC message with: [encoded_input]")
 
 	if(href_list["deny"])
+		if(!check_rights(R_ADMIN) || !SSticker.mode)
+			return
 		var/mob/M = locate(href_list["deny"])
 
 		if(!istype(M))
@@ -668,6 +688,8 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 		message_admins("[ADMIN_TPMONTY(usr)] has denied a distress beacon, requested by [ADMIN_TPMONTY(M)]")
 
 	if(href_list["distress"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/mob/M = locate(href_list["distress"])
 
 		if(!istype(M))
@@ -681,6 +703,8 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 			valid_calls.Add(E)
 
 		var/chosen_call = tgui_input_list(usr, "Select a distress to send", "Emergency Response", valid_calls, "Random", 0)
+		if(!chosen_call || !check_rights(R_ADMIN) || !SSticker.mode || SSticker.mode.waiting_for_candidates)
+			return
 
 		if(chosen_call == "Random")
 			SSticker.mode.activate_distress()
@@ -917,7 +941,7 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 				message_staff("[key_name_admin(usr)] marked and started replying to a fax from [key_name_admin(F.sender)].")
 
 			sender = F.sender
-			subject = "re: [F.title]"
+			subject = "re: [html_decode(F.title)]"
 
 		var/dep = input("Who do you want to message?", "Fax Message") as null|anything in list(CORPORATE_LIAISON, "Combat Information Center", "Brig", "Research", "Warden")
 		if(!dep)
@@ -928,9 +952,9 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 			return
 
 		var/custom_subject = input("Enter the subject line", "Fax Message", subject) as text|null
-		if(custom_subject != "")
+		if(length(custom_subject))
 			subject = custom_subject
-		var/type = input("Do you want to use the pencode, template or type a raw message?", "Fax Message") as null|anything in list("Pencode", "Template", "Raw")
+		var/type = input("Choose the fax format.", "Fax Message") as null|anything in list("Pencode", "Template", "Plain text")
 		if(!type)
 			return
 
@@ -941,11 +965,7 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 				if(!message)
 					return
 
-				if(check_rights(R_ADMIN, FALSE))
-					message = noscript(message)
-				else
-					message = sanitize(message)
-				fax_message = parse_pencode(message)
+				fax_message = parse_pencode(html_encode(message))
 
 				if(!fax_message)
 					return
@@ -958,7 +978,7 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 					if(!addressed)
 						return
 					if(addressed == "Sender")
-						addressed_to = "[sender.real_name]"
+						addressed_to = html_decode(sender.real_name)
 
 				if(!addressed_to)
 					addressed_to = input("Who is it addressed to?", "Fax Message", "") as text|null
@@ -968,33 +988,22 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 				if(!addressed_to && !message_body && !sent_by)
 					return
 
-				addressed_to = sanitize(addressed_to)
-				sent_by = sanitize(sent_by)
-
-				if(check_rights(R_ADMIN, FALSE))
-					message_body = noscript(message_body)
-				else
-					message_body = sanitize(message_body)
-
-				message_body = replacetext(message_body, "\n", "<br />") // Lets just always do this one
 				fax_message = generate_templated_fax(dep, subject, addressed_to, message_body, sent_by, department)
 				if(!fax_message)
 					return
 
-			if("Raw")
+			if("Plain text")
 				var/message = input("Please enter a message to send via secure connection.", "Fax Message", "") as message|null
 				if(!message)
 					return
 
-				if(check_rights(R_ADMIN, FALSE))
-					fax_message = noscript(message)
-				else
-					fax_message = sanitize(message)
+				fax_message = replacetext(html_encode(message), "\n", "<br />")
 
 				if(!fax_message)
 					return
 
 		var/datum/browser/browser = new(usr, "faxpreview", "New Fax", 600, 600)
+		browser.add_head_content(HTML_STATIC_CONTENT_POLICY)
 		browser.set_content(fax_message)
 		browser.open()
 
@@ -1002,12 +1011,15 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 			browser.close()
 			return
 
-		send_fax(usr, null, dep, subject, fax_message, TRUE)
+		if(!check_rights(R_ADMIN|R_MENTOR))
+			browser.close()
+			return
+		send_fax(usr, null, dep, html_encode(subject), fax_message, TRUE)
 		if(sender)
 			log_admin("[key_name(usr)] replied to a fax message from [key_name(sender)].")
 			message_staff("[ADMIN_TPMONTY(usr)] replied to a fax message from [ismob(sender) ? ADMIN_TPMONTY(sender) : key_name_admin(sender)].")
 		else
-			message_staff("[key_name_admin(usr)] sent a new fax - Department: [dep] | Subject: [subject].")
+			message_staff("[key_name_admin(usr)] sent a new fax - Department: [dep] | Subject: [html_encode(subject)].")
 
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))
@@ -1254,6 +1266,8 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 		message_admins("[ADMIN_TPMONTY(usr)] created [number] [english_list(paths)] at [ADMIN_VERBOSEJMP(usr.loc)].")
 
 	else if(href_list["viewruntime"])
+		if(!check_rights(R_DEBUG))
+			return
 		var/datum/error_viewer/error_viewer = locate(href_list["viewruntime"])
 		if(!istype(error_viewer))
 			to_chat(usr, span_warning("That runtime viewer no longer exists."))
@@ -2054,15 +2068,24 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 		log_admin("[key_name(usr)] changed [href_list["xeno"]] of [X] from [previous] to [change].")
 		message_admins("[ADMIN_TPMONTY(usr)] changed [href_list["xeno"]] of [ADMIN_TPMONTY(X)] from [previous] to [change].")
 	else if(href_list["adminapproval"])
-		var/approval_id = href_list["adminapproval"] // Already text at this point
-		if(GLOB.admin_approvals[approval_id] != -1)
-			to_chat(usr, span_warning("That approval has already been answered with '[GLOB.admin_approvals[approval_id]]'"))
+		var/approval_id = href_list["adminapproval"]
+		var/list/approval = GLOB.admin_approvals[approval_id]
+		if(!approval || !check_rights(approval["rights"]))
 			return
-		GLOB.admin_approvals[approval_id] = href_list["option"]
-		log_admin("[key_name(usr)] answered '[href_list["option"]]' to the admin approval ([approval_id]).")
-		message_admins("[key_name(usr)] answered '[href_list["option"]]' to the admin approval ([approval_id]).")
+		if(!isnull(approval["answer"]))
+			to_chat(usr, span_warning("That approval has already been answered with '[html_encode(approval["answer"])]'"))
+			return
+		var/list/options = approval["options"]
+		var/option = href_list["option"]
+		if(!(option in options))
+			return
+		approval["answer"] = option
+		log_admin("[key_name(usr)] answered '[option]' to the admin approval ([approval_id]).")
+		message_admins("[key_name(usr)] answered '[html_encode(option)]' to the admin approval ([approval_id]).")
 
 	else if(href_list["reloadpolls"])
+		if(!check_rights(R_POLLS))
+			return
 		GLOB.polls.Cut()
 		GLOB.poll_options.Cut()
 		load_poll_data()
@@ -2077,6 +2100,8 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 
 	else if(href_list["deletepoll"])
 		var/datum/poll_question/poll = locate(href_list["deletepoll"]) in GLOB.polls
+		if(!poll)
+			return
 		poll.delete_poll()
 		poll_list_panel()
 
@@ -2089,6 +2114,8 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 
 	else if(href_list["clearpollvotes"])
 		var/datum/poll_question/poll = locate(href_list["clearpollvotes"]) in GLOB.polls
+		if(!poll)
+			return
 		poll.cleaR_POLLS_votes()
 		poll_management_panel(poll)
 
@@ -2103,7 +2130,11 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 
 	else if(href_list["deletepolloption"])
 		var/datum/poll_option/option = locate(href_list["deletepolloption"]) in GLOB.poll_options
+		if(!option)
+			return
 		var/datum/poll_question/poll = option.delete_option()
+		if(!poll)
+			return
 		poll_management_panel(poll)
 
 	else if(href_list["submitoption"])
@@ -2112,13 +2143,24 @@ Status: [status ? status : "Unknown"] | Damage: [health ? health : "None"]
 		poll_option_parse_href(href_list, poll, option)
 
 	else if(href_list["cancelob"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/timerid_to_cancel = href_list["cancelob"]
-		deltimer(timerid_to_cancel)
+		var/datum/timedevent/timer = SStimer.timer_id_dict[timerid_to_cancel]
+		var/datum/callback/impact = timer?.callBack
+		if(!impact)
+			return
+		var/cannon_impact = istype(impact.object, /obj/structure/orbital_cannon) && impact.delegate == TYPE_PROC_REF(/obj/structure/orbital_cannon, impact_callback)
+		var/warhead_impact = istype(impact.object, /obj/structure/ob_ammo/warhead) && impact.delegate == TYPE_PROC_REF(/obj/structure/ob_ammo/warhead, warhead_impact)
+		if(!(cannon_impact || warhead_impact) || !deltimer(timerid_to_cancel))
+			return
 		var/logtext = "[key_name(usr)] has cancelled an OB with the timerid [timerid_to_cancel]"
 		message_admins(logtext)
 		log_admin(logtext)
 
 	else if(href_list["cancelsummon"])
+		if(!check_rights(R_ADMIN))
+			return
 		GLOB.active_summons.Cut()
 		var/logtext = "[key_name(usr)] has cancelled all psychic summons"
 		message_admins(logtext)

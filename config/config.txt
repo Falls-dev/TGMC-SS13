@@ -122,11 +122,7 @@ POPUP_ADMIN_PM
 # Addressed listed below are except from any incoming topic filering
 # TOPIC_FILTERING_WHITELIST 127.0.0.1
 
-## Play Internet Sound - yt-dlp (either key works; INVOKE_YOUTUBEDL is legacy alias)
-# INVOKE_YT_DLP yt-dlp
-# INVOKE_YOUTUBEDL yt-dlp
-
-## Play Internet Sound - cobalt.tools (used if set; preferred over yt-dlp when both are set)
+## Play Internet Sound - Cobalt. Use an HTTPS endpoint when supplying an API key.
 # COBALT_BASE_API https://api.cobalt.tools/
 # COBALT_API_KEY
 

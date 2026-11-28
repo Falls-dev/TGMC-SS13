@@ -155,7 +155,7 @@ ADMIN_VERB(deadmin, R_NONE, "DeAdmin", "Shed your admin powers.", ADMIN_CATEGORY
 	return FALSE
 
 /datum/admins/proc/check_for_rights(rights_required)
-	if(rights_required && !(rights_required & rank.rights))
+	if(rights_required && !(rights_required & rank?.rights))
 		return FALSE
 	return TRUE
 
@@ -178,16 +178,12 @@ ADMIN_VERB(deadmin, R_NONE, "DeAdmin", "Shed your admin powers.", ADMIN_CATEGORY
 /proc/check_other_rights(client/other, rights_required, show_msg = TRUE)
 	if(!other)
 		return FALSE
-	if(rights_required && other.holder?.rank?.rights)
-		if(rights_required & other.holder.rank.rights)
-			return TRUE
-		else if(show_msg)
-			to_chat(usr, span_warning("You do not have sufficient rights to do that. You require one of the following flags:[rights2text(rights_required," ")]."))
-	else
-		if(other.holder)
-			return TRUE
-		else if(show_msg)
-			to_chat(usr, span_warning("You are not a holder."))
+	if(check_rights_for(other, rights_required))
+		return TRUE
+	if(show_msg && rights_required && other.holder)
+		to_chat(usr, span_warning("You do not have sufficient rights to do that. You require one of the following flags:[rights2text(rights_required," ")]."))
+	else if(show_msg && !rights_required)
+		to_chat(usr, span_warning("You are not a holder."))
 	return FALSE
 
 /proc/check_if_greater_rights_than(client/other)

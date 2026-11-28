@@ -68,6 +68,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 //opens the ticket listings for one of the 3 states
 /datum/admin_help_tickets/proc/BrowseTickets(state)
+	if(!check_rights(R_ADMINTICKET | R_MENTOR, FALSE))
+		return
 	var/list/l2b
 	var/title
 	switch(state)
@@ -85,19 +87,15 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/dat = "<A href='byond://?_src_=holder;[HrefToken()];ahelp_tickets=[state]'>Refresh</A><br><br>"
 	for(var/I in l2b)
 		var/datum/admin_help/AH = I
-		if(AH.tier == TICKET_MENTOR && check_rights(R_ADMINTICKET|R_MENTOR, FALSE))
-			if(AH.initiator)
-				dat += "[span_adminnotice("<span class='adminhelp'>\[[AH.marked ? "X" : "  "]\] #[AH.id] Mentor Ticket")]: <A href='byond://?_src_=holder;[HrefToken()];ahelp=[REF(AH)];ahelp_action=ticket'>[AH.initiator_key_name]: [AH.name]</A></span><br>"
-			else
-				dat += "[span_adminnotice("<span class='adminhelp'>\[D\] #[AH.id] Mentor Ticket")]: <A href='byond://?_src_=holder;[HrefToken()];ahelp=[REF(AH)];ahelp_action=ticket'>[AH.initiator_key_name]: [AH.name]</A></span><br>"
-		else if(AH.tier == TICKET_ADMIN && check_rights(R_ADMINTICKET, FALSE))
-			if(AH.initiator)
-				dat += "[span_adminnotice("<span class='adminhelp'>\[[AH.marked ? "X" : "  "]\] #[AH.id] Admin Ticket")]: <A href='byond://?_src_=holder;[HrefToken()];ahelp=[REF(AH)];ahelp_action=ticket'>[AH.initiator_key_name]: [AH.name]</A></span><br>"
-			else
-				dat += "[span_adminnotice("<span class='adminhelp'>\[D\] #[AH.id] Admin Ticket")]: <A href='byond://?_src_=holder;[HrefToken()];ahelp=[REF(AH)];ahelp_action=ticket'>[AH.initiator_key_name]: [AH.name]</A></span><br>"
+		if(!AH.can_access(usr?.client))
+			continue
+		var/ticket_type = AH.tier == TICKET_MENTOR ? "Mentor" : "Admin"
+		var/marker = AH.initiator ? (AH.marked ? "X" : "  ") : "D"
+		var/ticket_label = html_encode("[AH.initiator_key_name]: [AH.name]")
+		dat += "[span_adminnotice("<span class='adminhelp'>\[[marker]\] #[AH.id] [ticket_type] Ticket")]: <A href='byond://?_src_=holder;[HrefToken()];ahelp=[REF(AH)];ahelp_action=ticket'>[ticket_label]</A></span><br>"
 
 	var/datum/browser/browser = new(usr, "ahelp_list[state]", "<div align='center'>[title]</div>", 600, 480)
-	browser.add_head_content(HTML_STATIC_CONTENT_POLICY)
+	browser.add_head_content(HTML_TEXT_CONTENT_POLICY)
 	browser.set_content(dat)
 	browser.open(FALSE)
 
@@ -248,7 +246,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //is_bwoink is TRUE if this ticket was started by an admin PM
 /datum/admin_help/New(msg_raw, client/C, is_bwoink, tickettier)
 	//clean the input msg
-	var/msg = sanitize(copytext_char(msg_raw, 1, MAX_MESSAGE_LEN))
+	var/msg = normalize_admin_message(msg_raw)
 	if(!msg || !C || !C.mob)
 		qdel(src)
 		return
@@ -285,7 +283,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		//send it to TGS if nobody is on and tell us how many were on
 		var/ticket_type = (tier == TICKET_ADMIN) ? "Admin" : "Mentor"
 		var/admin_number_present = send2tgs_adminless_only(initiator_ckey, "[ticket_type] Ticket #[id]: [sanitizediscord(name)]")
-		log_admin_private("Ticket #[id]: [key_name(initiator)]: [name] - heard by [admin_number_present] non-AFK staff.")
+		log_admin_private("Ticket #[id]: [key_name(initiator)]: [sanitize(name)] - heard by [admin_number_present] non-AFK staff.")
 		if(admin_number_present <= 0)
 			to_chat(C, span_notice("No active admins are online, your adminhelp was sent through TGS to admins who are available. This may use IRC or Discord."))
 			heard_by_no_admins = TRUE
@@ -298,6 +296,23 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	GLOB.ahelp_tickets.closed_tickets -= src
 	GLOB.ahelp_tickets.resolved_tickets -= src
 	return ..()
+
+/proc/admin_ticket_has_access(ticket_tier, rights)
+	switch(ticket_tier)
+		if(TICKET_ADMIN)
+			return !!(rights & R_ADMINTICKET)
+		if(TICKET_MENTOR)
+			return !!(rights & (R_ADMINTICKET | R_MENTOR))
+	return FALSE
+
+/datum/admin_help/proc/can_access(client/requester)
+	return admin_ticket_has_access(tier, requester?.holder?.rank?.rights)
+
+/// Bound player and staff text before encoding it at an HTML sink.
+/proc/normalize_admin_message(message)
+	if(istext(message))
+		return trim(copytext_char(trim(message), 1, MAX_MESSAGE_LEN + 1))
+	return ""
 
 
 /datum/admin_help/proc/AddInteraction(formatted_message)
@@ -345,9 +360,11 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 //private
 /datum/admin_help/proc/LinkedReplyName(ref_src)
+	if(state != AHELP_ACTIVE)
+		return html_encode(initiator_key_name)
 	if(!ref_src)
 		ref_src = "[REF(src)]"
-	return "<A href='byond://?_src_=holder;[HrefToken(TRUE)];ahelp=[ref_src];ahelp_action=reply'>[initiator_key_name]</A>"
+	return "<A href='byond://?_src_=holder;[HrefToken(TRUE)];ahelp=[ref_src];ahelp_action=reply'>[html_encode(initiator_key_name)]</A>"
 
 
 //private
@@ -360,7 +377,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //message from the initiator without a target, all admins will see this
 //won't bug irc/discord
 /datum/admin_help/proc/MessageNoRecipient(msg)
-	msg = sanitize(copytext_char(msg, 1, MAX_MESSAGE_LEN))
+	msg = sanitize(normalize_admin_message(msg))
+	if(!msg)
+		return
 	var/ref_src = "[REF(src)]"
 	//message to be sent to all admins
 
@@ -467,13 +486,15 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 //Mark it
 /datum/admin_help/proc/Mark()
-	if(state != AHELP_ACTIVE)
-		return
-	if(tier == TICKET_ADMIN && !check_rights(R_ADMINTICKET, FALSE))
+	var/client/requester = usr?.client
+	if(state != AHELP_ACTIVE || !can_access(requester))
 		return
 	if(marked)
-		if(marked == usr.client.key)
+		var/previous_mark = marked
+		if(marked == requester.key)
 			if(alert("Do you want to unmark this ticket?", "Confirmation", "Yes", "No") != "Yes")
+				return
+			if(state != AHELP_ACTIVE || !can_access(requester) || marked != previous_mark)
 				return
 			marked = null
 			if(tier == TICKET_MENTOR)
@@ -485,15 +506,17 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			return
 		else if(alert("This ticket has already been marked by [marked], do you want to replace them?", "Confirmation", "Yes", "No") != "Yes")
 			return
+		if(state != AHELP_ACTIVE || !can_access(requester) || marked != previous_mark)
+			return
 		if(tier == TICKET_MENTOR)
 			message_staff("Ticket [TicketHref("#[id]")] has been re-marked by [ADMIN_TPMONTY(usr)].")
 		else if(tier == TICKET_ADMIN)
 			message_admins("Ticket [TicketHref("#[id]")] has been re-marked by [ADMIN_TPMONTY(usr)].")
-		marked = usr.client.key
+		marked = requester.key
 		log_admin_private("Ticket (#[id]) has been re-marked by [key_name(usr)].")
 		to_chat(initiator, span_adminhelp("Your ticket has been marked by another admin."))
 		return
-	marked = usr.client.key
+	marked = requester.key
 	if(tier == TICKET_MENTOR)
 		message_staff("Ticket [TicketHref("#[id]")] has been marked by [ADMIN_TPMONTY(usr)].")
 	else if(tier == TICKET_ADMIN)
@@ -653,13 +676,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 //Show the ticket panel
 /datum/admin_help/proc/TicketPanel()
-	if(!check_rights(R_ADMINTICKET, FALSE) && !is_mentor(usr.client))
+	if(!can_access(usr?.client))
 		return
-
-	if(tier == TICKET_ADMIN && !check_rights(R_ADMINTICKET, FALSE))
-		var/datum/browser/browser = new(usr, "ahelp[id]", "<div align='center'>Access Denied</div>", 620, 480)
-		browser.set_content("Access Denied")
-		browser.open(FALSE)
 
 	var/dat
 	var/ref_src = "[REF(src)]"
@@ -675,7 +693,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		else
 			dat += "UNKNOWN"
 	if(marked)
-		dat += " <font color='#ff8c8c'>MARKED BY [marked]</font> "
+		dat += " <font color='#ff8c8c'>MARKED BY [html_encode(marked)]</font> "
 	else
 		dat += " UNMARKED "
 	dat += "</b>\t[TicketHref("Refresh", ref_src)]\t[TicketHref("Re-Title", ref_src, "retitle")]"
@@ -701,39 +719,48 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		dat += "[I]<br>"
 
 	var/datum/browser/browser = new(usr, "ahelp[id]", "<div align='center'>Ticket #[id]</div>", 620, 480)
-	browser.add_head_content(HTML_STATIC_CONTENT_POLICY)
+	browser.add_head_content(HTML_TEXT_CONTENT_POLICY)
 	browser.set_content(dat)
 	browser.open(FALSE)
 
 
 /datum/admin_help/proc/Retitle()
-	if(tier == TICKET_ADMIN && !check_rights(R_ADMINTICKET, FALSE))
+	var/client/requester = usr?.client
+	if(!can_access(requester))
 		return
 	var/new_title = input(usr, "Enter a title for the ticket", "Rename Ticket", name) as text|null
+	if(!can_access(requester))
+		return
+	new_title = normalize_admin_message(new_title)
 	if(new_title)
 		name = new_title
+		var/display_title = html_encode(name)
 		if(tier == TICKET_MENTOR)
-			message_staff("Ticket [TicketHref("#[id]")] titled [name] by [ADMIN_TPMONTY(usr)].")
+			message_staff("Ticket [TicketHref("#[id]")] titled [display_title] by [ADMIN_TPMONTY(usr)].")
 		else if(tier == TICKET_ADMIN)
-			message_admins("Ticket [TicketHref("#[id]")] titled [name] by [ADMIN_TPMONTY(usr)].")
+			message_admins("Ticket [TicketHref("#[id]")] titled [display_title] by [ADMIN_TPMONTY(usr)].")
 		//not saying the original name cause it could be a long ass message
-		log_admin_private("Ticket (#[id]) titled [name] by [key_name(usr)].")
+		log_admin_private("Ticket (#[id]) titled [sanitize(name)] by [key_name(usr)].")
 	TicketPanel()	//we have to be here to do this
 
 
 //Forwarded action from admin/Topic
 /datum/admin_help/proc/Action(action)
+	if(!can_access(usr?.client))
+		return
 	switch(action)
 		if("ticket")
 			TicketPanel()
 		if("retitle")
 			Retitle()
 		if("reject")
-			Reject()
+			if(check_rights(R_ADMINTICKET, FALSE))
+				Reject()
 		if("reply")
-			usr.client.ticket_reply(initiator)
+			usr.client.ticket_reply(src)
 		if("icissue")
-			ICIssue()
+			if(check_rights(R_ADMINTICKET, FALSE))
+				ICIssue()
 		if("close")
 			Close()
 		if("resolve")

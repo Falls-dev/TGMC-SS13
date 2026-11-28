@@ -57,9 +57,10 @@
 	user.set_interaction(src)
 	var/dat = "<center><table>"
 	for(var/obj/item/P in src)
-		dat += "<tr><td><a href='byond://?src=[text_ref(src)];retrieve=[text_ref(P)]'>[P.name]</a></td></tr>"
+		dat += "<tr><td><a href='byond://?src=[text_ref(src)];retrieve=[text_ref(P)]'>[html_encode(html_decode(P.name))]</a></td></tr>"
 	dat += "</table></center>"
 	var/datum/browser/browser = new(user, "filingcabinet", name, 350, 300)
+	browser.add_head_content(HTML_TEXT_CONTENT_POLICY)
 	browser.set_content(dat)
 	browser.open()
 
@@ -95,8 +96,8 @@
 			if(S)
 				var/obj/item/paper/P = new /obj/item/paper(src)
 				P.info = "<CENTER><B>Security Record</B></CENTER><BR>"
-				P.info += "Name: [G.fields["name"]] ID: [G.fields["id"]]<BR>\nSex: [G.fields["sex"]]<BR>\nAge: [G.fields["age"]]<BR>\nFingerprint: [G.fields["fingerprint"]]<BR>\nPhysical Status: [G.fields["p_stat"]]<BR>\nMental Status: [G.fields["m_stat"]]<BR>"
-				P.info += "<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: [S.fields["criminal"]]<BR>\n<BR>\nMinor Crimes: [S.fields["mi_crim"]]<BR>\nDetails: [S.fields["mi_crim_d"]]<BR>\n<BR>\nMajor Crimes: [S.fields["ma_crim"]]<BR>\nDetails: [S.fields["ma_crim_d"]]<BR>\n<BR>\nImportant Notes:<BR>\n\t[record_text_html(S.fields["notes"])]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
+				P.info += "Name: [record_text_html(G.fields["name"])] ID: [record_text_html(G.fields["id"])]<BR>\nSex: [record_text_html(G.fields["sex"])]<BR>\nAge: [record_text_html(G.fields["age"])]<BR>\nFingerprint: [record_text_html(G.fields["fingerprint"])]<BR>\nPhysical Status: [record_text_html(G.fields["p_stat"])]<BR>\nMental Status: [record_text_html(G.fields["m_stat"])]<BR>"
+				P.info += "<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: [record_text_html(S.fields["criminal"])]<BR>\n<BR>\nMinor Crimes: [record_text_html(S.fields["mi_crim"])]<BR>\nDetails: [record_text_html(S.fields["mi_crim_d"])]<BR>\n<BR>\nMajor Crimes: [record_text_html(S.fields["ma_crim"])]<BR>\nDetails: [record_text_html(S.fields["ma_crim_d"])]<BR>\n<BR>\nImportant Notes:<BR>\n\t[record_text_html(S.fields["notes"])]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
 				var/counter = 1
 				while(S.fields["com_[counter]"])
 					P.info += "[record_text_html(S.fields["com_[counter]"], is_comment = TRUE)]<BR>"
@@ -129,9 +130,9 @@
 			if(M)
 				var/obj/item/paper/P = new /obj/item/paper(src)
 				P.info = "<CENTER><B>Medical Record</B></CENTER><BR>"
-				P.info += "Name: [G.fields["name"]] ID: [G.fields["id"]]<BR>\nSex: [G.fields["sex"]]<BR>\nAge: [G.fields["age"]]<BR>\nFingerprint: [G.fields["fingerprint"]]<BR>\nPhysical Status: [G.fields["p_stat"]]<BR>\nMental Status: [G.fields["m_stat"]]<BR>"
+				P.info += "Name: [record_text_html(G.fields["name"])] ID: [record_text_html(G.fields["id"])]<BR>\nSex: [record_text_html(G.fields["sex"])]<BR>\nAge: [record_text_html(G.fields["age"])]<BR>\nFingerprint: [record_text_html(G.fields["fingerprint"])]<BR>\nPhysical Status: [record_text_html(G.fields["p_stat"])]<BR>\nMental Status: [record_text_html(G.fields["m_stat"])]<BR>"
 
-				P.info += "<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: [M.fields["b_type"]]<BR>\nDNA: [M.fields["b_dna"]]<BR>\n<BR>\nMinor Disabilities: [M.fields["mi_dis"]]<BR>\nDetails: [M.fields["mi_dis_d"]]<BR>\n<BR>\nMajor Disabilities: [M.fields["ma_dis"]]<BR>\nDetails: [M.fields["ma_dis_d"]]<BR>\n<BR>\nAllergies: [M.fields["alg"]]<BR>\nDetails: [M.fields["alg_d"]]<BR>\n<BR>\nCurrent Diseases: [M.fields["cdi"]] (per disease info placed in log/comment section)<BR>\nDetails: [M.fields["cdi_d"]]<BR>\n<BR>\nImportant Notes:<BR>\n\t[record_text_html(M.fields["notes"])]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
+				P.info += "<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: [record_text_html(M.fields["b_type"])]<BR>\nDNA: [record_text_html(M.fields["b_dna"])]<BR>\n<BR>\nMinor Disabilities: [record_text_html(M.fields["mi_dis"])]<BR>\nDetails: [record_text_html(M.fields["mi_dis_d"])]<BR>\n<BR>\nMajor Disabilities: [record_text_html(M.fields["ma_dis"])]<BR>\nDetails: [record_text_html(M.fields["ma_dis_d"])]<BR>\n<BR>\nAllergies: [record_text_html(M.fields["alg"])]<BR>\nDetails: [record_text_html(M.fields["alg_d"])]<BR>\n<BR>\nCurrent Diseases: [record_text_html(M.fields["cdi"])] (per disease info placed in log/comment section)<BR>\nDetails: [record_text_html(M.fields["cdi_d"])]<BR>\n<BR>\nImportant Notes:<BR>\n\t[record_text_html(M.fields["notes"])]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
 				var/counter = 1
 				while(M.fields["com_[counter]"])
 					P.info += "[record_text_html(M.fields["com_[counter]"], is_comment = TRUE)]<BR>"

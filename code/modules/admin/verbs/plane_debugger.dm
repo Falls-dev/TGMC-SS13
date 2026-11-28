@@ -77,7 +77,13 @@
 	set_target(get_target())
 
 /datum/plane_master_debug/ui_state(mob/user)
-	return GLOB.always_state//return ADMIN_STATE(R_DEBUG)
+	return GLOB.debug_state
+
+/datum/plane_master_debug/ui_status(mob/user, datum/ui_state/state)
+	var/client/viewer = user?.client
+	if(!viewer || viewer != owner?.owner || !check_rights_for(viewer, R_DEBUG))
+		return UI_CLOSE
+	return UI_INTERACTIVE
 
 /datum/plane_master_debug/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

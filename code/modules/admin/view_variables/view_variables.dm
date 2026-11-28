@@ -110,7 +110,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_DEBUG, "View Variables", "View th
 <html>
 	<head>
 		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-		<title>[title]</title>
+		<title>[html_encode(title)]</title>
 		<link rel="stylesheet" type="text/css" href="[SSassets.transport.get_asset_url("view_variables.css")]">
 	</head>
 	<body onload='selectTextField()' onkeydown='return handle_keydown()' onkeyup='handle_keyup()'>

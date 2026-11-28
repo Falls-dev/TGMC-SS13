@@ -110,7 +110,7 @@
 
 
 		if(CONFIG_GET(flag/allow_admin_ooccolor) && check_rights(R_COLOR, FALSE))
-			display_colour = prefs.ooccolor
+			display_colour = sanitize_hexcolor(prefs.ooccolor, 6, TRUE)
 
 	var/keyname
 	var/boosty_tier = SSdiscord.get_boosty_tier(ckey)
@@ -133,6 +133,7 @@
 				display_name = "[holder.fakekey]/([key])"
 			else
 				display_name = holder.fakekey
+		display_name = html_encode(display_name)
 
 		// Admins open straight to player panel
 		if(check_other_rights(C, R_ADMIN, FALSE))
@@ -233,7 +234,7 @@
 			display_name = display_key
 
 		var/avoid_highlight = C == src
-		to_chat(C, "<font color='#6D2A6D'>[span_ooc("<span class='prefix'>XOOC: [display_name]")]: <span class='message linkify'>[msg]</span></span></font>", avoid_highlighting = avoid_highlight)
+		to_chat(C, "<font color='#6D2A6D'>[span_ooc("<span class='prefix'>XOOC: [html_encode(display_name)]")]: <span class='message linkify'>[msg]</span></span></font>", avoid_highlighting = avoid_highlight)
 
 	// Send chat message to admins
 	for(var/client/C AS in GLOB.admins)
@@ -340,7 +341,7 @@
 			display_name = display_key
 
 		var/avoid_highlight = C == src
-		to_chat(C, "<font color='#B75800'>[span_ooc("<span class='prefix'>MOOC: [display_name]")]: <span class='message linkify'>[msg]</span></span></font>", avoid_highlighting = avoid_highlight)
+		to_chat(C, "<font color='#B75800'>[span_ooc("<span class='prefix'>MOOC: [html_encode(display_name)]")]: <span class='message linkify'>[msg]</span></span></font>", avoid_highlighting = avoid_highlight)
 
 	// Send chat message to admins
 	for(var/client/C AS in GLOB.admins)
@@ -435,7 +436,7 @@
 		for(var/mob/M in range(mob))
 			to_chat(M, message)
 	else
-		message = span_looc("[span_prefix("LOOC:")] [mob.name]: [span_message("[msg]")]")
+		message = span_looc("[span_prefix("LOOC:")] [html_encode(mob.name)]: [span_message("[msg]")]")
 		for(var/mob/M in range(mob))
 			to_chat(M, message)
 

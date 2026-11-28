@@ -555,6 +555,7 @@
 	squad_robot_type = sanitize_inlist(squad_robot_type, ROBOT_TYPES, initial(squad_robot_type))
 	xeno_name = reject_bad_name(xeno_name)
 	ai_name = reject_bad_name(ai_name, TRUE)
+	predator_name = reject_bad_name(predator_name) || initial(predator_name)
 	names_by_species = sanitize_islist(names_by_species, list())
 
 	real_name = reject_bad_name(real_name, TRUE)
@@ -653,7 +654,7 @@
 	ai_name = reject_bad_name(ai_name, TRUE)
 
 //RUTGMC EDIT
-	predator_name = predator_name ? sanitize_text(predator_name, initial(predator_name)) : initial(predator_name)
+	predator_name = reject_bad_name(predator_name) || initial(predator_name)
 	predator_gender = sanitize_text(predator_gender, initial(predator_gender))
 	predator_age = sanitize_integer(predator_age, 100, 10000, initial(predator_age))
 	predator_use_legacy = sanitize_inlist(predator_use_legacy, PRED_LEGACIES, initial(predator_use_legacy))

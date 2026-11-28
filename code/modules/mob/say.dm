@@ -83,10 +83,10 @@
 	else
 		name = real_name
 	if(name != real_name)
-		alt_name = " (died as [real_name])"
+		alt_name = " (died as [html_encode(real_name)])"
 
 	var/spanned = say_quote(say_emphasis(message))
-	var/source = "[span_game("<span class='prefix'>DEAD:")] [span_name("[name]")][alt_name]"
+	var/source = "[span_game("<span class='prefix'>DEAD:")] [span_name(html_encode(name))][alt_name]"
 	var/rendered = "[span_message("[emoji_parse(spanned)]")]</span>"
 	log_talk(message, LOG_SAY, tag = "DEAD")
 	if(SEND_SIGNAL(src, COMSIG_MOB_DEADSAY, message) & MOB_DEADSAY_SIGNAL_INTERCEPT)

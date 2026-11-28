@@ -2,7 +2,7 @@
 	var/job = speaker.GetJob()
 	var/namepart = "[speaker.GetVoice()][speaker.get_alt_name()]"
 
-	return radio_freq ? "\[[get_radio_name(radio_freq)][job ? " <a href='byond://?src=[REF(src)];track=[html_encode(namepart)]'>([job])</a>": ""]\] " : ""
+	return radio_freq ? "\[[html_encode(get_radio_name(radio_freq))][job ? " <a href='byond://?src=[REF(src)];track=[url_encode(namepart)]'>([html_encode(job)])</a>": ""]\] " : ""
 
 /mob/living/silicon/ai/radio(message, message_mode, list/spans, language)
 	if(incapacitated())

@@ -44,7 +44,7 @@
 	if(!params)
 		return "Insufficient parameters"
 	log_admin("Chat Name Check: [sender.friendly_name] on [params]")
-	message_admins("Name checking [params] from [sender.friendly_name]")
+	message_admins("Name checking [html_encode(params)] from [html_encode(sender.friendly_name)]")
 	return keywords_lookup(params, TRUE)
 
 /datum/tgs_chat_command/adminwho
@@ -55,20 +55,6 @@
 /datum/tgs_chat_command/adminwho/Run(datum/tgs_chat_user/sender, params)
 	return tgsadminwho()
 
-/datum/tgs_chat_command/sdql
-	name = "sdql"
-	help_text = "Runs an SDQL query"
-	admin_only = TRUE
-
-/datum/tgs_chat_command/sdql/Run(datum/tgs_chat_user/sender, params)
-	var/list/results = HandleUserlessSDQL(sender.friendly_name, params)
-	if(!results)
-		return "Query produced no output"
-	var/list/text_res = results.Copy(1, 3)
-	var/list/refs = results[4]
-	var/list/names = results[5]
-	. = "[text_res.Join("\n")][length(refs) ? "\nRefs: [refs.Join(" ")]" : ""][length(names) ? "\nText: [replacetext(names.Join(" "), "<br>", "")]" : ""]"
-
 /datum/tgs_chat_command/reload_admins
 	name = "reload_admins"
 	help_text = "Forces the server to reload admins."
@@ -77,7 +63,7 @@
 /datum/tgs_chat_command/reload_admins/Run(datum/tgs_chat_user/sender, params)
 	ReloadAsync()
 	log_admin("[sender.friendly_name] reloaded admins via chat command.")
-	message_admins("[sender.friendly_name] reloaded admins via chat command.")
+	message_admins("[html_encode(sender.friendly_name)] reloaded admins via chat command.")
 	return new /datum/tgs_message_content("Admins reloaded.")
 
 /datum/tgs_chat_command/reload_admins/proc/ReloadAsync()

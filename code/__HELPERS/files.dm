@@ -1,4 +1,6 @@
 /client/proc/browse_files(root_type=BROWSE_ROOT_ALL_LOGS, max_iterations=10, list/valid_extensions=list("txt","log","htm", "html"))
+	if(usr?.client != src || !check_rights_for(src, R_LOG) || IsAdminAdvancedProcCall())
+		return
 	// wow why was this ever a parameter
 	var/root = "data/logs/"
 	switch(root_type)
@@ -27,7 +29,7 @@
 			extensions += "|"
 		extensions += "[i]"
 	var/regex/valid_ext = new("\\.([extensions])$", "i")
-	if( !fexists(path) || !(valid_ext.Find(path)) )
+	if(!holder?.can_access_server_log(path) || !fexists(path) || !(valid_ext.Find(path)))
 		to_chat(src, "<font color='red'>Error: browse_files(): File not found/Invalid file([path]).</font>")
 		return
 	return path

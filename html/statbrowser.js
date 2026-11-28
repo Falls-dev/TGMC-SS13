@@ -396,12 +396,13 @@ function remove_tickets() {
 }
 
 function remove_sdql2() {
-	if (sdql2) {
-		sdql2 = [];
-		removePermanentTab("SDQL2");
-		if (current_tab == "SDQL2")
-			tab_change("Status");
-	}
+	sdql2 = [];
+	var tabIndex = verb_tabs.indexOf("SDQL2");
+	if (tabIndex !== -1)
+		verb_tabs.splice(tabIndex, 1);
+	removePermanentTab("SDQL2");
+	if (current_tab == "SDQL2")
+		tab_change("Status");
 	checkStatusTab();
 }
 

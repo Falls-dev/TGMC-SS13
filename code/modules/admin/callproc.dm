@@ -68,24 +68,6 @@ GLOBAL_PROTECT(AdminProcCallHandler)
 	usr = lastusr
 	handler.remove_caller(user)
 
-/**
- * Handles a userless sdql, used by circuits and tgs.
- *
- * Arguments:
- * * user - a string used to identify the user
- * * query_text - the query text
- */
-/proc/HandleUserlessSDQL(user, query_text)
-	if(IsAdminAdvancedProcCall())
-		return
-	var/mob/proccall_handler/handler = GLOB.AdminProcCallHandler
-	handler.add_caller(user)
-	var/lastusr = usr
-	usr = handler
-	. = world.SDQL2_query(query_text, user, user)
-	usr = lastusr
-	handler.remove_caller(user)
-
 ADMIN_VERB(advanced_proc_call, R_DEBUG, "Advanced ProcCall", "Call a proc on any datum in the server.", ADMIN_CATEGORY_DEBUG)
 	user.callproc_blocking()
 
@@ -134,7 +116,7 @@ ADMIN_VERB(advanced_proc_call, R_DEBUG, "Advanced ProcCall", "Call a proc on any
 			return
 
 	var/list/lst = get_callproc_args()
-	if(!lst)
+	if(!lst || !check_rights_for(src, R_DEBUG))
 		return
 
 	if(targetselected)
