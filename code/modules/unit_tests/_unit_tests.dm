@@ -58,6 +58,7 @@
 // BEGIN_INCLUDE
 #include "admin_ticket_security.dm"
 #include "apc_area_sanity.dm"
+#include "barsign_icons.dm"
 #include "bespoke_id.dm"
 #include "binary_insert.dm"
 #include "chat_filter.dm"
@@ -91,6 +92,7 @@
 #include "weed_ability.dm"
 #include "weed_spread.dm"
 #include "xeno_logical_scaling.dm"
+#include "zombie_fade_cleanup.dm"
 // END_INCLUDE
 
 #ifdef REFERENCE_TRACKING //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
