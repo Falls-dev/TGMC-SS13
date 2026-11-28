@@ -53,7 +53,11 @@ export function PlayersPage({ serverState, onNavigate, onAction }: Props) {
 
 function BackButton({ onClick }: { onClick: () => void }) {
   return (
-    <button className="escape-menu__back-button" onClick={onClick}>
+    <button
+      type="button"
+      className="escape-menu__back-button"
+      onClick={onClick}
+    >
       <div className="escape-menu__icon-button">
         <span className="escape-menu-icons40x40 template" />
         <span className="escape-menu-icons40x40 back escape-menu__icon-overlay" />

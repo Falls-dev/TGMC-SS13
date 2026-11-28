@@ -92,6 +92,7 @@ const CHAT_STYLES = [
   'white-space',
 ];
 
+const FONT_COLOR = /^(?:#[0-9a-f]{3}(?:[0-9a-f]{3})?|[a-z]+)$/i;
 const WEB_URL = /^https?:\/\/[^\s\\]+$/i;
 const BYOND_TOPIC_URL = /^(?:byond:\/\/)?\?[^\s\\]+$/i;
 const LOCAL_IMAGE =
@@ -106,10 +107,22 @@ export function sanitizeChatHtml(html: string, fromHistory = false) {
     ALLOWED_ATTR: CHAT_ATTRIBUTES,
     ALLOW_DATA_ATTR: false,
     ALLOW_ARIA_ATTR: false,
-    ADD_URI_SAFE_ATTR: ['data-component', 'data-content', 'data-position'],
+    ADD_URI_SAFE_ATTR: [
+      'color',
+      'data-component',
+      'data-content',
+      'data-position',
+    ],
     ALLOWED_URI_REGEXP: /^(?:https?:\/\/|(?:byond:\/\/)?\?|[\w.-]+(?:\/|$))/i,
     RETURN_DOM_FRAGMENT: true,
     FORBID_TAGS: fromHistory ? ['a'] : [],
+  });
+
+  fragment.querySelectorAll('[color]').forEach((element) => {
+    const color = element.getAttribute('color') || '';
+    if (element.tagName !== 'FONT' || !FONT_COLOR.test(color)) {
+      element.removeAttribute('color');
+    }
   });
 
   fragment.querySelectorAll('a[href]').forEach((link) => {

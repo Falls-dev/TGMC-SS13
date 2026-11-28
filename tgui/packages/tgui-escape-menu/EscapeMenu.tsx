@@ -88,9 +88,6 @@ function reducer(state: State, action: Action): State {
           canAdminHelp: false,
           canSeeNotes: false,
           hasTicketNotification: false,
-          resources: [],
-          players: [],
-          ignoredOffline: [],
           ...state.serverState,
           ...action.state,
           players: action.state.players ?? state.serverState?.players ?? [],
@@ -98,7 +95,8 @@ function reducer(state: State, action: Action): State {
             action.state.ignoredOffline ??
             state.serverState?.ignoredOffline ??
             [],
-          resources: action.state.resources ?? state.serverState?.resources ?? [],
+          resources:
+            action.state.resources ?? state.serverState?.resources ?? [],
         },
       };
   }
@@ -210,7 +208,6 @@ export function EscapeMenu() {
         )}
         {state.page === 'leave_body' && (
           <LeaveBodyPage
-            serverState={state.serverState}
             onNavigate={navigate}
             onAction={handleAction}
             onClose={handleClose}

@@ -513,9 +513,7 @@
 "cz" = (
 /obj/effect/ai_node,
 /turf/open/floor/plating/ground/mars/random/cave,
-/area/outpost/caves/south_east{
-	ceiling = 4
-	})
+/area/outpost/caves/south_east/underground)
 "cB" = (
 /turf/open/floor/plating/ground/mars/dirttosand{
 	dir = 8
@@ -1650,9 +1648,7 @@
 /area/outpost/caves/north_west)
 "ho" = (
 /turf/open/floor/plating/ground/mars/random/cave,
-/area/outpost/caves/south_east{
-	ceiling = 4
-	})
+/area/outpost/caves/south_east/underground)
 "hq" = (
 /obj/effect/ai_node,
 /turf/open/floor/marking/asteroidwarning,
@@ -4755,9 +4751,7 @@
 "ux" = (
 /obj/effect/landmark/xeno_silo_spawn,
 /turf/open/floor/plating/ground/mars/random/cave,
-/area/outpost/caves/south_east{
-	ceiling = 4
-	})
+/area/outpost/caves/south_east/underground)
 "uB" = (
 /turf/open/floor/tile/dark/blue2{
 	dir = 8
@@ -5238,9 +5232,7 @@
 "wE" = (
 /obj/effect/landmark/fog_blocker/xeno_spawn,
 /turf/open/floor/plating/ground/mars/random/cave,
-/area/outpost/caves/south_east{
-	ceiling = 4
-	})
+/area/outpost/caves/south_east/underground)
 "wF" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/plating/ground/mars/cavetodirt{
@@ -6900,9 +6892,7 @@
 /turf/open/floor/plating/ground/mars/cavetodirt{
 	dir = 1
 	},
-/area/outpost/caves/south_east{
-	ceiling = 4
-	})
+/area/outpost/caves/south_east/underground)
 "Eh" = (
 /turf/open/floor/plating/ground/mars/dirttosand{
 	dir = 5
@@ -7617,9 +7607,7 @@
 /turf/open/floor/plating/ground/mars/cavetodirt{
 	dir = 1
 	},
-/area/outpost/caves/south_east{
-	ceiling = 4
-	})
+/area/outpost/caves/south_east/underground)
 "Hu" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/marking/asteroidwarning,
@@ -10630,9 +10618,7 @@
 "Uu" = (
 /obj/effect/landmark/weed_node,
 /turf/open/floor/plating/ground/mars/random/cave,
-/area/outpost/caves/south_east{
-	ceiling = 4
-	})
+/area/outpost/caves/south_east/underground)
 "Uv" = (
 /turf/open/floor/plating/ground/mars/cavetodirt{
 	dir = 9

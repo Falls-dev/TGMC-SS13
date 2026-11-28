@@ -267,7 +267,6 @@ export const CardMod = () => {
                 {regions.map((region) => (
                   <Section
                     key={region.regid}
-                    level={2}
                     title={region.name}
                     buttons={
                       <>

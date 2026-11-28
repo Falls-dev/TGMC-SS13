@@ -34,6 +34,8 @@ SUBSYSTEM_DEF(vote)
 	var/shuffle_choices = FALSE
 	/// Shuffle vote choices per ckey cache
 	var/list/shuffle_cache = list()
+	/// Pending end-of-round vote types, processed in order.
+	var/list/automatic_vote_queue
 
 // Called by master_controller
 /datum/controller/subsystem/vote/fire()
@@ -44,6 +46,7 @@ SUBSYSTEM_DEF(vote)
 		result()
 		SStgui.close_uis(src)
 		reset()
+		advance_automatic_vote()
 
 /// Stop the current vote and reset everything
 /datum/controller/subsystem/vote/proc/reset()
@@ -86,7 +89,7 @@ SUBSYSTEM_DEF(vote)
 	var/text
 
 	if(!length(winners))
-		if(mode != "shipmap" && mode != "groundmap")
+		if(!length(choices) || (mode != "shipmap" && mode != "groundmap"))
 			text += "<b>Vote Result: Inconclusive - No Votes!</b>"
 			cleanup_vote(text)
 			return
@@ -141,7 +144,7 @@ SUBSYSTEM_DEF(vote)
 				restart = TRUE
 		if("gamemode")
 			SSticker.save_mode(.) //changes the next game mode
-			if(GLOB.master_mode == .)
+			if(GLOB.master_mode == . || SSticker.current_state == GAME_STATE_FINISHED)
 				return
 			if(SSticker.HasRoundStarted())
 				restart = TRUE
@@ -160,6 +163,11 @@ SUBSYSTEM_DEF(vote)
 		if("groundmap")
 			var/datum/map_config/VM = config.maplist[GROUND_MAP][.]
 			SSmapping.changemap(VM, GROUND_MAP)
+		if("shipmap")
+			var/list/ship_maps = config.maplist?[SHIP_MAP]
+			var/datum/map_config/ship = ship_maps?[.]
+			if(ship)
+				SSmapping.changemap(ship, SHIP_MAP)
 	if(restart)
 		var/active_admins = FALSE
 		for(var/client/C in GLOB.admins)
@@ -271,6 +279,14 @@ SUBSYSTEM_DEF(vote)
 					shuffle_choices = TRUE
 				for(var/valid_map in maps)
 					choices.Add(valid_map)
+			if("shipmap")
+				if(!lower_admin && SSmapping.shipmap_voted)
+					to_chat(usr, span_warning("The next ship map has already been selected."))
+					return FALSE
+				var/datum/game_mode/next_gamemode = config.pick_mode(trim(file2text("data/mode.txt")))
+				choices = get_shipmap_vote_choices(config.maplist?[SHIP_MAP], next_gamemode, length(GLOB.clients))
+				multiple_vote = TRUE
+				shuffle_choices = TRUE
 			if("custom")
 				question = stripped_input(usr, "What is the vote for?")
 				if(!question)
@@ -325,9 +341,35 @@ SUBSYSTEM_DEF(vote)
 
 ///Starts the automatic map vote at the end of each round
 /datum/controller/subsystem/vote/proc/automatic_vote()
+	SStgui.close_uis(src)
 	reset()
-	initiate_vote("gamemode", null, TRUE, TRUE)
-	addtimer(CALLBACK(src, PROC_REF(initiate_vote), "groundmap", null, TRUE, TRUE), CONFIG_GET(number/vote_period) * 2 + 6 SECONDS)
+	automatic_vote_queue = list("gamemode", "shipmap", "groundmap")
+	advance_automatic_vote()
+
+/// Stop advancing when a stage actually opens a ballot. Empty and single-choice stages resolve immediately.
+/datum/controller/subsystem/vote/proc/advance_automatic_vote()
+	while(length(automatic_vote_queue))
+		var/vote_type = popleft(automatic_vote_queue)
+		if(initiate_vote(vote_type, null, TRUE, TRUE))
+			return
+
+/proc/get_shipmap_vote_choices(list/ship_maps, datum/game_mode/next_gamemode, player_count)
+	var/list/eligible = list()
+	for(var/map_name in ship_maps)
+		var/datum/map_config/ship = ship_maps[map_name]
+		if(!ship || ship.voteweight <= 0)
+			continue
+		if(next_gamemode.whitelist_ship_maps)
+			if(!(ship.map_name in next_gamemode.whitelist_ship_maps))
+				continue
+		else if(next_gamemode.blacklist_ship_maps && (ship.map_name in next_gamemode.blacklist_ship_maps))
+			continue
+		if(ship.config_min_users > 0 && player_count < ship.config_min_users)
+			continue
+		if(ship.config_max_users > 0 && player_count > ship.config_max_users)
+			continue
+		eligible += ship.map_name
+	return eligible
 
 /datum/controller/subsystem/vote/ui_state()
 	return GLOB.always_state
@@ -353,6 +395,7 @@ SUBSYSTEM_DEF(vote)
 		"upper_admin" = check_rights_for(user.client, R_ADMIN),
 		"voting" = list(),
 		"allow_vote_groundmap" = CONFIG_GET(flag/allow_vote_groundmap),
+		"allow_vote_shipmap" = CONFIG_GET(flag/allow_vote_shipmap),
 		"allow_vote_mode" = CONFIG_GET(flag/allow_vote_mode),
 		"allow_vote_restart" = CONFIG_GET(flag/allow_vote_restart),
 		"vote_happening" = vote_happening,
@@ -396,7 +439,9 @@ SUBSYSTEM_DEF(vote)
 			if(usr.client.holder)
 				usr.log_message("[key_name_admin(usr)] cancelled a vote.", LOG_ADMIN)
 				message_admins("[key_name_admin(usr)] has cancelled the current vote.")
+				SStgui.close_uis(src)
 				reset()
+				advance_automatic_vote()
 		if("toggle_restart")
 			if(usr.client.holder && upper_admin)
 				CONFIG_SET(flag/allow_vote_restart, !CONFIG_GET(flag/allow_vote_restart))
@@ -406,6 +451,9 @@ SUBSYSTEM_DEF(vote)
 		if("toggle_groundmap")
 			if(usr.client.holder && upper_admin)
 				CONFIG_SET(flag/allow_vote_groundmap, !CONFIG_GET(flag/allow_vote_groundmap))
+		if("toggle_shipmap")
+			if(upper_admin)
+				CONFIG_SET(flag/allow_vote_shipmap, !CONFIG_GET(flag/allow_vote_shipmap))
 		if("restart")
 			if(CONFIG_GET(flag/allow_vote_restart) || usr.client.holder)
 				initiate_vote("restart",usr.key)
@@ -415,6 +463,9 @@ SUBSYSTEM_DEF(vote)
 		if("groundmap")
 			if(CONFIG_GET(flag/allow_vote_groundmap) || usr.client.holder)
 				initiate_vote("groundmap",usr.key)
+		if("shipmap")
+			if(CONFIG_GET(flag/allow_vote_shipmap) || usr.client.holder)
+				initiate_vote("shipmap", usr.key)
 		if("custom")
 			if(usr.client.holder)
 				initiate_vote("custom",usr.key)

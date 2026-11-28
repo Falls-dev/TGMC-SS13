@@ -10,6 +10,8 @@
 
 /// Resolve a supported source URL to a stream URL without running a local process.
 /datum/internet_media/cobalt/proc/get_media_url(url)
+	if(IsAdminAdvancedProcCall() || !check_rights(R_SOUND, FALSE))
+		return
 	var/cobalt = CONFIG_GET(string/cobalt_base_api)
 	if(!is_internet_media_url(url) || !is_internet_media_url(cobalt))
 		error = "Internet audio requires a valid media URL and configured Cobalt endpoint."

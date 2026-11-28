@@ -2,6 +2,7 @@ import './styles/main.scss';
 
 import { loadMappings, loadStyleSheet } from 'common/assets';
 import { createRoot, type Root } from 'react-dom/client';
+
 import { assetMap } from './assets';
 import { EscapeMenu, isResizeFrozen } from './EscapeMenu';
 import { updateScaling } from './scaling';

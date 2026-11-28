@@ -101,9 +101,7 @@ const MainPage = () => {
 
       <Stack.Item grow>
         <Section title="Orbital Control" fill>
-          {!!changing_orbit && (
-            <NoticeBox>Orbit change in progress.</NoticeBox>
-          )}
+          {!!changing_orbit && <NoticeBox>Orbit change in progress.</NoticeBox>}
           {!can_change_orbit ? (
             <NoticeBox color="bad">
               Insufficient Power Reserves to change orbit

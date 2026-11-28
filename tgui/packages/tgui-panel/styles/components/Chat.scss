@@ -75,6 +75,11 @@
   word-wrap: break-word;
 }
 
+.ooc-nickname a:link,
+.ooc-nickname a:visited {
+  color: inherit;
+}
+
 .ChatMessage--plain {
   white-space: pre-line;
 }

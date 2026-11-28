@@ -233,12 +233,7 @@ export function JobSelection(props) {
                 </NoticeBox>
               )}
               {!!security_level_text && (
-                <Box
-                  as="span"
-                  bold
-                  color={alertColor(security_level)}
-                  mr={1.5}
-                >
+                <Box as="span" bold color={alertColor(security_level)} mr={1.5}>
                   Alert level: {security_level_text.toUpperCase()}
                 </Box>
               )}

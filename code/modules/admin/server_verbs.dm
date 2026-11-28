@@ -373,6 +373,35 @@ ADMIN_VERB(change_ground_map, R_SERVER, "Change Ground Map", "Change Ground Map 
 	log_admin("[key_name(user)] changed the map to [VM.map_name].")
 	message_admins("[ADMIN_TPMONTY(user.mob)] changed the map to [VM.map_name].")
 
+ADMIN_VERB(change_ship_map, R_SERVER, "Change Ship Map", "Change Ship Map for the next round.", ADMIN_CATEGORY_SERVER)
+	var/list/ship_maps = config.maplist?[SHIP_MAP]
+	var/list/map_choices = list()
+	for(var/map_name in ship_maps)
+		var/datum/map_config/ship = ship_maps[map_name]
+		var/label = ship.map_name
+		if(ship == config.defaultmaps?[SHIP_MAP])
+			label += " (Default)"
+		if(ship.config_min_users > 0 || ship.config_max_users > 0)
+			label += " \[[max(0, ship.config_min_users)]-[ship.config_max_users > 0 ? ship.config_max_users : "inf"]\]"
+		map_choices[label] = ship
+
+	if(!length(map_choices))
+		to_chat(user, span_warning("No ship maps are configured."))
+		return
+
+	var/selected = tgui_input_list(user, "Choose the ship map for the next round.", "Change Ship Map", map_choices, timeout = 0)
+	if(!selected || !check_rights_for(user, R_SERVER))
+		return
+
+	var/datum/map_config/ship = map_choices[selected]
+	var/list/current_ship_maps = config.maplist?[SHIP_MAP]
+	if(!ship || current_ship_maps?[ship.map_name] != ship || !SSmapping.changemap(ship, SHIP_MAP))
+		to_chat(user, span_warning("Failed to change the ship map."))
+		return
+
+	log_admin("[key_name(user)] changed the ship map to [ship.map_name].")
+	message_admins("[ADMIN_TPMONTY(user.mob)] changed the ship map to [html_encode(ship.map_name)].")
+
 ADMIN_VERB(panic_bunker, R_SERVER, "Toggle Panic Bunker", "Toggle new players being permitted to join the server.", ADMIN_CATEGORY_SERVER)
 	if(!CONFIG_GET(flag/sql_enabled))
 		to_chat(user, span_adminnotice("The Database is not enabled!"))

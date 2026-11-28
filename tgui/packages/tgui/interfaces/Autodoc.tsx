@@ -198,13 +198,19 @@ const OccupantPanel = () => {
             {round(occupant.health, 0)} ({status[1]})
           </ProgressBar>
         </LabeledList.Item>
-        <LabeledList.Item label="Pulse, bpm" color={occupant.pulse_bad ? 'bad' : 'good'}>
+        <LabeledList.Item
+          label="Pulse, bpm"
+          color={occupant.pulse_bad ? 'bad' : 'good'}
+        >
           {occupant.pulse}
         </LabeledList.Item>
         <LabeledList.Item label="Status" color={status[0]}>
           {status[1]}
         </LabeledList.Item>
-        <LabeledList.Item label="Med-Pod Status" color={data.surgery ? 'bad' : 'good'}>
+        <LabeledList.Item
+          label="Med-Pod Status"
+          color={data.surgery ? 'bad' : 'good'}
+        >
           {data.surgery
             ? 'SURGERY IN PROGRESS: MANUAL EJECTION ONLY BY TRAINED OPERATORS!'
             : 'Not in surgery'}
@@ -353,10 +359,7 @@ const ManualSurgeriesPanel = () => {
         <Section title="Orthopedic Surgeries">
           <Flex wrap>
             <Flex.Item basis="50%" grow>
-              <SurgeryButton
-                surgeryKey="broken"
-                label="Broken Bone Surgery"
-              />
+              <SurgeryButton surgeryKey="broken" label="Broken Bone Surgery" />
             </Flex.Item>
             <Flex.Item basis="50%" grow>
               <SurgeryButton
@@ -395,10 +398,7 @@ const ManualSurgeriesPanel = () => {
               />
             </Flex.Item>
             <Flex.Item basis="50%" grow>
-              <SurgeryButton
-                surgeryKey="eyes"
-                label="Corrective Eye Surgery"
-              />
+              <SurgeryButton surgeryKey="eyes" label="Corrective Eye Surgery" />
             </Flex.Item>
           </Flex>
         </Section>
@@ -452,10 +452,7 @@ const ManualSurgeriesPanel = () => {
               />
             </Flex.Item>
             <Flex.Item grow>
-              <SurgeryButton
-                surgeryKey="open"
-                label="Close Open Incision"
-              />
+              <SurgeryButton surgeryKey="open" label="Close Open Incision" />
             </Flex.Item>
           </Flex>
         </Section>

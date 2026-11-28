@@ -12,28 +12,6 @@ Format:
 	disabled (disables the map)
 endmap
 
-map debugdalus
-	default
-	voteweight 0
-endmap
-
 map talos
-endmap
-
-map theseus
-endmap
-
-map pillar_of_spring
-endmap
-
-map sulaco
-endmap
-
-map arachne
-endmap
-
-map combat_patrol_base
-endmap
-
-map iteron
+	default
 endmap

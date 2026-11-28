@@ -51,7 +51,9 @@ const PAGES = [
     color: 'blue',
     icon: 'laugh',
     canAccess: (data: Data) => {
-      return hasPermission(data, 'mob_narrate') || hasPermission(data, 'mob_explode');
+      return (
+        hasPermission(data, 'mob_narrate') || hasPermission(data, 'mob_explode')
+      );
     },
   },
   {
@@ -150,7 +152,10 @@ export const PlayerPanel = (props) => {
                 <Stack.Item>
                   <Button
                     icon="clock"
-                    disabled={!data.has_client || !hasPermission(data, 'access_playtimes')}
+                    disabled={
+                      !data.has_client ||
+                      !hasPermission(data, 'access_playtimes')
+                    }
                     onClick={() => act('access_playtimes')}
                   >
                     Playtime
@@ -173,7 +178,9 @@ export const PlayerPanel = (props) => {
                   </Stack.Item>
                   <Stack.Item grow align="left">
                     <Box inline style={{ wordBreak: 'break-all' }}>
-                      {client_ckey ? `${client_key} (${client_ckey})` : client_key}
+                      {client_ckey
+                        ? `${client_key} (${client_ckey})`
+                        : client_key}
                     </Box>
                   </Stack.Item>
                   <Stack.Item align="right">
@@ -382,7 +389,7 @@ const GeneralActions = (props) => {
             <Stack.Item align="right" grow>
               <Input
                 width="100%"
-                onEnter={(e, value) => act('mob_force_say', { to_say: value })}
+                onEnter={(value) => act('mob_force_say', { to_say: value })}
               />
             </Stack.Item>
           </Stack>
@@ -395,9 +402,7 @@ const GeneralActions = (props) => {
             <Stack.Item align="right" grow>
               <Input
                 width="100%"
-                onEnter={(e, value) =>
-                  act('mob_force_emote', { to_emote: value })
-                }
+                onEnter={(value) => act('mob_force_emote', { to_emote: value })}
               />
             </Stack.Item>
           </Stack>
@@ -461,7 +466,9 @@ const PunishmentActions = (props) => {
           <Button
             width="100%"
             color="average"
-            disabled={!has_client || !hasPermission(data, 'related_accounts_cid')}
+            disabled={
+              !has_client || !hasPermission(data, 'related_accounts_cid')
+            }
             onClick={() => act('related_accounts_cid')}
           >
             CID Related Accounts
@@ -469,7 +476,9 @@ const PunishmentActions = (props) => {
           <Button
             width="100%"
             color="average"
-            disabled={!has_client || !hasPermission(data, 'related_accounts_ip')}
+            disabled={
+              !has_client || !hasPermission(data, 'related_accounts_ip')
+            }
             onClick={() => act('related_accounts_ip')}
           >
             IP Related Accounts
@@ -559,9 +568,7 @@ const FunActions = (props) => {
             <Stack.Item align="right" grow>
               <Input
                 width="100%"
-                onEnter={(e, value) =>
-                  act('mob_narrate', { to_narrate: value })
-                }
+                onEnter={(value) => act('mob_narrate', { to_narrate: value })}
               />
             </Stack.Item>
           </Stack>
@@ -737,7 +744,10 @@ const PhysicalActions = (props) => {
               onClick={() =>
                 act('mob_delimb', {
                   limbs: limbFlags
-                    .map((val, index) => !!(delimbOption & val) && glob_limbs[limbNames[index]])
+                    .map(
+                      (val, index) =>
+                        !!(delimbOption & val) && glob_limbs[limbNames[index]],
+                    )
                     .filter(Boolean),
                 })
               }

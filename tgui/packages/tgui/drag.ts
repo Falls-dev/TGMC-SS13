@@ -12,6 +12,7 @@ import { createLogger } from './logging';
 
 const logger = createLogger('drag');
 const pixelRatio = window.devicePixelRatio ?? 1;
+const GEOMETRY_LOOKUP_TIMEOUT = 100;
 let windowKey = Byond.windowId;
 let dragging = false;
 let resizing = false;
@@ -122,8 +123,27 @@ export const recallWindowGeometry = async (
     locked?: BooleanLike;
     scale?: BooleanLike;
   } = {},
+  isCurrent = () => true,
 ) => {
-  const geometry = await storage.get(windowKey);
+  let geometry: { pos?: [number, number] } | undefined;
+  const storedGeometry = storage.get(windowKey).then(
+    (stored) => {
+      geometry = stored;
+    },
+    () => undefined,
+  );
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+  await Promise.race([
+    // Storage initialization and a slow native query should never stall opening.
+    Promise.all([storedGeometry, screenOffsetPromise]),
+    new Promise<void>((resolve) => {
+      timeout = setTimeout(resolve, GEOMETRY_LOOKUP_TIMEOUT);
+    }),
+  ]);
+  clearTimeout(timeout);
+  if (!isCurrent()) {
+    return;
+  }
   if (geometry) {
     logger.log('recalled geometry:', geometry);
   }
@@ -145,8 +165,6 @@ export const recallWindowGeometry = async (
     document.body.style.zoom = '';
     document.documentElement.style.setProperty('--scaling-amount', null);
   }
-  // Wait until screen offset gets resolved
-  await screenOffsetPromise;
   const areaAvailable = getScreenSize();
   // Set window size
   if (size) {
@@ -166,26 +184,33 @@ export const recallWindowGeometry = async (
     setWindowPosition(pos);
     // Set window position at the center of the screen.
   } else if (size) {
-    pos = vecAdd(
+    const center = vecAdd(
       vecScale(areaAvailable, 0.5),
       vecScale(size, -0.5),
       vecScale(screenOffset, -1.0),
     );
-    setWindowPosition(pos);
+    setWindowPosition([center[0], center[1]]);
   }
 };
 
 // Setup draggable window
-export const setupDrag = async () => {
+export const setupDrag = () => {
   // Calculate screen offset caused by the windows taskbar
-  let windowPosition = getWindowPosition();
+  const windowPosition = getWindowPosition();
 
-  screenOffsetPromise = Byond.winget(Byond.windowId, 'pos').then((pos) => [
-    pos.x - windowPosition[0],
-    pos.y - windowPosition[1],
-  ]);
-  screenOffset = await screenOffsetPromise;
-  logger.debug('screen offset', screenOffset);
+  const lookup = Byond.winget(Byond.windowId, 'pos')
+    .then<[number, number]>((pos) => [
+      pos.x - windowPosition[0],
+      pos.y - windowPosition[1],
+    ])
+    .catch(() => screenOffset);
+  screenOffsetPromise = lookup;
+  lookup.then((offset) => {
+    if (screenOffsetPromise === lookup) {
+      screenOffset = offset;
+      logger.debug('screen offset', screenOffset);
+    }
+  });
 };
 
 /**

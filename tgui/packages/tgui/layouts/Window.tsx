@@ -8,16 +8,20 @@ import {
   ComponentProps,
   PropsWithChildren,
   ReactNode,
-  useEffect,
   useLayoutEffect,
-  useState,
+  useRef,
 } from 'react';
 import { Box } from 'tgui-core/components';
 import { UI_DISABLED, UI_INTERACTIVE } from 'tgui-core/constants';
 import { BooleanLike, classes } from 'tgui-core/react';
 import { decodeHtmlEntities } from 'tgui-core/string';
 
-import { backendSuspendStart, globalStore, useBackend } from '../backend';
+import {
+  backendSuspendStart,
+  globalStore,
+  selectBackend,
+  useBackend,
+} from '../backend';
 import { useDebug } from '../debug';
 import {
   dragStartHandler,
@@ -54,54 +58,58 @@ export const Window = (props: Props) => {
     height,
   } = props;
 
-  const { config, suspended } = useBackend();
+  const { config, suspended, suspending } = useBackend();
   const { debugLayout = false } = useDebug();
-  const [isReadyToRender, setIsReadyToRender] = useState(false);
+  const shown = useRef(false);
+  const { key, locked, scale } = config.window || {};
 
-  // We need to set the window to be invisible before we can set its geometry
-  // Otherwise, we get a flicker effect when the window is first rendered
   useLayoutEffect(() => {
-    Byond.winset(Byond.windowId, {
-      'is-visible': false,
-    });
-    setIsReadyToRender(true);
-  }, []);
-
-  const { scale } = config.window;
-
-  useEffect(() => {
-    if (!suspended && isReadyToRender) {
-      const updateGeometry = () => {
-        const options = {
-          ...config.window,
-          size: DEFAULT_SIZE,
-        };
-
-        if (width && height) {
-          options.size = [width, height];
-        }
-        if (config.window?.key) {
-          setWindowKey(config.window.key);
-        }
-        recallWindowGeometry(options);
-        Byond.winset(Byond.windowId, {
-          'is-visible': true,
-        });
-        Byond.sendMessage('visible');
-        logger.log('set to visible');
-      };
-
-      Byond.winset(Byond.windowId, {
-        'can-close': Boolean(canClose),
-      });
-      logger.log('mounting');
-      updateGeometry();
-
-      return () => {
-        logger.log('unmounting');
-      };
+    if (suspended) {
+      shown.current = false;
+      return;
     }
-  }, [isReadyToRender, width, height, scale]);
+    if (suspending) {
+      return;
+    }
+    let current = true;
+    let reveal: ReturnType<typeof setTimeout> | undefined;
+    const isCurrent = () => {
+      const backend = selectBackend(globalStore.getState());
+      return (
+        current &&
+        !backend.suspended &&
+        !backend.suspending &&
+        backend.config.window?.key === key
+      );
+    };
+    if (key) {
+      setWindowKey(key);
+    }
+    Byond.winset(Byond.windowId, {
+      'can-close': Boolean(canClose),
+      ...(!shown.current && { 'is-visible': false }),
+    });
+    recallWindowGeometry(
+      { locked, scale, size: width && height ? [width, height] : DEFAULT_SIZE },
+      isCurrent,
+    ).then(() => {
+      if (isCurrent() && !shown.current) {
+        // Let the native window apply geometry before making it visible.
+        reveal = setTimeout(() => {
+          if (!isCurrent()) {
+            return;
+          }
+          Byond.winset(Byond.windowId, { 'is-visible': true });
+          Byond.sendMessage('visible');
+          shown.current = true;
+        });
+      }
+    });
+    return () => {
+      current = false;
+      clearTimeout(reveal);
+    };
+  }, [canClose, height, key, locked, scale, suspended, suspending, width]);
 
   const dispatch = globalStore.dispatch;
 

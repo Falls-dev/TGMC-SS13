@@ -68,7 +68,9 @@ export function PatientLimbs() {
                     : 'Missing limbs can only be fixed through surgical intervention. Head reattachment is only possible for combat robots and synthetics. Only printed limbs work as a replacement.'
                 }
               >
-                <Stack.Item color="red" bold>MISSING</Stack.Item>
+                <Stack.Item color="red" bold>
+                  MISSING
+                </Stack.Item>
               </Tooltip>
             ) : (
               <>
@@ -155,16 +157,17 @@ export function PatientLimbs() {
                   >
                     [Implant x{limb.implants}]
                   </MedConditionalBox>
-                  {!!limb.skill_implants?.length && limb.skill_implants.map((implantName, idx) => (
-                    <MedConditionalBox
-                      key={idx}
-                      condition
-                      color="cyan"
-                      tooltip="Beneficial implant detected by bodyscanner."
-                    >
-                      [{implantName}]
-                    </MedConditionalBox>
-                  ))}
+                  {!!limb.skill_implants?.length &&
+                    limb.skill_implants.map((implantName, idx) => (
+                      <MedConditionalBox
+                        key={idx}
+                        condition
+                        color="cyan"
+                        tooltip="Beneficial implant detected by bodyscanner."
+                      >
+                        [{implantName}]
+                      </MedConditionalBox>
+                    ))}
                   <MedConditionalBox
                     condition={limb.open_incision}
                     color="red"

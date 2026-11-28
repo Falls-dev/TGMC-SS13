@@ -11,7 +11,6 @@
  * @license MIT
  */
 
-import { perf } from 'common/perf';
 import { createAction } from 'common/redux';
 import { BooleanLike } from 'tgui-core/react';
 
@@ -222,26 +221,6 @@ export const backendMiddleware = (store) => {
       resumeRenderer();
       // Setup drag
       setupDrag();
-      // We schedule this for the next tick here because resizing and unhiding
-      // during the same tick will flash with a white background.
-      setTimeout(() => {
-        perf.mark('resume/start');
-        // Doublecheck if we are not re-suspended.
-        const { suspended } = selectBackend(store.getState());
-        if (suspended) {
-          return;
-        }
-        Byond.winset(Byond.windowId, {
-          'is-visible': true,
-        });
-        perf.mark('resume/finish');
-        if (process.env.NODE_ENV !== 'production') {
-          logger.log(
-            'visible in',
-            perf.measure('render/finish', 'resume/finish'),
-          );
-        }
-      });
     }
 
     if (type === 'oversizePayloadResponse') {

@@ -110,9 +110,7 @@ export const OverwatchConsole = () => {
       <Window.Content scrollable>
         {!operator && <LoginPanel />}
         {!!operator && on_monitor && <MonitorPanel />}
-        {!!operator && !on_monitor && console_type === 'main' && (
-          <MainPanel />
-        )}
+        {!!operator && !on_monitor && console_type === 'main' && <MainPanel />}
         {!!operator &&
           !on_monitor &&
           console_type !== 'main' &&
@@ -207,9 +205,7 @@ const SquadPanel = () => {
                   {!!squad.leader_ref && (
                     <Button
                       icon="video"
-                      onClick={() =>
-                        act('jump', { target: squad.leader_ref })
-                      }
+                      onClick={() => act('jump', { target: squad.leader_ref })}
                     >
                       {squad.leader}
                     </Button>
@@ -240,9 +236,7 @@ const SquadPanel = () => {
                     <Button onClick={() => act('set_primary')}>Set</Button>
                   }
                 >
-                  {squad.primary_objective || (
-                    <Box color="bad">NONE!</Box>
-                  )}
+                  {squad.primary_objective || <Box color="bad">NONE!</Box>}
                 </LabeledList.Item>
                 <LabeledList.Item
                   label="Secondary Objective"
@@ -250,9 +244,7 @@ const SquadPanel = () => {
                     <Button onClick={() => act('set_secondary')}>Set</Button>
                   }
                 >
-                  {squad.secondary_objective || (
-                    <Box color="bad">NONE!</Box>
-                  )}
+                  {squad.secondary_objective || <Box color="bad">NONE!</Box>}
                 </LabeledList.Item>
               </>
             )}
@@ -296,16 +288,12 @@ const MainPanel = () => {
               buttons={
                 <>
                   <Button
-                    onClick={() =>
-                      act('message', { squad_id: squad.id })
-                    }
+                    onClick={() => act('message', { squad_id: squad.id })}
                   >
                     Message Squad
                   </Button>
                   <Button
-                    onClick={() =>
-                      act('monitor', { squad_id: squad.id })
-                    }
+                    onClick={() => act('monitor', { squad_id: squad.id })}
                   >
                     Monitor
                   </Button>
@@ -340,9 +328,7 @@ const MainPanel = () => {
                   {squad.leader || <Box color="bad">NONE</Box>}
                 </LabeledList.Item>
                 <LabeledList.Item label="Squad Overwatch">
-                  {squad.overwatch_officer || (
-                    <Box color="bad">NONE</Box>
-                  )}
+                  {squad.overwatch_officer || <Box color="bad">NONE</Box>}
                 </LabeledList.Item>
               </LabeledList>
             </Section>
@@ -462,9 +448,7 @@ const MonitorPanel = () => {
             {marines.map((marine) => (
               <Table.Row key={marine.ref}>
                 <Table.Cell>
-                  <Button
-                    onClick={() => act('jump', { target: marine.ref })}
-                  >
+                  <Button onClick={() => act('jump', { target: marine.ref })}>
                     {marine.name}
                   </Button>
                 </Table.Cell>
@@ -490,9 +474,7 @@ const MonitorPanel = () => {
 const FireSupportPanel = () => {
   const { act, data } = useBackend<Data>();
   const fs = data.firesupport!;
-  const squadPrefix = data.current_squad
-    ? `${data.current_squad.name} `
-    : '';
+  const squadPrefix = data.current_squad ? `${data.current_squad.name} ` : '';
 
   return (
     <Stack vertical>
@@ -522,9 +504,7 @@ const FireSupportPanel = () => {
           <Box mt={1} mb={0.5} bold>
             Beacon Targets:
           </Box>
-          {!fs.beacons?.length && (
-            <Box color="average">None transmitting</Box>
-          )}
+          {!fs.beacons?.length && <Box color="average">None transmitting</Box>}
           {fs.beacons?.map((beacon) => (
             <Button
               key={beacon.ref}

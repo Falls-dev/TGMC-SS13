@@ -1,4 +1,10 @@
-import { Box, Button, LabeledList, ProgressBar, Section } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  LabeledList,
+  ProgressBar,
+  Section,
+} from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';

@@ -330,13 +330,6 @@ Master controller and performance related.
 
 /datum/config_entry/flag/tickcomp
 
-// Accepted for compatibility with existing configs. Internet audio now uses COBALT_BASE_API.
-/datum/config_entry/string/invoke_yt_dlp
-	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN
-
-/datum/config_entry/string/invoke_youtubedl
-	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN
-
 /datum/config_entry/string/cobalt_base_api
 	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN
 

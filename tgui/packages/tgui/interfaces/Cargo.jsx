@@ -36,7 +36,8 @@ const CATEGORY_DATA = {
   'Pending Order': { name: 'Корзина', icon: 'shopping-cart' },
 };
 
-const getCategoryInfo = (cat) => CATEGORY_DATA[cat] || { name: cat, icon: 'box' };
+const getCategoryInfo = (cat) =>
+  CATEGORY_DATA[cat] || { name: cat, icon: 'box' };
 
 export const Cargo = () => {
   const { data } = useBackend();
@@ -60,7 +61,10 @@ export const Cargo = () => {
       <Window.Content className="theme-cargo">
         <Flex height="100%" align="stretch" spacing={1.5}>
           <Flex.Item width="300px">
-            <Menu selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
+            <Menu
+              selectedMenu={selectedMenu}
+              setSelectedMenu={setSelectedMenu}
+            />
           </Flex.Item>
 
           <Flex.Item position="relative" grow={1} height="100%">
@@ -78,7 +82,10 @@ export const Cargo = () => {
                 </Box>
               )}
 
-              <Box key={filter ? 'search-results' : selectedMenu} className="crt-effect">
+              <Box
+                key={filter ? 'search-results' : selectedMenu}
+                className="crt-effect"
+              >
                 {selectedMenu === 'Previous Purchases' && (
                   <OrderList
                     type={shopping_history}
@@ -176,7 +183,8 @@ const Exports = () => {
 };
 
 const MenuButton = (props) => {
-  const { condition, menuname, icon, label, selectedMenu, setSelectedMenu } = props;
+  const { condition, menuname, icon, label, selectedMenu, setSelectedMenu } =
+    props;
   const isSelected = selectedMenu === menuname;
 
   return (
@@ -230,13 +238,17 @@ const Menu = (props) => {
             }}
           >
             <Flex justify="flex-start" align="center" mb={0.5}>
-              <Box color="label" width="90px" mr={1}>Очки Карго:</Box>
+              <Box color="label" width="90px" mr={1}>
+                Очки Карго:
+              </Box>
               <Box fontSize="1.2em" bold color="primary">
                 <AnimatedNumber value={currentpoints} />
               </Box>
             </Flex>
             <Flex justify="flex-start" align="center">
-              <Box color="label" width="90px" mr={1}>Личные очки:</Box>
+              <Box color="label" width="90px" mr={1}>
+                Личные очки:
+              </Box>
               <Box fontSize="1.1em" bold color="warning">
                 <AnimatedNumber value={personalpoints} />
               </Box>
@@ -256,7 +268,11 @@ const Menu = (props) => {
                 setSelectedMenu={setSelectedMenu}
               />
             </Flex.Item>
-            <Box ml={1} bold color={awaiting_delivery_orders ? 'warning' : 'label'}>
+            <Box
+              ml={1}
+              bold
+              color={awaiting_delivery_orders ? 'warning' : 'label'}
+            >
               <AnimatedNumber value={awaiting_delivery_orders} />
             </Box>
           </Flex>
@@ -295,7 +311,13 @@ const Menu = (props) => {
           </Flex>
 
           {shopping_list_cost > 0 && (
-            <Box textAlign="right" color="label" fontSize="0.9em" mt={0.2} mb={1}>
+            <Box
+              textAlign="right"
+              color="label"
+              fontSize="0.9em"
+              mt={0.2}
+              mb={1}
+            >
               Сумма: <AnimatedNumber value={shopping_list_cost} /> очков
             </Box>
           )}
@@ -394,14 +416,18 @@ const OrderList = (props) => {
     setTimeout(() => act(actionType, { id }), 2200);
   };
   const pendingSpentPoints = type.reduce((sum, request) => {
-    return actedOrders[request.id] === 'approve' ? sum + (request.cost || 0) : sum;
+    return actedOrders[request.id] === 'approve'
+      ? sum + (request.cost || 0)
+      : sum;
   }, 0);
   const effectivePoints = currentpoints - pendingSpentPoints;
 
   return (
     <Section title={selectedMenu} buttons={buttons}>
       {!type.length ? (
-        <NoticeBox color="primary" mx={1}>Список пуст.</NoticeBox>
+        <NoticeBox color="primary" mx={1}>
+          Список пуст.
+        </NoticeBox>
       ) : (
         type.map((request) => {
           const {
@@ -430,13 +456,19 @@ const OrderList = (props) => {
                 overflow: 'hidden',
                 marginBottom: actionStatus ? '0px' : '8px',
                 opacity: actionStatus ? 0 : 1,
-                transition: 'max-height 0.6s ease-in-out 1.6s, margin-bottom 0.6s ease-in-out 1.6s, opacity 0.4s ease-out 1.6s',
+                transition:
+                  'max-height 0.6s ease-in-out 1.6s, margin-bottom 0.6s ease-in-out 1.6s, opacity 0.4s ease-out 1.6s',
               }}
             >
-              <Box position="relative" style={{ overflow: 'hidden', borderRadius: '3px' }}>
+              <Box
+                position="relative"
+                style={{ overflow: 'hidden', borderRadius: '3px' }}
+              >
                 <Section
                   level={2}
-                  title={personal_purchase ? `Личный заказ #${id}` : `Заказ #${id}`}
+                  title={
+                    personal_purchase ? `Личный заказ #${id}` : `Заказ #${id}`
+                  }
                   style={{
                     paddingTop: '3px',
                     opacity: actionStatus ? 0.4 : 1,
@@ -476,7 +508,10 @@ const OrderList = (props) => {
                               ? 'Сброс бесплатен!'
                               : 'Быстрая доставка спишет 150 очков карго.'
                           }
-                          disabled={!data.beacon || (!personal_purchase && effectivePoints < 150)}
+                          disabled={
+                            !data.beacon ||
+                            (!personal_purchase && effectivePoints < 150)
+                          }
                           onClick={() => act('delivery', { id })}
                         />
                       )}
@@ -485,11 +520,17 @@ const OrderList = (props) => {
                 >
                   <LabeledList>
                     <LabeledList.Item label="Запросил">
-                      <b>{orderer_rank} {orderer}</b>
+                      <b>
+                        {orderer_rank} {orderer}
+                      </b>
                     </LabeledList.Item>
-                    <LabeledList.Item label="Причина">{reason}</LabeledList.Item>
+                    <LabeledList.Item label="Причина">
+                      {reason}
+                    </LabeledList.Item>
                     <LabeledList.Item label="Стоимость">
-                      <Box inline bold color="primary">{cost} очков</Box>
+                      <Box inline bold color="primary">
+                        {cost} очков
+                      </Box>
                     </LabeledList.Item>
                     <LabeledList.Item label="Содержимое">
                       <Packs packs={packs} />
@@ -503,9 +544,13 @@ const OrderList = (props) => {
                   left={0}
                   bottom={0}
                   className={
-                    isApproved ? 'overlay-approve' :
-                    isDenied ? 'overlay-deny' :
-                    isDelivery ? 'overlay-delivery' : ''
+                    isApproved
+                      ? 'overlay-approve'
+                      : isDenied
+                        ? 'overlay-deny'
+                        : isDelivery
+                          ? 'overlay-delivery'
+                          : ''
                   }
                   style={{
                     width: actionStatus ? '100%' : '0%',
@@ -530,8 +575,11 @@ const OrderList = (props) => {
                         transition: 'opacity 0.4s ease-in 0.4s',
                       }}
                       className={
-                        isDenied ? 'glitch-text' :
-                        isApproved ? 'approved-glow' : ''
+                        isDenied
+                          ? 'glitch-text'
+                          : isApproved
+                            ? 'approved-glow'
+                            : ''
                       }
                     >
                       {isApproved ? 'ОДОБРЕНО' : isDenied ? 'ОТКЛОНЕНО' : ''}
@@ -614,11 +662,19 @@ const PackName = (props) => {
 
   return (
     <Box inline pl={pl}>
-      <Box inline textAlign="right" style={{ minWidth: '130px', whiteSpace: 'nowrap' }} color="warning" mr={1}>
+      <Box
+        inline
+        textAlign="right"
+        style={{ minWidth: '130px', whiteSpace: 'nowrap' }}
+        color="warning"
+        mr={1}
+      >
         {amount ? `${amount}x ` : ''}
         {cost} очков {amount ? `(${amount * cost})` : ''}
       </Box>
-      <Box inline bold>{name}</Box>
+      <Box inline bold>
+        {name}
+      </Box>
     </Box>
   );
 };
@@ -673,7 +729,10 @@ const ShoppingCart = (props) => {
   const shopping_list_array = Object.keys(shopping_list);
   const [reason, setReason] = useState('');
 
-  const canAffordPersonal = shopping_list_items > 0 && personalpoints >= shopping_list_cost && shopping_list_cost > 0;
+  const canAffordPersonal =
+    shopping_list_items > 0 &&
+    personalpoints >= shopping_list_cost &&
+    shopping_list_cost > 0;
 
   return (
     <Section title="Текущая Корзина" icon="shopping-cart">
@@ -718,8 +777,16 @@ const ShoppingCart = (props) => {
 
         {readOnly && (
           <Stack.Item>
-            <Box color="label" mb={0.5} ml={0.5}>Причина запроса:</Box>
-            <Input autoFocus placeholder="Укажите обоснование..." fluid value={reason} onChange={setReason} />
+            <Box color="label" mb={0.5} ml={0.5}>
+              Причина запроса:
+            </Box>
+            <Input
+              autoFocus
+              placeholder="Укажите обоснование..."
+              fluid
+              value={reason}
+              onChange={setReason}
+            />
           </Stack.Item>
         )}
 
@@ -884,8 +951,12 @@ export const CargoRequest = (props) => {
   const [filter, setFilter] = useState('');
   useEffect(() => setFilter(''), [selectedMenu]);
 
-  const { supplypacks = {}, approvedrequests = [], deniedrequests = [], awaiting_delivery = [] } =
-    data;
+  const {
+    supplypacks = {},
+    approvedrequests = [],
+    deniedrequests = [],
+    awaiting_delivery = [],
+  } = data;
 
   const selectedPackCat = supplypacks[selectedMenu] || null;
 
@@ -915,7 +986,10 @@ export const CargoRequest = (props) => {
                 </Box>
               )}
 
-              <Box key={filter ? 'search-results' : selectedMenu} className="crt-effect">
+              <Box
+                key={filter ? 'search-results' : selectedMenu}
+                className="crt-effect"
+              >
                 {selectedMenu === 'Awaiting Delivery' && (
                   <OrderList
                     type={awaiting_delivery}

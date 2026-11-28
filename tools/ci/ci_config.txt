@@ -3,5 +3,6 @@ ADDRESS 127.0.0.1
 PORT 3306
 FEEDBACK_DATABASE tgmc_ci
 FEEDBACK_TABLEPREFIX
-FEEDBACK_LOGIN root
-FEEDBACK_PASSWORD
+## Local disposable database created by the integration workflow.
+FEEDBACK_LOGIN tgmc_ci
+FEEDBACK_PASSWORD tgmc_ci

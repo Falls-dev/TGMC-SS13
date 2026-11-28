@@ -7,18 +7,24 @@
 	var/mob/original_mob
 	/// Timer to remove the hit effect
 	var/timer_effect
+	/// Timer that ends the illusion
+	var/lifetime_timer
 
 /mob/illusion/Initialize(mapload, mob/copy_mob, atom/escorted_atom, life_time)
-	. = ..()
-	if(!copy_mob)
+	if(!copy_mob || !life_time)
 		return INITIALIZE_HINT_QDEL
+	. = ..()
 	copy_appearance(copy_mob)
 	START_PROCESSING(SSprocessing, src)
-	QDEL_IN(src, life_time)
+	lifetime_timer = QDEL_IN_STOPPABLE(src, life_time)
 
 /mob/illusion/Destroy()
+	STOP_PROCESSING(SSprocessing, src)
 	original_mob = null
+	deltimer(lifetime_timer)
+	lifetime_timer = null
 	deltimer(timer_effect)
+	timer_effect = null
 	return ..()
 
 /mob/illusion/examine(mob/user)

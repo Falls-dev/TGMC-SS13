@@ -4,6 +4,7 @@
  * @license MIT
  */
 
+import { useLayoutEffect } from 'react';
 import { Box } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
@@ -22,6 +23,11 @@ export function Pane(props: Props) {
   const { theme, children, className, ...rest } = props;
   const { suspended } = useBackend();
   const { debugLayout = false } = useDebug();
+  useLayoutEffect(() => {
+    if (!suspended) {
+      Byond.winset(Byond.windowId, { 'is-visible': true });
+    }
+  }, [suspended]);
 
   return (
     <Layout className={classes(['Window', className])} theme={theme} {...rest}>

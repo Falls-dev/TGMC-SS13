@@ -82,23 +82,9 @@ const P_STAT_OPTIONS = [
   'Disabled',
 ] as const;
 
-const M_STAT_OPTIONS = [
-  '*Insane*',
-  '*Unstable*',
-  '*Watch*',
-  'Stable',
-] as const;
+const M_STAT_OPTIONS = ['*Insane*', '*Unstable*', '*Watch*', 'Stable'] as const;
 
-const BLOOD_TYPES = [
-  'A-',
-  'A+',
-  'B-',
-  'B+',
-  'AB-',
-  'AB+',
-  'O-',
-  'O+',
-] as const;
+const BLOOD_TYPES = ['A-', 'A+', 'B-', 'B+', 'AB-', 'AB+', 'O-', 'O+'] as const;
 
 export const MedicalRecords = () => {
   const { act, data } = useBackend<Data>();
@@ -558,7 +544,9 @@ const RecordView = (props: {
                 <NoticeBox danger>General Record Lost!</NoticeBox>
               ) : (
                 <LabeledList>
-                  <LabeledList.Item label="Name">{record.name}</LabeledList.Item>
+                  <LabeledList.Item label="Name">
+                    {record.name}
+                  </LabeledList.Item>
                   <LabeledList.Item label="ID">{record.id}</LabeledList.Item>
                   <LabeledList.Item label="Position">
                     {record.rank}
@@ -868,12 +856,7 @@ const RecordView = (props: {
         <Section>
           <Stack>
             <Stack.Item grow>
-              <Button
-                fluid
-                icon="print"
-                disabled={printing}
-                onClick={onPrint}
-              >
+              <Button fluid icon="print" disabled={printing} onClick={onPrint}>
                 {printing ? 'Printing...' : 'Print Record'}
               </Button>
             </Stack.Item>
@@ -932,7 +915,6 @@ const EditModal = (props: {
             fluid
             autoFocus
             autoSelect
-            type={field.type === 'number' ? 'number' : 'text'}
             value={value}
             onChange={onChange}
             onEnter={() => onSave()}

@@ -24,8 +24,12 @@ jobs:
       - name: Setup database
         run: |
           sudo systemctl start mysql
-          mysql -u root -proot -e 'CREATE DATABASE tg_ci;'
-          mysql -u root -proot tg_ci < SQL/tgmc-schema.sql
+          mysql -u root -proot <<'SQL'
+          CREATE DATABASE tgmc_ci;
+          CREATE USER 'tgmc_ci'@'127.0.0.1' IDENTIFIED BY 'tgmc_ci';
+          GRANT ALL PRIVILEGES ON tgmc_ci.* TO 'tgmc_ci'@'127.0.0.1';
+          SQL
+          mysql -u root -proot tgmc_ci < SQL/tgmc-schema.sql
       - name: Setup Node
         uses: ./.github/actions/setup_node
       - name: Install rust-g
@@ -43,15 +47,20 @@ jobs:
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build --ci dm -DCIBUILDING -DANSICOLORS -WError -NWTG0001
       - name: Run Tests
+        env:
+          TEST_MAP: ${{ inputs.map }}
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
-          bash tools/ci/run_server.sh ${{ inputs.map }}
-      - name: Upload screenshot tests
+          bash tools/ci/run_server.sh "$TEST_MAP"
+      - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test_artifacts_${{ inputs.map }}_${{ inputs.major }}_${{ inputs.minor }}
-          path: data/screenshots_new/
+          path: |
+            ci_test/run.*/data/screenshots_new/
+            ci_test/run.*/data/unit_tests.json
+            ci_test/run.*/data/logs/ci/
           retention-days: 1
       - name: Check client Compatibility
         if: always() && steps.compile_tests.outcome == 'success'

@@ -102,6 +102,7 @@ export function HomePage({
                 content={resource.tooltip}
               >
                 <button
+                  type="button"
                   className="escape-menu__resource-button"
                   onClick={() => onAction(`resource_${resource.id}`)}
                 >
@@ -115,6 +116,7 @@ export function HomePage({
           </div>
         )}
         <button
+          type="button"
           className="escape-menu__resource-toggle"
           onClick={onToggleResources}
         >
@@ -154,6 +156,7 @@ function MenuButton({
 }: MenuButtonProps) {
   const button = (
     <button
+      type="button"
       className={
         'escape-menu__menu-button' +
         (disabled ? ' escape-menu__menu-button--disabled' : '') +

@@ -1246,7 +1246,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(export_appearance, R_ADMIN, "Export Appearance", at
 		if(part_layer < 0)
 			if(part_layer <= -1000)
 				continue
-			part_layer = source.layer + part_layer / 1000 + (part in source.overlays ? 1 : 0)
+			part_layer = source.layer + part_layer / 1000 + ((part in source.overlays) ? 1 : 0)
 		var/insert_at = parts.len + 1
 		for(var/i in 1 to order.len)
 			if(part_layer < order[i])

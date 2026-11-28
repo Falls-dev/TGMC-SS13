@@ -138,13 +138,8 @@ const ItemCategory = (props) => {
 const ItemLine = (props) => {
   const { act, data } = useBackend();
 
-  const {
-    display_record,
-    cant_buy,
-    remaining_points,
-    showDesc,
-    setShowDesc,
-  } = props;
+  const { display_record, cant_buy, remaining_points, showDesc, setShowDesc } =
+    props;
   const {
     id,
     prod_cost,

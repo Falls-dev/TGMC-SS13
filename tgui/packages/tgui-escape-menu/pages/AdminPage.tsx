@@ -66,7 +66,11 @@ export function AdminPage({
 
 function BackButton({ onClick }: { onClick: () => void }) {
   return (
-    <button className="escape-menu__back-button" onClick={onClick}>
+    <button
+      type="button"
+      className="escape-menu__back-button"
+      onClick={onClick}
+    >
       <div className="escape-menu__icon-button">
         <span className="escape-menu-icons40x40 template" />
         <span className="escape-menu-icons40x40 back escape-menu__icon-overlay" />
@@ -93,6 +97,7 @@ function MenuButton({
 }: MenuButtonProps) {
   const button = (
     <button
+      type="button"
       className={
         'escape-menu__menu-button' +
         (disabled ? ' escape-menu__menu-button--disabled' : '') +

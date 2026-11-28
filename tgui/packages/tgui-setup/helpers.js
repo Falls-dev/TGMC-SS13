@@ -40,7 +40,8 @@
       ? hostByond.command.bind(hostByond)
       : null;
   // Keep host ref so late Topic injection can still be bound after we wipe.
-  var hostByondRef = hostByond && typeof hostByond === 'object' ? hostByond : null;
+  var hostByondRef =
+    hostByond && typeof hostByond === 'object' ? hostByond : null;
   var Byond = (window.Byond = {});
 
   // Expose inlined metadata

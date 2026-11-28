@@ -899,9 +899,9 @@
 	r_pocket = /obj/item/storage/pouch/medical_injectors/medic
 	suit_store = /obj/item/weapon/gun/energy/lasgun/lasrifle/plasma/smg/standard
 	l_hand = /obj/item/weapon/shield/riot/marine/som
+	r_hand = /obj/item/defibrillator
 	backpack_contents = list(
 		/obj/item/clothing/head/sw/cap/repofficer_ensign = 1,
-		/obj/item/defibrillator = 1,
 		/obj/item/tool/extinguisher = 1,
 		/obj/item/explosive/plastique = 1,
 		/obj/item/tool/crowbar/red = 1,

@@ -34,9 +34,7 @@ export const KeycardAuth = () => {
       <Window.Content>
         <Section>
           {!!waiting && (
-            <Box>
-              Waiting for confirmation on a second device...
-            </Box>
+            <Box>Waiting for confirmation on a second device...</Box>
           )}
           {!waiting && !!auth_required && (
             <Box>
@@ -63,7 +61,8 @@ export const KeycardAuth = () => {
               <Stack.Item>
                 <Box mb={1}>
                   This device triggers high-security events. Two bridge-level
-                  IDs are required{is_silicon ? ' (or silicon confirmation)' : ''}.
+                  IDs are required
+                  {is_silicon ? ' (or silicon confirmation)' : ''}.
                 </Box>
               </Stack.Item>
               {available_events.map((entry) => (
@@ -71,9 +70,7 @@ export const KeycardAuth = () => {
                   <Button
                     fluid
                     icon="exclamation-triangle"
-                    onClick={() =>
-                      act('trigger_event', { event: entry.ref })
-                    }
+                    onClick={() => act('trigger_event', { event: entry.ref })}
                   >
                     Set alert level to {entry.name}
                   </Button>

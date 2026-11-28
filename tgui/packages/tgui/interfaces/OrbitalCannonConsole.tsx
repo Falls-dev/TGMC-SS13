@@ -1,4 +1,12 @@
-import { Box, Button, Collapsible, Dimmer, Icon, NoticeBox, Section } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Collapsible,
+  Dimmer,
+  Icon,
+  NoticeBox,
+  Section,
+} from 'tgui-core/components';
 import { type BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
@@ -25,7 +33,11 @@ export const OrbitalCannonConsole = (props) => {
   const { cannon_linked, tray_linked } = data;
 
   return (
-    <Window title="Orbital Cannon System Control Console" width={480} height={430}>
+    <Window
+      title="Orbital Cannon System Control Console"
+      width={480}
+      height={430}
+    >
       <Window.Content scrollable>
         {(!cannon_linked && (
           <NoticeBox danger>No Orbital Cannon System Detected!</NoticeBox>
@@ -63,11 +75,12 @@ const OrbitalCannonControls = (props) => {
     <>
       <Section title="Tray Status">
         <Box>
-          Orbital Cannon Tray is <Box as="span" bold color={trayColor}>{trayStatus}</Box>
+          Orbital Cannon Tray is{' '}
+          <Box as="span" bold color={trayColor}>
+            {trayStatus}
+          </Box>
         </Box>
-        <Box>
-          {warhead ? `${warhead} Detected` : 'No Warhead Detected'}
-        </Box>
+        <Box>{warhead ? `${warhead} Detected` : 'No Warhead Detected'}</Box>
         <Box>
           {fuel} Solid Fuel Block{fuel === 1 ? '' : 's'} Detected
         </Box>

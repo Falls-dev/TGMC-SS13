@@ -8,8 +8,8 @@
 	TEST_ASSERT(!is_internet_media_url(null), "Reject a missing URL")
 
 	TEST_ASSERT(is_server_log_path("data/logs/"), "Allow the log root")
-	TEST_ASSERT(is_server_log_path("data/logs/2026/11/28/round-100/"), "Allow nested round directories")
-	TEST_ASSERT(is_server_log_file("data/logs/2026/11/28/round-100/game.log.json"), "Allow standard log files")
+	TEST_ASSERT(is_server_log_path("data/logs/test-fixture/round-100/"), "Allow nested round directories")
+	TEST_ASSERT(is_server_log_file("data/logs/test-fixture/round-100/game.log.json"), "Allow standard log files")
 	TEST_ASSERT(is_server_log_file("data/logs/round-100/round_end_data.HTML"), "Allow log extensions case-insensitively")
 	TEST_ASSERT(!is_server_log_file("data/logs/round-100/"), "Only regular log paths have a log extension")
 	TEST_ASSERT(!is_server_log_path("data/archives/round.log"), "Reject paths outside the log root")
